@@ -14,7 +14,9 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BigBigLoader
@@ -25,8 +27,12 @@ namespace BigBigLoader
     public partial class MainForm : Form
     {
         // Public variable declarations
-        
-        bool buttonIsDown = false;
+
+        D protocol = new D();
+        IPAddress serverAddr = null;
+        Socket sock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
+        IPEndPoint endPoint = new IPEndPoint(0, 0);
+
         public static byte Address;
         public static byte CheckSum;
         public static byte Command1, Command2, Data1, Data2;
@@ -621,14 +627,12 @@ namespace BigBigLoader
 
         /////////////////////////////////////
 
-        private void sendtoIP(byte[] code) {
+        private void sendtoIPAsync(byte[] code) {
             try {
-                IPAddress serverAddr = IPAddress.Parse(tB_IPCon_Adr.Text);
-                Socket sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(tB_IPCon_Port.Text));
-                sock.Connect(endPoint);
-                sock.SendTo(code, endPoint);
-                sock.Close();
+                if (!sock.Connected) {
+                    Connect();
+                }
+                SendToSocket(code);
             } catch (Exception e) {
                 string message = "Issue connecting to TCP Port";
                 string caption = "Error";
@@ -637,11 +641,54 @@ namespace BigBigLoader
                                  MessageBoxButtons.OK,
                                  MessageBoxIcon.Question);
             }
+        }
 
+        private async Task Connect() {
+            string ipAdr = tB_IPCon_Adr.Text;
+            if (!PingAdr(ipAdr)) {
+                return;
+            }
+            l_IPCon_Connected.Text = "✓";
+            l_IPCon_Connected.ForeColor = Color.Green;
+
+            serverAddr = IPAddress.Parse(ipAdr);
+            sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(tB_IPCon_Port.Text));
+            sock.Connect(endPoint);
+        }
+
+        private bool PingAdr(string address) {
+            Ping pinger = null;
+
+            l_IPCon_Connected.Text = "❌";
+            l_IPCon_Connected.ForeColor = Color.Red;
+
+            if (address == null) {
+                return false;
+            }
+
+            try {
+                pinger = new Ping();
+                PingReply reply = pinger.Send(address, 2);
+                if (reply.Status == IPStatus.Success) {
+                    return true;
+                }
+            } catch (PingException) {
+                //not connected
+            } finally {
+                pinger.Dispose();
+            }
+            return false;
+        }
+
+        private async Task SendToSocket(byte[] code) {
+            if (code != null) {
+                sock.SendTo(code, endPoint);
+                sock.Close();
+            }
         }
 
         private void PlayClick(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
-
             if (player.playlist.isPlaying == true) {
                 player.playlist.stop();
                 player.playlist.items.clear();
@@ -650,21 +697,27 @@ namespace BigBigLoader
             player.playlist.add(combinedUrl, null, ":network-caching=" + tB_PlayerL_Buffering.Text);
             player.playlist.next();
             player.playlist.play();
-
         }
 
-        uint MakeAdr() {
-            uint adr;
+        private uint MakeAdr() {
             if (cB_IPCon_Selected.Text == "Daylight") {
-                adr = 1;
+                return 1;
             } else {
-                adr = 2;
+                return 2;
             }
-            return adr;
+        }
+
+        private void OnFinishedTypingAdr(object sender, EventArgs e) {
+            Connect();
+        }
+
+        private void tB_IPCon_Adr_PreviewKeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                Connect();
+            }
         }
 
         void PTZMove(bool IsTilt, D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left) {
-            D protocol = new D();
 
             byte[] code;
             uint address = MakeAdr();
@@ -676,20 +729,14 @@ namespace BigBigLoader
                 code = protocol.CameraPan(address, pan, speed);
             }
 
-            sendtoIP(code);
+            sendtoIPAsync(code);
         }
 
         void PTZZoom(D.Zoom dir) {
-            D protocol = new D();
-            uint address = MakeAdr();
-
-            byte[] code = protocol.CameraZoom(address, dir);
-
-            sendtoIP(code);
+            sendtoIPAsync(protocol.CameraZoom(MakeAdr(), dir));
         }
 
         private void b_PlayerL_Play_Click(object sender, EventArgs e) {
-
             string ipaddress = tB_PlayerL_Adr.Text;
             string port = tB_PlayerL_Port.Text;
             string url = tB_PlayerL_RTSP.Text;
@@ -701,8 +748,7 @@ namespace BigBigLoader
             PlayClick(VLCPlayer_L, combinedurl);
         }
 
-        private void b_PlayerL_Play_Click_1(object sender, EventArgs e) {
-
+        private void b_PlayerR_Play_Click(object sender, EventArgs e) { //add each new player into a list and define them using their index?
             string ipaddress = tB_PlayerR_Adr.Text;
             string port = tB_PlayerR_Port.Text;
             string url = tB_PlayerR_RTSP.Text;
@@ -711,7 +757,7 @@ namespace BigBigLoader
 
             string combinedurl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
 
-            PlayClick(VLCPlayer_L, combinedurl);
+            PlayClick(VLCPlayer_R, combinedurl);
         }
        
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
@@ -737,514 +783,194 @@ namespace BigBigLoader
             PTZZoom(D.Zoom.Wide);
         }
 
-        private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) { //come back to this
-            uint address = MakeAdr();
-
-            D protocol = new D();
-            byte[] code = protocol.CameraStop(address);
-
-            sendtoIP(code);
+        private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {
+            sendtoIPAsync(protocol.CameraStop(MakeAdr()));
         }
 
         private void b_Presets_Admin_MechMen_Click(object sender, EventArgs e) {
-
-            byte[] send_buffer = new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 };
-            sendtoIP(send_buffer);
-
-            send_buffer = new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 };
-            sendtoIP(send_buffer);
-
-            send_buffer = new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 };
-            sendtoIP(send_buffer);
-
-            send_buffer = new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 };
-            sendtoIP(send_buffer);
-
+            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 });
         }
 
         private void b_Presets_Admin_SetupMen_Click(object sender, EventArgs e) {
-            byte[] send_buffer = new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 };
-            sendtoIP(send_buffer);
-
-            send_buffer = new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 };
-            sendtoIP(send_buffer);
-
-            send_buffer = new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 };
-            sendtoIP(send_buffer);
-
-            send_buffer = new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 };
-            sendtoIP(send_buffer);
-
+            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 });
         }
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
-            uint address = MakeAdr();
-
-            D protocol = new D();
-            byte[] code = protocol.Preset(address, 2, D.PresetAction.Goto);
-            sendtoIP(code);
-        }
-
-        private void Main_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Up) // I used the C Key
-            {
-                if (tC_Control.SelectedIndex == 0) // control is only in tab 1 (index 0) endabled
-                {
-                    MessageBox.Show("Key left");
-                }
-            }
+            sendtoIPAsync(protocol.Preset(MakeAdr(), 2, D.PresetAction.Goto));
         }
 
         private void tC_Control_KeyDown(object sender, KeyEventArgs e) {
             if (cB_IPCon_KeyboardCon.Checked == true) {
                 uint address = MakeAdr();
                 uint speed = Convert.ToUInt32(tB_PTZ_Speed.Value);
-                D protocol = new D();
+                byte[] code = null;
 
-                if (e.KeyCode == Keys.Up) {
-                    byte[] code = protocol.CameraTilt(address, D.Tilt.Up, speed);
-                    sendtoIP(code);
+                switch (e.KeyCode) { //change this to accept multiple inputs
+                    case Keys.Up:
+                        code = protocol.CameraTilt(address, D.Tilt.Up, speed);
+                        break;
+                    case Keys.Down:
+                        code = protocol.CameraTilt(address, D.Tilt.Down, speed);
+                        break;
+                    case Keys.Left:
+                        code = protocol.CameraPan(address, D.Pan.Left, speed);
+                        break;
+                    case Keys.Right:
+                        code = protocol.CameraPan(address, D.Pan.Right, speed);
+                        break;
+                    case Keys.Enter:
+                        code = protocol.CameraZoom(address, D.Zoom.Tele);
+                        break;
+                    case Keys.Escape:
+                        code = protocol.CameraZoom(address, D.Zoom.Wide);
+                        break;
                 }
 
-                if (e.KeyCode == Keys.Down) {
-                    byte[] code = protocol.CameraTilt(address, D.Tilt.Down, speed);
-                    sendtoIP(code);
-                }
-
-                if (e.KeyCode == Keys.Left) {
-                    byte[] code = protocol.CameraPan(address, D.Pan.Left, speed);
-                    sendtoIP(code);
-                }
-
-                if (e.KeyCode == Keys.Right) {
-                    byte[] code = protocol.CameraPan(address, D.Pan.Right, speed);
-                    sendtoIP(code);
-                }
-
-                if (e.KeyCode == Keys.Enter) {
-                    byte[] code = protocol.CameraZoom(address, D.Zoom.Tele);
-                    sendtoIP(code);
-
-                }
-
-                if (e.KeyCode == Keys.Escape) {
-                    byte[] code = protocol.CameraZoom(address, D.Zoom.Wide);
-                    sendtoIP(code);
-
-                }
-
+                sendtoIPAsync(code);
             }
-
-
         }
 
-
-        private void tC_Control_KeyUp(object sender, KeyEventArgs e) {
+        private void tC_Control_KeyUp(object sender, KeyEventArgs e) { //change the way to control this
             if (cB_IPCon_KeyboardCon.Checked == true) {
-
-                IPAddress serverAddr = IPAddress.Parse(tB_IPCon_Adr.Text);
-                Socket sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(tB_IPCon_Port.Text));
-                sock.Connect(endPoint);
-
-                D protocol = new D();
-                byte[] code = protocol.CameraStop(MakeAdr()); //
-                sendtoIP(code);
-
+                sendtoIPAsync(protocol.CameraStop(MakeAdr()));
             }
         }
 
-        private void button8_MouseDown(object sender, MouseEventArgs e) {
-
-            D protocol = new D();
-            byte[] code = protocol.CameraFocus(MakeAdr(), D.Focus.Far); //
-            sendtoIP(code);
+        private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
+            sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Far));
         }
 
-        private void button9_MouseDown(object sender, MouseEventArgs e) {
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.CameraFocus(MakeAdr(), D.Focus.Near);
-            sendtoIP(code);
+        private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
+            sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Near));
         }
 
-        private void b_Presets_Daylight_Wiper_Click(object sender, EventArgs e)
-        {
-
-
-            uint address = 1;
-
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 4, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Daylight_Wiper_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 4, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Daylight_ColMono_Click(object sender, EventArgs e)
-        {
-
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 3, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Daylight_ColMono_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 3, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Daylight_AF_Click(object sender, EventArgs e)
-        {
-
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 12, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Daylight_AF_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 12, D.PresetAction.Goto));
         }
 
-        private void tabPage3_Click(object sender, EventArgs e)
-        {
-
+        private void b_Presets_Thermal_WhiteBlack_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 8, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Thermal_WhiteBlack_Click(object sender, EventArgs e)
-        {
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 8, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Daylight_WDR_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 11, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Daylight_WDR_Click(object sender, EventArgs e)
-        {
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 11, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Daylight_Stabilizer_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 19, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Daylight_Stabilizer_Click(object sender, EventArgs e)
-        {
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 19, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Thermal_AF_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 12, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Thermal_AF_Click(object sender, EventArgs e)
-        {
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 12, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Thermal_ICE_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 16, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Thermal_ICE_Click(object sender, EventArgs e)
-        {
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 16, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Thermal_ICENeg_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 17, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Thermal_ICENeg_Click(object sender, EventArgs e)
-        {
-
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 17, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Thermal_ICEPos_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 18, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Thermal_ICEPos_Click(object sender, EventArgs e)
-        {
-
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 18, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Thermal_BrightNeg_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 176, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Thermal_BrightNeg_Click(object sender, EventArgs e)
-        {
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 176, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Thermal_BrightPos_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 177, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Thermal_BrightPos_Click(object sender, EventArgs e)
-        {
-
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 177, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void button31_Click(object sender, EventArgs e) { //"Contrast -"; {
+            sendtoIPAsync(protocol.Preset(2, 178, D.PresetAction.Goto));
         }
 
-        private void button31_Click(object sender, EventArgs e) //"Contrast -";
-        {
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 178, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void button32_Click(object sender, EventArgs e) { //"Contrast +";
+            sendtoIPAsync(protocol.Preset(2, 179, D.PresetAction.Goto));
         }
 
-        private void button32_Click(object sender, EventArgs e) //"Contrast +";
-        {
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 179, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_SLG_SteadyGreen_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 30, D.PresetAction.Goto));
         }
 
-        private void b_Presets_SLG_SteadyGreen_Click(object sender, EventArgs e) //"Steady Green On";
-        {
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 30, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_SLG_FlashingGreen_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 31, D.PresetAction.Goto));
         }
 
-        private void b_Presets_SLG_FlashingGreen_Click(object sender, EventArgs e) //"Flashing Green On";
-        {
-
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 31, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_SLG_SteadyRed_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 32, D.PresetAction.Goto));
         }
 
-        private void b_Presets_SLG_SteadyRed_Click(object sender, EventArgs e) // "Steady Red On";
-        {
-
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 32, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_SLG_FlashingRed_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 33, D.PresetAction.Goto)); 
         }
 
-        private void b_Presets_SLG_FlashingRed_Click(object sender, EventArgs e) //"Flashing Red On";
-        {
-
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 33, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_SLG_FlashingWhite_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 34, D.PresetAction.Goto));
         }
 
-        private void b_Presets_SLG_FlashingWhite_Click(object sender, EventArgs e) //"Flashing White On";
-        {
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 34, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_SLG_FlashingRG_Click(object sender, EventArgs e)  {
+            sendtoIPAsync(protocol.Preset(1, 35, D.PresetAction.Goto));
         }
 
-        private void b_Presets_SLG_FlashingRG_Click(object sender, EventArgs e) //"Flashing Red / Green";
-        {
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 35, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_SLG_AllLightsOff_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(1, 36, D.PresetAction.Goto));
         }
 
-        private void b_Presets_SLG_AllLightsOff_Click(object sender, EventArgs e) //"All Lights Off";
-        {
-            IPAddress serverAddr = IPAddress.Parse(tB_IPCon_Adr.Text);
-            Socket sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(tB_IPCon_Port.Text));
-            sock.Connect(endPoint);
-
-            uint address = 1;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 36, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Peak_SteadyLamp_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 188, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Peak_SteadyLamp_Click(object sender, EventArgs e) //"Lamp On Steady";
-        {
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 188, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Peak_StrobeLamp_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 189, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Peak_StrobeLamp_Click(object sender, EventArgs e) //"Lamp on Strobe";
-        {
-
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 189, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void Presets_Peak_LampOff_Click(object sender, EventArgs e)  {
+            sendtoIPAsync(protocol.Preset(2, 187, D.PresetAction.Goto));
         }
 
-        private void Presets_Peak_LampOff_Click(object sender, EventArgs e) //"Lamp Off";
-        {
-            IPAddress serverAddr = IPAddress.Parse(tB_IPCon_Adr.Text);
-            Socket sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(tB_IPCon_Port.Text));
-            sock.Connect(endPoint);
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 187, D.PresetAction.Goto);
-            sendtoIP(code);
-
+        private void b_Presets_Peak_ZoomIn_Click(object sender, EventArgs e)  {
+            sendtoIPAsync(protocol.Preset(2, 185, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Peak_ZoomIn_Click(object sender, EventArgs e) //"Start Zoom In";
-        {
-
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 185, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Peak_ZoomOut_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 186, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Peak_ZoomOut_Click(object sender, EventArgs e)
-        {
-            IPAddress serverAddr = IPAddress.Parse(tB_IPCon_Adr.Text);
-            Socket sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(tB_IPCon_Port.Text));
-            sock.Connect(endPoint);
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 186, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Peak_StopZoom_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 184, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Peak_StopZoom_Click(object sender, EventArgs e)
-        {
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 184, D.PresetAction.Goto);
-            sendtoIP(code);
+        private void b_Presets_Thermal_NUC_Click(object sender, EventArgs e) {
+            sendtoIPAsync(protocol.Preset(2, 175, D.PresetAction.Goto));
         }
-
-        private void b_Presets_Thermal_NUC_Click(object sender, EventArgs e)
-        {
-            IPAddress serverAddr = IPAddress.Parse(tB_IPCon_Adr.Text);
-            Socket sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(tB_IPCon_Port.Text));
-            sock.Connect(endPoint);
-
-            uint address = 2;
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, 175, D.PresetAction.Goto);
-            sendtoIP(code);
-        }
-
-        private void b_Presets_GoTo_Click(object sender, EventArgs e)
-        {
+        private void b_Presets_GoTo_Click(object sender, EventArgs e) {
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
 
-
-            uint address = 1;
-
-            if (cB_IPCon_Selected.Text == "Daylight")
-            { address = 1; }
-            else
-            { address = 2; }
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, presetnumber, D.PresetAction.Goto);
-            sendtoIP(code);
-
+            sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Learn_Click(object sender, EventArgs e)
-        {
+        private void b_Presets_Learn_Click(object sender, EventArgs e) {
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
-            uint address = 1;
 
-            if (cB_IPCon_Selected.Text == "Daylight")
-            { address = 1; }
-            else
-            { address = 2; }
-
-
-            BigBigLoader.D protocol = new BigBigLoader.D();
-            byte[] code = protocol.Preset(address, presetnumber, D.PresetAction.Set);
-            sendtoIP(code);
+            sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Set));
         }
 
 
@@ -1286,6 +1012,7 @@ namespace BigBigLoader
             tB_PlayerL_Password.Text = password;
 
         }
+
 
         private void cB_PlayerR_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
