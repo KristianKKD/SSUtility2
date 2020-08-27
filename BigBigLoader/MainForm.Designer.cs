@@ -16,6 +16,7 @@ namespace BigBigLoader
 {
 	partial class MainForm
 	{
+
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
 		/// </summary>
@@ -142,12 +143,16 @@ namespace BigBigLoader
             this.l_Presets = new System.Windows.Forms.Label();
             this.l_PTZCon = new System.Windows.Forms.Label();
             this.l_IPCon = new System.Windows.Forms.Label();
+            this.b_PlayerR_Detach = new System.Windows.Forms.Button();
             this.b_PlayerL_Detach = new System.Windows.Forms.Button();
             this.b_PlayerL_StopRec = new System.Windows.Forms.Button();
             this.b_PlayerL_StartRec = new System.Windows.Forms.Button();
+            this.b_PlayerR_StopRec = new System.Windows.Forms.Button();
             this.b_PlayerL_SaveSnap = new System.Windows.Forms.Button();
+            this.b_PlayerR_StartRec = new System.Windows.Forms.Button();
             this.b_Presets_Learn = new System.Windows.Forms.Button();
             this.b_Presets_GoTo = new System.Windows.Forms.Button();
+            this.b_PlayerR_SaveSnap = new System.Windows.Forms.Button();
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
             this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
@@ -156,45 +161,41 @@ namespace BigBigLoader
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.b_PTZ_Right = new System.Windows.Forms.Button();
             this.b_PTZ_Left = new System.Windows.Forms.Button();
+            this.VLCPlayer_R = new AxAXVLC.AxVLCPlugin2();
             this.VLCPlayer_L = new AxAXVLC.AxVLCPlugin2();
+            this.b_PlayerR_Play = new System.Windows.Forms.Button();
             this.b_PlayerL_Play = new System.Windows.Forms.Button();
+            this.cB_PlayerR_Type = new System.Windows.Forms.ComboBox();
             this.cB_PlayerL_Type = new System.Windows.Forms.ComboBox();
+            this.l_PlayerR_Type = new System.Windows.Forms.Label();
+            this.tB_PlayerR_Password = new System.Windows.Forms.TextBox();
             this.l_PlayerL_Type = new System.Windows.Forms.Label();
+            this.l_PlayerR_Buffering = new System.Windows.Forms.Label();
+            this.l_PlayerR_Username = new System.Windows.Forms.Label();
             this.tB_PlayerL_Password = new System.Windows.Forms.TextBox();
+            this.tB_PlayerR_Buffering = new System.Windows.Forms.TextBox();
+            this.tB_PlayerR_Username = new System.Windows.Forms.TextBox();
             this.l_PlayerL_Buffering = new System.Windows.Forms.Label();
             this.l_PlayerL_Username = new System.Windows.Forms.Label();
+            this.l_PlayerR_Adr = new System.Windows.Forms.Label();
             this.tB_PlayerL_Buffering = new System.Windows.Forms.TextBox();
             this.tB_PlayerL_Username = new System.Windows.Forms.TextBox();
+            this.tB_PlayerR_RTSP = new System.Windows.Forms.TextBox();
             this.l_PlayerL_Adr = new System.Windows.Forms.Label();
+            this.l_PlayerR_Port = new System.Windows.Forms.Label();
             this.tB_PlayerL_RTSP = new System.Windows.Forms.TextBox();
+            this.tB_PlayerR_Port = new System.Windows.Forms.TextBox();
             this.l_PlayerL_Port = new System.Windows.Forms.Label();
+            this.l_PlayerR_Password = new System.Windows.Forms.Label();
             this.tB_PlayerL_Port = new System.Windows.Forms.TextBox();
+            this.tB_PlayerR_Adr = new System.Windows.Forms.TextBox();
             this.l_PlayerL_Password = new System.Windows.Forms.Label();
+            this.l_PlayerR_RTSP = new System.Windows.Forms.Label();
             this.tB_PlayerL_Adr = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.l_PlayerR_RTSP = new System.Windows.Forms.Label();
-            this.tB_PlayerR_Adr = new System.Windows.Forms.TextBox();
-            this.l_PlayerR_Password = new System.Windows.Forms.Label();
-            this.tB_PlayerR_Port = new System.Windows.Forms.TextBox();
-            this.l_PlayerR_Port = new System.Windows.Forms.Label();
-            this.tB_PlayerR_RTSP = new System.Windows.Forms.TextBox();
-            this.l_PlayerR_Adr = new System.Windows.Forms.Label();
-            this.tB_PlayerR_Username = new System.Windows.Forms.TextBox();
-            this.tB_PlayerR_Buffering = new System.Windows.Forms.TextBox();
-            this.l_PlayerR_Username = new System.Windows.Forms.Label();
-            this.l_PlayerR_Buffering = new System.Windows.Forms.Label();
-            this.tB_PlayerR_Password = new System.Windows.Forms.TextBox();
-            this.l_PlayerR_Type = new System.Windows.Forms.Label();
-            this.cB_PlayerR_Type = new System.Windows.Forms.ComboBox();
-            this.b_PlayerR_Play = new System.Windows.Forms.Button();
-            this.VLCPlayer_R = new AxAXVLC.AxVLCPlugin2();
-            this.b_PlayerR_SaveSnap = new System.Windows.Forms.Button();
-            this.b_PlayerR_StartRec = new System.Windows.Forms.Button();
-            this.b_PlayerR_StopRec = new System.Windows.Forms.Button();
-            this.b_PlayerR_Detach = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
             this.tC_Main.SuspendLayout();
@@ -209,9 +210,9 @@ namespace BigBigLoader
             this.tabPage9.SuspendLayout();
             this.tabPage8.SuspendLayout();
             this.tabPage10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).BeginInit();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).BeginInit();
             this.SuspendLayout();
             // 
             // GetSNbutton
@@ -1258,6 +1259,15 @@ namespace BigBigLoader
             this.l_IPCon.TabIndex = 11;
             this.l_IPCon.Text = "IP Control";
             // 
+            // b_PlayerR_Detach
+            // 
+            this.b_PlayerR_Detach.Location = new System.Drawing.Point(1219, 604);
+            this.b_PlayerR_Detach.Name = "b_PlayerR_Detach";
+            this.b_PlayerR_Detach.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerR_Detach.TabIndex = 8;
+            this.b_PlayerR_Detach.Text = "Detach Video";
+            this.b_PlayerR_Detach.UseVisualStyleBackColor = true;
+            // 
             // b_PlayerL_Detach
             // 
             this.b_PlayerL_Detach.Location = new System.Drawing.Point(612, 604);
@@ -1285,6 +1295,15 @@ namespace BigBigLoader
             this.b_PlayerL_StartRec.Text = "START Recording";
             this.b_PlayerL_StartRec.UseVisualStyleBackColor = true;
             // 
+            // b_PlayerR_StopRec
+            // 
+            this.b_PlayerR_StopRec.Location = new System.Drawing.Point(1219, 579);
+            this.b_PlayerR_StopRec.Name = "b_PlayerR_StopRec";
+            this.b_PlayerR_StopRec.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerR_StopRec.TabIndex = 8;
+            this.b_PlayerR_StopRec.Text = "STOP Recording";
+            this.b_PlayerR_StopRec.UseVisualStyleBackColor = true;
+            // 
             // b_PlayerL_SaveSnap
             // 
             this.b_PlayerL_SaveSnap.Location = new System.Drawing.Point(612, 526);
@@ -1293,6 +1312,16 @@ namespace BigBigLoader
             this.b_PlayerL_SaveSnap.TabIndex = 8;
             this.b_PlayerL_SaveSnap.Text = "Save Snapshot";
             this.b_PlayerL_SaveSnap.UseVisualStyleBackColor = true;
+            this.b_PlayerL_SaveSnap.Click += new System.EventHandler(this.b_PlayerL_SaveSnap_Click);
+            // 
+            // b_PlayerR_StartRec
+            // 
+            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1219, 553);
+            this.b_PlayerR_StartRec.Name = "b_PlayerR_StartRec";
+            this.b_PlayerR_StartRec.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerR_StartRec.TabIndex = 8;
+            this.b_PlayerR_StartRec.Text = "START Recording";
+            this.b_PlayerR_StartRec.UseVisualStyleBackColor = true;
             // 
             // b_Presets_Learn
             // 
@@ -1313,6 +1342,15 @@ namespace BigBigLoader
             this.b_Presets_GoTo.Text = "Go To";
             this.b_Presets_GoTo.UseVisualStyleBackColor = true;
             this.b_Presets_GoTo.Click += new System.EventHandler(this.b_Presets_GoTo_Click);
+            // 
+            // b_PlayerR_SaveSnap
+            // 
+            this.b_PlayerR_SaveSnap.Location = new System.Drawing.Point(1219, 526);
+            this.b_PlayerR_SaveSnap.Name = "b_PlayerR_SaveSnap";
+            this.b_PlayerR_SaveSnap.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerR_SaveSnap.TabIndex = 8;
+            this.b_PlayerR_SaveSnap.Text = "Save Snapshot";
+            this.b_PlayerR_SaveSnap.UseVisualStyleBackColor = true;
             // 
             // b_PTZ_Down
             // 
@@ -1406,14 +1444,33 @@ namespace BigBigLoader
             this.b_PTZ_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
             this.b_PTZ_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
+            // VLCPlayer_R
+            // 
+            this.VLCPlayer_R.Enabled = true;
+            this.VLCPlayer_R.Location = new System.Drawing.Point(884, 8);
+            this.VLCPlayer_R.Name = "VLCPlayer_R";
+            this.VLCPlayer_R.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_R.OcxState")));
+            this.VLCPlayer_R.Size = new System.Drawing.Size(640, 512);
+            this.VLCPlayer_R.TabIndex = 0;
+            // 
             // VLCPlayer_L
             // 
             this.VLCPlayer_L.Enabled = true;
             this.VLCPlayer_L.Location = new System.Drawing.Point(278, 8);
             this.VLCPlayer_L.Name = "VLCPlayer_L";
             this.VLCPlayer_L.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_L.OcxState")));
-            this.VLCPlayer_L.Size = new System.Drawing.Size(581, 512);
+            this.VLCPlayer_L.Size = new System.Drawing.Size(580, 512);
             this.VLCPlayer_L.TabIndex = 0;
+            // 
+            // b_PlayerR_Play
+            // 
+            this.b_PlayerR_Play.Location = new System.Drawing.Point(884, 715);
+            this.b_PlayerR_Play.Name = "b_PlayerR_Play";
+            this.b_PlayerR_Play.Size = new System.Drawing.Size(507, 23);
+            this.b_PlayerR_Play.TabIndex = 1;
+            this.b_PlayerR_Play.Text = "Play";
+            this.b_PlayerR_Play.UseVisualStyleBackColor = true;
+            this.b_PlayerR_Play.Click += new System.EventHandler(this.b_PlayerR_Play_Click);
             // 
             // b_PlayerL_Play
             // 
@@ -1424,6 +1481,20 @@ namespace BigBigLoader
             this.b_PlayerL_Play.Text = "Play";
             this.b_PlayerL_Play.UseVisualStyleBackColor = true;
             this.b_PlayerL_Play.Click += new System.EventHandler(this.b_PlayerL_Play_Click);
+            // 
+            // cB_PlayerR_Type
+            // 
+            this.cB_PlayerR_Type.FormattingEnabled = true;
+            this.cB_PlayerR_Type.Items.AddRange(new object[] {
+            "IONodes - Daylight",
+            "IONodes - Thermal",
+            "VIVOTEK",
+            "BOSCH"});
+            this.cB_PlayerR_Type.Location = new System.Drawing.Point(989, 528);
+            this.cB_PlayerR_Type.Name = "cB_PlayerR_Type";
+            this.cB_PlayerR_Type.Size = new System.Drawing.Size(214, 21);
+            this.cB_PlayerR_Type.TabIndex = 5;
+            this.cB_PlayerR_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerR_Type_SelectedIndexChanged);
             // 
             // cB_PlayerL_Type
             // 
@@ -1439,6 +1510,23 @@ namespace BigBigLoader
             this.cB_PlayerL_Type.TabIndex = 5;
             this.cB_PlayerL_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerL_Type_SelectedIndexChanged);
             // 
+            // l_PlayerR_Type
+            // 
+            this.l_PlayerR_Type.AutoSize = true;
+            this.l_PlayerR_Type.Location = new System.Drawing.Point(881, 531);
+            this.l_PlayerR_Type.Name = "l_PlayerR_Type";
+            this.l_PlayerR_Type.Size = new System.Drawing.Size(77, 13);
+            this.l_PlayerR_Type.TabIndex = 2;
+            this.l_PlayerR_Type.Text = "Encoder Type:";
+            // 
+            // tB_PlayerR_Password
+            // 
+            this.tB_PlayerR_Password.Location = new System.Drawing.Point(989, 684);
+            this.tB_PlayerR_Password.Name = "tB_PlayerR_Password";
+            this.tB_PlayerR_Password.Size = new System.Drawing.Size(214, 20);
+            this.tB_PlayerR_Password.TabIndex = 4;
+            this.tB_PlayerR_Password.Text = "admin";
+            // 
             // l_PlayerL_Type
             // 
             this.l_PlayerL_Type.AutoSize = true;
@@ -1448,6 +1536,24 @@ namespace BigBigLoader
             this.l_PlayerL_Type.TabIndex = 2;
             this.l_PlayerL_Type.Text = "Encoder Type:";
             // 
+            // l_PlayerR_Buffering
+            // 
+            this.l_PlayerR_Buffering.AutoSize = true;
+            this.l_PlayerR_Buffering.Location = new System.Drawing.Point(881, 634);
+            this.l_PlayerR_Buffering.Name = "l_PlayerR_Buffering";
+            this.l_PlayerR_Buffering.Size = new System.Drawing.Size(77, 13);
+            this.l_PlayerR_Buffering.TabIndex = 2;
+            this.l_PlayerR_Buffering.Text = "Buffeirng (ms): ";
+            // 
+            // l_PlayerR_Username
+            // 
+            this.l_PlayerR_Username.AutoSize = true;
+            this.l_PlayerR_Username.Location = new System.Drawing.Point(881, 660);
+            this.l_PlayerR_Username.Name = "l_PlayerR_Username";
+            this.l_PlayerR_Username.Size = new System.Drawing.Size(58, 13);
+            this.l_PlayerR_Username.TabIndex = 2;
+            this.l_PlayerR_Username.Text = "Username:";
+            // 
             // tB_PlayerL_Password
             // 
             this.tB_PlayerL_Password.Location = new System.Drawing.Point(383, 684);
@@ -1455,6 +1561,22 @@ namespace BigBigLoader
             this.tB_PlayerL_Password.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerL_Password.TabIndex = 4;
             this.tB_PlayerL_Password.Text = "admin";
+            // 
+            // tB_PlayerR_Buffering
+            // 
+            this.tB_PlayerR_Buffering.Location = new System.Drawing.Point(989, 632);
+            this.tB_PlayerR_Buffering.Name = "tB_PlayerR_Buffering";
+            this.tB_PlayerR_Buffering.Size = new System.Drawing.Size(214, 20);
+            this.tB_PlayerR_Buffering.TabIndex = 4;
+            this.tB_PlayerR_Buffering.Text = "200";
+            // 
+            // tB_PlayerR_Username
+            // 
+            this.tB_PlayerR_Username.Location = new System.Drawing.Point(989, 658);
+            this.tB_PlayerR_Username.Name = "tB_PlayerR_Username";
+            this.tB_PlayerR_Username.Size = new System.Drawing.Size(214, 20);
+            this.tB_PlayerR_Username.TabIndex = 4;
+            this.tB_PlayerR_Username.Text = "admin";
             // 
             // l_PlayerL_Buffering
             // 
@@ -1474,6 +1596,15 @@ namespace BigBigLoader
             this.l_PlayerL_Username.TabIndex = 2;
             this.l_PlayerL_Username.Text = "Username:";
             // 
+            // l_PlayerR_Adr
+            // 
+            this.l_PlayerR_Adr.AutoSize = true;
+            this.l_PlayerR_Adr.Location = new System.Drawing.Point(881, 557);
+            this.l_PlayerR_Adr.Name = "l_PlayerR_Adr";
+            this.l_PlayerR_Adr.Size = new System.Drawing.Size(61, 13);
+            this.l_PlayerR_Adr.TabIndex = 2;
+            this.l_PlayerR_Adr.Text = "IP Address:";
+            // 
             // tB_PlayerL_Buffering
             // 
             this.tB_PlayerL_Buffering.Location = new System.Drawing.Point(383, 632);
@@ -1490,6 +1621,14 @@ namespace BigBigLoader
             this.tB_PlayerL_Username.TabIndex = 4;
             this.tB_PlayerL_Username.Text = "admin";
             // 
+            // tB_PlayerR_RTSP
+            // 
+            this.tB_PlayerR_RTSP.Location = new System.Drawing.Point(989, 606);
+            this.tB_PlayerR_RTSP.Name = "tB_PlayerR_RTSP";
+            this.tB_PlayerR_RTSP.Size = new System.Drawing.Size(214, 20);
+            this.tB_PlayerR_RTSP.TabIndex = 4;
+            this.tB_PlayerR_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
+            // 
             // l_PlayerL_Adr
             // 
             this.l_PlayerL_Adr.AutoSize = true;
@@ -1499,6 +1638,15 @@ namespace BigBigLoader
             this.l_PlayerL_Adr.TabIndex = 2;
             this.l_PlayerL_Adr.Text = "IP Address:";
             // 
+            // l_PlayerR_Port
+            // 
+            this.l_PlayerR_Port.AutoSize = true;
+            this.l_PlayerR_Port.Location = new System.Drawing.Point(881, 583);
+            this.l_PlayerR_Port.Name = "l_PlayerR_Port";
+            this.l_PlayerR_Port.Size = new System.Drawing.Size(29, 13);
+            this.l_PlayerR_Port.TabIndex = 2;
+            this.l_PlayerR_Port.Text = "Port:";
+            // 
             // tB_PlayerL_RTSP
             // 
             this.tB_PlayerL_RTSP.Location = new System.Drawing.Point(383, 606);
@@ -1506,6 +1654,14 @@ namespace BigBigLoader
             this.tB_PlayerL_RTSP.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerL_RTSP.TabIndex = 4;
             this.tB_PlayerL_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
+            // 
+            // tB_PlayerR_Port
+            // 
+            this.tB_PlayerR_Port.Location = new System.Drawing.Point(989, 581);
+            this.tB_PlayerR_Port.Name = "tB_PlayerR_Port";
+            this.tB_PlayerR_Port.Size = new System.Drawing.Size(214, 20);
+            this.tB_PlayerR_Port.TabIndex = 4;
+            this.tB_PlayerR_Port.Text = "554";
             // 
             // l_PlayerL_Port
             // 
@@ -1516,6 +1672,15 @@ namespace BigBigLoader
             this.l_PlayerL_Port.TabIndex = 2;
             this.l_PlayerL_Port.Text = "Port:";
             // 
+            // l_PlayerR_Password
+            // 
+            this.l_PlayerR_Password.AutoSize = true;
+            this.l_PlayerR_Password.Location = new System.Drawing.Point(881, 685);
+            this.l_PlayerR_Password.Name = "l_PlayerR_Password";
+            this.l_PlayerR_Password.Size = new System.Drawing.Size(56, 13);
+            this.l_PlayerR_Password.TabIndex = 2;
+            this.l_PlayerR_Password.Text = "Password:";
+            // 
             // tB_PlayerL_Port
             // 
             this.tB_PlayerL_Port.Location = new System.Drawing.Point(383, 581);
@@ -1523,6 +1688,14 @@ namespace BigBigLoader
             this.tB_PlayerL_Port.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerL_Port.TabIndex = 4;
             this.tB_PlayerL_Port.Text = "554";
+            // 
+            // tB_PlayerR_Adr
+            // 
+            this.tB_PlayerR_Adr.Location = new System.Drawing.Point(989, 555);
+            this.tB_PlayerR_Adr.Name = "tB_PlayerR_Adr";
+            this.tB_PlayerR_Adr.Size = new System.Drawing.Size(214, 20);
+            this.tB_PlayerR_Adr.TabIndex = 4;
+            this.tB_PlayerR_Adr.Text = "192.168.1.71";
             // 
             // l_PlayerL_Password
             // 
@@ -1532,6 +1705,15 @@ namespace BigBigLoader
             this.l_PlayerL_Password.Size = new System.Drawing.Size(56, 13);
             this.l_PlayerL_Password.TabIndex = 2;
             this.l_PlayerL_Password.Text = "Password:";
+            // 
+            // l_PlayerR_RTSP
+            // 
+            this.l_PlayerR_RTSP.AutoSize = true;
+            this.l_PlayerR_RTSP.Location = new System.Drawing.Point(881, 608);
+            this.l_PlayerR_RTSP.Name = "l_PlayerR_RTSP";
+            this.l_PlayerR_RTSP.Size = new System.Drawing.Size(69, 13);
+            this.l_PlayerR_RTSP.TabIndex = 2;
+            this.l_PlayerR_RTSP.Text = "RTSP String:";
             // 
             // tB_PlayerL_Adr
             // 
@@ -1595,186 +1777,6 @@ namespace BigBigLoader
             this.tabPage1.Text = "Firmware Upgrade";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // l_PlayerR_RTSP
-            // 
-            this.l_PlayerR_RTSP.AutoSize = true;
-            this.l_PlayerR_RTSP.Location = new System.Drawing.Point(881, 608);
-            this.l_PlayerR_RTSP.Name = "l_PlayerR_RTSP";
-            this.l_PlayerR_RTSP.Size = new System.Drawing.Size(69, 13);
-            this.l_PlayerR_RTSP.TabIndex = 2;
-            this.l_PlayerR_RTSP.Text = "RTSP String:";
-            // 
-            // tB_PlayerR_Adr
-            // 
-            this.tB_PlayerR_Adr.Location = new System.Drawing.Point(989, 555);
-            this.tB_PlayerR_Adr.Name = "tB_PlayerR_Adr";
-            this.tB_PlayerR_Adr.Size = new System.Drawing.Size(214, 20);
-            this.tB_PlayerR_Adr.TabIndex = 4;
-            this.tB_PlayerR_Adr.Text = "192.168.1.71";
-            // 
-            // l_PlayerR_Password
-            // 
-            this.l_PlayerR_Password.AutoSize = true;
-            this.l_PlayerR_Password.Location = new System.Drawing.Point(881, 685);
-            this.l_PlayerR_Password.Name = "l_PlayerR_Password";
-            this.l_PlayerR_Password.Size = new System.Drawing.Size(56, 13);
-            this.l_PlayerR_Password.TabIndex = 2;
-            this.l_PlayerR_Password.Text = "Password:";
-            // 
-            // tB_PlayerR_Port
-            // 
-            this.tB_PlayerR_Port.Location = new System.Drawing.Point(989, 581);
-            this.tB_PlayerR_Port.Name = "tB_PlayerR_Port";
-            this.tB_PlayerR_Port.Size = new System.Drawing.Size(214, 20);
-            this.tB_PlayerR_Port.TabIndex = 4;
-            this.tB_PlayerR_Port.Text = "554";
-            // 
-            // l_PlayerR_Port
-            // 
-            this.l_PlayerR_Port.AutoSize = true;
-            this.l_PlayerR_Port.Location = new System.Drawing.Point(881, 583);
-            this.l_PlayerR_Port.Name = "l_PlayerR_Port";
-            this.l_PlayerR_Port.Size = new System.Drawing.Size(29, 13);
-            this.l_PlayerR_Port.TabIndex = 2;
-            this.l_PlayerR_Port.Text = "Port:";
-            // 
-            // tB_PlayerR_RTSP
-            // 
-            this.tB_PlayerR_RTSP.Location = new System.Drawing.Point(989, 606);
-            this.tB_PlayerR_RTSP.Name = "tB_PlayerR_RTSP";
-            this.tB_PlayerR_RTSP.Size = new System.Drawing.Size(214, 20);
-            this.tB_PlayerR_RTSP.TabIndex = 4;
-            this.tB_PlayerR_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
-            // 
-            // l_PlayerR_Adr
-            // 
-            this.l_PlayerR_Adr.AutoSize = true;
-            this.l_PlayerR_Adr.Location = new System.Drawing.Point(881, 557);
-            this.l_PlayerR_Adr.Name = "l_PlayerR_Adr";
-            this.l_PlayerR_Adr.Size = new System.Drawing.Size(61, 13);
-            this.l_PlayerR_Adr.TabIndex = 2;
-            this.l_PlayerR_Adr.Text = "IP Address:";
-            // 
-            // tB_PlayerR_Username
-            // 
-            this.tB_PlayerR_Username.Location = new System.Drawing.Point(989, 658);
-            this.tB_PlayerR_Username.Name = "tB_PlayerR_Username";
-            this.tB_PlayerR_Username.Size = new System.Drawing.Size(214, 20);
-            this.tB_PlayerR_Username.TabIndex = 4;
-            this.tB_PlayerR_Username.Text = "admin";
-            // 
-            // tB_PlayerR_Buffering
-            // 
-            this.tB_PlayerR_Buffering.Location = new System.Drawing.Point(989, 632);
-            this.tB_PlayerR_Buffering.Name = "tB_PlayerR_Buffering";
-            this.tB_PlayerR_Buffering.Size = new System.Drawing.Size(214, 20);
-            this.tB_PlayerR_Buffering.TabIndex = 4;
-            this.tB_PlayerR_Buffering.Text = "200";
-            // 
-            // l_PlayerR_Username
-            // 
-            this.l_PlayerR_Username.AutoSize = true;
-            this.l_PlayerR_Username.Location = new System.Drawing.Point(881, 660);
-            this.l_PlayerR_Username.Name = "l_PlayerR_Username";
-            this.l_PlayerR_Username.Size = new System.Drawing.Size(58, 13);
-            this.l_PlayerR_Username.TabIndex = 2;
-            this.l_PlayerR_Username.Text = "Username:";
-            // 
-            // l_PlayerR_Buffering
-            // 
-            this.l_PlayerR_Buffering.AutoSize = true;
-            this.l_PlayerR_Buffering.Location = new System.Drawing.Point(881, 634);
-            this.l_PlayerR_Buffering.Name = "l_PlayerR_Buffering";
-            this.l_PlayerR_Buffering.Size = new System.Drawing.Size(77, 13);
-            this.l_PlayerR_Buffering.TabIndex = 2;
-            this.l_PlayerR_Buffering.Text = "Buffeirng (ms): ";
-            // 
-            // tB_PlayerR_Password
-            // 
-            this.tB_PlayerR_Password.Location = new System.Drawing.Point(989, 684);
-            this.tB_PlayerR_Password.Name = "tB_PlayerR_Password";
-            this.tB_PlayerR_Password.Size = new System.Drawing.Size(214, 20);
-            this.tB_PlayerR_Password.TabIndex = 4;
-            this.tB_PlayerR_Password.Text = "admin";
-            // 
-            // l_PlayerR_Type
-            // 
-            this.l_PlayerR_Type.AutoSize = true;
-            this.l_PlayerR_Type.Location = new System.Drawing.Point(881, 531);
-            this.l_PlayerR_Type.Name = "l_PlayerR_Type";
-            this.l_PlayerR_Type.Size = new System.Drawing.Size(77, 13);
-            this.l_PlayerR_Type.TabIndex = 2;
-            this.l_PlayerR_Type.Text = "Encoder Type:";
-            // 
-            // cB_PlayerR_Type
-            // 
-            this.cB_PlayerR_Type.FormattingEnabled = true;
-            this.cB_PlayerR_Type.Items.AddRange(new object[] {
-            "IONodes - Daylight",
-            "IONodes - Thermal",
-            "VIVOTEK",
-            "BOSCH"});
-            this.cB_PlayerR_Type.Location = new System.Drawing.Point(989, 528);
-            this.cB_PlayerR_Type.Name = "cB_PlayerR_Type";
-            this.cB_PlayerR_Type.Size = new System.Drawing.Size(214, 21);
-            this.cB_PlayerR_Type.TabIndex = 5;
-            this.cB_PlayerR_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerR_Type_SelectedIndexChanged);
-            // 
-            // b_PlayerR_Play
-            // 
-            this.b_PlayerR_Play.Location = new System.Drawing.Point(884, 715);
-            this.b_PlayerR_Play.Name = "b_PlayerR_Play";
-            this.b_PlayerR_Play.Size = new System.Drawing.Size(507, 23);
-            this.b_PlayerR_Play.TabIndex = 1;
-            this.b_PlayerR_Play.Text = "Play";
-            this.b_PlayerR_Play.UseVisualStyleBackColor = true;
-            this.b_PlayerR_Play.Click += new System.EventHandler(this.b_PlayerR_Play_Click);
-            // 
-            // VLCPlayer_R
-            // 
-            this.VLCPlayer_R.Enabled = true;
-            this.VLCPlayer_R.Location = new System.Drawing.Point(884, 8);
-            this.VLCPlayer_R.Name = "VLCPlayer_R";
-            this.VLCPlayer_R.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_R.OcxState")));
-            this.VLCPlayer_R.Size = new System.Drawing.Size(639, 512);
-            this.VLCPlayer_R.TabIndex = 0;
-            // 
-            // b_PlayerR_SaveSnap
-            // 
-            this.b_PlayerR_SaveSnap.Location = new System.Drawing.Point(1219, 526);
-            this.b_PlayerR_SaveSnap.Name = "b_PlayerR_SaveSnap";
-            this.b_PlayerR_SaveSnap.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_SaveSnap.TabIndex = 8;
-            this.b_PlayerR_SaveSnap.Text = "Save Snapshot";
-            this.b_PlayerR_SaveSnap.UseVisualStyleBackColor = true;
-            // 
-            // b_PlayerR_StartRec
-            // 
-            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1219, 553);
-            this.b_PlayerR_StartRec.Name = "b_PlayerR_StartRec";
-            this.b_PlayerR_StartRec.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_StartRec.TabIndex = 8;
-            this.b_PlayerR_StartRec.Text = "START Recording";
-            this.b_PlayerR_StartRec.UseVisualStyleBackColor = true;
-            // 
-            // b_PlayerR_StopRec
-            // 
-            this.b_PlayerR_StopRec.Location = new System.Drawing.Point(1219, 579);
-            this.b_PlayerR_StopRec.Name = "b_PlayerR_StopRec";
-            this.b_PlayerR_StopRec.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_StopRec.TabIndex = 8;
-            this.b_PlayerR_StopRec.Text = "STOP Recording";
-            this.b_PlayerR_StopRec.UseVisualStyleBackColor = true;
-            // 
-            // b_PlayerR_Detach
-            // 
-            this.b_PlayerR_Detach.Location = new System.Drawing.Point(1219, 604);
-            this.b_PlayerR_Detach.Name = "b_PlayerR_Detach";
-            this.b_PlayerR_Detach.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_Detach.TabIndex = 8;
-            this.b_PlayerR_Detach.Text = "Detach Video";
-            this.b_PlayerR_Detach.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1802,10 +1804,10 @@ namespace BigBigLoader
             this.tabPage9.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
             this.tabPage10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2307,8 +2309,8 @@ namespace BigBigLoader
         private Button b_Presets_Admin_DebugToggle;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private ComboBox cB_IPCon_Selected;
-        private TextBox tB_IPCon_Port;
-        private TextBox tB_IPCon_Adr;
+        public TextBox tB_IPCon_Port;
+        public TextBox tB_IPCon_Adr;
         private Label l_IPCon_SelectedCam;
         private Label l_IPCon_Port;
         private Label l_IPCon_Adr;
@@ -2366,7 +2368,7 @@ namespace BigBigLoader
         private TabPage tabPage10;
         private Button b_Presets_CHARM_Standby;
         private Button b_Presets_CHARM_Aquire;
-        private Label l_IPCon_Connected;
+        public Label l_IPCon_Connected;
         private Button b_PlayerR_Detach;
         private Button b_PlayerR_StopRec;
         private Button b_PlayerR_StartRec;
@@ -2387,5 +2389,6 @@ namespace BigBigLoader
         private Label l_PlayerR_Password;
         private TextBox tB_PlayerR_Adr;
         private Label l_PlayerR_RTSP;
+
     } // end of partial class MainForm
 } // end of namespace BigBigLoader

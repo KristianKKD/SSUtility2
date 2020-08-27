@@ -13,9 +13,8 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -29,9 +28,12 @@ namespace BigBigLoader
         // Public variable declarations
 
         D protocol = new D();
-        IPAddress serverAddr = null;
-        Socket sock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
-        IPEndPoint endPoint = new IPEndPoint(0, 0);
+        public static MainForm m;
+
+
+        public static string config = "config.txt";
+        public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
+        public static string scFolder = appFolder + @"Screenshots\";
 
         public static byte Address;
         public static byte CheckSum;
@@ -109,6 +111,7 @@ namespace BigBigLoader
 
         public MainForm()
         {
+            m = this;
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
@@ -116,12 +119,13 @@ namespace BigBigLoader
             // Catch MainForm closing event to close Serial Port if it is Open
             this.FormClosing += new FormClosingEventHandler(MainForm_Closing);
 
+            StartupStuff();
+
             //
             // TODO: Add constructor code after the InitializeComponent() call.
             //
             string[] stdspeeds = { "2400", "4800", "9600", "19200", "38400", "57600", "115200" };
             string[] loadspeeds = { "9600", "19200", "38400", "57600", "115200", "230400" };
-
 
 
             int i;
@@ -627,64 +631,12 @@ namespace BigBigLoader
 
         /////////////////////////////////////
 
-        private void sendtoIPAsync(byte[] code) {
-            try {
-                if (!sock.Connected) {
-                    Connect();
-                }
-                SendToSocket(code);
-            } catch (Exception e) {
-                string message = "Issue connecting to TCP Port";
-                string caption = "Error";
 
-                MessageBox.Show(message, caption,
-                                 MessageBoxButtons.OK,
-                                 MessageBoxIcon.Question);
-            }
-        }
-
-        private async Task Connect() {
-            string ipAdr = tB_IPCon_Adr.Text;
-            if (!PingAdr(ipAdr)) {
-                return;
-            }
-            l_IPCon_Connected.Text = "✓";
-            l_IPCon_Connected.ForeColor = Color.Green;
-
-            serverAddr = IPAddress.Parse(ipAdr);
-            sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(tB_IPCon_Port.Text));
-            sock.Connect(endPoint);
-        }
-
-        private bool PingAdr(string address) {
-            Ping pinger = null;
-
-            l_IPCon_Connected.Text = "❌";
-            l_IPCon_Connected.ForeColor = Color.Red;
-
-            if (address == null) {
-                return false;
-            }
-
-            try {
-                pinger = new Ping();
-                PingReply reply = pinger.Send(address, 2);
-                if (reply.Status == IPStatus.Success) {
-                    return true;
-                }
-            } catch (PingException) {
-                //not connected
-            } finally {
-                pinger.Dispose();
-            }
-            return false;
-        }
-
-        private async Task SendToSocket(byte[] code) {
-            if (code != null) {
-                sock.SendTo(code, endPoint);
-                sock.Close();
+        private uint MakeAdr() {
+            if (cB_IPCon_Selected.Text == "Daylight") {
+                return 1;
+            } else {
+                return 2;
             }
         }
 
@@ -699,21 +651,15 @@ namespace BigBigLoader
             player.playlist.play();
         }
 
-        private uint MakeAdr() {
-            if (cB_IPCon_Selected.Text == "Daylight") {
-                return 1;
-            } else {
-                return 2;
-            }
-        }
+       
 
         private void OnFinishedTypingAdr(object sender, EventArgs e) {
-            Connect();
+            CameraCommunicate.Connect(m);
         }
 
         private void tB_IPCon_Adr_PreviewKeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                Connect();
+                CameraCommunicate.Connect(m);
             }
         }
 
@@ -729,11 +675,11 @@ namespace BigBigLoader
                 code = protocol.CameraPan(address, pan, speed);
             }
 
-            sendtoIPAsync(code);
+            CameraCommunicate.sendtoIPAsync(code);
         }
 
         void PTZZoom(D.Zoom dir) {
-            sendtoIPAsync(protocol.CameraZoom(MakeAdr(), dir));
+            CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(MakeAdr(), dir));
         }
 
         private void b_PlayerL_Play_Click(object sender, EventArgs e) {
@@ -784,25 +730,25 @@ namespace BigBigLoader
         }
 
         private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {
-            sendtoIPAsync(protocol.CameraStop(MakeAdr()));
+            CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()));
         }
 
         private void b_Presets_Admin_MechMen_Click(object sender, EventArgs e) {
-            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
-            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
-            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
-            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 });
         }
 
         private void b_Presets_Admin_SetupMen_Click(object sender, EventArgs e) {
-            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
-            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
-            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
-            sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 });
         }
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(MakeAdr(), 2, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), 2, D.PresetAction.Goto));
         }
 
         private void tC_Control_KeyDown(object sender, KeyEventArgs e) {
@@ -832,145 +778,145 @@ namespace BigBigLoader
                         break;
                 }
 
-                sendtoIPAsync(code);
+                CameraCommunicate.sendtoIPAsync(code);
             }
         }
 
         private void tC_Control_KeyUp(object sender, KeyEventArgs e) { //change the way to control this
             if (cB_IPCon_KeyboardCon.Checked == true) {
-                sendtoIPAsync(protocol.CameraStop(MakeAdr()));
+                CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()));
             }
         }
 
         private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
-            sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Far));
+            CameraCommunicate.sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Far));
         }
 
         private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
-            sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Near));
+            CameraCommunicate.sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Near));
         }
 
         private void b_Presets_Daylight_Wiper_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 4, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 4, D.PresetAction.Goto));
         }
 
         private void b_Presets_Daylight_ColMono_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 3, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 3, D.PresetAction.Goto));
         }
 
         private void b_Presets_Daylight_AF_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 12, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 12, D.PresetAction.Goto));
         }
 
         private void b_Presets_Thermal_WhiteBlack_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 8, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 8, D.PresetAction.Goto));
         }
 
         private void b_Presets_Daylight_WDR_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 11, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 11, D.PresetAction.Goto));
         }
 
         private void b_Presets_Daylight_Stabilizer_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 19, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 19, D.PresetAction.Goto));
         }
 
         private void b_Presets_Thermal_AF_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 12, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 12, D.PresetAction.Goto));
         }
 
         private void b_Presets_Thermal_ICE_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 16, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 16, D.PresetAction.Goto));
         }
 
         private void b_Presets_Thermal_ICENeg_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 17, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 17, D.PresetAction.Goto));
         }
 
         private void b_Presets_Thermal_ICEPos_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 18, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 18, D.PresetAction.Goto));
         }
 
         private void b_Presets_Thermal_BrightNeg_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 176, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 176, D.PresetAction.Goto));
         }
 
         private void b_Presets_Thermal_BrightPos_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 177, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 177, D.PresetAction.Goto));
         }
 
         private void button31_Click(object sender, EventArgs e) { //"Contrast -"; {
-            sendtoIPAsync(protocol.Preset(2, 178, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 178, D.PresetAction.Goto));
         }
 
         private void button32_Click(object sender, EventArgs e) { //"Contrast +";
-            sendtoIPAsync(protocol.Preset(2, 179, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 179, D.PresetAction.Goto));
         }
 
         private void b_Presets_SLG_SteadyGreen_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 30, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 30, D.PresetAction.Goto));
         }
 
         private void b_Presets_SLG_FlashingGreen_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 31, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 31, D.PresetAction.Goto));
         }
 
         private void b_Presets_SLG_SteadyRed_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 32, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 32, D.PresetAction.Goto));
         }
 
         private void b_Presets_SLG_FlashingRed_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 33, D.PresetAction.Goto)); 
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 33, D.PresetAction.Goto)); 
         }
 
         private void b_Presets_SLG_FlashingWhite_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 34, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 34, D.PresetAction.Goto));
         }
 
         private void b_Presets_SLG_FlashingRG_Click(object sender, EventArgs e)  {
-            sendtoIPAsync(protocol.Preset(1, 35, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 35, D.PresetAction.Goto));
         }
 
         private void b_Presets_SLG_AllLightsOff_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(1, 36, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 36, D.PresetAction.Goto));
         }
 
         private void b_Presets_Peak_SteadyLamp_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 188, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 188, D.PresetAction.Goto));
         }
 
         private void b_Presets_Peak_StrobeLamp_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 189, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 189, D.PresetAction.Goto));
         }
 
         private void Presets_Peak_LampOff_Click(object sender, EventArgs e)  {
-            sendtoIPAsync(protocol.Preset(2, 187, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 187, D.PresetAction.Goto));
         }
 
         private void b_Presets_Peak_ZoomIn_Click(object sender, EventArgs e)  {
-            sendtoIPAsync(protocol.Preset(2, 185, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 185, D.PresetAction.Goto));
         }
 
         private void b_Presets_Peak_ZoomOut_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 186, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 186, D.PresetAction.Goto));
         }
 
         private void b_Presets_Peak_StopZoom_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 184, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 184, D.PresetAction.Goto));
         }
 
         private void b_Presets_Thermal_NUC_Click(object sender, EventArgs e) {
-            sendtoIPAsync(protocol.Preset(2, 175, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 175, D.PresetAction.Goto));
         }
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
 
-            sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Goto));
         }
 
         private void b_Presets_Learn_Click(object sender, EventArgs e) {
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
 
-            sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Set));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Set));
         }
 
 
@@ -1013,7 +959,6 @@ namespace BigBigLoader
 
         }
 
-
         private void cB_PlayerR_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
             string enc = cB_PlayerR_Type.Text;
@@ -1051,6 +996,10 @@ namespace BigBigLoader
             tB_PlayerR_Password.Text = password;
         }
 
+        private void b_PlayerL_SaveSnap_Click(object sender, EventArgs e) {
+            SaveSnap(VLCPlayer_L);
+        }
+
         private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
             string control = cB_IPCon_Type.Text;
@@ -1068,47 +1017,63 @@ namespace BigBigLoader
             tB_IPCon_Port.Text = port;
         }
 
-        //private string Int2Hexstring(int n)
-        //{
-        //    string retvals;
-        //    retvals = Int2Hexchar((n >> 4) & 0x0F).ToString() + Int2Hexchar(n & 0x0F).ToString();
-        //    return retvals;
-        //}
-        //private char Int2Hexchar(int n) {
-        //    char retvalc;
-        //    if (n < 10)
-        //        retvalc = Convert.ToChar(n + 48);
-        //    else if (n < 16)
-        //        retvalc = Convert.ToChar(n + 55);
-        //    else
-        //        retvalc = '?';
-        //    return retvalc;
-        //}
+        private async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
 
-        private void tB_IPCon_Adr_Click(object sender, EventArgs e)
-        {
+            bool wasPlaying = false;
+            if (player.playlist.isPlaying) {
+                wasPlaying = true;
+                player.playlist.pause();
+            }
 
-            VLCPlayer_L.playlist.togglePause();
-            System.Threading.Thread.Sleep(100);
+            string imgPath = scFolder + "Captured.jpg";
 
-
-            String tempPath = @"C:\Users\SILENT SENTINEL\Desktop\Test";
-            string imgPath = tempPath + @"Captured.jpg";
-            Bitmap bmpScreenshot = new Bitmap(VLCPlayer_L.ClientRectangle.Width,
-                VLCPlayer_L.ClientRectangle.Height);
+            Bitmap bmpScreenshot = new Bitmap(player.ClientRectangle.Width,
+                player.ClientRectangle.Height);
             Graphics gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-            System.Drawing.Size imgSize = new System.Drawing.Size(
-                VLCPlayer_L.ClientRectangle.Width,
-                VLCPlayer_L.ClientRectangle.Height);
-            Point ps = PointToScreen(new Point(VLCPlayer_L.Bounds.X, VLCPlayer_L.Bounds.Y));
+
+            Size imgSize = new Size(
+                player.ClientRectangle.Width,
+                player.ClientRectangle.Height);
+            Point ps = PointToScreen(new Point(player.Bounds.X, player.Bounds.Y));
             gfxScreenshot.CopyFromScreen(ps.X, ps.Y, 0, 0, imgSize, CopyPixelOperation.SourceCopy);
             bmpScreenshot.Save(imgPath, System.Drawing.Imaging.ImageFormat.Jpeg);
-            MessageBox.Show("Image saved : " + imgPath);
-            VLCPlayer_L.playlist.togglePause();
+
+            MessageBox.Show("Image saved : " + scFolder);
+
+            if (wasPlaying) {
+                player.playlist.play();
+            }
 
 
         }
 
+        static void CheckCreateFile(string fileName, string folderName = null) {
+            if (folderName != null) {
+                if (!Directory.Exists(folderName)) {
+                    Directory.CreateDirectory(folderName);
+                }
+            }
+            if (fileName != null) {
+                if (!File.Exists(appFolder + fileName)) {
+                    var newFile = File.Create(folderName + fileName);
+                    newFile.Close();
+                    if (appFolder + fileName == appFolder + config) {
+                        ConfigControl.Created(appFolder + fileName);
+                    }
+                }
+            }
+        }
+
+        static async Task StartupStuff() {
+            CheckCreateFile(config, appFolder);
+            await ConfigControl.SearchForVarsAsync(appFolder + config);
+            foreach (PathVariable v in ConfigControl.varList) {
+                if (v.name == ConfigControl.ScreenshotFolderVar) {
+                    scFolder = v.value;
+                }
+            }
+            CheckCreateFile(config, scFolder);
+        }
 
     } // end of class MainForm
 } // end of namespace BigBigLoader

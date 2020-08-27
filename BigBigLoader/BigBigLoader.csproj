@@ -87,6 +87,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CameraCommunicate.cs" />
+    <Compile Include="ConfigControl.cs" />
     <Compile Include="D.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
