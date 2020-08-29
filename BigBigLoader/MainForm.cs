@@ -647,7 +647,6 @@ namespace BigBigLoader
         private void PlayClick(string combinedUrl) {
             PlayerStuff.PlayStreamAsync(sC_PlayerL, combinedUrl);
             PlayerStuff.EnableControls(b_PlayerL_Pause, true);
-            PlayerStuff.EnableControls(b_PlayerL_Stop, true);
         }
 
         private void OnFinishedTypingAdr(object sender, EventArgs e) {
