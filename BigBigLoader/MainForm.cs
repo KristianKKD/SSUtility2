@@ -11,10 +11,12 @@
  * Form layout modelled on SSUTILITY Firmware tab for continuity
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -34,6 +36,8 @@ namespace BigBigLoader
         public static string config = "config.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
         public static string scFolder = appFolder + @"Screenshots\";
+        private bool isPaused;
+        public static string lastAdr;
 
         public static byte Address;
         public static byte CheckSum;
@@ -640,18 +644,11 @@ namespace BigBigLoader
             }
         }
 
-        private void PlayClick(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
-            if (player.playlist.isPlaying == true) {
-                player.playlist.stop();
-                player.playlist.items.clear();
-            }
-
-            player.playlist.add(combinedUrl, null, ":network-caching=" + tB_PlayerL_Buffering.Text);
-            player.playlist.next();
-            player.playlist.play();
+        private void PlayClick(string combinedUrl) {
+            PlayerStuff.PlayStreamAsync(sC_PlayerL, combinedUrl);
+            PlayerStuff.EnableControls(b_PlayerL_Pause, true);
+            PlayerStuff.EnableControls(b_PlayerL_Stop, true);
         }
-
-       
 
         private void OnFinishedTypingAdr(object sender, EventArgs e) {
             CameraCommunicate.Connect(m);
@@ -683,27 +680,26 @@ namespace BigBigLoader
         }
 
         private void b_PlayerL_Play_Click(object sender, EventArgs e) {
-            string ipaddress = tB_PlayerL_Adr.Text;
-            string port = tB_PlayerL_Port.Text;
-            string url = tB_PlayerL_RTSP.Text;
-            string username = tB_PlayerL_Username.Text;
-            string password = tB_PlayerL_Password.Text;
+            string combinedUrl;
 
-            string combinedurl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            if (checkB_PlayerL_Manual.Checked) { //make a function to automatically grab these from gB_...
+                string ipaddress = tB_PlayerL_Adr.Text;
+                string port = tB_PlayerL_Port.Text;
+                string url = tB_PlayerL_RTSP.Text;
+                string username = tB_PlayerL_Username.Text;
+                string password = tB_PlayerL_Password.Text;
 
-            PlayClick(VLCPlayer_L, combinedurl);
+                combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            } else {
+                combinedUrl = tB_PlayerL_SimpleAdr.Text;
+            }
+
+            PlayClick(combinedUrl);
         }
 
+      
         private void b_PlayerR_Play_Click(object sender, EventArgs e) { //add each new player into a list and define them using their index?
-            string ipaddress = tB_PlayerR_Adr.Text;
-            string port = tB_PlayerR_Port.Text;
-            string url = tB_PlayerR_RTSP.Text;
-            string username = tB_PlayerR_Username.Text;
-            string password = tB_PlayerR_Password.Text;
-
-            string combinedurl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
-
-            PlayClick(VLCPlayer_R, combinedurl);
+            //
         }
        
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
@@ -757,7 +753,7 @@ namespace BigBigLoader
                 uint speed = Convert.ToUInt32(tB_PTZ_Speed.Value);
                 byte[] code = null;
 
-                switch (e.KeyCode) { //change this to accept multiple inputs
+                switch (e.KeyCode) { //is there a command that accepts diagonal?
                     case Keys.Up:
                         code = protocol.CameraTilt(address, D.Tilt.Up, speed);
                         break;
@@ -997,11 +993,10 @@ namespace BigBigLoader
         }
 
         private void b_PlayerL_SaveSnap_Click(object sender, EventArgs e) {
-            SaveSnap(VLCPlayer_L);
+            SaveSnap(sC_PlayerL);
         }
 
-        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string control = cB_IPCon_Type.Text;
             string port = "";
 
@@ -1017,34 +1012,47 @@ namespace BigBigLoader
             tB_IPCon_Port.Text = port;
         }
 
-        private async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
+        private void checkB_PlayerL_Manual_CheckedChanged(object sender, EventArgs e) {
+            gB_PlayerL_Extended.Enabled = checkB_PlayerL_Manual.Checked;
+            tB_PlayerL_SimpleAdr.Enabled = !checkB_PlayerL_Manual.Checked;
+            l_PlayerL_SimpleAdr.Enabled = !checkB_PlayerL_Manual.Checked;
+            
+            if (!checkB_PlayerL_Manual.Checked) {
+                gB_PlayerL_Extended.Hide();
 
-            bool wasPlaying = false;
-            if (player.playlist.isPlaying) {
-                wasPlaying = true;
-                player.playlist.pause();
+                l_PlayerL_SimpleAdr.Show();
+                tB_PlayerL_SimpleAdr.Show();
+            } else {
+                gB_PlayerL_Extended.Show();
+
+                l_PlayerL_SimpleAdr.Hide();
+                tB_PlayerL_SimpleAdr.Hide();
             }
+        }
 
-            string imgPath = scFolder + "Captured.jpg";
+        private void b_Player_Pause_Click(object sender, EventArgs e) {
+            if (!isPaused) {
+                isPaused = true;
+                b_PlayerL_Pause.Text = "Play";
+                PlayerStuff.PauseStream(sC_PlayerL);
+            } else {
+                isPaused = false;
+                b_PlayerL_Pause.Text = "Pause";
+                PlayerStuff.PlayStreamAsync(sC_PlayerL, lastAdr);
+            }
+        }
 
-            Bitmap bmpScreenshot = new Bitmap(player.ClientRectangle.Width,
-                player.ClientRectangle.Height);
-            Graphics gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-
-            Size imgSize = new Size(
-                player.ClientRectangle.Width,
-                player.ClientRectangle.Height);
-            Point ps = PointToScreen(new Point(player.Bounds.X, player.Bounds.Y));
-            gfxScreenshot.CopyFromScreen(ps.X, ps.Y, 0, 0, imgSize, CopyPixelOperation.SourceCopy);
-            bmpScreenshot.Save(imgPath, System.Drawing.Imaging.ImageFormat.Jpeg);
+        private async Task SaveSnap(WebEye.StreamControl.WinForms.StreamControl player) {
+            var imagePath = scFolder + "Capture.jpg";
+          
+            Image bmp = new Bitmap(player.Width, player.Height);
+            Graphics gfx = Graphics.FromImage(bmp);
+            Rectangle rec = player.RectangleToScreen(player.ClientRectangle);
+            gfx.CopyFromScreen(rec.Location, Point.Empty, player.Size);
+            
+            bmp.Save(imagePath, ImageFormat.Jpeg);
 
             MessageBox.Show("Image saved : " + scFolder);
-
-            if (wasPlaying) {
-                player.playlist.play();
-            }
-
-
         }
 
         static void CheckCreateFile(string fileName, string folderName = null) {
