@@ -11,10 +11,12 @@
  * Form layout modelled on SSUTILITY Firmware tab for continuity
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -30,10 +32,11 @@ namespace BigBigLoader
         D protocol = new D();
         public static MainForm m;
 
-
         public static string config = "config.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
         public static string scFolder = appFolder + @"Screenshots\";
+        private bool isPaused;
+        public static string lastAdr;
 
         public static byte Address;
         public static byte CheckSum;
@@ -631,7 +634,6 @@ namespace BigBigLoader
 
         /////////////////////////////////////
 
-
         private uint MakeAdr() {
             if (cB_IPCon_Selected.Text == "Daylight") {
                 return 1;
@@ -640,7 +642,12 @@ namespace BigBigLoader
             }
         }
 
-        private void PlayClick(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
+        private void Play(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
+            if (combinedUrl == null) {
+                MessageBox.Show("Address is invalid!");
+                return;
+            }
+
             if (player.playlist.isPlaying == true) {
                 player.playlist.stop();
                 player.playlist.items.clear();
@@ -651,16 +658,18 @@ namespace BigBigLoader
             player.playlist.play();
         }
 
-       
 
-        private void OnFinishedTypingAdr(object sender, EventArgs e) {
-            CameraCommunicate.Connect(m);
+        private void BrowseFolderButton(TextBox tb) {
+            FolderBrowserDialog folderDlg = new FolderBrowserDialog();
+            folderDlg.ShowNewFolderButton = true;
+            DialogResult result = folderDlg.ShowDialog();
+            if (result == DialogResult.OK) {
+                tb.Text = folderDlg.SelectedPath;
+            }
         }
 
-        private void tB_IPCon_Adr_PreviewKeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) {
-                CameraCommunicate.Connect(m);
-            }
+        private async Task ApplyAll() { //
+            ConfigControl.Create(appFolder + config);
         }
 
         void PTZMove(bool IsTilt, D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left) {
@@ -682,30 +691,97 @@ namespace BigBigLoader
             CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(MakeAdr(), dir));
         }
 
+        private async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
+            var imagePath = scFolder + "Capture.jpg";
+
+            Image bmp = new Bitmap(player.Width, player.Height);
+            Graphics gfx = Graphics.FromImage(bmp);
+            Rectangle rec = player.RectangleToScreen(player.ClientRectangle);
+            gfx.CopyFromScreen(rec.Location, Point.Empty, player.Size);
+
+            bmp.Save(imagePath, ImageFormat.Jpeg);
+
+            MessageBox.Show("Image saved : " + scFolder);
+        }
+
+        static void CheckCreateFile(string fileName, string folderName = null) {
+            if (folderName != null) {
+                if (!Directory.Exists(folderName)) {
+                    Directory.CreateDirectory(folderName);
+                }
+            }
+            if (fileName != null) {
+                if (!File.Exists(appFolder + fileName)) {
+                    if (appFolder + fileName == appFolder + config) {
+                        ConfigControl.Create(appFolder + fileName);
+                    }
+                }
+            }
+        }
+
+        async Task StartupStuff() {
+            CheckCreateFile(config, appFolder);
+            await ConfigControl.SearchForVarsAsync(appFolder + config);
+            foreach (PathVariable v in ConfigControl.varList) {
+                if (v.name == ConfigControl.ScreenshotFolderVar) {
+                    scFolder = v.value;
+                }
+            }
+            CheckCreateFile(config, scFolder);
+            ConfigControl.SetDefaults();
+            ApplySettingText();
+        }
+
+        public async Task ApplySettingText() {
+            tB_Paths_sCFolder.Text = scFolder;
+        }
+
         private void b_PlayerL_Play_Click(object sender, EventArgs e) {
-            string ipaddress = tB_PlayerL_Adr.Text;
-            string port = tB_PlayerL_Port.Text;
-            string url = tB_PlayerL_RTSP.Text;
-            string username = tB_PlayerL_Username.Text;
-            string password = tB_PlayerL_Password.Text;
+            string combinedUrl;
 
-            string combinedurl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            if (checkB_PlayerL_Manual.Checked) { //make a function to automatically grab these from gB_...
+                string ipaddress = tB_PlayerL_Adr.Text; //is it possible? the variables need to be in an order
+                string port = tB_PlayerL_Port.Text;
+                string url = tB_PlayerL_RTSP.Text;
+                string username = tB_PlayerL_Username.Text;
+                string password = tB_PlayerL_Password.Text;
 
-            PlayClick(VLCPlayer_L, combinedurl);
+                combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            } else {
+                combinedUrl = tB_PlayerL_SimpleAdr.Text;
+            }
+
+            Play(VLCPlayer_L, combinedUrl);
         }
 
-        private void b_PlayerR_Play_Click(object sender, EventArgs e) { //add each new player into a list and define them using their index?
-            string ipaddress = tB_PlayerR_Adr.Text;
-            string port = tB_PlayerR_Port.Text;
-            string url = tB_PlayerR_RTSP.Text;
-            string username = tB_PlayerR_Username.Text;
-            string password = tB_PlayerR_Password.Text;
+        private void b_PlayerR_Play_Click(object sender, EventArgs e) {
+            string combinedUrl;
 
-            string combinedurl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            if (checkB_PlayerR_Manual.Checked) { //make a function to automatically grab these from gB_...
+                string ipaddress = tB_PlayerR_Adr.Text; //is it possible? the variables need to be in an order
+                string port = tB_PlayerR_Port.Text;
+                string url = tB_PlayerR_RTSP.Text;
+                string username = tB_PlayerR_Username.Text;
+                string password = tB_PlayerR_Password.Text;
 
-            PlayClick(VLCPlayer_R, combinedurl);
+                combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            } else {
+                combinedUrl = tB_PlayerR_SimpleAdr.Text;
+            }
+
+            Play(VLCPlayer_R, combinedUrl);
         }
-       
+
+        private void OnFinishedTypingAdr(object sender, EventArgs e) {
+            CameraCommunicate.Connect(m);
+        }
+
+        private void tB_IPCon_Adr_PreviewKeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                CameraCommunicate.Connect(m);
+            }
+        }
+
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
             PTZMove(true, D.Tilt.Up);
         }
@@ -713,6 +789,7 @@ namespace BigBigLoader
         private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
             PTZMove(true, D.Tilt.Down);
         }
+
         private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
             PTZMove(false, D.Tilt.Null, D.Pan.Left);
         }
@@ -757,7 +834,7 @@ namespace BigBigLoader
                 uint speed = Convert.ToUInt32(tB_PTZ_Speed.Value);
                 byte[] code = null;
 
-                switch (e.KeyCode) { //change this to accept multiple inputs
+                switch (e.KeyCode) { //is there a command that accepts diagonal?
                     case Keys.Up:
                         code = protocol.CameraTilt(address, D.Tilt.Up, speed);
                         break;
@@ -907,6 +984,7 @@ namespace BigBigLoader
         private void b_Presets_Thermal_NUC_Click(object sender, EventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 175, D.PresetAction.Goto));
         }
+
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
 
@@ -918,7 +996,6 @@ namespace BigBigLoader
 
             CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Set));
         }
-
 
         private void cB_PlayerL_Type_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1000,8 +1077,7 @@ namespace BigBigLoader
             SaveSnap(VLCPlayer_L);
         }
 
-        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string control = cB_IPCon_Type.Text;
             string port = "";
 
@@ -1017,63 +1093,61 @@ namespace BigBigLoader
             tB_IPCon_Port.Text = port;
         }
 
-        private async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
+        private void checkB_PlayerL_Manual_CheckedChanged(object sender, EventArgs e) {
+            gB_PlayerL_Extended.Enabled = checkB_PlayerL_Manual.Checked;
+            tB_PlayerL_SimpleAdr.Enabled = !checkB_PlayerL_Manual.Checked;
+            l_PlayerL_SimpleAdr.Enabled = !checkB_PlayerL_Manual.Checked;
+            
+            if (!checkB_PlayerL_Manual.Checked) {
+                gB_PlayerL_Extended.Hide();
 
-            bool wasPlaying = false;
-            if (player.playlist.isPlaying) {
-                wasPlaying = true;
-                player.playlist.pause();
+                l_PlayerL_SimpleAdr.Show();
+                tB_PlayerL_SimpleAdr.Show();
+            } else {
+                gB_PlayerL_Extended.Show();
+
+                l_PlayerL_SimpleAdr.Hide();
+                tB_PlayerL_SimpleAdr.Hide();
             }
-
-            string imgPath = scFolder + "Captured.jpg";
-
-            Bitmap bmpScreenshot = new Bitmap(player.ClientRectangle.Width,
-                player.ClientRectangle.Height);
-            Graphics gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-
-            Size imgSize = new Size(
-                player.ClientRectangle.Width,
-                player.ClientRectangle.Height);
-            Point ps = PointToScreen(new Point(player.Bounds.X, player.Bounds.Y));
-            gfxScreenshot.CopyFromScreen(ps.X, ps.Y, 0, 0, imgSize, CopyPixelOperation.SourceCopy);
-            bmpScreenshot.Save(imgPath, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            MessageBox.Show("Image saved : " + scFolder);
-
-            if (wasPlaying) {
-                player.playlist.play();
-            }
-
-
         }
-
-        static void CheckCreateFile(string fileName, string folderName = null) {
-            if (folderName != null) {
-                if (!Directory.Exists(folderName)) {
-                    Directory.CreateDirectory(folderName);
-                }
-            }
-            if (fileName != null) {
-                if (!File.Exists(appFolder + fileName)) {
-                    var newFile = File.Create(folderName + fileName);
-                    newFile.Close();
-                    if (appFolder + fileName == appFolder + config) {
-                        ConfigControl.Created(appFolder + fileName);
-                    }
-                }
+       
+        private void OnFinishedTypingScFolder(object sender, EventArgs e) {
+            if (ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
+                scFolder = tB_Paths_sCFolder.Text;
             }
         }
 
-        static async Task StartupStuff() {
-            CheckCreateFile(config, appFolder);
-            await ConfigControl.SearchForVarsAsync(appFolder + config);
-            foreach (PathVariable v in ConfigControl.varList) {
-                if (v.name == ConfigControl.ScreenshotFolderVar) {
-                    scFolder = v.value;
-                }
+        private void checkB_PlayerR_Manual_CheckedChanged(object sender, EventArgs e) {
+            gB_PlayerR_Extended.Enabled = checkB_PlayerR_Manual.Checked;
+            tB_PlayerR_SimpleAdr.Enabled = !checkB_PlayerR_Manual.Checked;
+            l_PlayerR_SimpleAdr.Enabled = !checkB_PlayerR_Manual.Checked;
+
+            if (!checkB_PlayerR_Manual.Checked) {
+                gB_PlayerR_Extended.Hide();
+
+                l_PlayerR_SimpleAdr.Show();
+                tB_PlayerR_SimpleAdr.Show();
+            } else {
+                gB_PlayerR_Extended.Show();
+
+                l_PlayerR_SimpleAdr.Hide();
+                tB_PlayerR_SimpleAdr.Hide();
             }
-            CheckCreateFile(config, scFolder);
         }
+
+        private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
+            BrowseFolderButton(tB_Paths_sCFolder);
+        }
+        
+        private void b_Settings_Apply_Click(object sender, EventArgs e) {
+            ApplyAll();
+        }
+
+        private void b_Settings_Default_Click(object sender, EventArgs e) {
+            scFolder = ConfigControl.DefScFolder;
+            ApplySettingText();
+        }
+
 
     } // end of class MainForm
 } // end of namespace BigBigLoader

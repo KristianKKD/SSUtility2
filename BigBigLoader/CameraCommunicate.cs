@@ -13,8 +13,7 @@ namespace BigBigLoader
         static IPAddress serverAddr = null;
         static Socket sock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
         static IPEndPoint endPoint = new IPEndPoint(0, 0);
-
-
+        
         public static async Task sendtoIPAsync(byte[] code) {
             try {
                 if (!sock.Connected) {

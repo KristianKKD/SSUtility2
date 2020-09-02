@@ -10,16 +10,36 @@ using System.Windows.Forms;
 namespace BigBigLoader {
     class ConfigControl {
 
-        static string con = MainForm.appFolder + MainForm.config;
+        public static string DefScFolder;
+
         const string varString = "v";
         public const string ScreenshotFolderVar = "ScreenshotFolder";
 
         public static List<PathVariable> varList { get;
             set; }
 
-        public static void Created(string path) {
+        public static async Task SetDefaults() {
+            DefScFolder = MainForm.scFolder;
+        }
+
+        public static void Create(string path) {
+            if (File.Exists(path)) {
+                File.Delete(path);
+            }
+            var newFile = File.Create(path);
+            newFile.Close();
+
             File.AppendAllText(path, varString + ScreenshotFolderVar + ":" + MainForm.scFolder);
             // anything else i want in the config file
+        }
+
+        public static async Task<bool> CheckIfExists(TextBox tb, Label linkedLabel) {
+            if (!Directory.Exists(tb.Text)) {
+                linkedLabel.Text = "❌";
+                return false;
+            }
+            linkedLabel.Text = "✓";
+            return true;
         }
 
         public async static Task SearchForVarsAsync(string path) {
@@ -42,18 +62,7 @@ namespace BigBigLoader {
 
             return new PathVariable(name, text);
         }
-
-        public static async Task ChangeLine(string newText, int lineIndex = 1) {
-            string[] text = File.ReadAllLines(con);
-
-            try {
-                text[lineIndex - 1] = newText;
-                File.WriteAllLines(con, text);
-            } catch {
-
-            }
-
-        }
+      
     }
 
     class PathVariable {
@@ -67,6 +76,5 @@ namespace BigBigLoader {
         }
 
     }
-
 
 }
