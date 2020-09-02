@@ -449,6 +449,7 @@ namespace BigBigLoader
             int rv = -1;
             int i = 0;
             bool brv;
+            statusStrip1.Show();
             // Keep buttons refreshed
             Application.DoEvents();
             while (i < length && !EscapeWasPressed)
@@ -670,6 +671,7 @@ namespace BigBigLoader
 
         private async Task ApplyAll() { //
             ConfigControl.Create(appFolder + config);
+            MessageBox.Show("Applied settings to: " + appFolder + config);
         }
 
         void PTZMove(bool IsTilt, D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left) {
@@ -692,7 +694,7 @@ namespace BigBigLoader
         }
 
         private async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
-            var imagePath = scFolder + "Capture.jpg";
+            var imagePath = scFolder + @"\Capture" + (Directory.GetFiles(scFolder).Length + 1) + ".jpg";
 
             Image bmp = new Bitmap(player.Width, player.Height);
             Graphics gfx = Graphics.FromImage(bmp);
@@ -720,6 +722,8 @@ namespace BigBigLoader
         }
 
         async Task StartupStuff() {
+            ConfigControl.SetDefaults();
+
             CheckCreateFile(config, appFolder);
             await ConfigControl.SearchForVarsAsync(appFolder + config);
             foreach (PathVariable v in ConfigControl.varList) {
@@ -728,7 +732,7 @@ namespace BigBigLoader
                 }
             }
             CheckCreateFile(config, scFolder);
-            ConfigControl.SetDefaults();
+
             ApplySettingText();
         }
 
@@ -1076,6 +1080,9 @@ namespace BigBigLoader
         private void b_PlayerL_SaveSnap_Click(object sender, EventArgs e) {
             SaveSnap(VLCPlayer_L);
         }
+        private void b_PlayerR_SaveSnap_Click(object sender, EventArgs e) {
+            SaveSnap(VLCPlayer_R);
+        }
 
         private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string control = cB_IPCon_Type.Text;
@@ -1093,45 +1100,30 @@ namespace BigBigLoader
             tB_IPCon_Port.Text = port;
         }
 
-        private void checkB_PlayerL_Manual_CheckedChanged(object sender, EventArgs e) {
-            gB_PlayerL_Extended.Enabled = checkB_PlayerL_Manual.Checked;
-            tB_PlayerL_SimpleAdr.Enabled = !checkB_PlayerL_Manual.Checked;
-            l_PlayerL_SimpleAdr.Enabled = !checkB_PlayerL_Manual.Checked;
-            
-            if (!checkB_PlayerL_Manual.Checked) {
-                gB_PlayerL_Extended.Hide();
+        private void checkB_PlayerL_Manual_CheckedChanged(object sendeL, EventArgs e) {
+            ExtendOptions(checkB_PlayerL_Manual.Checked, gB_PlayerL_Extended, gB_PlayerL_Simple);
+        }
+        private void checkB_PlayerR_Manual_CheckedChanged(object sender, EventArgs e) {
+            ExtendOptions(checkB_PlayerR_Manual.Checked, gB_PlayerR_Extended, gB_PlayerR_Simple);
+        }
 
-                l_PlayerL_SimpleAdr.Show();
-                tB_PlayerL_SimpleAdr.Show();
+        void ExtendOptions(bool check, GroupBox gbExt, GroupBox gbSim) {
+            if (check) {
+                gbSim.Hide();
+                gbExt.Show();
             } else {
-                gB_PlayerL_Extended.Show();
-
-                l_PlayerL_SimpleAdr.Hide();
-                tB_PlayerL_SimpleAdr.Hide();
+                gbExt.Hide();
+                gbSim.Show();
             }
         }
-       
+
         private void OnFinishedTypingScFolder(object sender, EventArgs e) {
+            if (tB_Paths_sCFolder.Text.Length < 1) {
+                tB_Paths_sCFolder.Text = appFolder;
+                return;
+            }
             if (ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
                 scFolder = tB_Paths_sCFolder.Text;
-            }
-        }
-
-        private void checkB_PlayerR_Manual_CheckedChanged(object sender, EventArgs e) {
-            gB_PlayerR_Extended.Enabled = checkB_PlayerR_Manual.Checked;
-            tB_PlayerR_SimpleAdr.Enabled = !checkB_PlayerR_Manual.Checked;
-            l_PlayerR_SimpleAdr.Enabled = !checkB_PlayerR_Manual.Checked;
-
-            if (!checkB_PlayerR_Manual.Checked) {
-                gB_PlayerR_Extended.Hide();
-
-                l_PlayerR_SimpleAdr.Show();
-                tB_PlayerR_SimpleAdr.Show();
-            } else {
-                gB_PlayerR_Extended.Show();
-
-                l_PlayerR_SimpleAdr.Hide();
-                tB_PlayerR_SimpleAdr.Hide();
             }
         }
 

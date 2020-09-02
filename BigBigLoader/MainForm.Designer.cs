@@ -63,13 +63,6 @@ namespace BigBigLoader
             this.Portlabel = new System.Windows.Forms.Label();
             this.PortcomboBox = new System.Windows.Forms.ComboBox();
             this.Portbutton = new System.Windows.Forms.Button();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
             this.LogtextBox = new System.Windows.Forms.TextBox();
             this.Loglabel = new System.Windows.Forms.Label();
             this.ClearLogbutton = new System.Windows.Forms.Button();
@@ -83,11 +76,11 @@ namespace BigBigLoader
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tC_Control = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.VLCPlayer_R = new AxAXVLC.AxVLCPlugin2();
-            this.l_PlayerR_SimpleAdr = new System.Windows.Forms.Label();
+            this.gB_PlayerR_Simple = new System.Windows.Forms.GroupBox();
             this.tB_PlayerR_SimpleAdr = new System.Windows.Forms.TextBox();
+            this.l_PlayerR_SimpleAdr = new System.Windows.Forms.Label();
+            this.gB_PlayerR_Info = new System.Windows.Forms.GroupBox();
             this.gB_PlayerR_Extended = new System.Windows.Forms.GroupBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tB_PlayerR_Adr = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -101,15 +94,11 @@ namespace BigBigLoader
             this.label9 = new System.Windows.Forms.Label();
             this.tB_PlayerR_Password = new System.Windows.Forms.TextBox();
             this.cB_PlayerR_Type = new System.Windows.Forms.ComboBox();
-            this.checkB_PlayerR_Manual = new System.Windows.Forms.CheckBox();
-            this.b_PlayerR_Detach = new System.Windows.Forms.Button();
-            this.b_PlayerR_StopRec = new System.Windows.Forms.Button();
-            this.b_PlayerR_StartRec = new System.Windows.Forms.Button();
-            this.b_PlayerR_SaveSnap = new System.Windows.Forms.Button();
-            this.b_PlayerR_Play = new System.Windows.Forms.Button();
-            this.VLCPlayer_L = new AxAXVLC.AxVLCPlugin2();
-            this.l_PlayerL_SimpleAdr = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.gB_PlayerL_Simple = new System.Windows.Forms.GroupBox();
             this.tB_PlayerL_SimpleAdr = new System.Windows.Forms.TextBox();
+            this.l_PlayerL_SimpleAdr = new System.Windows.Forms.Label();
+            this.gB_PLayerL_Info = new System.Windows.Forms.GroupBox();
             this.gB_PlayerL_Extended = new System.Windows.Forms.GroupBox();
             this.l_PlayerL_Type = new System.Windows.Forms.Label();
             this.l_PlayerL_RTSP = new System.Windows.Forms.Label();
@@ -125,6 +114,14 @@ namespace BigBigLoader
             this.l_PlayerL_Buffering = new System.Windows.Forms.Label();
             this.tB_PlayerL_Password = new System.Windows.Forms.TextBox();
             this.cB_PlayerL_Type = new System.Windows.Forms.ComboBox();
+            this.VLCPlayer_R = new AxAXVLC.AxVLCPlugin2();
+            this.checkB_PlayerR_Manual = new System.Windows.Forms.CheckBox();
+            this.b_PlayerR_Detach = new System.Windows.Forms.Button();
+            this.b_PlayerR_StopRec = new System.Windows.Forms.Button();
+            this.b_PlayerR_StartRec = new System.Windows.Forms.Button();
+            this.b_PlayerR_SaveSnap = new System.Windows.Forms.Button();
+            this.b_PlayerR_Play = new System.Windows.Forms.Button();
+            this.VLCPlayer_L = new AxAXVLC.AxVLCPlugin2();
             this.checkB_PlayerL_Manual = new System.Windows.Forms.CheckBox();
             this.l_IPCon_Connected = new System.Windows.Forms.Label();
             this.tB_PTZ_Speed = new System.Windows.Forms.TrackBar();
@@ -212,16 +209,26 @@ namespace BigBigLoader
             this.l_Paths_sCFolder = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
             this.tC_Main.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tC_Control.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).BeginInit();
+            this.gB_PlayerR_Simple.SuspendLayout();
+            this.gB_PlayerR_Info.SuspendLayout();
             this.gB_PlayerR_Extended.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).BeginInit();
+            this.gB_PlayerL_Simple.SuspendLayout();
+            this.gB_PLayerL_Info.SuspendLayout();
             this.gB_PlayerL_Extended.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tB_PTZ_Speed)).BeginInit();
             this.tC_Presets_Default.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -233,6 +240,7 @@ namespace BigBigLoader
             this.tP_Settings.SuspendLayout();
             this.gB_Paths.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // GetSNbutton
@@ -387,65 +395,6 @@ namespace BigBigLoader
             this.Portbutton.UseVisualStyleBackColor = true;
             this.Portbutton.Click += new System.EventHandler(this.PortbuttonClick);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2,
-            this.toolStripStatusLabel3,
-            this.toolStripStatusLabel4,
-            this.toolStripStatusLabel5,
-            this.toolStripStatusLabel6});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 1022);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1924, 39);
-            this.statusStrip1.TabIndex = 19;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.AutoSize = false;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(140, 34);
-            this.toolStripStatusLabel1.Text = "  ";
-            // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.AutoSize = false;
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(100, 34);
-            this.toolStripStatusLabel2.Text = "  ";
-            // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.AutoSize = false;
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(80, 34);
-            this.toolStripStatusLabel3.Text = "  ";
-            // 
-            // toolStripStatusLabel4
-            // 
-            this.toolStripStatusLabel4.AutoSize = false;
-            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(50, 34);
-            this.toolStripStatusLabel4.Text = "  ";
-            // 
-            // toolStripStatusLabel5
-            // 
-            this.toolStripStatusLabel5.AutoSize = false;
-            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(200, 34);
-            this.toolStripStatusLabel5.Text = "  ";
-            // 
-            // toolStripStatusLabel6
-            // 
-            this.toolStripStatusLabel6.Name = "toolStripStatusLabel6";
-            this.toolStripStatusLabel6.Size = new System.Drawing.Size(1339, 34);
-            this.toolStripStatusLabel6.Spring = true;
-            this.toolStripStatusLabel6.Text = "  ";
-            this.toolStripStatusLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // LogtextBox
             // 
             this.LogtextBox.Location = new System.Drawing.Point(5, 273);
@@ -550,7 +499,7 @@ namespace BigBigLoader
             this.tC_Main.Location = new System.Drawing.Point(0, 0);
             this.tC_Main.Name = "tC_Main";
             this.tC_Main.SelectedIndex = 0;
-            this.tC_Main.Size = new System.Drawing.Size(1924, 1022);
+            this.tC_Main.Size = new System.Drawing.Size(1659, 929);
             this.tC_Main.TabIndex = 29;
             // 
             // tabPage2
@@ -559,7 +508,7 @@ namespace BigBigLoader
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1916, 996);
+            this.tabPage2.Size = new System.Drawing.Size(1651, 903);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Control";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -572,17 +521,18 @@ namespace BigBigLoader
             this.tC_Control.Location = new System.Drawing.Point(3, 3);
             this.tC_Control.Name = "tC_Control";
             this.tC_Control.SelectedIndex = 0;
-            this.tC_Control.Size = new System.Drawing.Size(1910, 990);
+            this.tC_Control.Size = new System.Drawing.Size(1645, 897);
             this.tC_Control.TabIndex = 6;
             this.tC_Control.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tC_Control_KeyDown);
             this.tC_Control.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tC_Control_KeyUp);
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.gB_PlayerR_Simple);
+            this.tabPage3.Controls.Add(this.gB_PlayerR_Info);
+            this.tabPage3.Controls.Add(this.gB_PlayerL_Simple);
+            this.tabPage3.Controls.Add(this.gB_PLayerL_Info);
             this.tabPage3.Controls.Add(this.VLCPlayer_R);
-            this.tabPage3.Controls.Add(this.l_PlayerR_SimpleAdr);
-            this.tabPage3.Controls.Add(this.tB_PlayerR_SimpleAdr);
-            this.tabPage3.Controls.Add(this.gB_PlayerR_Extended);
             this.tabPage3.Controls.Add(this.checkB_PlayerR_Manual);
             this.tabPage3.Controls.Add(this.b_PlayerR_Detach);
             this.tabPage3.Controls.Add(this.b_PlayerR_StopRec);
@@ -590,9 +540,6 @@ namespace BigBigLoader
             this.tabPage3.Controls.Add(this.b_PlayerR_SaveSnap);
             this.tabPage3.Controls.Add(this.b_PlayerR_Play);
             this.tabPage3.Controls.Add(this.VLCPlayer_L);
-            this.tabPage3.Controls.Add(this.l_PlayerL_SimpleAdr);
-            this.tabPage3.Controls.Add(this.tB_PlayerL_SimpleAdr);
-            this.tabPage3.Controls.Add(this.gB_PlayerL_Extended);
             this.tabPage3.Controls.Add(this.checkB_PlayerL_Manual);
             this.tabPage3.Controls.Add(this.l_IPCon_Connected);
             this.tabPage3.Controls.Add(this.tB_PTZ_Speed);
@@ -632,39 +579,50 @@ namespace BigBigLoader
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1902, 964);
+            this.tabPage3.Size = new System.Drawing.Size(1637, 871);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Camera Control";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // VLCPlayer_R
+            // gB_PlayerR_Simple
             // 
-            this.VLCPlayer_R.Enabled = true;
-            this.VLCPlayer_R.Location = new System.Drawing.Point(965, 8);
-            this.VLCPlayer_R.Name = "VLCPlayer_R";
-            this.VLCPlayer_R.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_R.OcxState")));
-            this.VLCPlayer_R.Size = new System.Drawing.Size(639, 512);
-            this.VLCPlayer_R.TabIndex = 29;
+            this.gB_PlayerR_Simple.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.gB_PlayerR_Simple.Controls.Add(this.tB_PlayerR_SimpleAdr);
+            this.gB_PlayerR_Simple.Controls.Add(this.l_PlayerR_SimpleAdr);
+            this.gB_PlayerR_Simple.Location = new System.Drawing.Point(965, 526);
+            this.gB_PlayerR_Simple.Name = "gB_PlayerR_Simple";
+            this.gB_PlayerR_Simple.Size = new System.Drawing.Size(313, 239);
+            this.gB_PlayerR_Simple.TabIndex = 40;
+            this.gB_PlayerR_Simple.TabStop = false;
+            // 
+            // tB_PlayerR_SimpleAdr
+            // 
+            this.tB_PlayerR_SimpleAdr.Location = new System.Drawing.Point(89, 26);
+            this.tB_PlayerR_SimpleAdr.Name = "tB_PlayerR_SimpleAdr";
+            this.tB_PlayerR_SimpleAdr.Size = new System.Drawing.Size(214, 20);
+            this.tB_PlayerR_SimpleAdr.TabIndex = 28;
             // 
             // l_PlayerR_SimpleAdr
             // 
             this.l_PlayerR_SimpleAdr.AutoSize = true;
-            this.l_PlayerR_SimpleAdr.Location = new System.Drawing.Point(968, 572);
+            this.l_PlayerR_SimpleAdr.Location = new System.Drawing.Point(3, 27);
             this.l_PlayerR_SimpleAdr.Name = "l_PlayerR_SimpleAdr";
             this.l_PlayerR_SimpleAdr.Size = new System.Drawing.Size(80, 13);
-            this.l_PlayerR_SimpleAdr.TabIndex = 37;
+            this.l_PlayerR_SimpleAdr.TabIndex = 27;
             this.l_PlayerR_SimpleAdr.Text = "RTSP Address:";
             // 
-            // tB_PlayerR_SimpleAdr
+            // gB_PlayerR_Info
             // 
-            this.tB_PlayerR_SimpleAdr.Location = new System.Drawing.Point(1054, 571);
-            this.tB_PlayerR_SimpleAdr.Name = "tB_PlayerR_SimpleAdr";
-            this.tB_PlayerR_SimpleAdr.Size = new System.Drawing.Size(214, 20);
-            this.tB_PlayerR_SimpleAdr.TabIndex = 38;
+            this.gB_PlayerR_Info.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.gB_PlayerR_Info.Controls.Add(this.gB_PlayerR_Extended);
+            this.gB_PlayerR_Info.Location = new System.Drawing.Point(965, 526);
+            this.gB_PlayerR_Info.Name = "gB_PlayerR_Info";
+            this.gB_PlayerR_Info.Size = new System.Drawing.Size(313, 239);
+            this.gB_PlayerR_Info.TabIndex = 41;
+            this.gB_PlayerR_Info.TabStop = false;
             // 
             // gB_PlayerR_Extended
             // 
-            this.gB_PlayerR_Extended.Controls.Add(this.label3);
             this.gB_PlayerR_Extended.Controls.Add(this.label4);
             this.gB_PlayerR_Extended.Controls.Add(this.tB_PlayerR_Adr);
             this.gB_PlayerR_Extended.Controls.Add(this.label5);
@@ -678,22 +636,13 @@ namespace BigBigLoader
             this.gB_PlayerR_Extended.Controls.Add(this.label9);
             this.gB_PlayerR_Extended.Controls.Add(this.tB_PlayerR_Password);
             this.gB_PlayerR_Extended.Controls.Add(this.cB_PlayerR_Type);
-            this.gB_PlayerR_Extended.Enabled = false;
-            this.gB_PlayerR_Extended.Location = new System.Drawing.Point(965, 529);
+            this.gB_PlayerR_Extended.Controls.Add(this.label3);
+            this.gB_PlayerR_Extended.Location = new System.Drawing.Point(0, 0);
             this.gB_PlayerR_Extended.Name = "gB_PlayerR_Extended";
-            this.gB_PlayerR_Extended.Size = new System.Drawing.Size(313, 217);
+            this.gB_PlayerR_Extended.Size = new System.Drawing.Size(313, 239);
             this.gB_PlayerR_Extended.TabIndex = 36;
             this.gB_PlayerR_Extended.TabStop = false;
             this.gB_PlayerR_Extended.Visible = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 17);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Encoder Type:";
             // 
             // label4
             // 
@@ -809,91 +758,56 @@ namespace BigBigLoader
             this.cB_PlayerR_Type.Name = "cB_PlayerR_Type";
             this.cB_PlayerR_Type.Size = new System.Drawing.Size(214, 21);
             this.cB_PlayerR_Type.TabIndex = 5;
+            this.cB_PlayerR_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerR_Type_SelectedIndexChanged);
             // 
-            // checkB_PlayerR_Manual
+            // label3
             // 
-            this.checkB_PlayerR_Manual.AutoSize = true;
-            this.checkB_PlayerR_Manual.Location = new System.Drawing.Point(1284, 536);
-            this.checkB_PlayerR_Manual.Name = "checkB_PlayerR_Manual";
-            this.checkB_PlayerR_Manual.Size = new System.Drawing.Size(144, 17);
-            this.checkB_PlayerR_Manual.TabIndex = 35;
-            this.checkB_PlayerR_Manual.Text = "Extended RTSP Controls";
-            this.checkB_PlayerR_Manual.UseVisualStyleBackColor = true;
-            this.checkB_PlayerR_Manual.CheckedChanged += new System.EventHandler(this.checkB_PlayerR_Manual_CheckedChanged);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 13);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Encoder Type:";
             // 
-            // b_PlayerR_Detach
+            // gB_PlayerL_Simple
             // 
-            this.b_PlayerR_Detach.Location = new System.Drawing.Point(1432, 650);
-            this.b_PlayerR_Detach.Name = "b_PlayerR_Detach";
-            this.b_PlayerR_Detach.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_Detach.TabIndex = 31;
-            this.b_PlayerR_Detach.Text = "Detach Video";
-            this.b_PlayerR_Detach.UseVisualStyleBackColor = true;
+            this.gB_PlayerL_Simple.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.gB_PlayerL_Simple.Controls.Add(this.tB_PlayerL_SimpleAdr);
+            this.gB_PlayerL_Simple.Controls.Add(this.l_PlayerL_SimpleAdr);
+            this.gB_PlayerL_Simple.Location = new System.Drawing.Point(291, 526);
+            this.gB_PlayerL_Simple.Name = "gB_PlayerL_Simple";
+            this.gB_PlayerL_Simple.Size = new System.Drawing.Size(313, 239);
+            this.gB_PlayerL_Simple.TabIndex = 39;
+            this.gB_PlayerL_Simple.TabStop = false;
             // 
-            // b_PlayerR_StopRec
+            // tB_PlayerL_SimpleAdr
             // 
-            this.b_PlayerR_StopRec.Location = new System.Drawing.Point(1432, 625);
-            this.b_PlayerR_StopRec.Name = "b_PlayerR_StopRec";
-            this.b_PlayerR_StopRec.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_StopRec.TabIndex = 32;
-            this.b_PlayerR_StopRec.Text = "STOP Recording";
-            this.b_PlayerR_StopRec.UseVisualStyleBackColor = true;
-            // 
-            // b_PlayerR_StartRec
-            // 
-            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1432, 599);
-            this.b_PlayerR_StartRec.Name = "b_PlayerR_StartRec";
-            this.b_PlayerR_StartRec.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_StartRec.TabIndex = 33;
-            this.b_PlayerR_StartRec.Text = "START Recording";
-            this.b_PlayerR_StartRec.UseVisualStyleBackColor = true;
-            // 
-            // b_PlayerR_SaveSnap
-            // 
-            this.b_PlayerR_SaveSnap.Location = new System.Drawing.Point(1432, 572);
-            this.b_PlayerR_SaveSnap.Name = "b_PlayerR_SaveSnap";
-            this.b_PlayerR_SaveSnap.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_SaveSnap.TabIndex = 34;
-            this.b_PlayerR_SaveSnap.Text = "Save Snapshot";
-            this.b_PlayerR_SaveSnap.UseVisualStyleBackColor = true;
-            // 
-            // b_PlayerR_Play
-            // 
-            this.b_PlayerR_Play.Location = new System.Drawing.Point(965, 771);
-            this.b_PlayerR_Play.Name = "b_PlayerR_Play";
-            this.b_PlayerR_Play.Size = new System.Drawing.Size(639, 23);
-            this.b_PlayerR_Play.TabIndex = 30;
-            this.b_PlayerR_Play.Text = "Play";
-            this.b_PlayerR_Play.UseVisualStyleBackColor = true;
-            this.b_PlayerR_Play.Click += new System.EventHandler(this.b_PlayerR_Play_Click);
-            // 
-            // VLCPlayer_L
-            // 
-            this.VLCPlayer_L.Enabled = true;
-            this.VLCPlayer_L.Location = new System.Drawing.Point(291, 8);
-            this.VLCPlayer_L.Name = "VLCPlayer_L";
-            this.VLCPlayer_L.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_L.OcxState")));
-            this.VLCPlayer_L.Size = new System.Drawing.Size(639, 512);
-            this.VLCPlayer_L.TabIndex = 0;
+            this.tB_PlayerL_SimpleAdr.Location = new System.Drawing.Point(89, 26);
+            this.tB_PlayerL_SimpleAdr.Name = "tB_PlayerL_SimpleAdr";
+            this.tB_PlayerL_SimpleAdr.Size = new System.Drawing.Size(214, 20);
+            this.tB_PlayerL_SimpleAdr.TabIndex = 28;
             // 
             // l_PlayerL_SimpleAdr
             // 
             this.l_PlayerL_SimpleAdr.AutoSize = true;
-            this.l_PlayerL_SimpleAdr.Location = new System.Drawing.Point(294, 572);
+            this.l_PlayerL_SimpleAdr.Location = new System.Drawing.Point(3, 27);
             this.l_PlayerL_SimpleAdr.Name = "l_PlayerL_SimpleAdr";
             this.l_PlayerL_SimpleAdr.Size = new System.Drawing.Size(80, 13);
             this.l_PlayerL_SimpleAdr.TabIndex = 27;
             this.l_PlayerL_SimpleAdr.Text = "RTSP Address:";
             // 
-            // tB_PlayerL_SimpleAdr
+            // gB_PLayerL_Info
             // 
-            this.tB_PlayerL_SimpleAdr.Location = new System.Drawing.Point(380, 571);
-            this.tB_PlayerL_SimpleAdr.Name = "tB_PlayerL_SimpleAdr";
-            this.tB_PlayerL_SimpleAdr.Size = new System.Drawing.Size(214, 20);
-            this.tB_PlayerL_SimpleAdr.TabIndex = 28;
+            this.gB_PLayerL_Info.Controls.Add(this.gB_PlayerL_Extended);
+            this.gB_PLayerL_Info.Location = new System.Drawing.Point(291, 526);
+            this.gB_PLayerL_Info.Name = "gB_PLayerL_Info";
+            this.gB_PLayerL_Info.Size = new System.Drawing.Size(313, 239);
+            this.gB_PLayerL_Info.TabIndex = 40;
+            this.gB_PLayerL_Info.TabStop = false;
             // 
             // gB_PlayerL_Extended
             // 
+            this.gB_PlayerL_Extended.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.gB_PlayerL_Extended.Controls.Add(this.l_PlayerL_Type);
             this.gB_PlayerL_Extended.Controls.Add(this.l_PlayerL_RTSP);
             this.gB_PlayerL_Extended.Controls.Add(this.tB_PlayerL_Adr);
@@ -908,10 +822,9 @@ namespace BigBigLoader
             this.gB_PlayerL_Extended.Controls.Add(this.l_PlayerL_Buffering);
             this.gB_PlayerL_Extended.Controls.Add(this.tB_PlayerL_Password);
             this.gB_PlayerL_Extended.Controls.Add(this.cB_PlayerL_Type);
-            this.gB_PlayerL_Extended.Enabled = false;
-            this.gB_PlayerL_Extended.Location = new System.Drawing.Point(291, 529);
+            this.gB_PlayerL_Extended.Location = new System.Drawing.Point(0, 0);
             this.gB_PlayerL_Extended.Name = "gB_PlayerL_Extended";
-            this.gB_PlayerL_Extended.Size = new System.Drawing.Size(313, 217);
+            this.gB_PlayerL_Extended.Size = new System.Drawing.Size(313, 239);
             this.gB_PlayerL_Extended.TabIndex = 26;
             this.gB_PlayerL_Extended.TabStop = false;
             this.gB_PlayerL_Extended.Visible = false;
@@ -1040,6 +953,82 @@ namespace BigBigLoader
             this.cB_PlayerL_Type.Size = new System.Drawing.Size(214, 21);
             this.cB_PlayerL_Type.TabIndex = 5;
             this.cB_PlayerL_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerL_Type_SelectedIndexChanged);
+            // 
+            // VLCPlayer_R
+            // 
+            this.VLCPlayer_R.Enabled = true;
+            this.VLCPlayer_R.Location = new System.Drawing.Point(965, 8);
+            this.VLCPlayer_R.Name = "VLCPlayer_R";
+            this.VLCPlayer_R.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_R.OcxState")));
+            this.VLCPlayer_R.Size = new System.Drawing.Size(639, 512);
+            this.VLCPlayer_R.TabIndex = 29;
+            // 
+            // checkB_PlayerR_Manual
+            // 
+            this.checkB_PlayerR_Manual.AutoSize = true;
+            this.checkB_PlayerR_Manual.Location = new System.Drawing.Point(1284, 536);
+            this.checkB_PlayerR_Manual.Name = "checkB_PlayerR_Manual";
+            this.checkB_PlayerR_Manual.Size = new System.Drawing.Size(144, 17);
+            this.checkB_PlayerR_Manual.TabIndex = 35;
+            this.checkB_PlayerR_Manual.Text = "Extended RTSP Controls";
+            this.checkB_PlayerR_Manual.UseVisualStyleBackColor = true;
+            this.checkB_PlayerR_Manual.CheckedChanged += new System.EventHandler(this.checkB_PlayerR_Manual_CheckedChanged);
+            // 
+            // b_PlayerR_Detach
+            // 
+            this.b_PlayerR_Detach.Location = new System.Drawing.Point(1284, 643);
+            this.b_PlayerR_Detach.Name = "b_PlayerR_Detach";
+            this.b_PlayerR_Detach.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerR_Detach.TabIndex = 31;
+            this.b_PlayerR_Detach.Text = "Detach Video";
+            this.b_PlayerR_Detach.UseVisualStyleBackColor = true;
+            // 
+            // b_PlayerR_StopRec
+            // 
+            this.b_PlayerR_StopRec.Location = new System.Drawing.Point(1284, 618);
+            this.b_PlayerR_StopRec.Name = "b_PlayerR_StopRec";
+            this.b_PlayerR_StopRec.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerR_StopRec.TabIndex = 32;
+            this.b_PlayerR_StopRec.Text = "STOP Recording";
+            this.b_PlayerR_StopRec.UseVisualStyleBackColor = true;
+            // 
+            // b_PlayerR_StartRec
+            // 
+            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1284, 592);
+            this.b_PlayerR_StartRec.Name = "b_PlayerR_StartRec";
+            this.b_PlayerR_StartRec.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerR_StartRec.TabIndex = 33;
+            this.b_PlayerR_StartRec.Text = "START Recording";
+            this.b_PlayerR_StartRec.UseVisualStyleBackColor = true;
+            // 
+            // b_PlayerR_SaveSnap
+            // 
+            this.b_PlayerR_SaveSnap.Location = new System.Drawing.Point(1284, 565);
+            this.b_PlayerR_SaveSnap.Name = "b_PlayerR_SaveSnap";
+            this.b_PlayerR_SaveSnap.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerR_SaveSnap.TabIndex = 34;
+            this.b_PlayerR_SaveSnap.Text = "Save Snapshot";
+            this.b_PlayerR_SaveSnap.UseVisualStyleBackColor = true;
+            this.b_PlayerR_SaveSnap.Click += new System.EventHandler(this.b_PlayerR_SaveSnap_Click);
+            // 
+            // b_PlayerR_Play
+            // 
+            this.b_PlayerR_Play.Location = new System.Drawing.Point(965, 778);
+            this.b_PlayerR_Play.Name = "b_PlayerR_Play";
+            this.b_PlayerR_Play.Size = new System.Drawing.Size(639, 23);
+            this.b_PlayerR_Play.TabIndex = 30;
+            this.b_PlayerR_Play.Text = "Play";
+            this.b_PlayerR_Play.UseVisualStyleBackColor = true;
+            this.b_PlayerR_Play.Click += new System.EventHandler(this.b_PlayerR_Play_Click);
+            // 
+            // VLCPlayer_L
+            // 
+            this.VLCPlayer_L.Enabled = true;
+            this.VLCPlayer_L.Location = new System.Drawing.Point(291, 8);
+            this.VLCPlayer_L.Name = "VLCPlayer_L";
+            this.VLCPlayer_L.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_L.OcxState")));
+            this.VLCPlayer_L.Size = new System.Drawing.Size(639, 512);
+            this.VLCPlayer_L.TabIndex = 0;
             // 
             // checkB_PlayerL_Manual
             // 
@@ -1676,7 +1665,7 @@ namespace BigBigLoader
             // 
             // b_PlayerL_Detach
             // 
-            this.b_PlayerL_Detach.Location = new System.Drawing.Point(758, 650);
+            this.b_PlayerL_Detach.Location = new System.Drawing.Point(610, 643);
             this.b_PlayerL_Detach.Name = "b_PlayerL_Detach";
             this.b_PlayerL_Detach.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerL_Detach.TabIndex = 8;
@@ -1685,7 +1674,7 @@ namespace BigBigLoader
             // 
             // b_PlayerL_StopRec
             // 
-            this.b_PlayerL_StopRec.Location = new System.Drawing.Point(758, 625);
+            this.b_PlayerL_StopRec.Location = new System.Drawing.Point(610, 618);
             this.b_PlayerL_StopRec.Name = "b_PlayerL_StopRec";
             this.b_PlayerL_StopRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerL_StopRec.TabIndex = 8;
@@ -1694,7 +1683,7 @@ namespace BigBigLoader
             // 
             // b_PlayerL_StartRec
             // 
-            this.b_PlayerL_StartRec.Location = new System.Drawing.Point(758, 599);
+            this.b_PlayerL_StartRec.Location = new System.Drawing.Point(610, 592);
             this.b_PlayerL_StartRec.Name = "b_PlayerL_StartRec";
             this.b_PlayerL_StartRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerL_StartRec.TabIndex = 8;
@@ -1703,7 +1692,7 @@ namespace BigBigLoader
             // 
             // b_PlayerL_SaveSnap
             // 
-            this.b_PlayerL_SaveSnap.Location = new System.Drawing.Point(758, 572);
+            this.b_PlayerL_SaveSnap.Location = new System.Drawing.Point(610, 565);
             this.b_PlayerL_SaveSnap.Name = "b_PlayerL_SaveSnap";
             this.b_PlayerL_SaveSnap.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerL_SaveSnap.TabIndex = 8;
@@ -1825,7 +1814,7 @@ namespace BigBigLoader
             // 
             // b_PlayerL_Play
             // 
-            this.b_PlayerL_Play.Location = new System.Drawing.Point(291, 771);
+            this.b_PlayerL_Play.Location = new System.Drawing.Point(291, 778);
             this.b_PlayerL_Play.Name = "b_PlayerL_Play";
             this.b_PlayerL_Play.Size = new System.Drawing.Size(639, 23);
             this.b_PlayerL_Play.TabIndex = 1;
@@ -1840,7 +1829,7 @@ namespace BigBigLoader
             this.tP_Settings.Location = new System.Drawing.Point(4, 22);
             this.tP_Settings.Name = "tP_Settings";
             this.tP_Settings.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Settings.Size = new System.Drawing.Size(1902, 964);
+            this.tP_Settings.Size = new System.Drawing.Size(1902, 1003);
             this.tP_Settings.TabIndex = 1;
             this.tP_Settings.Text = "Settings";
             this.tP_Settings.UseVisualStyleBackColor = true;
@@ -1914,7 +1903,6 @@ namespace BigBigLoader
             this.tB_Paths_sCFolder.Size = new System.Drawing.Size(198, 20);
             this.tB_Paths_sCFolder.TabIndex = 4;
             this.tB_Paths_sCFolder.TextChanged += new System.EventHandler(this.OnFinishedTypingScFolder);
-            this.tB_Paths_sCFolder.Leave += new System.EventHandler(this.PortbuttonClick);
             // 
             // l_Paths_sCFolder
             // 
@@ -1955,35 +1943,99 @@ namespace BigBigLoader
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1916, 996);
+            this.tabPage1.Size = new System.Drawing.Size(1916, 1035);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Firmware Upgrade";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.toolStripStatusLabel2,
+            this.toolStripStatusLabel3,
+            this.toolStripStatusLabel4,
+            this.toolStripStatusLabel5,
+            this.toolStripStatusLabel6});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 1022);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1924, 39);
+            this.statusStrip1.TabIndex = 19;
+            this.statusStrip1.Text = "statusStrip1";
+            this.statusStrip1.Visible = false;
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.AutoSize = false;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(140, 34);
+            this.toolStripStatusLabel1.Text = "  ";
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.AutoSize = false;
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(100, 34);
+            this.toolStripStatusLabel2.Text = "  ";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.AutoSize = false;
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(80, 34);
+            this.toolStripStatusLabel3.Text = "  ";
+            // 
+            // toolStripStatusLabel4
+            // 
+            this.toolStripStatusLabel4.AutoSize = false;
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(50, 34);
+            this.toolStripStatusLabel4.Text = "  ";
+            // 
+            // toolStripStatusLabel5
+            // 
+            this.toolStripStatusLabel5.AutoSize = false;
+            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(200, 34);
+            this.toolStripStatusLabel5.Text = "  ";
+            // 
+            // toolStripStatusLabel6
+            // 
+            this.toolStripStatusLabel6.Name = "toolStripStatusLabel6";
+            this.toolStripStatusLabel6.Size = new System.Drawing.Size(1339, 34);
+            this.toolStripStatusLabel6.Spring = true;
+            this.toolStripStatusLabel6.Text = "  ";
+            this.toolStripStatusLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1924, 1061);
+            this.ClientSize = new System.Drawing.Size(1659, 929);
             this.Controls.Add(this.tC_Main);
             this.Controls.Add(this.statusStrip1);
             this.Name = "MainForm";
             this.Text = "SSUtility V2.0";
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).EndInit();
             this.tC_Main.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tC_Control.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).EndInit();
+            this.gB_PlayerR_Simple.ResumeLayout(false);
+            this.gB_PlayerR_Simple.PerformLayout();
+            this.gB_PlayerR_Info.ResumeLayout(false);
             this.gB_PlayerR_Extended.ResumeLayout(false);
             this.gB_PlayerR_Extended.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).EndInit();
+            this.gB_PlayerL_Simple.ResumeLayout(false);
+            this.gB_PlayerL_Simple.PerformLayout();
+            this.gB_PLayerL_Info.ResumeLayout(false);
             this.gB_PlayerL_Extended.ResumeLayout(false);
             this.gB_PlayerL_Extended.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tB_PTZ_Speed)).EndInit();
             this.tC_Presets_Default.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
@@ -1998,6 +2050,8 @@ namespace BigBigLoader
             this.gB_Paths.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2005,12 +2059,6 @@ namespace BigBigLoader
 
 		private System.Windows.Forms.Button ResetMemorybutton;
 		private System.Windows.Forms.Button Abortbutton;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.Label CamNolabel;
 		private System.Windows.Forms.NumericUpDown CamNoUpDown;
 		private System.Windows.Forms.Label SNtext;
@@ -2018,7 +2066,6 @@ namespace BigBigLoader
 		private System.Windows.Forms.Button ClearLogbutton;
 		private System.Windows.Forms.Label Loglabel;
 		private System.Windows.Forms.TextBox LogtextBox;
-		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.Button Portbutton;
 		private System.Windows.Forms.ComboBox PortcomboBox;
 		private System.Windows.Forms.Label Portlabel;
@@ -2119,6 +2166,10 @@ namespace BigBigLoader
 			}
 			else 
 			{
+                if (PortcomboBox.Text == "" || this.PortcomboBox.SelectedItem == null) {
+                    MessageBox.Show("Port invalid!");
+                    return;
+                }
 				sline = "8N1";
 				this.serialPort1 = new System.IO.Ports.SerialPort(this.PortcomboBox.SelectedItem.ToString());
 				this.serialPort1.BaudRate = System.Convert.ToInt32(this.SpeedcomboBox.SelectedItem.ToString());
@@ -2573,8 +2624,6 @@ namespace BigBigLoader
         private Label l_Paths_sCCheck;
         private AxAXVLC.AxVLCPlugin2 VLCPlayer_L;
         private AxAXVLC.AxVLCPlugin2 VLCPlayer_R;
-        private Label l_PlayerR_SimpleAdr;
-        private TextBox tB_PlayerR_SimpleAdr;
         private GroupBox gB_PlayerR_Extended;
         private Label label3;
         private Label label4;
@@ -2596,5 +2645,18 @@ namespace BigBigLoader
         private Button b_PlayerR_StartRec;
         private Button b_PlayerR_SaveSnap;
         private Button b_PlayerR_Play;
+        private GroupBox gB_PlayerL_Simple;
+        private GroupBox gB_PLayerL_Info;
+        private GroupBox gB_PlayerR_Info;
+        private GroupBox gB_PlayerR_Simple;
+        private TextBox tB_PlayerR_SimpleAdr;
+        private Label l_PlayerR_SimpleAdr;
+        private StatusStrip statusStrip1;
+        private ToolStripStatusLabel toolStripStatusLabel2;
+        private ToolStripStatusLabel toolStripStatusLabel3;
+        private ToolStripStatusLabel toolStripStatusLabel4;
+        private ToolStripStatusLabel toolStripStatusLabel5;
+        private ToolStripStatusLabel toolStripStatusLabel6;
+        private ToolStripStatusLabel toolStripStatusLabel1;
     } // end of partial class MainForm
 } // end of namespace BigBigLoader
