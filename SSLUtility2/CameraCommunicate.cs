@@ -5,10 +5,13 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace BigBigLoader
-{
-    class CameraCommunicate
-    {
+namespace SSLUtility2 {
+
+    class CameraCommunicate {
+        public MainForm MainRef {
+            get;
+            set;
+        }
 
         static string failedConnectMsg = "Issue connecting to TCP Port\n" +
                     "Would you like to see more information?";

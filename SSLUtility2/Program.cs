@@ -9,7 +9,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace BigBigLoader
+namespace SSLUtility2
 {
     /// <summary>
     /// Class with program entry point.

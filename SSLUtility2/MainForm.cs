@@ -11,6 +11,7 @@
  * Form layout modelled on SSUTILITY Firmware tab for continuity
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -18,7 +19,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BigBigLoader
+namespace SSLUtility2
 {
     /// <summary>
     /// Description of MainForm.
@@ -29,6 +30,8 @@ namespace BigBigLoader
 
         D protocol = new D();
         public static MainForm m;
+        Recorder rec;
+
 
         public static string config = "config.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
@@ -110,7 +113,7 @@ namespace BigBigLoader
 
 
         public MainForm() {
-            m = this;
+
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
@@ -118,7 +121,6 @@ namespace BigBigLoader
             // Catch MainForm closing event to close Serial Port if it is Open
             this.FormClosing += new FormClosingEventHandler(MainForm_Closing);
 
-            StartupStuff();
 
             //
             // TODO: Add constructor code after the InitializeComponent() call.
@@ -141,6 +143,7 @@ namespace BigBigLoader
                                                         //}
                                                         //this.PortcomboBox.SelectedIndex = 0;
             mystopwatch1 = System.Diagnostics.Stopwatch.StartNew(); // Get stopwatch object and init and start
+            StartupStuff();
         } // end of MainForm()
 
         private void MainForm_Closing(Object sender, FormClosingEventArgs e) {
@@ -607,6 +610,15 @@ namespace BigBigLoader
             }
         }
 
+        public void StartRec(AxAXVLC.AxVLCPlugin2 player) {
+            rec = new Recorder(new Record("out.avi", 60,
+                SharpAvi.KnownFourCCs.Codecs.MotionJpeg, 100, player));
+        }
+
+        public void PauseRec() {
+            rec.Dispose();
+        }
+
         private uint MakeAdr() {
             if (cB_IPCon_Selected.Text == "Daylight") {
                 return 1;
@@ -703,11 +715,13 @@ namespace BigBigLoader
         }
 
         async Task StartupStuff() {
+            m = this;
+
             ConfigControl.SetDefaults();
 
             CheckCreateFile(config, appFolder);
             await ConfigControl.SearchForVarsAsync(appFolder + config);
-            foreach (PathVariable v in ConfigControl.varList) {
+            foreach (PathVar v in ConfigControl.varList) {
                 if (v.name == ConfigControl.ScreenshotFolderVar) {
                     scFolder = v.value;
                 }
@@ -726,6 +740,19 @@ namespace BigBigLoader
             DetachedVid.Show();
             DetachedVid.MainRef = this;
             return DetachedVid;
+        }
+
+        public bool StopStartRec(bool isPlaying, AxAXVLC.AxVLCPlugin2 player, Button control) {
+            if (isPlaying) {
+                control.Text = "START Recording";
+                isPlaying = false;
+                PauseRec();
+            } else {
+                control.Text = "STOP Recording";
+                StartRec(player);
+                isPlaying = true;
+            }
+            return isPlaying;
         }
 
         private void b_PlayerL_Play_Click(object sender, EventArgs e) {
@@ -1089,19 +1116,14 @@ namespace BigBigLoader
         private void b_PlayerL_Detach_Click(object sender, EventArgs e) {
             Detached d = DetachVid();
 
-            //int TypeIndex = cB_PlayerL_Type.SelectedIndex;
-            //bool Checked = checkB_PlayerL_Manual.Checked;
+            //foreach (Control c in gB_PlayerL_Extended.Controls) {
+            //    if (c is TextBox) {
+            //        ConfigControl.Append(c.Name + "::" + c.Text + "\n");
+            //    }
+            //}
 
-            //string RTSP = tB_PlayerL_SimpleAdr.Text;
-            //string IP = tB_PlayerL_Adr.Text;
-            //string Port = tB_PlayerL_Port.Text;
-            //string RTSPString = tB_PlayerL_RTSP.Text;
-            //string Buffer = tB_PlayerL_Buffering.Text;
-            //string User = tB_PlayerL_Username.Text;
-            //string Pass = tB_PlayerL_Password.Text;
             d.cB_PlayerD_Type.SelectedIndex = cB_PlayerL_Type.SelectedIndex;
             d.checkB_PlayerD_Manual.Checked = checkB_PlayerL_Manual.Checked;
-
             d.tB_PlayerD_SimpleAdr.Text = tB_PlayerL_SimpleAdr.Text;
             d.tB_PlayerD_Adr.Text = tB_PlayerL_Adr.Text;
             d.tB_PlayerD_Port.Text = tB_PlayerL_Port.Text;
@@ -1110,6 +1132,23 @@ namespace BigBigLoader
             d.tB_PlayerD_Username.Text = tB_PlayerL_Username.Text;
             d.tB_PlayerD_Password.Text = tB_PlayerL_Password.Text;
 
+        }
+
+        bool Lplaying = false;
+        bool Rplaying = false;
+
+        private void b_PlayerL_StartRec_Click(object sender, EventArgs e) {
+            Lplaying = StopStartRec(Lplaying, VLCPlayer_L, b_PlayerL_StartRec);
+        }
+        private void b_PlayerR_StartRec_Click(object sender, EventArgs e) {
+            Rplaying = StopStartRec(Rplaying, VLCPlayer_L, b_PlayerL_StartRec);
+        }
+
+        private void b_PlayerL_PauseRec_Click(object sender, EventArgs e) {
+            //pause
+        }
+        private void b_PlayerR_PauseRec_Click(object sender, EventArgs e) {
+            //pause
         }
 
         private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
@@ -1127,4 +1166,4 @@ namespace BigBigLoader
 
 
     } // end of class MainForm
-} // end of namespace BigBigLoader
+} // end of namespace SSLUtility2

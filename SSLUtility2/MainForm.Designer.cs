@@ -12,10 +12,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace BigBigLoader
-{
-	partial class MainForm
-	{
+namespace SSLUtility2 {
+
+	partial class MainForm {
 
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
@@ -114,8 +113,7 @@ namespace BigBigLoader
             this.l_PlayerL_SimpleAdr = new System.Windows.Forms.Label();
             this.VLCPlayer_R = new AxAXVLC.AxVLCPlugin2();
             this.checkB_PlayerR_Manual = new System.Windows.Forms.CheckBox();
-            this.b_PlayerR_Detach = new System.Windows.Forms.Button();
-            this.b_PlayerR_StopRec = new System.Windows.Forms.Button();
+            this.b_PlayerR_PauseRec = new System.Windows.Forms.Button();
             this.b_PlayerR_StartRec = new System.Windows.Forms.Button();
             this.b_PlayerR_SaveSnap = new System.Windows.Forms.Button();
             this.b_PlayerR_Play = new System.Windows.Forms.Button();
@@ -182,7 +180,7 @@ namespace BigBigLoader
             this.l_PTZCon = new System.Windows.Forms.Label();
             this.l_IPCon = new System.Windows.Forms.Label();
             this.b_PlayerL_Detach = new System.Windows.Forms.Button();
-            this.b_PlayerL_StopRec = new System.Windows.Forms.Button();
+            this.b_PlayerL_PauseRec = new System.Windows.Forms.Button();
             this.b_PlayerL_StartRec = new System.Windows.Forms.Button();
             this.b_PlayerL_SaveSnap = new System.Windows.Forms.Button();
             this.b_Presets_Learn = new System.Windows.Forms.Button();
@@ -199,11 +197,11 @@ namespace BigBigLoader
             this.tP_Settings = new System.Windows.Forms.TabPage();
             this.l_Paths_sCCheck = new System.Windows.Forms.Label();
             this.gB_Paths = new System.Windows.Forms.GroupBox();
+            this.tB_Paths_sCFolder = new System.Windows.Forms.TextBox();
             this.b_Settings_Apply = new System.Windows.Forms.Button();
             this.b_Settings_Default = new System.Windows.Forms.Button();
             this.b_Paths_sCBrowse = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.tB_Paths_sCFolder = new System.Windows.Forms.TextBox();
             this.l_Paths_sCFolder = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -530,8 +528,7 @@ namespace BigBigLoader
             this.tabPage3.Controls.Add(this.gB_PlayerL_Simple);
             this.tabPage3.Controls.Add(this.VLCPlayer_R);
             this.tabPage3.Controls.Add(this.checkB_PlayerR_Manual);
-            this.tabPage3.Controls.Add(this.b_PlayerR_Detach);
-            this.tabPage3.Controls.Add(this.b_PlayerR_StopRec);
+            this.tabPage3.Controls.Add(this.b_PlayerR_PauseRec);
             this.tabPage3.Controls.Add(this.b_PlayerR_StartRec);
             this.tabPage3.Controls.Add(this.b_PlayerR_SaveSnap);
             this.tabPage3.Controls.Add(this.b_PlayerR_Play);
@@ -558,7 +555,7 @@ namespace BigBigLoader
             this.tabPage3.Controls.Add(this.l_PTZCon);
             this.tabPage3.Controls.Add(this.l_IPCon);
             this.tabPage3.Controls.Add(this.b_PlayerL_Detach);
-            this.tabPage3.Controls.Add(this.b_PlayerL_StopRec);
+            this.tabPage3.Controls.Add(this.b_PlayerL_PauseRec);
             this.tabPage3.Controls.Add(this.b_PlayerL_StartRec);
             this.tabPage3.Controls.Add(this.b_PlayerL_SaveSnap);
             this.tabPage3.Controls.Add(this.b_Presets_Learn);
@@ -951,32 +948,25 @@ namespace BigBigLoader
             this.checkB_PlayerR_Manual.UseVisualStyleBackColor = true;
             this.checkB_PlayerR_Manual.CheckedChanged += new System.EventHandler(this.checkB_PlayerR_Manual_CheckedChanged);
             // 
-            // b_PlayerR_Detach
+            // b_PlayerR_PauseRec
             // 
-            this.b_PlayerR_Detach.Location = new System.Drawing.Point(1281, 654);
-            this.b_PlayerR_Detach.Name = "b_PlayerR_Detach";
-            this.b_PlayerR_Detach.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_Detach.TabIndex = 31;
-            this.b_PlayerR_Detach.Text = "Detach Video";
-            this.b_PlayerR_Detach.UseVisualStyleBackColor = true;
-            // 
-            // b_PlayerR_StopRec
-            // 
-            this.b_PlayerR_StopRec.Location = new System.Drawing.Point(1281, 629);
-            this.b_PlayerR_StopRec.Name = "b_PlayerR_StopRec";
-            this.b_PlayerR_StopRec.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_StopRec.TabIndex = 32;
-            this.b_PlayerR_StopRec.Text = "STOP Recording";
-            this.b_PlayerR_StopRec.UseVisualStyleBackColor = true;
+            this.b_PlayerR_PauseRec.Location = new System.Drawing.Point(1281, 644);
+            this.b_PlayerR_PauseRec.Name = "b_PlayerR_PauseRec";
+            this.b_PlayerR_PauseRec.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerR_PauseRec.TabIndex = 32;
+            this.b_PlayerR_PauseRec.Text = "PAUSE Recording";
+            this.b_PlayerR_PauseRec.UseVisualStyleBackColor = true;
+            this.b_PlayerR_PauseRec.Click += new System.EventHandler(this.b_PlayerR_PauseRec_Click);
             // 
             // b_PlayerR_StartRec
             // 
-            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1281, 603);
+            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1281, 615);
             this.b_PlayerR_StartRec.Name = "b_PlayerR_StartRec";
             this.b_PlayerR_StartRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerR_StartRec.TabIndex = 33;
             this.b_PlayerR_StartRec.Text = "START Recording";
             this.b_PlayerR_StartRec.UseVisualStyleBackColor = true;
+            this.b_PlayerR_StartRec.Click += new System.EventHandler(this.b_PlayerR_StartRec_Click);
             // 
             // b_PlayerR_SaveSnap
             // 
@@ -1642,31 +1632,33 @@ namespace BigBigLoader
             // 
             // b_PlayerL_Detach
             // 
-            this.b_PlayerL_Detach.Location = new System.Drawing.Point(607, 654);
+            this.b_PlayerL_Detach.Location = new System.Drawing.Point(17, 390);
             this.b_PlayerL_Detach.Name = "b_PlayerL_Detach";
-            this.b_PlayerL_Detach.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerL_Detach.Size = new System.Drawing.Size(239, 92);
             this.b_PlayerL_Detach.TabIndex = 8;
             this.b_PlayerL_Detach.Text = "Detach Video";
             this.b_PlayerL_Detach.UseVisualStyleBackColor = true;
             this.b_PlayerL_Detach.Click += new System.EventHandler(this.b_PlayerL_Detach_Click);
             // 
-            // b_PlayerL_StopRec
+            // b_PlayerL_PauseRec
             // 
-            this.b_PlayerL_StopRec.Location = new System.Drawing.Point(607, 629);
-            this.b_PlayerL_StopRec.Name = "b_PlayerL_StopRec";
-            this.b_PlayerL_StopRec.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerL_StopRec.TabIndex = 8;
-            this.b_PlayerL_StopRec.Text = "STOP Recording";
-            this.b_PlayerL_StopRec.UseVisualStyleBackColor = true;
+            this.b_PlayerL_PauseRec.Location = new System.Drawing.Point(607, 647);
+            this.b_PlayerL_PauseRec.Name = "b_PlayerL_PauseRec";
+            this.b_PlayerL_PauseRec.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerL_PauseRec.TabIndex = 8;
+            this.b_PlayerL_PauseRec.Text = "PAUSE Recording";
+            this.b_PlayerL_PauseRec.UseVisualStyleBackColor = true;
+            this.b_PlayerL_PauseRec.Click += new System.EventHandler(this.b_PlayerL_PauseRec_Click);
             // 
             // b_PlayerL_StartRec
             // 
-            this.b_PlayerL_StartRec.Location = new System.Drawing.Point(607, 603);
+            this.b_PlayerL_StartRec.Location = new System.Drawing.Point(607, 618);
             this.b_PlayerL_StartRec.Name = "b_PlayerL_StartRec";
             this.b_PlayerL_StartRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerL_StartRec.TabIndex = 8;
             this.b_PlayerL_StartRec.Text = "START Recording";
             this.b_PlayerL_StartRec.UseVisualStyleBackColor = true;
+            this.b_PlayerL_StartRec.Click += new System.EventHandler(this.b_PlayerL_StartRec_Click);
             // 
             // b_PlayerL_SaveSnap
             // 
@@ -1822,17 +1814,24 @@ namespace BigBigLoader
             // 
             // gB_Paths
             // 
+            this.gB_Paths.Controls.Add(this.tB_Paths_sCFolder);
             this.gB_Paths.Controls.Add(this.b_Settings_Apply);
             this.gB_Paths.Controls.Add(this.b_Settings_Default);
             this.gB_Paths.Controls.Add(this.b_Paths_sCBrowse);
             this.gB_Paths.Controls.Add(this.label1);
-            this.gB_Paths.Controls.Add(this.tB_Paths_sCFolder);
             this.gB_Paths.Controls.Add(this.l_Paths_sCFolder);
             this.gB_Paths.Location = new System.Drawing.Point(17, 6);
             this.gB_Paths.Name = "gB_Paths";
             this.gB_Paths.Size = new System.Drawing.Size(428, 194);
             this.gB_Paths.TabIndex = 27;
             this.gB_Paths.TabStop = false;
+            // 
+            // tB_Paths_sCFolder
+            // 
+            this.tB_Paths_sCFolder.Location = new System.Drawing.Point(109, 45);
+            this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
+            this.tB_Paths_sCFolder.Size = new System.Drawing.Size(198, 20);
+            this.tB_Paths_sCFolder.TabIndex = 16;
             // 
             // b_Settings_Apply
             // 
@@ -1873,14 +1872,6 @@ namespace BigBigLoader
             this.label1.Size = new System.Drawing.Size(55, 20);
             this.label1.TabIndex = 12;
             this.label1.Text = "Paths";
-            // 
-            // tB_Paths_sCFolder
-            // 
-            this.tB_Paths_sCFolder.Location = new System.Drawing.Point(109, 45);
-            this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
-            this.tB_Paths_sCFolder.Size = new System.Drawing.Size(198, 20);
-            this.tB_Paths_sCFolder.TabIndex = 4;
-            this.tB_Paths_sCFolder.TextChanged += new System.EventHandler(this.OnFinishedTypingScFolder);
             // 
             // l_Paths_sCFolder
             // 
@@ -2497,7 +2488,7 @@ namespace BigBigLoader
         private TabControl tC_Control;
         private TabPage tabPage3;
         private TabPage tP_Settings;
-        private Button b_PlayerL_StopRec;
+        private Button b_PlayerL_PauseRec;
         private Button b_PlayerL_StartRec;
         private Button b_PlayerL_SaveSnap;
         private Button b_PTZ_Down;
@@ -2573,7 +2564,6 @@ namespace BigBigLoader
         public Label l_IPCon_Connected;
         private CheckBox checkB_PlayerL_Manual;
         private GroupBox gB_Paths;
-        public TextBox tB_Paths_sCFolder;
         private Label l_Paths_sCFolder;
         private Label label1;
         private Button b_Paths_sCBrowse;
@@ -2598,8 +2588,7 @@ namespace BigBigLoader
         private TextBox tB_PlayerR_Password;
         private ComboBox cB_PlayerR_Type;
         private CheckBox checkB_PlayerR_Manual;
-        private Button b_PlayerR_Detach;
-        private Button b_PlayerR_StopRec;
+        private Button b_PlayerR_PauseRec;
         private Button b_PlayerR_StartRec;
         private Button b_PlayerR_SaveSnap;
         private Button b_PlayerR_Play;
@@ -2616,7 +2605,7 @@ namespace BigBigLoader
         private GroupBox gB_PlayerL_Simple;
         private TextBox tB_PlayerL_SimpleAdr;
         private Label l_PlayerL_SimpleAdr;
-        private GroupBox gB_PlayerL_Extended;
+        public GroupBox gB_PlayerL_Extended;
         private Label l_PlayerL_Type;
         private Label l_PlayerL_RTSP;
         private TextBox tB_PlayerL_Adr;
@@ -2632,5 +2621,6 @@ namespace BigBigLoader
         private TextBox tB_PlayerL_Password;
         private ComboBox cB_PlayerL_Type;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        public TextBox tB_Paths_sCFolder;
     } // end of partial class MainForm
-} // end of namespace BigBigLoader
+} // end of namespace SSLUtility2

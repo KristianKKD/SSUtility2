@@ -26,7 +26,7 @@
  * ------------------------------------------------------------------------------*/
 using System;
 
-namespace BigBigLoader
+namespace SSLUtility2
 {
     /// <summary>
     /// dot.NET Implementation of Pelco D Protocol

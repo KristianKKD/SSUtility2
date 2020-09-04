@@ -1,7 +1,6 @@
-﻿namespace BigBigLoader
-{
-    partial class Detached
-    {
+﻿namespace SSLUtility2 {
+
+    partial class Detached {
         /// <summary>
         /// Required designer variable.
         /// </summary>
