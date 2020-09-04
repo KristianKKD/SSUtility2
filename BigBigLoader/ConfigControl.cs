@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BigBigLoader {
-    class ConfigControl {
+namespace BigBigLoader
+{
+    class ConfigControl
+    {
 
         public static string DefScFolder;
 
         const string varString = "v";
         public const string ScreenshotFolderVar = "ScreenshotFolder";
 
-        public static List<PathVariable> varList { get;
-            set; }
+        public static List<PathVariable> varList {
+            get;
+            set;
+        }
 
         public static async Task SetDefaults() {
             DefScFolder = MainForm.scFolder;
@@ -62,10 +62,11 @@ namespace BigBigLoader {
 
             return new PathVariable(name, text);
         }
-      
+
     }
 
-    class PathVariable {
+    class PathVariable
+    {
 
         public string name;
         public string value;

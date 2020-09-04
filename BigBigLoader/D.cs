@@ -33,7 +33,7 @@ namespace BigBigLoader
     /// </summary>
     public class D
     {
-      
+
 
 
         #region Pan and Tilt Commands
@@ -68,27 +68,64 @@ namespace BigBigLoader
         #endregion
 
         #region Enums
-        public enum PresetAction { Set, Clear, Goto }
-        public enum AuxAction { Set = 0x09, Clear = 0x0B }
-        public enum Action { Start, Stop }
-        public enum LensSpeed { Low = 0x00, Medium = 0x01, High = 0x02, Turbo = 0x03 }
-        public enum PatternAction { Start, Stop, Run }
-        public enum SwitchAction { Auto = 0x00, On = 0x01, Off = 0x02 }
-        public enum Switch { On = 0x01, Off = 0x02 }
-        public enum Focus { Near = FocusNear, Far = FocusFar }
-        public enum Zoom { Wide = ZoomWide, Tele = ZoomTele }
-        public enum Tilt { Up = TiltUp, Down = TiltDown, Null }
-        public enum Pan { Left = PanLeft, Right = PanRight }
-        public enum Scan { Auto, Manual }
-        public enum Iris { Open = IrisOpen, Close = IrisClose }
+        public enum PresetAction
+        {
+            Set, Clear, Goto
+        }
+        public enum AuxAction
+        {
+            Set = 0x09, Clear = 0x0B
+        }
+        public enum Action
+        {
+            Start, Stop
+        }
+        public enum LensSpeed
+        {
+            Low = 0x00, Medium = 0x01, High = 0x02, Turbo = 0x03
+        }
+        public enum PatternAction
+        {
+            Start, Stop, Run
+        }
+        public enum SwitchAction
+        {
+            Auto = 0x00, On = 0x01, Off = 0x02
+        }
+        public enum Switch
+        {
+            On = 0x01, Off = 0x02
+        }
+        public enum Focus
+        {
+            Near = FocusNear, Far = FocusFar
+        }
+        public enum Zoom
+        {
+            Wide = ZoomWide, Tele = ZoomTele
+        }
+        public enum Tilt
+        {
+            Up = TiltUp, Down = TiltDown, Null
+        }
+        public enum Pan
+        {
+            Left = PanLeft, Right = PanRight
+        }
+        public enum Scan
+        {
+            Auto, Manual
+        }
+        public enum Iris
+        {
+            Open = IrisOpen, Close = IrisClose
+        }
         #endregion
 
         #region Extended Command Set
-        public byte[] Preset(uint deviceAddress, byte preset, PresetAction action)
-        {
+        public byte[] Preset(uint deviceAddress, byte preset, PresetAction action) {
             byte m_action;
-            switch (action)
-            {
+            switch (action) {
                 case PresetAction.Set:
                     m_action = 0x03;
                     break;
@@ -105,18 +142,15 @@ namespace BigBigLoader
             return Message.GetMessage(deviceAddress, 0x00, m_action, 0x00, preset);
         }
 
-        public byte[] Flip(uint deviceAddress)
-        {
+        public byte[] Flip(uint deviceAddress) {
             return Message.GetMessage(deviceAddress, 0x00, 0x07, 0x00, 0x21);
         }
 
-        public byte[] ZeroPanPosition(uint deviceAddress)
-        {
+        public byte[] ZeroPanPosition(uint deviceAddress) {
             return Message.GetMessage(deviceAddress, 0x00, 0x07, 0x00, 0x22);
         }
 
-        public byte[] SetAuxiliary(uint deviceAddress, byte auxiliaryID, AuxAction action)
-        {
+        public byte[] SetAuxiliary(uint deviceAddress, byte auxiliaryID, AuxAction action) {
             if (auxiliaryID < 0x00)
                 auxiliaryID = 0x00;
             else if (auxiliaryID > 0x08)
@@ -124,12 +158,10 @@ namespace BigBigLoader
             return Message.GetMessage(deviceAddress, 0x00, (byte)action, 0x00, auxiliaryID);
         }
 
-        public byte[] RemoteReset(uint deviceAddress)
-        {
+        public byte[] RemoteReset(uint deviceAddress) {
             return Message.GetMessage(deviceAddress, 0x00, 0x0F, 0x00, 0x00);
         }
-        public byte[] Zone(uint deviceAddress, byte zone, Action action)
-        {
+        public byte[] Zone(uint deviceAddress, byte zone, Action action) {
             if (zone < 0x01 & zone > 0x08)
                 throw new Exception("Zone value should be between 0x01 and 0x08 include");
             byte m_action;
@@ -141,8 +173,7 @@ namespace BigBigLoader
             return Message.GetMessage(deviceAddress, 0x00, m_action, 0x00, zone);
         }
 
-        public byte[] WriteToScreen(uint deviceAddress, string text)
-        {
+        public byte[] WriteToScreen(uint deviceAddress, string text) {
             if (text.Length > 40)
                 text = text.Remove(40, text.Length - 40);
             System.Text.Encoding encoding = System.Text.Encoding.ASCII;
@@ -151,8 +182,7 @@ namespace BigBigLoader
             byte m_scrPosition;
             byte m_ASCIIchr;
 
-            foreach (char ch in text)
-            {
+            foreach (char ch in text) {
                 m_scrPosition = Convert.ToByte(i / 7);
                 m_ASCIIchr = Convert.ToByte(ch);
                 Array.Copy(Message.GetMessage(deviceAddress, 0x00, 0x15, m_scrPosition, m_ASCIIchr), 0, m_bytes, i, 7);
@@ -162,20 +192,17 @@ namespace BigBigLoader
             return m_bytes;
         }
 
-        public byte[] ClearScreen(uint deviceAddress)
-        {
+        public byte[] ClearScreen(uint deviceAddress) {
             return Message.GetMessage(deviceAddress, 0x00, 0x17, 0x00, 0x00);
         }
 
-        public byte[] AlarmAcknowledge(uint deviceAddress, uint alarmID)
-        {
+        public byte[] AlarmAcknowledge(uint deviceAddress, uint alarmID) {
             if (alarmID < 1 & alarmID > 8)
                 throw new Exception("Only 8 alarms allowed for Pelco P implementation");
             return Message.GetMessage(deviceAddress, 0x00, 0x19, 0x00, Convert.ToByte(alarmID));
         }
 
-        public byte[] ZoneScan(uint deviceAddress, Action action)
-        {
+        public byte[] ZoneScan(uint deviceAddress, Action action) {
             byte m_action;
             if (action == Action.Start)
                 m_action = 0x1B;
@@ -184,11 +211,9 @@ namespace BigBigLoader
             return Message.GetMessage(deviceAddress, 0x00, m_action, 0x00, 0x00);
         }
 
-        public byte[] Pattern(uint deviceAddress, PatternAction action)
-        {
+        public byte[] Pattern(uint deviceAddress, PatternAction action) {
             byte m_action;
-            switch (action)
-            {
+            switch (action) {
                 case PatternAction.Start:
                     m_action = 0x1F;
                     break;
@@ -205,81 +230,64 @@ namespace BigBigLoader
             return Message.GetMessage(deviceAddress, 0x00, m_action, 0x00, 0x00);
         }
 
-        public byte[] SetZoomLensSpeed(uint deviceAddress, LensSpeed speed)
-        {
+        public byte[] SetZoomLensSpeed(uint deviceAddress, LensSpeed speed) {
             return Message.GetMessage(deviceAddress, 0x00, 0x25, 0x00, (byte)speed);
         }
 
-        public byte[] SetFocusLensSpeed(uint deviceAddress, LensSpeed speed)
-        {
+        public byte[] SetFocusLensSpeed(uint deviceAddress, LensSpeed speed) {
             return Message.GetMessage(deviceAddress, 0x00, 0x27, 0x00, (byte)speed);
         }
 
-        public byte[] ResetCamera(uint deviceAddress)
-        {
+        public byte[] ResetCamera(uint deviceAddress) {
             return Message.GetMessage(deviceAddress, 0x00, 0x29, 0x00, 0x00);
         }
-        public byte[] AutoFocus(uint deviceAddress, SwitchAction action)
-        {
+        public byte[] AutoFocus(uint deviceAddress, SwitchAction action) {
             return Message.GetMessage(deviceAddress, 0x00, 0x2B, 0x00, (byte)action);
         }
-        public byte[] AutoIris(uint deviceAddress, SwitchAction action)
-        {
+        public byte[] AutoIris(uint deviceAddress, SwitchAction action) {
             return Message.GetMessage(deviceAddress, 0x00, 0x2D, 0x00, (byte)action);
         }
-        public byte[] AGC(uint deviceAddress, SwitchAction action)
-        {
+        public byte[] AGC(uint deviceAddress, SwitchAction action) {
             return Message.GetMessage(deviceAddress, 0x00, 0x2F, 0x00, (byte)action);
         }
-        public byte[] BackLightCompensation(uint deviceAddress, Switch action)
-        {
+        public byte[] BackLightCompensation(uint deviceAddress, Switch action) {
             return Message.GetMessage(deviceAddress, 0x00, 0x31, 0x00, (byte)action);
         }
-        public byte[] AutoWhiteBalance(uint deviceAddress, Switch action)
-        {
+        public byte[] AutoWhiteBalance(uint deviceAddress, Switch action) {
             return Message.GetMessage(deviceAddress, 0x00, 0x33, 0x00, (byte)action);
         }
 
-        public byte[] EnableDevicePhaseDelayMode(uint deviceAddress)
-        {
+        public byte[] EnableDevicePhaseDelayMode(uint deviceAddress) {
             return Message.GetMessage(deviceAddress, 0x00, 0x35, 0x00, 0x00);
         }
-        public byte[] SetShutterSpeed(uint deviceAddress, byte speed)
-        {
+        public byte[] SetShutterSpeed(uint deviceAddress, byte speed) {
             return Message.GetMessage(deviceAddress, 0x00, 0x37, speed, speed);//Not sure about
         }
-        public byte[] AdjustLineLockPhaseDelay(uint deviceAddress)
-        {
+        public byte[] AdjustLineLockPhaseDelay(uint deviceAddress) {
             throw new Exception("Did not implemented");
             return Message.GetMessage(deviceAddress, 0x00, 0x39, 0x00, 0x00);
         }
-        public byte[] AdjustWhiteBalanceRB(uint deviceAddress)
-        {
+        public byte[] AdjustWhiteBalanceRB(uint deviceAddress) {
             throw new Exception("Did not implemented");
             return Message.GetMessage(deviceAddress, 0x00, 0x3B, 0x00, 0x00);
         }
-        public byte[] AdjustWhiteBalanceMG(uint deviceAddress)
-        {
+        public byte[] AdjustWhiteBalanceMG(uint deviceAddress) {
             throw new Exception("Did not implemented");
             return Message.GetMessage(deviceAddress, 0x00, 0x3D, 0x00, 0x00);
         }
-        public byte[] AdjustGain(uint deviceAddress)
-        {
+        public byte[] AdjustGain(uint deviceAddress) {
             throw new Exception("Did not implemented");
             return Message.GetMessage(deviceAddress, 0x00, 0x3F, 0x00, 0x00);
         }
-        public byte[] AdjustAutoIrisLevel(uint deviceAddress)
-        {
+        public byte[] AdjustAutoIrisLevel(uint deviceAddress) {
             throw new Exception("Did not implemented");
             return Message.GetMessage(deviceAddress, 0x00, 0x41, 0x00, 0x00);
         }
-        public byte[] AdjustAutoIrisPeakValue(uint deviceAddress)
-        {
+        public byte[] AdjustAutoIrisPeakValue(uint deviceAddress) {
             throw new Exception("Did not implemented");
             return Message.GetMessage(deviceAddress, 0x00, 0x43, 0x00, 0x00);
         }
-        public byte[] Query(uint deviceAddress)
-        {
+        public byte[] Query(uint deviceAddress) {
             throw new Exception("Did not implemented");
             return Message.GetMessage(deviceAddress, 0x00, 0x45, 0x00, 0x00);
         }
@@ -287,8 +295,7 @@ namespace BigBigLoader
 
         #region Base Command Set
 
-        public byte[] CameraSwitch(uint deviceAddress, Switch action)
-        {
+        public byte[] CameraSwitch(uint deviceAddress, Switch action) {
             byte m_action = CameraOnOff;
             if (action == Switch.On)
                 m_action = CameraOnOff + Sense;
@@ -296,26 +303,22 @@ namespace BigBigLoader
 
         }
 
-        public byte[] CameraIrisSwitch(uint deviceAddress, Iris action)
-        {
+        public byte[] CameraIrisSwitch(uint deviceAddress, Iris action) {
             return Message.GetMessage(deviceAddress, (byte)action, 0x00, 0x00, 0x00);
         }
 
-        public byte[] CameraFocus(uint deviceAddress, Focus action)
-        {
+        public byte[] CameraFocus(uint deviceAddress, Focus action) {
             if (action == Focus.Near)
                 return Message.GetMessage(deviceAddress, (byte)action, 0x00, 0x00, 0x00);
             else
                 return Message.GetMessage(deviceAddress, 0x00, (byte)action, 0x00, 0x00);
         }
 
-        public byte[] CameraZoom(uint deviceAddress, Zoom action)
-        {
+        public byte[] CameraZoom(uint deviceAddress, Zoom action) {
             return Message.GetMessage(deviceAddress, 0x00, (byte)action, 0x00, 0x00);
         }
 
-        public byte[] CameraTilt(uint deviceAddress, Tilt action, uint speed)
-        {
+        public byte[] CameraTilt(uint deviceAddress, Tilt action, uint speed) {
             if (speed < TiltSpeedMin)
                 speed = TiltSpeedMin;
             if (speed > TiltSpeedMax)
@@ -324,8 +327,7 @@ namespace BigBigLoader
             return Message.GetMessage(deviceAddress, 0x00, (byte)action, 0x00, (byte)speed);
         }
 
-        public byte[] CameraPan(uint deviceAddress, Pan action, uint speed)
-        {
+        public byte[] CameraPan(uint deviceAddress, Pan action, uint speed) {
             if (speed < PanSpeedMin)
                 speed = PanSpeedMin;
             if (speed > PanSpeedMax)
@@ -334,8 +336,7 @@ namespace BigBigLoader
             return Message.GetMessage(deviceAddress, 0x00, (byte)action, (byte)speed, 0x00);
         }
 
-        public byte[] CameraPanTilt(uint deviceAddress, Pan panAction, uint panSpeed, Tilt tiltAction, uint tiltSpeed)
-        {
+        public byte[] CameraPanTilt(uint deviceAddress, Pan panAction, uint panSpeed, Tilt tiltAction, uint tiltSpeed) {
             byte[] m_bytes = new byte[8];
             byte[] m_tiltMessage = CameraTilt(deviceAddress, tiltAction, tiltSpeed);
             byte[] m_panMessage = CameraPan(deviceAddress, panAction, panSpeed);
@@ -353,13 +354,11 @@ namespace BigBigLoader
 
         }
 
-        public byte[] CameraStop(uint deviceAddress)
-        {
+        public byte[] CameraStop(uint deviceAddress) {
             return Message.GetMessage(deviceAddress, 0x00, 0x00, 0x00, 0x00);
         }
 
-        public byte[] CameraScan(uint deviceAddress, Scan scan)
-        {
+        public byte[] CameraScan(uint deviceAddress, Scan scan) {
             byte m_byte = AutoManualScan;
             if (scan == Scan.Auto)
                 m_byte = AutoManualScan + Sense;
@@ -381,8 +380,7 @@ namespace BigBigLoader
             public static byte Command1, Command2, Data1, Data2;
             public static byte STX = 0xFF;
 
-            public static byte[] GetMessage(uint address, byte command1, byte command2, byte data1, byte data2)
-            {
+            public static byte[] GetMessage(uint address, byte command1, byte command2, byte data1, byte data2) {
                 if (address < 1 & address > 256)
                     throw new Exception("Protocol Pelco D support 256 devices only");
 
