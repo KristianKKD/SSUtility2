@@ -88,7 +88,7 @@ namespace SSLUtility2 {
             videoStream = Params.CreateVideoStream(writer);
             // Set only name. Other properties were when creating stream, 
             // either explicitly by arguments or implicitly by the encoder used
-            videoStream.Name = "Captura";
+            videoStream.Name = "SilentSentinelRecording";
 
             screenThread = new Thread(RecordScreen) {
                 Name = typeof(Recorder).Name + ".RecordScreen",

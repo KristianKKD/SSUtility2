@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,11 +33,13 @@ namespace SSLUtility2
         public static MainForm m;
         Recorder rec;
 
-
         public static string config = "config.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
         public static string scFolder = appFolder + @"Screenshots\";
-        public static string lastAdr;
+        public static string vFolder = appFolder + @"Videos\";
+        public static string vFileName = "VideoCapture";
+        public static string scFileName = "ScreenCapture";
+
 
         public static byte Address;
         public static byte CheckSum;
@@ -601,6 +604,17 @@ namespace SSLUtility2
 
         /////////////////////////////////////
 
+        async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
+            if (tb.Text.Length < 1) {
+                tb.Text = appFolder;
+                return false;
+            }
+            if (ConfigControl.CheckIfExists(tb, linkLabel).Result) {
+                return true;
+            }
+            return false;
+        }
+
         public static void ShowError(string message, string caption, string error) {
             DialogResult d = MessageBox.Show(message, caption,
                                 MessageBoxButtons.YesNo,
@@ -611,8 +625,9 @@ namespace SSLUtility2
         }
 
         public void StartRec(AxAXVLC.AxVLCPlugin2 player) {
-            rec = new Recorder(new Record("out.avi", 24,
-                SharpAvi.KnownFourCCs.Codecs.MotionJpeg, 100, player));
+            rec = new Recorder(new Record(tB_Paths_vFolder.Text + vFileName +
+                (Directory.GetFiles(scFolder).Length + 1) + ".avi", 10,
+                 SharpAvi.KnownFourCCs.Codecs.MotionJpeg, 1, player));//add quality and framerate changing too 
         }
 
         public void StopRec() {
@@ -687,7 +702,7 @@ namespace SSLUtility2
         }
 
         public async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
-            var imagePath = scFolder + @"\Capture" + (Directory.GetFiles(scFolder).Length + 1) + ".jpg";
+            var imagePath = scFolder + @"\" + scFileName + (Directory.GetFiles(scFolder).Length + 1) + ".jpg";
 
             Image bmp = new Bitmap(player.Width, player.Height);
             Graphics gfx = Graphics.FromImage(bmp);
@@ -699,7 +714,22 @@ namespace SSLUtility2
             MessageBox.Show("Image saved : " + scFolder);
         }
 
-        static void CheckCreateFile(string fileName, string folderName = null) {
+        static async Task<bool> CheckIfNameValid(char[] nameArray) {
+            foreach (Char c in nameArray) {
+                foreach (Char symbol in Path.GetInvalidFileNameChars()) {
+                    if (c == symbol && c.ToString() != ":" && c.ToString() != "\\") {
+                        ShowError("Invalid character detected, Show more?", "Cannot create file",
+                        "Do not use invalid symbols in file names.\nInvalid character found: " + c);
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        static async Task CheckCreateFile(string fileName, string folderName = null) {
+            CheckIfNameValid((fileName + folderName).ToCharArray());
+
             if (folderName != null) {
                 if (!Directory.Exists(folderName)) {
                     Directory.CreateDirectory(folderName);
@@ -720,19 +750,34 @@ namespace SSLUtility2
             ConfigControl.SetDefaults();
 
             CheckCreateFile(config, appFolder);
+            CheckCreateFile(null, scFolder);
+            CheckCreateFile(null, vFolder);
             await ConfigControl.SearchForVarsAsync(appFolder + config);
             foreach (PathVar v in ConfigControl.varList) {
-                if (v.name == ConfigControl.ScreenshotFolderVar) {
-                    scFolder = v.value;
+                switch (v.name) {
+                    case ConfigControl.screenshotFolderVar:
+                        scFolder = v.value;
+                        break;
+                    case ConfigControl.videoFolderVar:
+                        vFolder = v.value;
+                        break;
+                    case ConfigControl.scFileNVar:
+                        scFileName = v.value;
+                        break;
+                    case ConfigControl.videoFileNVar:
+                        vFileName = v.value;
+                        break;
                 }
             }
-            CheckCreateFile(config, scFolder);
 
-            ApplySettingText();
+            PopulateSettingText();
         }
 
-        public async Task ApplySettingText() {
+        public async Task PopulateSettingText() {
             tB_Paths_sCFolder.Text = scFolder;
+            tB_Paths_vFolder.Text = vFolder;
+            tB_Rec_vFileN.Text = vFileName;
+            tB_Rec_scFileN.Text = scFileName;
         }
 
         Detached DetachVid() {
@@ -1105,12 +1150,14 @@ namespace SSLUtility2
         }
 
         private void OnFinishedTypingScFolder(object sender, EventArgs e) {
-            if (tB_Paths_sCFolder.Text.Length < 1) {
-                tB_Paths_sCFolder.Text = appFolder;
-                return;
-            }
-            if (ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
+            if (CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
                 scFolder = tB_Paths_sCFolder.Text;
+            }
+        }
+
+        private void OnFinishedTypingVFolder(object sender, EventArgs e) {
+            if (CheckFinishedTypingPath(tB_Paths_vFolder, l_Paths_vCheck).Result) {
+                vFolder = tB_Paths_vFolder.Text;
             }
         }
 
@@ -1151,6 +1198,26 @@ namespace SSLUtility2
             //pause
         }
 
+        private void b_Paths_vBrowse_Click(object sender, EventArgs e) {
+            BrowseFolderButton(tB_Paths_vFolder);
+        }
+
+        private void tB_Rec_vFileN_TextChanged(object sender, EventArgs e) {
+            if (CheckIfNameValid(tB_Rec_vFileN.Text.ToCharArray()).Result) {
+                vFileName = tB_Rec_vFileN.Text;
+            } else {
+                tB_Rec_vFileN.Text = vFileName;
+            }
+        }
+
+        private void tB_Rec_sCFileN_TextChanged(object sender, EventArgs e) {
+            if (CheckIfNameValid(tB_Rec_scFileN.Text.ToCharArray()).Result) {
+                scFileName = tB_Rec_scFileN.Text;
+            } else {
+                tB_Rec_vFileN.Text = scFileName;
+            }
+        }
+
         private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
             BrowseFolderButton(tB_Paths_sCFolder);
         }
@@ -1161,11 +1228,14 @@ namespace SSLUtility2
 
         private void b_Settings_Default_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
-                "Settings will not automatically be applied.",
+                "Settings will not automatically be applied so the user may edit the defaults before applying.",
                 "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (d == DialogResult.Yes) {
                 scFolder = ConfigControl.DefScFolder;
-                ApplySettingText();
+                vFolder = ConfigControl.DefVFolder;
+                scFileName = ConfigControl.DefScName;
+                vFileName = ConfigControl.DefVName;
+                PopulateSettingText();
             }
         }
 

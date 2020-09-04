@@ -8,11 +8,17 @@ namespace SSLUtility2 {
     class ConfigControl {
 
         public static string DefScFolder;
+        public static string DefVFolder;
+        public static string DefScName;
+        public static string DefVName;
 
         static string configPath = "";
 
         const string varString = "v";
-        public const string ScreenshotFolderVar = "ScreenshotFolder";
+        public const string screenshotFolderVar = "ScreenshotFolder";
+        public const string videoFolderVar = "VideoFolder";
+        public const string videoFileNVar = "VideoFileName";
+        public const string scFileNVar = "ScreenshotFileName";
 
         public static List<PathVar> varList {
             get;
@@ -21,6 +27,9 @@ namespace SSLUtility2 {
 
         public static async Task SetDefaults() {
             DefScFolder = MainForm.scFolder;
+            DefVFolder = MainForm.vFolder;
+            DefVName = MainForm.vFileName;
+            DefScName = MainForm.scFileName;
         }
 
         public static void Create(string path) {
@@ -31,8 +40,10 @@ namespace SSLUtility2 {
             newFile.Close();
             configPath = path;
 
-            File.AppendAllText(path, varString + ScreenshotFolderVar + ":" + MainForm.scFolder);
-            // anything else i want in the config file
+            File.AppendAllText(path, varString + screenshotFolderVar + ":" + MainForm.scFolder + "\n");
+            File.AppendAllText(path, varString + videoFolderVar + ":" + MainForm.vFolder + "\n");
+            File.AppendAllText(path, varString + scFileNVar + ":" + MainForm.scFileName + "\n");
+            File.AppendAllText(path, varString + videoFileNVar + ":" + MainForm.vFileName + "\n");
         }
 
         public static void Append(string text) {
@@ -40,7 +51,6 @@ namespace SSLUtility2 {
                 configPath = MainForm.appFolder + MainForm.config;
             }
             File.AppendAllText(configPath, varString + text);
-
         }
 
         public static async Task<bool> CheckIfExists(TextBox tb, Label linkedLabel) {
