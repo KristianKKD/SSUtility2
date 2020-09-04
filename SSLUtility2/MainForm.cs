@@ -611,11 +611,11 @@ namespace SSLUtility2
         }
 
         public void StartRec(AxAXVLC.AxVLCPlugin2 player) {
-            rec = new Recorder(new Record("out.avi", 60,
+            rec = new Recorder(new Record("out.avi", 24,
                 SharpAvi.KnownFourCCs.Codecs.MotionJpeg, 100, player));
         }
 
-        public void PauseRec() {
+        public void StopRec() {
             rec.Dispose();
         }
 
@@ -746,12 +746,13 @@ namespace SSLUtility2
             if (isPlaying) {
                 control.Text = "START Recording";
                 isPlaying = false;
-                PauseRec();
+                StopRec();
             } else {
                 control.Text = "STOP Recording";
                 StartRec(player);
                 isPlaying = true;
             }
+
             return isPlaying;
         }
 
@@ -1143,7 +1144,6 @@ namespace SSLUtility2
         private void b_PlayerR_StartRec_Click(object sender, EventArgs e) {
             Rplaying = StopStartRec(Rplaying, VLCPlayer_L, b_PlayerL_StartRec);
         }
-
         private void b_PlayerL_PauseRec_Click(object sender, EventArgs e) {
             //pause
         }
@@ -1160,8 +1160,13 @@ namespace SSLUtility2
         }
 
         private void b_Settings_Default_Click(object sender, EventArgs e) {
-            scFolder = ConfigControl.DefScFolder;
-            ApplySettingText();
+            DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
+                "Settings will not automatically be applied.",
+                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (d == DialogResult.Yes) {
+                scFolder = ConfigControl.DefScFolder;
+                ApplySettingText();
+            }
         }
 
 

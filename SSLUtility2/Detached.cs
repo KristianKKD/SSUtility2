@@ -37,5 +37,15 @@ namespace SSLUtility2 {
         private void checkB_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
             MainRef.ExtendOptions(checkB_PlayerD_Manual.Checked, gB_PlayerD_Extended, gB_PlayerD_Simple);
         }
+
+        bool Dplaying = false;
+
+        private void b_PlayerD_StartRec_Click(object sender, EventArgs e) {
+            Dplaying = MainRef.StopStartRec(Dplaying, VLCPlayer_D, b_PlayerD_StartRec);
+        }
+        private void b_PlayerD_PauseRec_Click(object sender, EventArgs e) {
+            //MainRef.Pause
+        }
+
     }
 }
