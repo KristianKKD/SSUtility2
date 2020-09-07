@@ -11,14 +11,16 @@
  * Form layout modelled on SSUTILITY Firmware tab for continuity
  */
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BigBigLoader
+namespace SSLUtility2
 {
     /// <summary>
     /// Description of MainForm.
@@ -29,11 +31,18 @@ namespace BigBigLoader
 
         D protocol = new D();
         public static MainForm m;
-
+        Recorder recorderL;
+        Recorder recorderR;
 
         public static string config = "config.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
         public static string scFolder = appFolder + @"Screenshots\";
+        public static string vFolder = appFolder + @"Videos\";
+        public static string vFileName = "VideoCapture";
+        public static string scFileName = "ScreenCapture";
+        public static string RecFPS = "30";
+        public static string RecQual = "70";
+
 
         public static byte Address;
         public static byte CheckSum;
@@ -109,9 +118,8 @@ namespace BigBigLoader
 
 
 
-        public MainForm()
-        {
-            m = this;
+        public MainForm() {
+
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
@@ -119,7 +127,6 @@ namespace BigBigLoader
             // Catch MainForm closing event to close Serial Port if it is Open
             this.FormClosing += new FormClosingEventHandler(MainForm_Closing);
 
-            StartupStuff();
 
             //
             // TODO: Add constructor code after the InitializeComponent() call.
@@ -129,13 +136,11 @@ namespace BigBigLoader
 
 
             int i;
-            for (i = 0; i < 7; i++)
-            {
+            for (i = 0; i < 7; i++) {
                 this.SpeedcomboBox.Items.Add(stdspeeds[i]);
             }
             this.SpeedcomboBox.SelectedIndex = 2;   // Default contact speed is 9600
-            for (i = 0; i < 6; i++)
-            {
+            for (i = 0; i < 6; i++) {
                 this.LoadSpeedcomboBox.Items.Add(loadspeeds[i]);
             }
             this.LoadSpeedcomboBox.SelectedIndex = 3;   // Default load speed is 57600
@@ -144,61 +149,55 @@ namespace BigBigLoader
                                                         //}
                                                         //this.PortcomboBox.SelectedIndex = 0;
             mystopwatch1 = System.Diagnostics.Stopwatch.StartNew(); // Get stopwatch object and init and start
+            StartupStuff();
         } // end of MainForm()
 
-        private void MainForm_Closing(Object sender, FormClosingEventArgs e)
-        {
-            if (this.serialPort1.IsOpen)
-            {
+        private void MainForm_Closing(Object sender, FormClosingEventArgs e) {
+            if (this.serialPort1.IsOpen) {
                 this.serialPort1.Close();
                 //System.Windows.Forms.MessageBox.Show("Closed Serial Port on Application Finish");
             }
         } // end of MainForm_Closing()
 
-        private int SSCPChecksum(byte[] cmd, int len)
-        {
+        private int SSCPChecksum(byte[] cmd, int len) {
             int i;
             int rv = 0;
-            if (len < 3 || cmd[0] != 0x02 || cmd[len - 1] != 0x03) return rv;
-            for (i = 1; i < len - 1; i++)
-            {
+            if (len < 3 || cmd[0] != 0x02 || cmd[len - 1] != 0x03)
+                return rv;
+            for (i = 1; i < len - 1; i++) {
                 rv = (int)crc_table[rv ^ (int)cmd[i]];
             }
             return rv;
         } // end of SSCPChecksum()
 
-        private int Char2Hex(char c)
-        {
+        private int Char2Hex(char c) {
             int rv;
             rv = "0123456789ABCDEF".IndexOf(Char.ToUpper(c));
             return rv;
         }
 
-        private int HexByte(char c1, char c2)
-        {
+        private int HexByte(char c1, char c2) {
             int rv;
             rv = Char2Hex(c1) * 16 + Char2Hex(c2);
             return rv;
         } // end of HexByte()
 
-        private int SSCPHexValue(int start, int length)
-        {
+        private int SSCPHexValue(int start, int length) {
             int rv = 0;
             int i;
             length += start;
-            for (i = start; i < length; i++) rv = (rv << 4) + Char2Hex((char)replybuf[i]);
+            for (i = start; i < length; i++)
+                rv = (rv << 4) + Char2Hex((char)replybuf[i]);
             return rv;
         } // end of SSCPHexValue()
 
-        private void escapeProtocol()
-        {
+        private void escapeProtocol() {
             var tmpbytearray = new byte[] { Convert.ToByte(27) };
             this.serialPort1.Write(tmpbytearray, 0, 1); // Write Esc
             System.Threading.Thread.Sleep(1000);
         } // end of escapeProtocol()
 
-        private int sendSSCP(byte cmd1, byte cmd2, string data, bool expectreply, int discardto, int sendto, int ackto, int replyto)
-        {
+        private int sendSSCP(byte cmd1, byte cmd2, string data, bool expectreply, int discardto, int sendto, int ackto, int replyto) {
             string tpkt;
             string tcmd1;
             string tcksum;
@@ -213,11 +212,14 @@ namespace BigBigLoader
             int tnb = 0;
             int nb = 0;
             long tt;        // Total ms that this stage took
-            if (cmd1 != 0) tcmd1 = cmd1.ToString("X2");
-            else tcmd1 = "";
+            if (cmd1 != 0)
+                tcmd1 = cmd1.ToString("X2");
+            else
+                tcmd1 = "";
             camno = (int)this.CamNoUpDown.Value;    // Remember current camera number
                                                     // *** 27-Apr-2018 We now implement 300ms timeout and 5 retries
-            if (!this.serialPort1.IsOpen) return rv;
+            if (!this.serialPort1.IsOpen)
+                return rv;
             // Format SSCP packet and calc checksum
             tpkt = "\x02" + camno.ToString("X2") + tcmd1 + cmd2.ToString("X2") + data + "\x03";
             byte[] btpkt = System.Text.Encoding.UTF8.GetBytes(tpkt);
@@ -226,41 +228,36 @@ namespace BigBigLoader
             ms2send = (tpktlen * 9600) / this.serialPort1.BaudRate + 1; // Estimate how many ms to send packet
                                                                         // For first attempt just discard for 5 ms; for remaining tries discard for discardto ms
             timeout = 5;
-            for (ret = 0; ret < retries; ret++)
-            {
+            for (ret = 0; ret < retries; ret++) {
                 // Discard anything in port receive buffer for up to discardto ms
-                if (debugSSCP)
-                {
+                if (debugSSCP) {
                     nb = ret + 1;
                     this.LogtextBox.AppendText("SSCP attempt " + nb.ToString() + Environment.NewLine);
                 }
                 this.mystopwatch1.Restart();
                 tnb = 0;    // How many bytes were discarded
-                while (this.mystopwatch1.ElapsedMilliseconds < timeout)
-                {
+                while (this.mystopwatch1.ElapsedMilliseconds < timeout) {
                     nb = this.serialPort1.BytesToRead;
-                    if (nb > 0)
-                    {
+                    if (nb > 0) {
                         tnb = tnb + nb; // Count bytes discarded
                         this.serialPort1.ReadExisting();
                     }
                 }
                 this.mystopwatch1.Stop();
-                if (debugSSCP && tnb > 0)
-                {
+                if (debugSSCP && tnb > 0) {
                     this.LogtextBox.AppendText(ret.ToString() + ": SSCP discarded " + tnb.ToString() + " bytes" + Environment.NewLine);
                 }
                 // Write SSCP packet
                 this.serialPort1.Write(tpkt);
                 // Show SSCP sent packet in Log pane
-                if (debugSSCP)
-                {
+                if (debugSSCP) {
                     this.LogtextBox.AppendText("SSCP sent ");
-                    for (i = 0; i < btpkt.Length; i++)
-                    {
+                    for (i = 0; i < btpkt.Length; i++) {
                         j = btpkt[i];
-                        if (j < 33 || j > 126) this.LogtextBox.AppendText("<" + j.ToString("X2") + ">");
-                        else this.LogtextBox.AppendText(((char)j).ToString());
+                        if (j < 33 || j > 126)
+                            this.LogtextBox.AppendText("<" + j.ToString("X2") + ">");
+                        else
+                            this.LogtextBox.AppendText(((char)j).ToString());
                     }
                     //this.serialPort1.Write(SSCPChecksum(btpkt,btpkt.Length).ToString("X2"));
                     this.LogtextBox.AppendText(tcksum + Environment.NewLine);
@@ -268,31 +265,25 @@ namespace BigBigLoader
                 this.serialPort1.Write(tcksum);
                 // Wait for ms2send ms for packet to go
                 this.mystopwatch1.Restart();
-                while (this.mystopwatch1.ElapsedMilliseconds < ms2send)
-                {
+                while (this.mystopwatch1.ElapsedMilliseconds < ms2send) {
                 }
                 tt = this.mystopwatch1.ElapsedMilliseconds; // How long it took
                 this.mystopwatch1.Stop();
                 this.mystopwatch1.Restart();
-                while (this.mystopwatch1.ElapsedMilliseconds < sendto)
-                {
-                    if (this.serialPort1.BytesToWrite < 2) break;
+                while (this.mystopwatch1.ElapsedMilliseconds < sendto) {
+                    if (this.serialPort1.BytesToWrite < 2)
+                        break;
                 }
                 tt = tt + this.mystopwatch1.ElapsedMilliseconds;    // How long it took overall
                 this.mystopwatch1.Stop();
                 nb = this.serialPort1.BytesToWrite;
-                if (nb > 1)
-                { // Failed to write packet within allowed time
-                    if (debugSSCP)
-                    {
+                if (nb > 1) { // Failed to write packet within allowed time
+                    if (debugSSCP) {
                         this.LogtextBox.AppendText("Write not finished after " + sendto.ToString() + "ms; " + nb.ToString() + " bytes to go" + Environment.NewLine);
                     }
                     continue;   // Failed to write the packet within sendto ms
-                }
-                else
-                {
-                    if (debugSSCP)
-                    {
+                } else {
+                    if (debugSSCP) {
                         this.LogtextBox.AppendText("Write took " + tt.ToString() + "ms" + Environment.NewLine);
                     }
                 }
@@ -313,10 +304,8 @@ namespace BigBigLoader
                                     // We now use a stopwatch and expect a byte to return within ackto ms
                 this.mystopwatch1.Restart();
                 replybuf[0] = 0;    // Init 1st byte of replybuf to 0 meaning no reply
-                while (this.mystopwatch1.ElapsedMilliseconds < ackto)
-                {
-                    if (this.serialPort1.BytesToRead > 0)
-                    {
+                while (this.mystopwatch1.ElapsedMilliseconds < ackto) {
+                    if (this.serialPort1.BytesToRead > 0) {
                         replybuf[0] = (byte)this.serialPort1.ReadByte();
                         replylen = 1;
                         break;
@@ -335,33 +324,33 @@ namespace BigBigLoader
                 //}
                 //replybuf = System.Text.Encoding.UTF8.GetBytes(tpkt);
                 //replylen = replybuf.Length;
-                if (debugSSCP)
-                { // We either have nothing or 1 byte
+                if (debugSSCP) { // We either have nothing or 1 byte
                     this.LogtextBox.AppendText("SSCP rcvd ");
-                    if (replylen < 1) this.LogtextBox.AppendText("nothing after " + tt.ToString() + "ms" + Environment.NewLine);
-                    else
-                    {
+                    if (replylen < 1)
+                        this.LogtextBox.AppendText("nothing after " + tt.ToString() + "ms" + Environment.NewLine);
+                    else {
                         j = replybuf[0];
-                        if (j < 33 || j > 126) this.LogtextBox.AppendText("<" + j.ToString("X2") + ">");
-                        else this.LogtextBox.AppendText(((char)j).ToString());
+                        if (j < 33 || j > 126)
+                            this.LogtextBox.AppendText("<" + j.ToString("X2") + ">");
+                        else
+                            this.LogtextBox.AppendText(((char)j).ToString());
                         this.LogtextBox.AppendText(" after " + tt.ToString() + "ms" + Environment.NewLine);
                     }
                 }
                 //return 0;
                 // Did we get a reply or did we time out??
                 //if (replylen < 1)	return rv;	// Failed to get reply
-                if (replylen < 1) continue; // Failed to get reply
+                if (replylen < 1)
+                    continue; // Failed to get reply
                 rv = replybuf[0];
-                if (rv == 2)
-                {
+                if (rv == 2) {
                     rv = 0; // No Ack or Nak but got reply packet - leave Stx at start
-                }
-                else
-                {
+                } else {
                     replylen = 0;   // Lose Ack or Nak from buffer but we will return its code
                 }
                 // If we saw a Stx we try to read a reply packet (whether or not we were expecting one
-                if (replylen == 0 && !expectreply) return rv;
+                if (replylen == 0 && !expectreply)
+                    return rv;
                 //while (replylen < 128) {
                 //	try {
                 //		replylen = replylen + this.serialPort1.Read(replybuf,replylen,128-replylen);
@@ -376,50 +365,53 @@ namespace BigBigLoader
                 //}
                 // We now use a stopwatch and expect a reply to return within replyto ms
                 this.mystopwatch1.Restart();
-                while (this.mystopwatch1.ElapsedMilliseconds < replyto)
-                {
-                    if (this.serialPort1.BytesToRead > 0)
-                    {
+                while (this.mystopwatch1.ElapsedMilliseconds < replyto) {
+                    if (this.serialPort1.BytesToRead > 0) {
                         replybuf[replylen] = (byte)this.serialPort1.ReadByte(); // Read 1 byte at a time
                         replylen++;
                         // We now call a halt if we have Etx as 3rd last char in replybuf[]
-                        if (replylen > 7 && replybuf[replylen - 3] == 0x03) break;
+                        if (replylen > 7 && replybuf[replylen - 3] == 0x03)
+                            break;
                     }
                 }
                 tt = this.mystopwatch1.ElapsedMilliseconds; // How long it took
                 this.mystopwatch1.Stop();
-                if (debugSSCP)
-                {
+                if (debugSSCP) {
                     this.LogtextBox.AppendText("SSCP rcvd ");
-                    if (replylen < 1) this.LogtextBox.AppendText("nothing after " + tt.ToString() + "ms" + Environment.NewLine);
-                    else
-                    {
-                        for (i = 0; i < replylen; i++)
-                        {
+                    if (replylen < 1)
+                        this.LogtextBox.AppendText("nothing after " + tt.ToString() + "ms" + Environment.NewLine);
+                    else {
+                        for (i = 0; i < replylen; i++) {
                             j = replybuf[i];
-                            if (j < 33 || j > 126) this.LogtextBox.AppendText("<" + j.ToString("X2") + ">");
-                            else this.LogtextBox.AppendText(((char)j).ToString());
+                            if (j < 33 || j > 126)
+                                this.LogtextBox.AppendText("<" + j.ToString("X2") + ">");
+                            else
+                                this.LogtextBox.AppendText(((char)j).ToString());
                         }
                         this.LogtextBox.AppendText(Environment.NewLine);
                         this.LogtextBox.AppendText(" Reply took " + tt.ToString() + "ms" + Environment.NewLine);
                     }
                 }
-                if (replylen < 8 || replybuf[replylen - 3] != 0x03) rv = -1;
-                if (rv == 6 || (expectreply && rv == 0)) return rv;
+                if (replylen < 8 || replybuf[replylen - 3] != 0x03)
+                    rv = -1;
+                if (rv == 6 || (expectreply && rv == 0))
+                    return rv;
                 timeout = discardto;    // We will use this timeout for discard next time
             } // end of for (ret=0;... trying up to 5 times
             return rv;
         } // end of sendSSCP()
 
-        private int ClassifyFWLine(string roline)
-        { // Return line type byte value (0-3 or 9) or -1 if not recognised
-          //string sline;
+        private int ClassifyFWLine(string roline) { // Return line type byte value (0-3 or 9) or -1 if not recognised
+                                                    //string sline;
             int rv = -1;
             int datalen;
             int linetype;
-            if (String.IsNullOrWhiteSpace(roline)) return (rv); // Blank line
-            if (roline[0] != ':') return (rv);      // Bad start
-            if (roline.Length < 11) return (rv);    // Too short
+            if (String.IsNullOrWhiteSpace(roline))
+                return (rv); // Blank line
+            if (roline[0] != ':')
+                return (rv);      // Bad start
+            if (roline.Length < 11)
+                return (rv);    // Too short
             datalen = HexByte(roline[1], roline[2]);
             linetype = HexByte(roline[7], roline[8]);
             //if (roline.Length != (datalen + datalen + 11))	return(rv);	// Wrong length
@@ -427,9 +419,8 @@ namespace BigBigLoader
             return (rv);    // Return line type
         } // end of ClassifyFWLine()
 
-        private string gethexfilelinedata(int addr)
-        { // Given code address of start of line, return substring of code line that contains code
-          // If we reach a non-code line at end of file, return an empty string
+        private string gethexfilelinedata(int addr) { // Given code address of start of line, return substring of code line that contains code
+                                                      // If we reach a non-code line at end of file, return an empty string
             int n;  // This will be the index in hexfilelines[] of the relevant code line
             string s;   // This will get the return substring
             n = (addr >> 4) + (addr >> 16) - 0x800;
@@ -440,21 +431,19 @@ namespace BigBigLoader
             return s;
         } // end of gethexfilelinedata()
 
-        private bool WriteFromBuffer(int addr, int length, int destaddr)
-        {
+        private bool WriteFromBuffer(int addr, int length, int destaddr) {
             string s;
             int rv = -1;
             int i = 0;
             bool brv;
+            statusStrip1.Show();
             // Keep buttons refreshed
             Application.DoEvents();
-            while (i < length && !EscapeWasPressed)
-            { // Transfer another 16 bytes of the current 4096 byte block
-              // Build next 16-byte line
+            while (i < length && !EscapeWasPressed) { // Transfer another 16 bytes of the current 4096 byte block
+                                                      // Build next 16-byte line
                 s = gethexfilelinedata(addr + i);
-                if (s.Length == 0)
-                { // Reached end of file - fake that last block was sent OK
-                  // Update status bar with progress
+                if (s.Length == 0) { // Reached end of file - fake that last block was sent OK
+                                     // Update status bar with progress
                     this.toolStripStatusLabel5.Text = "Off end of file";
                     this.statusStrip1.Refresh();
                     i = length;
@@ -469,23 +458,19 @@ namespace BigBigLoader
                 i += 16;
                 destaddr += 16;
                 // Break out if not Ack or just reply
-                if (rv != 0 && rv != 6) break;
+                if (rv != 0 && rv != 6)
+                    break;
                 // Keep buttons refreshed
                 Application.DoEvents();
             } // end of while (i<length && ...
               // Now, if Abort button was pressed, just say Upload aborted
-            if (EscapeWasPressed)
-            {
+            if (EscapeWasPressed) {
                 this.LogtextBox.AppendText("Block " + currentblock.ToString() + ": " + "Upload aborted." + Environment.NewLine);
                 brv = false;
-            }
-            else if (i >= length && (rv == 0 || rv == 6))
-            {
+            } else if (i >= length && (rv == 0 || rv == 6)) {
                 this.LogtextBox.AppendText("Block " + currentblock.ToString() + ": " + i.ToString() + " bytes transferred." + Environment.NewLine);
                 brv = true;
-            }
-            else
-            {
+            } else {
                 this.LogtextBox.AppendText("Block " + currentblock.ToString() + ": " + "Failed after " + i.ToString() + " bytes of " + length.ToString() + Environment.NewLine);
                 brv = false;
             }
@@ -494,8 +479,7 @@ namespace BigBigLoader
             return brv;
         } // end of WriteFromBuffer()
 
-        private int WriteToFlash(int addr, int length)
-        {
+        private int WriteToFlash(int addr, int length) {
             string s;
             int rv;
             this.LogtextBox.AppendText("Flashed at " + addr.ToString("X5"));
@@ -511,8 +495,7 @@ namespace BigBigLoader
             return rv;
         } // end of WriteToFlash()
 
-        private int EraseFlash(int addr, int length)
-        {
+        private int EraseFlash(int addr, int length) {
             string s;
             int rv;
             length = addr + length;
@@ -531,8 +514,7 @@ namespace BigBigLoader
             return rv;
         } // end of EraseFlash()
 
-        private int ActivateFlash(int length)
-        {
+        private int ActivateFlash(int length) {
             string s;
             int rv;
             this.LogtextBox.AppendText("Activated " + length.ToString("X5"));
@@ -547,13 +529,14 @@ namespace BigBigLoader
             if (rv != 0 && rv != 6)
                 rv = -1;
             this.LogtextBox.AppendText(", result=" + rv.ToString() + Environment.NewLine);
-            if (rv < 0) isactive = false;
-            else isactive = true;
+            if (rv < 0)
+                isactive = false;
+            else
+                isactive = true;
             return rv;
         } // end of ActivateFlash()
 
-        private int ReadChecksum(int addr, int length)
-        {
+        private int ReadChecksum(int addr, int length) {
             string s;
             int rv;
             rv = addr + length;
@@ -571,8 +554,7 @@ namespace BigBigLoader
             return rv;
         } // end of ReadChecksum()
 
-        private void AnalyseFirmwareFile()
-        { // Parse the firmware file contents in Textbox1 and setup stats vars
+        private void AnalyseFirmwareFile() { // Parse the firmware file contents in Textbox1 and setup stats vars
             int lastaddr = 0;
             int last64kblock = 0;
             int lno = 0;
@@ -599,26 +581,20 @@ namespace BigBigLoader
             // Start address is implied to be 00008000
 
             hexfiledatachecksum = 0;
-            foreach (String roline in hexfilelines)
-            {
+            foreach (String roline in hexfilelines) {
                 lno++;
                 val = ClassifyFWLine(roline);
-                if (val == 0)
-                { // Data line
-                    if (lno == 1 && roline.StartsWith(":1080000018F09FE5")) hexfileformat = 0;  // Unencrypted
+                if (val == 0) { // Data line
+                    if (lno == 1 && roline.StartsWith(":1080000018F09FE5"))
+                        hexfileformat = 0;  // Unencrypted
                     lastaddr = HexByte(roline[3], roline[4]) * 256 + HexByte(roline[5], roline[6]); // Last addr value seen on data line
-                    for (i = 9; i < 41; i = i + 2) hexfiledatachecksum = hexfiledatachecksum + (uint)HexByte(roline[i], roline[i + 1]);
-                }
-                else if (val == 2)
-                { // Next 64K block line
+                    for (i = 9; i < 41; i = i + 2)
+                        hexfiledatachecksum = hexfiledatachecksum + (uint)HexByte(roline[i], roline[i + 1]);
+                } else if (val == 2) { // Next 64K block line
                     last64kblock = Char2Hex(roline[9]); // Last 64K block number seen
-                }
-                else if (val == 9)
-                {
+                } else if (val == 9) {
                     hexfilechecksum = roline.Substring(9, 8);
-                }
-                else
-                { // Anything else is bad or record at end of file
+                } else { // Anything else is bad or record at end of file
                     break;
                 }
             } // end of for each line in textBox1
@@ -631,6 +607,49 @@ namespace BigBigLoader
 
         /////////////////////////////////////
 
+        async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
+            if (tb.Text.Length < 1) {
+                tb.Text = appFolder;
+                return false;
+            }
+            if (ConfigControl.CheckIfExists(tb, linkLabel).Result) {
+                return true;
+            }
+            return false;
+        }
+
+        public static void ShowError(string message, string caption, string error) {
+            DialogResult d = MessageBox.Show(message, caption,
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Question);
+            if (d == DialogResult.Yes) {
+                MessageBox.Show(error, caption, MessageBoxButtons.OK);
+            }
+        }
+
+        public Recorder StartRec(AxAXVLC.AxVLCPlugin2 player) {
+            Recorder rec = new Recorder(new Record(tB_Paths_vFolder.Text + vFileName +
+                (Directory.GetFiles(vFolder).Length + 1) + ".avi", int.Parse(RecFPS),
+                 SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(RecQual), player));//add quality and framerate changing too 
+            return rec;
+        }
+
+        public void StopRec(Recorder r) {
+            r.Dispose();
+        }
+
+        public (bool, Recorder) StopStartRec(bool isPlaying, AxAXVLC.AxVLCPlugin2 player, Button control, Recorder r) {
+            if (isPlaying) {
+                control.Text = "START Recording";
+                isPlaying = false;
+                StopRec(r);
+                return (isPlaying, null);
+            } else {
+                control.Text = "STOP Recording";
+                isPlaying = true;
+                return (isPlaying, StartRec(player));
+            }
+        }
 
         private uint MakeAdr() {
             if (cB_IPCon_Selected.Text == "Daylight") {
@@ -640,7 +659,12 @@ namespace BigBigLoader
             }
         }
 
-        private void PlayClick(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
+        public void Play(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
+            if (combinedUrl == "") {
+                MessageBox.Show("Address is invalid!");
+                return;
+            }
+
             if (player.playlist.isPlaying == true) {
                 player.playlist.stop();
                 player.playlist.items.clear();
@@ -651,16 +675,28 @@ namespace BigBigLoader
             player.playlist.play();
         }
 
-       
-
-        private void OnFinishedTypingAdr(object sender, EventArgs e) {
-            CameraCommunicate.Connect(m);
+        public void ExtendOptions(bool check, GroupBox gbExt, GroupBox gbSim) {
+            if (check) {
+                gbSim.Hide();
+                gbExt.Show();
+            } else {
+                gbExt.Hide();
+                gbSim.Show();
+            }
         }
 
-        private void tB_IPCon_Adr_PreviewKeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) {
-                CameraCommunicate.Connect(m);
+        private void BrowseFolderButton(TextBox tb) {
+            FolderBrowserDialog folderDlg = new FolderBrowserDialog();
+            folderDlg.ShowNewFolderButton = true;
+            DialogResult result = folderDlg.ShowDialog();
+            if (result == DialogResult.OK) {
+                tb.Text = folderDlg.SelectedPath;
             }
+        }
+
+        private async Task ApplyAll() { //
+            ConfigControl.Create(appFolder + config);
+            MessageBox.Show("Applied settings to: " + appFolder + config);
         }
 
         void PTZMove(bool IsTilt, D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left) {
@@ -682,30 +718,148 @@ namespace BigBigLoader
             CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(MakeAdr(), dir));
         }
 
+        public async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
+            var imagePath = scFolder + @"\" + scFileName + (Directory.GetFiles(scFolder).Length + 1) + ".jpg";
+
+            Image bmp = new Bitmap(player.Width, player.Height);
+            Graphics gfx = Graphics.FromImage(bmp);
+            Rectangle rec = player.RectangleToScreen(player.ClientRectangle);
+            gfx.CopyFromScreen(rec.Location, Point.Empty, player.Size);
+
+            bmp.Save(imagePath, ImageFormat.Jpeg);
+
+            MessageBox.Show("Image saved : " + scFolder);
+        }
+
+        static async Task<bool> CheckIfNameValid(char[] nameArray) {
+            foreach (Char c in nameArray) {
+                foreach (Char symbol in Path.GetInvalidFileNameChars()) {
+                    if (c == symbol && c.ToString() != ":" && c.ToString() != "\\") {
+                        ShowError("Invalid character detected, Show more?", "Cannot create file",
+                        "Do not use invalid symbols in file names.\nInvalid character found: " + c);
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        static async Task CheckCreateFile(string fileName, string folderName = null) {
+            CheckIfNameValid((fileName + folderName).ToCharArray());
+
+            if (folderName != null) {
+                if (!Directory.Exists(folderName)) {
+                    Directory.CreateDirectory(folderName);
+                }
+            }
+            if (fileName != null) {
+                if (!File.Exists(appFolder + fileName)) {
+                    if (appFolder + fileName == appFolder + config) {
+                        ConfigControl.Create(appFolder + fileName);
+                    }
+                }
+            }
+        }
+
+        async Task StartupStuff() {
+            m = this;
+
+            ConfigControl.SetDefaults();
+
+            CheckCreateFile(config, appFolder);
+            CheckCreateFile(null, scFolder);
+            CheckCreateFile(null, vFolder);
+            await ConfigControl.SearchForVarsAsync(appFolder + config);
+            foreach (PathVar v in ConfigControl.varList) {
+                switch (v.name) {
+                    case ConfigControl.screenshotFolderVar:
+                        scFolder = v.value;
+                        break;
+                    case ConfigControl.videoFolderVar:
+                        vFolder = v.value;
+                        break;
+                    case ConfigControl.scFileNVar:
+                        scFileName = v.value;
+                        break;
+                    case ConfigControl.videoFileNVar:
+                        vFileName = v.value;
+                        break;
+                    case ConfigControl.RecQualVar:
+                        RecQual = v.value;
+                        break;
+                    case ConfigControl.RecFPSVar:
+                        RecFPS = v.value;
+                        break;
+                }
+            }
+
+            PopulateSettingText();
+        }
+
+        public async Task PopulateSettingText() {
+            tB_Paths_sCFolder.Text = scFolder;
+            tB_Paths_vFolder.Text = vFolder;
+
+            tB_Rec_vFileN.Text = vFileName;
+            tB_Rec_scFileN.Text = scFileName;
+
+            cB_Rec_Quality.Text = RecQual;
+            cB_Rec_FPS.Text = RecFPS;
+        }
+
+        Detached DetachVid() {
+            Detached DetachedVid = new Detached();
+            DetachedVid.Show();
+            DetachedVid.MainRef = this;
+            return DetachedVid;
+        }
+
         private void b_PlayerL_Play_Click(object sender, EventArgs e) {
-            string ipaddress = tB_PlayerL_Adr.Text;
-            string port = tB_PlayerL_Port.Text;
-            string url = tB_PlayerL_RTSP.Text;
-            string username = tB_PlayerL_Username.Text;
-            string password = tB_PlayerL_Password.Text;
+            string combinedUrl;
 
-            string combinedurl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            if (checkB_PlayerL_Manual.Checked) { //make a function to automatically grab these from gB_...
+                string ipaddress = tB_PlayerL_Adr.Text; //is it possible? the variables need to be in an order
+                string port = tB_PlayerL_Port.Text;
+                string url = tB_PlayerL_RTSP.Text;
+                string username = tB_PlayerL_Username.Text;
+                string password = tB_PlayerL_Password.Text;
 
-            PlayClick(VLCPlayer_L, combinedurl);
+                combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            } else {
+                combinedUrl = tB_PlayerL_SimpleAdr.Text;
+            }
+
+            Play(VLCPlayer_L, combinedUrl);
         }
 
-        private void b_PlayerR_Play_Click(object sender, EventArgs e) { //add each new player into a list and define them using their index?
-            string ipaddress = tB_PlayerR_Adr.Text;
-            string port = tB_PlayerR_Port.Text;
-            string url = tB_PlayerR_RTSP.Text;
-            string username = tB_PlayerR_Username.Text;
-            string password = tB_PlayerR_Password.Text;
+        private void b_PlayerR_Play_Click(object sender, EventArgs e) {
+            string combinedUrl;
 
-            string combinedurl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            if (checkB_PlayerR_Manual.Checked) { //make a function to automatically grab these from gB_...
+                string ipaddress = tB_PlayerR_Adr.Text; //is it possible? the variables need to be in an order
+                string port = tB_PlayerR_Port.Text;
+                string url = tB_PlayerR_RTSP.Text;
+                string username = tB_PlayerR_Username.Text;
+                string password = tB_PlayerR_Password.Text;
 
-            PlayClick(VLCPlayer_R, combinedurl);
+                combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+            } else {
+                combinedUrl = tB_PlayerR_SimpleAdr.Text;
+            }
+
+            Play(VLCPlayer_R, combinedUrl);
         }
-       
+
+        private void OnFinishedTypingAdr(object sender, EventArgs e) {
+            CameraCommunicate.Connect(m);
+        }
+
+        private void tB_IPCon_Adr_PreviewKeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                CameraCommunicate.Connect(m);
+            }
+        }
+
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
             PTZMove(true, D.Tilt.Up);
         }
@@ -713,6 +867,7 @@ namespace BigBigLoader
         private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
             PTZMove(true, D.Tilt.Down);
         }
+
         private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
             PTZMove(false, D.Tilt.Null, D.Pan.Left);
         }
@@ -757,7 +912,7 @@ namespace BigBigLoader
                 uint speed = Convert.ToUInt32(tB_PTZ_Speed.Value);
                 byte[] code = null;
 
-                switch (e.KeyCode) { //change this to accept multiple inputs
+                switch (e.KeyCode) { //is there a command that accepts diagonal?
                     case Keys.Up:
                         code = protocol.CameraTilt(address, D.Tilt.Up, speed);
                         break;
@@ -865,14 +1020,14 @@ namespace BigBigLoader
         }
 
         private void b_Presets_SLG_FlashingRed_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 33, D.PresetAction.Goto)); 
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 33, D.PresetAction.Goto));
         }
 
         private void b_Presets_SLG_FlashingWhite_Click(object sender, EventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 34, D.PresetAction.Goto));
         }
 
-        private void b_Presets_SLG_FlashingRG_Click(object sender, EventArgs e)  {
+        private void b_Presets_SLG_FlashingRG_Click(object sender, EventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 35, D.PresetAction.Goto));
         }
 
@@ -888,11 +1043,11 @@ namespace BigBigLoader
             CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 189, D.PresetAction.Goto));
         }
 
-        private void Presets_Peak_LampOff_Click(object sender, EventArgs e)  {
+        private void Presets_Peak_LampOff_Click(object sender, EventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 187, D.PresetAction.Goto));
         }
 
-        private void b_Presets_Peak_ZoomIn_Click(object sender, EventArgs e)  {
+        private void b_Presets_Peak_ZoomIn_Click(object sender, EventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 185, D.PresetAction.Goto));
         }
 
@@ -907,6 +1062,7 @@ namespace BigBigLoader
         private void b_Presets_Thermal_NUC_Click(object sender, EventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 175, D.PresetAction.Goto));
         }
+
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
 
@@ -919,34 +1075,25 @@ namespace BigBigLoader
             CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Set));
         }
 
-
-        private void cB_PlayerL_Type_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cB_PlayerL_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string enc = cB_PlayerL_Type.Text;
             string username = "";
             string password = "";
             string rtsp = "";
 
-            if (enc == "IONodes - Daylight")
-            {
+            if (enc == "IONodes - Daylight") {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_1:0/h264_1/onvif.stm";
-            }
-            else if (enc == "IONodes - Thermal")
-            {
+            } else if (enc == "IONodes - Thermal") {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_2:0/h264_1/onvif.stm";
-            }
-            else if (enc == "VIVOTEK")
-            {
+            } else if (enc == "VIVOTEK") {
                 username = "root";
                 password = "root1234";
                 rtsp = "live.sdp";
-            }
-            else if (enc == "BOSCH")
-            {
+            } else if (enc == "BOSCH") {
                 username = "service";
                 password = "Service123!";
                 rtsp = "";
@@ -959,33 +1106,25 @@ namespace BigBigLoader
 
         }
 
-        private void cB_PlayerR_Type_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cB_PlayerR_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string enc = cB_PlayerR_Type.Text;
             string username = "";
             string password = "";
             string rtsp = "";
 
-            if (enc == "IONodes - Daylight")
-            {
+            if (enc == "IONodes - Daylight") {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_1:0/h264_1/onvif.stm";
-            }
-            else if (enc == "IONodes - Thermal")
-            {
+            } else if (enc == "IONodes - Thermal") {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_2:0/h264_1/onvif.stm";
-            }
-            else if (enc == "VIVOTEK")
-            {
+            } else if (enc == "VIVOTEK") {
                 username = "root";
                 password = "root1234";
                 rtsp = "live.sdp";
-            }
-            else if (enc == "BOSCH")
-            {
+            } else if (enc == "BOSCH") {
                 username = "service";
                 password = "Service123!";
                 rtsp = "";
@@ -999,81 +1138,154 @@ namespace BigBigLoader
         private void b_PlayerL_SaveSnap_Click(object sender, EventArgs e) {
             SaveSnap(VLCPlayer_L);
         }
+        private void b_PlayerR_SaveSnap_Click(object sender, EventArgs e) {
+            SaveSnap(VLCPlayer_R);
+        }
 
-        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string control = cB_IPCon_Type.Text;
             string port = "";
 
-            if (control == "Encoder")
-            {
+            if (control == "Encoder") {
                 port = "6791";
-            }
-            else if (control == "MOXA nPort")
-            {
+            } else if (control == "MOXA nPort") {
                 port = "4001";
             }
 
             tB_IPCon_Port.Text = port;
         }
 
-        private async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
-
-            bool wasPlaying = false;
-            if (player.playlist.isPlaying) {
-                wasPlaying = true;
-                player.playlist.pause();
-            }
-
-            string imgPath = scFolder + "Captured.jpg";
-
-            Bitmap bmpScreenshot = new Bitmap(player.ClientRectangle.Width,
-                player.ClientRectangle.Height);
-            Graphics gfxScreenshot = Graphics.FromImage(bmpScreenshot);
-
-            Size imgSize = new Size(
-                player.ClientRectangle.Width,
-                player.ClientRectangle.Height);
-            Point ps = PointToScreen(new Point(player.Bounds.X, player.Bounds.Y));
-            gfxScreenshot.CopyFromScreen(ps.X, ps.Y, 0, 0, imgSize, CopyPixelOperation.SourceCopy);
-            bmpScreenshot.Save(imgPath, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            MessageBox.Show("Image saved : " + scFolder);
-
-            if (wasPlaying) {
-                player.playlist.play();
-            }
-
-
+        private void checkB_PlayerL_Manual_CheckedChanged(object sendeL, EventArgs e) {
+            ExtendOptions(checkB_PlayerL_Manual.Checked, gB_PlayerL_Extended, gB_PlayerL_Simple);
+        }
+        private void checkB_PlayerR_Manual_CheckedChanged(object sender, EventArgs e) {
+            ExtendOptions(checkB_PlayerR_Manual.Checked, gB_PlayerR_Extended, gB_PlayerR_Simple);
         }
 
-        static void CheckCreateFile(string fileName, string folderName = null) {
-            if (folderName != null) {
-                if (!Directory.Exists(folderName)) {
-                    Directory.CreateDirectory(folderName);
-                }
-            }
-            if (fileName != null) {
-                if (!File.Exists(appFolder + fileName)) {
-                    var newFile = File.Create(folderName + fileName);
-                    newFile.Close();
-                    if (appFolder + fileName == appFolder + config) {
-                        ConfigControl.Created(appFolder + fileName);
-                    }
-                }
+        private void OnFinishedTypingScFolder(object sender, EventArgs e) {
+            if (CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
+                scFolder = tB_Paths_sCFolder.Text;
             }
         }
 
-        static async Task StartupStuff() {
-            CheckCreateFile(config, appFolder);
-            await ConfigControl.SearchForVarsAsync(appFolder + config);
-            foreach (PathVariable v in ConfigControl.varList) {
-                if (v.name == ConfigControl.ScreenshotFolderVar) {
-                    scFolder = v.value;
-                }
+        private void OnFinishedTypingVFolder(object sender, EventArgs e) {
+            if (CheckFinishedTypingPath(tB_Paths_vFolder, l_Paths_vCheck).Result) {
+                vFolder = tB_Paths_vFolder.Text;
             }
-            CheckCreateFile(config, scFolder);
         }
+
+        private void b_PlayerL_Detach_Click(object sender, EventArgs e) {
+            Detached d = DetachVid();
+
+            //foreach (Control c in gB_PlayerL_Extended.Controls) {
+            //    if (c is TextBox) {
+            //        ConfigControl.Append(c.Name + "::" + c.Text + "\n");
+            //    }
+            //}
+
+            d.cB_PlayerD_Type.SelectedIndex = cB_PlayerL_Type.SelectedIndex;
+            d.checkB_PlayerD_Manual.Checked = checkB_PlayerL_Manual.Checked;
+            d.tB_PlayerD_SimpleAdr.Text = tB_PlayerL_SimpleAdr.Text;
+            d.tB_PlayerD_Adr.Text = tB_PlayerL_Adr.Text;
+            d.tB_PlayerD_Port.Text = tB_PlayerL_Port.Text;
+            d.tB_PlayerD_RTSP.Text = tB_PlayerL_RTSP.Text;
+            d.tB_PlayerD_Buffering.Text = tB_PlayerL_Buffering.Text;
+            d.tB_PlayerD_Username.Text = tB_PlayerL_Username.Text;
+            d.tB_PlayerD_Password.Text = tB_PlayerL_Password.Text;
+
+        }
+
+        bool Lplaying = false;
+        bool Rplaying = false;
+
+        private void b_PlayerL_StartRec_Click(object sender, EventArgs e) {
+            (bool, Recorder) vals = StopStartRec(Lplaying, VLCPlayer_L, b_PlayerL_StartRec, recorderL);
+            Lplaying = vals.Item1;
+            recorderL = vals.Item2;
+        }
+        private void b_PlayerR_StartRec_Click(object sender, EventArgs e) {
+            (bool, Recorder) vals = StopStartRec(Rplaying, VLCPlayer_R, b_PlayerR_StartRec, recorderR);
+            Rplaying = vals.Item1;
+            recorderR = vals.Item2;
+        }
+        private void b_PlayerL_PauseRec_Click(object sender, EventArgs e) {
+            //pause
+        }
+        private void b_PlayerR_PauseRec_Click(object sender, EventArgs e) {
+            //pause
+        }
+
+        private void b_Paths_vBrowse_Click(object sender, EventArgs e) {
+            BrowseFolderButton(tB_Paths_vFolder);
+        }
+
+        private void tB_Rec_vFileN_TextChanged(object sender, EventArgs e) {
+            if (CheckIfNameValid(tB_Rec_vFileN.Text.ToCharArray()).Result) {
+                vFileName = tB_Rec_vFileN.Text;
+            } else {
+                tB_Rec_vFileN.Text = vFileName;
+            }
+        }
+
+        private void tB_Rec_sCFileN_TextChanged(object sender, EventArgs e) {
+            if (CheckIfNameValid(tB_Rec_scFileN.Text.ToCharArray()).Result) {
+                scFileName = tB_Rec_scFileN.Text;
+            } else {
+                tB_Rec_vFileN.Text = scFileName;
+            }
+        }
+
+        private void cB_Rec_Quality_TextChanged(object sender, EventArgs e) {
+            int q = int.Parse(ConfigControl.DefvRecQualVar);
+            if (!int.TryParse(cB_Rec_Quality.Text, out q)) {
+                cB_Rec_Quality.Text = q.ToString();
+                return;
+            }
+            if (q > 100) {
+                cB_Rec_Quality.Text = "100";
+            } else if (q < 1) {
+                cB_Rec_Quality.Text = "1";
+            }
+
+            RecQual = cB_Rec_Quality.Text;
+        }
+
+        private void cB_Rec_FPS_TextChanged(object sender, EventArgs e) {
+            int fps = int.Parse(ConfigControl.DefvRecFPSVar);
+            if (!int.TryParse(cB_Rec_Quality.Text, out fps)) {
+                cB_Rec_FPS.Text = fps.ToString();
+                return;
+            }
+            if (fps < 1) {
+                cB_Rec_FPS.Text = "1";
+            }
+
+            RecFPS = cB_Rec_FPS.Text;
+        }
+
+        private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
+            BrowseFolderButton(tB_Paths_sCFolder);
+        }
+
+        private void b_Settings_Apply_Click(object sender, EventArgs e) {
+            ApplyAll();
+        }
+
+        private void b_Settings_Default_Click(object sender, EventArgs e) {
+            DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
+                "Settings will not automatically be applied so the user may edit the defaults before applying.",
+                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (d == DialogResult.Yes) {
+                scFolder = ConfigControl.DefScFolder;
+                vFolder = ConfigControl.DefVFolder;
+                scFileName = ConfigControl.DefScName;
+                vFileName = ConfigControl.DefVName;
+                RecQual = ConfigControl.DefvRecQualVar;
+                RecFPS = ConfigControl.DefvRecFPSVar;
+                PopulateSettingText();
+            }
+        }
+
 
     } // end of class MainForm
-} // end of namespace BigBigLoader
+} // end of namespace SSLUtility2
