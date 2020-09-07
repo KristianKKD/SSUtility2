@@ -45,14 +45,7 @@ namespace SSLUtility2
         public static string scFileName = "ScreenCapture";
         public static string RecFPS = "30";
         public static string RecQual = "70";
-
-
-        //public static string plIP; 
-        //public static string plPort; 
-        //public static string plRTSP; 
-        //public static string plBuff; 
-        //public static string plUser; 
-        //public static string plPass; 
+        const string defaultIP = "192.168.1.71";
         
 
         public static byte Address;
@@ -681,6 +674,11 @@ namespace SSLUtility2
 
             PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
+
+            if (tB_IPCon_Adr.Text != defaultIP) {
+                CameraCommunicate.Connect(m);
+            }
+
         }
 
         async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
@@ -710,7 +708,7 @@ namespace SSLUtility2
 
         private async Task AutoFillConnect() {
             if (CameraCommunicate.Connect(m).Result) {
-                if (tB_PlayerL_Adr.Text == "192.168.1.71" || tB_PlayerL_Adr.Text == "") {
+                if (tB_PlayerL_Adr.Text == defaultIP || tB_PlayerL_Adr.Text == "") {
                     tB_PlayerL_Adr.Text = tB_IPCon_Adr.Text;
                 }
             }
@@ -815,7 +813,9 @@ namespace SSLUtility2
             }
         }
         void control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right) {
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down ||
+                e.KeyCode == Keys.Left || e.KeyCode == Keys.Right ||
+                e.KeyCode == Keys.Escape || e.KeyCode == Keys.Enter) {
                 e.IsInputKey = true;
             }
         }
@@ -824,7 +824,7 @@ namespace SSLUtility2
 
             byte[] code;
             uint address = MakeAdr();
-            uint speed = Convert.ToUInt32(tB_PTZ_Speed.Value);
+            uint speed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
 
             if (IsTilt) {
                 code = protocol.CameraTilt(address, tilt, speed);
@@ -841,7 +841,7 @@ namespace SSLUtility2
 
         public async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
             var imagePath = scFolder + @"\" + scFileName + (Directory.GetFiles(scFolder).Length + 1) + ".jpg";
-
+            
             Image bmp = new Bitmap(player.Width, player.Height);
             Graphics gfx = Graphics.FromImage(bmp);
             Rectangle rec = player.RectangleToScreen(player.ClientRectangle);
@@ -999,21 +999,21 @@ namespace SSLUtility2
         private void tC_Control_KeyDown(object sender, KeyEventArgs e) {
             if (cB_IPCon_KeyboardCon.Checked == true) {
                 uint address = MakeAdr();
-                uint speed = Convert.ToUInt32(tB_PTZ_Speed.Value);
+                uint ptSpeed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
                 byte[] code = null;
 
                 switch (e.KeyCode) { //is there a command that accepts diagonal?
                     case Keys.Up:
-                        code = protocol.CameraTilt(address, D.Tilt.Up, speed);
+                        code = protocol.CameraTilt(address, D.Tilt.Up, ptSpeed);
                         break;
                     case Keys.Down:
-                        code = protocol.CameraTilt(address, D.Tilt.Down, speed);
+                        code = protocol.CameraTilt(address, D.Tilt.Down, ptSpeed);
                         break;
                     case Keys.Left:
-                        code = protocol.CameraPan(address, D.Pan.Left, speed);
+                        code = protocol.CameraPan(address, D.Pan.Left, ptSpeed);
                         break;
                     case Keys.Right:
-                        code = protocol.CameraPan(address, D.Pan.Right, speed);
+                        code = protocol.CameraPan(address, D.Pan.Right, ptSpeed);
                         break;
                     case Keys.Enter:
                         code = protocol.CameraZoom(address, D.Zoom.Tele);
@@ -1351,6 +1351,12 @@ namespace SSLUtility2
             }
 
             RecFPS = cB_Rec_FPS.Text;
+        }
+
+        private void cB_IPCon_KeyboardCon_CheckedChanged(object sender, EventArgs e) {
+            if (cB_IPCon_KeyboardCon.Checked) {
+                b_PTZ_Up.Focus();
+            }
         }
 
         private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {

@@ -7,10 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace SSLUtility2 {
 
@@ -75,6 +72,8 @@ namespace SSLUtility2 {
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tC_Control = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.track_PTZ_ZoomSpeed = new System.Windows.Forms.TrackBar();
+            this.l_PTZ_ZoomSpeed = new System.Windows.Forms.Label();
             this.gB_PlayerR_Extended = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tB_PlayerR_Adr = new System.Windows.Forms.TextBox();
@@ -120,7 +119,7 @@ namespace SSLUtility2 {
             this.VLCPlayer_L = new AxAXVLC.AxVLCPlugin2();
             this.checkB_PlayerL_Manual = new System.Windows.Forms.CheckBox();
             this.l_IPCon_Connected = new System.Windows.Forms.Label();
-            this.tB_PTZ_Speed = new System.Windows.Forms.TrackBar();
+            this.track_PTZ_PTSpeed = new System.Windows.Forms.TrackBar();
             this.cB_IPCon_Type = new System.Windows.Forms.ComboBox();
             this.tB_Presets_Number = new System.Windows.Forms.TextBox();
             this.tC_Presets_Default = new System.Windows.Forms.TabControl();
@@ -171,7 +170,7 @@ namespace SSLUtility2 {
             this.l_IPCon_KeyControl = new System.Windows.Forms.Label();
             this.l_IPCon_SelectedCam = new System.Windows.Forms.Label();
             this.l_IPCon_Port = new System.Windows.Forms.Label();
-            this.l_IPCon_Speed = new System.Windows.Forms.Label();
+            this.l_IPCon_PTSpeed = new System.Windows.Forms.Label();
             this.l_Presets_Number = new System.Windows.Forms.Label();
             this.l_IPCon_ConType = new System.Windows.Forms.Label();
             this.l_IPCon_Adr = new System.Windows.Forms.Label();
@@ -231,13 +230,14 @@ namespace SSLUtility2 {
             this.tabPage2.SuspendLayout();
             this.tC_Control.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_ZoomSpeed)).BeginInit();
             this.gB_PlayerR_Extended.SuspendLayout();
             this.gB_PlayerL_Extended.SuspendLayout();
             this.gB_PlayerR_Simple.SuspendLayout();
             this.gB_PlayerL_Simple.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tB_PTZ_Speed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).BeginInit();
             this.tC_Presets_Default.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
@@ -537,6 +537,8 @@ namespace SSLUtility2 {
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.track_PTZ_ZoomSpeed);
+            this.tabPage3.Controls.Add(this.l_PTZ_ZoomSpeed);
             this.tabPage3.Controls.Add(this.gB_PlayerR_Extended);
             this.tabPage3.Controls.Add(this.gB_PlayerL_Extended);
             this.tabPage3.Controls.Add(this.gB_PlayerR_Simple);
@@ -550,7 +552,7 @@ namespace SSLUtility2 {
             this.tabPage3.Controls.Add(this.VLCPlayer_L);
             this.tabPage3.Controls.Add(this.checkB_PlayerL_Manual);
             this.tabPage3.Controls.Add(this.l_IPCon_Connected);
-            this.tabPage3.Controls.Add(this.tB_PTZ_Speed);
+            this.tabPage3.Controls.Add(this.track_PTZ_PTSpeed);
             this.tabPage3.Controls.Add(this.cB_IPCon_Type);
             this.tabPage3.Controls.Add(this.tB_Presets_Number);
             this.tabPage3.Controls.Add(this.tC_Presets_Default);
@@ -561,7 +563,7 @@ namespace SSLUtility2 {
             this.tabPage3.Controls.Add(this.l_IPCon_KeyControl);
             this.tabPage3.Controls.Add(this.l_IPCon_SelectedCam);
             this.tabPage3.Controls.Add(this.l_IPCon_Port);
-            this.tabPage3.Controls.Add(this.l_IPCon_Speed);
+            this.tabPage3.Controls.Add(this.l_IPCon_PTSpeed);
             this.tabPage3.Controls.Add(this.l_Presets_Number);
             this.tabPage3.Controls.Add(this.l_IPCon_ConType);
             this.tabPage3.Controls.Add(this.l_IPCon_Adr);
@@ -591,6 +593,26 @@ namespace SSLUtility2 {
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Camera Control";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // track_PTZ_ZoomSpeed
+            // 
+            this.track_PTZ_ZoomSpeed.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.track_PTZ_ZoomSpeed.Enabled = false;
+            this.track_PTZ_ZoomSpeed.Location = new System.Drawing.Point(109, 391);
+            this.track_PTZ_ZoomSpeed.Maximum = 63;
+            this.track_PTZ_ZoomSpeed.Name = "track_PTZ_ZoomSpeed";
+            this.track_PTZ_ZoomSpeed.Size = new System.Drawing.Size(132, 45);
+            this.track_PTZ_ZoomSpeed.TabIndex = 42;
+            this.track_PTZ_ZoomSpeed.Value = 63;
+            // 
+            // l_PTZ_ZoomSpeed
+            // 
+            this.l_PTZ_ZoomSpeed.AutoSize = true;
+            this.l_PTZ_ZoomSpeed.Location = new System.Drawing.Point(14, 394);
+            this.l_PTZ_ZoomSpeed.Name = "l_PTZ_ZoomSpeed";
+            this.l_PTZ_ZoomSpeed.Size = new System.Drawing.Size(71, 13);
+            this.l_PTZ_ZoomSpeed.TabIndex = 41;
+            this.l_PTZ_ZoomSpeed.Text = "Zoom Speed:";
             // 
             // gB_PlayerR_Extended
             // 
@@ -967,6 +989,7 @@ namespace SSLUtility2 {
             // 
             // b_PlayerR_PauseRec
             // 
+            this.b_PlayerR_PauseRec.Enabled = false;
             this.b_PlayerR_PauseRec.Location = new System.Drawing.Point(1281, 644);
             this.b_PlayerR_PauseRec.Name = "b_PlayerR_PauseRec";
             this.b_PlayerR_PauseRec.Size = new System.Drawing.Size(172, 23);
@@ -1033,15 +1056,15 @@ namespace SSLUtility2 {
             this.l_IPCon_Connected.Size = new System.Drawing.Size(0, 13);
             this.l_IPCon_Connected.TabIndex = 23;
             // 
-            // tB_PTZ_Speed
+            // track_PTZ_PTSpeed
             // 
-            this.tB_PTZ_Speed.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.tB_PTZ_Speed.Location = new System.Drawing.Point(109, 354);
-            this.tB_PTZ_Speed.Maximum = 63;
-            this.tB_PTZ_Speed.Name = "tB_PTZ_Speed";
-            this.tB_PTZ_Speed.Size = new System.Drawing.Size(132, 45);
-            this.tB_PTZ_Speed.TabIndex = 22;
-            this.tB_PTZ_Speed.Value = 63;
+            this.track_PTZ_PTSpeed.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(109, 354);
+            this.track_PTZ_PTSpeed.Maximum = 63;
+            this.track_PTZ_PTSpeed.Name = "track_PTZ_PTSpeed";
+            this.track_PTZ_PTSpeed.Size = new System.Drawing.Size(132, 45);
+            this.track_PTZ_PTSpeed.TabIndex = 22;
+            this.track_PTZ_PTSpeed.Value = 63;
             // 
             // cB_IPCon_Type
             // 
@@ -1513,6 +1536,7 @@ namespace SSLUtility2 {
             this.cB_IPCon_KeyboardCon.Size = new System.Drawing.Size(15, 14);
             this.cB_IPCon_KeyboardCon.TabIndex = 18;
             this.cB_IPCon_KeyboardCon.UseVisualStyleBackColor = true;
+            this.cB_IPCon_KeyboardCon.CheckedChanged += new System.EventHandler(this.cB_IPCon_KeyboardCon_CheckedChanged);
             // 
             // cB_IPCon_Selected
             // 
@@ -1571,14 +1595,14 @@ namespace SSLUtility2 {
             this.l_IPCon_Port.TabIndex = 13;
             this.l_IPCon_Port.Text = "Port:";
             // 
-            // l_IPCon_Speed
+            // l_IPCon_PTSpeed
             // 
-            this.l_IPCon_Speed.AutoSize = true;
-            this.l_IPCon_Speed.Location = new System.Drawing.Point(14, 357);
-            this.l_IPCon_Speed.Name = "l_IPCon_Speed";
-            this.l_IPCon_Speed.Size = new System.Drawing.Size(88, 13);
-            this.l_IPCon_Speed.TabIndex = 12;
-            this.l_IPCon_Speed.Text = "Pan / Tilt Speed:";
+            this.l_IPCon_PTSpeed.AutoSize = true;
+            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(14, 357);
+            this.l_IPCon_PTSpeed.Name = "l_IPCon_PTSpeed";
+            this.l_IPCon_PTSpeed.Size = new System.Drawing.Size(88, 13);
+            this.l_IPCon_PTSpeed.TabIndex = 12;
+            this.l_IPCon_PTSpeed.Text = "Pan / Tilt Speed:";
             // 
             // l_Presets_Number
             // 
@@ -1631,7 +1655,7 @@ namespace SSLUtility2 {
             // 
             this.l_PTZCon.AutoSize = true;
             this.l_PTZCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_PTZCon.Location = new System.Drawing.Point(17, 175);
+            this.l_PTZCon.Location = new System.Drawing.Point(13, 179);
             this.l_PTZCon.Name = "l_PTZCon";
             this.l_PTZCon.Size = new System.Drawing.Size(104, 20);
             this.l_PTZCon.TabIndex = 11;
@@ -1649,16 +1673,17 @@ namespace SSLUtility2 {
             // 
             // b_PlayerL_Detach
             // 
-            this.b_PlayerL_Detach.Location = new System.Drawing.Point(17, 405);
+            this.b_PlayerL_Detach.Location = new System.Drawing.Point(17, 440);
             this.b_PlayerL_Detach.Name = "b_PlayerL_Detach";
-            this.b_PlayerL_Detach.Size = new System.Drawing.Size(235, 79);
+            this.b_PlayerL_Detach.Size = new System.Drawing.Size(225, 55);
             this.b_PlayerL_Detach.TabIndex = 8;
-            this.b_PlayerL_Detach.Text = "Spawn Video Player";
+            this.b_PlayerL_Detach.Text = "Spawn Detached Video Player";
             this.b_PlayerL_Detach.UseVisualStyleBackColor = true;
             this.b_PlayerL_Detach.Click += new System.EventHandler(this.b_PlayerL_Detach_Click);
             // 
             // b_PlayerL_PauseRec
             // 
+            this.b_PlayerL_PauseRec.Enabled = false;
             this.b_PlayerL_PauseRec.Location = new System.Drawing.Point(607, 647);
             this.b_PlayerL_PauseRec.Name = "b_PlayerL_PauseRec";
             this.b_PlayerL_PauseRec.Size = new System.Drawing.Size(172, 23);
@@ -1709,7 +1734,7 @@ namespace SSLUtility2 {
             // 
             // b_PTZ_Down
             // 
-            this.b_PTZ_Down.Location = new System.Drawing.Point(109, 303);
+            this.b_PTZ_Down.Location = new System.Drawing.Point(95, 301);
             this.b_PTZ_Down.Name = "b_PTZ_Down";
             this.b_PTZ_Down.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Down.TabIndex = 6;
@@ -1720,7 +1745,7 @@ namespace SSLUtility2 {
             // 
             // b_PTZ_Up
             // 
-            this.b_PTZ_Up.Location = new System.Drawing.Point(109, 219);
+            this.b_PTZ_Up.Location = new System.Drawing.Point(95, 217);
             this.b_PTZ_Up.Name = "b_PTZ_Up";
             this.b_PTZ_Up.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Up.TabIndex = 6;
@@ -1732,7 +1757,7 @@ namespace SSLUtility2 {
             // b_PTZ_FocusNeg
             // 
             this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.Aqua;
-            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(31, 305);
+            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(17, 303);
             this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
             this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusNeg.TabIndex = 6;
@@ -1744,7 +1769,7 @@ namespace SSLUtility2 {
             // b_PTZ_ZoomNeg
             // 
             this.b_PTZ_ZoomNeg.BackColor = System.Drawing.Color.GreenYellow;
-            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(31, 218);
+            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(17, 216);
             this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
             this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(59, 35);
             this.b_PTZ_ZoomNeg.TabIndex = 6;
@@ -1756,7 +1781,7 @@ namespace SSLUtility2 {
             // b_PTZ_FocusPos
             // 
             this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.Aqua;
-            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(186, 305);
+            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(172, 303);
             this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
             this.b_PTZ_FocusPos.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusPos.TabIndex = 6;
@@ -1768,7 +1793,7 @@ namespace SSLUtility2 {
             // b_PTZ_ZoomPos
             // 
             this.b_PTZ_ZoomPos.BackColor = System.Drawing.Color.GreenYellow;
-            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(186, 219);
+            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(172, 217);
             this.b_PTZ_ZoomPos.Name = "b_PTZ_ZoomPos";
             this.b_PTZ_ZoomPos.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_ZoomPos.TabIndex = 6;
@@ -1779,7 +1804,7 @@ namespace SSLUtility2 {
             // 
             // b_PTZ_Right
             // 
-            this.b_PTZ_Right.Location = new System.Drawing.Point(167, 261);
+            this.b_PTZ_Right.Location = new System.Drawing.Point(153, 259);
             this.b_PTZ_Right.Name = "b_PTZ_Right";
             this.b_PTZ_Right.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Right.TabIndex = 6;
@@ -1790,7 +1815,7 @@ namespace SSLUtility2 {
             // 
             // b_PTZ_Left
             // 
-            this.b_PTZ_Left.Location = new System.Drawing.Point(51, 261);
+            this.b_PTZ_Left.Location = new System.Drawing.Point(37, 259);
             this.b_PTZ_Left.Name = "b_PTZ_Left";
             this.b_PTZ_Left.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Left.TabIndex = 6;
@@ -2159,6 +2184,7 @@ namespace SSLUtility2 {
             this.tC_Control.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_ZoomSpeed)).EndInit();
             this.gB_PlayerR_Extended.ResumeLayout(false);
             this.gB_PlayerR_Extended.PerformLayout();
             this.gB_PlayerL_Extended.ResumeLayout(false);
@@ -2169,7 +2195,7 @@ namespace SSLUtility2 {
             this.gB_PlayerL_Simple.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.tB_PTZ_Speed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).EndInit();
             this.tC_Presets_Default.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
@@ -2724,8 +2750,8 @@ namespace SSLUtility2 {
         public ComboBox cB_IPCon_Type;
         public Label l_IPCon_ConType;
         public Button b_Presets_Admin_DefaultMen;
-        public TrackBar tB_PTZ_Speed;
-        public Label l_IPCon_Speed;
+        public TrackBar track_PTZ_PTSpeed;
+        public Label l_IPCon_PTSpeed;
         public TabPage tabPage10;
         public Button b_Presets_CHARM_Standby;
         public Button b_Presets_CHARM_Aquire;
@@ -2804,5 +2830,7 @@ namespace SSLUtility2 {
         public Label l_Rec_sCFileN;
         public ComboBox cB_Rec_Quality;
         public Label l_Rec_Quality;
+        public TrackBar track_PTZ_ZoomSpeed;
+        public Label l_PTZ_ZoomSpeed;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
