@@ -228,6 +228,7 @@
             this.cB_PlayerD_Type.Name = "cB_PlayerD_Type";
             this.cB_PlayerD_Type.Size = new System.Drawing.Size(214, 21);
             this.cB_PlayerD_Type.TabIndex = 5;
+            this.cB_PlayerD_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_Type_SelectedIndexChanged);
             // 
             // VLCPlayer_D
             // 

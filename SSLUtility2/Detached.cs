@@ -27,7 +27,7 @@ namespace SSLUtility2 {
                 combinedUrl = tB_PlayerD_SimpleAdr.Text;
             }
 
-            MainRef.Play(VLCPlayer_D, combinedUrl);
+            MainRef.Play(VLCPlayer_D, combinedUrl, tB_PlayerD_SimpleAdr);
         }
 
         private void b_PlayerD_SaveSnap_Click(object sender, EventArgs e) {
@@ -50,5 +50,34 @@ namespace SSLUtility2 {
             //MainRef.Pause
         }
 
+        private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
+            string enc = cB_PlayerD_Type.Text;
+            string username = "";
+            string password = "";
+            string rtsp = "";
+
+            if (enc == "IONodes - Daylight") {
+                username = "admin";
+                password = "admin";
+                rtsp = "videoinput_1:0/h264_1/onvif.stm";
+            } else if (enc == "IONodes - Thermal") {
+                username = "admin";
+                password = "admin";
+                rtsp = "videoinput_2:0/h264_1/onvif.stm";
+            } else if (enc == "VIVOTEK") {
+                username = "root";
+                password = "root1234";
+                rtsp = "live.sdp";
+            } else if (enc == "BOSCH") {
+                username = "service";
+                password = "Service123!";
+                rtsp = "";
+            }
+
+
+            tB_PlayerD_RTSP.Text = rtsp;
+            tB_PlayerD_Username.Text = username;
+            tB_PlayerD_Password.Text = password;
+        }
     }
 }

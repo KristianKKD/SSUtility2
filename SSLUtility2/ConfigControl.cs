@@ -16,7 +16,7 @@ namespace SSLUtility2 {
 
         static string configPath = "";
 
-        const string varString = "v"; //What the prefix of the actual value is (ScreenshotFolder:bin/obj/)
+        public const string varString = "v"; //What the prefix of the actual value is (ScreenshotFolder:bin/obj/)
         public const string screenshotFolderVar = "ScreenshotFolder";
         public const string videoFolderVar = "VideoFolder";
 
@@ -25,6 +25,7 @@ namespace SSLUtility2 {
 
         public const string RecQualVar = "RecordingQuality";
         public const string RecFPSVar = "RecordingFramerate";
+        /////
 
         public static List<PathVar> varList {
             get;
@@ -42,12 +43,8 @@ namespace SSLUtility2 {
             DefvRecFPSVar = MainForm.RecFPS;
         }
 
-        public static void Create(string path) {
-            if (File.Exists(path)) {
-                File.Delete(path);
-            }
-            var newFile = File.Create(path);
-            newFile.Close();
+        public static void CreateConfig(string path) {
+            ResetFile(path);
             configPath = path;
 
             File.AppendAllText(path, varString + screenshotFolderVar + ":" + MainForm.scFolder + "\n");
@@ -58,6 +55,14 @@ namespace SSLUtility2 {
 
             File.AppendAllText(path, varString + RecQualVar + ":" + MainForm.RecQual + "\n");
             File.AppendAllText(path, varString + RecFPSVar + ":" + MainForm.RecFPS + "\n");
+        }
+
+        public static void ResetFile(string path) {
+            if (File.Exists(path)) {
+                File.Delete(path);
+            }
+            var newFile = File.Create(path);
+            newFile.Close();
         }
 
         public static void Append(string text) {

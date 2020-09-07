@@ -90,6 +90,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoSave.cs" />
     <Compile Include="CameraCommunicate.cs" />
     <Compile Include="ConfigControl.cs" />
     <Compile Include="D.cs" />

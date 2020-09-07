@@ -34,7 +34,10 @@ namespace SSLUtility2
         Recorder recorderL;
         Recorder recorderR;
 
+        public static Control[] saveList = new Control[0];
+
         public static string config = "config.txt";
+        public static string autoSave = "auto.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
         public static string scFolder = appFolder + @"Screenshots\";
         public static string vFolder = appFolder + @"Videos\";
@@ -43,6 +46,14 @@ namespace SSLUtility2
         public static string RecFPS = "30";
         public static string RecQual = "70";
 
+
+        //public static string plIP; 
+        //public static string plPort; 
+        //public static string plRTSP; 
+        //public static string plBuff; 
+        //public static string plUser; 
+        //public static string plPass; 
+        
 
         public static byte Address;
         public static byte CheckSum;
@@ -607,6 +618,70 @@ namespace SSLUtility2
 
         /////////////////////////////////////
 
+        async Task StartupStuff() {
+            m = this;
+
+            saveList = new Control[]{
+                cB_IPCon_Type,
+                tB_IPCon_Adr,
+                tB_IPCon_Port,
+                cB_IPCon_Selected,
+
+                cB_PlayerL_Type,
+                tB_PlayerL_Adr,
+                tB_PlayerL_Port,
+                tB_PlayerL_RTSP,
+                tB_PlayerL_Buffering,
+                tB_PlayerL_Username,
+                tB_PlayerL_Password,
+                tB_PlayerL_SimpleAdr,
+
+                cB_PlayerR_Type,
+                tB_PlayerR_Adr,
+                tB_PlayerR_Port,
+                tB_PlayerR_RTSP,
+                tB_PlayerR_Buffering,
+                tB_PlayerR_Username,
+                tB_PlayerR_Password,
+                tB_PlayerR_SimpleAdr,
+            };
+
+            AutoSave.LoadAuto(appFolder + autoSave);
+
+            ConfigControl.SetDefaults();
+
+            CheckCreateFile(config, appFolder);
+            CheckCreateFile(autoSave, appFolder);
+            CheckCreateFile(null, scFolder);
+            CheckCreateFile(null, vFolder);
+
+            await ConfigControl.SearchForVarsAsync(appFolder + config);
+            foreach (PathVar v in ConfigControl.varList) {
+                switch (v.name) {
+                    case ConfigControl.screenshotFolderVar:
+                        scFolder = v.value;
+                        break;
+                    case ConfigControl.videoFolderVar:
+                        vFolder = v.value;
+                        break;
+                    case ConfigControl.scFileNVar:
+                        scFileName = v.value;
+                        break;
+                    case ConfigControl.videoFileNVar:
+                        vFileName = v.value;
+                        break;
+                    case ConfigControl.RecQualVar:
+                        RecQual = v.value;
+                        break;
+                    case ConfigControl.RecFPSVar:
+                        RecFPS = v.value;
+                        break;
+                }
+            }
+
+            PopulateSettingText();
+        }
+
         async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
             if (tb.Text.Length < 1) {
                 tb.Text = appFolder;
@@ -618,14 +693,20 @@ namespace SSLUtility2
             return false;
         }
 
-        public static void ShowError(string message, string caption, string error) {
+        public static bool ShowError(string message, string caption, string error, bool showError = true) {
+            bool res = false;
             DialogResult d = MessageBox.Show(message, caption,
                                 MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question);
             if (d == DialogResult.Yes) {
-                MessageBox.Show(error, caption, MessageBoxButtons.OK);
+                res = true;
+                if (showError) {
+                    MessageBox.Show(error, caption, MessageBoxButtons.OK);
+                }
             }
+            return res;
         }
+
 
         public Recorder StartRec(AxAXVLC.AxVLCPlugin2 player) {
             Recorder rec = new Recorder(new Record(tB_Paths_vFolder.Text + vFileName +
@@ -659,12 +740,14 @@ namespace SSLUtility2
             }
         }
 
-        public void Play(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
+        public void Play(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, TextBox linkedTB) {
             if (combinedUrl == "") {
                 MessageBox.Show("Address is invalid!");
                 return;
             }
 
+            linkedTB.Text = combinedUrl;
+            
             if (player.playlist.isPlaying == true) {
                 player.playlist.stop();
                 player.playlist.items.clear();
@@ -695,8 +778,22 @@ namespace SSLUtility2
         }
 
         private async Task ApplyAll() { //
-            ConfigControl.Create(appFolder + config);
+            ConfigControl.CreateConfig(appFolder + config);
             MessageBox.Show("Applied settings to: " + appFolder + config);
+        }
+        private void b_Settings_Default_Click(object sender, EventArgs e) {
+            DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
+                "Settings will not automatically be applied so the user may edit the defaults before applying.",
+                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (d == DialogResult.Yes) {
+                scFolder = ConfigControl.DefScFolder;
+                vFolder = ConfigControl.DefVFolder;
+                scFileName = ConfigControl.DefScName;
+                vFileName = ConfigControl.DefVName;
+                RecQual = ConfigControl.DefvRecQualVar;
+                RecFPS = ConfigControl.DefvRecFPSVar;
+                PopulateSettingText();
+            }
         }
 
         void PTZMove(bool IsTilt, D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left) {
@@ -755,45 +852,13 @@ namespace SSLUtility2
             if (fileName != null) {
                 if (!File.Exists(appFolder + fileName)) {
                     if (appFolder + fileName == appFolder + config) {
-                        ConfigControl.Create(appFolder + fileName);
+                        ConfigControl.CreateConfig(appFolder + fileName);
+                    } else {
+                        var newFile = File.Create(appFolder + fileName);
+                        newFile.Close();
                     }
                 }
             }
-        }
-
-        async Task StartupStuff() {
-            m = this;
-
-            ConfigControl.SetDefaults();
-
-            CheckCreateFile(config, appFolder);
-            CheckCreateFile(null, scFolder);
-            CheckCreateFile(null, vFolder);
-            await ConfigControl.SearchForVarsAsync(appFolder + config);
-            foreach (PathVar v in ConfigControl.varList) {
-                switch (v.name) {
-                    case ConfigControl.screenshotFolderVar:
-                        scFolder = v.value;
-                        break;
-                    case ConfigControl.videoFolderVar:
-                        vFolder = v.value;
-                        break;
-                    case ConfigControl.scFileNVar:
-                        scFileName = v.value;
-                        break;
-                    case ConfigControl.videoFileNVar:
-                        vFileName = v.value;
-                        break;
-                    case ConfigControl.RecQualVar:
-                        RecQual = v.value;
-                        break;
-                    case ConfigControl.RecFPSVar:
-                        RecFPS = v.value;
-                        break;
-                }
-            }
-
-            PopulateSettingText();
         }
 
         public async Task PopulateSettingText() {
@@ -829,7 +894,7 @@ namespace SSLUtility2
                 combinedUrl = tB_PlayerL_SimpleAdr.Text;
             }
 
-            Play(VLCPlayer_L, combinedUrl);
+            Play(VLCPlayer_L, combinedUrl, tB_PlayerL_SimpleAdr);
         }
 
         private void b_PlayerR_Play_Click(object sender, EventArgs e) {
@@ -847,7 +912,7 @@ namespace SSLUtility2
                 combinedUrl = tB_PlayerR_SimpleAdr.Text;
             }
 
-            Play(VLCPlayer_R, combinedUrl);
+            Play(VLCPlayer_R, combinedUrl, tB_PlayerR_SimpleAdr);
         }
 
         private void OnFinishedTypingAdr(object sender, EventArgs e) {
@@ -1271,21 +1336,9 @@ namespace SSLUtility2
             ApplyAll();
         }
 
-        private void b_Settings_Default_Click(object sender, EventArgs e) {
-            DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
-                "Settings will not automatically be applied so the user may edit the defaults before applying.",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (d == DialogResult.Yes) {
-                scFolder = ConfigControl.DefScFolder;
-                vFolder = ConfigControl.DefVFolder;
-                scFileName = ConfigControl.DefScName;
-                vFileName = ConfigControl.DefVName;
-                RecQual = ConfigControl.DefvRecQualVar;
-                RecFPS = ConfigControl.DefvRecFPSVar;
-                PopulateSettingText();
-            }
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            AutoSave.SaveAuto(appFolder + autoSave);
         }
-
 
     } // end of class MainForm
 } // end of namespace SSLUtility2
