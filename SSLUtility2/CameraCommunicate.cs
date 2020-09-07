@@ -32,7 +32,7 @@ namespace SSLUtility2 {
             }
         }
 
-        public static async Task Connect(MainForm m) {
+        public static async Task<bool> Connect(MainForm m) {
             if (sock.Connected) {
                 sock.Close();
             }
@@ -42,7 +42,7 @@ namespace SSLUtility2 {
                 m.l_IPCon_Connected.Text = "❌";
                 m.l_IPCon_Connected.ForeColor = Color.Red;
                 MainForm.ShowError(failedConnectMsg, failedConnectCaption, "IP ping timed out with no response.");
-                return;
+                return false;
             }
             m.l_IPCon_Connected.Text = "✓";
             m.l_IPCon_Connected.ForeColor = Color.Green;
@@ -51,6 +51,7 @@ namespace SSLUtility2 {
             sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(m.tB_IPCon_Port.Text));
             sock.ConnectAsync(endPoint);
+            return true;
         }
 
         public static bool PingAdr(string address) {

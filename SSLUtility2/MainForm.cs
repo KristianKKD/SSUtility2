@@ -620,7 +620,7 @@ namespace SSLUtility2
 
         async Task StartupStuff() {
             m = this;
-
+            
             saveList = new Control[]{
                 cB_IPCon_Type,
                 tB_IPCon_Adr,
@@ -680,6 +680,7 @@ namespace SSLUtility2
             }
 
             PopulateSettingText();
+            SetFeatureToAllControls(m.Controls);
         }
 
         async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
@@ -707,6 +708,13 @@ namespace SSLUtility2
             return res;
         }
 
+        private async Task AutoFillConnect() {
+            if (CameraCommunicate.Connect(m).Result) {
+                if (tB_PlayerL_Adr.Text == "192.168.1.71" || tB_PlayerL_Adr.Text == "") {
+                    tB_PlayerL_Adr.Text = tB_IPCon_Adr.Text;
+                }
+            }
+        }
 
         public Recorder StartRec(AxAXVLC.AxVLCPlugin2 player) {
             Recorder rec = new Recorder(new Record(tB_Paths_vFolder.Text + vFileName +
@@ -793,6 +801,22 @@ namespace SSLUtility2
                 RecQual = ConfigControl.DefvRecQualVar;
                 RecFPS = ConfigControl.DefvRecFPSVar;
                 PopulateSettingText();
+            }
+        }
+
+        private void SetFeatureToAllControls(Control.ControlCollection cc) {
+            if (cc != null) {
+                foreach (Control control in cc) {
+                    if (control != tC_Control) {
+                        control.PreviewKeyDown += new PreviewKeyDownEventHandler(control_PreviewKeyDown);
+                    }
+                    SetFeatureToAllControls(control.Controls);
+                }
+            }
+        }
+        void control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down || e.KeyCode == Keys.Left || e.KeyCode == Keys.Right) {
+                e.IsInputKey = true;
             }
         }
 
@@ -916,12 +940,13 @@ namespace SSLUtility2
         }
 
         private void OnFinishedTypingAdr(object sender, EventArgs e) {
-            CameraCommunicate.Connect(m);
+            AutoFillConnect();   
         }
+
 
         private void tB_IPCon_Adr_PreviewKeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                CameraCommunicate.Connect(m);
+                AutoFillConnect();
             }
         }
 

@@ -729,6 +729,7 @@ namespace SSLUtility2 {
             this.cB_PlayerR_Type.Name = "cB_PlayerR_Type";
             this.cB_PlayerR_Type.Size = new System.Drawing.Size(214, 21);
             this.cB_PlayerR_Type.TabIndex = 5;
+            this.cB_PlayerR_Type.Text = "IONodes - Daylight";
             this.cB_PlayerR_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerR_Type_SelectedIndexChanged);
             // 
             // label3
@@ -887,6 +888,7 @@ namespace SSLUtility2 {
             this.cB_PlayerL_Type.Name = "cB_PlayerL_Type";
             this.cB_PlayerL_Type.Size = new System.Drawing.Size(214, 21);
             this.cB_PlayerL_Type.TabIndex = 5;
+            this.cB_PlayerL_Type.Text = "IONodes - Daylight";
             this.cB_PlayerL_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerL_Type_SelectedIndexChanged);
             // 
             // gB_PlayerR_Simple
