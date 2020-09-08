@@ -51,7 +51,7 @@ namespace SSLUtility2
         public static byte Address;
         public static byte CheckSum;
         public static byte Command1, Command2, Data1, Data2;
-        private readonly byte STX = 0xFF;
+        //private readonly byte STX = 0xFF;
         public int camno = 1;   // Default camera number (1 for now)
         public bool camisthere = false; // True if camera has replied to SSCP query
         public int waitval = 0; // Wait n millisecs before sending next protocol packet
@@ -613,7 +613,8 @@ namespace SSLUtility2
 
         async Task StartupStuff() {
             m = this;
-            
+            tC_Main.TabPages[1].Dispose(); //remove the firmware page
+
             saveList = new Control[]{
                 cB_IPCon_Type,
                 tB_IPCon_Adr,
