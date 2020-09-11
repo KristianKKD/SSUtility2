@@ -3,7 +3,9 @@ using System.Drawing;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SSLUtility2 {
 
@@ -20,11 +22,15 @@ namespace SSLUtility2 {
         static IPAddress serverAddr = null;
         static Socket sock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
         static IPEndPoint endPoint = new IPEndPoint(0, 0);
+        public static Control defaultLabel;
 
-        public static async Task sendtoIPAsync(byte[] code) {
+        public static async Task sendtoIPAsync(byte[] code, Control lab = null) {
             try {
+                if (lab == null) {
+                    lab = defaultLabel;
+                }
                 if (!sock.Connected) {
-                    await Connect(MainForm.m);
+                    await Connect(MainForm.m, false, lab);
                 }
                 SendToSocket(code);
             } catch (Exception e) {
@@ -32,20 +38,25 @@ namespace SSLUtility2 {
             }
         }
 
-        public static async Task<bool> Connect(MainForm m) {
+        public static async Task<bool> Connect(MainForm m, bool stopError = false, Control lCon = null) {
+            if (lCon == null) {
+                lCon = defaultLabel;
+            }
             if (sock.Connected) {
                 sock.Close();
             }
             string ipAdr = m.tB_IPCon_Adr.Text;
 
             if (!PingAdr(ipAdr)) {
-                m.l_IPCon_Connected.Text = "❌";
-                m.l_IPCon_Connected.ForeColor = Color.Red;
-                MainForm.ShowError(failedConnectMsg, failedConnectCaption, "IP ping timed out with no response.");
+                lCon.Text = "❌";
+                lCon.ForeColor = Color.Red;
+                if (!stopError) {
+                    MainForm.ShowError(failedConnectMsg, failedConnectCaption, "IP ping timed out with no response.");
+                }
                 return false;
             }
-            m.l_IPCon_Connected.Text = "✓";
-            m.l_IPCon_Connected.ForeColor = Color.Green;
+            lCon.Text = "✓";
+            lCon.ForeColor = Color.Green;
 
             serverAddr = IPAddress.Parse(ipAdr);
             sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

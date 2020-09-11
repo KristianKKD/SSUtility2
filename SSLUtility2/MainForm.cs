@@ -20,14 +20,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2
-{
-    /// <summary>
-    /// Description of MainForm.
-    /// </summary>
-    public partial class MainForm : Form
-    {
-        // Public variable declarations
+namespace SSLUtility2 {
+    public partial class MainForm : Form {
 
         D protocol = new D();
         public static MainForm m;
@@ -35,9 +29,10 @@ namespace SSLUtility2
         Recorder recorderR;
 
         public static Control[] saveList = new Control[0];
+        Control[] ipConSaveList = new Control[0];
 
         public static string config = "config.txt";
-        public static string autoSave = "auto.txt";
+        public const string autoSave = "auto.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
         public static string scFolder = appFolder + @"Screenshots\";
         public static string vFolder = appFolder + @"Videos\";
@@ -46,8 +41,9 @@ namespace SSLUtility2
         public static string RecFPS = "30";
         public static string RecQual = "70";
         const string defaultIP = "192.168.1.71";
-        
+        public bool lite = false;
 
+        #region Firmware Stuff
         public static byte Address;
         public static byte CheckSum;
         public static byte Command1, Command2, Data1, Data2;
@@ -123,7 +119,6 @@ namespace SSLUtility2
 
 
         public MainForm() {
-
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
@@ -608,12 +603,13 @@ namespace SSLUtility2
             hexfileendaddress = last64kblock * 65536 + lastaddr + 16;
             hexfilelength = hexfileendaddress - hexfilestartaddress;
         } // end of AnalyseFirmwareFile()
+        #endregion
 
-        /////////////////////////////////////
 
-        async Task StartupStuff() {
+        public async Task StartupStuff() {
             m = this;
             tC_Main.TabPages[1].Dispose(); //remove the firmware page
+            CameraCommunicate.defaultLabel = l_IPCon_Connected;
 
             saveList = new Control[]{
                 cB_IPCon_Type,
@@ -677,10 +673,74 @@ namespace SSLUtility2
             SetFeatureToAllControls(m.Controls);
 
             if (tB_IPCon_Adr.Text != defaultIP) {
-                CameraCommunicate.Connect(m);
+                CameraCommunicate.Connect(m, true);
             }
-
+            lite = false;
         }
+
+        TabPage LiteMode() {
+            TabPage tp = new TabPage();
+            tp.Text = "Camera Control";
+            tC_Control.Controls.Add(tp);
+            m.Size = new Size(300, 1000);
+            AutoSave.SaveAuto(appFolder + autoSave);
+            lite = true;
+            return tp;
+        }
+
+        void AttachPresetPanel(TabPage tp, ControlPanel panel) {
+            GroupBox gb = new GroupBox();
+            PresetPanel pp = new PresetPanel();
+            pp.mainRef = m;
+
+            gb.Location = new Point(0, 565);
+            gb.Size = pp.Size;
+
+            tp.Controls.Add(gb);
+
+            var c = GetAllType(pp, typeof(TabControl));
+            gb.Controls.AddRange(c.ToArray());
+        }
+
+        ControlPanel AttachControlPanel(TabPage tp) {
+            GroupBox gb = new GroupBox();
+            ControlPanel cp = new ControlPanel();
+
+            cp.mainRef = m;
+            cp.pathToAuto = appFolder + autoSave;
+            cp.cB_IPCon_Type.Text = cB_IPCon_Type.Text;
+            cp.tB_IPCon_Adr.Text = tB_IPCon_Adr.Text;
+            cp.tB_IPCon_Port.Text = tB_IPCon_Port.Text;
+            cp.cB_IPCon_Selected.Text = cB_IPCon_Selected.Text;
+
+
+            gb.Size = cp.Size;
+            tp.Controls.Add(gb);
+
+            AddControls(gb, cp);
+            return cp;
+        }
+
+        void AddControls(GroupBox g, Control panel) {
+            var c = GetAll(panel);
+            g.Controls.AddRange(c.ToArray());
+        }
+
+        public IEnumerable<Control> GetAll(Control control) {
+            var controls = control.Controls.Cast<Control>();
+
+            return controls.SelectMany(ctrl => GetAll(ctrl))
+                                      .Concat(controls);
+        }
+
+        public IEnumerable<Control> GetAllType(Control control, Type type) {
+            var controls = control.Controls.Cast<Control>();
+
+            return controls.SelectMany(ctrl => GetAllType(ctrl, type))
+                                      .Concat(controls)
+                                      .Where(c => c.GetType() == type);
+        }
+
 
         async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
             if (tb.Text.Length < 1) {
@@ -707,8 +767,8 @@ namespace SSLUtility2
             return res;
         }
 
-        private async Task AutoFillConnect() {
-            if (CameraCommunicate.Connect(m).Result) {
+        public async Task AutoFillConnect(bool supressError = false, Control lab = null) {
+            if (CameraCommunicate.Connect(m, supressError, lab).Result) {
                 if (tB_PlayerL_Adr.Text == defaultIP || tB_PlayerL_Adr.Text == "") {
                     tB_PlayerL_Adr.Text = tB_IPCon_Adr.Text;
                 }
@@ -739,7 +799,7 @@ namespace SSLUtility2
             }
         }
 
-        private uint MakeAdr() {
+        public uint MakeAdr() {
             if (cB_IPCon_Selected.Text == "Daylight") {
                 return 1;
             } else {
@@ -752,9 +812,15 @@ namespace SSLUtility2
                 MessageBox.Show("Address is invalid!");
                 return;
             }
-
+            if (CameraCommunicate.PingAdr(combinedUrl)) {
+                MessageBox.Show("Address could not be pinged!");
+                return;
+            }
             linkedTB.Text = combinedUrl;
-            
+            Replay(player, combinedUrl);
+        }
+
+        public void Replay(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
             if (player.playlist.isPlaying == true) {
                 player.playlist.stop();
                 player.playlist.items.clear();
@@ -821,7 +887,7 @@ namespace SSLUtility2
             }
         }
 
-        void PTZMove(bool IsTilt, D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left) {
+        public void PTZMove(bool IsTilt, D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left) {
 
             byte[] code;
             uint address = MakeAdr();
@@ -836,7 +902,7 @@ namespace SSLUtility2
             CameraCommunicate.sendtoIPAsync(code);
         }
 
-        void PTZZoom(D.Zoom dir) {
+        public void PTZZoom(D.Zoom dir) {
             CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(MakeAdr(), dir));
         }
 
@@ -897,9 +963,11 @@ namespace SSLUtility2
             cB_Rec_FPS.Text = RecFPS;
         }
 
-        Detached DetachVid() {
+        public Detached DetachVid(bool show = true) {
             Detached DetachedVid = new Detached();
-            DetachedVid.Show();
+            if (show) {
+                DetachedVid.Show();
+            }
             DetachedVid.MainRef = this;
             return DetachedVid;
         }
@@ -941,7 +1009,7 @@ namespace SSLUtility2
         }
 
         private void OnFinishedTypingAdr(object sender, EventArgs e) {
-            AutoFillConnect();   
+            AutoFillConnect(true);   
         }
 
 
@@ -994,6 +1062,10 @@ namespace SSLUtility2
         }
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), 196, D.PresetAction.Goto));
+        }
+
+        private void b_Presets_Admin_DefaultMen_Click(object sender, EventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), 2, D.PresetAction.Goto));
         }
 
@@ -1028,7 +1100,7 @@ namespace SSLUtility2
             }
         }
 
-        private void tC_Control_KeyUp(object sender, KeyEventArgs e) { //change the way to control this
+        private void tC_Control_KeyUp(object sender, KeyEventArgs e) {
             if (cB_IPCon_KeyboardCon.Checked == true) {
                 CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()));
             }
@@ -1155,12 +1227,18 @@ namespace SSLUtility2
         }
 
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
+            if (tB_Presets_Number.Text.ToString() == "") {
+                return;
+            }
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
 
             CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Goto));
         }
 
         private void b_Presets_Learn_Click(object sender, EventArgs e) {
+            if (tB_Presets_Number.Text.ToString() == "") {
+                return;
+            }
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
 
             CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Set));
@@ -1360,6 +1438,14 @@ namespace SSLUtility2
             }
         }
 
+        private void b_IPCon_LayoutMode_Click(object sender, EventArgs e) {
+            TabPage tp = LiteMode();
+            ControlPanel cp = AttachControlPanel(tp);
+            AttachPresetPanel(tp, cp);
+            tC_Control.TabPages[0].Dispose();
+            tC_Control.TabPages[0].Dispose();
+        }
+
         private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
             BrowseFolderButton(tB_Paths_sCFolder);
         }
@@ -1369,7 +1455,9 @@ namespace SSLUtility2
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-            AutoSave.SaveAuto(appFolder + autoSave);
+            if (!lite) {
+                AutoSave.SaveAuto(appFolder + autoSave);
+            }
         }
 
     } // end of class MainForm

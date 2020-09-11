@@ -11,7 +11,6 @@ namespace SSLUtility2 {
     class AutoSave {
 
         public static async Task SaveAuto(string path) {
-            
             ConfigControl.ResetFile(path);
 
             foreach (Control c in MainForm.saveList) {

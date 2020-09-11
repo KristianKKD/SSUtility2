@@ -29,6 +29,7 @@
             this.tB_PlayerD_SimpleAdr = new System.Windows.Forms.TextBox();
             this.l_PlayerD_SimpleAdr = new System.Windows.Forms.Label();
             this.gB_PlayerD_Extended = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.l_PlayerD_Type = new System.Windows.Forms.Label();
             this.l_PlayerD_RTSP = new System.Windows.Forms.Label();
             this.tB_PlayerD_Adr = new System.Windows.Forms.TextBox();
@@ -45,7 +46,6 @@
             this.cB_PlayerD_Type = new System.Windows.Forms.ComboBox();
             this.VLCPlayer_D = new AxAXVLC.AxVLCPlugin2();
             this.checkB_PlayerD_Manual = new System.Windows.Forms.CheckBox();
-            this.b_PlayerD_PauseRec = new System.Windows.Forms.Button();
             this.b_PlayerD_StartRec = new System.Windows.Forms.Button();
             this.b_PlayerD_SaveSnap = new System.Windows.Forms.Button();
             this.b_PlayerD_Play = new System.Windows.Forms.Button();
@@ -84,6 +84,7 @@
             // gB_PlayerD_Extended
             // 
             this.gB_PlayerD_Extended.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.gB_PlayerD_Extended.Controls.Add(this.label1);
             this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_Type);
             this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_RTSP);
             this.gB_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Adr);
@@ -104,6 +105,15 @@
             this.gB_PlayerD_Extended.TabIndex = 26;
             this.gB_PlayerD_Extended.TabStop = false;
             this.gB_PlayerD_Extended.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 193);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(275, 13);
+            this.label1.TabIndex = 49;
+            this.label1.Text = "*Changed fields will not apply until the stream is replayed*";
             // 
             // l_PlayerD_Type
             // 
@@ -228,6 +238,7 @@
             this.cB_PlayerD_Type.Name = "cB_PlayerD_Type";
             this.cB_PlayerD_Type.Size = new System.Drawing.Size(214, 21);
             this.cB_PlayerD_Type.TabIndex = 5;
+            this.cB_PlayerD_Type.Text = "Daylight";
             this.cB_PlayerD_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_Type_SelectedIndexChanged);
             // 
             // VLCPlayer_D
@@ -250,19 +261,9 @@
             this.checkB_PlayerD_Manual.UseVisualStyleBackColor = true;
             this.checkB_PlayerD_Manual.CheckedChanged += new System.EventHandler(this.checkB_PlayerD_Manual_CheckedChanged);
             // 
-            // b_PlayerD_PauseRec
-            // 
-            this.b_PlayerD_PauseRec.Location = new System.Drawing.Point(320, 630);
-            this.b_PlayerD_PauseRec.Name = "b_PlayerD_PauseRec";
-            this.b_PlayerD_PauseRec.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerD_PauseRec.TabIndex = 44;
-            this.b_PlayerD_PauseRec.Text = "PAUSE Recording";
-            this.b_PlayerD_PauseRec.UseVisualStyleBackColor = true;
-            this.b_PlayerD_PauseRec.Click += new System.EventHandler(this.b_PlayerD_PauseRec_Click);
-            // 
             // b_PlayerD_StartRec
             // 
-            this.b_PlayerD_StartRec.Location = new System.Drawing.Point(320, 604);
+            this.b_PlayerD_StartRec.Location = new System.Drawing.Point(320, 583);
             this.b_PlayerD_StartRec.Name = "b_PlayerD_StartRec";
             this.b_PlayerD_StartRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerD_StartRec.TabIndex = 45;
@@ -272,7 +273,7 @@
             // 
             // b_PlayerD_SaveSnap
             // 
-            this.b_PlayerD_SaveSnap.Location = new System.Drawing.Point(320, 559);
+            this.b_PlayerD_SaveSnap.Location = new System.Drawing.Point(320, 554);
             this.b_PlayerD_SaveSnap.Name = "b_PlayerD_SaveSnap";
             this.b_PlayerD_SaveSnap.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerD_SaveSnap.TabIndex = 46;
@@ -299,7 +300,6 @@
             this.Controls.Add(this.gB_PlayerD_Simple);
             this.Controls.Add(this.VLCPlayer_D);
             this.Controls.Add(this.checkB_PlayerD_Manual);
-            this.Controls.Add(this.b_PlayerD_PauseRec);
             this.Controls.Add(this.b_PlayerD_StartRec);
             this.Controls.Add(this.b_PlayerD_SaveSnap);
             this.Controls.Add(this.b_PlayerD_Play);
@@ -337,9 +337,9 @@
         public System.Windows.Forms.ComboBox cB_PlayerD_Type;
         public AxAXVLC.AxVLCPlugin2 VLCPlayer_D;
         public System.Windows.Forms.CheckBox checkB_PlayerD_Manual;
-        public System.Windows.Forms.Button b_PlayerD_PauseRec;
         public System.Windows.Forms.Button b_PlayerD_StartRec;
         public System.Windows.Forms.Button b_PlayerD_SaveSnap;
         public System.Windows.Forms.Button b_PlayerD_Play;
+        public System.Windows.Forms.Label label1;
     }
 }

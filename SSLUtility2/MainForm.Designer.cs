@@ -69,12 +69,12 @@ namespace SSLUtility2 {
             this.Abortbutton = new System.Windows.Forms.Button();
             this.ResetMemorybutton = new System.Windows.Forms.Button();
             this.tC_Main = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.camControl = new System.Windows.Forms.TabPage();
             this.tC_Control = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.track_PTZ_ZoomSpeed = new System.Windows.Forms.TrackBar();
-            this.l_PTZ_ZoomSpeed = new System.Windows.Forms.Label();
+            this.cameraCon = new System.Windows.Forms.TabPage();
+            this.b_IPCon_LayoutMode = new System.Windows.Forms.Button();
             this.gB_PlayerR_Extended = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tB_PlayerR_Adr = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -90,6 +90,7 @@ namespace SSLUtility2 {
             this.cB_PlayerR_Type = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.gB_PlayerL_Extended = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.l_PlayerL_Type = new System.Windows.Forms.Label();
             this.l_PlayerL_RTSP = new System.Windows.Forms.Label();
             this.tB_PlayerL_Adr = new System.Windows.Forms.TextBox();
@@ -111,25 +112,31 @@ namespace SSLUtility2 {
             this.tB_PlayerL_SimpleAdr = new System.Windows.Forms.TextBox();
             this.l_PlayerL_SimpleAdr = new System.Windows.Forms.Label();
             this.VLCPlayer_R = new AxAXVLC.AxVLCPlugin2();
+            this.VLCPlayer_L = new AxAXVLC.AxVLCPlugin2();
+            this.tB_Presets_Number = new System.Windows.Forms.TextBox();
+            this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
+            this.tB_IPCon_Adr = new System.Windows.Forms.TextBox();
             this.checkB_PlayerR_Manual = new System.Windows.Forms.CheckBox();
-            this.b_PlayerR_PauseRec = new System.Windows.Forms.Button();
             this.b_PlayerR_StartRec = new System.Windows.Forms.Button();
             this.b_PlayerR_SaveSnap = new System.Windows.Forms.Button();
             this.b_PlayerR_Play = new System.Windows.Forms.Button();
-            this.VLCPlayer_L = new AxAXVLC.AxVLCPlugin2();
             this.checkB_PlayerL_Manual = new System.Windows.Forms.CheckBox();
             this.l_IPCon_Connected = new System.Windows.Forms.Label();
             this.track_PTZ_PTSpeed = new System.Windows.Forms.TrackBar();
             this.cB_IPCon_Type = new System.Windows.Forms.ComboBox();
-            this.tB_Presets_Number = new System.Windows.Forms.TextBox();
             this.tC_Presets_Default = new System.Windows.Forms.TabControl();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.adminPage = new System.Windows.Forms.TabPage();
+            this.b_Presets_Admin_DefaultMen = new System.Windows.Forms.Button();
+            this.b_Presets_Admin_DebugToggle = new System.Windows.Forms.Button();
+            this.b_Presets_Admin_MechMen = new System.Windows.Forms.Button();
+            this.b_Presets_Admin_SetupMen = new System.Windows.Forms.Button();
+            this.daylightPage = new System.Windows.Forms.TabPage();
             this.b_Presets_Daylight_Stabilizer = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_WDR = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_Wiper = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_AF = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_ColMono = new System.Windows.Forms.Button();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.thermalPage = new System.Windows.Forms.TabPage();
             this.button32 = new System.Windows.Forms.Button();
             this.button31 = new System.Windows.Forms.Button();
             this.b_Presets_Thermal_BrightPos = new System.Windows.Forms.Button();
@@ -140,7 +147,7 @@ namespace SSLUtility2 {
             this.b_Presets_Thermal_WhiteBlack = new System.Windows.Forms.Button();
             this.b_Presets_Thermal_NUC = new System.Windows.Forms.Button();
             this.b_Presets_Thermal_AF = new System.Windows.Forms.Button();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.slgPage = new System.Windows.Forms.TabPage();
             this.b_Presets_SLG_SteadyGreen = new System.Windows.Forms.Button();
             this.b_Presets_SLG_AllLightsOff = new System.Windows.Forms.Button();
             this.b_Presets_SLG_FlashingRG = new System.Windows.Forms.Button();
@@ -148,25 +155,18 @@ namespace SSLUtility2 {
             this.b_Presets_SLG_FlashingRed = new System.Windows.Forms.Button();
             this.b_Presets_SLG_SteadyRed = new System.Windows.Forms.Button();
             this.b_Presets_SLG_FlashingGreen = new System.Windows.Forms.Button();
-            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.peakbeamPage = new System.Windows.Forms.TabPage();
             this.b_Presets_Peak_SteadyLamp = new System.Windows.Forms.Button();
             this.b_Presets_Peak_StopZoom = new System.Windows.Forms.Button();
             this.b_Presets_Peak_ZoomOut = new System.Windows.Forms.Button();
             this.b_Presets_Peak_ZoomIn = new System.Windows.Forms.Button();
             this.b_Presets_Peak_LampOff = new System.Windows.Forms.Button();
             this.b_Presets_Peak_StrobeLamp = new System.Windows.Forms.Button();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.b_Presets_Admin_DefaultMen = new System.Windows.Forms.Button();
-            this.b_Presets_Admin_DebugToggle = new System.Windows.Forms.Button();
-            this.b_Presets_Admin_MechMen = new System.Windows.Forms.Button();
-            this.b_Presets_Admin_SetupMen = new System.Windows.Forms.Button();
-            this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.charmPage = new System.Windows.Forms.TabPage();
             this.b_Presets_CHARM_Aquire = new System.Windows.Forms.Button();
             this.b_Presets_CHARM_Standby = new System.Windows.Forms.Button();
             this.cB_IPCon_KeyboardCon = new System.Windows.Forms.CheckBox();
             this.cB_IPCon_Selected = new System.Windows.Forms.ComboBox();
-            this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
-            this.tB_IPCon_Adr = new System.Windows.Forms.TextBox();
             this.l_IPCon_KeyControl = new System.Windows.Forms.Label();
             this.l_IPCon_SelectedCam = new System.Windows.Forms.Label();
             this.l_IPCon_Port = new System.Windows.Forms.Label();
@@ -179,7 +179,6 @@ namespace SSLUtility2 {
             this.l_PTZCon = new System.Windows.Forms.Label();
             this.l_IPCon = new System.Windows.Forms.Label();
             this.b_PlayerL_Detach = new System.Windows.Forms.Button();
-            this.b_PlayerL_PauseRec = new System.Windows.Forms.Button();
             this.b_PlayerL_StartRec = new System.Windows.Forms.Button();
             this.b_PlayerL_SaveSnap = new System.Windows.Forms.Button();
             this.b_Presets_Learn = new System.Windows.Forms.Button();
@@ -227,10 +226,9 @@ namespace SSLUtility2 {
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
             this.tC_Main.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.camControl.SuspendLayout();
             this.tC_Control.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_ZoomSpeed)).BeginInit();
+            this.cameraCon.SuspendLayout();
             this.gB_PlayerR_Extended.SuspendLayout();
             this.gB_PlayerL_Extended.SuspendLayout();
             this.gB_PlayerR_Simple.SuspendLayout();
@@ -239,12 +237,12 @@ namespace SSLUtility2 {
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).BeginInit();
             this.tC_Presets_Default.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
-            this.tabPage7.SuspendLayout();
-            this.tabPage9.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            this.tabPage10.SuspendLayout();
+            this.adminPage.SuspendLayout();
+            this.daylightPage.SuspendLayout();
+            this.thermalPage.SuspendLayout();
+            this.slgPage.SuspendLayout();
+            this.peakbeamPage.SuspendLayout();
+            this.charmPage.SuspendLayout();
             this.tP_Settings.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gB_Paths.SuspendLayout();
@@ -502,7 +500,7 @@ namespace SSLUtility2 {
             // 
             // tC_Main
             // 
-            this.tC_Main.Controls.Add(this.tabPage2);
+            this.tC_Main.Controls.Add(this.camControl);
             this.tC_Main.Controls.Add(this.tabPage1);
             this.tC_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tC_Main.Location = new System.Drawing.Point(0, 0);
@@ -511,20 +509,20 @@ namespace SSLUtility2 {
             this.tC_Main.Size = new System.Drawing.Size(1659, 929);
             this.tC_Main.TabIndex = 29;
             // 
-            // tabPage2
+            // camControl
             // 
-            this.tabPage2.Controls.Add(this.tC_Control);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1651, 903);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Control";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.camControl.Controls.Add(this.tC_Control);
+            this.camControl.Location = new System.Drawing.Point(4, 22);
+            this.camControl.Name = "camControl";
+            this.camControl.Padding = new System.Windows.Forms.Padding(3);
+            this.camControl.Size = new System.Drawing.Size(1651, 903);
+            this.camControl.TabIndex = 1;
+            this.camControl.Text = "Control";
+            this.camControl.UseVisualStyleBackColor = true;
             // 
             // tC_Control
             // 
-            this.tC_Control.Controls.Add(this.tabPage3);
+            this.tC_Control.Controls.Add(this.cameraCon);
             this.tC_Control.Controls.Add(this.tP_Settings);
             this.tC_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tC_Control.Location = new System.Drawing.Point(3, 3);
@@ -535,87 +533,75 @@ namespace SSLUtility2 {
             this.tC_Control.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tC_Control_KeyDown);
             this.tC_Control.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tC_Control_KeyUp);
             // 
-            // tabPage3
+            // cameraCon
             // 
-            this.tabPage3.Controls.Add(this.track_PTZ_ZoomSpeed);
-            this.tabPage3.Controls.Add(this.l_PTZ_ZoomSpeed);
-            this.tabPage3.Controls.Add(this.gB_PlayerR_Extended);
-            this.tabPage3.Controls.Add(this.gB_PlayerL_Extended);
-            this.tabPage3.Controls.Add(this.gB_PlayerR_Simple);
-            this.tabPage3.Controls.Add(this.gB_PlayerL_Simple);
-            this.tabPage3.Controls.Add(this.VLCPlayer_R);
-            this.tabPage3.Controls.Add(this.checkB_PlayerR_Manual);
-            this.tabPage3.Controls.Add(this.b_PlayerR_PauseRec);
-            this.tabPage3.Controls.Add(this.b_PlayerR_StartRec);
-            this.tabPage3.Controls.Add(this.b_PlayerR_SaveSnap);
-            this.tabPage3.Controls.Add(this.b_PlayerR_Play);
-            this.tabPage3.Controls.Add(this.VLCPlayer_L);
-            this.tabPage3.Controls.Add(this.checkB_PlayerL_Manual);
-            this.tabPage3.Controls.Add(this.l_IPCon_Connected);
-            this.tabPage3.Controls.Add(this.track_PTZ_PTSpeed);
-            this.tabPage3.Controls.Add(this.cB_IPCon_Type);
-            this.tabPage3.Controls.Add(this.tB_Presets_Number);
-            this.tabPage3.Controls.Add(this.tC_Presets_Default);
-            this.tabPage3.Controls.Add(this.cB_IPCon_KeyboardCon);
-            this.tabPage3.Controls.Add(this.cB_IPCon_Selected);
-            this.tabPage3.Controls.Add(this.tB_IPCon_Port);
-            this.tabPage3.Controls.Add(this.tB_IPCon_Adr);
-            this.tabPage3.Controls.Add(this.l_IPCon_KeyControl);
-            this.tabPage3.Controls.Add(this.l_IPCon_SelectedCam);
-            this.tabPage3.Controls.Add(this.l_IPCon_Port);
-            this.tabPage3.Controls.Add(this.l_IPCon_PTSpeed);
-            this.tabPage3.Controls.Add(this.l_Presets_Number);
-            this.tabPage3.Controls.Add(this.l_IPCon_ConType);
-            this.tabPage3.Controls.Add(this.l_IPCon_Adr);
-            this.tabPage3.Controls.Add(this.l_Presets_Default);
-            this.tabPage3.Controls.Add(this.l_Presets);
-            this.tabPage3.Controls.Add(this.l_PTZCon);
-            this.tabPage3.Controls.Add(this.l_IPCon);
-            this.tabPage3.Controls.Add(this.b_PlayerL_Detach);
-            this.tabPage3.Controls.Add(this.b_PlayerL_PauseRec);
-            this.tabPage3.Controls.Add(this.b_PlayerL_StartRec);
-            this.tabPage3.Controls.Add(this.b_PlayerL_SaveSnap);
-            this.tabPage3.Controls.Add(this.b_Presets_Learn);
-            this.tabPage3.Controls.Add(this.b_Presets_GoTo);
-            this.tabPage3.Controls.Add(this.b_PTZ_Down);
-            this.tabPage3.Controls.Add(this.b_PTZ_Up);
-            this.tabPage3.Controls.Add(this.b_PTZ_FocusNeg);
-            this.tabPage3.Controls.Add(this.b_PTZ_ZoomNeg);
-            this.tabPage3.Controls.Add(this.b_PTZ_FocusPos);
-            this.tabPage3.Controls.Add(this.b_PTZ_ZoomPos);
-            this.tabPage3.Controls.Add(this.b_PTZ_Right);
-            this.tabPage3.Controls.Add(this.b_PTZ_Left);
-            this.tabPage3.Controls.Add(this.b_PlayerL_Play);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1637, 871);
-            this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "Camera Control";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.cameraCon.Controls.Add(this.b_IPCon_LayoutMode);
+            this.cameraCon.Controls.Add(this.gB_PlayerR_Extended);
+            this.cameraCon.Controls.Add(this.gB_PlayerL_Extended);
+            this.cameraCon.Controls.Add(this.gB_PlayerR_Simple);
+            this.cameraCon.Controls.Add(this.gB_PlayerL_Simple);
+            this.cameraCon.Controls.Add(this.VLCPlayer_R);
+            this.cameraCon.Controls.Add(this.VLCPlayer_L);
+            this.cameraCon.Controls.Add(this.tB_Presets_Number);
+            this.cameraCon.Controls.Add(this.tB_IPCon_Port);
+            this.cameraCon.Controls.Add(this.tB_IPCon_Adr);
+            this.cameraCon.Controls.Add(this.checkB_PlayerR_Manual);
+            this.cameraCon.Controls.Add(this.b_PlayerR_StartRec);
+            this.cameraCon.Controls.Add(this.b_PlayerR_SaveSnap);
+            this.cameraCon.Controls.Add(this.b_PlayerR_Play);
+            this.cameraCon.Controls.Add(this.checkB_PlayerL_Manual);
+            this.cameraCon.Controls.Add(this.l_IPCon_Connected);
+            this.cameraCon.Controls.Add(this.track_PTZ_PTSpeed);
+            this.cameraCon.Controls.Add(this.cB_IPCon_Type);
+            this.cameraCon.Controls.Add(this.tC_Presets_Default);
+            this.cameraCon.Controls.Add(this.cB_IPCon_KeyboardCon);
+            this.cameraCon.Controls.Add(this.cB_IPCon_Selected);
+            this.cameraCon.Controls.Add(this.l_IPCon_KeyControl);
+            this.cameraCon.Controls.Add(this.l_IPCon_SelectedCam);
+            this.cameraCon.Controls.Add(this.l_IPCon_Port);
+            this.cameraCon.Controls.Add(this.l_IPCon_PTSpeed);
+            this.cameraCon.Controls.Add(this.l_Presets_Number);
+            this.cameraCon.Controls.Add(this.l_IPCon_ConType);
+            this.cameraCon.Controls.Add(this.l_IPCon_Adr);
+            this.cameraCon.Controls.Add(this.l_Presets_Default);
+            this.cameraCon.Controls.Add(this.l_Presets);
+            this.cameraCon.Controls.Add(this.l_PTZCon);
+            this.cameraCon.Controls.Add(this.l_IPCon);
+            this.cameraCon.Controls.Add(this.b_PlayerL_Detach);
+            this.cameraCon.Controls.Add(this.b_PlayerL_StartRec);
+            this.cameraCon.Controls.Add(this.b_PlayerL_SaveSnap);
+            this.cameraCon.Controls.Add(this.b_Presets_Learn);
+            this.cameraCon.Controls.Add(this.b_Presets_GoTo);
+            this.cameraCon.Controls.Add(this.b_PTZ_Down);
+            this.cameraCon.Controls.Add(this.b_PTZ_Up);
+            this.cameraCon.Controls.Add(this.b_PTZ_FocusNeg);
+            this.cameraCon.Controls.Add(this.b_PTZ_ZoomNeg);
+            this.cameraCon.Controls.Add(this.b_PTZ_FocusPos);
+            this.cameraCon.Controls.Add(this.b_PTZ_ZoomPos);
+            this.cameraCon.Controls.Add(this.b_PTZ_Right);
+            this.cameraCon.Controls.Add(this.b_PTZ_Left);
+            this.cameraCon.Controls.Add(this.b_PlayerL_Play);
+            this.cameraCon.Location = new System.Drawing.Point(4, 22);
+            this.cameraCon.Name = "cameraCon";
+            this.cameraCon.Padding = new System.Windows.Forms.Padding(3);
+            this.cameraCon.Size = new System.Drawing.Size(1637, 871);
+            this.cameraCon.TabIndex = 0;
+            this.cameraCon.Text = "Camera Control";
+            this.cameraCon.UseVisualStyleBackColor = true;
             // 
-            // track_PTZ_ZoomSpeed
+            // b_IPCon_LayoutMode
             // 
-            this.track_PTZ_ZoomSpeed.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.track_PTZ_ZoomSpeed.Enabled = false;
-            this.track_PTZ_ZoomSpeed.Location = new System.Drawing.Point(109, 391);
-            this.track_PTZ_ZoomSpeed.Maximum = 63;
-            this.track_PTZ_ZoomSpeed.Name = "track_PTZ_ZoomSpeed";
-            this.track_PTZ_ZoomSpeed.Size = new System.Drawing.Size(132, 45);
-            this.track_PTZ_ZoomSpeed.TabIndex = 42;
-            this.track_PTZ_ZoomSpeed.Value = 63;
-            // 
-            // l_PTZ_ZoomSpeed
-            // 
-            this.l_PTZ_ZoomSpeed.AutoSize = true;
-            this.l_PTZ_ZoomSpeed.Location = new System.Drawing.Point(14, 394);
-            this.l_PTZ_ZoomSpeed.Name = "l_PTZ_ZoomSpeed";
-            this.l_PTZ_ZoomSpeed.Size = new System.Drawing.Size(71, 13);
-            this.l_PTZ_ZoomSpeed.TabIndex = 41;
-            this.l_PTZ_ZoomSpeed.Text = "Zoom Speed:";
+            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(131, 442);
+            this.b_IPCon_LayoutMode.Name = "b_IPCon_LayoutMode";
+            this.b_IPCon_LayoutMode.Size = new System.Drawing.Size(107, 57);
+            this.b_IPCon_LayoutMode.TabIndex = 43;
+            this.b_IPCon_LayoutMode.Text = "Swap To: Lite Mode";
+            this.b_IPCon_LayoutMode.UseVisualStyleBackColor = true;
+            this.b_IPCon_LayoutMode.Click += new System.EventHandler(this.b_IPCon_LayoutMode_Click);
             // 
             // gB_PlayerR_Extended
             // 
+            this.gB_PlayerR_Extended.Controls.Add(this.label2);
             this.gB_PlayerR_Extended.Controls.Add(this.label4);
             this.gB_PlayerR_Extended.Controls.Add(this.tB_PlayerR_Adr);
             this.gB_PlayerR_Extended.Controls.Add(this.label5);
@@ -636,6 +622,15 @@ namespace SSLUtility2 {
             this.gB_PlayerR_Extended.TabIndex = 36;
             this.gB_PlayerR_Extended.TabStop = false;
             this.gB_PlayerR_Extended.Visible = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 200);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(275, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "*Changed fields will not apply until the stream is replayed*";
             // 
             // label4
             // 
@@ -766,6 +761,7 @@ namespace SSLUtility2 {
             // gB_PlayerL_Extended
             // 
             this.gB_PlayerL_Extended.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.gB_PlayerL_Extended.Controls.Add(this.label1);
             this.gB_PlayerL_Extended.Controls.Add(this.l_PlayerL_Type);
             this.gB_PlayerL_Extended.Controls.Add(this.l_PlayerL_RTSP);
             this.gB_PlayerL_Extended.Controls.Add(this.tB_PlayerL_Adr);
@@ -786,6 +782,15 @@ namespace SSLUtility2 {
             this.gB_PlayerL_Extended.TabIndex = 26;
             this.gB_PlayerL_Extended.TabStop = false;
             this.gB_PlayerL_Extended.Visible = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 200);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(275, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "*Changed fields will not apply until the stream is replayed*";
             // 
             // l_PlayerL_Type
             // 
@@ -976,6 +981,40 @@ namespace SSLUtility2 {
             this.VLCPlayer_R.Size = new System.Drawing.Size(639, 512);
             this.VLCPlayer_R.TabIndex = 29;
             // 
+            // VLCPlayer_L
+            // 
+            this.VLCPlayer_L.Enabled = true;
+            this.VLCPlayer_L.Location = new System.Drawing.Point(288, 19);
+            this.VLCPlayer_L.Name = "VLCPlayer_L";
+            this.VLCPlayer_L.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_L.OcxState")));
+            this.VLCPlayer_L.Size = new System.Drawing.Size(639, 512);
+            this.VLCPlayer_L.TabIndex = 0;
+            // 
+            // tB_Presets_Number
+            // 
+            this.tB_Presets_Number.Location = new System.Drawing.Point(118, 533);
+            this.tB_Presets_Number.Name = "tB_Presets_Number";
+            this.tB_Presets_Number.Size = new System.Drawing.Size(123, 20);
+            this.tB_Presets_Number.TabIndex = 20;
+            // 
+            // tB_IPCon_Port
+            // 
+            this.tB_IPCon_Port.Location = new System.Drawing.Point(109, 88);
+            this.tB_IPCon_Port.Name = "tB_IPCon_Port";
+            this.tB_IPCon_Port.Size = new System.Drawing.Size(123, 20);
+            this.tB_IPCon_Port.TabIndex = 14;
+            this.tB_IPCon_Port.Text = "6791";
+            // 
+            // tB_IPCon_Adr
+            // 
+            this.tB_IPCon_Adr.Location = new System.Drawing.Point(109, 62);
+            this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
+            this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
+            this.tB_IPCon_Adr.TabIndex = 14;
+            this.tB_IPCon_Adr.Text = "192.168.1.71";
+            this.tB_IPCon_Adr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_PreviewKeyDown);
+            this.tB_IPCon_Adr.Leave += new System.EventHandler(this.OnFinishedTypingAdr);
+            // 
             // checkB_PlayerR_Manual
             // 
             this.checkB_PlayerR_Manual.AutoSize = true;
@@ -987,20 +1026,9 @@ namespace SSLUtility2 {
             this.checkB_PlayerR_Manual.UseVisualStyleBackColor = true;
             this.checkB_PlayerR_Manual.CheckedChanged += new System.EventHandler(this.checkB_PlayerR_Manual_CheckedChanged);
             // 
-            // b_PlayerR_PauseRec
-            // 
-            this.b_PlayerR_PauseRec.Enabled = false;
-            this.b_PlayerR_PauseRec.Location = new System.Drawing.Point(1281, 644);
-            this.b_PlayerR_PauseRec.Name = "b_PlayerR_PauseRec";
-            this.b_PlayerR_PauseRec.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerR_PauseRec.TabIndex = 32;
-            this.b_PlayerR_PauseRec.Text = "PAUSE Recording";
-            this.b_PlayerR_PauseRec.UseVisualStyleBackColor = true;
-            this.b_PlayerR_PauseRec.Click += new System.EventHandler(this.b_PlayerR_PauseRec_Click);
-            // 
             // b_PlayerR_StartRec
             // 
-            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1281, 615);
+            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1281, 599);
             this.b_PlayerR_StartRec.Name = "b_PlayerR_StartRec";
             this.b_PlayerR_StartRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerR_StartRec.TabIndex = 33;
@@ -1010,7 +1038,7 @@ namespace SSLUtility2 {
             // 
             // b_PlayerR_SaveSnap
             // 
-            this.b_PlayerR_SaveSnap.Location = new System.Drawing.Point(1281, 576);
+            this.b_PlayerR_SaveSnap.Location = new System.Drawing.Point(1281, 570);
             this.b_PlayerR_SaveSnap.Name = "b_PlayerR_SaveSnap";
             this.b_PlayerR_SaveSnap.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerR_SaveSnap.TabIndex = 34;
@@ -1027,15 +1055,6 @@ namespace SSLUtility2 {
             this.b_PlayerR_Play.Text = "Play";
             this.b_PlayerR_Play.UseVisualStyleBackColor = true;
             this.b_PlayerR_Play.Click += new System.EventHandler(this.b_PlayerR_Play_Click);
-            // 
-            // VLCPlayer_L
-            // 
-            this.VLCPlayer_L.Enabled = true;
-            this.VLCPlayer_L.Location = new System.Drawing.Point(288, 19);
-            this.VLCPlayer_L.Name = "VLCPlayer_L";
-            this.VLCPlayer_L.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_L.OcxState")));
-            this.VLCPlayer_L.Size = new System.Drawing.Size(639, 512);
-            this.VLCPlayer_L.TabIndex = 0;
             // 
             // checkB_PlayerL_Manual
             // 
@@ -1059,7 +1078,7 @@ namespace SSLUtility2 {
             // track_PTZ_PTSpeed
             // 
             this.track_PTZ_PTSpeed.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(109, 354);
+            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(106, 361);
             this.track_PTZ_PTSpeed.Maximum = 63;
             this.track_PTZ_PTSpeed.Name = "track_PTZ_PTSpeed";
             this.track_PTZ_PTSpeed.Size = new System.Drawing.Size(132, 45);
@@ -1079,41 +1098,87 @@ namespace SSLUtility2 {
             this.cB_IPCon_Type.Text = "Encoder";
             this.cB_IPCon_Type.SelectedIndexChanged += new System.EventHandler(this.cB_IPCon_Type_SelectedIndexChanged);
             // 
-            // tB_Presets_Number
-            // 
-            this.tB_Presets_Number.Location = new System.Drawing.Point(118, 533);
-            this.tB_Presets_Number.Name = "tB_Presets_Number";
-            this.tB_Presets_Number.Size = new System.Drawing.Size(123, 20);
-            this.tB_Presets_Number.TabIndex = 20;
-            // 
             // tC_Presets_Default
             // 
-            this.tC_Presets_Default.Controls.Add(this.tabPage5);
-            this.tC_Presets_Default.Controls.Add(this.tabPage6);
-            this.tC_Presets_Default.Controls.Add(this.tabPage7);
-            this.tC_Presets_Default.Controls.Add(this.tabPage9);
-            this.tC_Presets_Default.Controls.Add(this.tabPage8);
-            this.tC_Presets_Default.Controls.Add(this.tabPage10);
+            this.tC_Presets_Default.Controls.Add(this.adminPage);
+            this.tC_Presets_Default.Controls.Add(this.daylightPage);
+            this.tC_Presets_Default.Controls.Add(this.thermalPage);
+            this.tC_Presets_Default.Controls.Add(this.slgPage);
+            this.tC_Presets_Default.Controls.Add(this.peakbeamPage);
+            this.tC_Presets_Default.Controls.Add(this.charmPage);
             this.tC_Presets_Default.Location = new System.Drawing.Point(13, 632);
             this.tC_Presets_Default.Name = "tC_Presets_Default";
             this.tC_Presets_Default.SelectedIndex = 0;
             this.tC_Presets_Default.Size = new System.Drawing.Size(239, 222);
             this.tC_Presets_Default.TabIndex = 19;
             // 
-            // tabPage5
+            // adminPage
             // 
-            this.tabPage5.Controls.Add(this.b_Presets_Daylight_Stabilizer);
-            this.tabPage5.Controls.Add(this.b_Presets_Daylight_WDR);
-            this.tabPage5.Controls.Add(this.b_Presets_Daylight_Wiper);
-            this.tabPage5.Controls.Add(this.b_Presets_Daylight_AF);
-            this.tabPage5.Controls.Add(this.b_Presets_Daylight_ColMono);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(231, 196);
-            this.tabPage5.TabIndex = 0;
-            this.tabPage5.Text = "Daylight";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.adminPage.Controls.Add(this.b_Presets_Admin_DefaultMen);
+            this.adminPage.Controls.Add(this.b_Presets_Admin_DebugToggle);
+            this.adminPage.Controls.Add(this.b_Presets_Admin_MechMen);
+            this.adminPage.Controls.Add(this.b_Presets_Admin_SetupMen);
+            this.adminPage.Location = new System.Drawing.Point(4, 22);
+            this.adminPage.Name = "adminPage";
+            this.adminPage.Size = new System.Drawing.Size(231, 196);
+            this.adminPage.TabIndex = 3;
+            this.adminPage.Text = "Admin";
+            this.adminPage.UseVisualStyleBackColor = true;
+            // 
+            // b_Presets_Admin_DefaultMen
+            // 
+            this.b_Presets_Admin_DefaultMen.Location = new System.Drawing.Point(7, 71);
+            this.b_Presets_Admin_DefaultMen.Name = "b_Presets_Admin_DefaultMen";
+            this.b_Presets_Admin_DefaultMen.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Admin_DefaultMen.TabIndex = 10;
+            this.b_Presets_Admin_DefaultMen.Text = "Default Menu";
+            this.b_Presets_Admin_DefaultMen.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_DefaultMen.Click += new System.EventHandler(this.b_Presets_Admin_DefaultMen_Click);
+            // 
+            // b_Presets_Admin_DebugToggle
+            // 
+            this.b_Presets_Admin_DebugToggle.Location = new System.Drawing.Point(7, 100);
+            this.b_Presets_Admin_DebugToggle.Name = "b_Presets_Admin_DebugToggle";
+            this.b_Presets_Admin_DebugToggle.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Admin_DebugToggle.TabIndex = 10;
+            this.b_Presets_Admin_DebugToggle.Text = "Debug Toggle";
+            this.b_Presets_Admin_DebugToggle.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_DebugToggle.Click += new System.EventHandler(this.b_Presets_Admin_DebugToggle_Click);
+            // 
+            // b_Presets_Admin_MechMen
+            // 
+            this.b_Presets_Admin_MechMen.Location = new System.Drawing.Point(7, 12);
+            this.b_Presets_Admin_MechMen.Name = "b_Presets_Admin_MechMen";
+            this.b_Presets_Admin_MechMen.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Admin_MechMen.TabIndex = 9;
+            this.b_Presets_Admin_MechMen.Text = "Mechanical Menu";
+            this.b_Presets_Admin_MechMen.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_MechMen.Click += new System.EventHandler(this.b_Presets_Admin_MechMen_Click);
+            // 
+            // b_Presets_Admin_SetupMen
+            // 
+            this.b_Presets_Admin_SetupMen.Location = new System.Drawing.Point(7, 41);
+            this.b_Presets_Admin_SetupMen.Name = "b_Presets_Admin_SetupMen";
+            this.b_Presets_Admin_SetupMen.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Admin_SetupMen.TabIndex = 9;
+            this.b_Presets_Admin_SetupMen.Text = "Setup Menu";
+            this.b_Presets_Admin_SetupMen.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_SetupMen.Click += new System.EventHandler(this.b_Presets_Admin_SetupMen_Click);
+            // 
+            // daylightPage
+            // 
+            this.daylightPage.Controls.Add(this.b_Presets_Daylight_Stabilizer);
+            this.daylightPage.Controls.Add(this.b_Presets_Daylight_WDR);
+            this.daylightPage.Controls.Add(this.b_Presets_Daylight_Wiper);
+            this.daylightPage.Controls.Add(this.b_Presets_Daylight_AF);
+            this.daylightPage.Controls.Add(this.b_Presets_Daylight_ColMono);
+            this.daylightPage.Location = new System.Drawing.Point(4, 22);
+            this.daylightPage.Name = "daylightPage";
+            this.daylightPage.Padding = new System.Windows.Forms.Padding(3);
+            this.daylightPage.Size = new System.Drawing.Size(231, 196);
+            this.daylightPage.TabIndex = 0;
+            this.daylightPage.Text = "Daylight";
+            this.daylightPage.UseVisualStyleBackColor = true;
             // 
             // b_Presets_Daylight_Stabilizer
             // 
@@ -1165,25 +1230,25 @@ namespace SSLUtility2 {
             this.b_Presets_Daylight_ColMono.UseVisualStyleBackColor = true;
             this.b_Presets_Daylight_ColMono.Click += new System.EventHandler(this.b_Presets_Daylight_ColMono_Click);
             // 
-            // tabPage6
+            // thermalPage
             // 
-            this.tabPage6.Controls.Add(this.button32);
-            this.tabPage6.Controls.Add(this.button31);
-            this.tabPage6.Controls.Add(this.b_Presets_Thermal_BrightPos);
-            this.tabPage6.Controls.Add(this.b_Presets_Thermal_BrightNeg);
-            this.tabPage6.Controls.Add(this.b_Presets_Thermal_ICEPos);
-            this.tabPage6.Controls.Add(this.b_Presets_Thermal_ICENeg);
-            this.tabPage6.Controls.Add(this.b_Presets_Thermal_ICE);
-            this.tabPage6.Controls.Add(this.b_Presets_Thermal_WhiteBlack);
-            this.tabPage6.Controls.Add(this.b_Presets_Thermal_NUC);
-            this.tabPage6.Controls.Add(this.b_Presets_Thermal_AF);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(231, 196);
-            this.tabPage6.TabIndex = 1;
-            this.tabPage6.Text = "Thermal";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.thermalPage.Controls.Add(this.button32);
+            this.thermalPage.Controls.Add(this.button31);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_BrightPos);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_BrightNeg);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_ICEPos);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_ICENeg);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_ICE);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_WhiteBlack);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_NUC);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_AF);
+            this.thermalPage.Location = new System.Drawing.Point(4, 22);
+            this.thermalPage.Name = "thermalPage";
+            this.thermalPage.Padding = new System.Windows.Forms.Padding(3);
+            this.thermalPage.Size = new System.Drawing.Size(231, 196);
+            this.thermalPage.TabIndex = 1;
+            this.thermalPage.Text = "Thermal";
+            this.thermalPage.UseVisualStyleBackColor = true;
             // 
             // button32
             // 
@@ -1207,9 +1272,9 @@ namespace SSLUtility2 {
             // 
             // b_Presets_Thermal_BrightPos
             // 
-            this.b_Presets_Thermal_BrightPos.Location = new System.Drawing.Point(127, 168);
+            this.b_Presets_Thermal_BrightPos.Location = new System.Drawing.Point(118, 168);
             this.b_Presets_Thermal_BrightPos.Name = "b_Presets_Thermal_BrightPos";
-            this.b_Presets_Thermal_BrightPos.Size = new System.Drawing.Size(91, 27);
+            this.b_Presets_Thermal_BrightPos.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_BrightPos.TabIndex = 6;
             this.b_Presets_Thermal_BrightPos.Text = "Brightness +";
             this.b_Presets_Thermal_BrightPos.UseVisualStyleBackColor = true;
@@ -1219,7 +1284,7 @@ namespace SSLUtility2 {
             // 
             this.b_Presets_Thermal_BrightNeg.Location = new System.Drawing.Point(6, 168);
             this.b_Presets_Thermal_BrightNeg.Name = "b_Presets_Thermal_BrightNeg";
-            this.b_Presets_Thermal_BrightNeg.Size = new System.Drawing.Size(91, 27);
+            this.b_Presets_Thermal_BrightNeg.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_Thermal_BrightNeg.TabIndex = 6;
             this.b_Presets_Thermal_BrightNeg.Text = "Brightness -";
             this.b_Presets_Thermal_BrightNeg.UseVisualStyleBackColor = true;
@@ -1227,9 +1292,9 @@ namespace SSLUtility2 {
             // 
             // b_Presets_Thermal_ICEPos
             // 
-            this.b_Presets_Thermal_ICEPos.Location = new System.Drawing.Point(127, 135);
+            this.b_Presets_Thermal_ICEPos.Location = new System.Drawing.Point(118, 135);
             this.b_Presets_Thermal_ICEPos.Name = "b_Presets_Thermal_ICEPos";
-            this.b_Presets_Thermal_ICEPos.Size = new System.Drawing.Size(91, 27);
+            this.b_Presets_Thermal_ICEPos.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_ICEPos.TabIndex = 6;
             this.b_Presets_Thermal_ICEPos.Text = "ICE / CLAHE +";
             this.b_Presets_Thermal_ICEPos.UseVisualStyleBackColor = true;
@@ -1239,7 +1304,7 @@ namespace SSLUtility2 {
             // 
             this.b_Presets_Thermal_ICENeg.Location = new System.Drawing.Point(6, 135);
             this.b_Presets_Thermal_ICENeg.Name = "b_Presets_Thermal_ICENeg";
-            this.b_Presets_Thermal_ICENeg.Size = new System.Drawing.Size(91, 27);
+            this.b_Presets_Thermal_ICENeg.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_ICENeg.TabIndex = 6;
             this.b_Presets_Thermal_ICENeg.Text = "ICE / CLAHE -";
             this.b_Presets_Thermal_ICENeg.UseVisualStyleBackColor = true;
@@ -1285,27 +1350,27 @@ namespace SSLUtility2 {
             this.b_Presets_Thermal_AF.UseVisualStyleBackColor = true;
             this.b_Presets_Thermal_AF.Click += new System.EventHandler(this.b_Presets_Thermal_AF_Click);
             // 
-            // tabPage7
+            // slgPage
             // 
-            this.tabPage7.Controls.Add(this.b_Presets_SLG_SteadyGreen);
-            this.tabPage7.Controls.Add(this.b_Presets_SLG_AllLightsOff);
-            this.tabPage7.Controls.Add(this.b_Presets_SLG_FlashingRG);
-            this.tabPage7.Controls.Add(this.b_Presets_SLG_FlashingWhite);
-            this.tabPage7.Controls.Add(this.b_Presets_SLG_FlashingRed);
-            this.tabPage7.Controls.Add(this.b_Presets_SLG_SteadyRed);
-            this.tabPage7.Controls.Add(this.b_Presets_SLG_FlashingGreen);
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
-            this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(231, 196);
-            this.tabPage7.TabIndex = 2;
-            this.tabPage7.Text = "SLG";
-            this.tabPage7.UseVisualStyleBackColor = true;
+            this.slgPage.Controls.Add(this.b_Presets_SLG_SteadyGreen);
+            this.slgPage.Controls.Add(this.b_Presets_SLG_AllLightsOff);
+            this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingRG);
+            this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingWhite);
+            this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingRed);
+            this.slgPage.Controls.Add(this.b_Presets_SLG_SteadyRed);
+            this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingGreen);
+            this.slgPage.Location = new System.Drawing.Point(4, 22);
+            this.slgPage.Name = "slgPage";
+            this.slgPage.Size = new System.Drawing.Size(231, 196);
+            this.slgPage.TabIndex = 2;
+            this.slgPage.Text = "SLG";
+            this.slgPage.UseVisualStyleBackColor = true;
             // 
             // b_Presets_SLG_SteadyGreen
             // 
-            this.b_Presets_SLG_SteadyGreen.Location = new System.Drawing.Point(6, 3);
+            this.b_Presets_SLG_SteadyGreen.Location = new System.Drawing.Point(7, 12);
             this.b_Presets_SLG_SteadyGreen.Name = "b_Presets_SLG_SteadyGreen";
-            this.b_Presets_SLG_SteadyGreen.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_SLG_SteadyGreen.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_SLG_SteadyGreen.TabIndex = 8;
             this.b_Presets_SLG_SteadyGreen.Text = "Steady Green On";
             this.b_Presets_SLG_SteadyGreen.UseVisualStyleBackColor = true;
@@ -1323,7 +1388,7 @@ namespace SSLUtility2 {
             // 
             // b_Presets_SLG_FlashingRG
             // 
-            this.b_Presets_SLG_FlashingRG.Location = new System.Drawing.Point(6, 167);
+            this.b_Presets_SLG_FlashingRG.Location = new System.Drawing.Point(6, 83);
             this.b_Presets_SLG_FlashingRG.Name = "b_Presets_SLG_FlashingRG";
             this.b_Presets_SLG_FlashingRG.Size = new System.Drawing.Size(212, 27);
             this.b_Presets_SLG_FlashingRG.TabIndex = 7;
@@ -1333,7 +1398,7 @@ namespace SSLUtility2 {
             // 
             // b_Presets_SLG_FlashingWhite
             // 
-            this.b_Presets_SLG_FlashingWhite.Location = new System.Drawing.Point(6, 135);
+            this.b_Presets_SLG_FlashingWhite.Location = new System.Drawing.Point(6, 116);
             this.b_Presets_SLG_FlashingWhite.Name = "b_Presets_SLG_FlashingWhite";
             this.b_Presets_SLG_FlashingWhite.Size = new System.Drawing.Size(212, 27);
             this.b_Presets_SLG_FlashingWhite.TabIndex = 7;
@@ -1343,9 +1408,9 @@ namespace SSLUtility2 {
             // 
             // b_Presets_SLG_FlashingRed
             // 
-            this.b_Presets_SLG_FlashingRed.Location = new System.Drawing.Point(6, 102);
+            this.b_Presets_SLG_FlashingRed.Location = new System.Drawing.Point(118, 44);
             this.b_Presets_SLG_FlashingRed.Name = "b_Presets_SLG_FlashingRed";
-            this.b_Presets_SLG_FlashingRed.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_SLG_FlashingRed.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_SLG_FlashingRed.TabIndex = 7;
             this.b_Presets_SLG_FlashingRed.Text = "Flashing Red On";
             this.b_Presets_SLG_FlashingRed.UseVisualStyleBackColor = true;
@@ -1353,9 +1418,9 @@ namespace SSLUtility2 {
             // 
             // b_Presets_SLG_SteadyRed
             // 
-            this.b_Presets_SLG_SteadyRed.Location = new System.Drawing.Point(6, 69);
+            this.b_Presets_SLG_SteadyRed.Location = new System.Drawing.Point(117, 12);
             this.b_Presets_SLG_SteadyRed.Name = "b_Presets_SLG_SteadyRed";
-            this.b_Presets_SLG_SteadyRed.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_SLG_SteadyRed.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_SLG_SteadyRed.TabIndex = 7;
             this.b_Presets_SLG_SteadyRed.Text = "Steady Red On";
             this.b_Presets_SLG_SteadyRed.UseVisualStyleBackColor = true;
@@ -1363,34 +1428,34 @@ namespace SSLUtility2 {
             // 
             // b_Presets_SLG_FlashingGreen
             // 
-            this.b_Presets_SLG_FlashingGreen.Location = new System.Drawing.Point(6, 36);
+            this.b_Presets_SLG_FlashingGreen.Location = new System.Drawing.Point(7, 46);
             this.b_Presets_SLG_FlashingGreen.Name = "b_Presets_SLG_FlashingGreen";
-            this.b_Presets_SLG_FlashingGreen.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_SLG_FlashingGreen.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_SLG_FlashingGreen.TabIndex = 7;
             this.b_Presets_SLG_FlashingGreen.Text = "Flashing Green On";
             this.b_Presets_SLG_FlashingGreen.UseVisualStyleBackColor = true;
             this.b_Presets_SLG_FlashingGreen.Click += new System.EventHandler(this.b_Presets_SLG_FlashingGreen_Click);
             // 
-            // tabPage9
+            // peakbeamPage
             // 
-            this.tabPage9.Controls.Add(this.b_Presets_Peak_SteadyLamp);
-            this.tabPage9.Controls.Add(this.b_Presets_Peak_StopZoom);
-            this.tabPage9.Controls.Add(this.b_Presets_Peak_ZoomOut);
-            this.tabPage9.Controls.Add(this.b_Presets_Peak_ZoomIn);
-            this.tabPage9.Controls.Add(this.b_Presets_Peak_LampOff);
-            this.tabPage9.Controls.Add(this.b_Presets_Peak_StrobeLamp);
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
-            this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(231, 196);
-            this.tabPage9.TabIndex = 4;
-            this.tabPage9.Text = "Peak Beam";
-            this.tabPage9.UseVisualStyleBackColor = true;
+            this.peakbeamPage.Controls.Add(this.b_Presets_Peak_SteadyLamp);
+            this.peakbeamPage.Controls.Add(this.b_Presets_Peak_StopZoom);
+            this.peakbeamPage.Controls.Add(this.b_Presets_Peak_ZoomOut);
+            this.peakbeamPage.Controls.Add(this.b_Presets_Peak_ZoomIn);
+            this.peakbeamPage.Controls.Add(this.b_Presets_Peak_LampOff);
+            this.peakbeamPage.Controls.Add(this.b_Presets_Peak_StrobeLamp);
+            this.peakbeamPage.Location = new System.Drawing.Point(4, 22);
+            this.peakbeamPage.Name = "peakbeamPage";
+            this.peakbeamPage.Size = new System.Drawing.Size(231, 196);
+            this.peakbeamPage.TabIndex = 4;
+            this.peakbeamPage.Text = "Peak Beam";
+            this.peakbeamPage.UseVisualStyleBackColor = true;
             // 
             // b_Presets_Peak_SteadyLamp
             // 
-            this.b_Presets_Peak_SteadyLamp.Location = new System.Drawing.Point(7, 3);
+            this.b_Presets_Peak_SteadyLamp.Location = new System.Drawing.Point(119, 23);
             this.b_Presets_Peak_SteadyLamp.Name = "b_Presets_Peak_SteadyLamp";
-            this.b_Presets_Peak_SteadyLamp.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Peak_SteadyLamp.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_SteadyLamp.TabIndex = 14;
             this.b_Presets_Peak_SteadyLamp.Text = "Lamp On Steady";
             this.b_Presets_Peak_SteadyLamp.UseVisualStyleBackColor = true;
@@ -1398,7 +1463,7 @@ namespace SSLUtility2 {
             // 
             // b_Presets_Peak_StopZoom
             // 
-            this.b_Presets_Peak_StopZoom.Location = new System.Drawing.Point(7, 167);
+            this.b_Presets_Peak_StopZoom.Location = new System.Drawing.Point(7, 142);
             this.b_Presets_Peak_StopZoom.Name = "b_Presets_Peak_StopZoom";
             this.b_Presets_Peak_StopZoom.Size = new System.Drawing.Size(212, 27);
             this.b_Presets_Peak_StopZoom.TabIndex = 9;
@@ -1408,9 +1473,9 @@ namespace SSLUtility2 {
             // 
             // b_Presets_Peak_ZoomOut
             // 
-            this.b_Presets_Peak_ZoomOut.Location = new System.Drawing.Point(7, 135);
+            this.b_Presets_Peak_ZoomOut.Location = new System.Drawing.Point(7, 109);
             this.b_Presets_Peak_ZoomOut.Name = "b_Presets_Peak_ZoomOut";
-            this.b_Presets_Peak_ZoomOut.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Peak_ZoomOut.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_ZoomOut.TabIndex = 10;
             this.b_Presets_Peak_ZoomOut.Text = "Start Zoom Out";
             this.b_Presets_Peak_ZoomOut.UseVisualStyleBackColor = true;
@@ -1418,9 +1483,9 @@ namespace SSLUtility2 {
             // 
             // b_Presets_Peak_ZoomIn
             // 
-            this.b_Presets_Peak_ZoomIn.Location = new System.Drawing.Point(7, 102);
+            this.b_Presets_Peak_ZoomIn.Location = new System.Drawing.Point(119, 109);
             this.b_Presets_Peak_ZoomIn.Name = "b_Presets_Peak_ZoomIn";
-            this.b_Presets_Peak_ZoomIn.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Peak_ZoomIn.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_ZoomIn.TabIndex = 11;
             this.b_Presets_Peak_ZoomIn.Text = "Start Zoom In";
             this.b_Presets_Peak_ZoomIn.UseVisualStyleBackColor = true;
@@ -1428,7 +1493,7 @@ namespace SSLUtility2 {
             // 
             // b_Presets_Peak_LampOff
             // 
-            this.b_Presets_Peak_LampOff.Location = new System.Drawing.Point(7, 69);
+            this.b_Presets_Peak_LampOff.Location = new System.Drawing.Point(7, 56);
             this.b_Presets_Peak_LampOff.Name = "b_Presets_Peak_LampOff";
             this.b_Presets_Peak_LampOff.Size = new System.Drawing.Size(212, 27);
             this.b_Presets_Peak_LampOff.TabIndex = 12;
@@ -1438,81 +1503,28 @@ namespace SSLUtility2 {
             // 
             // b_Presets_Peak_StrobeLamp
             // 
-            this.b_Presets_Peak_StrobeLamp.Location = new System.Drawing.Point(7, 36);
+            this.b_Presets_Peak_StrobeLamp.Location = new System.Drawing.Point(7, 23);
             this.b_Presets_Peak_StrobeLamp.Name = "b_Presets_Peak_StrobeLamp";
-            this.b_Presets_Peak_StrobeLamp.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Peak_StrobeLamp.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_StrobeLamp.TabIndex = 13;
             this.b_Presets_Peak_StrobeLamp.Text = "Lamp on Strobe";
             this.b_Presets_Peak_StrobeLamp.UseVisualStyleBackColor = true;
             this.b_Presets_Peak_StrobeLamp.Click += new System.EventHandler(this.b_Presets_Peak_StrobeLamp_Click);
             // 
-            // tabPage8
+            // charmPage
             // 
-            this.tabPage8.Controls.Add(this.b_Presets_Admin_DefaultMen);
-            this.tabPage8.Controls.Add(this.b_Presets_Admin_DebugToggle);
-            this.tabPage8.Controls.Add(this.b_Presets_Admin_MechMen);
-            this.tabPage8.Controls.Add(this.b_Presets_Admin_SetupMen);
-            this.tabPage8.Location = new System.Drawing.Point(4, 22);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(231, 196);
-            this.tabPage8.TabIndex = 3;
-            this.tabPage8.Text = "Admin";
-            this.tabPage8.UseVisualStyleBackColor = true;
-            // 
-            // b_Presets_Admin_DefaultMen
-            // 
-            this.b_Presets_Admin_DefaultMen.Location = new System.Drawing.Point(3, 64);
-            this.b_Presets_Admin_DefaultMen.Name = "b_Presets_Admin_DefaultMen";
-            this.b_Presets_Admin_DefaultMen.Size = new System.Drawing.Size(214, 27);
-            this.b_Presets_Admin_DefaultMen.TabIndex = 10;
-            this.b_Presets_Admin_DefaultMen.Text = "Default Menu";
-            this.b_Presets_Admin_DefaultMen.UseVisualStyleBackColor = true;
-            this.b_Presets_Admin_DefaultMen.Click += new System.EventHandler(this.b_Presets_Admin_DebugToggle_Click);
-            // 
-            // b_Presets_Admin_DebugToggle
-            // 
-            this.b_Presets_Admin_DebugToggle.Location = new System.Drawing.Point(3, 93);
-            this.b_Presets_Admin_DebugToggle.Name = "b_Presets_Admin_DebugToggle";
-            this.b_Presets_Admin_DebugToggle.Size = new System.Drawing.Size(214, 27);
-            this.b_Presets_Admin_DebugToggle.TabIndex = 10;
-            this.b_Presets_Admin_DebugToggle.Text = "Debug Toggle";
-            this.b_Presets_Admin_DebugToggle.UseVisualStyleBackColor = true;
-            this.b_Presets_Admin_DebugToggle.Click += new System.EventHandler(this.b_Presets_Admin_DebugToggle_Click);
-            // 
-            // b_Presets_Admin_MechMen
-            // 
-            this.b_Presets_Admin_MechMen.Location = new System.Drawing.Point(3, 5);
-            this.b_Presets_Admin_MechMen.Name = "b_Presets_Admin_MechMen";
-            this.b_Presets_Admin_MechMen.Size = new System.Drawing.Size(214, 27);
-            this.b_Presets_Admin_MechMen.TabIndex = 9;
-            this.b_Presets_Admin_MechMen.Text = "Mechanical Menu";
-            this.b_Presets_Admin_MechMen.UseVisualStyleBackColor = true;
-            this.b_Presets_Admin_MechMen.Click += new System.EventHandler(this.b_Presets_Admin_MechMen_Click);
-            // 
-            // b_Presets_Admin_SetupMen
-            // 
-            this.b_Presets_Admin_SetupMen.Location = new System.Drawing.Point(3, 34);
-            this.b_Presets_Admin_SetupMen.Name = "b_Presets_Admin_SetupMen";
-            this.b_Presets_Admin_SetupMen.Size = new System.Drawing.Size(214, 27);
-            this.b_Presets_Admin_SetupMen.TabIndex = 9;
-            this.b_Presets_Admin_SetupMen.Text = "Setup Menu";
-            this.b_Presets_Admin_SetupMen.UseVisualStyleBackColor = true;
-            this.b_Presets_Admin_SetupMen.Click += new System.EventHandler(this.b_Presets_Admin_SetupMen_Click);
-            // 
-            // tabPage10
-            // 
-            this.tabPage10.Controls.Add(this.b_Presets_CHARM_Aquire);
-            this.tabPage10.Controls.Add(this.b_Presets_CHARM_Standby);
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
-            this.tabPage10.Name = "tabPage10";
-            this.tabPage10.Size = new System.Drawing.Size(231, 196);
-            this.tabPage10.TabIndex = 5;
-            this.tabPage10.Text = "CHARM";
-            this.tabPage10.UseVisualStyleBackColor = true;
+            this.charmPage.Controls.Add(this.b_Presets_CHARM_Aquire);
+            this.charmPage.Controls.Add(this.b_Presets_CHARM_Standby);
+            this.charmPage.Location = new System.Drawing.Point(4, 22);
+            this.charmPage.Name = "charmPage";
+            this.charmPage.Size = new System.Drawing.Size(231, 196);
+            this.charmPage.TabIndex = 5;
+            this.charmPage.Text = "CHARM";
+            this.charmPage.UseVisualStyleBackColor = true;
             // 
             // b_Presets_CHARM_Aquire
             // 
-            this.b_Presets_CHARM_Aquire.Location = new System.Drawing.Point(4, 37);
+            this.b_Presets_CHARM_Aquire.Location = new System.Drawing.Point(7, 45);
             this.b_Presets_CHARM_Aquire.Name = "b_Presets_CHARM_Aquire";
             this.b_Presets_CHARM_Aquire.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_CHARM_Aquire.TabIndex = 10;
@@ -1521,7 +1533,7 @@ namespace SSLUtility2 {
             // 
             // b_Presets_CHARM_Standby
             // 
-            this.b_Presets_CHARM_Standby.Location = new System.Drawing.Point(4, 4);
+            this.b_Presets_CHARM_Standby.Location = new System.Drawing.Point(7, 12);
             this.b_Presets_CHARM_Standby.Name = "b_Presets_CHARM_Standby";
             this.b_Presets_CHARM_Standby.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_CHARM_Standby.TabIndex = 10;
@@ -1549,24 +1561,6 @@ namespace SSLUtility2 {
             this.cB_IPCon_Selected.Size = new System.Drawing.Size(123, 21);
             this.cB_IPCon_Selected.TabIndex = 15;
             this.cB_IPCon_Selected.Text = "Daylight";
-            // 
-            // tB_IPCon_Port
-            // 
-            this.tB_IPCon_Port.Location = new System.Drawing.Point(109, 88);
-            this.tB_IPCon_Port.Name = "tB_IPCon_Port";
-            this.tB_IPCon_Port.Size = new System.Drawing.Size(123, 20);
-            this.tB_IPCon_Port.TabIndex = 14;
-            this.tB_IPCon_Port.Text = "6791";
-            // 
-            // tB_IPCon_Adr
-            // 
-            this.tB_IPCon_Adr.Location = new System.Drawing.Point(109, 62);
-            this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
-            this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
-            this.tB_IPCon_Adr.TabIndex = 14;
-            this.tB_IPCon_Adr.Text = "192.168.1.71";
-            this.tB_IPCon_Adr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_PreviewKeyDown);
-            this.tB_IPCon_Adr.Leave += new System.EventHandler(this.OnFinishedTypingAdr);
             // 
             // l_IPCon_KeyControl
             // 
@@ -1598,7 +1592,7 @@ namespace SSLUtility2 {
             // l_IPCon_PTSpeed
             // 
             this.l_IPCon_PTSpeed.AutoSize = true;
-            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(14, 357);
+            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(14, 372);
             this.l_IPCon_PTSpeed.Name = "l_IPCon_PTSpeed";
             this.l_IPCon_PTSpeed.Size = new System.Drawing.Size(88, 13);
             this.l_IPCon_PTSpeed.TabIndex = 12;
@@ -1665,7 +1659,7 @@ namespace SSLUtility2 {
             // 
             this.l_IPCon.AutoSize = true;
             this.l_IPCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_IPCon.Location = new System.Drawing.Point(13, 6);
+            this.l_IPCon.Location = new System.Drawing.Point(9, 3);
             this.l_IPCon.Name = "l_IPCon";
             this.l_IPCon.Size = new System.Drawing.Size(89, 20);
             this.l_IPCon.TabIndex = 11;
@@ -1673,28 +1667,17 @@ namespace SSLUtility2 {
             // 
             // b_PlayerL_Detach
             // 
-            this.b_PlayerL_Detach.Location = new System.Drawing.Point(17, 440);
+            this.b_PlayerL_Detach.Location = new System.Drawing.Point(17, 442);
             this.b_PlayerL_Detach.Name = "b_PlayerL_Detach";
-            this.b_PlayerL_Detach.Size = new System.Drawing.Size(225, 55);
+            this.b_PlayerL_Detach.Size = new System.Drawing.Size(107, 55);
             this.b_PlayerL_Detach.TabIndex = 8;
             this.b_PlayerL_Detach.Text = "Spawn Detached Video Player";
             this.b_PlayerL_Detach.UseVisualStyleBackColor = true;
             this.b_PlayerL_Detach.Click += new System.EventHandler(this.b_PlayerL_Detach_Click);
             // 
-            // b_PlayerL_PauseRec
-            // 
-            this.b_PlayerL_PauseRec.Enabled = false;
-            this.b_PlayerL_PauseRec.Location = new System.Drawing.Point(607, 647);
-            this.b_PlayerL_PauseRec.Name = "b_PlayerL_PauseRec";
-            this.b_PlayerL_PauseRec.Size = new System.Drawing.Size(172, 23);
-            this.b_PlayerL_PauseRec.TabIndex = 8;
-            this.b_PlayerL_PauseRec.Text = "PAUSE Recording";
-            this.b_PlayerL_PauseRec.UseVisualStyleBackColor = true;
-            this.b_PlayerL_PauseRec.Click += new System.EventHandler(this.b_PlayerL_PauseRec_Click);
-            // 
             // b_PlayerL_StartRec
             // 
-            this.b_PlayerL_StartRec.Location = new System.Drawing.Point(607, 618);
+            this.b_PlayerL_StartRec.Location = new System.Drawing.Point(607, 604);
             this.b_PlayerL_StartRec.Name = "b_PlayerL_StartRec";
             this.b_PlayerL_StartRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerL_StartRec.TabIndex = 8;
@@ -1704,7 +1687,7 @@ namespace SSLUtility2 {
             // 
             // b_PlayerL_SaveSnap
             // 
-            this.b_PlayerL_SaveSnap.Location = new System.Drawing.Point(607, 576);
+            this.b_PlayerL_SaveSnap.Location = new System.Drawing.Point(607, 575);
             this.b_PlayerL_SaveSnap.Name = "b_PlayerL_SaveSnap";
             this.b_PlayerL_SaveSnap.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerL_SaveSnap.TabIndex = 8;
@@ -2180,11 +2163,10 @@ namespace SSLUtility2 {
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).EndInit();
             this.tC_Main.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
+            this.camControl.ResumeLayout(false);
             this.tC_Control.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_ZoomSpeed)).EndInit();
+            this.cameraCon.ResumeLayout(false);
+            this.cameraCon.PerformLayout();
             this.gB_PlayerR_Extended.ResumeLayout(false);
             this.gB_PlayerR_Extended.PerformLayout();
             this.gB_PlayerL_Extended.ResumeLayout(false);
@@ -2197,12 +2179,12 @@ namespace SSLUtility2 {
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).EndInit();
             this.tC_Presets_Default.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage7.ResumeLayout(false);
-            this.tabPage9.ResumeLayout(false);
-            this.tabPage8.ResumeLayout(false);
-            this.tabPage10.ResumeLayout(false);
+            this.adminPage.ResumeLayout(false);
+            this.daylightPage.ResumeLayout(false);
+            this.thermalPage.ResumeLayout(false);
+            this.slgPage.ResumeLayout(false);
+            this.peakbeamPage.ResumeLayout(false);
+            this.charmPage.ResumeLayout(false);
             this.tP_Settings.ResumeLayout(false);
             this.tP_Settings.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -2677,97 +2659,19 @@ namespace SSLUtility2 {
 
         public TabControl tC_Main;
         public TabPage tabPage1;
-        public TabPage tabPage2;
-        public Button b_PlayerL_Play;
+        public StatusStrip statusStrip1;
+        public ToolStripStatusLabel toolStripStatusLabel2;
+        public ToolStripStatusLabel toolStripStatusLabel3;
+        public ToolStripStatusLabel toolStripStatusLabel4;
+        public ToolStripStatusLabel toolStripStatusLabel5;
+        public ToolStripStatusLabel toolStripStatusLabel6;
+        public ToolStripStatusLabel toolStripStatusLabel1;
+        public System.ComponentModel.BackgroundWorker backgroundWorker1;
+        public TabPage camControl;
         public TabControl tC_Control;
-        public TabPage tabPage3;
-        public TabPage tP_Settings;
-        public Button b_PlayerL_PauseRec;
-        public Button b_PlayerL_StartRec;
-        public Button b_PlayerL_SaveSnap;
-        public Button b_PTZ_Down;
-        public Button b_PTZ_Up;
-        public Button b_Presets_Daylight_AF;
-        public Button b_PTZ_FocusNeg;
-        public Button b_PTZ_ZoomNeg;
-        public Button b_PTZ_FocusPos;
-        public Button b_PTZ_ZoomPos;
-        public Button b_PTZ_Right;
-        public Button b_PTZ_Left;
-        public Button b_Presets_Admin_SetupMen;
-        public Button b_Presets_Admin_MechMen;
-        public Button b_Presets_Admin_DebugToggle;
-        public ComboBox cB_IPCon_Selected;
-        public TextBox tB_IPCon_Port;
-        public TextBox tB_IPCon_Adr;
-        public Label l_IPCon_SelectedCam;
-        public Label l_IPCon_Port;
-        public Label l_IPCon_Adr;
-        public Label l_IPCon;
-        public CheckBox cB_IPCon_KeyboardCon;
-        public Label l_IPCon_KeyControl;
-        public Button b_Presets_Daylight_ColMono;
-        public Button b_Presets_Daylight_Wiper;
-        public Button b_Presets_Thermal_AF;
-        public TabControl tC_Presets_Default;
-        public TabPage tabPage5;
-        public TabPage tabPage6;
-        public TabPage tabPage7;
-        public TabPage tabPage8;
-        public Button b_Presets_Thermal_ICENeg;
-        public Button b_Presets_Thermal_ICE;
-        public Button b_Presets_Thermal_WhiteBlack;
-        public Button b_Presets_Daylight_Stabilizer;
-        public Button b_Presets_Daylight_WDR;
-        public Button b_Presets_Thermal_ICEPos;
-        public Button button32;
-        public Button button31;
-        public Button b_Presets_Thermal_BrightPos;
-        public Button b_Presets_Thermal_BrightNeg;
-        public Button b_Presets_SLG_SteadyGreen;
-        public Button b_Presets_SLG_FlashingWhite;
-        public Button b_Presets_SLG_FlashingRed;
-        public Button b_Presets_SLG_SteadyRed;
-        public Button b_Presets_SLG_FlashingGreen;
-        public Button b_Presets_SLG_AllLightsOff;
-        public Button b_Presets_SLG_FlashingRG;
-        public TabPage tabPage9;
-        public Button b_Presets_Peak_SteadyLamp;
-        public Button b_Presets_Peak_StopZoom;
-        public Button b_Presets_Peak_ZoomOut;
-        public Button b_Presets_Peak_ZoomIn;
-        public Button b_Presets_Peak_LampOff;
-        public Button b_Presets_Peak_StrobeLamp;
-        public Button b_Presets_Thermal_NUC;
-        public TextBox tB_Presets_Number;
-        public Label l_Presets_Number;
-        public Label l_Presets;
-        public Label l_PTZCon;
-        public Button b_Presets_Learn;
-        public Button b_Presets_GoTo;
-        public Label l_Presets_Default;
-        public Button b_PlayerL_Detach;
-        public ComboBox cB_IPCon_Type;
-        public Label l_IPCon_ConType;
-        public Button b_Presets_Admin_DefaultMen;
-        public TrackBar track_PTZ_PTSpeed;
-        public Label l_IPCon_PTSpeed;
-        public TabPage tabPage10;
-        public Button b_Presets_CHARM_Standby;
-        public Button b_Presets_CHARM_Aquire;
-        public Label l_IPCon_Connected;
-        public CheckBox checkB_PlayerL_Manual;
-        public GroupBox gB_Paths;
-        public Label l_Paths_sCFolder;
-        public Label l_Settings_Paths;
-        public Button b_Paths_sCBrowse;
-        public Button b_Settings_Apply;
-        public Button b_Settings_Default;
-        public Label l_Paths_sCCheck;
-        public AxAXVLC.AxVLCPlugin2 VLCPlayer_L;
-        public AxAXVLC.AxVLCPlugin2 VLCPlayer_R;
+        public TabPage cameraCon;
         public GroupBox gB_PlayerR_Extended;
-        public Label label3;
+        public Label label2;
         public Label label4;
         public TextBox tB_PlayerR_Adr;
         public Label label5;
@@ -2781,25 +2685,9 @@ namespace SSLUtility2 {
         public Label label9;
         public TextBox tB_PlayerR_Password;
         public ComboBox cB_PlayerR_Type;
-        public CheckBox checkB_PlayerR_Manual;
-        public Button b_PlayerR_PauseRec;
-        public Button b_PlayerR_StartRec;
-        public Button b_PlayerR_SaveSnap;
-        public Button b_PlayerR_Play;
-        public GroupBox gB_PlayerR_Simple;
-        public TextBox tB_PlayerR_SimpleAdr;
-        public Label l_PlayerR_SimpleAdr;
-        public StatusStrip statusStrip1;
-        public ToolStripStatusLabel toolStripStatusLabel2;
-        public ToolStripStatusLabel toolStripStatusLabel3;
-        public ToolStripStatusLabel toolStripStatusLabel4;
-        public ToolStripStatusLabel toolStripStatusLabel5;
-        public ToolStripStatusLabel toolStripStatusLabel6;
-        public ToolStripStatusLabel toolStripStatusLabel1;
-        public GroupBox gB_PlayerL_Simple;
-        public TextBox tB_PlayerL_SimpleAdr;
-        public Label l_PlayerL_SimpleAdr;
+        public Label label3;
         public GroupBox gB_PlayerL_Extended;
+        public Label label1;
         public Label l_PlayerL_Type;
         public Label l_PlayerL_RTSP;
         public TextBox tB_PlayerL_Adr;
@@ -2814,23 +2702,116 @@ namespace SSLUtility2 {
         public Label l_PlayerL_Buffering;
         public TextBox tB_PlayerL_Password;
         public ComboBox cB_PlayerL_Type;
-        public System.ComponentModel.BackgroundWorker backgroundWorker1;
-        public TextBox tB_Paths_sCFolder;
+        public GroupBox gB_PlayerR_Simple;
+        public TextBox tB_PlayerR_SimpleAdr;
+        public Label l_PlayerR_SimpleAdr;
+        public GroupBox gB_PlayerL_Simple;
+        public TextBox tB_PlayerL_SimpleAdr;
+        public Label l_PlayerL_SimpleAdr;
+        public AxAXVLC.AxVLCPlugin2 VLCPlayer_R;
+        public AxAXVLC.AxVLCPlugin2 VLCPlayer_L;
+        public TextBox tB_Presets_Number;
+        public TextBox tB_IPCon_Port;
+        public TextBox tB_IPCon_Adr;
+        public CheckBox checkB_PlayerR_Manual;
+        public Button b_PlayerR_StartRec;
+        public Button b_PlayerR_SaveSnap;
+        public Button b_PlayerR_Play;
+        public CheckBox checkB_PlayerL_Manual;
+        public Label l_IPCon_Connected;
+        public TrackBar track_PTZ_PTSpeed;
+        public ComboBox cB_IPCon_Type;
+        public TabControl tC_Presets_Default;
+        public TabPage adminPage;
+        public Button b_Presets_Admin_DefaultMen;
+        public Button b_Presets_Admin_DebugToggle;
+        public Button b_Presets_Admin_MechMen;
+        public Button b_Presets_Admin_SetupMen;
+        public TabPage daylightPage;
+        public Button b_Presets_Daylight_Stabilizer;
+        public Button b_Presets_Daylight_WDR;
+        public Button b_Presets_Daylight_Wiper;
+        public Button b_Presets_Daylight_AF;
+        public Button b_Presets_Daylight_ColMono;
+        public TabPage thermalPage;
+        public Button button32;
+        public Button button31;
+        public Button b_Presets_Thermal_BrightPos;
+        public Button b_Presets_Thermal_BrightNeg;
+        public Button b_Presets_Thermal_ICEPos;
+        public Button b_Presets_Thermal_ICENeg;
+        public Button b_Presets_Thermal_ICE;
+        public Button b_Presets_Thermal_WhiteBlack;
+        public Button b_Presets_Thermal_NUC;
+        public Button b_Presets_Thermal_AF;
+        public TabPage slgPage;
+        public Button b_Presets_SLG_SteadyGreen;
+        public Button b_Presets_SLG_AllLightsOff;
+        public Button b_Presets_SLG_FlashingRG;
+        public Button b_Presets_SLG_FlashingWhite;
+        public Button b_Presets_SLG_FlashingRed;
+        public Button b_Presets_SLG_SteadyRed;
+        public Button b_Presets_SLG_FlashingGreen;
+        public TabPage peakbeamPage;
+        public Button b_Presets_Peak_SteadyLamp;
+        public Button b_Presets_Peak_StopZoom;
+        public Button b_Presets_Peak_ZoomOut;
+        public Button b_Presets_Peak_ZoomIn;
+        public Button b_Presets_Peak_LampOff;
+        public Button b_Presets_Peak_StrobeLamp;
+        public TabPage charmPage;
+        public Button b_Presets_CHARM_Aquire;
+        public Button b_Presets_CHARM_Standby;
+        public CheckBox cB_IPCon_KeyboardCon;
+        public ComboBox cB_IPCon_Selected;
+        public Label l_IPCon_KeyControl;
+        public Label l_IPCon_SelectedCam;
+        public Label l_IPCon_Port;
+        public Label l_IPCon_PTSpeed;
+        public Label l_Presets_Number;
+        public Label l_IPCon_ConType;
+        public Label l_IPCon_Adr;
+        public Label l_Presets_Default;
+        public Label l_Presets;
+        public Label l_PTZCon;
+        public Label l_IPCon;
+        public Button b_PlayerL_Detach;
+        public Button b_PlayerL_StartRec;
+        public Button b_PlayerL_SaveSnap;
+        public Button b_Presets_Learn;
+        public Button b_Presets_GoTo;
+        public Button b_PTZ_Down;
+        public Button b_PTZ_Up;
+        public Button b_PTZ_FocusNeg;
+        public Button b_PTZ_ZoomNeg;
+        public Button b_PTZ_FocusPos;
+        public Button b_PTZ_ZoomPos;
+        public Button b_PTZ_Right;
+        public Button b_PTZ_Left;
+        public Button b_PlayerL_Play;
+        public TabPage tP_Settings;
         public GroupBox groupBox1;
+        public ComboBox cB_Rec_Quality;
+        public Label l_Rec_Quality;
+        public TextBox tB_Rec_scFileN;
+        public Label l_Rec_sCFileN;
+        public ComboBox cB_Rec_FPS;
+        public TextBox tB_Rec_vFileN;
+        public Label l_Rec_vFileN;
         public Label l_Rec;
         public Label l_Rec_FPS;
+        public Label l_Paths_sCCheck;
+        public GroupBox gB_Paths;
+        public Label l_Paths_vCheck;
         public Button b_Paths_vBrowse;
         public TextBox tB_Paths_vFolder;
         public Label l_Paths_vFolder;
-        public ComboBox cB_Rec_FPS;
-        public Label l_Paths_vCheck;
-        public TextBox tB_Rec_vFileN;
-        public Label l_Rec_vFileN;
-        public TextBox tB_Rec_scFileN;
-        public Label l_Rec_sCFileN;
-        public ComboBox cB_Rec_Quality;
-        public Label l_Rec_Quality;
-        public TrackBar track_PTZ_ZoomSpeed;
-        public Label l_PTZ_ZoomSpeed;
+        public TextBox tB_Paths_sCFolder;
+        public Button b_Paths_sCBrowse;
+        public Label l_Settings_Paths;
+        public Label l_Paths_sCFolder;
+        public Button b_Settings_Default;
+        public Button b_Settings_Apply;
+        public Button b_IPCon_LayoutMode;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
