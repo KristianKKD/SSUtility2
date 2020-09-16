@@ -23,8 +23,6 @@ namespace SSLUtility2 {
             l = l_IPCon_Connected;
         }
 
-       
-
         public void StartConnect() {
             CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l, true);
         }

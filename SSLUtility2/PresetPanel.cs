@@ -135,9 +135,9 @@ namespace SSLUtility2 {
             CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 189, D.PresetAction.Goto), cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
         }
 
-        //private void Presets_Peak_LampOff_Click(object sender, EventArgs e) { //
-        //    CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 187, D.PresetAction.Goto), cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
-        //}
+        private void Presets_Peak_LampOff_Click(object sender, EventArgs e) { //
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 187, D.PresetAction.Goto), cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
+        }
 
         private void b_Presets_Peak_ZoomIn_Click(object sender, EventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 185, D.PresetAction.Goto), cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
