@@ -104,6 +104,7 @@
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
             this.tB_IPCon_Adr.TabIndex = 64;
             this.tB_IPCon_Adr.Text = "192.168.1.71";
+            this.tB_IPCon_Adr.TextChanged += new System.EventHandler(this.tB_IPCon_Adr_TextChanged);
             this.tB_IPCon_Adr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyDown);
             this.tB_IPCon_Adr.Leave += new System.EventHandler(this.tB_IPCon_Adr_Leave);
             // 

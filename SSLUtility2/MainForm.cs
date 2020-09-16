@@ -17,6 +17,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,9 +29,10 @@ namespace SSLUtility2 {
         public static MainForm m;
         Recorder recorderL;
         Recorder recorderR;
+        public bool lite = false;
+        Control lab;
 
         public static Control[] saveList = new Control[0];
-        Control[] ipConSaveList = new Control[0];
 
         public static string config = "config.txt";
         public const string autoSave = "auto.txt";
@@ -41,7 +44,7 @@ namespace SSLUtility2 {
         public static string RecFPS = "30";
         public static string RecQual = "70";
         const string defaultIP = "192.168.1.71";
-        public bool lite = false;
+
 
         #region Firmware Stuff
         public static byte Address;
@@ -609,7 +612,8 @@ namespace SSLUtility2 {
         public async Task StartupStuff() {
             m = this;
             tC_Main.TabPages[1].Dispose(); //remove the firmware page
-            CameraCommunicate.defaultLabel = l_IPCon_Connected;
+            CameraCommunicate.mainRef = m;
+            lab = l_IPCon_Connected;
 
             saveList = new Control[]{
                 cB_IPCon_Type,
@@ -673,7 +677,7 @@ namespace SSLUtility2 {
             SetFeatureToAllControls(m.Controls);
 
             if (tB_IPCon_Adr.Text != defaultIP) {
-                CameraCommunicate.Connect(m, true);
+                CameraCommunicate.Connect(tB_IPCon_Adr.Text,tB_IPCon_Port.Text, lab, true);
             }
             lite = false;
         }
@@ -688,19 +692,7 @@ namespace SSLUtility2 {
             return tp;
         }
 
-        void AttachPresetPanel(TabPage tp, ControlPanel panel) {
-            GroupBox gb = new GroupBox();
-            PresetPanel pp = new PresetPanel();
-            pp.mainRef = m;
-
-            gb.Location = new Point(0, 565);
-            gb.Size = pp.Size;
-
-            tp.Controls.Add(gb);
-
-            var c = GetAllType(pp, typeof(TabControl));
-            gb.Controls.AddRange(c.ToArray());
-        }
+        
 
         ControlPanel AttachControlPanel(TabPage tp) {
             GroupBox gb = new GroupBox();
@@ -713,6 +705,9 @@ namespace SSLUtility2 {
             cp.tB_IPCon_Port.Text = tB_IPCon_Port.Text;
             cp.cB_IPCon_Selected.Text = cB_IPCon_Selected.Text;
 
+            SetFeatureToAllControls(cp.Controls);
+
+            cp.StartConnect();
 
             gb.Size = cp.Size;
             tp.Controls.Add(gb);
@@ -767,8 +762,8 @@ namespace SSLUtility2 {
             return res;
         }
 
-        public async Task AutoFillConnect(bool supressError = false, Control lab = null) {
-            if (CameraCommunicate.Connect(m, supressError, lab).Result) {
+        public async Task AutoFillConnect(bool supressError = false) {
+            if (CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, lab, supressError).Result) {
                 if (tB_PlayerL_Adr.Text == defaultIP || tB_PlayerL_Adr.Text == "") {
                     tB_PlayerL_Adr.Text = tB_IPCon_Adr.Text;
                 }
@@ -795,12 +790,16 @@ namespace SSLUtility2 {
             } else {
                 control.Text = "STOP Recording";
                 isPlaying = true;
+                MessageBox.Show("Saved recording to: " + appFolder + vFolder);
                 return (isPlaying, StartRec(player));
             }
         }
 
-        public uint MakeAdr() {
-            if (cB_IPCon_Selected.Text == "Daylight") {
+        public uint MakeAdr(Control l = null) {
+            if (l == null) {
+                l = cB_IPCon_Selected;
+            }
+            if (l.Text == "Daylight") {
                 return 1;
             } else {
                 return 2;
@@ -812,7 +811,7 @@ namespace SSLUtility2 {
                 MessageBox.Show("Address is invalid!");
                 return;
             }
-            if (CameraCommunicate.PingAdr(combinedUrl)) {
+            if (CameraCommunicate.PingAdr(combinedUrl).Result) {
                 MessageBox.Show("Address could not be pinged!");
                 return;
             }
@@ -821,7 +820,7 @@ namespace SSLUtility2 {
         }
 
         public void Replay(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
-            if (player.playlist.isPlaying == true) {
+            if (player.playlist.isPlaying) {
                 player.playlist.stop();
                 player.playlist.items.clear();
             }
@@ -830,6 +829,7 @@ namespace SSLUtility2 {
             player.playlist.next();
             player.playlist.play();
         }
+
 
         public void ExtendOptions(bool check, GroupBox gbExt, GroupBox gbSim) {
             if (check) {
@@ -869,7 +869,7 @@ namespace SSLUtility2 {
             }
         }
 
-        private void SetFeatureToAllControls(Control.ControlCollection cc) {
+        public void SetFeatureToAllControls(Control.ControlCollection cc) {
             if (cc != null) {
                 foreach (Control control in cc) {
                     if (control != tC_Control) {
@@ -879,7 +879,7 @@ namespace SSLUtility2 {
                 }
             }
         }
-        void control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
+        public void control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
             if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down ||
                 e.KeyCode == Keys.Left || e.KeyCode == Keys.Right ||
                 e.KeyCode == Keys.Escape || e.KeyCode == Keys.Enter) {
@@ -887,11 +887,20 @@ namespace SSLUtility2 {
             }
         }
 
-        public void PTZMove(bool IsTilt, D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left) {
-
+        public void PTZMove(bool IsTilt, uint address, uint speed,
+            D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left,
+            string ip = null, string port = null, Control lcon = null) {
             byte[] code;
-            uint address = MakeAdr();
-            uint speed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
+
+            if (ip == null) {
+                ip = tB_IPCon_Adr.Text;
+                port = tB_IPCon_Port.Text;
+                lcon = lab;
+            }
+
+            if (CameraCommunicate.lastIPPort != ip + port) {
+                CameraCommunicate.Connect(ip, port, lcon);
+            }
 
             if (IsTilt) {
                 code = protocol.CameraTilt(address, tilt, speed);
@@ -899,11 +908,11 @@ namespace SSLUtility2 {
                 code = protocol.CameraPan(address, pan, speed);
             }
 
-            CameraCommunicate.sendtoIPAsync(code);
+            CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
         }
 
         public void PTZZoom(D.Zoom dir) {
-            CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(MakeAdr(), dir));
+            CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(MakeAdr(), dir), lab);
         }
 
         public async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
@@ -969,6 +978,7 @@ namespace SSLUtility2 {
                 DetachedVid.Show();
             }
             DetachedVid.MainRef = this;
+            SetFeatureToAllControls(DetachedVid.Controls);
             return DetachedVid;
         }
 
@@ -1009,7 +1019,7 @@ namespace SSLUtility2 {
         }
 
         private void OnFinishedTypingAdr(object sender, EventArgs e) {
-            AutoFillConnect(true);   
+            AutoFillConnect();   
         }
 
 
@@ -1020,19 +1030,19 @@ namespace SSLUtility2 {
         }
 
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(true, D.Tilt.Up);
+            PTZMove(true, MakeAdr(), Convert.ToUInt32(track_PTZ_PTSpeed.Value), D.Tilt.Up);
         }
 
         private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(true, D.Tilt.Down);
+            PTZMove(true, MakeAdr(), Convert.ToUInt32(track_PTZ_PTSpeed.Value), D.Tilt.Down);
         }
 
         private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(false, D.Tilt.Null, D.Pan.Left);
+            PTZMove(false, MakeAdr(), Convert.ToUInt32(track_PTZ_PTSpeed.Value), D.Tilt.Null, D.Pan.Left);
         }
 
         private void b_PTZ_Right_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(false, D.Tilt.Null, D.Pan.Right);
+            PTZMove(false, MakeAdr(), Convert.ToUInt32(track_PTZ_PTSpeed.Value), D.Tilt.Null, D.Pan.Right);
         }
 
         private void b_PTZ_ZoomPos_MouseDown(object sender, MouseEventArgs e) {
@@ -1044,32 +1054,32 @@ namespace SSLUtility2 {
         }
 
         private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()));
+            CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()), lab);
         }
 
         private void b_Presets_Admin_MechMen_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 }, lab);
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 }, lab);
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 }, lab);
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 }, lab);
         }
 
         private void b_Presets_Admin_SetupMen_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 });
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 }, lab);
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 }, lab);
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 }, lab);
+            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 }, lab);
         }
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), 196, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), 196, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Admin_DefaultMen_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), 2, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), 2, D.PresetAction.Goto), lab);
         }
 
-        private void tC_Control_KeyDown(object sender, KeyEventArgs e) {
+        public void KeyControl(Control lab, KeyEventArgs e) {
             if (cB_IPCon_KeyboardCon.Checked == true) {
                 uint address = MakeAdr();
                 uint ptSpeed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
@@ -1096,134 +1106,138 @@ namespace SSLUtility2 {
                         break;
                 }
 
-                CameraCommunicate.sendtoIPAsync(code);
+                CameraCommunicate.sendtoIPAsync(code, lab);
             }
+        }
+
+        private void tC_Control_KeyDown(object sender, KeyEventArgs e) {
+            KeyControl(lab, e);   
         }
 
         private void tC_Control_KeyUp(object sender, KeyEventArgs e) {
             if (cB_IPCon_KeyboardCon.Checked == true) {
-                CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()));
+                CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()), lab);
             }
         }
 
         private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Far));
+            CameraCommunicate.sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Far), lab);
         }
 
         private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Near));
+            CameraCommunicate.sendtoIPAsync(protocol.CameraFocus(MakeAdr(), D.Focus.Near), lab);
         }
 
         private void b_Presets_Daylight_Wiper_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 4, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 4, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Daylight_ColMono_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 3, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 3, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Daylight_AF_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 12, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 12, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Thermal_WhiteBlack_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 8, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 8, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Daylight_WDR_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 11, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 11, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Daylight_Stabilizer_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 19, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 19, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Thermal_AF_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 12, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 12, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Thermal_ICE_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 16, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 16, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Thermal_ICENeg_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 17, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 17, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Thermal_ICEPos_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 18, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 18, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Thermal_BrightNeg_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 176, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 176, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Thermal_BrightPos_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 177, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 177, D.PresetAction.Goto), lab);
         }
 
         private void button31_Click(object sender, EventArgs e) { //"Contrast -"; {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 178, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 178, D.PresetAction.Goto), lab);
         }
 
         private void button32_Click(object sender, EventArgs e) { //"Contrast +";
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 179, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 179, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_SLG_SteadyGreen_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 30, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 30, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_SLG_FlashingGreen_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 31, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 31, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_SLG_SteadyRed_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 32, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 32, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_SLG_FlashingRed_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 33, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 33, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_SLG_FlashingWhite_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 34, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 34, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_SLG_FlashingRG_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 35, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 35, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_SLG_AllLightsOff_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 36, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(1, 36, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Peak_SteadyLamp_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 188, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 188, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Peak_StrobeLamp_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 189, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 189, D.PresetAction.Goto), lab);
         }
 
         private void Presets_Peak_LampOff_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 187, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 187, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Peak_ZoomIn_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 185, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 185, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Peak_ZoomOut_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 186, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 186, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Peak_StopZoom_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 184, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 184, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Thermal_NUC_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 175, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(2, 175, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
@@ -1232,7 +1246,7 @@ namespace SSLUtility2 {
             }
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
 
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Goto));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Goto), lab);
         }
 
         private void b_Presets_Learn_Click(object sender, EventArgs e) {
@@ -1241,7 +1255,7 @@ namespace SSLUtility2 {
             }
             byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
 
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Set));
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(MakeAdr(), presetnumber, D.PresetAction.Set), lab);
         }
 
         private void cB_PlayerL_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -1442,8 +1456,61 @@ namespace SSLUtility2 {
             TabPage tp = LiteMode();
             ControlPanel cp = AttachControlPanel(tp);
             AttachPresetPanel(tp, cp);
-            tC_Control.TabPages[0].Dispose();
-            tC_Control.TabPages[0].Dispose();
+            foreach (TabPage tab in tC_Control.TabPages) {
+                if (tab != tp) {
+                    tab.Dispose();
+                }
+            }
+        }
+
+        void AttachPresetPanel(TabPage tp, ControlPanel panel) {
+            GroupBox gb = new GroupBox();
+            PresetPanel pp = new PresetPanel();
+            SetFeatureToAllControls(pp.Controls);
+            pp.mainRef = m;
+
+            gb.Location = new Point(0, 565);
+            gb.Size = pp.Size;
+
+            tp.Controls.Add(gb);
+
+            var c = GetAllType(pp, typeof(TabControl));
+            gb.Controls.AddRange(c.ToArray());
+        }
+
+        System.Threading.Timer timer = null;
+
+        public void tB_IPCon_Adr_TextChanged(object sender, EventArgs e) { // i cant implement this into cp for some reason?
+            TextBox origin = sender as TextBox;
+            if (!origin.ContainsFocus)
+                return;
+
+            DisposeTimer();
+            timer = new System.Threading.Timer(TimerElapsed, null, 300, 300);
+        }
+
+
+        private void TimerElapsed(Object obj) {
+            CheckSyntaxAndReport();
+            DisposeTimer();
+        }
+
+        private void DisposeTimer() {
+            if (timer != null) {
+                timer.Dispose();
+                timer = null;
+            }
+        }
+
+        private void CheckSyntaxAndReport() {
+            this.Invoke(new Action(() => {
+                Control l = l_IPCon_Connected;
+                if (CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l_IPCon_Connected, true).Result) {
+                    CameraCommunicate.LabelDisplay(true, l);
+                } else {
+                    CameraCommunicate.LabelDisplay(false, l);
+                }
+            }));
         }
 
         private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {

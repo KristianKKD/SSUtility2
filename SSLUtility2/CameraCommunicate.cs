@@ -10,10 +10,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
 
     class CameraCommunicate {
-        public MainForm MainRef {
-            get;
-            set;
-        }
+        public static MainForm mainRef;
 
         static string failedConnectMsg = "Issue connecting to TCP Port\n" +
                     "Would you like to see more information?";
@@ -22,50 +19,63 @@ namespace SSLUtility2 {
         static IPAddress serverAddr = null;
         static Socket sock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
         static IPEndPoint endPoint = new IPEndPoint(0, 0);
-        public static Control defaultLabel;
 
-        public static async Task sendtoIPAsync(byte[] code, Control lab = null) {
+        public static string lastIPPort = "1";
+
+        public static async Task<bool> sendtoIPAsync(byte[] code, Control lab, string ip = null, string port = null) {
             try {
-                if (lab == null) {
-                    lab = defaultLabel;
+                if (ip == null) {
+                    ip = mainRef.tB_IPCon_Adr.Text;
+                    port = mainRef.tB_IPCon_Port.Text;
                 }
                 if (!sock.Connected) {
-                    await Connect(MainForm.m, false, lab);
+                    bool ableToConnect = Connect(ip, port, lab, false).Result;
+                    if (!ableToConnect) {
+                        return false;
+                    }
                 }
-                SendToSocket(code);
+                lastIPPort = ip + port;
+                
+                bool success = SendToSocket(code).Result;
+                return success;
             } catch (Exception e) {
                 MainForm.ShowError(failedConnectMsg, failedConnectCaption, e.ToString());
+                return false;
             }
         }
 
-        public static async Task<bool> Connect(MainForm m, bool stopError = false, Control lCon = null) {
-            if (lCon == null) {
-                lCon = defaultLabel;
-            }
-            if (sock.Connected) {
-                sock.Close();
-            }
-            string ipAdr = m.tB_IPCon_Adr.Text;
+        public static async Task<bool> Connect(string ipAdr, string port, Control lCon, bool stopError = false) {
+            LabelDisplay(false, lCon);
 
-            if (!PingAdr(ipAdr)) {
-                lCon.Text = "❌";
-                lCon.ForeColor = Color.Red;
+            if (sock.Connected) {
+                CloseSock();
+            }
+            if (!PingAdr(ipAdr).Result) {
                 if (!stopError) {
                     MainForm.ShowError(failedConnectMsg, failedConnectCaption, "IP ping timed out with no response.");
                 }
                 return false;
             }
-            lCon.Text = "✓";
-            lCon.ForeColor = Color.Green;
+            LabelDisplay(true, lCon);
 
             serverAddr = IPAddress.Parse(ipAdr);
             sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(m.tB_IPCon_Port.Text));
-            sock.ConnectAsync(endPoint);
+            endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(port));
+            sock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
             return true;
         }
 
-        public static bool PingAdr(string address) {
+        public static void LabelDisplay(bool connected, Control l) {
+            if (connected) {
+                l.Text = "✓";
+                l.ForeColor = Color.Green;
+            } else {
+                l.Text = "❌";
+                l.ForeColor = Color.Red;
+            }
+        }
+
+        public static async Task<bool> PingAdr(string address) {
             Ping pinger = null;
 
             if (address == null) {
@@ -78,18 +88,26 @@ namespace SSLUtility2 {
                 if (reply.Status == IPStatus.Success) {
                     return true;
                 }
-            } catch (PingException) {
-                //not connected
+            } catch {
             } finally {
                 pinger.Dispose();
             }
             return false;
         }
 
-        private static async Task SendToSocket(byte[] code) {
+        private static async Task<bool> SendToSocket(byte[] code) {
             if (code != null) {
                 sock.SendTo(code, endPoint);
-                //sock.Close();
+                return true;
+            }
+            return false;
+        }
+
+
+        public static void CloseSock() {
+            if (sock != null) {
+                sock.Shutdown(SocketShutdown.Both);
+                sock.Close();
             }
         }
 

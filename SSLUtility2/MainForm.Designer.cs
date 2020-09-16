@@ -591,9 +591,9 @@ namespace SSLUtility2 {
             // 
             // b_IPCon_LayoutMode
             // 
-            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(131, 442);
+            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(131, 412);
             this.b_IPCon_LayoutMode.Name = "b_IPCon_LayoutMode";
-            this.b_IPCon_LayoutMode.Size = new System.Drawing.Size(107, 57);
+            this.b_IPCon_LayoutMode.Size = new System.Drawing.Size(107, 87);
             this.b_IPCon_LayoutMode.TabIndex = 43;
             this.b_IPCon_LayoutMode.Text = "Swap To: Lite Mode";
             this.b_IPCon_LayoutMode.UseVisualStyleBackColor = true;
@@ -1012,6 +1012,7 @@ namespace SSLUtility2 {
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
             this.tB_IPCon_Adr.TabIndex = 14;
             this.tB_IPCon_Adr.Text = "192.168.1.71";
+            this.tB_IPCon_Adr.TextChanged += new System.EventHandler(this.tB_IPCon_Adr_TextChanged);
             this.tB_IPCon_Adr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_PreviewKeyDown);
             this.tB_IPCon_Adr.Leave += new System.EventHandler(this.OnFinishedTypingAdr);
             // 
@@ -1028,7 +1029,7 @@ namespace SSLUtility2 {
             // 
             // b_PlayerR_StartRec
             // 
-            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1281, 599);
+            this.b_PlayerR_StartRec.Location = new System.Drawing.Point(1281, 604);
             this.b_PlayerR_StartRec.Name = "b_PlayerR_StartRec";
             this.b_PlayerR_StartRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerR_StartRec.TabIndex = 33;
@@ -1038,7 +1039,7 @@ namespace SSLUtility2 {
             // 
             // b_PlayerR_SaveSnap
             // 
-            this.b_PlayerR_SaveSnap.Location = new System.Drawing.Point(1281, 570);
+            this.b_PlayerR_SaveSnap.Location = new System.Drawing.Point(1281, 575);
             this.b_PlayerR_SaveSnap.Name = "b_PlayerR_SaveSnap";
             this.b_PlayerR_SaveSnap.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerR_SaveSnap.TabIndex = 34;
@@ -1667,9 +1668,9 @@ namespace SSLUtility2 {
             // 
             // b_PlayerL_Detach
             // 
-            this.b_PlayerL_Detach.Location = new System.Drawing.Point(17, 442);
+            this.b_PlayerL_Detach.Location = new System.Drawing.Point(17, 412);
             this.b_PlayerL_Detach.Name = "b_PlayerL_Detach";
-            this.b_PlayerL_Detach.Size = new System.Drawing.Size(107, 55);
+            this.b_PlayerL_Detach.Size = new System.Drawing.Size(107, 85);
             this.b_PlayerL_Detach.TabIndex = 8;
             this.b_PlayerL_Detach.Text = "Spawn Detached Video Player";
             this.b_PlayerL_Detach.UseVisualStyleBackColor = true;

@@ -106,6 +106,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PelcoD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PelcoD.Designer.cs">
+      <DependentUpon>PelcoD.cs</DependentUpon>
+    </Compile>
     <Compile Include="PresetPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PelcoD.resx">
+      <DependentUpon>PelcoD.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PresetPanel.resx">
       <DependentUpon>PresetPanel.cs</DependentUpon>
