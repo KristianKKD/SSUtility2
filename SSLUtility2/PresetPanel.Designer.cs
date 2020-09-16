@@ -452,7 +452,7 @@ namespace SSLUtility2
             this.b_Presets_Peak_LampOff.TabIndex = 12;
             this.b_Presets_Peak_LampOff.Text = "Lamp Off";
             this.b_Presets_Peak_LampOff.UseVisualStyleBackColor = true;
-            this.b_Presets_Peak_LampOff.Click += new System.EventHandler(this.b_Presets_Peak_LampOff_Click_1);
+            this.b_Presets_Peak_LampOff.Click += new System.EventHandler(this.b_Presets_Peak_LampOff_Click);
             // 
             // b_Presets_Peak_StrobeLamp
             // 
