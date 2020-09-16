@@ -137,8 +137,8 @@ namespace SSLUtility2 {
             this.b_Presets_Daylight_AF = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_ColMono = new System.Windows.Forms.Button();
             this.thermalPage = new System.Windows.Forms.TabPage();
-            this.button32 = new System.Windows.Forms.Button();
-            this.button31 = new System.Windows.Forms.Button();
+            this.b_Presets_ContrastPos = new System.Windows.Forms.Button();
+            this.b_Presets_ContrastNeg = new System.Windows.Forms.Button();
             this.b_Presets_Thermal_BrightPos = new System.Windows.Forms.Button();
             this.b_Presets_Thermal_BrightNeg = new System.Windows.Forms.Button();
             this.b_Presets_Thermal_ICEPos = new System.Windows.Forms.Button();
@@ -149,7 +149,6 @@ namespace SSLUtility2 {
             this.b_Presets_Thermal_AF = new System.Windows.Forms.Button();
             this.slgPage = new System.Windows.Forms.TabPage();
             this.b_Presets_SLG_SteadyGreen = new System.Windows.Forms.Button();
-            this.b_Presets_SLG_AllLightsOff = new System.Windows.Forms.Button();
             this.b_Presets_SLG_FlashingRG = new System.Windows.Forms.Button();
             this.b_Presets_SLG_FlashingWhite = new System.Windows.Forms.Button();
             this.b_Presets_SLG_FlashingRed = new System.Windows.Forms.Button();
@@ -224,6 +223,7 @@ namespace SSLUtility2 {
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.b_Presets_SLG_AllLightsOff = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
             this.tC_Main.SuspendLayout();
             this.camControl.SuspendLayout();
@@ -1107,10 +1107,10 @@ namespace SSLUtility2 {
             this.tC_Presets_Default.Controls.Add(this.slgPage);
             this.tC_Presets_Default.Controls.Add(this.peakbeamPage);
             this.tC_Presets_Default.Controls.Add(this.charmPage);
-            this.tC_Presets_Default.Location = new System.Drawing.Point(13, 632);
+            this.tC_Presets_Default.Location = new System.Drawing.Point(13, 608);
             this.tC_Presets_Default.Name = "tC_Presets_Default";
             this.tC_Presets_Default.SelectedIndex = 0;
-            this.tC_Presets_Default.Size = new System.Drawing.Size(239, 222);
+            this.tC_Presets_Default.Size = new System.Drawing.Size(239, 257);
             this.tC_Presets_Default.TabIndex = 19;
             // 
             // adminPage
@@ -1121,7 +1121,7 @@ namespace SSLUtility2 {
             this.adminPage.Controls.Add(this.b_Presets_Admin_SetupMen);
             this.adminPage.Location = new System.Drawing.Point(4, 22);
             this.adminPage.Name = "adminPage";
-            this.adminPage.Size = new System.Drawing.Size(231, 196);
+            this.adminPage.Size = new System.Drawing.Size(231, 231);
             this.adminPage.TabIndex = 3;
             this.adminPage.Text = "Admin";
             this.adminPage.UseVisualStyleBackColor = true;
@@ -1176,7 +1176,7 @@ namespace SSLUtility2 {
             this.daylightPage.Location = new System.Drawing.Point(4, 22);
             this.daylightPage.Name = "daylightPage";
             this.daylightPage.Padding = new System.Windows.Forms.Padding(3);
-            this.daylightPage.Size = new System.Drawing.Size(231, 196);
+            this.daylightPage.Size = new System.Drawing.Size(231, 231);
             this.daylightPage.TabIndex = 0;
             this.daylightPage.Text = "Daylight";
             this.daylightPage.UseVisualStyleBackColor = true;
@@ -1233,8 +1233,8 @@ namespace SSLUtility2 {
             // 
             // thermalPage
             // 
-            this.thermalPage.Controls.Add(this.button32);
-            this.thermalPage.Controls.Add(this.button31);
+            this.thermalPage.Controls.Add(this.b_Presets_ContrastPos);
+            this.thermalPage.Controls.Add(this.b_Presets_ContrastNeg);
             this.thermalPage.Controls.Add(this.b_Presets_Thermal_BrightPos);
             this.thermalPage.Controls.Add(this.b_Presets_Thermal_BrightNeg);
             this.thermalPage.Controls.Add(this.b_Presets_Thermal_ICEPos);
@@ -1246,30 +1246,30 @@ namespace SSLUtility2 {
             this.thermalPage.Location = new System.Drawing.Point(4, 22);
             this.thermalPage.Name = "thermalPage";
             this.thermalPage.Padding = new System.Windows.Forms.Padding(3);
-            this.thermalPage.Size = new System.Drawing.Size(231, 196);
+            this.thermalPage.Size = new System.Drawing.Size(231, 231);
             this.thermalPage.TabIndex = 1;
             this.thermalPage.Text = "Thermal";
             this.thermalPage.UseVisualStyleBackColor = true;
             // 
-            // button32
+            // b_Presets_ContrastPos
             // 
-            this.button32.Location = new System.Drawing.Point(127, 198);
-            this.button32.Name = "button32";
-            this.button32.Size = new System.Drawing.Size(91, 27);
-            this.button32.TabIndex = 6;
-            this.button32.Text = "Contrast +";
-            this.button32.UseVisualStyleBackColor = true;
-            this.button32.Click += new System.EventHandler(this.button32_Click);
+            this.b_Presets_ContrastPos.Location = new System.Drawing.Point(127, 198);
+            this.b_Presets_ContrastPos.Name = "b_Presets_ContrastPos";
+            this.b_Presets_ContrastPos.Size = new System.Drawing.Size(91, 27);
+            this.b_Presets_ContrastPos.TabIndex = 6;
+            this.b_Presets_ContrastPos.Text = "Contrast +";
+            this.b_Presets_ContrastPos.UseVisualStyleBackColor = true;
+            this.b_Presets_ContrastPos.Click += new System.EventHandler(this.button32_Click);
             // 
-            // button31
+            // b_Presets_ContrastNeg
             // 
-            this.button31.Location = new System.Drawing.Point(6, 198);
-            this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(91, 27);
-            this.button31.TabIndex = 6;
-            this.button31.Text = "Contrast -";
-            this.button31.UseVisualStyleBackColor = true;
-            this.button31.Click += new System.EventHandler(this.button31_Click);
+            this.b_Presets_ContrastNeg.Location = new System.Drawing.Point(6, 198);
+            this.b_Presets_ContrastNeg.Name = "b_Presets_ContrastNeg";
+            this.b_Presets_ContrastNeg.Size = new System.Drawing.Size(91, 27);
+            this.b_Presets_ContrastNeg.TabIndex = 6;
+            this.b_Presets_ContrastNeg.Text = "Contrast -";
+            this.b_Presets_ContrastNeg.UseVisualStyleBackColor = true;
+            this.b_Presets_ContrastNeg.Click += new System.EventHandler(this.button31_Click);
             // 
             // b_Presets_Thermal_BrightPos
             // 
@@ -1353,8 +1353,8 @@ namespace SSLUtility2 {
             // 
             // slgPage
             // 
-            this.slgPage.Controls.Add(this.b_Presets_SLG_SteadyGreen);
             this.slgPage.Controls.Add(this.b_Presets_SLG_AllLightsOff);
+            this.slgPage.Controls.Add(this.b_Presets_SLG_SteadyGreen);
             this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingRG);
             this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingWhite);
             this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingRed);
@@ -1362,7 +1362,7 @@ namespace SSLUtility2 {
             this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingGreen);
             this.slgPage.Location = new System.Drawing.Point(4, 22);
             this.slgPage.Name = "slgPage";
-            this.slgPage.Size = new System.Drawing.Size(231, 196);
+            this.slgPage.Size = new System.Drawing.Size(231, 231);
             this.slgPage.TabIndex = 2;
             this.slgPage.Text = "SLG";
             this.slgPage.UseVisualStyleBackColor = true;
@@ -1376,16 +1376,6 @@ namespace SSLUtility2 {
             this.b_Presets_SLG_SteadyGreen.Text = "Steady Green On";
             this.b_Presets_SLG_SteadyGreen.UseVisualStyleBackColor = true;
             this.b_Presets_SLG_SteadyGreen.Click += new System.EventHandler(this.b_Presets_SLG_SteadyGreen_Click);
-            // 
-            // b_Presets_SLG_AllLightsOff
-            // 
-            this.b_Presets_SLG_AllLightsOff.Location = new System.Drawing.Point(6, 198);
-            this.b_Presets_SLG_AllLightsOff.Name = "b_Presets_SLG_AllLightsOff";
-            this.b_Presets_SLG_AllLightsOff.Size = new System.Drawing.Size(212, 27);
-            this.b_Presets_SLG_AllLightsOff.TabIndex = 7;
-            this.b_Presets_SLG_AllLightsOff.Text = "All Lights Off";
-            this.b_Presets_SLG_AllLightsOff.UseVisualStyleBackColor = true;
-            this.b_Presets_SLG_AllLightsOff.Click += new System.EventHandler(this.b_Presets_SLG_AllLightsOff_Click);
             // 
             // b_Presets_SLG_FlashingRG
             // 
@@ -1447,7 +1437,7 @@ namespace SSLUtility2 {
             this.peakbeamPage.Controls.Add(this.b_Presets_Peak_StrobeLamp);
             this.peakbeamPage.Location = new System.Drawing.Point(4, 22);
             this.peakbeamPage.Name = "peakbeamPage";
-            this.peakbeamPage.Size = new System.Drawing.Size(231, 196);
+            this.peakbeamPage.Size = new System.Drawing.Size(231, 231);
             this.peakbeamPage.TabIndex = 4;
             this.peakbeamPage.Text = "Peak Beam";
             this.peakbeamPage.UseVisualStyleBackColor = true;
@@ -1518,7 +1508,7 @@ namespace SSLUtility2 {
             this.charmPage.Controls.Add(this.b_Presets_CHARM_Standby);
             this.charmPage.Location = new System.Drawing.Point(4, 22);
             this.charmPage.Name = "charmPage";
-            this.charmPage.Size = new System.Drawing.Size(231, 196);
+            this.charmPage.Size = new System.Drawing.Size(231, 231);
             this.charmPage.TabIndex = 5;
             this.charmPage.Text = "CHARM";
             this.charmPage.UseVisualStyleBackColor = true;
@@ -1630,7 +1620,7 @@ namespace SSLUtility2 {
             // 
             this.l_Presets_Default.AutoSize = true;
             this.l_Presets_Default.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Presets_Default.Location = new System.Drawing.Point(13, 601);
+            this.l_Presets_Default.Location = new System.Drawing.Point(13, 585);
             this.l_Presets_Default.Name = "l_Presets_Default";
             this.l_Presets_Default.Size = new System.Drawing.Size(134, 20);
             this.l_Presets_Default.TabIndex = 11;
@@ -2150,6 +2140,16 @@ namespace SSLUtility2 {
             this.toolStripStatusLabel6.Spring = true;
             this.toolStripStatusLabel6.Text = "  ";
             this.toolStripStatusLabel6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // b_Presets_SLG_AllLightsOff
+            // 
+            this.b_Presets_SLG_AllLightsOff.Location = new System.Drawing.Point(6, 149);
+            this.b_Presets_SLG_AllLightsOff.Name = "b_Presets_SLG_AllLightsOff";
+            this.b_Presets_SLG_AllLightsOff.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_SLG_AllLightsOff.TabIndex = 13;
+            this.b_Presets_SLG_AllLightsOff.Text = "All Lights Off";
+            this.b_Presets_SLG_AllLightsOff.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_AllLightsOff.Click += new System.EventHandler(this.b_Presets_SLG_AllLightsOff_Click);
             // 
             // MainForm
             // 
@@ -2735,8 +2735,8 @@ namespace SSLUtility2 {
         public Button b_Presets_Daylight_AF;
         public Button b_Presets_Daylight_ColMono;
         public TabPage thermalPage;
-        public Button button32;
-        public Button button31;
+        public Button b_Presets_ContrastPos;
+        public Button b_Presets_ContrastNeg;
         public Button b_Presets_Thermal_BrightPos;
         public Button b_Presets_Thermal_BrightNeg;
         public Button b_Presets_Thermal_ICEPos;
@@ -2747,7 +2747,6 @@ namespace SSLUtility2 {
         public Button b_Presets_Thermal_AF;
         public TabPage slgPage;
         public Button b_Presets_SLG_SteadyGreen;
-        public Button b_Presets_SLG_AllLightsOff;
         public Button b_Presets_SLG_FlashingRG;
         public Button b_Presets_SLG_FlashingWhite;
         public Button b_Presets_SLG_FlashingRed;
@@ -2814,5 +2813,6 @@ namespace SSLUtility2 {
         public Button b_Settings_Default;
         public Button b_Settings_Apply;
         public Button b_IPCon_LayoutMode;
+        public Button b_Presets_SLG_AllLightsOff;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

@@ -106,11 +106,11 @@
             this.gB_PlayerD_Extended.TabStop = false;
             this.gB_PlayerD_Extended.Visible = false;
             // 
-            // label1
+            // l_Presets_Default
             // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(10, 193);
-            this.label1.Name = "label1";
+            this.label1.Name = "l_Presets_Default";
             this.label1.Size = new System.Drawing.Size(275, 13);
             this.label1.TabIndex = 49;
             this.label1.Text = "*Changed fields will not apply until the stream is replayed*";

@@ -16,7 +16,7 @@ namespace SSLUtility2 {
         public MainForm mainRef;
         public string pathToAuto;
         D protocol = new D();
-        Control l;
+        public Control l;
 
         public ControlPanel() {
             InitializeComponent();
@@ -26,7 +26,7 @@ namespace SSLUtility2 {
        
 
         public void StartConnect() {
-            CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l, false);
+            CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l, true);
         }
 
         private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {

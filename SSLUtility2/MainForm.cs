@@ -716,6 +716,22 @@ namespace SSLUtility2 {
             return cp;
         }
 
+        PresetPanel AttachPresetPanel(TabPage tp, ControlPanel panel) {
+            GroupBox gb = new GroupBox();
+            PresetPanel pp = new PresetPanel();
+            SetFeatureToAllControls(pp.Controls);
+            pp.mainRef = m;
+
+            gb.Location = new Point(0, 565);
+            gb.Size = pp.Size;
+
+            tp.Controls.Add(gb);
+
+            var c = GetAllType(pp, typeof(TabControl));
+            gb.Controls.AddRange(c.ToArray());
+            return pp;
+        }
+
         void AddControls(GroupBox g, Control panel) {
             var c = GetAll(panel);
             g.Controls.AddRange(c.ToArray());
@@ -1455,27 +1471,27 @@ namespace SSLUtility2 {
         private void b_IPCon_LayoutMode_Click(object sender, EventArgs e) {
             TabPage tp = LiteMode();
             ControlPanel cp = AttachControlPanel(tp);
-            AttachPresetPanel(tp, cp);
+            PresetPanel pp = AttachPresetPanel(tp, cp);
+            pp.cp = cp;
             foreach (TabPage tab in tC_Control.TabPages) {
                 if (tab != tp) {
                     tab.Dispose();
                 }
             }
         }
+      
+        private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
+            BrowseFolderButton(tB_Paths_sCFolder);
+        }
 
-        void AttachPresetPanel(TabPage tp, ControlPanel panel) {
-            GroupBox gb = new GroupBox();
-            PresetPanel pp = new PresetPanel();
-            SetFeatureToAllControls(pp.Controls);
-            pp.mainRef = m;
+        private void b_Settings_Apply_Click(object sender, EventArgs e) {
+            ApplyAll();
+        }
 
-            gb.Location = new Point(0, 565);
-            gb.Size = pp.Size;
-
-            tp.Controls.Add(gb);
-
-            var c = GetAllType(pp, typeof(TabControl));
-            gb.Controls.AddRange(c.ToArray());
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            if (!lite) {
+                AutoSave.SaveAuto(appFolder + autoSave);
+            }
         }
 
         System.Threading.Timer timer = null;
@@ -1513,19 +1529,6 @@ namespace SSLUtility2 {
             }));
         }
 
-        private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
-            BrowseFolderButton(tB_Paths_sCFolder);
-        }
-
-        private void b_Settings_Apply_Click(object sender, EventArgs e) {
-            ApplyAll();
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-            if (!lite) {
-                AutoSave.SaveAuto(appFolder + autoSave);
-            }
-        }
 
     } // end of class MainForm
 } // end of namespace SSLUtility2

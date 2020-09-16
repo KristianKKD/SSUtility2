@@ -25,8 +25,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.track_PTZ_ZoomSpeed = new System.Windows.Forms.TrackBar();
-            this.l_PTZ_ZoomSpeed = new System.Windows.Forms.Label();
             this.tB_Presets_Number = new System.Windows.Forms.TextBox();
             this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
             this.tB_IPCon_Adr = new System.Windows.Forms.TextBox();
@@ -58,29 +56,8 @@
             this.b_PTZ_Left = new System.Windows.Forms.Button();
             this.l_Presets_Default = new System.Windows.Forms.Label();
             this.b_IPCon_LayoutMode = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_ZoomSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).BeginInit();
             this.SuspendLayout();
-            // 
-            // track_PTZ_ZoomSpeed
-            // 
-            this.track_PTZ_ZoomSpeed.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.track_PTZ_ZoomSpeed.Enabled = false;
-            this.track_PTZ_ZoomSpeed.Location = new System.Drawing.Point(99, 394);
-            this.track_PTZ_ZoomSpeed.Maximum = 63;
-            this.track_PTZ_ZoomSpeed.Name = "track_PTZ_ZoomSpeed";
-            this.track_PTZ_ZoomSpeed.Size = new System.Drawing.Size(132, 45);
-            this.track_PTZ_ZoomSpeed.TabIndex = 73;
-            this.track_PTZ_ZoomSpeed.Value = 63;
-            // 
-            // l_PTZ_ZoomSpeed
-            // 
-            this.l_PTZ_ZoomSpeed.AutoSize = true;
-            this.l_PTZ_ZoomSpeed.Location = new System.Drawing.Point(13, 394);
-            this.l_PTZ_ZoomSpeed.Name = "l_PTZ_ZoomSpeed";
-            this.l_PTZ_ZoomSpeed.Size = new System.Drawing.Size(71, 13);
-            this.l_PTZ_ZoomSpeed.TabIndex = 72;
-            this.l_PTZ_ZoomSpeed.Text = "Zoom Speed:";
             // 
             // tB_Presets_Number
             // 
@@ -119,7 +96,7 @@
             // track_PTZ_PTSpeed
             // 
             this.track_PTZ_PTSpeed.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(99, 346);
+            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(98, 359);
             this.track_PTZ_PTSpeed.Maximum = 63;
             this.track_PTZ_PTSpeed.Name = "track_PTZ_PTSpeed";
             this.track_PTZ_PTSpeed.Size = new System.Drawing.Size(132, 45);
@@ -191,7 +168,7 @@
             // l_IPCon_PTSpeed
             // 
             this.l_IPCon_PTSpeed.AutoSize = true;
-            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(13, 357);
+            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(12, 370);
             this.l_IPCon_PTSpeed.Name = "l_IPCon_PTSpeed";
             this.l_IPCon_PTSpeed.Size = new System.Drawing.Size(88, 13);
             this.l_IPCon_PTSpeed.TabIndex = 59;
@@ -256,9 +233,9 @@
             // 
             // b_PlayerL_Detach
             // 
-            this.b_PlayerL_Detach.Location = new System.Drawing.Point(16, 447);
+            this.b_PlayerL_Detach.Location = new System.Drawing.Point(16, 415);
             this.b_PlayerL_Detach.Name = "b_PlayerL_Detach";
-            this.b_PlayerL_Detach.Size = new System.Drawing.Size(107, 55);
+            this.b_PlayerL_Detach.Size = new System.Drawing.Size(107, 87);
             this.b_PlayerL_Detach.TabIndex = 53;
             this.b_PlayerL_Detach.Text = "Spawn Detached Video Player";
             this.b_PlayerL_Detach.UseVisualStyleBackColor = true;
@@ -388,9 +365,9 @@
             // 
             // b_IPCon_LayoutMode
             // 
-            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(124, 447);
+            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(124, 415);
             this.b_IPCon_LayoutMode.Name = "b_IPCon_LayoutMode";
-            this.b_IPCon_LayoutMode.Size = new System.Drawing.Size(107, 55);
+            this.b_IPCon_LayoutMode.Size = new System.Drawing.Size(107, 87);
             this.b_IPCon_LayoutMode.TabIndex = 75;
             this.b_IPCon_LayoutMode.Text = "Swap To: Dual Mode";
             this.b_IPCon_LayoutMode.UseVisualStyleBackColor = true;
@@ -403,8 +380,6 @@
             this.ClientSize = new System.Drawing.Size(254, 585);
             this.Controls.Add(this.b_IPCon_LayoutMode);
             this.Controls.Add(this.l_Presets_Default);
-            this.Controls.Add(this.track_PTZ_ZoomSpeed);
-            this.Controls.Add(this.l_PTZ_ZoomSpeed);
             this.Controls.Add(this.tB_Presets_Number);
             this.Controls.Add(this.tB_IPCon_Port);
             this.Controls.Add(this.tB_IPCon_Adr);
@@ -439,7 +414,6 @@
             this.Load += new System.EventHandler(this.ControlPanel_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ControlPanel_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ControlPanel_KeyUp);
-            ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_ZoomSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -447,9 +421,6 @@
         }
 
         #endregion
-
-        public System.Windows.Forms.TrackBar track_PTZ_ZoomSpeed;
-        public System.Windows.Forms.Label l_PTZ_ZoomSpeed;
         public System.Windows.Forms.TextBox tB_Presets_Number;
         public System.Windows.Forms.TextBox tB_IPCon_Port;
         public System.Windows.Forms.TextBox tB_IPCon_Adr;
