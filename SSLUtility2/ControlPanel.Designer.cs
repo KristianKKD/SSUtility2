@@ -54,8 +54,8 @@
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.b_PTZ_Right = new System.Windows.Forms.Button();
             this.b_PTZ_Left = new System.Windows.Forms.Button();
-            this.l_Presets_Default = new System.Windows.Forms.Label();
             this.b_IPCon_LayoutMode = new System.Windows.Forms.Button();
+            this.b_IPCon_CustomD = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,7 +81,6 @@
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
             this.tB_IPCon_Adr.TabIndex = 64;
             this.tB_IPCon_Adr.Text = "192.168.1.71";
-            this.tB_IPCon_Adr.TextChanged += new System.EventHandler(this.tB_IPCon_Adr_TextChanged);
             this.tB_IPCon_Adr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyDown);
             this.tB_IPCon_Adr.Leave += new System.EventHandler(this.tB_IPCon_Adr_Leave);
             // 
@@ -233,13 +232,13 @@
             // 
             // b_PlayerL_Detach
             // 
-            this.b_PlayerL_Detach.Location = new System.Drawing.Point(16, 415);
+            this.b_PlayerL_Detach.Location = new System.Drawing.Point(89, 413);
             this.b_PlayerL_Detach.Name = "b_PlayerL_Detach";
-            this.b_PlayerL_Detach.Size = new System.Drawing.Size(107, 87);
+            this.b_PlayerL_Detach.Size = new System.Drawing.Size(75, 87);
             this.b_PlayerL_Detach.TabIndex = 53;
             this.b_PlayerL_Detach.Text = "Spawn Detached Video Player";
             this.b_PlayerL_Detach.UseVisualStyleBackColor = true;
-            this.b_PlayerL_Detach.Click += new System.EventHandler(this.b_PlayerL_Detach_Click);
+            this.b_PlayerL_Detach.Click += new System.EventHandler(this.b_Detach);
             // 
             // b_Presets_Learn
             // 
@@ -353,33 +352,33 @@
             this.b_PTZ_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
             this.b_PTZ_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
-            // l_Presets_Default
-            // 
-            this.l_Presets_Default.AutoSize = true;
-            this.l_Presets_Default.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Presets_Default.Location = new System.Drawing.Point(12, 599);
-            this.l_Presets_Default.Name = "l_Presets_Default";
-            this.l_Presets_Default.Size = new System.Drawing.Size(134, 20);
-            this.l_Presets_Default.TabIndex = 74;
-            this.l_Presets_Default.Text = "Default Presets";
-            // 
             // b_IPCon_LayoutMode
             // 
-            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(124, 415);
+            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(167, 413);
             this.b_IPCon_LayoutMode.Name = "b_IPCon_LayoutMode";
-            this.b_IPCon_LayoutMode.Size = new System.Drawing.Size(107, 87);
+            this.b_IPCon_LayoutMode.Size = new System.Drawing.Size(75, 87);
             this.b_IPCon_LayoutMode.TabIndex = 75;
-            this.b_IPCon_LayoutMode.Text = "Swap To: Dual Mode";
+            this.b_IPCon_LayoutMode.Text = "Swap To: Lite Mode";
             this.b_IPCon_LayoutMode.UseVisualStyleBackColor = true;
             this.b_IPCon_LayoutMode.Click += new System.EventHandler(this.b_IPCon_LayoutMode_Click);
+            // 
+            // b_IPCon_CustomD
+            // 
+            this.b_IPCon_CustomD.Location = new System.Drawing.Point(11, 413);
+            this.b_IPCon_CustomD.Name = "b_IPCon_CustomD";
+            this.b_IPCon_CustomD.Size = new System.Drawing.Size(75, 87);
+            this.b_IPCon_CustomD.TabIndex = 76;
+            this.b_IPCon_CustomD.Text = "Custom PelcoD";
+            this.b_IPCon_CustomD.UseVisualStyleBackColor = true;
+            this.b_IPCon_CustomD.Click += new System.EventHandler(this.b_IPCon_CustomD_Click);
             // 
             // ControlPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 585);
+            this.ClientSize = new System.Drawing.Size(254, 586);
+            this.Controls.Add(this.b_IPCon_CustomD);
             this.Controls.Add(this.b_IPCon_LayoutMode);
-            this.Controls.Add(this.l_Presets_Default);
             this.Controls.Add(this.tB_Presets_Number);
             this.Controls.Add(this.tB_IPCon_Port);
             this.Controls.Add(this.tB_IPCon_Adr);
@@ -450,7 +449,7 @@
         public System.Windows.Forms.Button b_PTZ_ZoomPos;
         public System.Windows.Forms.Button b_PTZ_Right;
         public System.Windows.Forms.Button b_PTZ_Left;
-        public System.Windows.Forms.Label l_Presets_Default;
         public System.Windows.Forms.Button b_IPCon_LayoutMode;
+        public System.Windows.Forms.Button b_IPCon_CustomD;
     }
 }

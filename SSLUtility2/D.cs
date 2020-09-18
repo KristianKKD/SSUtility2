@@ -340,18 +340,9 @@ namespace SSLUtility2
             byte[] m_bytes = new byte[8];
             byte[] m_tiltMessage = CameraTilt(deviceAddress, tiltAction, tiltSpeed);
             byte[] m_panMessage = CameraPan(deviceAddress, panAction, panSpeed);
-            /*m_bytes[0] = m_tiltMessage[0];
-			m_bytes[1] = m_tiltMessage[1];
-			m_bytes[2] = m_tiltMessage[2];
-			m_bytes[3] = (byte)(m_tiltMessage[3]+m_panMessage[3]);
-			m_bytes[4] = (byte)(m_tiltMessage[4]+m_panMessage[4]);
-			m_bytes[5] = (byte)(m_tiltMessage[5]+m_panMessage[5]);
-			m_bytes[6] = m_tiltMessage[6];
-			m_bytes[7] = m_tiltMessage[7];*/
             m_bytes = Message.GetMessage(deviceAddress, 0x00, (byte)(m_tiltMessage[3] + m_panMessage[3]),
                 m_panMessage[4], m_tiltMessage[5]);
             return m_bytes;
-
         }
 
         public byte[] CameraStop(uint deviceAddress) {
@@ -364,7 +355,6 @@ namespace SSLUtility2
                 m_byte = AutoManualScan + Sense;
 
             return Message.GetMessage(deviceAddress, m_byte, 0x00, 0x00, 0x00);
-
         }
 
 

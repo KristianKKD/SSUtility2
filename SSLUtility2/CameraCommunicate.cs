@@ -24,10 +24,10 @@ namespace SSLUtility2 {
 
         public static async Task<bool> sendtoIPAsync(byte[] code, Control lab, string ip = null, string port = null) {
             try {
-                if (ip == null) {
-                    ip = mainRef.tB_IPCon_Adr.Text;
-                    port = mainRef.tB_IPCon_Port.Text;
-                }
+                //if (ip == null) {
+                //    ip = mainRef.tB_IPCon_Adr.Text;
+                //    port = mainRef.tB_IPCon_Port.Text;
+                //}
                 if (!sock.Connected) {
                     bool ableToConnect = Connect(ip, port, lab, false).Result;
                     if (!ableToConnect) {
@@ -52,7 +52,7 @@ namespace SSLUtility2 {
             }
             if (!PingAdr(ipAdr).Result) {
                 if (!stopError) {
-                    MainForm.ShowError(failedConnectMsg, failedConnectCaption, "IP ping timed out with no response.");
+                    MainForm.ShowError(failedConnectMsg, failedConnectCaption, ipAdr + ":" + port + " ping timed out with no response.");
                 }
                 return false;
             }
@@ -101,6 +101,11 @@ namespace SSLUtility2 {
                 return true;
             }
             return false;
+        }
+
+        private static async Task ComWithSocket(byte[] code) {
+            sock.SendTo(code, endPoint);
+            //sock.BeginRe
         }
 
 

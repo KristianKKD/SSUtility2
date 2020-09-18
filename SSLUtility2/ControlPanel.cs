@@ -17,6 +17,7 @@ namespace SSLUtility2 {
         public string pathToAuto;
         D protocol = new D();
         public Control l;
+        public bool isOriginal = false;
 
         public ControlPanel() {
             InitializeComponent();
@@ -45,7 +46,7 @@ namespace SSLUtility2 {
             }
         }
 
-        private void b_PlayerL_Detach_Click(object sender, EventArgs e) {
+        private void b_Detach(object sender, EventArgs e) {
             Detached d = mainRef.DetachVid();
 
             d.tB_PlayerD_Adr.Text = tB_IPCon_Adr.Text;
@@ -53,22 +54,22 @@ namespace SSLUtility2 {
         }
 
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
-            if (mainRef.tB_Presets_Number.Text.ToString() == "") {
-                return;
-            }
-            byte presetnumber = Convert.ToByte(mainRef.tB_Presets_Number.Text);
+            //if (mainRef.tB_Presets_Number.Text.ToString() == "") {
+            //    return;
+            //}
+            //byte presetnumber = Convert.ToByte(mainRef.tB_Presets_Number.Text);
             
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(mainRef.MakeAdr(cB_IPCon_Selected), presetnumber, D.PresetAction.Goto), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            //CameraCommunicate.sendtoIPAsync(protocol.Preset(mainRef.MakeAdr(cB_IPCon_Selected), presetnumber, D.PresetAction.Goto), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
         }
 
         private void b_Presets_Learn_Click(object sender, EventArgs e) {
-            if (mainRef.tB_Presets_Number.Text.ToString() == "") {
-                return;
-            }
-            byte presetnumber = Convert.ToByte(mainRef.tB_Presets_Number.Text);
+            //if (mainRef.tB_Presets_Number.Text.ToString() == "") {
+            //    return;
+            //}
+            //byte presetnumber = Convert.ToByte(mainRef.tB_Presets_Number.Text);
             
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(mainRef.MakeAdr(cB_IPCon_Selected), presetnumber, D.PresetAction.Set),
-                l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            //CameraCommunicate.sendtoIPAsync(protocol.Preset(mainRef.MakeAdr(cB_IPCon_Selected), presetnumber, D.PresetAction.Set),
+            //    l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
         }
 
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
@@ -130,20 +131,21 @@ namespace SSLUtility2 {
         }
 
         private void b_IPCon_LayoutMode_Click(object sender, EventArgs e) {
-            mainRef.lite = true;
-            Application.Restart();
-            Application.ExitThread();
-            this.Close();
+            if (!isOriginal) {
+                Application.Restart();
+                Application.ExitThread();
+                this.Close();
+            } else {
+                mainRef.InitLiteMode();
+            }
         }
 
         private void ControlPanel_Load(object sender, EventArgs e) {
             mainRef.PopulateSettingText();
         }
 
-
-        private void tB_IPCon_Adr_TextChanged(object sender, EventArgs e) {
-            
+        private void b_IPCon_CustomD_Click(object sender, EventArgs e) {
+            mainRef.OpenPelco();
         }
-
     }
 }

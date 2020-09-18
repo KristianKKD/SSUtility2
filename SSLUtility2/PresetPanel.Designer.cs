@@ -86,10 +86,10 @@ namespace SSLUtility2
             this.tC_Presets_Default.Controls.Add(this.slgPage);
             this.tC_Presets_Default.Controls.Add(this.peakbeamPage);
             this.tC_Presets_Default.Controls.Add(this.charmPage);
-            this.tC_Presets_Default.Location = new System.Drawing.Point(12, 61);
+            this.tC_Presets_Default.Location = new System.Drawing.Point(12, 33);
             this.tC_Presets_Default.Name = "tC_Presets_Default";
             this.tC_Presets_Default.SelectedIndex = 0;
-            this.tC_Presets_Default.Size = new System.Drawing.Size(239, 257);
+            this.tC_Presets_Default.Size = new System.Drawing.Size(239, 252);
             this.tC_Presets_Default.TabIndex = 77;
             // 
             // adminPage
@@ -100,7 +100,7 @@ namespace SSLUtility2
             this.adminPage.Controls.Add(this.b_Presets_Admin_SetupMen);
             this.adminPage.Location = new System.Drawing.Point(4, 22);
             this.adminPage.Name = "adminPage";
-            this.adminPage.Size = new System.Drawing.Size(231, 231);
+            this.adminPage.Size = new System.Drawing.Size(231, 226);
             this.adminPage.TabIndex = 3;
             this.adminPage.Text = "Admin";
             this.adminPage.UseVisualStyleBackColor = true;
@@ -113,6 +113,7 @@ namespace SSLUtility2
             this.b_Presets_Admin_DefaultMen.TabIndex = 10;
             this.b_Presets_Admin_DefaultMen.Text = "Default Menu";
             this.b_Presets_Admin_DefaultMen.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_DefaultMen.Click += new System.EventHandler(this.b_Presets_Admin_DefaultMen_Click);
             // 
             // b_Presets_Admin_DebugToggle
             // 
@@ -122,6 +123,7 @@ namespace SSLUtility2
             this.b_Presets_Admin_DebugToggle.TabIndex = 10;
             this.b_Presets_Admin_DebugToggle.Text = "Debug Toggle";
             this.b_Presets_Admin_DebugToggle.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_DebugToggle.Click += new System.EventHandler(this.b_Presets_Admin_DebugToggle_Click);
             // 
             // b_Presets_Admin_MechMen
             // 
@@ -131,6 +133,7 @@ namespace SSLUtility2
             this.b_Presets_Admin_MechMen.TabIndex = 9;
             this.b_Presets_Admin_MechMen.Text = "Mechanical Menu";
             this.b_Presets_Admin_MechMen.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_MechMen.Click += new System.EventHandler(this.b_Presets_Admin_MechMen_Click);
             // 
             // b_Presets_Admin_SetupMen
             // 
@@ -140,6 +143,7 @@ namespace SSLUtility2
             this.b_Presets_Admin_SetupMen.TabIndex = 9;
             this.b_Presets_Admin_SetupMen.Text = "Setup Menu";
             this.b_Presets_Admin_SetupMen.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_SetupMen.Click += new System.EventHandler(this.b_Presets_Admin_SetupMen_Click);
             // 
             // daylightPage
             // 
@@ -151,7 +155,7 @@ namespace SSLUtility2
             this.daylightPage.Location = new System.Drawing.Point(4, 22);
             this.daylightPage.Name = "daylightPage";
             this.daylightPage.Padding = new System.Windows.Forms.Padding(3);
-            this.daylightPage.Size = new System.Drawing.Size(231, 231);
+            this.daylightPage.Size = new System.Drawing.Size(231, 226);
             this.daylightPage.TabIndex = 0;
             this.daylightPage.Text = "Daylight";
             this.daylightPage.UseVisualStyleBackColor = true;
@@ -164,6 +168,7 @@ namespace SSLUtility2
             this.b_Presets_Daylight_Stabilizer.TabIndex = 6;
             this.b_Presets_Daylight_Stabilizer.Text = "Toggle Stabiliser";
             this.b_Presets_Daylight_Stabilizer.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_Stabilizer.Click += new System.EventHandler(this.b_Presets_Daylight_Stabilizer_Click);
             // 
             // b_Presets_Daylight_WDR
             // 
@@ -173,6 +178,7 @@ namespace SSLUtility2
             this.b_Presets_Daylight_WDR.TabIndex = 6;
             this.b_Presets_Daylight_WDR.Text = "WDR On / Off (Sony Only)";
             this.b_Presets_Daylight_WDR.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_WDR.Click += new System.EventHandler(this.b_Presets_Daylight_WDR_Click);
             // 
             // b_Presets_Daylight_Wiper
             // 
@@ -182,6 +188,7 @@ namespace SSLUtility2
             this.b_Presets_Daylight_Wiper.TabIndex = 6;
             this.b_Presets_Daylight_Wiper.Text = "Wiper";
             this.b_Presets_Daylight_Wiper.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_Wiper.Click += new System.EventHandler(this.b_Presets_Daylight_Wiper_Click);
             // 
             // b_Presets_Daylight_AF
             // 
@@ -191,6 +198,7 @@ namespace SSLUtility2
             this.b_Presets_Daylight_AF.TabIndex = 6;
             this.b_Presets_Daylight_AF.Text = "AutoFocus ";
             this.b_Presets_Daylight_AF.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_AF.Click += new System.EventHandler(this.b_Presets_Daylight_AF_Click);
             // 
             // b_Presets_Daylight_ColMono
             // 
@@ -200,6 +208,7 @@ namespace SSLUtility2
             this.b_Presets_Daylight_ColMono.TabIndex = 6;
             this.b_Presets_Daylight_ColMono.Text = "Colour / Mono";
             this.b_Presets_Daylight_ColMono.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_ColMono.Click += new System.EventHandler(this.b_Presets_Daylight_ColMono_Click);
             // 
             // thermalPage
             // 
@@ -216,7 +225,7 @@ namespace SSLUtility2
             this.thermalPage.Location = new System.Drawing.Point(4, 22);
             this.thermalPage.Name = "thermalPage";
             this.thermalPage.Padding = new System.Windows.Forms.Padding(3);
-            this.thermalPage.Size = new System.Drawing.Size(231, 231);
+            this.thermalPage.Size = new System.Drawing.Size(231, 226);
             this.thermalPage.TabIndex = 1;
             this.thermalPage.Text = "Thermal";
             this.thermalPage.UseVisualStyleBackColor = true;
@@ -249,6 +258,7 @@ namespace SSLUtility2
             this.b_Presets_Thermal_BrightPos.TabIndex = 6;
             this.b_Presets_Thermal_BrightPos.Text = "Brightness +";
             this.b_Presets_Thermal_BrightPos.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_BrightPos.Click += new System.EventHandler(this.b_Presets_Thermal_BrightPos_Click);
             // 
             // b_Presets_Thermal_BrightNeg
             // 
@@ -258,6 +268,7 @@ namespace SSLUtility2
             this.b_Presets_Thermal_BrightNeg.TabIndex = 6;
             this.b_Presets_Thermal_BrightNeg.Text = "Brightness -";
             this.b_Presets_Thermal_BrightNeg.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_BrightNeg.Click += new System.EventHandler(this.b_Presets_Thermal_BrightNeg_Click);
             // 
             // b_Presets_Thermal_ICEPos
             // 
@@ -267,6 +278,7 @@ namespace SSLUtility2
             this.b_Presets_Thermal_ICEPos.TabIndex = 6;
             this.b_Presets_Thermal_ICEPos.Text = "ICE / CLAHE +";
             this.b_Presets_Thermal_ICEPos.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_ICEPos.Click += new System.EventHandler(this.b_Presets_Thermal_ICEPos_Click);
             // 
             // b_Presets_Thermal_ICENeg
             // 
@@ -276,6 +288,7 @@ namespace SSLUtility2
             this.b_Presets_Thermal_ICENeg.TabIndex = 6;
             this.b_Presets_Thermal_ICENeg.Text = "ICE / CLAHE -";
             this.b_Presets_Thermal_ICENeg.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_ICENeg.Click += new System.EventHandler(this.b_Presets_Thermal_ICENeg_Click);
             // 
             // b_Presets_Thermal_ICE
             // 
@@ -285,6 +298,7 @@ namespace SSLUtility2
             this.b_Presets_Thermal_ICE.TabIndex = 6;
             this.b_Presets_Thermal_ICE.Text = "Toggle ICE / CLAHE";
             this.b_Presets_Thermal_ICE.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_ICE.Click += new System.EventHandler(this.b_Presets_Thermal_ICE_Click);
             // 
             // b_Presets_Thermal_WhiteBlack
             // 
@@ -294,6 +308,7 @@ namespace SSLUtility2
             this.b_Presets_Thermal_WhiteBlack.TabIndex = 6;
             this.b_Presets_Thermal_WhiteBlack.Text = "White Hot / Black Hot";
             this.b_Presets_Thermal_WhiteBlack.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_WhiteBlack.Click += new System.EventHandler(this.b_Presets_Thermal_WhiteBlack_Click);
             // 
             // b_Presets_Thermal_NUC
             // 
@@ -303,6 +318,7 @@ namespace SSLUtility2
             this.b_Presets_Thermal_NUC.TabIndex = 6;
             this.b_Presets_Thermal_NUC.Text = "Do NUC";
             this.b_Presets_Thermal_NUC.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_NUC.Click += new System.EventHandler(this.b_Presets_Thermal_NUC_Click);
             // 
             // b_Presets_Thermal_AF
             // 
@@ -312,6 +328,7 @@ namespace SSLUtility2
             this.b_Presets_Thermal_AF.TabIndex = 6;
             this.b_Presets_Thermal_AF.Text = "AutoFocus";
             this.b_Presets_Thermal_AF.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_AF.Click += new System.EventHandler(this.b_Presets_Thermal_AF_Click);
             // 
             // slgPage
             // 
@@ -324,7 +341,7 @@ namespace SSLUtility2
             this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingGreen);
             this.slgPage.Location = new System.Drawing.Point(4, 22);
             this.slgPage.Name = "slgPage";
-            this.slgPage.Size = new System.Drawing.Size(231, 231);
+            this.slgPage.Size = new System.Drawing.Size(231, 226);
             this.slgPage.TabIndex = 2;
             this.slgPage.Text = "SLG";
             this.slgPage.UseVisualStyleBackColor = true;
@@ -347,6 +364,7 @@ namespace SSLUtility2
             this.b_Presets_SLG_SteadyGreen.TabIndex = 8;
             this.b_Presets_SLG_SteadyGreen.Text = "Steady Green On";
             this.b_Presets_SLG_SteadyGreen.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_SteadyGreen.Click += new System.EventHandler(this.b_Presets_SLG_SteadyGreen_Click);
             // 
             // b_Presets_SLG_FlashingRG
             // 
@@ -356,6 +374,7 @@ namespace SSLUtility2
             this.b_Presets_SLG_FlashingRG.TabIndex = 7;
             this.b_Presets_SLG_FlashingRG.Text = "Flashing Red / Green";
             this.b_Presets_SLG_FlashingRG.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_FlashingRG.Click += new System.EventHandler(this.b_Presets_SLG_FlashingRG_Click);
             // 
             // b_Presets_SLG_FlashingWhite
             // 
@@ -365,6 +384,7 @@ namespace SSLUtility2
             this.b_Presets_SLG_FlashingWhite.TabIndex = 7;
             this.b_Presets_SLG_FlashingWhite.Text = "Flashing White On";
             this.b_Presets_SLG_FlashingWhite.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_FlashingWhite.Click += new System.EventHandler(this.b_Presets_SLG_FlashingWhite_Click);
             // 
             // b_Presets_SLG_FlashingRed
             // 
@@ -374,6 +394,7 @@ namespace SSLUtility2
             this.b_Presets_SLG_FlashingRed.TabIndex = 7;
             this.b_Presets_SLG_FlashingRed.Text = "Flashing Red On";
             this.b_Presets_SLG_FlashingRed.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_FlashingRed.Click += new System.EventHandler(this.b_Presets_SLG_FlashingRed_Click);
             // 
             // b_Presets_SLG_SteadyRed
             // 
@@ -383,6 +404,7 @@ namespace SSLUtility2
             this.b_Presets_SLG_SteadyRed.TabIndex = 7;
             this.b_Presets_SLG_SteadyRed.Text = "Steady Red On";
             this.b_Presets_SLG_SteadyRed.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_SteadyRed.Click += new System.EventHandler(this.b_Presets_SLG_SteadyRed_Click);
             // 
             // b_Presets_SLG_FlashingGreen
             // 
@@ -392,6 +414,7 @@ namespace SSLUtility2
             this.b_Presets_SLG_FlashingGreen.TabIndex = 7;
             this.b_Presets_SLG_FlashingGreen.Text = "Flashing Green On";
             this.b_Presets_SLG_FlashingGreen.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_FlashingGreen.Click += new System.EventHandler(this.b_Presets_SLG_FlashingGreen_Click);
             // 
             // peakbeamPage
             // 
@@ -403,7 +426,7 @@ namespace SSLUtility2
             this.peakbeamPage.Controls.Add(this.b_Presets_Peak_StrobeLamp);
             this.peakbeamPage.Location = new System.Drawing.Point(4, 22);
             this.peakbeamPage.Name = "peakbeamPage";
-            this.peakbeamPage.Size = new System.Drawing.Size(231, 231);
+            this.peakbeamPage.Size = new System.Drawing.Size(231, 226);
             this.peakbeamPage.TabIndex = 4;
             this.peakbeamPage.Text = "Peak Beam";
             this.peakbeamPage.UseVisualStyleBackColor = true;
@@ -416,6 +439,7 @@ namespace SSLUtility2
             this.b_Presets_Peak_SteadyLamp.TabIndex = 14;
             this.b_Presets_Peak_SteadyLamp.Text = "Lamp On Steady";
             this.b_Presets_Peak_SteadyLamp.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_SteadyLamp.Click += new System.EventHandler(this.b_Presets_Peak_SteadyLamp_Click);
             // 
             // b_Presets_Peak_StopZoom
             // 
@@ -425,6 +449,7 @@ namespace SSLUtility2
             this.b_Presets_Peak_StopZoom.TabIndex = 9;
             this.b_Presets_Peak_StopZoom.Text = "Stop Zooming";
             this.b_Presets_Peak_StopZoom.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_StopZoom.Click += new System.EventHandler(this.b_Presets_Peak_StopZoom_Click);
             // 
             // b_Presets_Peak_ZoomOut
             // 
@@ -434,6 +459,7 @@ namespace SSLUtility2
             this.b_Presets_Peak_ZoomOut.TabIndex = 10;
             this.b_Presets_Peak_ZoomOut.Text = "Start Zoom Out";
             this.b_Presets_Peak_ZoomOut.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_ZoomOut.Click += new System.EventHandler(this.b_Presets_Peak_ZoomOut_Click);
             // 
             // b_Presets_Peak_ZoomIn
             // 
@@ -443,6 +469,7 @@ namespace SSLUtility2
             this.b_Presets_Peak_ZoomIn.TabIndex = 11;
             this.b_Presets_Peak_ZoomIn.Text = "Start Zoom In";
             this.b_Presets_Peak_ZoomIn.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_ZoomIn.Click += new System.EventHandler(this.b_Presets_Peak_ZoomIn_Click);
             // 
             // b_Presets_Peak_LampOff
             // 
@@ -462,6 +489,7 @@ namespace SSLUtility2
             this.b_Presets_Peak_StrobeLamp.TabIndex = 13;
             this.b_Presets_Peak_StrobeLamp.Text = "Lamp on Strobe";
             this.b_Presets_Peak_StrobeLamp.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_StrobeLamp.Click += new System.EventHandler(this.b_Presets_Peak_StrobeLamp_Click);
             // 
             // charmPage
             // 
@@ -469,7 +497,7 @@ namespace SSLUtility2
             this.charmPage.Controls.Add(this.b_Presets_CHARM_Standby);
             this.charmPage.Location = new System.Drawing.Point(4, 22);
             this.charmPage.Name = "charmPage";
-            this.charmPage.Size = new System.Drawing.Size(231, 231);
+            this.charmPage.Size = new System.Drawing.Size(231, 226);
             this.charmPage.TabIndex = 5;
             this.charmPage.Text = "CHARM";
             this.charmPage.UseVisualStyleBackColor = true;
@@ -482,6 +510,7 @@ namespace SSLUtility2
             this.b_Presets_CHARM_Aquire.TabIndex = 10;
             this.b_Presets_CHARM_Aquire.Text = "Aquire";
             this.b_Presets_CHARM_Aquire.UseVisualStyleBackColor = true;
+            this.b_Presets_CHARM_Aquire.Click += new System.EventHandler(this.b_Presets_CHARM_Aquire_Click);
             // 
             // b_Presets_CHARM_Standby
             // 
@@ -491,12 +520,13 @@ namespace SSLUtility2
             this.b_Presets_CHARM_Standby.TabIndex = 10;
             this.b_Presets_CHARM_Standby.Text = "Standby";
             this.b_Presets_CHARM_Standby.UseVisualStyleBackColor = true;
+            this.b_Presets_CHARM_Standby.Click += new System.EventHandler(this.b_Presets_CHARM_Standby_Click);
             // 
             // l_Presets_Default
             // 
             this.l_Presets_Default.AutoSize = true;
             this.l_Presets_Default.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Presets_Default.Location = new System.Drawing.Point(12, 38);
+            this.l_Presets_Default.Location = new System.Drawing.Point(12, 9);
             this.l_Presets_Default.Name = "l_Presets_Default";
             this.l_Presets_Default.Size = new System.Drawing.Size(134, 20);
             this.l_Presets_Default.TabIndex = 76;
@@ -506,7 +536,7 @@ namespace SSLUtility2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 342);
+            this.ClientSize = new System.Drawing.Size(254, 297);
             this.Controls.Add(this.tC_Presets_Default);
             this.Controls.Add(this.l_Presets_Default);
             this.Name = "PresetPanel";
@@ -524,15 +554,15 @@ namespace SSLUtility2
         }
 
         private void b_Presets_CHARM_Standby_Click(object sender, EventArgs e) {
-            throw new NotImplementedException();
+            
         }
 
         private void b_Presets_CHARM_Aquire_Click(object sender, EventArgs e) {
-            throw new NotImplementedException();
+            
         }
 
         private void b_Presets_Peak_LampOff_Click(object sender, EventArgs e) {
-            throw new NotImplementedException();
+            
         }
 
         #endregion

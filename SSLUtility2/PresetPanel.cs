@@ -36,11 +36,11 @@ namespace SSLUtility2 {
 
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(mainRef.MakeAdr(), 196, D.PresetAction.Goto), cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(mainRef.MakeAdr(cp.l), 196, D.PresetAction.Goto), cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
         }
 
         private void b_Presets_Admin_DefaultMen_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(mainRef.MakeAdr(), 2, D.PresetAction.Goto), cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
+            CameraCommunicate.sendtoIPAsync(protocol.Preset(mainRef.MakeAdr(cp.l), 2, D.PresetAction.Goto), cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
         }
 
         private void b_Presets_Daylight_Wiper_Click(object sender, EventArgs e) {

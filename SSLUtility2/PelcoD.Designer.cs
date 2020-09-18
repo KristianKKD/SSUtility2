@@ -100,6 +100,7 @@
             this.b_PD_FireSingle.TabIndex = 15;
             this.b_PD_FireSingle.Text = "Fire";
             this.b_PD_FireSingle.UseVisualStyleBackColor = true;
+            this.b_PD_FireSingle.Click += new System.EventHandler(this.b_PD_FireSingle_Click);
             // 
             // tB_PD_Single
             // 
@@ -112,7 +113,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 481);
+            this.ClientSize = new System.Drawing.Size(470, 472);
             this.Controls.Add(this.l_PD_Single);
             this.Controls.Add(this.b_PD_FireSingle);
             this.Controls.Add(this.tB_PD_Single);
