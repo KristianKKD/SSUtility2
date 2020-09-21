@@ -86,8 +86,10 @@ namespace SSLUtility2
             this.tC_Presets_Default.Controls.Add(this.slgPage);
             this.tC_Presets_Default.Controls.Add(this.peakbeamPage);
             this.tC_Presets_Default.Controls.Add(this.charmPage);
+            this.tC_Presets_Default.ItemSize = new System.Drawing.Size(40, 18);
             this.tC_Presets_Default.Location = new System.Drawing.Point(12, 33);
             this.tC_Presets_Default.Name = "tC_Presets_Default";
+            this.tC_Presets_Default.Padding = new System.Drawing.Point(0, 0);
             this.tC_Presets_Default.SelectedIndex = 0;
             this.tC_Presets_Default.Size = new System.Drawing.Size(239, 252);
             this.tC_Presets_Default.TabIndex = 77;

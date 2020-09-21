@@ -490,7 +490,7 @@ namespace SSLUtility2 {
             // l_Version
             // 
             this.l_Version.AutoSize = true;
-            this.l_Version.Location = new System.Drawing.Point(1553, 858);
+            this.l_Version.Location = new System.Drawing.Point(1539, 858);
             this.l_Version.Name = "l_Version";
             this.l_Version.Size = new System.Drawing.Size(48, 13);
             this.l_Version.TabIndex = 41;
