@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
-    
+namespace SSLUtility2
+{
+
     class AutoSave {
 
         public static async Task SaveAuto(string path) {
@@ -27,11 +24,11 @@ namespace SSLUtility2 {
 
             string[] lines = File.ReadAllLines(path);
 
-            if (MainForm.saveList.Length != lines.Length) {
+            if (MainForm.saveList.Length != lines.Length && !ConfigControl.configNotif) {
                 if (MainForm.ShowError("Misaligment of autosaved variables! \nWould you like to regenerate the file?" +
                     "\n(Press 'yes' if you don't know what to do)", "Reset autosave?", null, false)) {
-                    ConfigControl.ResetFile(path);
-                    return;
+                        ConfigControl.ResetFile(path);
+                        return;
                 }
             }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -7,54 +8,99 @@ namespace SSLUtility2 {
 
     class ConfigControl {
 
-        public static string DefScFolder;
-        public static string DefVFolder;
-        public static string DefScName;
-        public static string DefVName;
-        public static string DefvRecQualVar;
-        public static string DefvRecFPSVar;
+        //Defaults//
+        public static string defScFolder = @"Screenshots\";
+        public static string defVFolder = @"Screenshots\";
 
+        public static string defVName = "VideoCapture";
+        public static string defScName = "ScreenCapture";
+
+        public static string defVRecQual = "70";
+        public static string defVRecFPS = "30";
+
+        public static bool defSubnetNot = false;
+        public static bool defConfigNot = false;
+
+        public static string config = "config.txt";
+        public const string autoSave = "auto.txt";
+        public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
+        //Defaults//
+
+        //RuntimeVars//
+        public static string scFolder;
+        public static string vFolder;
+        public static string scFileName;
+        public static string vFileName;
+        public static string recQual;
+        public static string recFPS;
+
+        public static bool subnetNotif;
+        public static bool configNotif;
+        //RuntimeVars//
+
+        //SearchForVars//
         static string configPath = "";
 
-        public const string varString = "v"; //What the prefix of the actual value is (ScreenshotFolder:bin/obj/)
+        public const string varPrefix = "v"; //What the prefix of the actual value is (ScreenshotFolder:bin/obj/)
+
         public const string screenshotFolderVar = "ScreenshotFolder";
         public const string videoFolderVar = "VideoFolder";
 
         public const string videoFileNVar = "VideoFileName";
         public const string scFileNVar = "ScreenshotFileName";
 
-        public const string RecQualVar = "RecordingQuality";
-        public const string RecFPSVar = "RecordingFramerate";
-        /////
+        public const string recQualVar = "RecordingQuality";
+        public const string recFPSVar = "RecordingFramerate";
 
-        public static List<PathVar> varList {
+        public const string subnetNotifVar = "SubnetNotificationHidden";
+        public const string configNotifVar = "BadConfigNotificationHidden";
+        //SearchForVars//
+
+        public static List<ConfigVar> stringVarList {
             get;
             set;
         }
 
-        public static async Task SetDefaults() {
-            DefScFolder = MainForm.scFolder;
-            DefVFolder = MainForm.vFolder;
+        public static async Task SetToDefaults() {
+            defScFolder = appFolder + defScFolder;
+            defVFolder = appFolder + defVFolder;
 
-            DefVName = MainForm.vFileName;
-            DefScName = MainForm.scFileName;
+            scFolder = defScFolder;
+            vFolder = defVFolder;
 
-            DefvRecQualVar = MainForm.RecQual;
-            DefvRecFPSVar = MainForm.RecFPS;
+            scFileName = defScName;
+            vFileName = defVName;
+
+            recQual = defVRecQual;
+            recFPS = defVRecFPS;
+
+            subnetNotif = defSubnetNot;
+            configNotif = defConfigNot;
         }
 
         public static void CreateConfig(string path) {
             ResetFile(path);
             configPath = path;
 
-            File.AppendAllText(path, varString + screenshotFolderVar + ":" + MainForm.scFolder + "\n");
-            File.AppendAllText(path, varString + videoFolderVar + ":" + MainForm.vFolder + "\n");
+            File.AppendAllText(path, varPrefix + screenshotFolderVar + ":" + scFolder + "\n");
+            File.AppendAllText(path, varPrefix + videoFolderVar + ":" + vFolder + "\n");
 
-            File.AppendAllText(path, varString + scFileNVar + ":" + MainForm.scFileName + "\n");
-            File.AppendAllText(path, varString + videoFileNVar + ":" + MainForm.vFileName + "\n");
+            File.AppendAllText(path, varPrefix + scFileNVar + ":" + scFileName + "\n");
+            File.AppendAllText(path, varPrefix + videoFileNVar + ":" + vFileName + "\n");
 
-            File.AppendAllText(path, varString + RecQualVar + ":" + MainForm.RecQual + "\n");
-            File.AppendAllText(path, varString + RecFPSVar + ":" + MainForm.RecFPS + "\n");
+            File.AppendAllText(path, varPrefix + recQualVar + ":" + recQual + "\n");
+            File.AppendAllText(path, varPrefix + recFPSVar + ":" + recFPS + "\n");
+
+            File.AppendAllText(path, varPrefix + subnetNotifVar + ":" + subnetNotif + "\n");
+            File.AppendAllText(path, varPrefix + configNotifVar + ":" + configNotif + "\n");
+        }
+
+        public static bool CheckVal(string v) {
+            if (v.ToLower() == "true") {
+                return true;
+            } else {
+                return false;
+            }
         }
 
         public static void ResetFile(string path) {
@@ -67,9 +113,9 @@ namespace SSLUtility2 {
 
         public static void Append(string text) {
             if (configPath == "") {
-                configPath = MainForm.appFolder + MainForm.config;
+                configPath = appFolder + config;
             }
-            File.AppendAllText(configPath, varString + text);
+            File.AppendAllText(configPath, varPrefix + text);
         }
 
         public static async Task<bool> CheckIfExists(TextBox tb, Label linkedLabel) {
@@ -84,45 +130,34 @@ namespace SSLUtility2 {
         public async static Task SearchForVarsAsync(string path) {
             string[] lines = File.ReadAllLines(path);
 
-            List<PathVar> found = new List<PathVar>();
+            List<ConfigVar> varFound = new List<ConfigVar>();
             foreach (string line in lines) {
-                if (line.StartsWith(varString)) {
-                    found.Add(CreateVar(line));
+                if (line.StartsWith(varPrefix)) {
+                    varFound.Add(CreateConfigVar(line));
                 }
             }
-
-            varList = found;
+           
+            stringVarList = varFound;
         }
 
-        static PathVar CreateVar(string l) {
+        static ConfigVar CreateConfigVar(string l) {
             int nameMarker = l.IndexOf(":") + 1;
-            string name = l.Substring(varString.Length, nameMarker - varString.Length - 1);
+            string name = l.Substring(varPrefix.Length, nameMarker - varPrefix.Length - 1);
             string text = l.Substring(nameMarker);
 
-            return new PathVar(name, text);
+            return new ConfigVar(name, text);
         }
 
     }
 
-    class PathVar {
+    class ConfigVar {
 
         public string name;
         public string value;
 
-        public PathVar(string n, string t) {
-            value = t;
+        public ConfigVar(string n, string t) {
             name = n;
-        }
-
-    }
-    class SavedControl {
-
-        public string value;
-        public string name;
-
-        public SavedControl( string t, string n) {
             value = t;
-            name = n;
         }
 
     }

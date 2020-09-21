@@ -51,7 +51,8 @@ namespace SSLUtility2 {
                         rtb_PD_Commands.Text += line + "\n";
                     }
                 } else {
-                    MessageBox.Show("Please open a .txt file!");
+                    MainForm.ShowError("Please open a .txt file!\nYou tried to open an unsupported file type! Show more info?", "Invalid File Type!",
+                        "You tried opening: " + fdg.SelectedPath + "\nTry opening a .txt file instead.");
                 }
             }
         }

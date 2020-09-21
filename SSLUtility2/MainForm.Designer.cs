@@ -122,6 +122,12 @@ namespace SSLUtility2 {
             this.b_PlayerL_SaveSnap = new System.Windows.Forms.Button();
             this.b_PlayerL_Play = new System.Windows.Forms.Button();
             this.tP_Settings = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.check_Not_Config = new System.Windows.Forms.CheckBox();
+            this.check_Not_Subnet = new System.Windows.Forms.CheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.l_Not_Subnet = new System.Windows.Forms.Label();
+            this.l_Not_Notifs = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
             this.l_Rec_Quality = new System.Windows.Forms.Label();
@@ -165,6 +171,7 @@ namespace SSLUtility2 {
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_R)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).BeginInit();
             this.tP_Settings.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gB_Paths.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -953,6 +960,7 @@ namespace SSLUtility2 {
             // 
             // tP_Settings
             // 
+            this.tP_Settings.Controls.Add(this.groupBox2);
             this.tP_Settings.Controls.Add(this.groupBox1);
             this.tP_Settings.Controls.Add(this.l_Paths_sCCheck);
             this.tP_Settings.Controls.Add(this.gB_Paths);
@@ -965,6 +973,65 @@ namespace SSLUtility2 {
             this.tP_Settings.TabIndex = 1;
             this.tP_Settings.Text = "Settings";
             this.tP_Settings.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.check_Not_Config);
+            this.groupBox2.Controls.Add(this.check_Not_Subnet);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.l_Not_Subnet);
+            this.groupBox2.Controls.Add(this.l_Not_Notifs);
+            this.groupBox2.Location = new System.Drawing.Point(885, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(428, 194);
+            this.groupBox2.TabIndex = 29;
+            this.groupBox2.TabStop = false;
+            // 
+            // check_Not_Config
+            // 
+            this.check_Not_Config.Location = new System.Drawing.Point(172, 72);
+            this.check_Not_Config.Name = "check_Not_Config";
+            this.check_Not_Config.Size = new System.Drawing.Size(15, 17);
+            this.check_Not_Config.TabIndex = 29;
+            this.check_Not_Config.UseVisualStyleBackColor = true;
+            this.check_Not_Config.CheckedChanged += new System.EventHandler(this.check_Not_Config_CheckedChanged);
+            // 
+            // check_Not_Subnet
+            // 
+            this.check_Not_Subnet.Location = new System.Drawing.Point(172, 47);
+            this.check_Not_Subnet.Name = "check_Not_Subnet";
+            this.check_Not_Subnet.Size = new System.Drawing.Size(15, 17);
+            this.check_Not_Subnet.TabIndex = 0;
+            this.check_Not_Subnet.UseVisualStyleBackColor = true;
+            this.check_Not_Subnet.CheckedChanged += new System.EventHandler(this.check_Not_Subnet_CheckedChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(10, 72);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(140, 13);
+            this.label10.TabIndex = 28;
+            this.label10.Text = "Hide Bad Config Notification";
+            // 
+            // l_Not_Subnet
+            // 
+            this.l_Not_Subnet.AutoSize = true;
+            this.l_Not_Subnet.Location = new System.Drawing.Point(10, 47);
+            this.l_Not_Subnet.Name = "l_Not_Subnet";
+            this.l_Not_Subnet.Size = new System.Drawing.Size(122, 13);
+            this.l_Not_Subnet.TabIndex = 27;
+            this.l_Not_Subnet.Text = "Hide Subnet Notification";
+            // 
+            // l_Not_Notifs
+            // 
+            this.l_Not_Notifs.AutoSize = true;
+            this.l_Not_Notifs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Not_Notifs.Location = new System.Drawing.Point(9, 16);
+            this.l_Not_Notifs.Name = "l_Not_Notifs";
+            this.l_Not_Notifs.Size = new System.Drawing.Size(109, 20);
+            this.l_Not_Notifs.TabIndex = 12;
+            this.l_Not_Notifs.Text = "Notifications";
             // 
             // groupBox1
             // 
@@ -1171,7 +1238,7 @@ namespace SSLUtility2 {
             // 
             // b_Settings_Default
             // 
-            this.b_Settings_Default.Location = new System.Drawing.Point(723, 206);
+            this.b_Settings_Default.Location = new System.Drawing.Point(1156, 206);
             this.b_Settings_Default.Name = "b_Settings_Default";
             this.b_Settings_Default.Size = new System.Drawing.Size(75, 23);
             this.b_Settings_Default.TabIndex = 14;
@@ -1181,7 +1248,7 @@ namespace SSLUtility2 {
             // 
             // b_Settings_Apply
             // 
-            this.b_Settings_Apply.Location = new System.Drawing.Point(804, 206);
+            this.b_Settings_Apply.Location = new System.Drawing.Point(1237, 206);
             this.b_Settings_Apply.Name = "b_Settings_Apply";
             this.b_Settings_Apply.Size = new System.Drawing.Size(75, 23);
             this.b_Settings_Apply.TabIndex = 15;
@@ -1313,6 +1380,8 @@ namespace SSLUtility2 {
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_L)).EndInit();
             this.tP_Settings.ResumeLayout(false);
             this.tP_Settings.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.gB_Paths.ResumeLayout(false);
@@ -2431,5 +2500,11 @@ namespace SSLUtility2 {
         public Label l_Paths_sCFolder;
         public Button b_Settings_Default;
         public Button b_Settings_Apply;
+        public GroupBox groupBox2;
+        public Label l_Not_Notifs;
+        public Label label10;
+        public Label l_Not_Subnet;
+        private CheckBox check_Not_Config;
+        private CheckBox check_Not_Subnet;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

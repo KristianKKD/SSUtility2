@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSLUtility2
+{
 
     public partial class ControlPanel : Form {
     
@@ -93,11 +86,11 @@ namespace SSLUtility2 {
         }
 
         private void b_PTZ_ZoomPos_MouseDown(object sender, MouseEventArgs e) {
-            mainRef.PTZZoom(D.Zoom.Tele);
+            mainRef.PTZZoom(D.Zoom.Tele, mainRef.MakeAdr(cB_IPCon_Selected), tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l);
         }
 
         private void b_PTZ_ZoomNeg_MouseDown(object sender, MouseEventArgs e) {
-            mainRef.PTZZoom(D.Zoom.Wide);
+            mainRef.PTZZoom(D.Zoom.Wide, mainRef.MakeAdr(cB_IPCon_Selected), tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l);
         }
         private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.CameraFocus(mainRef.MakeAdr(cB_IPCon_Selected), D.Focus.Far), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
@@ -113,7 +106,7 @@ namespace SSLUtility2 {
         }
 
         private void ControlPanel_KeyDown(object sender, KeyEventArgs e) {
-            mainRef.KeyControl(l, e);
+            mainRef.KeyControl(l, e, mainRef.MakeAdr(l), tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
         }
 
         private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {

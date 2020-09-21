@@ -3,11 +3,11 @@ using System.Drawing;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Reflection.Emit;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSLUtility2
+{
 
     class CameraCommunicate {
         public static MainForm mainRef;
@@ -24,10 +24,6 @@ namespace SSLUtility2 {
 
         public static async Task<bool> sendtoIPAsync(byte[] code, Control lab, string ip = null, string port = null) {
             try {
-                //if (ip == null) {
-                //    ip = mainRef.tB_IPCon_Adr.Text;
-                //    port = mainRef.tB_IPCon_Port.Text;
-                //}
                 if (!sock.Connected) {
                     bool ableToConnect = Connect(ip, port, lab, false).Result;
                     if (!ableToConnect) {
@@ -46,6 +42,12 @@ namespace SSLUtility2 {
 
         public static async Task<bool> Connect(string ipAdr, string port, Control lCon, bool stopError = false) {
             LabelDisplay(false, lCon);
+            if (!stopError) {
+                if (!CheckIsSameSubnet(ipAdr) && !ConfigControl.subnetNotif) {
+                    CloseSock();
+                    return false;
+                }
+            }
 
             if (sock.Connected) {
                 CloseSock();
@@ -110,10 +112,44 @@ namespace SSLUtility2 {
 
 
         public static void CloseSock() {
-            if (sock != null) {
+            if (sock != null && sock.Connected) {
                 sock.Shutdown(SocketShutdown.Both);
                 sock.Close();
             }
+        }
+        public static bool CheckIsSameSubnet(string newIp) {
+            string rawIp = GetLocalIPAddress();
+            string mySub = FindSubnet(rawIp);
+            string newSub = FindSubnet(newIp);
+
+            Int32.TryParse(mySub, out int mine);
+            Int32.TryParse(newSub, out int other);
+
+            if (mine != other) {
+                MainForm.ShowError("Local IP subnet is not the same as the camera subnet!\nShow possible fix?", "Incorrect subnet!",
+                    "Try changing your IP from: " + rawIp + "\n To: " + rawIp.Replace(mySub, newSub) +
+                    "\nThe new IP will also have to be static!");
+                return false;
+            } else {
+                return true;
+            }
+        }
+        static string FindSubnet(string ip) {
+            string difference = ip.Substring(ip.IndexOf(".", ip.IndexOf(".") + 1));
+            string endChunk = ip.Substring(ip.LastIndexOf("."));
+            difference = difference.Replace(endChunk, "");
+            difference = difference.Replace(".", "").Trim();
+            return difference;
+        }
+
+        public static string GetLocalIPAddress() {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList) {
+                if (ip.AddressFamily == AddressFamily.InterNetwork) {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
 
     }

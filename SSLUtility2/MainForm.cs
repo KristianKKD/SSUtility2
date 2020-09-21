@@ -12,17 +12,17 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSLUtility2
+{
     public partial class MainForm : Form {
 
         D protocol = new D();
@@ -34,15 +34,6 @@ namespace SSLUtility2 {
 
         public static Control[] saveList = new Control[0];
 
-        public static string config = "config.txt";
-        public const string autoSave = "auto.txt";
-        public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
-        public static string scFolder = appFolder + @"Screenshots\";
-        public static string vFolder = appFolder + @"Videos\";
-        public static string vFileName = "VideoCapture";
-        public static string scFileName = "ScreenCapture";
-        public static string RecFPS = "30";
-        public static string RecQual = "70";
         const string defaultIP = "192.168.1.71";
 
         ControlPanel ipCon;
@@ -87,39 +78,17 @@ namespace SSLUtility2 {
                 tB_PlayerR_SimpleAdr,
             };
 
-            AutoSave.LoadAuto(appFolder + autoSave);
+            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave);
 
-            ConfigControl.SetDefaults();
+            ConfigControl.SetToDefaults();
 
-            CheckCreateFile(config, appFolder);
-            CheckCreateFile(autoSave, appFolder);
-            CheckCreateFile(null, scFolder);
-            CheckCreateFile(null, vFolder);
+            CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
+            CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
+            CheckCreateFile(null, ConfigControl.scFolder);
+            CheckCreateFile(null, ConfigControl.vFolder);
 
-            await ConfigControl.SearchForVarsAsync(appFolder + config);
-            foreach (PathVar v in ConfigControl.varList) {
-                switch (v.name) {
-                    case ConfigControl.screenshotFolderVar:
-                        scFolder = v.value;
-                        break;
-                    case ConfigControl.videoFolderVar:
-                        vFolder = v.value;
-                        break;
-                    case ConfigControl.scFileNVar:
-                        scFileName = v.value;
-                        break;
-                    case ConfigControl.videoFileNVar:
-                        vFileName = v.value;
-                        break;
-                    case ConfigControl.RecQualVar:
-                        RecQual = v.value;
-                        break;
-                    case ConfigControl.RecFPSVar:
-                        RecFPS = v.value;
-                        break;
-                }
-            }
-
+            await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
+            FindVars();
 
             PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
@@ -130,6 +99,46 @@ namespace SSLUtility2 {
             lite = false;
         }
 
+        async Task FindVars() {
+            foreach (ConfigVar v in ConfigControl.stringVarList) {
+                if (v.value.ToLower() == "false" || v.value.ToLower() == "true") {
+                    bool val = ConfigControl.CheckVal(v.value);
+                    switch (v.name) {
+                        case ConfigControl.subnetNotifVar:
+                            ConfigControl.subnetNotif = val;
+                            break;
+                        case ConfigControl.configNotifVar:
+                            ConfigControl.configNotif = val;
+                            break;
+                    }
+                } else {
+                    switch (v.name) {
+                        case ConfigControl.screenshotFolderVar:
+                            ConfigControl.scFolder = v.value;
+                            break;
+                        case ConfigControl.videoFolderVar:
+                            ConfigControl.vFolder = v.value;
+                            break;
+                        case ConfigControl.scFileNVar:
+                            ConfigControl.scFileName = v.value;
+                            break;
+                        case ConfigControl.videoFileNVar:
+                            ConfigControl.vFileName = v.value;
+                            break;
+                        case ConfigControl.recQualVar:
+                            ConfigControl.recQual = v.value;
+                            break;
+                        case ConfigControl.recFPSVar:
+                            ConfigControl.recFPS = v.value;
+                            break;
+                    }
+                }
+            }
+        }
+
+        
+
+      
         public void InitLiteMode() {
             TabPage tp = LiteMode();
             ControlPanel cp = AttachControlPanel(tp);
@@ -149,7 +158,7 @@ namespace SSLUtility2 {
             tp.Text = "Camera Control";
             tC_Control.Controls.Add(tp);
             m.Size = new Size(300, 1000);
-            AutoSave.SaveAuto(appFolder + autoSave);
+            AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
             lite = true;
             return tp;
         }
@@ -160,7 +169,7 @@ namespace SSLUtility2 {
 
             if (makeLite) {
                 cp.mainRef = m;
-                cp.pathToAuto = appFolder + autoSave;
+                cp.pathToAuto = ConfigControl.appFolder + ConfigControl.autoSave;
                 cp.cB_IPCon_Type.Text = ipCon.cB_IPCon_Type.Text;
                 cp.tB_IPCon_Adr.Text = ipCon.tB_IPCon_Adr.Text;
                 cp.tB_IPCon_Port.Text = ipCon.tB_IPCon_Port.Text;
@@ -222,7 +231,7 @@ namespace SSLUtility2 {
 
         async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
             if (tb.Text.Length < 1) {
-                tb.Text = appFolder;
+                tb.Text = ConfigControl.appFolder;
                 return false;
             }
             if (ConfigControl.CheckIfExists(tb, linkLabel).Result) {
@@ -245,18 +254,10 @@ namespace SSLUtility2 {
             return res;
         }
 
-        public async Task AutoFillConnect(bool supressError = false) {
-            //if (CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, lab, supressError).Result) {
-            //    if (tB_PlayerL_Adr.Text == defaultIP || tB_PlayerL_Adr.Text == "") {
-            //        tB_PlayerL_Adr.Text = ipCon.tB_IPCon_Adr.Text;
-            //    }
-            //}
-        }
-
         public Recorder StartRec(AxAXVLC.AxVLCPlugin2 player) {
-            Recorder rec = new Recorder(new Record(tB_Paths_vFolder.Text + vFileName +
-                (Directory.GetFiles(vFolder).Length + 1) + ".avi", int.Parse(RecFPS),
-                 SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(RecQual), player));//add quality and framerate changing too 
+            Recorder rec = new Recorder(new Record(tB_Paths_vFolder.Text + ConfigControl.vFileName +
+                (Directory.GetFiles(ConfigControl.vFolder).Length + 1) + ".avi", int.Parse(ConfigControl.recFPS),
+                 SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(ConfigControl.recQual), player));//add quality and framerate changing too 
             return rec;
         }
 
@@ -273,14 +274,14 @@ namespace SSLUtility2 {
             } else {
                 control.Text = "STOP Recording";
                 isPlaying = true;
-                MessageBox.Show("Saved recording to: " + appFolder + vFolder);
+                MessageBox.Show("Saved recording to: " + ConfigControl.appFolder + ConfigControl.vFolder);
                 return (isPlaying, StartRec(player));
             }
         }
 
         public uint MakeAdr(Control selected = null) {
             if (selected == null) {
-                //selected = ipCon.cB_IPCon_Selected;
+                selected = ipCon.cB_IPCon_Selected;
             }
             if (selected.Text == "Daylight") {
                 return 1;
@@ -333,20 +334,15 @@ namespace SSLUtility2 {
         }
 
         private async Task ApplyAll() { //
-            ConfigControl.CreateConfig(appFolder + config);
-            MessageBox.Show("Applied settings to: " + appFolder + config);
+            ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
+            MessageBox.Show("Applied settings to: " + ConfigControl.appFolder + ConfigControl.config);
         }
         private void b_Settings_Default_Click(object sender, EventArgs e) {
             DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
                 "Settings will not automatically be applied so the user may edit the defaults before applying.",
                 "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (d == DialogResult.Yes) {
-                scFolder = ConfigControl.DefScFolder;
-                vFolder = ConfigControl.DefVFolder;
-                scFileName = ConfigControl.DefScName;
-                vFileName = ConfigControl.DefVName;
-                RecQual = ConfigControl.DefvRecQualVar;
-                RecFPS = ConfigControl.DefvRecFPSVar;
+                ConfigControl.SetToDefaults();
                 PopulateSettingText();
             }
         }
@@ -361,6 +357,7 @@ namespace SSLUtility2 {
                 }
             }
         }
+
         public void control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
             if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down ||
                 e.KeyCode == Keys.Left || e.KeyCode == Keys.Right ||
@@ -373,12 +370,6 @@ namespace SSLUtility2 {
             D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left,
             string ip = null, string port = null, Control lcon = null) {
             byte[] code;
-
-            if (ip == null) {
-                //ip = ipCon.tB_IPCon_Adr.Text;
-                //port = ipCon.tB_IPCon_Port.Text;
-                lcon = lab;
-            }
 
             if (CameraCommunicate.lastIPPort != ip + port) {
                 CameraCommunicate.Connect(ip, port, lcon);
@@ -393,12 +384,17 @@ namespace SSLUtility2 {
             CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
         }
 
-        public void PTZZoom(D.Zoom dir) {
-            CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(MakeAdr(), dir), lab);
+        public void PTZZoom(D.Zoom dir, uint address, string ip, string port, Control lcon) {
+            if (CameraCommunicate.lastIPPort != ip + port) {
+                CameraCommunicate.Connect(ip, port, lcon);
+            }
+
+            CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(address, dir), lcon, ip, port);
         }
 
+
         public async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
-            var imagePath = scFolder + @"\" + scFileName + (Directory.GetFiles(scFolder).Length + 1) + ".jpg";
+            var imagePath = ConfigControl.scFolder + @"\" + ConfigControl.scFileName + (Directory.GetFiles(ConfigControl.scFolder).Length + 1) + ".jpg";
             
             Image bmp = new Bitmap(player.Width, player.Height);
             Graphics gfx = Graphics.FromImage(bmp);
@@ -407,7 +403,7 @@ namespace SSLUtility2 {
 
             bmp.Save(imagePath, ImageFormat.Jpeg);
 
-            MessageBox.Show("Image saved : " + scFolder);
+            MessageBox.Show("Image saved : " + ConfigControl.scFolder);
         }
 
         static async Task<bool> CheckIfNameValid(char[] nameArray) {
@@ -432,11 +428,11 @@ namespace SSLUtility2 {
                 }
             }
             if (fileName != null) {
-                if (!File.Exists(appFolder + fileName)) {
-                    if (appFolder + fileName == appFolder + config) {
-                        ConfigControl.CreateConfig(appFolder + fileName);
+                if (!File.Exists(ConfigControl.appFolder + fileName)) {
+                    if (ConfigControl.appFolder + fileName == ConfigControl.appFolder + ConfigControl.config) {
+                        ConfigControl.CreateConfig(ConfigControl.appFolder + fileName);
                     } else {
-                        var newFile = File.Create(appFolder + fileName);
+                        var newFile = File.Create(ConfigControl.appFolder + fileName);
                         newFile.Close();
                     }
                 }
@@ -444,14 +440,17 @@ namespace SSLUtility2 {
         }
 
         public async Task PopulateSettingText() {
-            tB_Paths_sCFolder.Text = scFolder;
-            tB_Paths_vFolder.Text = vFolder;
+            tB_Paths_sCFolder.Text = ConfigControl.scFolder;
+            tB_Paths_vFolder.Text = ConfigControl.vFolder;
 
-            tB_Rec_vFileN.Text = vFileName;
-            tB_Rec_scFileN.Text = scFileName;
+            tB_Rec_vFileN.Text = ConfigControl.vFileName;
+            tB_Rec_scFileN.Text = ConfigControl.scFileName;
 
-            cB_Rec_Quality.Text = RecQual;
-            cB_Rec_FPS.Text = RecFPS;
+            cB_Rec_Quality.Text = ConfigControl.recQual;
+            cB_Rec_FPS.Text = ConfigControl.recFPS;
+
+            check_Not_Subnet.Checked = ConfigControl.subnetNotif;
+            check_Not_Config.Checked = ConfigControl.configNotif;
         }
 
         public Detached DetachVid() {
@@ -510,8 +509,9 @@ namespace SSLUtility2 {
 
         public void tB_IPCon_Adr_TextChanged(object sender, EventArgs e) { // i cant implement this into cp for some reason?
             TextBox origin = sender as TextBox;
-            if (!origin.ContainsFocus)
+            if (!origin.ContainsFocus) {
                 return;
+            }
 
             DisposeTimer();
             timer = new System.Threading.Timer(TimerElapsed, null, 300, 300);
@@ -525,12 +525,12 @@ namespace SSLUtility2 {
 
         private void CheckSyntaxAndReport() {
             this.Invoke(new Action(() => {
-                //Control l = ipCon.l_IPCon_Connected;
-                //if (CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.l_IPCon_Connected, true).Result) {
-                //    CameraCommunicate.LabelDisplay(true, l);
-                //} else {
-                //    CameraCommunicate.LabelDisplay(false, l);
-                //}
+                Control l = ipCon.l_IPCon_Connected;
+                if (CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.l_IPCon_Connected, true).Result) {
+                    CameraCommunicate.LabelDisplay(true, l);
+                } else {
+                    CameraCommunicate.LabelDisplay(false, l);
+                }
             }));
         }
 
@@ -542,45 +542,44 @@ namespace SSLUtility2 {
             }
         }
 
-        public void KeyControl(Control lab, KeyEventArgs e) {
-            //if (ipCon.cB_IPCon_KeyboardCon.Checked == true) {
-            //    uint address = MakeAdr();
-            //    uint ptSpeed = Convert.ToUInt32(ipCon.track_PTZ_PTSpeed.Value);
-            //    byte[] code = null;
+        public void KeyControl(Control lab, KeyEventArgs e, uint address, string ip, string port) { //test this
+            if (ipCon.cB_IPCon_KeyboardCon.Checked == true) {
+                uint ptSpeed = Convert.ToUInt32(ipCon.track_PTZ_PTSpeed.Value);
+                byte[] code = null;
 
-            //    switch (e.KeyCode) { //is there a command that accepts diagonal?
-            //        case Keys.Up:
-            //            code = protocol.CameraTilt(address, D.Tilt.Up, ptSpeed);
-            //            break;
-            //        case Keys.Down:
-            //            code = protocol.CameraTilt(address, D.Tilt.Down, ptSpeed);
-            //            break;
-            //        case Keys.Left:
-            //            code = protocol.CameraPan(address, D.Pan.Left, ptSpeed);
-            //            break;
-            //        case Keys.Right:
-            //            code = protocol.CameraPan(address, D.Pan.Right, ptSpeed);
-            //            break;
-            //        case Keys.Enter:
-            //            code = protocol.CameraZoom(address, D.Zoom.Tele);
-            //            break;
-            //        case Keys.Escape:
-            //            code = protocol.CameraZoom(address, D.Zoom.Wide);
-            //            break;
-            //    }
+                switch (e.KeyCode) { //is there a command that accepts diagonal?
+                    case Keys.Up:
+                        code = protocol.CameraTilt(address, D.Tilt.Up, ptSpeed);
+                        break;
+                    case Keys.Down:
+                        code = protocol.CameraTilt(address, D.Tilt.Down, ptSpeed);
+                        break;
+                    case Keys.Left:
+                        code = protocol.CameraPan(address, D.Pan.Left, ptSpeed);
+                        break;
+                    case Keys.Right:
+                        code = protocol.CameraPan(address, D.Pan.Right, ptSpeed);
+                        break;
+                    case Keys.Enter:
+                        code = protocol.CameraZoom(address, D.Zoom.Tele);
+                        break;
+                    case Keys.Escape:
+                        code = protocol.CameraZoom(address, D.Zoom.Wide);
+                        break;
+                }
 
-            //    CameraCommunicate.sendtoIPAsync(code, lab);
-            //}
+                CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
+            }
         }
 
         private void tC_Control_KeyDown(object sender, KeyEventArgs e) {
-            KeyControl(lab, e);   
+            KeyControl(lab, e, MakeAdr(), ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text);   
         }
 
-        private void tC_Control_KeyUp(object sender, KeyEventArgs e) {
-            //if (ipCon.cB_IPCon_KeyboardCon.Checked == true) {
-            //    CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()), lab);
-            //}
+        private void tC_Control_KeyUp(object sender, KeyEventArgs e) { //test this
+            if (ipCon.cB_IPCon_KeyboardCon.Checked == true) {
+                CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()), lab);
+            }
         }
 
         private void cB_PlayerL_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -650,19 +649,6 @@ namespace SSLUtility2 {
             SaveSnap(VLCPlayer_R);
         }
 
-        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
-            //string control = ipCon.cB_IPCon_Type.Text;
-            //string port = "";
-
-            //if (control == "Encoder") {
-            //    port = "6791";
-            //} else if (control == "MOXA nPort") {
-            //    port = "4001";
-            //}
-
-            //ipCon.tB_IPCon_Port.Text = port;
-        }
-
         private void checkB_PlayerL_Manual_CheckedChanged(object sendeL, EventArgs e) {
             ExtendOptions(checkB_PlayerL_Manual.Checked, gB_PlayerL_Extended, gB_PlayerL_Simple);
         }
@@ -672,14 +658,22 @@ namespace SSLUtility2 {
 
         private void OnFinishedTypingScFolder(object sender, EventArgs e) {
             if (CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
-                scFolder = tB_Paths_sCFolder.Text;
+                ConfigControl.scFolder = tB_Paths_sCFolder.Text;
             }
         }
 
         private void OnFinishedTypingVFolder(object sender, EventArgs e) {
             if (CheckFinishedTypingPath(tB_Paths_vFolder, l_Paths_vCheck).Result) {
-                vFolder = tB_Paths_vFolder.Text;
+                ConfigControl.vFolder = tB_Paths_vFolder.Text;
             }
+        }
+
+        private void check_Not_Subnet_CheckedChanged(object sender, EventArgs e) {
+            ConfigControl.subnetNotif = check_Not_Subnet.Checked;
+        }
+
+        private void check_Not_Config_CheckedChanged(object sender, EventArgs e) {
+            ConfigControl.configNotif = check_Not_Config.Checked;
         }
 
         bool Lplaying = false;
@@ -702,23 +696,22 @@ namespace SSLUtility2 {
 
         private void tB_Rec_vFileN_TextChanged(object sender, EventArgs e) {
             if (CheckIfNameValid(tB_Rec_vFileN.Text.ToCharArray()).Result) {
-                vFileName = tB_Rec_vFileN.Text;
+                ConfigControl.vFileName = tB_Rec_vFileN.Text;
             } else {
-                tB_Rec_vFileN.Text = vFileName;
+                tB_Rec_vFileN.Text = ConfigControl.vFileName;
             }
         }
 
         private void tB_Rec_sCFileN_TextChanged(object sender, EventArgs e) {
             if (CheckIfNameValid(tB_Rec_scFileN.Text.ToCharArray()).Result) {
-                scFileName = tB_Rec_scFileN.Text;
+                ConfigControl.scFileName = tB_Rec_scFileN.Text;
             } else {
-                tB_Rec_vFileN.Text = scFileName;
+                tB_Rec_vFileN.Text = ConfigControl.scFileName;
             }
         }
 
         private void cB_Rec_Quality_TextChanged(object sender, EventArgs e) {
-            int q = int.Parse(ConfigControl.DefvRecQualVar);
-            if (!int.TryParse(cB_Rec_Quality.Text, out q)) {
+            if (!int.TryParse(cB_Rec_Quality.Text, out int q)) {
                 cB_Rec_Quality.Text = q.ToString();
                 return;
             }
@@ -728,12 +721,11 @@ namespace SSLUtility2 {
                 cB_Rec_Quality.Text = "1";
             }
 
-            RecQual = cB_Rec_Quality.Text;
+            ConfigControl.recQual = cB_Rec_Quality.Text;
         }
 
         private void cB_Rec_FPS_TextChanged(object sender, EventArgs e) {
-            int fps = int.Parse(ConfigControl.DefvRecFPSVar);
-            if (!int.TryParse(cB_Rec_Quality.Text, out fps)) {
+            if (!int.TryParse(cB_Rec_Quality.Text, out int fps)) {
                 cB_Rec_FPS.Text = fps.ToString();
                 return;
             }
@@ -741,7 +733,7 @@ namespace SSLUtility2 {
                 cB_Rec_FPS.Text = "1";
             }
 
-            RecFPS = cB_Rec_FPS.Text;
+            ConfigControl.recFPS = cB_Rec_FPS.Text;
         }
 
         private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
@@ -753,11 +745,11 @@ namespace SSLUtility2 {
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            CameraCommunicate.CloseSock();
             if (!lite) {
-                AutoSave.SaveAuto(appFolder + autoSave);
+                AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
             }
         }
-
 
     } // end of class MainForm
 } // end of namespace SSLUtility2
