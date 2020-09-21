@@ -16,6 +16,8 @@ namespace SSLUtility2 {
 
         public MainForm mainRef;
         D protocol = new D();
+        string responses;
+        ResponseLog rl;
 
         public PelcoD() {
             InitializeComponent();
@@ -89,17 +91,20 @@ namespace SSLUtility2 {
             }
         }
 
-        private void b_PD_Save_Click(object sender, EventArgs e) {
-            OpenFileDialog fdg = OpenTxt();
-            DialogResult result = fdg.ShowDialog();
-            if (result == DialogResult.OK) {
-                ConfigControl.ResetFile(fdg.FileName);
-                File.AppendAllLines(fdg.FileName, rtb_PD_Commands.Lines);
+        public void WriteToResponses(string text) {
+            responses += "[" + tB_IPCon_Adr + ":" + tB_IPCon_Port + " at "
+                + DateTime.Now + "]" + text + "\n";
+            if (rl != null) {
+                rl.rtb_Log.Text = responses;
             }
         }
 
+        private void b_PD_Save_Click(object sender, EventArgs e) {
+            SaveFile(rtb_PD_Commands.Lines, "PelcoScript");
+        }
+
         private void b_PD_Load_Click(object sender, EventArgs e) {
-            OpenFileDialog fdg = OpenTxt();
+            OpenFileDialog fdg = MainForm.OpenTxt();
             DialogResult result = fdg.ShowDialog();
             if (result == DialogResult.OK) {
                 if (fdg.FileName.Contains(".txt")) {
@@ -115,12 +120,15 @@ namespace SSLUtility2 {
             }
         }
 
-        OpenFileDialog OpenTxt() {
-            OpenFileDialog fileDlg = new OpenFileDialog();
-            fileDlg.Multiselect = false;
-            fileDlg.Title = "Select PelcoD Script (txt file)";
-            return fileDlg;
+        public static void SaveFile(string[] lines, string name = null) {
+            SaveFileDialog fdg = MainForm.SaveTxt(name);
+            DialogResult result = fdg.ShowDialog();
+            if (result == DialogResult.OK) {
+                ConfigControl.ResetFile(fdg.FileName);
+                File.AppendAllLines(fdg.FileName, lines);
+            }
         }
+
 
         private void b_PD_FireSingle_Click(object sender, EventArgs e) {
             byte[] split = MakeBytes(tB_PD_Single.Text);
@@ -129,8 +137,22 @@ namespace SSLUtility2 {
             MessageBox.Show("done");
         }
 
-        private void button1_Click(object sender, EventArgs e) {
+        private void b_PD_Stop_Click(object sender, EventArgs e) {
             CameraCommunicate.sendtoIPAsync(protocol.CameraStop(1), l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+        }
+
+        private void b_PD_RL_Click(object sender, EventArgs e) {
+            if (rl == null) {
+                rl = new ResponseLog();
+                rl.rtb_Log.Text = responses;
+            }
+            rl.Show();
+        }
+
+        private void PelcoD_FormClosing(object sender, FormClosingEventArgs e) {
+            if (rl != null) {
+                rl.Dispose();
+            }
         }
     }
 }

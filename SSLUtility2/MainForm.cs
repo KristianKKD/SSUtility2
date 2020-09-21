@@ -25,7 +25,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.1.2";
+        public const string version = "v1.2.2.0";
         D protocol = new D();
         public static MainForm m;
         Recorder recorderL;
@@ -138,9 +138,26 @@ namespace SSLUtility2
             }
         }
 
-        
+        public static OpenFileDialog OpenTxt() {
+            OpenFileDialog fileDlg = new OpenFileDialog();
+            fileDlg.InitialDirectory = ConfigControl.appFolder;
+            fileDlg.Multiselect = false;
+            fileDlg.DefaultExt = ".txt";
+            fileDlg.RestoreDirectory = true;
+            fileDlg.Title = "Select Text File";
+            return fileDlg;
+        }
 
-      
+        public static SaveFileDialog SaveTxt(string name) {
+            SaveFileDialog fileDlg = new SaveFileDialog();
+            fileDlg.InitialDirectory = ConfigControl.appFolder;
+            fileDlg.DefaultExt = ".txt";
+            fileDlg.RestoreDirectory = true;
+            fileDlg.Title = "Select Text File";
+            fileDlg.FileName = name;
+            return fileDlg;
+        }
+
         public void InitLiteMode() {
             TabPage tp = LiteMode();
             ControlPanel cp = AttachControlPanel(tp);
@@ -272,11 +289,11 @@ namespace SSLUtility2
                 control.Text = "START Recording";
                 isPlaying = false;
                 StopRec(r);
+                MessageBox.Show("Saved recording to: " + ConfigControl.appFolder + ConfigControl.vFolder);
                 return (isPlaying, null);
             } else {
                 control.Text = "STOP Recording";
                 isPlaying = true;
-                MessageBox.Show("Saved recording to: " + ConfigControl.appFolder + ConfigControl.vFolder);
                 return (isPlaying, StartRec(player));
             }
         }
