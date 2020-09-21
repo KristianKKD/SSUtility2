@@ -138,7 +138,7 @@ namespace SSLUtility2
         }
 
         private void b_IPCon_CustomD_Click(object sender, EventArgs e) {
-            mainRef.OpenPelco();
+            mainRef.OpenPelco(cB_IPCon_Type.Text, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, cB_IPCon_Selected.Text);
         }
     }
 }

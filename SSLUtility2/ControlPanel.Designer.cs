@@ -232,7 +232,7 @@
             // 
             // b_PlayerL_Detach
             // 
-            this.b_PlayerL_Detach.Location = new System.Drawing.Point(89, 413);
+            this.b_PlayerL_Detach.Location = new System.Drawing.Point(89, 410);
             this.b_PlayerL_Detach.Name = "b_PlayerL_Detach";
             this.b_PlayerL_Detach.Size = new System.Drawing.Size(75, 87);
             this.b_PlayerL_Detach.TabIndex = 53;
@@ -354,7 +354,7 @@
             // 
             // b_IPCon_LayoutMode
             // 
-            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(167, 413);
+            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(167, 410);
             this.b_IPCon_LayoutMode.Name = "b_IPCon_LayoutMode";
             this.b_IPCon_LayoutMode.Size = new System.Drawing.Size(75, 87);
             this.b_IPCon_LayoutMode.TabIndex = 75;
@@ -364,7 +364,7 @@
             // 
             // b_IPCon_CustomD
             // 
-            this.b_IPCon_CustomD.Location = new System.Drawing.Point(11, 413);
+            this.b_IPCon_CustomD.Location = new System.Drawing.Point(11, 410);
             this.b_IPCon_CustomD.Name = "b_IPCon_CustomD";
             this.b_IPCon_CustomD.Size = new System.Drawing.Size(75, 87);
             this.b_IPCon_CustomD.TabIndex = 76;

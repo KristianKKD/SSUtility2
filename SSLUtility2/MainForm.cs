@@ -461,9 +461,13 @@ namespace SSLUtility2
             return dv;
         }
 
-        public PelcoD OpenPelco() {
+        public PelcoD OpenPelco(string type, string ip, string port, string selected) {
             PelcoD pd = new PelcoD();
             pd.mainRef = m;
+            pd.cB_IPCon_Type.Text = type;
+            pd.tB_IPCon_Adr.Text = ip;
+            pd.tB_IPCon_Port.Text = port;
+            pd.cB_IPCon_Selected.Text = selected;
             pd.Show();
             SetFeatureToAllControls(pd.Controls);
             return pd;

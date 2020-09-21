@@ -370,20 +370,29 @@ namespace SSLUtility2
             public static byte Command1, Command2, Data1, Data2;
             public static byte STX = 0xFF;
 
-            public static byte[] GetMessage(uint address, byte command1, byte command2, byte data1, byte data2) {
+            public static byte[] GetMessage(uint address, byte command1, byte command2, byte data1, byte data2, byte[] arr = null) {
                 if (address < 1 & address > 256)
                     throw new Exception("Protocol Pelco D support 256 devices only");
 
-                Address = Byte.Parse((address).ToString());
-                Data1 = data1;
-                Data2 = data2;
-                Command1 = command1;
-                Command2 = command2;
+                if (arr == null) {
+                    Address = Byte.Parse((address).ToString());
+                    Data1 = data1;
+                    Data2 = data2;
+                    Command1 = command1;
+                    Command2 = command2;
+
+                } else {
+                    Address = Byte.Parse((address).ToString());
+                    Data1 = arr[0];
+                    Data2 = arr[1];
+                    Command1 = arr[2];
+                    Command2 = arr[3];
+                }
 
                 CheckSum = (byte)((Address + Command1 + Command2 + Data1 + Data2) % 256);
-
-
                 return new byte[] { STX, Address, Command1, Command2, Data1, Data2, CheckSum };
+
+
             }
 
         }

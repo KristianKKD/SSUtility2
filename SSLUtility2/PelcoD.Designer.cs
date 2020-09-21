@@ -33,6 +33,17 @@
             this.l_PD_Single = new System.Windows.Forms.Label();
             this.b_PD_FireSingle = new System.Windows.Forms.Button();
             this.tB_PD_Single = new System.Windows.Forms.TextBox();
+            this.l_IPCon_Connected = new System.Windows.Forms.Label();
+            this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
+            this.tB_IPCon_Adr = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cB_IPCon_Type = new System.Windows.Forms.ComboBox();
+            this.cB_IPCon_Selected = new System.Windows.Forms.ComboBox();
+            this.l_IPCon_SelectedCam = new System.Windows.Forms.Label();
+            this.l_IPCon_Port = new System.Windows.Forms.Label();
+            this.l_IPCon_ConType = new System.Windows.Forms.Label();
+            this.l_IPCon_Adr = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // b_PD_Load
@@ -109,11 +120,124 @@
             this.tB_PD_Single.Size = new System.Drawing.Size(119, 20);
             this.tB_PD_Single.TabIndex = 14;
             // 
+            // l_IPCon_Connected
+            // 
+            this.l_IPCon_Connected.AutoSize = true;
+            this.l_IPCon_Connected.Location = new System.Drawing.Point(572, 176);
+            this.l_IPCon_Connected.Name = "l_IPCon_Connected";
+            this.l_IPCon_Connected.Size = new System.Drawing.Size(0, 13);
+            this.l_IPCon_Connected.TabIndex = 79;
+            // 
+            // tB_IPCon_Port
+            // 
+            this.tB_IPCon_Port.Location = new System.Drawing.Point(351, 293);
+            this.tB_IPCon_Port.Name = "tB_IPCon_Port";
+            this.tB_IPCon_Port.Size = new System.Drawing.Size(123, 20);
+            this.tB_IPCon_Port.TabIndex = 85;
+            this.tB_IPCon_Port.Text = "6791";
+            // 
+            // tB_IPCon_Adr
+            // 
+            this.tB_IPCon_Adr.Location = new System.Drawing.Point(351, 254);
+            this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
+            this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
+            this.tB_IPCon_Adr.TabIndex = 84;
+            this.tB_IPCon_Adr.Text = "192.168.1.71";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(572, 248);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 13);
+            this.label1.TabIndex = 88;
+            // 
+            // cB_IPCon_Type
+            // 
+            this.cB_IPCon_Type.FormattingEnabled = true;
+            this.cB_IPCon_Type.Items.AddRange(new object[] {
+            "Encoder",
+            "MOXA nPort"});
+            this.cB_IPCon_Type.Location = new System.Drawing.Point(351, 214);
+            this.cB_IPCon_Type.Name = "cB_IPCon_Type";
+            this.cB_IPCon_Type.Size = new System.Drawing.Size(123, 21);
+            this.cB_IPCon_Type.TabIndex = 87;
+            this.cB_IPCon_Type.Text = "Encoder";
+            // 
+            // cB_IPCon_Selected
+            // 
+            this.cB_IPCon_Selected.FormattingEnabled = true;
+            this.cB_IPCon_Selected.Items.AddRange(new object[] {
+            "Daylight",
+            "Thermal"});
+            this.cB_IPCon_Selected.Location = new System.Drawing.Point(351, 332);
+            this.cB_IPCon_Selected.Name = "cB_IPCon_Selected";
+            this.cB_IPCon_Selected.Size = new System.Drawing.Size(123, 21);
+            this.cB_IPCon_Selected.TabIndex = 86;
+            this.cB_IPCon_Selected.Text = "Daylight";
+            // 
+            // l_IPCon_SelectedCam
+            // 
+            this.l_IPCon_SelectedCam.AutoSize = true;
+            this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(348, 316);
+            this.l_IPCon_SelectedCam.Name = "l_IPCon_SelectedCam";
+            this.l_IPCon_SelectedCam.Size = new System.Drawing.Size(91, 13);
+            this.l_IPCon_SelectedCam.TabIndex = 83;
+            this.l_IPCon_SelectedCam.Text = "Selected Camera:";
+            // 
+            // l_IPCon_Port
+            // 
+            this.l_IPCon_Port.AutoSize = true;
+            this.l_IPCon_Port.Location = new System.Drawing.Point(348, 277);
+            this.l_IPCon_Port.Name = "l_IPCon_Port";
+            this.l_IPCon_Port.Size = new System.Drawing.Size(29, 13);
+            this.l_IPCon_Port.TabIndex = 82;
+            this.l_IPCon_Port.Text = "Port:";
+            // 
+            // l_IPCon_ConType
+            // 
+            this.l_IPCon_ConType.AutoSize = true;
+            this.l_IPCon_ConType.Location = new System.Drawing.Point(348, 198);
+            this.l_IPCon_ConType.Name = "l_IPCon_ConType";
+            this.l_IPCon_ConType.Size = new System.Drawing.Size(70, 13);
+            this.l_IPCon_ConType.TabIndex = 81;
+            this.l_IPCon_ConType.Text = "Control Type:";
+            // 
+            // l_IPCon_Adr
+            // 
+            this.l_IPCon_Adr.AutoSize = true;
+            this.l_IPCon_Adr.Location = new System.Drawing.Point(348, 238);
+            this.l_IPCon_Adr.Name = "l_IPCon_Adr";
+            this.l_IPCon_Adr.Size = new System.Drawing.Size(61, 13);
+            this.l_IPCon_Adr.TabIndex = 80;
+            this.l_IPCon_Adr.Text = "IP Address:";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(356, 384);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(111, 33);
+            this.button1.TabIndex = 89;
+            this.button1.Text = "Test";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // PelcoD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 472);
+            this.ClientSize = new System.Drawing.Size(479, 472);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.tB_IPCon_Port);
+            this.Controls.Add(this.tB_IPCon_Adr);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.cB_IPCon_Type);
+            this.Controls.Add(this.cB_IPCon_Selected);
+            this.Controls.Add(this.l_IPCon_SelectedCam);
+            this.Controls.Add(this.l_IPCon_Port);
+            this.Controls.Add(this.l_IPCon_ConType);
+            this.Controls.Add(this.l_IPCon_Adr);
+            this.Controls.Add(this.l_IPCon_Connected);
             this.Controls.Add(this.l_PD_Single);
             this.Controls.Add(this.b_PD_FireSingle);
             this.Controls.Add(this.tB_PD_Single);
@@ -139,5 +263,16 @@
         private System.Windows.Forms.Label l_PD_Single;
         private System.Windows.Forms.Button b_PD_FireSingle;
         private System.Windows.Forms.TextBox tB_PD_Single;
+        public System.Windows.Forms.Label l_IPCon_Connected;
+        public System.Windows.Forms.TextBox tB_IPCon_Port;
+        public System.Windows.Forms.TextBox tB_IPCon_Adr;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.ComboBox cB_IPCon_Type;
+        public System.Windows.Forms.ComboBox cB_IPCon_Selected;
+        public System.Windows.Forms.Label l_IPCon_SelectedCam;
+        public System.Windows.Forms.Label l_IPCon_Port;
+        public System.Windows.Forms.Label l_IPCon_ConType;
+        public System.Windows.Forms.Label l_IPCon_Adr;
+        private System.Windows.Forms.Button button1;
     }
 }
