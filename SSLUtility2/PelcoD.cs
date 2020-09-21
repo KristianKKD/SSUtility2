@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -24,26 +25,32 @@ namespace SSLUtility2 {
         }
 
         private void b_PD_Fire_Click(object sender, EventArgs e) {
+            Fire();
+        }
+
+        async Task Fire() {
             for (int i = 0; i < rtb_PD_Commands.Lines.Length; i++) {
                 string line = rtb_PD_Commands.Lines[i];
                 byte[] send;
                 if (line != "") {
                     byte[] command = CheckForCommands(line).Result;
                     if (command != null) {
-                        send = command;    
+                        send = command;
                     } else {
                         send = MakeBytes(line);
                     }
                     if (!CameraCommunicate.sendtoIPAsync(send, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text).Result) {
                         MessageBox.Show("Command: " + line + " could not be sent.");
                         break;
+                    } else {
+                        //wait for response
                     }
                 }
             }
             MessageBox.Show("Finished sending commands!");
         }
 
-        byte[] MakeBytes(string line) {
+        byte[] MakeBytes(string line) { //ignores the first byte and turns it automatically to 0xFF, need to fix
             int index = 0;
             int spaceCount = 0;
             List<int> foundSpacePos = new List<int>();
@@ -91,21 +98,25 @@ namespace SSLUtility2 {
         async Task<byte[]> CheckForCommands(string line) {
             byte[] code = null;
             line = line.ToLower();
-            switch (line) {
-                case "wait":
+            string start = line;
+            int firstSpace = line.IndexOf(" ");
+            if (firstSpace != -1) {
+                start = line.Substring(0, firstSpace);
+            }
+
+            switch (start) {
+                case "wait": case "pause":
+                    if (firstSpace != -1) {
+                        Thread.Sleep(int.Parse(line.Substring(firstSpace + 1)));
+                    }
                     break;
                 case "stop":
+                    code = protocol.CameraStop(mainRef.MakeAdr(cB_IPCon_Selected));
                     break;
-                case "test":
-                    code = protocol.Preset(1, 3, D.PresetAction.Goto);
+                case "mono":
+                    code = protocol.Preset(mainRef.MakeAdr(cB_IPCon_Selected), 3, D.PresetAction.Goto);
                     break;
             }
-            //if (code != null) {
-            //    CameraCommunicate.sendtoIPAsync(code, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
-            //    return true;
-            //} else {
-            //    return false;
-            //}
             return code;
         }
 

@@ -44,7 +44,6 @@ namespace SSLUtility2
             tC_Main.TabPages[1].Dispose(); //remove the firmware page
             CameraCommunicate.mainRef = m;
             l_Version.Text = l_Version.Text + version;
-
             TabPage tp = tC_Control.TabPages[0];
             ipCon = AttachControlPanel(tp, false);
             ipCon.mainRef = m;
@@ -98,6 +97,7 @@ namespace SSLUtility2
             if (ipCon.tB_IPCon_Adr.Text != defaultIP) {
                 CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, lab, true);
             }
+            
             lite = false;
         }
 
@@ -143,6 +143,8 @@ namespace SSLUtility2
             fileDlg.InitialDirectory = ConfigControl.appFolder;
             fileDlg.Multiselect = false;
             fileDlg.DefaultExt = ".txt";
+            fileDlg.Filter = "Text File (*.txt)|*.txt|All files (*.*)|*.*";
+            fileDlg.FilterIndex = 1;
             fileDlg.RestoreDirectory = true;
             fileDlg.Title = "Select Text File";
             return fileDlg;
@@ -152,6 +154,8 @@ namespace SSLUtility2
             SaveFileDialog fileDlg = new SaveFileDialog();
             fileDlg.InitialDirectory = ConfigControl.appFolder;
             fileDlg.DefaultExt = ".txt";
+            fileDlg.Filter = "Text File (*.txt)|*.txt|All files (*.*)|*.*";
+            fileDlg.FilterIndex = 1;
             fileDlg.RestoreDirectory = true;
             fileDlg.Title = "Select Text File";
             fileDlg.FileName = name;
@@ -298,11 +302,11 @@ namespace SSLUtility2
             }
         }
 
-        public uint MakeAdr(Control selected = null) {
-            if (selected == null) {
-                selected = ipCon.cB_IPCon_Selected;
+        public uint MakeAdr(Control comboBox = null) {
+            if (comboBox == null) {
+                comboBox = ipCon.cB_IPCon_Selected;
             }
-            if (selected.Text == "Daylight") {
+            if (comboBox.Text == "Daylight") {
                 return 1;
             } else {
                 return 2;
@@ -564,7 +568,7 @@ namespace SSLUtility2
             }
         }
 
-        public void KeyControl(Control lab, KeyEventArgs e, uint address, string ip, string port) { //test this
+        public void KeyControl(Control lab, PreviewKeyDownEventArgs e, uint address, string ip, string port) { //test this
             if (ipCon.cB_IPCon_KeyboardCon.Checked == true) {
                 uint ptSpeed = Convert.ToUInt32(ipCon.track_PTZ_PTSpeed.Value);
                 byte[] code = null;
@@ -591,16 +595,6 @@ namespace SSLUtility2
                 }
 
                 CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
-            }
-        }
-
-        private void tC_Control_KeyDown(object sender, KeyEventArgs e) {
-            KeyControl(lab, e, MakeAdr(), ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text);   
-        }
-
-        private void tC_Control_KeyUp(object sender, KeyEventArgs e) { //test this
-            if (ipCon.cB_IPCon_KeyboardCon.Checked == true) {
-                CameraCommunicate.sendtoIPAsync(protocol.CameraStop(MakeAdr()), lab);
             }
         }
 

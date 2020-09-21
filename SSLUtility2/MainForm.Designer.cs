@@ -459,8 +459,6 @@ namespace SSLUtility2 {
             this.tC_Control.SelectedIndex = 0;
             this.tC_Control.Size = new System.Drawing.Size(1645, 897);
             this.tC_Control.TabIndex = 6;
-            this.tC_Control.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tC_Control_KeyDown);
-            this.tC_Control.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tC_Control_KeyUp);
             // 
             // tP_CameraCon
             // 

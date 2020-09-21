@@ -100,6 +100,7 @@
     <Compile Include="Detached.Designer.cs">
       <DependentUpon>Detached.cs</DependentUpon>
     </Compile>
+    <Compile Include="KeyboardHook.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

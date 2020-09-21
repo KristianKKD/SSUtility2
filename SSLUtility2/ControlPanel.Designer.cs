@@ -411,8 +411,6 @@
             this.Name = "ControlPanel";
             this.Text = "ControlPanel";
             this.Load += new System.EventHandler(this.ControlPanel_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ControlPanel_KeyDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ControlPanel_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
