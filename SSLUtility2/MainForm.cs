@@ -25,7 +25,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.1.1";
+        public const string version = "v1.2.1.2";
         D protocol = new D();
         public static MainForm m;
         Recorder recorderL;
