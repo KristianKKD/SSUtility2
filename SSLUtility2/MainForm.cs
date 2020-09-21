@@ -25,6 +25,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
+        public const string version = "v1.2.1.1";
         D protocol = new D();
         public static MainForm m;
         Recorder recorderL;
@@ -42,6 +43,7 @@ namespace SSLUtility2
             m = this;
             tC_Main.TabPages[1].Dispose(); //remove the firmware page
             CameraCommunicate.mainRef = m;
+            l_Version.Text = l_Version.Text + version;
 
             TabPage tp = tC_Control.TabPages[0];
             ipCon = AttachControlPanel(tp, false);

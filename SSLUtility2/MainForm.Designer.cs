@@ -73,6 +73,7 @@ namespace SSLUtility2 {
             this.camControl = new System.Windows.Forms.TabPage();
             this.tC_Control = new System.Windows.Forms.TabControl();
             this.tP_CameraCon = new System.Windows.Forms.TabPage();
+            this.l_Version = new System.Windows.Forms.Label();
             this.gB_PlayerR_Extended = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -463,6 +464,7 @@ namespace SSLUtility2 {
             // 
             // tP_CameraCon
             // 
+            this.tP_CameraCon.Controls.Add(this.l_Version);
             this.tP_CameraCon.Controls.Add(this.gB_PlayerR_Extended);
             this.tP_CameraCon.Controls.Add(this.gB_PlayerL_Extended);
             this.tP_CameraCon.Controls.Add(this.gB_PlayerR_Simple);
@@ -484,6 +486,15 @@ namespace SSLUtility2 {
             this.tP_CameraCon.TabIndex = 0;
             this.tP_CameraCon.Text = "Camera Control";
             this.tP_CameraCon.UseVisualStyleBackColor = true;
+            // 
+            // l_Version
+            // 
+            this.l_Version.AutoSize = true;
+            this.l_Version.Location = new System.Drawing.Point(1553, 858);
+            this.l_Version.Name = "l_Version";
+            this.l_Version.Size = new System.Drawing.Size(48, 13);
+            this.l_Version.TabIndex = 41;
+            this.l_Version.Text = "Version: ";
             // 
             // gB_PlayerR_Extended
             // 
@@ -2506,5 +2517,6 @@ namespace SSLUtility2 {
         public Label l_Not_Subnet;
         private CheckBox check_Not_Config;
         private CheckBox check_Not_Subnet;
+        private Label l_Version;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
