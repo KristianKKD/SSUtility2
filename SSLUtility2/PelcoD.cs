@@ -26,14 +26,17 @@ namespace SSLUtility2 {
         private void b_PD_Fire_Click(object sender, EventArgs e) {
             for (int i = 0; i < rtb_PD_Commands.Lines.Length; i++) {
                 string line = rtb_PD_Commands.Lines[i];
+                byte[] send;
                 if (line != "") {
-                    if (!CheckForCommands(line).Result) {
-                        byte[] split = MakeBytes(line);
-                        byte[] bytes = D.Message.GetMessage(mainRef.MakeAdr(l_IPCon_Connected), 0x00, 0x00, 0x00, 0x00, split);
-                        if (!CameraCommunicate.sendtoIPAsync(bytes, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text).Result) {
-                            MessageBox.Show("Command: " + line + " could not be sent.");
-                            break;
-                        }
+                    byte[] command = CheckForCommands(line).Result;
+                    if (command != null) {
+                        send = command;    
+                    } else {
+                        send = MakeBytes(line);
+                    }
+                    if (!CameraCommunicate.sendtoIPAsync(send, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text).Result) {
+                        MessageBox.Show("Command: " + line + " could not be sent.");
+                        break;
                     }
                 }
             }
@@ -41,54 +44,69 @@ namespace SSLUtility2 {
         }
 
         byte[] MakeBytes(string line) {
-            byte[] bytes = new byte[4];
-            int[] spacePos = new int[4];
             int index = 0;
             int spaceCount = 0;
+            List<int> foundSpacePos = new List<int>();
+
+            line = line.Replace(",", "");
 
             foreach (char c in line) {
                 index++;
                 if (index == 1) {
-                    spacePos[0] = 0;
+                    foundSpacePos.Add(0);
                     spaceCount++;
                 } else {
-                    if (spaceCount == bytes.Length) {
-                        break;
-                    }
                     if (c.ToString() == " ") {
-                        spacePos[spaceCount] = index - spaceCount;
+                        foundSpacePos.Add(index - spaceCount);
                         spaceCount++;
                     }
                 }
             }
+            int[] spacePos = new int[foundSpacePos.Count];
+
+            for (int i = 0; i < foundSpacePos.Count; i++) {
+                spacePos[i] = foundSpacePos[i];
+            }
+
             line = line.Replace(" ", "");
             line = line.ToLower().Replace("x", "0");
 
-            for (int i = 0; i < spacePos.Length; i++) {
+            byte checksum = 0x00;
+            byte[] b = new byte[spaceCount + 2]; //2
+            for (int i = 1; i < spacePos.Length; i++) { //1
                 string subbed = line.Substring(spacePos[i], 4);
                 byte.TryParse(subbed , out byte result);
-                bytes[i] = result;
+                b[i] = result;
+                if (result != D.Message.STX) {
+                    checksum += result;
+                }
             }
 
-            return bytes;
+            b[0] = 0xFF;
+            b[spaceCount] = checksum;
+
+            return b;
         }
 
-        async Task<bool> CheckForCommands(string line) {
+        async Task<byte[]> CheckForCommands(string line) {
             byte[] code = null;
+            line = line.ToLower();
             switch (line) {
-                case "WAIT":
+                case "wait":
                     break;
-                case "STOP":
+                case "stop":
                     break;
-                    //case "SPEED":
-                    //    break;
+                case "test":
+                    code = protocol.Preset(1, 3, D.PresetAction.Goto);
+                    break;
             }
-            if (code != null) {
-                CameraCommunicate.sendtoIPAsync(code, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
-                return true;
-            } else {
-                return false;
-            }
+            //if (code != null) {
+            //    CameraCommunicate.sendtoIPAsync(code, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            //    return true;
+            //} else {
+            //    return false;
+            //}
+            return code;
         }
 
         public void WriteToResponses(string text) {

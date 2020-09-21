@@ -25,6 +25,8 @@
  * Version: 1.4
  * ------------------------------------------------------------------------------*/
 using System;
+using System.Text;
+using System.Windows.Forms;
 
 namespace SSLUtility2
 {
@@ -390,9 +392,9 @@ namespace SSLUtility2
                 }
 
                 CheckSum = (byte)((Address + Command1 + Command2 + Data1 + Data2) % 256);
+                //MessageBox.Show(STX.ToString() + " " +  Address.ToString() + " " +  Command1.ToString() + " " +
+                //    Command2.ToString() + " " +  Data1.ToString() + " " +  Data2.ToString() + " " + CheckSum.ToString());
                 return new byte[] { STX, Address, Command1, Command2, Data1, Data2, CheckSum };
-
-
             }
 
         }
