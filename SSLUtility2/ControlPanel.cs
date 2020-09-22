@@ -15,9 +15,7 @@ namespace SSLUtility2
         public ControlPanel() {
             InitializeComponent();
             l = l_IPCon_Connected;
-            //InterceptKeys IK = new InterceptKeys();
-            
-
+            Program.cp = this;
         }
 
         public void StartConnect() {
@@ -35,11 +33,6 @@ namespace SSLUtility2
             }
 
             tB_IPCon_Port.Text = port;
-        }
-        private void cB_IPCon_KeyboardCon_CheckedChanged(object sender, EventArgs e) {
-            if (cB_IPCon_KeyboardCon.Checked) {
-                b_PTZ_Up.Focus();
-            }
         }
 
         private void b_Detach(object sender, EventArgs e) {
@@ -134,6 +127,40 @@ namespace SSLUtility2
             mainRef.OpenPelco(cB_IPCon_Type.Text, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, cB_IPCon_Selected.Text);
         }
 
+        public void StopCam() {
+            if (cB_IPCon_KeyboardCon.Checked == true) {
+                CameraCommunicate.sendtoIPAsync(protocol.CameraStop(mainRef.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            }
+        }
+        public void KeyControl(Control lab, Keys k, uint address, string ip, string port) { //test this
+            if (cB_IPCon_KeyboardCon.Checked == true) {
+                uint ptSpeed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
+                byte[] code = null;
+
+                switch (k) { //is there a command that accepts diagonal? // there is but its in byte codes
+                    case Keys.Up:
+                        code = protocol.CameraTilt(address, D.Tilt.Up, ptSpeed);
+                        break;
+                    case Keys.Down:
+                        code = protocol.CameraTilt(address, D.Tilt.Down, ptSpeed);
+                        break;
+                    case Keys.Left:
+                        code = protocol.CameraPan(address, D.Pan.Left, ptSpeed);
+                        break;
+                    case Keys.Right:
+                        code = protocol.CameraPan(address, D.Pan.Right, ptSpeed);
+                        break;
+                    case Keys.Enter:
+                        code = protocol.CameraZoom(address, D.Zoom.Tele);
+                        break;
+                    case Keys.Escape:
+                        code = protocol.CameraZoom(address, D.Zoom.Wide);
+                        break;
+                }
+
+                CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
+            }
+        }
         //private void b_PTZ_Up_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
         //    mainRef.KeyControl(l, e, mainRef.MakeAdr(cB_IPCon_Selected), tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
         //}

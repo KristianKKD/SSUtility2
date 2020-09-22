@@ -123,7 +123,6 @@
             this.cB_IPCon_KeyboardCon.Size = new System.Drawing.Size(15, 14);
             this.cB_IPCon_KeyboardCon.TabIndex = 67;
             this.cB_IPCon_KeyboardCon.UseVisualStyleBackColor = true;
-            this.cB_IPCon_KeyboardCon.CheckedChanged += new System.EventHandler(this.cB_IPCon_KeyboardCon_CheckedChanged);
             // 
             // cB_IPCon_Selected
             // 

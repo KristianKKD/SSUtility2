@@ -12,12 +12,14 @@
  */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -25,7 +27,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.2.1";
+        public const string version = "v1.2.3.0";
         D protocol = new D();
         public static MainForm m;
         Recorder recorderL;
@@ -41,9 +43,12 @@ namespace SSLUtility2
 
         public async Task StartupStuff() {
             m = this;
-            tC_Main.TabPages[1].Dispose(); //remove the firmware page
             CameraCommunicate.mainRef = m;
+
+            tC_Main.TabPages[1].Dispose(); //remove the firmware page
+
             l_Version.Text = l_Version.Text + version;
+
             TabPage tp = tC_Control.TabPages[0];
             ipCon = AttachControlPanel(tp, false);
             ipCon.mainRef = m;
@@ -565,36 +570,6 @@ namespace SSLUtility2
             if (timer != null) {
                 timer.Dispose();
                 timer = null;
-            }
-        }
-
-        public void KeyControl(Control lab, PreviewKeyDownEventArgs e, uint address, string ip, string port) { //test this
-            if (ipCon.cB_IPCon_KeyboardCon.Checked == true) {
-                uint ptSpeed = Convert.ToUInt32(ipCon.track_PTZ_PTSpeed.Value);
-                byte[] code = null;
-
-                switch (e.KeyCode) { //is there a command that accepts diagonal?
-                    case Keys.Up:
-                        code = protocol.CameraTilt(address, D.Tilt.Up, ptSpeed);
-                        break;
-                    case Keys.Down:
-                        code = protocol.CameraTilt(address, D.Tilt.Down, ptSpeed);
-                        break;
-                    case Keys.Left:
-                        code = protocol.CameraPan(address, D.Pan.Left, ptSpeed);
-                        break;
-                    case Keys.Right:
-                        code = protocol.CameraPan(address, D.Pan.Right, ptSpeed);
-                        break;
-                    case Keys.Enter:
-                        code = protocol.CameraZoom(address, D.Zoom.Tele);
-                        break;
-                    case Keys.Escape:
-                        code = protocol.CameraZoom(address, D.Zoom.Wide);
-                        break;
-                }
-
-                CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
             }
         }
 
