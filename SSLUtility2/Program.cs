@@ -52,10 +52,6 @@ namespace SSLUtility2 {
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam) {
             if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN) {
                 int vkCode = Marshal.ReadInt32(lParam);
-                if (Keys.C == (Keys)vkCode) {
-                    MessageBox.Show(cp.tB_IPCon_Adr.Text + ":" + cp.tB_IPCon_Port.Text);
-                    return CallNextHookEx(_hookID, nCode, wParam, lParam);
-                }
                 cp.KeyControl(cp.l, (Keys)vkCode, cp.mainRef.MakeAdr(cp.cB_IPCon_Selected),
                     cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
             }

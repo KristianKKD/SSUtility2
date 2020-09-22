@@ -43,6 +43,7 @@
             this.l_IPCon_Adr = new System.Windows.Forms.Label();
             this.b_PD_Stop = new System.Windows.Forms.Button();
             this.b_PD_RL = new System.Windows.Forms.Button();
+            this.check_PD_Perfect = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // b_PD_Load
@@ -106,7 +107,7 @@
             // 
             this.b_PD_FireSingle.Location = new System.Drawing.Point(271, 434);
             this.b_PD_FireSingle.Name = "b_PD_FireSingle";
-            this.b_PD_FireSingle.Size = new System.Drawing.Size(75, 23);
+            this.b_PD_FireSingle.Size = new System.Drawing.Size(75, 21);
             this.b_PD_FireSingle.TabIndex = 15;
             this.b_PD_FireSingle.Text = "Fire";
             this.b_PD_FireSingle.UseVisualStyleBackColor = true;
@@ -129,17 +130,17 @@
             // 
             // tB_IPCon_Port
             // 
-            this.tB_IPCon_Port.Location = new System.Drawing.Point(348, 211);
+            this.tB_IPCon_Port.Location = new System.Drawing.Point(348, 224);
             this.tB_IPCon_Port.Name = "tB_IPCon_Port";
-            this.tB_IPCon_Port.Size = new System.Drawing.Size(123, 20);
+            this.tB_IPCon_Port.Size = new System.Drawing.Size(111, 20);
             this.tB_IPCon_Port.TabIndex = 85;
             this.tB_IPCon_Port.Text = "6791";
             // 
             // tB_IPCon_Adr
             // 
-            this.tB_IPCon_Adr.Location = new System.Drawing.Point(348, 172);
+            this.tB_IPCon_Adr.Location = new System.Drawing.Point(348, 185);
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
-            this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
+            this.tB_IPCon_Adr.Size = new System.Drawing.Size(111, 20);
             this.tB_IPCon_Adr.TabIndex = 84;
             this.tB_IPCon_Adr.Text = "192.168.1.71";
             // 
@@ -157,16 +158,16 @@
             this.cB_IPCon_Selected.Items.AddRange(new object[] {
             "Daylight",
             "Thermal"});
-            this.cB_IPCon_Selected.Location = new System.Drawing.Point(348, 250);
+            this.cB_IPCon_Selected.Location = new System.Drawing.Point(348, 263);
             this.cB_IPCon_Selected.Name = "cB_IPCon_Selected";
-            this.cB_IPCon_Selected.Size = new System.Drawing.Size(123, 21);
+            this.cB_IPCon_Selected.Size = new System.Drawing.Size(111, 21);
             this.cB_IPCon_Selected.TabIndex = 86;
             this.cB_IPCon_Selected.Text = "Daylight";
             // 
             // l_IPCon_SelectedCam
             // 
             this.l_IPCon_SelectedCam.AutoSize = true;
-            this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(345, 234);
+            this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(345, 247);
             this.l_IPCon_SelectedCam.Name = "l_IPCon_SelectedCam";
             this.l_IPCon_SelectedCam.Size = new System.Drawing.Size(91, 13);
             this.l_IPCon_SelectedCam.TabIndex = 83;
@@ -175,7 +176,7 @@
             // l_IPCon_Port
             // 
             this.l_IPCon_Port.AutoSize = true;
-            this.l_IPCon_Port.Location = new System.Drawing.Point(345, 195);
+            this.l_IPCon_Port.Location = new System.Drawing.Point(345, 208);
             this.l_IPCon_Port.Name = "l_IPCon_Port";
             this.l_IPCon_Port.Size = new System.Drawing.Size(29, 13);
             this.l_IPCon_Port.TabIndex = 82;
@@ -184,7 +185,7 @@
             // l_IPCon_Adr
             // 
             this.l_IPCon_Adr.AutoSize = true;
-            this.l_IPCon_Adr.Location = new System.Drawing.Point(345, 156);
+            this.l_IPCon_Adr.Location = new System.Drawing.Point(345, 169);
             this.l_IPCon_Adr.Name = "l_IPCon_Adr";
             this.l_IPCon_Adr.Size = new System.Drawing.Size(61, 13);
             this.l_IPCon_Adr.TabIndex = 80;
@@ -192,11 +193,12 @@
             // 
             // b_PD_Stop
             // 
+            this.b_PD_Stop.Enabled = false;
             this.b_PD_Stop.Location = new System.Drawing.Point(348, 367);
             this.b_PD_Stop.Name = "b_PD_Stop";
             this.b_PD_Stop.Size = new System.Drawing.Size(111, 50);
             this.b_PD_Stop.TabIndex = 89;
-            this.b_PD_Stop.Text = "Camera Stop Command";
+            this.b_PD_Stop.Text = "Stop Script Execution";
             this.b_PD_Stop.UseVisualStyleBackColor = true;
             this.b_PD_Stop.Click += new System.EventHandler(this.b_PD_Stop_Click);
             // 
@@ -210,11 +212,23 @@
             this.b_PD_RL.UseVisualStyleBackColor = true;
             this.b_PD_RL.Click += new System.EventHandler(this.b_PD_RL_Click);
             // 
+            // check_PD_Perfect
+            // 
+            this.check_PD_Perfect.AccessibleDescription = "E.g. \"0021 0002 0153 0004\"";
+            this.check_PD_Perfect.AutoSize = true;
+            this.check_PD_Perfect.Location = new System.Drawing.Point(348, 149);
+            this.check_PD_Perfect.Name = "check_PD_Perfect";
+            this.check_PD_Perfect.Size = new System.Drawing.Size(95, 17);
+            this.check_PD_Perfect.TabIndex = 92;
+            this.check_PD_Perfect.Text = "Perfect Format";
+            this.check_PD_Perfect.UseVisualStyleBackColor = true;
+            // 
             // PelcoD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 472);
+            this.ClientSize = new System.Drawing.Size(470, 467);
+            this.Controls.Add(this.check_PD_Perfect);
             this.Controls.Add(this.b_PD_RL);
             this.Controls.Add(this.b_PD_Stop);
             this.Controls.Add(this.tB_IPCon_Port);
@@ -261,5 +275,6 @@
         public System.Windows.Forms.Label l_IPCon_Adr;
         private System.Windows.Forms.Button b_PD_Stop;
         private System.Windows.Forms.Button b_PD_RL;
+        private System.Windows.Forms.CheckBox check_PD_Perfect;
     }
 }

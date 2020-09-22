@@ -10,7 +10,8 @@ namespace SSLUtility2 {
 
         //Defaults//
         public static string defScFolder = @"Screenshots\";
-        public static string defVFolder = @"Screenshots\";
+        public static string defVFolder = @"Videos\";
+        public static string defSavedFolder = @"Saved\";
 
         public static string defVName = "VideoCapture";
         public static string defScName = "ScreenCapture";
@@ -29,6 +30,7 @@ namespace SSLUtility2 {
         //RuntimeVars//
         public static string scFolder;
         public static string vFolder;
+        public static string savedFolder;
         public static string scFileName;
         public static string vFileName;
         public static string recQual;
@@ -64,9 +66,11 @@ namespace SSLUtility2 {
         public static async Task SetToDefaults() {
             defScFolder = appFolder + defScFolder;
             defVFolder = appFolder + defVFolder;
+            defSavedFolder = appFolder + defSavedFolder;
 
             scFolder = defScFolder;
             vFolder = defVFolder;
+            savedFolder = defSavedFolder;
 
             scFileName = defScName;
             vFileName = defVName;

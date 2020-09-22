@@ -12,14 +12,10 @@
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,7 +23,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.3.0";
+        public const string version = "v1.2.4.0";
         D protocol = new D();
         public static MainForm m;
         Recorder recorderL;
@@ -43,21 +39,13 @@ namespace SSLUtility2
 
         public async Task StartupStuff() {
             m = this;
+            lite = false;
             CameraCommunicate.mainRef = m;
+            l_Version.Text = l_Version.Text + version;
 
             tC_Main.TabPages[1].Dispose(); //remove the firmware page
 
-            l_Version.Text = l_Version.Text + version;
-
-            TabPage tp = tC_Control.TabPages[0];
-            ipCon = AttachControlPanel(tp, false);
-            ipCon.mainRef = m;
-            PresetPanel pp = AttachPresetPanel(tp, ipCon);
-            pp.cp = ipCon;
-
-            ipCon.isOriginal = true;
-
-            lab = ipCon.l_IPCon_Connected;
+            AttachControlPanel();
 
             saveList = new Control[]{
                 ipCon.cB_IPCon_Type,
@@ -84,17 +72,7 @@ namespace SSLUtility2
                 tB_PlayerR_SimpleAdr,
             };
 
-            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave);
-
-            ConfigControl.SetToDefaults();
-
-            CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
-            CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
-            CheckCreateFile(null, ConfigControl.scFolder);
-            CheckCreateFile(null, ConfigControl.vFolder);
-
-            await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
-            FindVars();
+            FileStuff();
 
             PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
@@ -103,7 +81,32 @@ namespace SSLUtility2
                 CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, lab, true);
             }
             
-            lite = false;
+        }
+
+        async Task FileStuff() {
+            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave);
+
+            ConfigControl.SetToDefaults();
+
+            CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
+            CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
+            CheckCreateFile(null, ConfigControl.scFolder);
+            CheckCreateFile(null, ConfigControl.vFolder);
+            CheckCreateFile(null, ConfigControl.savedFolder);
+
+            await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
+            FindVars();
+        }
+
+        void AttachControlPanel() {
+            TabPage tp = tC_Control.TabPages[0];
+            ipCon = SpawnControlPanel(tp, false);
+            ipCon.mainRef = m;
+            PresetPanel pp = AttachPresetPanel(tp, ipCon);
+            pp.cp = ipCon;
+
+            ipCon.isOriginal = true;
+            lab = ipCon.l_IPCon_Connected;
         }
 
         async Task FindVars() {
@@ -145,7 +148,7 @@ namespace SSLUtility2
 
         public static OpenFileDialog OpenTxt() {
             OpenFileDialog fileDlg = new OpenFileDialog();
-            fileDlg.InitialDirectory = ConfigControl.appFolder;
+            fileDlg.InitialDirectory = ConfigControl.savedFolder;
             fileDlg.Multiselect = false;
             fileDlg.DefaultExt = ".txt";
             fileDlg.Filter = "Text File (*.txt)|*.txt|All files (*.*)|*.*";
@@ -157,7 +160,7 @@ namespace SSLUtility2
 
         public static SaveFileDialog SaveTxt(string name) {
             SaveFileDialog fileDlg = new SaveFileDialog();
-            fileDlg.InitialDirectory = ConfigControl.appFolder;
+            fileDlg.InitialDirectory = ConfigControl.savedFolder;
             fileDlg.DefaultExt = ".txt";
             fileDlg.Filter = "Text File (*.txt)|*.txt|All files (*.*)|*.*";
             fileDlg.FilterIndex = 1;
@@ -169,7 +172,7 @@ namespace SSLUtility2
 
         public void InitLiteMode() {
             TabPage tp = LiteMode();
-            ControlPanel cp = AttachControlPanel(tp);
+            ControlPanel cp = SpawnControlPanel(tp);
             PresetPanel pp = AttachPresetPanel(tp, cp);
             pp.cp = cp;
             cp.isOriginal = false;
@@ -191,7 +194,7 @@ namespace SSLUtility2
             return tp;
         }
 
-        ControlPanel AttachControlPanel(TabPage tp, bool makeLite = true) {
+        ControlPanel SpawnControlPanel(TabPage tp, bool makeLite = true) {
             GroupBox gb = new GroupBox();
             ControlPanel cp = new ControlPanel();
 
@@ -489,7 +492,7 @@ namespace SSLUtility2
             return dv;
         }
 
-        public PelcoD OpenPelco(string type, string ip, string port, string selected) {
+        public PelcoD OpenPelco(string ip, string port, string selected) {
             PelcoD pd = new PelcoD();
             pd.mainRef = m;
             pd.tB_IPCon_Adr.Text = ip;
@@ -536,43 +539,7 @@ namespace SSLUtility2
             Play(VLCPlayer_R, combinedUrl, tB_PlayerR_SimpleAdr);
         }
 
-        System.Threading.Timer timer = null;
-
-        public void tB_IPCon_Adr_TextChanged(object sender, EventArgs e) { // i cant implement this into cp for some reason?
-            TextBox origin = sender as TextBox;
-            if (!origin.ContainsFocus) {
-                return;
-            }
-
-            DisposeTimer();
-            timer = new System.Threading.Timer(TimerElapsed, null, 300, 300);
-        }
-
-
-        private void TimerElapsed(Object obj) {
-            CheckSyntaxAndReport();
-            DisposeTimer();
-        }
-
-        private void CheckSyntaxAndReport() {
-            this.Invoke(new Action(() => {
-                Control l = ipCon.l_IPCon_Connected;
-                if (CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.l_IPCon_Connected, true).Result) {
-                    CameraCommunicate.LabelDisplay(true, l);
-                } else {
-                    CameraCommunicate.LabelDisplay(false, l);
-                }
-            }));
-        }
-
-
-        private void DisposeTimer() {
-            if (timer != null) {
-                timer.Dispose();
-                timer = null;
-            }
-        }
-
+       
         private void cB_PlayerL_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string enc = cB_PlayerL_Type.Text;
             string username = "";

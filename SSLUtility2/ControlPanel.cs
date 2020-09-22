@@ -124,7 +124,7 @@ namespace SSLUtility2
         }
 
         private void b_IPCon_CustomD_Click(object sender, EventArgs e) {
-            mainRef.OpenPelco(cB_IPCon_Type.Text, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, cB_IPCon_Selected.Text);
+            mainRef.OpenPelco(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, cB_IPCon_Selected.Text);
         }
 
         public void StopCam() {
@@ -161,14 +161,6 @@ namespace SSLUtility2
                 CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
             }
         }
-        //private void b_PTZ_Up_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
-        //    mainRef.KeyControl(l, e, mainRef.MakeAdr(cB_IPCon_Selected), tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
-        //}
 
-        //private void b_PTZ_Up_KeyUp(object sender, KeyEventArgs e) {
-        //    if (cB_IPCon_KeyboardCon.Checked == true) {
-        //        CameraCommunicate.sendtoIPAsync(protocol.CameraStop(mainRef.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
-        //    }
-        //}
     }
 }

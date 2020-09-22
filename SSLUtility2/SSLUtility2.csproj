@@ -93,6 +93,7 @@
     <Compile Include="ControlPanel.Designer.cs">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomScriptCommands.cs" />
     <Compile Include="D.cs" />
     <Compile Include="Detached.cs">
       <SubType>Form</SubType>

@@ -42,7 +42,7 @@
             // 
             // b_RL_Clear
             // 
-            this.b_RL_Clear.Location = new System.Drawing.Point(395, 32);
+            this.b_RL_Clear.Location = new System.Drawing.Point(395, 61);
             this.b_RL_Clear.Name = "b_RL_Clear";
             this.b_RL_Clear.Size = new System.Drawing.Size(75, 23);
             this.b_RL_Clear.TabIndex = 1;
@@ -52,7 +52,7 @@
             // 
             // b_RL_Save
             // 
-            this.b_RL_Save.Location = new System.Drawing.Point(394, 61);
+            this.b_RL_Save.Location = new System.Drawing.Point(395, 32);
             this.b_RL_Save.Name = "b_RL_Save";
             this.b_RL_Save.Size = new System.Drawing.Size(75, 23);
             this.b_RL_Save.TabIndex = 2;

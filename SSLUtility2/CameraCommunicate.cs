@@ -3,11 +3,12 @@ using System.Drawing;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2
-{
+namespace SSLUtility2 {
 
     class CameraCommunicate {
         public static MainForm mainRef;
@@ -23,6 +24,11 @@ namespace SSLUtility2
         public static string lastIPPort = "1";
 
         public static async Task<bool> sendtoIPAsync(byte[] code, Control lab, string ip = null, string port = null) {
+            //string m = "";
+            //for (int i = 0; i < code.Length; i++) {
+            //    m += code[i].ToString() + " ";
+            //}
+            //MessageBox.Show(m);
             try {
                 if (!sock.Connected) {
                     bool ableToConnect = Connect(ip, port, lab, false).Result;
@@ -105,12 +111,47 @@ namespace SSLUtility2
             return false;
         }
 
-        private static async Task ComWithSocket(byte[] code) {
-            sock.SendTo(code, endPoint);
-            //sock.BeginRe
+        public static async Task<string> StringFromSock(string ipAdr, string port, Control lCon, bool stopError = false) {
+            if (!sock.Connected) {
+                if (!Connect(ipAdr, port, lCon, stopError).Result) {
+                    return null;
+                }
+            }
+            try {
+                byte[] buffer = new byte[4];
+                Receive(sock, buffer, 0, buffer.Length, 10000);
+                string m = "";
+                for (int i = 0; i < buffer.Length; i++) {
+                    m += buffer[i].ToString() + " ";
+                }
+                return m;
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+                return null;
+            }
         }
 
+        private static async void Receive(Socket socket, byte[] buffer, int offset, int size, int timeout) {
+            int startTickCount = Environment.TickCount;
+            int received = 0;  // how many bytes is already received
+            while (received < size) {
+                if (Environment.TickCount > startTickCount + timeout)
+                    throw new Exception("Timeout.");
+                try {
+                    received += socket.Receive(buffer, offset + received, size - received, SocketFlags.None);
+                } catch (SocketException ex) {
+                    if (ex.SocketErrorCode == SocketError.WouldBlock ||
+                        ex.SocketErrorCode == SocketError.IOPending ||
+                        ex.SocketErrorCode == SocketError.NoBufferSpaceAvailable) {
+                        // socket buffer is probably empty, wait and try again
+                        await Task.Delay(30);
+                    } else
+                        throw ex;  // any serious error occurr
+                }
+            } 
+        }
 
+       
         public static void CloseSock() {
             if (sock != null && sock.Connected) {
                 sock.Shutdown(SocketShutdown.Both);
