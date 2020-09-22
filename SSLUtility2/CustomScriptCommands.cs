@@ -16,11 +16,15 @@ namespace SSLUtility2 {
             string start = line;
             int value = 0;
             int firstSpace = line.IndexOf(" ");
+            Console.WriteLine(firstSpace);
             if (firstSpace != -1) {
                 start = line.Substring(0, firstSpace);
             }
+            byte adrByte = Convert.ToByte(adr);
+            byte valByte = Convert.ToByte(value);
 
             switch (start) {
+                // value accepting //
                 case "wait":
                 case "pause":
                     value = int.Parse(line.Substring(firstSpace + 1));
@@ -30,12 +34,24 @@ namespace SSLUtility2 {
                     pdRef.WriteToResponses("Waiting: " + value);
                     code = PelcoD.noGo;
                     break;
+                case "up":
+                    code = new byte[] { 0xFF, adrByte, 0x00, 0x08, 0x00, valByte, 0x00 };
+                    break;
+                case "down":
+//                    code = new byte[] { 0xFF, adrByte, 0x00, 0x08, 0x00, valByte, 0x00 };
+                    break;
+                case "left":
+                    break;
+                case "right":
+                    break;
+                // no values // 
                 case "stop":
                     code = protocol.CameraStop(adr);
                     break;
-                case "mono":
+                case "monocolour":
                     code = protocol.Preset((adr), 3, D.PresetAction.Goto);
                     break;
+               
             }
 
             return code;
