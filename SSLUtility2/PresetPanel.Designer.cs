@@ -27,6 +27,7 @@ namespace SSLUtility2
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PresetPanel));
             this.tC_Presets_Default = new System.Windows.Forms.TabControl();
             this.adminPage = new System.Windows.Forms.TabPage();
             this.b_Presets_Admin_DefaultMen = new System.Windows.Forms.Button();
@@ -541,6 +542,7 @@ namespace SSLUtility2
             this.ClientSize = new System.Drawing.Size(254, 297);
             this.Controls.Add(this.tC_Presets_Default);
             this.Controls.Add(this.l_Presets_Default);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PresetPanel";
             this.Text = "PresetPanel";
             this.tC_Presets_Default.ResumeLayout(false);

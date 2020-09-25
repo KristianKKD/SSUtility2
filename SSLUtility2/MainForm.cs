@@ -23,7 +23,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.4.0";
+        public const string version = "v1.2.4.1";
         D protocol = new D();
         public static MainForm m;
         Recorder recorderL;
@@ -503,6 +503,14 @@ namespace SSLUtility2
             return pd;
         }
 
+
+
+
+        /// <summary>
+        /// //
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_PlayerL_Play_Click(object sender, EventArgs e) {
             string combinedUrl;
 
@@ -614,6 +622,27 @@ namespace SSLUtility2
             ExtendOptions(checkB_PlayerR_Manual.Checked, gB_PlayerR_Extended, gB_PlayerR_Simple);
         }
 
+        bool Lplaying = false;
+        bool Rplaying = false;
+
+        private void b_PlayerL_StartRec_Click(object sender, EventArgs e) {
+            (bool, Recorder) vals = StopStartRec(Lplaying, VLCPlayer_L, b_PlayerL_StartRec, recorderL);
+            Lplaying = vals.Item1;
+            recorderL = vals.Item2;
+        }
+        private void b_PlayerR_StartRec_Click(object sender, EventArgs e) {
+            (bool, Recorder) vals = StopStartRec(Rplaying, VLCPlayer_R, b_PlayerR_StartRec, recorderR);
+            Rplaying = vals.Item1;
+            recorderR = vals.Item2;
+        }
+
+
+        /// <summary>
+        /// //
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
         private void OnFinishedTypingScFolder(object sender, EventArgs e) {
             if (CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
                 ConfigControl.scFolder = tB_Paths_sCFolder.Text;
@@ -634,20 +663,7 @@ namespace SSLUtility2
             ConfigControl.configNotif = check_Not_Config.Checked;
         }
 
-        bool Lplaying = false;
-        bool Rplaying = false;
-
-        private void b_PlayerL_StartRec_Click(object sender, EventArgs e) {
-            (bool, Recorder) vals = StopStartRec(Lplaying, VLCPlayer_L, b_PlayerL_StartRec, recorderL);
-            Lplaying = vals.Item1;
-            recorderL = vals.Item2;
-        }
-        private void b_PlayerR_StartRec_Click(object sender, EventArgs e) {
-            (bool, Recorder) vals = StopStartRec(Rplaying, VLCPlayer_R, b_PlayerR_StartRec, recorderR);
-            Rplaying = vals.Item1;
-            recorderR = vals.Item2;
-        }
-
+      
         private void b_Paths_vBrowse_Click(object sender, EventArgs e) {
             BrowseFolderButton(tB_Paths_vFolder);
         }

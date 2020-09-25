@@ -1368,6 +1368,7 @@ namespace SSLUtility2 {
             this.ClientSize = new System.Drawing.Size(1659, 929);
             this.Controls.Add(this.tC_Main);
             this.Controls.Add(this.statusStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "SSUtility V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);

@@ -25,6 +25,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         public void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResponseLog));
             this.rtb_Log = new System.Windows.Forms.RichTextBox();
             this.b_RL_Clear = new System.Windows.Forms.Button();
             this.b_RL_Save = new System.Windows.Forms.Button();
@@ -79,6 +80,7 @@
             this.Controls.Add(this.b_RL_Save);
             this.Controls.Add(this.b_RL_Clear);
             this.Controls.Add(this.rtb_Log);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ResponseLog";
             this.Text = "ResponseLog";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ResponseLog_FormClosing);

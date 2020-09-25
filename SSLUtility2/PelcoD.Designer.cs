@@ -25,6 +25,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PelcoD));
             this.b_PD_Load = new System.Windows.Forms.Button();
             this.b_PD_Save = new System.Windows.Forms.Button();
             this.b_PD_Fire = new System.Windows.Forms.Button();
@@ -247,6 +248,7 @@
             this.Controls.Add(this.b_PD_Save);
             this.Controls.Add(this.b_PD_Fire);
             this.Controls.Add(this.rtb_PD_Commands);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PelcoD";
             this.Text = "PelcoD";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PelcoD_FormClosing);

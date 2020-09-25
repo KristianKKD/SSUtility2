@@ -25,6 +25,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPanel));
             this.tB_Presets_Number = new System.Windows.Forms.TextBox();
             this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
             this.tB_IPCon_Adr = new System.Windows.Forms.TextBox();
@@ -407,6 +408,7 @@
             this.Controls.Add(this.b_PTZ_ZoomPos);
             this.Controls.Add(this.b_PTZ_Right);
             this.Controls.Add(this.b_PTZ_Left);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ControlPanel";
             this.Text = "ControlPanel";
             this.Load += new System.EventHandler(this.ControlPanel_Load);
