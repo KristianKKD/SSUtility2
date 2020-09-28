@@ -48,8 +48,8 @@ namespace SSLUtility2 {
 
         public static async Task<bool> Connect(string ipAdr, string port, Control lCon, bool stopError = false) {
             LabelDisplay(false, lCon);
-            if (!stopError) {
-                if (!CheckIsSameSubnet(ipAdr) && !ConfigControl.subnetNotif) {
+            if (!stopError && !ConfigControl.subnetNotif) {
+                if (!CheckIsSameSubnet(ipAdr)) {
                     CloseSock();
                     return false;
                 }
@@ -58,6 +58,7 @@ namespace SSLUtility2 {
             if (sock.Connected) {
                 CloseSock();
             }
+
             if (!PingAdr(ipAdr).Result) {
                 if (!stopError) {
                     MainForm.ShowError(failedConnectMsg, failedConnectCaption, ipAdr + ":" + port + " ping timed out with no response.");
@@ -150,7 +151,6 @@ namespace SSLUtility2 {
                 }
             } 
         }
-
        
         public static void CloseSock() {
             if (sock != null && sock.Connected) {
@@ -158,6 +158,7 @@ namespace SSLUtility2 {
                 sock.Close();
             }
         }
+
         public static bool CheckIsSameSubnet(string newIp) {
             string rawIp = GetLocalIPAddress();
             string mySub = FindSubnet(rawIp);

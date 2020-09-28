@@ -70,6 +70,11 @@ namespace SSLUtility2
             this.b_Presets_CHARM_Aquire = new System.Windows.Forms.Button();
             this.b_Presets_CHARM_Standby = new System.Windows.Forms.Button();
             this.l_Presets_Default = new System.Windows.Forms.Label();
+            this.b_Presets_Daylight_Extender = new System.Windows.Forms.Button();
+            this.b_Presets_Thermal_DigiPos = new System.Windows.Forms.Button();
+            this.b_Presets_Thermal_DigiNeg = new System.Windows.Forms.Button();
+            this.b_Presets_Thermal_Stabi = new System.Windows.Forms.Button();
+            this.b_Presets_Thermal_Cycle = new System.Windows.Forms.Button();
             this.tC_Presets_Default.SuspendLayout();
             this.adminPage.SuspendLayout();
             this.daylightPage.SuspendLayout();
@@ -150,6 +155,7 @@ namespace SSLUtility2
             // 
             // daylightPage
             // 
+            this.daylightPage.Controls.Add(this.b_Presets_Daylight_Extender);
             this.daylightPage.Controls.Add(this.b_Presets_Daylight_Stabilizer);
             this.daylightPage.Controls.Add(this.b_Presets_Daylight_WDR);
             this.daylightPage.Controls.Add(this.b_Presets_Daylight_Wiper);
@@ -215,6 +221,10 @@ namespace SSLUtility2
             // 
             // thermalPage
             // 
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_Cycle);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_Stabi);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_DigiNeg);
+            this.thermalPage.Controls.Add(this.b_Presets_Thermal_DigiPos);
             this.thermalPage.Controls.Add(this.b_Presets_ContrastPos);
             this.thermalPage.Controls.Add(this.b_Presets_ContrastNeg);
             this.thermalPage.Controls.Add(this.b_Presets_Thermal_BrightPos);
@@ -235,9 +245,9 @@ namespace SSLUtility2
             // 
             // b_Presets_ContrastPos
             // 
-            this.b_Presets_ContrastPos.Location = new System.Drawing.Point(127, 198);
+            this.b_Presets_ContrastPos.Location = new System.Drawing.Point(118, 198);
             this.b_Presets_ContrastPos.Name = "b_Presets_ContrastPos";
-            this.b_Presets_ContrastPos.Size = new System.Drawing.Size(91, 27);
+            this.b_Presets_ContrastPos.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_ContrastPos.TabIndex = 6;
             this.b_Presets_ContrastPos.Text = "Contrast +";
             this.b_Presets_ContrastPos.UseVisualStyleBackColor = true;
@@ -247,7 +257,7 @@ namespace SSLUtility2
             // 
             this.b_Presets_ContrastNeg.Location = new System.Drawing.Point(6, 198);
             this.b_Presets_ContrastNeg.Name = "b_Presets_ContrastNeg";
-            this.b_Presets_ContrastNeg.Size = new System.Drawing.Size(91, 27);
+            this.b_Presets_ContrastNeg.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_ContrastNeg.TabIndex = 6;
             this.b_Presets_ContrastNeg.Text = "Contrast -";
             this.b_Presets_ContrastNeg.UseVisualStyleBackColor = true;
@@ -295,29 +305,29 @@ namespace SSLUtility2
             // 
             // b_Presets_Thermal_ICE
             // 
-            this.b_Presets_Thermal_ICE.Location = new System.Drawing.Point(6, 102);
+            this.b_Presets_Thermal_ICE.Location = new System.Drawing.Point(118, 39);
             this.b_Presets_Thermal_ICE.Name = "b_Presets_Thermal_ICE";
-            this.b_Presets_Thermal_ICE.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Thermal_ICE.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_ICE.TabIndex = 6;
-            this.b_Presets_Thermal_ICE.Text = "Toggle ICE / CLAHE";
+            this.b_Presets_Thermal_ICE.Text = "ICE / CLAHE";
             this.b_Presets_Thermal_ICE.UseVisualStyleBackColor = true;
             this.b_Presets_Thermal_ICE.Click += new System.EventHandler(this.b_Presets_Thermal_ICE_Click);
             // 
             // b_Presets_Thermal_WhiteBlack
             // 
-            this.b_Presets_Thermal_WhiteBlack.Location = new System.Drawing.Point(6, 69);
+            this.b_Presets_Thermal_WhiteBlack.Location = new System.Drawing.Point(6, 39);
             this.b_Presets_Thermal_WhiteBlack.Name = "b_Presets_Thermal_WhiteBlack";
-            this.b_Presets_Thermal_WhiteBlack.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Thermal_WhiteBlack.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_WhiteBlack.TabIndex = 6;
-            this.b_Presets_Thermal_WhiteBlack.Text = "White Hot / Black Hot";
+            this.b_Presets_Thermal_WhiteBlack.Text = "White/Black Hot";
             this.b_Presets_Thermal_WhiteBlack.UseVisualStyleBackColor = true;
             this.b_Presets_Thermal_WhiteBlack.Click += new System.EventHandler(this.b_Presets_Thermal_WhiteBlack_Click);
             // 
             // b_Presets_Thermal_NUC
             // 
-            this.b_Presets_Thermal_NUC.Location = new System.Drawing.Point(6, 38);
+            this.b_Presets_Thermal_NUC.Location = new System.Drawing.Point(117, 6);
             this.b_Presets_Thermal_NUC.Name = "b_Presets_Thermal_NUC";
-            this.b_Presets_Thermal_NUC.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Thermal_NUC.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_Thermal_NUC.TabIndex = 6;
             this.b_Presets_Thermal_NUC.Text = "Do NUC";
             this.b_Presets_Thermal_NUC.UseVisualStyleBackColor = true;
@@ -327,7 +337,7 @@ namespace SSLUtility2
             // 
             this.b_Presets_Thermal_AF.Location = new System.Drawing.Point(6, 6);
             this.b_Presets_Thermal_AF.Name = "b_Presets_Thermal_AF";
-            this.b_Presets_Thermal_AF.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Thermal_AF.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_AF.TabIndex = 6;
             this.b_Presets_Thermal_AF.Text = "AutoFocus";
             this.b_Presets_Thermal_AF.UseVisualStyleBackColor = true;
@@ -531,9 +541,59 @@ namespace SSLUtility2
             this.l_Presets_Default.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_Presets_Default.Location = new System.Drawing.Point(12, 9);
             this.l_Presets_Default.Name = "l_Presets_Default";
-            this.l_Presets_Default.Size = new System.Drawing.Size(134, 20);
+            this.l_Presets_Default.Size = new System.Drawing.Size(138, 20);
             this.l_Presets_Default.TabIndex = 76;
-            this.l_Presets_Default.Text = "Default Presets";
+            this.l_Presets_Default.Text = "Quick Functions";
+            // 
+            // b_Presets_Daylight_Extender
+            // 
+            this.b_Presets_Daylight_Extender.Location = new System.Drawing.Point(7, 166);
+            this.b_Presets_Daylight_Extender.Name = "b_Presets_Daylight_Extender";
+            this.b_Presets_Daylight_Extender.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Daylight_Extender.TabIndex = 7;
+            this.b_Presets_Daylight_Extender.Text = "Extender";
+            this.b_Presets_Daylight_Extender.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_Extender.Click += new System.EventHandler(this.b_Presets_Daylight_Extender_Click);
+            // 
+            // b_Presets_Thermal_DigiPos
+            // 
+            this.b_Presets_Thermal_DigiPos.Location = new System.Drawing.Point(7, 105);
+            this.b_Presets_Thermal_DigiPos.Name = "b_Presets_Thermal_DigiPos";
+            this.b_Presets_Thermal_DigiPos.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_DigiPos.TabIndex = 7;
+            this.b_Presets_Thermal_DigiPos.Text = "Digital Zoom In";
+            this.b_Presets_Thermal_DigiPos.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_DigiPos.Click += new System.EventHandler(this.b_Presets_Thermal_DigiPos_Click);
+            // 
+            // b_Presets_Thermal_DigiNeg
+            // 
+            this.b_Presets_Thermal_DigiNeg.Location = new System.Drawing.Point(117, 105);
+            this.b_Presets_Thermal_DigiNeg.Name = "b_Presets_Thermal_DigiNeg";
+            this.b_Presets_Thermal_DigiNeg.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_DigiNeg.TabIndex = 8;
+            this.b_Presets_Thermal_DigiNeg.Text = "Digital Zoom Out";
+            this.b_Presets_Thermal_DigiNeg.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_DigiNeg.Click += new System.EventHandler(this.b_Presets_Thermal_DigiNeg_Click);
+            // 
+            // b_Presets_Thermal_Stabi
+            // 
+            this.b_Presets_Thermal_Stabi.Location = new System.Drawing.Point(6, 72);
+            this.b_Presets_Thermal_Stabi.Name = "b_Presets_Thermal_Stabi";
+            this.b_Presets_Thermal_Stabi.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_Stabi.TabIndex = 9;
+            this.b_Presets_Thermal_Stabi.Text = "Stabilisation";
+            this.b_Presets_Thermal_Stabi.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_Stabi.Click += new System.EventHandler(this.b_Presets_Thermal_Stabi_Click);
+            // 
+            // b_Presets_Thermal_Cycle
+            // 
+            this.b_Presets_Thermal_Cycle.Location = new System.Drawing.Point(118, 72);
+            this.b_Presets_Thermal_Cycle.Name = "b_Presets_Thermal_Cycle";
+            this.b_Presets_Thermal_Cycle.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_Cycle.TabIndex = 10;
+            this.b_Presets_Thermal_Cycle.Text = "Cycle Palettes";
+            this.b_Presets_Thermal_Cycle.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_Cycle.Click += new System.EventHandler(this.b_Presets_Thermal_Cycle_Click);
             // 
             // PresetPanel
             // 
@@ -613,5 +673,10 @@ namespace SSLUtility2
         public System.Windows.Forms.Button b_Presets_CHARM_Standby;
         public System.Windows.Forms.Label l_Presets_Default;
         public System.Windows.Forms.Button b_Presets_SLG_AllLightsOff;
+        public System.Windows.Forms.Button b_Presets_Daylight_Extender;
+        public System.Windows.Forms.Button b_Presets_Thermal_DigiNeg;
+        public System.Windows.Forms.Button b_Presets_Thermal_DigiPos;
+        public System.Windows.Forms.Button b_Presets_Thermal_Cycle;
+        public System.Windows.Forms.Button b_Presets_Thermal_Stabi;
     }
 }

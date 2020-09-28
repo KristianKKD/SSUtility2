@@ -36,7 +36,7 @@ namespace SSLUtility2
         }
 
         private void b_Detach(object sender, EventArgs e) {
-            Detached d = mainRef.DetachVid();
+            Detached d = mainRef.DetachVid(true);
 
             d.tB_PlayerD_Adr.Text = tB_IPCon_Adr.Text;
             d.checkB_PlayerD_Manual.Checked = true;

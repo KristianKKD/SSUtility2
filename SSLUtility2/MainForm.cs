@@ -23,11 +23,9 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.4.1";
+        public const string version = "v1.2.5.0";
         D protocol = new D();
         public static MainForm m;
-        Recorder recorderL;
-        Recorder recorderR;
         public bool lite = false;
         Control lab;
 
@@ -46,6 +44,8 @@ namespace SSLUtility2
             tC_Main.TabPages[1].Dispose(); //remove the firmware page
 
             AttachControlPanel();
+            Detached playerL = AttachDetached(10);
+            Detached playerR = AttachDetached(690);
 
             saveList = new Control[]{
                 ipCon.cB_IPCon_Type,
@@ -53,23 +53,23 @@ namespace SSLUtility2
                 ipCon.tB_IPCon_Port,
                 ipCon.cB_IPCon_Selected,
 
-                cB_PlayerL_Type,
-                tB_PlayerL_Adr,
-                tB_PlayerL_Port,
-                tB_PlayerL_RTSP,
-                tB_PlayerL_Buffering,
-                tB_PlayerL_Username,
-                tB_PlayerL_Password,
-                tB_PlayerL_SimpleAdr,
+                playerL.cB_PlayerD_Type,
+                playerL.tB_PlayerD_Adr,
+                playerL.tB_PlayerD_Port,
+                playerL.tB_PlayerD_RTSP,
+                playerL.tB_PlayerD_Buffering,
+                playerL.tB_PlayerD_Username,
+                playerL.tB_PlayerD_Password,
+                playerL.tB_PlayerD_SimpleAdr,
 
-                cB_PlayerR_Type,
-                tB_PlayerR_Adr,
-                tB_PlayerR_Port,
-                tB_PlayerR_RTSP,
-                tB_PlayerR_Buffering,
-                tB_PlayerR_Username,
-                tB_PlayerR_Password,
-                tB_PlayerR_SimpleAdr,
+                playerR.cB_PlayerD_Type,
+                playerR.tB_PlayerD_Adr,
+                playerR.tB_PlayerD_Port,
+                playerR.tB_PlayerD_RTSP,
+                playerR.tB_PlayerD_Buffering,
+                playerR.tB_PlayerD_Username,
+                playerR.tB_PlayerD_Password,
+                playerR.tB_PlayerD_SimpleAdr,
             };
 
             FileStuff();
@@ -82,33 +82,6 @@ namespace SSLUtility2
             }
             
         }
-
-        async Task FileStuff() {
-            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave);
-
-            ConfigControl.SetToDefaults();
-
-            CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
-            CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
-            CheckCreateFile(null, ConfigControl.scFolder);
-            CheckCreateFile(null, ConfigControl.vFolder);
-            CheckCreateFile(null, ConfigControl.savedFolder);
-
-            await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
-            FindVars();
-        }
-
-        void AttachControlPanel() {
-            TabPage tp = tC_Control.TabPages[0];
-            ipCon = SpawnControlPanel(tp, false);
-            ipCon.mainRef = m;
-            PresetPanel pp = AttachPresetPanel(tp, ipCon);
-            pp.cp = ipCon;
-
-            ipCon.isOriginal = true;
-            lab = ipCon.l_IPCon_Connected;
-        }
-
         async Task FindVars() {
             foreach (ConfigVar v in ConfigControl.stringVarList) {
                 if (v.value.ToLower() == "false" || v.value.ToLower() == "true") {
@@ -170,6 +143,58 @@ namespace SSLUtility2
             return fileDlg;
         }
 
+        async Task FileStuff() {
+
+            ConfigControl.SetToDefaults();
+
+            CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
+            CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
+            CheckCreateFile(null, ConfigControl.scFolder);
+            CheckCreateFile(null, ConfigControl.vFolder);
+            CheckCreateFile(null, ConfigControl.savedFolder);
+
+            await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
+            FindVars();
+            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave);
+        }
+
+        void AttachControlPanel() {
+            TabPage tp = tC_Control.TabPages[0];
+            ipCon = SpawnControlPanel(tp, false);
+            ipCon.mainRef = m;
+            PresetPanel pp = AttachPresetPanel(tp, ipCon);
+            pp.cp = ipCon;
+
+            ipCon.isOriginal = true;
+            lab = ipCon.l_IPCon_Connected;
+        }
+
+        Detached AttachDetached(int xOffset) {
+            TabPage tp = tC_Control.TabPages[0];
+            GroupBox gb = new GroupBox();
+            Detached d = DetachVid(false);
+
+            var c = GetAllType(d, typeof(GroupBox));
+            var c2 = GetAllType(d, typeof(Button));
+            var c3 = GetAllType(d, typeof(Label));
+            var c4 = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
+            var c5 = GetAllType(d, typeof(CheckBox));
+
+            gb.Controls.AddRange(c.ToArray());
+            gb.Controls.AddRange(c2.ToArray());
+            gb.Controls.AddRange(c3.ToArray());
+            gb.Controls.AddRange(c4.ToArray());
+            gb.Controls.AddRange(c5.ToArray());
+
+            d.VLCPlayer_D.Location = new Point(d.VLCPlayer_D.Location.X, d.VLCPlayer_D.Location.Y + 5);
+            gb.Size = new Size(d.Width - 18, d.Height - 40);
+            gb.Location = new Point(ipCon.Location.X + ipCon.Size.Width + xOffset, ipCon.Location.Y + 25);
+
+            tp.Controls.Add(gb);
+
+            return d;
+        }
+       
         public void InitLiteMode() {
             TabPage tp = LiteMode();
             ControlPanel cp = SpawnControlPanel(tp);
@@ -192,6 +217,16 @@ namespace SSLUtility2
             AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
             lite = true;
             return tp;
+        }
+
+        public Detached DetachVid(bool show) {
+            Detached dv = new Detached();
+            if (show) {
+                dv.Show();
+            }
+            dv.mainRef = m;
+            SetFeatureToAllControls(dv.Controls);
+            return dv;
         }
 
         ControlPanel SpawnControlPanel(TabPage tp, bool makeLite = true) {
@@ -321,7 +356,7 @@ namespace SSLUtility2
             }
         }
 
-        public void Play(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, TextBox linkedTB) {
+        public void Play(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, TextBox linkedTB, string buffering) {
             if (combinedUrl == "") {
                 MessageBox.Show("Address is invalid!");
                 return;
@@ -331,16 +366,16 @@ namespace SSLUtility2
                 return;
             }
             linkedTB.Text = combinedUrl;
-            Replay(player, combinedUrl);
+            Replay(player, combinedUrl, buffering);
         }
 
-        public void Replay(AxAXVLC.AxVLCPlugin2 player, string combinedUrl) {
+        public void Replay(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, string buffering) {
             if (player.playlist.isPlaying) {
                 player.playlist.stop();
                 player.playlist.items.clear();
             }
 
-            player.playlist.add(combinedUrl, null, ":network-caching=" + tB_PlayerL_Buffering.Text);
+            player.playlist.add(combinedUrl, null, ":network-caching=" +buffering);
             player.playlist.next();
             player.playlist.play();
         }
@@ -484,14 +519,6 @@ namespace SSLUtility2
             check_Not_Config.Checked = ConfigControl.configNotif;
         }
 
-        public Detached DetachVid() {
-            Detached dv = new Detached();
-            dv.Show();
-            dv.MainRef = m;
-            SetFeatureToAllControls(dv.Controls);
-            return dv;
-        }
-
         public PelcoD OpenPelco(string ip, string port, string selected) {
             PelcoD pd = new PelcoD();
             pd.mainRef = m;
@@ -502,146 +529,6 @@ namespace SSLUtility2
             SetFeatureToAllControls(pd.Controls);
             return pd;
         }
-
-
-
-
-        /// <summary>
-        /// //
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void b_PlayerL_Play_Click(object sender, EventArgs e) {
-            string combinedUrl;
-
-            if (checkB_PlayerL_Manual.Checked) { //make a function to automatically grab these from gB_...
-                string ipaddress = tB_PlayerL_Adr.Text; //is it possible? the variables need to be in an order
-                string port = tB_PlayerL_Port.Text;
-                string url = tB_PlayerL_RTSP.Text;
-                string username = tB_PlayerL_Username.Text;
-                string password = tB_PlayerL_Password.Text;
-
-                combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
-            } else {
-                combinedUrl = tB_PlayerL_SimpleAdr.Text;
-            }
-
-            Play(VLCPlayer_L, combinedUrl, tB_PlayerL_SimpleAdr);
-        }
-
-        private void b_PlayerR_Play_Click(object sender, EventArgs e) {
-            string combinedUrl;
-
-            if (checkB_PlayerR_Manual.Checked) { //make a function to automatically grab these from gB_...
-                string ipaddress = tB_PlayerR_Adr.Text; //is it possible? the variables need to be in an order
-                string port = tB_PlayerR_Port.Text;
-                string url = tB_PlayerR_RTSP.Text;
-                string username = tB_PlayerR_Username.Text;
-                string password = tB_PlayerR_Password.Text;
-
-                combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
-            } else {
-                combinedUrl = tB_PlayerR_SimpleAdr.Text;
-            }
-
-            Play(VLCPlayer_R, combinedUrl, tB_PlayerR_SimpleAdr);
-        }
-
-       
-        private void cB_PlayerL_Type_SelectedIndexChanged(object sender, EventArgs e) {
-            string enc = cB_PlayerL_Type.Text;
-            string username = "";
-            string password = "";
-            string rtsp = "";
-
-            if (enc == "IONodes - Daylight") {
-                username = "admin";
-                password = "admin";
-                rtsp = "videoinput_1:0/h264_1/onvif.stm";
-            } else if (enc == "IONodes - Thermal") {
-                username = "admin";
-                password = "admin";
-                rtsp = "videoinput_2:0/h264_1/onvif.stm";
-            } else if (enc == "VIVOTEK") {
-                username = "root";
-                password = "root1234";
-                rtsp = "live.sdp";
-            } else if (enc == "BOSCH") {
-                username = "service";
-                password = "Service123!";
-                rtsp = "";
-            }
-
-
-            tB_PlayerL_RTSP.Text = rtsp;
-            tB_PlayerL_Username.Text = username;
-            tB_PlayerL_Password.Text = password;
-
-        }
-
-        private void cB_PlayerR_Type_SelectedIndexChanged(object sender, EventArgs e) {
-            string enc = cB_PlayerR_Type.Text;
-            string username = "";
-            string password = "";
-            string rtsp = "";
-
-            if (enc == "IONodes - Daylight") {
-                username = "admin";
-                password = "admin";
-                rtsp = "videoinput_1:0/h264_1/onvif.stm";
-            } else if (enc == "IONodes - Thermal") {
-                username = "admin";
-                password = "admin";
-                rtsp = "videoinput_2:0/h264_1/onvif.stm";
-            } else if (enc == "VIVOTEK") {
-                username = "root";
-                password = "root1234";
-                rtsp = "live.sdp";
-            } else if (enc == "BOSCH") {
-                username = "service";
-                password = "Service123!";
-                rtsp = "";
-            }
-
-            tB_PlayerR_RTSP.Text = rtsp;
-            tB_PlayerR_Username.Text = username;
-            tB_PlayerR_Password.Text = password;
-        }
-
-        private void b_PlayerL_SaveSnap_Click(object sender, EventArgs e) {
-            SaveSnap(VLCPlayer_L);
-        }
-        private void b_PlayerR_SaveSnap_Click(object sender, EventArgs e) {
-            SaveSnap(VLCPlayer_R);
-        }
-
-        private void checkB_PlayerL_Manual_CheckedChanged(object sendeL, EventArgs e) {
-            ExtendOptions(checkB_PlayerL_Manual.Checked, gB_PlayerL_Extended, gB_PlayerL_Simple);
-        }
-        private void checkB_PlayerR_Manual_CheckedChanged(object sender, EventArgs e) {
-            ExtendOptions(checkB_PlayerR_Manual.Checked, gB_PlayerR_Extended, gB_PlayerR_Simple);
-        }
-
-        bool Lplaying = false;
-        bool Rplaying = false;
-
-        private void b_PlayerL_StartRec_Click(object sender, EventArgs e) {
-            (bool, Recorder) vals = StopStartRec(Lplaying, VLCPlayer_L, b_PlayerL_StartRec, recorderL);
-            Lplaying = vals.Item1;
-            recorderL = vals.Item2;
-        }
-        private void b_PlayerR_StartRec_Click(object sender, EventArgs e) {
-            (bool, Recorder) vals = StopStartRec(Rplaying, VLCPlayer_R, b_PlayerR_StartRec, recorderR);
-            Rplaying = vals.Item1;
-            recorderR = vals.Item2;
-        }
-
-
-        /// <summary>
-        /// //
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
 
         private void OnFinishedTypingScFolder(object sender, EventArgs e) {
             if (CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {

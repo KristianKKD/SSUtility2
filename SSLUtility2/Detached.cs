@@ -5,7 +5,7 @@ namespace SSLUtility2 {
 
     public partial class Detached : Form {
 
-        public MainForm MainRef { get;
+        public MainForm mainRef { get;
             set; }
 
         public Detached() {
@@ -27,27 +27,24 @@ namespace SSLUtility2 {
                 combinedUrl = tB_PlayerD_SimpleAdr.Text;
             }
 
-            MainRef.Play(VLCPlayer_D, combinedUrl, tB_PlayerD_SimpleAdr);
+            mainRef.Play(VLCPlayer_D, combinedUrl, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text);
         }
 
         private void b_PlayerD_SaveSnap_Click(object sender, EventArgs e) {
-            MainRef.SaveSnap(VLCPlayer_D);
+            mainRef.SaveSnap(VLCPlayer_D);
         }
 
         private void checkB_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
-            MainRef.ExtendOptions(checkB_PlayerD_Manual.Checked, gB_PlayerD_Extended, gB_PlayerD_Simple);
+            mainRef.ExtendOptions(checkB_PlayerD_Manual.Checked, gB_PlayerD_Extended, gB_PlayerD_Simple);
         }
 
         bool Dplaying = false;
         Recorder recorderD;
 
         private void b_PlayerD_StartRec_Click(object sender, EventArgs e) {
-            (bool, Recorder) vals = MainRef.StopStartRec(Dplaying, VLCPlayer_D, b_PlayerD_StartRec, recorderD);
+            (bool, Recorder) vals = mainRef.StopStartRec(Dplaying, VLCPlayer_D, b_PlayerD_StartRec, recorderD);
             Dplaying = vals.Item1;
             recorderD = vals.Item2;
-        }
-        private void b_PlayerD_PauseRec_Click(object sender, EventArgs e) {
-            //MainRef.Pause
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -78,6 +75,10 @@ namespace SSLUtility2 {
             tB_PlayerD_RTSP.Text = rtsp;
             tB_PlayerD_Username.Text = username;
             tB_PlayerD_Password.Text = password;
+        }
+
+        private void gB_PlayerD_Simple_Enter(object sender, EventArgs e) {
+
         }
     }
 }

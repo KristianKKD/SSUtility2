@@ -59,11 +59,12 @@
             this.gB_PlayerD_Simple.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.gB_PlayerD_Simple.Controls.Add(this.tB_PlayerD_SimpleAdr);
             this.gB_PlayerD_Simple.Controls.Add(this.l_PlayerD_SimpleAdr);
-            this.gB_PlayerD_Simple.Location = new System.Drawing.Point(2, 516);
+            this.gB_PlayerD_Simple.Location = new System.Drawing.Point(2, 519);
             this.gB_PlayerD_Simple.Name = "gB_PlayerD_Simple";
-            this.gB_PlayerD_Simple.Size = new System.Drawing.Size(313, 239);
+            this.gB_PlayerD_Simple.Size = new System.Drawing.Size(313, 236);
             this.gB_PlayerD_Simple.TabIndex = 48;
             this.gB_PlayerD_Simple.TabStop = false;
+            this.gB_PlayerD_Simple.Enter += new System.EventHandler(this.gB_PlayerD_Simple_Enter);
             // 
             // tB_PlayerD_SimpleAdr
             // 
@@ -99,9 +100,9 @@
             this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_Buffering);
             this.gB_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Password);
             this.gB_PlayerD_Extended.Controls.Add(this.cB_PlayerD_Type);
-            this.gB_PlayerD_Extended.Location = new System.Drawing.Point(2, 516);
+            this.gB_PlayerD_Extended.Location = new System.Drawing.Point(2, 519);
             this.gB_PlayerD_Extended.Name = "gB_PlayerD_Extended";
-            this.gB_PlayerD_Extended.Size = new System.Drawing.Size(313, 239);
+            this.gB_PlayerD_Extended.Size = new System.Drawing.Size(313, 236);
             this.gB_PlayerD_Extended.TabIndex = 26;
             this.gB_PlayerD_Extended.TabStop = false;
             this.gB_PlayerD_Extended.Visible = false;
@@ -244,10 +245,10 @@
             // VLCPlayer_D
             // 
             this.VLCPlayer_D.Enabled = true;
-            this.VLCPlayer_D.Location = new System.Drawing.Point(1, 1);
+            this.VLCPlayer_D.Location = new System.Drawing.Point(0, 0);
             this.VLCPlayer_D.Name = "VLCPlayer_D";
             this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
-            this.VLCPlayer_D.Size = new System.Drawing.Size(639, 512);
+            this.VLCPlayer_D.Size = new System.Drawing.Size(640, 513);
             this.VLCPlayer_D.TabIndex = 41;
             // 
             // checkB_PlayerD_Manual
@@ -263,7 +264,7 @@
             // 
             // b_PlayerD_StartRec
             // 
-            this.b_PlayerD_StartRec.Location = new System.Drawing.Point(320, 583);
+            this.b_PlayerD_StartRec.Location = new System.Drawing.Point(321, 582);
             this.b_PlayerD_StartRec.Name = "b_PlayerD_StartRec";
             this.b_PlayerD_StartRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerD_StartRec.TabIndex = 45;
@@ -273,7 +274,7 @@
             // 
             // b_PlayerD_SaveSnap
             // 
-            this.b_PlayerD_SaveSnap.Location = new System.Drawing.Point(320, 554);
+            this.b_PlayerD_SaveSnap.Location = new System.Drawing.Point(321, 553);
             this.b_PlayerD_SaveSnap.Name = "b_PlayerD_SaveSnap";
             this.b_PlayerD_SaveSnap.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerD_SaveSnap.TabIndex = 46;
@@ -285,7 +286,7 @@
             // 
             this.b_PlayerD_Play.Location = new System.Drawing.Point(320, 662);
             this.b_PlayerD_Play.Name = "b_PlayerD_Play";
-            this.b_PlayerD_Play.Size = new System.Drawing.Size(320, 93);
+            this.b_PlayerD_Play.Size = new System.Drawing.Size(315, 93);
             this.b_PlayerD_Play.TabIndex = 42;
             this.b_PlayerD_Play.Text = "Play";
             this.b_PlayerD_Play.UseVisualStyleBackColor = true;
@@ -295,7 +296,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 767);
+            this.ClientSize = new System.Drawing.Size(639, 761);
             this.Controls.Add(this.gB_PlayerD_Extended);
             this.Controls.Add(this.gB_PlayerD_Simple);
             this.Controls.Add(this.VLCPlayer_D);
