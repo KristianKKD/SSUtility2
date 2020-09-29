@@ -76,11 +76,11 @@ namespace SSLUtility2 {
             this.l_Version = new System.Windows.Forms.Label();
             this.tP_Settings = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.l_Other = new System.Windows.Forms.Label();
+            this.check_Other_AutoPlay = new System.Windows.Forms.CheckBox();
             this.check_Not_Config = new System.Windows.Forms.CheckBox();
             this.check_Not_Subnet = new System.Windows.Forms.CheckBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.l_Not_Subnet = new System.Windows.Forms.Label();
-            this.l_Not_Notifs = new System.Windows.Forms.Label();
+            this.l_Notifs = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
             this.l_Rec_Quality = new System.Windows.Forms.Label();
@@ -91,15 +91,17 @@ namespace SSLUtility2 {
             this.l_Rec_vFileN = new System.Windows.Forms.Label();
             this.l_Rec = new System.Windows.Forms.Label();
             this.l_Rec_FPS = new System.Windows.Forms.Label();
-            this.l_Paths_sCCheck = new System.Windows.Forms.Label();
             this.gB_Paths = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.check_Paths_Manual = new System.Windows.Forms.CheckBox();
+            this.l_Paths_sCCheck = new System.Windows.Forms.Label();
             this.l_Paths_vCheck = new System.Windows.Forms.Label();
             this.b_Paths_vBrowse = new System.Windows.Forms.Button();
             this.tB_Paths_vFolder = new System.Windows.Forms.TextBox();
             this.l_Paths_vFolder = new System.Windows.Forms.Label();
             this.tB_Paths_sCFolder = new System.Windows.Forms.TextBox();
             this.b_Paths_sCBrowse = new System.Windows.Forms.Button();
-            this.l_Settings_Paths = new System.Windows.Forms.Label();
+            this.l_Paths = new System.Windows.Forms.Label();
             this.l_Paths_sCFolder = new System.Windows.Forms.Label();
             this.b_Settings_Default = new System.Windows.Forms.Button();
             this.b_Settings_Apply = new System.Windows.Forms.Button();
@@ -431,76 +433,85 @@ namespace SSLUtility2 {
             // 
             this.tP_Settings.Controls.Add(this.groupBox2);
             this.tP_Settings.Controls.Add(this.groupBox1);
-            this.tP_Settings.Controls.Add(this.l_Paths_sCCheck);
             this.tP_Settings.Controls.Add(this.gB_Paths);
             this.tP_Settings.Controls.Add(this.b_Settings_Default);
             this.tP_Settings.Controls.Add(this.b_Settings_Apply);
             this.tP_Settings.Location = new System.Drawing.Point(4, 22);
             this.tP_Settings.Name = "tP_Settings";
             this.tP_Settings.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Settings.Size = new System.Drawing.Size(1637, 847);
+            this.tP_Settings.Size = new System.Drawing.Size(1637, 871);
             this.tP_Settings.TabIndex = 1;
             this.tP_Settings.Text = "Settings";
             this.tP_Settings.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.l_Other);
+            this.groupBox2.Controls.Add(this.check_Other_AutoPlay);
             this.groupBox2.Controls.Add(this.check_Not_Config);
             this.groupBox2.Controls.Add(this.check_Not_Subnet);
-            this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Controls.Add(this.l_Not_Subnet);
-            this.groupBox2.Controls.Add(this.l_Not_Notifs);
+            this.groupBox2.Controls.Add(this.l_Notifs);
             this.groupBox2.Location = new System.Drawing.Point(885, 6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(428, 194);
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
             // 
+            // l_Other
+            // 
+            this.l_Other.AutoSize = true;
+            this.l_Other.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Other.Location = new System.Drawing.Point(9, 95);
+            this.l_Other.Name = "l_Other";
+            this.l_Other.Size = new System.Drawing.Size(126, 20);
+            this.l_Other.TabIndex = 31;
+            this.l_Other.Text = "Other Settings";
+            // 
+            // check_Other_AutoPlay
+            // 
+            this.check_Other_AutoPlay.Location = new System.Drawing.Point(13, 125);
+            this.check_Other_AutoPlay.Name = "check_Other_AutoPlay";
+            this.check_Other_AutoPlay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_AutoPlay.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_AutoPlay.TabIndex = 30;
+            this.check_Other_AutoPlay.Text = "Autoplay Videos on Launch";
+            this.check_Other_AutoPlay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.check_Other_AutoPlay.UseVisualStyleBackColor = true;
+            this.check_Other_AutoPlay.CheckedChanged += new System.EventHandler(this.check_Other_AutoPlay_CheckChanged);
+            // 
             // check_Not_Config
             // 
-            this.check_Not_Config.Location = new System.Drawing.Point(172, 72);
+            this.check_Not_Config.Location = new System.Drawing.Point(13, 72);
             this.check_Not_Config.Name = "check_Not_Config";
-            this.check_Not_Config.Size = new System.Drawing.Size(15, 17);
+            this.check_Not_Config.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Not_Config.Size = new System.Drawing.Size(174, 17);
             this.check_Not_Config.TabIndex = 29;
+            this.check_Not_Config.Text = "Hide Bad Config Notification";
+            this.check_Not_Config.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.check_Not_Config.UseVisualStyleBackColor = true;
             this.check_Not_Config.CheckedChanged += new System.EventHandler(this.check_Not_Config_CheckedChanged);
             // 
             // check_Not_Subnet
             // 
-            this.check_Not_Subnet.Location = new System.Drawing.Point(172, 47);
+            this.check_Not_Subnet.Location = new System.Drawing.Point(13, 47);
             this.check_Not_Subnet.Name = "check_Not_Subnet";
-            this.check_Not_Subnet.Size = new System.Drawing.Size(15, 17);
+            this.check_Not_Subnet.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Not_Subnet.Size = new System.Drawing.Size(174, 17);
             this.check_Not_Subnet.TabIndex = 0;
+            this.check_Not_Subnet.Text = "Hide Subnet Notification";
+            this.check_Not_Subnet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.check_Not_Subnet.UseVisualStyleBackColor = true;
             this.check_Not_Subnet.CheckedChanged += new System.EventHandler(this.check_Not_Subnet_CheckedChanged);
             // 
-            // label10
+            // l_Notifs
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(10, 72);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(140, 13);
-            this.label10.TabIndex = 28;
-            this.label10.Text = "Hide Bad Config Notification";
-            // 
-            // l_Not_Subnet
-            // 
-            this.l_Not_Subnet.AutoSize = true;
-            this.l_Not_Subnet.Location = new System.Drawing.Point(10, 47);
-            this.l_Not_Subnet.Name = "l_Not_Subnet";
-            this.l_Not_Subnet.Size = new System.Drawing.Size(122, 13);
-            this.l_Not_Subnet.TabIndex = 27;
-            this.l_Not_Subnet.Text = "Hide Subnet Notification";
-            // 
-            // l_Not_Notifs
-            // 
-            this.l_Not_Notifs.AutoSize = true;
-            this.l_Not_Notifs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Not_Notifs.Location = new System.Drawing.Point(9, 16);
-            this.l_Not_Notifs.Name = "l_Not_Notifs";
-            this.l_Not_Notifs.Size = new System.Drawing.Size(109, 20);
-            this.l_Not_Notifs.TabIndex = 12;
-            this.l_Not_Notifs.Text = "Notifications";
+            this.l_Notifs.AutoSize = true;
+            this.l_Notifs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Notifs.Location = new System.Drawing.Point(9, 16);
+            this.l_Notifs.Name = "l_Notifs";
+            this.l_Notifs.Size = new System.Drawing.Size(109, 20);
+            this.l_Notifs.TabIndex = 12;
+            this.l_Notifs.Text = "Notifications";
             // 
             // groupBox1
             // 
@@ -543,6 +554,7 @@ namespace SSLUtility2 {
             // 
             // tB_Rec_scFileN
             // 
+            this.tB_Rec_scFileN.Enabled = false;
             this.tB_Rec_scFileN.Location = new System.Drawing.Point(126, 126);
             this.tB_Rec_scFileN.Name = "tB_Rec_scFileN";
             this.tB_Rec_scFileN.Size = new System.Drawing.Size(188, 20);
@@ -575,6 +587,7 @@ namespace SSLUtility2 {
             // 
             // tB_Rec_vFileN
             // 
+            this.tB_Rec_vFileN.Enabled = false;
             this.tB_Rec_vFileN.Location = new System.Drawing.Point(126, 97);
             this.tB_Rec_vFileN.Name = "tB_Rec_vFileN";
             this.tB_Rec_vFileN.Size = new System.Drawing.Size(188, 20);
@@ -609,23 +622,18 @@ namespace SSLUtility2 {
             this.l_Rec_FPS.TabIndex = 2;
             this.l_Rec_FPS.Text = "Framerate";
             // 
-            // l_Paths_sCCheck
-            // 
-            this.l_Paths_sCCheck.AutoSize = true;
-            this.l_Paths_sCCheck.Location = new System.Drawing.Point(397, 53);
-            this.l_Paths_sCCheck.Name = "l_Paths_sCCheck";
-            this.l_Paths_sCCheck.Size = new System.Drawing.Size(0, 13);
-            this.l_Paths_sCCheck.TabIndex = 16;
-            // 
             // gB_Paths
             // 
+            this.gB_Paths.Controls.Add(this.label1);
+            this.gB_Paths.Controls.Add(this.check_Paths_Manual);
+            this.gB_Paths.Controls.Add(this.l_Paths_sCCheck);
             this.gB_Paths.Controls.Add(this.l_Paths_vCheck);
             this.gB_Paths.Controls.Add(this.b_Paths_vBrowse);
             this.gB_Paths.Controls.Add(this.tB_Paths_vFolder);
             this.gB_Paths.Controls.Add(this.l_Paths_vFolder);
             this.gB_Paths.Controls.Add(this.tB_Paths_sCFolder);
             this.gB_Paths.Controls.Add(this.b_Paths_sCBrowse);
-            this.gB_Paths.Controls.Add(this.l_Settings_Paths);
+            this.gB_Paths.Controls.Add(this.l_Paths);
             this.gB_Paths.Controls.Add(this.l_Paths_sCFolder);
             this.gB_Paths.Location = new System.Drawing.Point(17, 6);
             this.gB_Paths.Name = "gB_Paths";
@@ -633,17 +641,49 @@ namespace SSLUtility2 {
             this.gB_Paths.TabIndex = 27;
             this.gB_Paths.TabStop = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(115, 166);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(307, 13);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "Automatic paths are Documents/SSUtility/Saved/[CAMERA IP]";
+            // 
+            // check_Paths_Manual
+            // 
+            this.check_Paths_Manual.Checked = true;
+            this.check_Paths_Manual.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.check_Paths_Manual.Location = new System.Drawing.Point(13, 45);
+            this.check_Paths_Manual.Name = "check_Paths_Manual";
+            this.check_Paths_Manual.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Paths_Manual.Size = new System.Drawing.Size(119, 21);
+            this.check_Paths_Manual.TabIndex = 32;
+            this.check_Paths_Manual.Text = "Automatic Paths";
+            this.check_Paths_Manual.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.check_Paths_Manual.UseVisualStyleBackColor = true;
+            this.check_Paths_Manual.CheckedChanged += new System.EventHandler(this.check_Paths_Manual_CheckedChanged);
+            // 
+            // l_Paths_sCCheck
+            // 
+            this.l_Paths_sCCheck.AutoSize = true;
+            this.l_Paths_sCCheck.Location = new System.Drawing.Point(380, 80);
+            this.l_Paths_sCCheck.Name = "l_Paths_sCCheck";
+            this.l_Paths_sCCheck.Size = new System.Drawing.Size(0, 13);
+            this.l_Paths_sCCheck.TabIndex = 16;
+            // 
             // l_Paths_vCheck
             // 
             this.l_Paths_vCheck.AutoSize = true;
-            this.l_Paths_vCheck.Location = new System.Drawing.Point(380, 80);
+            this.l_Paths_vCheck.Location = new System.Drawing.Point(380, 113);
             this.l_Paths_vCheck.Name = "l_Paths_vCheck";
             this.l_Paths_vCheck.Size = new System.Drawing.Size(0, 13);
             this.l_Paths_vCheck.TabIndex = 20;
             // 
             // b_Paths_vBrowse
             // 
-            this.b_Paths_vBrowse.Location = new System.Drawing.Point(311, 75);
+            this.b_Paths_vBrowse.Enabled = false;
+            this.b_Paths_vBrowse.Location = new System.Drawing.Point(313, 108);
             this.b_Paths_vBrowse.Name = "b_Paths_vBrowse";
             this.b_Paths_vBrowse.Size = new System.Drawing.Size(61, 22);
             this.b_Paths_vBrowse.TabIndex = 19;
@@ -653,7 +693,8 @@ namespace SSLUtility2 {
             // 
             // tB_Paths_vFolder
             // 
-            this.tB_Paths_vFolder.Location = new System.Drawing.Point(117, 77);
+            this.tB_Paths_vFolder.Enabled = false;
+            this.tB_Paths_vFolder.Location = new System.Drawing.Point(119, 110);
             this.tB_Paths_vFolder.Name = "tB_Paths_vFolder";
             this.tB_Paths_vFolder.Size = new System.Drawing.Size(188, 20);
             this.tB_Paths_vFolder.TabIndex = 18;
@@ -662,7 +703,7 @@ namespace SSLUtility2 {
             // l_Paths_vFolder
             // 
             this.l_Paths_vFolder.AutoSize = true;
-            this.l_Paths_vFolder.Location = new System.Drawing.Point(10, 80);
+            this.l_Paths_vFolder.Location = new System.Drawing.Point(12, 113);
             this.l_Paths_vFolder.Name = "l_Paths_vFolder";
             this.l_Paths_vFolder.Size = new System.Drawing.Size(101, 13);
             this.l_Paths_vFolder.TabIndex = 17;
@@ -670,7 +711,8 @@ namespace SSLUtility2 {
             // 
             // tB_Paths_sCFolder
             // 
-            this.tB_Paths_sCFolder.Location = new System.Drawing.Point(117, 44);
+            this.tB_Paths_sCFolder.Enabled = false;
+            this.tB_Paths_sCFolder.Location = new System.Drawing.Point(119, 77);
             this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
             this.tB_Paths_sCFolder.Size = new System.Drawing.Size(188, 20);
             this.tB_Paths_sCFolder.TabIndex = 16;
@@ -678,7 +720,8 @@ namespace SSLUtility2 {
             // 
             // b_Paths_sCBrowse
             // 
-            this.b_Paths_sCBrowse.Location = new System.Drawing.Point(311, 42);
+            this.b_Paths_sCBrowse.Enabled = false;
+            this.b_Paths_sCBrowse.Location = new System.Drawing.Point(313, 75);
             this.b_Paths_sCBrowse.Name = "b_Paths_sCBrowse";
             this.b_Paths_sCBrowse.Size = new System.Drawing.Size(61, 22);
             this.b_Paths_sCBrowse.TabIndex = 13;
@@ -686,20 +729,20 @@ namespace SSLUtility2 {
             this.b_Paths_sCBrowse.UseVisualStyleBackColor = true;
             this.b_Paths_sCBrowse.Click += new System.EventHandler(this.b_Paths_sCBrowse_Click);
             // 
-            // l_Settings_Paths
+            // l_Paths
             // 
-            this.l_Settings_Paths.AutoSize = true;
-            this.l_Settings_Paths.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Settings_Paths.Location = new System.Drawing.Point(9, 16);
-            this.l_Settings_Paths.Name = "l_Settings_Paths";
-            this.l_Settings_Paths.Size = new System.Drawing.Size(55, 20);
-            this.l_Settings_Paths.TabIndex = 12;
-            this.l_Settings_Paths.Text = "Paths";
+            this.l_Paths.AutoSize = true;
+            this.l_Paths.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Paths.Location = new System.Drawing.Point(9, 16);
+            this.l_Paths.Name = "l_Paths";
+            this.l_Paths.Size = new System.Drawing.Size(55, 20);
+            this.l_Paths.TabIndex = 12;
+            this.l_Paths.Text = "Paths";
             // 
             // l_Paths_sCFolder
             // 
             this.l_Paths_sCFolder.AutoSize = true;
-            this.l_Paths_sCFolder.Location = new System.Drawing.Point(10, 47);
+            this.l_Paths_sCFolder.Location = new System.Drawing.Point(12, 80);
             this.l_Paths_sCFolder.Name = "l_Paths_sCFolder";
             this.l_Paths_sCFolder.Size = new System.Drawing.Size(93, 13);
             this.l_Paths_sCFolder.TabIndex = 2;
@@ -755,7 +798,7 @@ namespace SSLUtility2 {
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1651, 879);
+            this.tabPage1.Size = new System.Drawing.Size(1651, 903);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Firmware Upgrade";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -844,7 +887,6 @@ namespace SSLUtility2 {
             this.tP_CameraCon.ResumeLayout(false);
             this.tP_CameraCon.PerformLayout();
             this.tP_Settings.ResumeLayout(false);
-            this.tP_Settings.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -1913,17 +1955,19 @@ namespace SSLUtility2 {
         public Label l_Paths_vFolder;
         public TextBox tB_Paths_sCFolder;
         public Button b_Paths_sCBrowse;
-        public Label l_Settings_Paths;
+        public Label l_Paths;
         public Label l_Paths_sCFolder;
         public Button b_Settings_Default;
         public Button b_Settings_Apply;
         public GroupBox groupBox2;
-        public Label l_Not_Notifs;
-        public Label label10;
-        public Label l_Not_Subnet;
+        public Label l_Notifs;
         private CheckBox check_Not_Config;
         private CheckBox check_Not_Subnet;
         private Label l_Version;
         private ContextMenuStrip contextMenuStrip1;
+        private CheckBox check_Other_AutoPlay;
+        public Label l_Other;
+        private CheckBox check_Paths_Manual;
+        public Label label1;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

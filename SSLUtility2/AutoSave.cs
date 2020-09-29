@@ -16,7 +16,11 @@ namespace SSLUtility2
 
         }
 
-        public static async Task LoadAuto(string path) {
+        public static async Task LoadAuto(string path, bool firstTime) {
+            if (firstTime) {
+                return;
+            }
+
             if (!File.Exists(path)) {
                 ConfigControl.ResetFile(path);
                 return;

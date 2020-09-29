@@ -50,17 +50,38 @@ namespace SSLUtility2 {
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam) {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN) {
-                int vkCode = Marshal.ReadInt32(lParam);
-                cp.KeyControl(cp.l, (Keys)vkCode, cp.mainRef.MakeAdr(cp.cB_IPCon_Selected),
-                    cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
+            if (ApplicationIsActivated()) {
+                if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN) {
+                    int vkCode = Marshal.ReadInt32(lParam);
+                    cp.KeyControl(cp.l, (Keys)vkCode, cp.mainRef.MakeAdr(cp.cB_IPCon_Selected),
+                        cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
+                }
+                if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP) {
+                    cp.StopCam();
+                }
             }
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP) {
-                cp.StopCam();
-            }
-
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
+
+        public static bool ApplicationIsActivated() {
+            var activatedHandle = GetForegroundWindow();
+            if (activatedHandle == IntPtr.Zero) {
+                return false;       // No window is currently activated
+            }
+
+            var procId = Process.GetCurrentProcess().Id;
+            int activeProcId;
+            GetWindowThreadProcessId(activatedHandle, out activeProcId);
+
+            return activeProcId == procId;
+        }
+
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern int GetWindowThreadProcessId(IntPtr handle, out int processId);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);

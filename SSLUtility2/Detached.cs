@@ -12,9 +12,8 @@ namespace SSLUtility2 {
             InitializeComponent();
         }
 
-        private void b_PlayerD_Play_Click(object sender, EventArgs e) {
+        public string GetCombined() {
             string combinedUrl;
-
             if (checkB_PlayerD_Manual.Checked) { //make a function to automatically grab these from gB_...
                 string ipaddress = tB_PlayerD_Adr.Text; //is it possible? the variables need to be in an order
                 string port = tB_PlayerD_Port.Text;
@@ -26,12 +25,17 @@ namespace SSLUtility2 {
             } else {
                 combinedUrl = tB_PlayerD_SimpleAdr.Text;
             }
+            return combinedUrl;
+        }
 
-            mainRef.Play(VLCPlayer_D, combinedUrl, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text);
+        private void b_PlayerD_Play_Click(object sender, EventArgs e) {
+            string combined = GetCombined();
+
+            mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true);
         }
 
         private void b_PlayerD_SaveSnap_Click(object sender, EventArgs e) {
-            mainRef.SaveSnap(VLCPlayer_D);
+            mainRef.SaveSnap(this);
         }
 
         private void checkB_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
@@ -42,7 +46,7 @@ namespace SSLUtility2 {
         Recorder recorderD;
 
         private void b_PlayerD_StartRec_Click(object sender, EventArgs e) {
-            (bool, Recorder) vals = mainRef.StopStartRec(Dplaying, VLCPlayer_D, b_PlayerD_StartRec, recorderD);
+            (bool, Recorder) vals = mainRef.StopStartRec(Dplaying, this, recorderD);
             Dplaying = vals.Item1;
             recorderD = vals.Item2;
         }

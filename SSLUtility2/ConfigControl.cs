@@ -13,14 +13,16 @@ namespace SSLUtility2 {
         public static string defVFolder = @"Videos\";
         public static string defSavedFolder = @"Saved\";
 
-        public static string defVName = "VideoCapture";
-        public static string defScName = "ScreenCapture";
+        public static string defVName = "Video";
+        public static string defScName = "Screenshot";
 
         public static string defVRecQual = "70";
         public static string defVRecFPS = "30";
 
         public static bool defSubnetNot = false;
         public static bool defConfigNot = false;
+        public static bool defAutoPlay = true;
+        public static bool defAutomaticPaths = true;
 
         public static string config = "config.txt";
         public const string autoSave = "auto.txt";
@@ -38,6 +40,8 @@ namespace SSLUtility2 {
 
         public static bool subnetNotif;
         public static bool configNotif;
+        public static bool autoPlay;
+        public static bool automaticPaths;
         //RuntimeVars//
 
         //SearchForVars//
@@ -56,6 +60,8 @@ namespace SSLUtility2 {
 
         public const string subnetNotifVar = "SubnetNotificationHidden";
         public const string configNotifVar = "BadConfigNotificationHidden";
+        public const string autoPlayVar = "AutoPlayLaunch";
+        public const string automaticPathsVar = "AutomaticPaths";
         //SearchForVars//
 
         public static List<ConfigVar> stringVarList {
@@ -80,6 +86,8 @@ namespace SSLUtility2 {
 
             subnetNotif = defSubnetNot;
             configNotif = defConfigNot;
+            autoPlay = defAutoPlay;
+            automaticPaths = defAutomaticPaths;
         }
 
         public static void CreateConfig(string path) {
@@ -97,6 +105,8 @@ namespace SSLUtility2 {
 
             File.AppendAllText(path, varPrefix + subnetNotifVar + ":" + subnetNotif + "\n");
             File.AppendAllText(path, varPrefix + configNotifVar + ":" + configNotif + "\n");
+            File.AppendAllText(path, varPrefix + autoPlayVar + ":" + autoPlay + "\n");
+            File.AppendAllText(path, varPrefix + automaticPathsVar + ":" + automaticPaths + "\n");
         }
 
         public static bool CheckVal(string v) {

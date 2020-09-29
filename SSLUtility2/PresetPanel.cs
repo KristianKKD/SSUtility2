@@ -167,11 +167,11 @@ namespace SSLUtility2 {
         }
 
         private void b_Presets_Thermal_DigiPos_Click(object sender, EventArgs e) {
-            DoPreset(2, 182);
+            DoPreset(2, 183);
         }
 
         private void b_Presets_Thermal_DigiNeg_Click(object sender, EventArgs e) {
-            DoPreset(2, 183);
+            DoPreset(2, 182);
         }
 
         void DoPreset(uint adr, byte p) {

@@ -23,15 +23,13 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.5.0";
+        public const string version = "v1.2.6.0";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
         Control lab;
 
         public static Control[] saveList = new Control[0];
-
-        const string defaultIP = "192.168.1.71";
 
         ControlPanel ipCon;
 
@@ -40,7 +38,7 @@ namespace SSLUtility2
             lite = false;
             CameraCommunicate.mainRef = m;
             l_Version.Text = l_Version.Text + version;
-
+            bool first = CheckIfFirstTime();
             tC_Main.TabPages[1].Dispose(); //remove the firmware page
 
             AttachControlPanel();
@@ -72,16 +70,48 @@ namespace SSLUtility2
                 playerR.tB_PlayerD_SimpleAdr,
             };
 
-            FileStuff();
+            FileStuff(first);
 
             PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
-
-            if (ipCon.tB_IPCon_Adr.Text != defaultIP) {
-                CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, lab, true);
-            }
-            
+            AutoConnect(playerL, playerR);
         }
+        public async Task PopulateSettingText() {
+            tB_Paths_sCFolder.Text = ConfigControl.savedFolder;
+            tB_Paths_vFolder.Text = ConfigControl.savedFolder;
+
+            tB_Rec_vFileN.Text = ConfigControl.vFileName;
+            tB_Rec_scFileN.Text = ConfigControl.scFileName;
+
+            cB_Rec_Quality.Text = ConfigControl.recQual;
+            cB_Rec_FPS.Text = ConfigControl.recFPS;
+
+            check_Not_Subnet.Checked = ConfigControl.subnetNotif;
+            check_Not_Config.Checked = ConfigControl.configNotif;
+            check_Other_AutoPlay.Checked = ConfigControl.autoPlay;
+            check_Paths_Manual.Checked = ConfigControl.automaticPaths;
+        }
+
+        bool CheckIfFirstTime() {
+            if (!File.Exists(ConfigControl.appFolder + ConfigControl.config)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        async Task AutoConnect(Detached playerL, Detached playerR) {
+            CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, lab, true);
+            if (ConfigControl.autoPlay) {
+                if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
+                    Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false);
+                }
+                if (playerR.tB_PlayerD_SimpleAdr.Text != "") {
+                    Play(playerR.VLCPlayer_D, playerR.GetCombined(), playerR.tB_PlayerD_SimpleAdr, playerR.tB_PlayerD_Buffering.Text, false);
+                }
+            }
+        }
+
         async Task FindVars() {
             foreach (ConfigVar v in ConfigControl.stringVarList) {
                 if (v.value.ToLower() == "false" || v.value.ToLower() == "true") {
@@ -143,19 +173,16 @@ namespace SSLUtility2
             return fileDlg;
         }
 
-        async Task FileStuff() {
-
+        async Task FileStuff(bool first) {
             ConfigControl.SetToDefaults();
 
             CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
             CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
-            CheckCreateFile(null, ConfigControl.scFolder);
-            CheckCreateFile(null, ConfigControl.vFolder);
             CheckCreateFile(null, ConfigControl.savedFolder);
 
             await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
             FindVars();
-            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave);
+            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, first);
         }
 
         void AttachControlPanel() {
@@ -229,6 +256,17 @@ namespace SSLUtility2
             return dv;
         }
 
+        public PelcoD OpenPelco(string ip, string port, string selected) {
+            PelcoD pd = new PelcoD();
+            pd.mainRef = m;
+            pd.tB_IPCon_Adr.Text = ip;
+            pd.tB_IPCon_Port.Text = port;
+            pd.cB_IPCon_Selected.Text = selected;
+            pd.Show();
+            SetFeatureToAllControls(pd.Controls);
+            return pd;
+        }
+
         ControlPanel SpawnControlPanel(TabPage tp, bool makeLite = true) {
             GroupBox gb = new GroupBox();
             ControlPanel cp = new ControlPanel();
@@ -294,6 +332,24 @@ namespace SSLUtility2
                                       .Where(c => c.GetType() == type);
         }
 
+        public void SetFeatureToAllControls(Control.ControlCollection cc) {
+            if (cc != null) {
+                foreach (Control control in cc) {
+                    if (control != tC_Control) {
+                        control.PreviewKeyDown += new PreviewKeyDownEventHandler(control_PreviewKeyDown);
+                    }
+                    SetFeatureToAllControls(control.Controls);
+                }
+            }
+        }
+
+        public void control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
+            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down ||
+                e.KeyCode == Keys.Left || e.KeyCode == Keys.Right ||
+                e.KeyCode == Keys.Escape || e.KeyCode == Keys.Enter) {
+                e.IsInputKey = true;
+            }
+        }
 
         async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
             if (tb.Text.Length < 1) {
@@ -320,50 +376,16 @@ namespace SSLUtility2
             return res;
         }
 
-        public Recorder StartRec(AxAXVLC.AxVLCPlugin2 player) {
-            Recorder rec = new Recorder(new Record(tB_Paths_vFolder.Text + ConfigControl.vFileName +
-                (Directory.GetFiles(ConfigControl.vFolder).Length + 1) + ".avi", int.Parse(ConfigControl.recFPS),
-                 SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(ConfigControl.recQual), player));//add quality and framerate changing too 
-            return rec;
-        }
-
-        public void StopRec(Recorder r) {
-            r.Dispose();
-        }
-
-        public (bool, Recorder) StopStartRec(bool isPlaying, AxAXVLC.AxVLCPlugin2 player, Button control, Recorder r) {
-            if (isPlaying) {
-                control.Text = "START Recording";
-                isPlaying = false;
-                StopRec(r);
-                MessageBox.Show("Saved recording to: " + ConfigControl.appFolder + ConfigControl.vFolder);
-                return (isPlaying, null);
-            } else {
-                control.Text = "STOP Recording";
-                isPlaying = true;
-                return (isPlaying, StartRec(player));
-            }
-        }
-
-        public uint MakeAdr(Control comboBox = null) {
-            if (comboBox == null) {
-                comboBox = ipCon.cB_IPCon_Selected;
-            }
-            if (comboBox.Text == "Daylight") {
-                return 1;
-            } else {
-                return 2;
-            }
-        }
-
-        public void Play(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, TextBox linkedTB, string buffering) {
-            if (combinedUrl == "") {
-                MessageBox.Show("Address is invalid!");
-                return;
-            }
-            if (CameraCommunicate.PingAdr(combinedUrl).Result) {
-                MessageBox.Show("Address could not be pinged!");
-                return;
+        public void Play(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, TextBox linkedTB, string buffering, bool showError) {
+            if (showError) {
+                if (combinedUrl == "") {
+                    MessageBox.Show("Address is invalid!");
+                    return;
+                }
+                if (CameraCommunicate.PingAdr(combinedUrl).Result) {
+                    MessageBox.Show("Address could not be pinged!");
+                    return;
+                }
             }
             linkedTB.Text = combinedUrl;
             Replay(player, combinedUrl, buffering);
@@ -403,32 +425,15 @@ namespace SSLUtility2
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
             MessageBox.Show("Applied settings to: " + ConfigControl.appFolder + ConfigControl.config);
         }
-        private void b_Settings_Default_Click(object sender, EventArgs e) {
-            DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
-                "Settings will not automatically be applied so the user may edit the defaults before applying.",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (d == DialogResult.Yes) {
-                ConfigControl.SetToDefaults();
-                PopulateSettingText();
-            }
-        }
 
-        public void SetFeatureToAllControls(Control.ControlCollection cc) {
-            if (cc != null) {
-                foreach (Control control in cc) {
-                    if (control != tC_Control) {
-                        control.PreviewKeyDown += new PreviewKeyDownEventHandler(control_PreviewKeyDown);
-                    }
-                    SetFeatureToAllControls(control.Controls);
-                }
+        public uint MakeAdr(Control comboBox = null) {
+            if (comboBox == null) {
+                comboBox = ipCon.cB_IPCon_Selected;
             }
-        }
-
-        public void control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down ||
-                e.KeyCode == Keys.Left || e.KeyCode == Keys.Right ||
-                e.KeyCode == Keys.Escape || e.KeyCode == Keys.Enter) {
-                e.IsInputKey = true;
+            if (comboBox.Text == "Daylight") {
+                return 1;
+            } else {
+                return 2;
             }
         }
 
@@ -458,18 +463,60 @@ namespace SSLUtility2
             CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(address, dir), lcon, ip, port);
         }
 
+        public async Task SaveSnap(Detached player) {
+            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player.tB_PlayerD_Adr.Text, "Screenshots") + ".jpg";
 
-        public async Task SaveSnap(AxAXVLC.AxVLCPlugin2 player) {
-            var imagePath = ConfigControl.scFolder + @"\" + ConfigControl.scFileName + (Directory.GetFiles(ConfigControl.scFolder).Length + 1) + ".jpg";
-            
-            Image bmp = new Bitmap(player.Width, player.Height);
+            Image bmp = new Bitmap(player.VLCPlayer_D.Width, player.VLCPlayer_D.Height);
             Graphics gfx = Graphics.FromImage(bmp);
-            Rectangle rec = player.RectangleToScreen(player.ClientRectangle);
-            gfx.CopyFromScreen(rec.Location, Point.Empty, player.Size);
+            Rectangle rec = player.VLCPlayer_D.RectangleToScreen(player.VLCPlayer_D.ClientRectangle);
+            gfx.CopyFromScreen(rec.Location, Point.Empty, player.VLCPlayer_D.Size);
 
-            bmp.Save(imagePath, ImageFormat.Jpeg);
+            bmp.Save(fullImagePath, ImageFormat.Jpeg);
 
-            MessageBox.Show("Image saved : " + ConfigControl.scFolder);
+            MessageBox.Show("Image saved : " + fullImagePath);
+        }
+
+        public async Task<Recorder> StartRec(Detached player) {
+            string fullImagePath = GivePath(ConfigControl.vFolder, ConfigControl.vFileName, player.tB_PlayerD_Adr.Text, "Recordings") + ".avi";
+
+            Recorder rec = new Recorder(new Record(fullImagePath, int.Parse(ConfigControl.recFPS),
+                 SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(ConfigControl.recQual), player.VLCPlayer_D));
+
+            return rec;
+        }
+
+        public void StopRec(Recorder r) {
+            r.Dispose();
+        }
+
+        public (bool, Recorder) StopStartRec(bool isPlaying, Detached player, Recorder r) {
+            if (isPlaying) {
+                player.b_PlayerD_StartRec.Text = "START Recording";
+                isPlaying = false;
+                StopRec(r);
+                MessageBox.Show("Saved recording to: " + ConfigControl.appFolder + ConfigControl.vFolder); //NO
+                return (isPlaying, null);
+            } else {
+                player.b_PlayerD_StartRec.Text = "STOP Recording";
+                isPlaying = true;
+                return (isPlaying, StartRec(player).Result);
+            }
+        }
+
+        string GivePath(string orgFolder, string orgName, string adr, string folderType) {
+            string folder = orgFolder;
+            string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
+
+            if (ConfigControl.automaticPaths) {
+                folder = ConfigControl.savedFolder + @"\" + adr + @"\" + folderType; //need to find a way to extract ip from simple adr
+                string timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
+                fileName = orgName + " " + timeText;
+            }
+
+            CheckCreateFile(null, folder);
+
+            string full = folder + @"\" + fileName;
+            return full;
         }
 
         static async Task<bool> CheckIfNameValid(char[] nameArray) {
@@ -485,7 +532,7 @@ namespace SSLUtility2
             return true;
         }
 
-        static async Task CheckCreateFile(string fileName, string folderName = null) {
+        public static async Task CheckCreateFile(string fileName, string folderName = null) {
             CheckIfNameValid((fileName + folderName).ToCharArray());
 
             if (folderName != null) {
@@ -504,30 +551,15 @@ namespace SSLUtility2
                 }
             }
         }
-
-        public async Task PopulateSettingText() {
-            tB_Paths_sCFolder.Text = ConfigControl.scFolder;
-            tB_Paths_vFolder.Text = ConfigControl.vFolder;
-
-            tB_Rec_vFileN.Text = ConfigControl.vFileName;
-            tB_Rec_scFileN.Text = ConfigControl.scFileName;
-
-            cB_Rec_Quality.Text = ConfigControl.recQual;
-            cB_Rec_FPS.Text = ConfigControl.recFPS;
-
-            check_Not_Subnet.Checked = ConfigControl.subnetNotif;
-            check_Not_Config.Checked = ConfigControl.configNotif;
-        }
-
-        public PelcoD OpenPelco(string ip, string port, string selected) {
-            PelcoD pd = new PelcoD();
-            pd.mainRef = m;
-            pd.tB_IPCon_Adr.Text = ip;
-            pd.tB_IPCon_Port.Text = port;
-            pd.cB_IPCon_Selected.Text = selected;
-            pd.Show();
-            SetFeatureToAllControls(pd.Controls);
-            return pd;
+       
+        private void b_Settings_Default_Click(object sender, EventArgs e) {
+            DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
+                "Settings will not automatically be applied so the user may edit the defaults before applying.",
+                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (d == DialogResult.Yes) {
+                ConfigControl.SetToDefaults();
+                PopulateSettingText();
+            }
         }
 
         private void OnFinishedTypingScFolder(object sender, EventArgs e) {
@@ -550,7 +582,25 @@ namespace SSLUtility2
             ConfigControl.configNotif = check_Not_Config.Checked;
         }
 
-      
+        private void check_Other_AutoPlay_CheckChanged(object sender, EventArgs e) {
+            ConfigControl.autoPlay = check_Other_AutoPlay.Checked;
+        }
+
+        private void check_Paths_Manual_CheckedChanged(object sender, EventArgs e) {
+            bool auto = !check_Paths_Manual.Checked;
+
+            ConfigControl.automaticPaths = !auto;
+            
+            tB_Paths_sCFolder.Enabled = auto;
+            tB_Paths_vFolder.Enabled = auto;
+
+            tB_Rec_vFileN.Enabled = auto;
+            tB_Rec_scFileN.Enabled = auto;
+
+            b_Paths_sCBrowse.Enabled = auto;
+            b_Paths_vBrowse.Enabled = auto;
+        }
+
         private void b_Paths_vBrowse_Click(object sender, EventArgs e) {
             BrowseFolderButton(tB_Paths_vFolder);
         }
