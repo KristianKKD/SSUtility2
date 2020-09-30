@@ -3,8 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2
-{
+namespace SSLUtility2 {
 
     public partial class ControlPanel : Form {
     
@@ -12,7 +11,6 @@ namespace SSLUtility2
         public string pathToAuto;
         D protocol = new D();
         public Control l;
-        public bool isOriginal = false;
 
         public ControlPanel() {
             InitializeComponent();
@@ -35,13 +33,6 @@ namespace SSLUtility2
             }
 
             tB_IPCon_Port.Text = port;
-        }
-
-        private void b_Detach(object sender, EventArgs e) {
-            Detached d = mainRef.DetachVid(true);
-
-            d.tB_PlayerD_Adr.Text = tB_IPCon_Adr.Text;
-            d.checkB_PlayerD_Manual.Checked = true;
         }
 
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
@@ -117,22 +108,8 @@ namespace SSLUtility2
             }
         }
 
-        private void b_IPCon_LayoutMode_Click(object sender, EventArgs e) {
-            if (!isOriginal) {
-                Application.Restart();
-                Application.ExitThread();
-                this.Close();
-            } else {
-                mainRef.InitLiteMode();
-            }
-        }
-
         private void ControlPanel_Load(object sender, EventArgs e) {
             mainRef.PopulateSettingText();
-        }
-
-        private void b_IPCon_CustomD_Click(object sender, EventArgs e) {
-            mainRef.OpenPelco(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, cB_IPCon_Selected.Text);
         }
 
         public void StopCam() {
@@ -140,6 +117,7 @@ namespace SSLUtility2
                 CameraCommunicate.sendtoIPAsync(protocol.CameraStop(mainRef.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
             }
         }
+
         public void KeyControl(Control lab, Keys k, uint address, string ip, string port) { //test this
             if (cB_IPCon_KeyboardCon.Checked == true) {
                 uint ptSpeed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);

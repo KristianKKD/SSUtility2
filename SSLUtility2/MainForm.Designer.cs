@@ -71,9 +71,8 @@ namespace SSLUtility2 {
             this.ResetMemorybutton = new System.Windows.Forms.Button();
             this.tC_Main = new System.Windows.Forms.TabControl();
             this.camControl = new System.Windows.Forms.TabPage();
-            this.tC_Control = new System.Windows.Forms.TabControl();
-            this.tP_CameraCon = new System.Windows.Forms.TabPage();
             this.l_Version = new System.Windows.Forms.Label();
+            this.firmwareUp = new System.Windows.Forms.TabPage();
             this.tP_Settings = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.l_Other = new System.Windows.Forms.Label();
@@ -105,7 +104,6 @@ namespace SSLUtility2 {
             this.l_Paths_sCFolder = new System.Windows.Forms.Label();
             this.b_Settings_Default = new System.Windows.Forms.Button();
             this.b_Settings_Apply = new System.Windows.Forms.Button();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -115,27 +113,23 @@ namespace SSLUtility2 {
             this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.finalTestModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.detachedPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pelcoDScriptingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.responseLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.liteModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu = new System.Windows.Forms.MenuStrip();
+            this.Menu_Window = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Window_Detached = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Window_PelcoD = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Window_Lite = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
             this.tC_Main.SuspendLayout();
             this.camControl.SuspendLayout();
-            this.tC_Control.SuspendLayout();
-            this.tP_CameraCon.SuspendLayout();
+            this.firmwareUp.SuspendLayout();
             this.tP_Settings.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gB_Paths.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.Menu.SuspendLayout();
             this.SuspendLayout();
             // 
             // GetSNbutton
@@ -389,7 +383,8 @@ namespace SSLUtility2 {
             // tC_Main
             // 
             this.tC_Main.Controls.Add(this.camControl);
-            this.tC_Main.Controls.Add(this.tabPage1);
+            this.tC_Main.Controls.Add(this.firmwareUp);
+            this.tC_Main.Controls.Add(this.tP_Settings);
             this.tC_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tC_Main.Location = new System.Drawing.Point(0, 24);
             this.tC_Main.Name = "tC_Main";
@@ -399,7 +394,7 @@ namespace SSLUtility2 {
             // 
             // camControl
             // 
-            this.camControl.Controls.Add(this.tC_Control);
+            this.camControl.Controls.Add(this.l_Version);
             this.camControl.Location = new System.Drawing.Point(4, 22);
             this.camControl.Name = "camControl";
             this.camControl.Padding = new System.Windows.Forms.Padding(3);
@@ -408,36 +403,49 @@ namespace SSLUtility2 {
             this.camControl.Text = "Control";
             this.camControl.UseVisualStyleBackColor = true;
             // 
-            // tC_Control
-            // 
-            this.tC_Control.Controls.Add(this.tP_CameraCon);
-            this.tC_Control.Controls.Add(this.tP_Settings);
-            this.tC_Control.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tC_Control.Location = new System.Drawing.Point(3, 3);
-            this.tC_Control.Name = "tC_Control";
-            this.tC_Control.SelectedIndex = 0;
-            this.tC_Control.Size = new System.Drawing.Size(1645, 873);
-            this.tC_Control.TabIndex = 6;
-            // 
-            // tP_CameraCon
-            // 
-            this.tP_CameraCon.Controls.Add(this.l_Version);
-            this.tP_CameraCon.Location = new System.Drawing.Point(4, 22);
-            this.tP_CameraCon.Name = "tP_CameraCon";
-            this.tP_CameraCon.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_CameraCon.Size = new System.Drawing.Size(1637, 847);
-            this.tP_CameraCon.TabIndex = 0;
-            this.tP_CameraCon.Text = "Camera Control";
-            this.tP_CameraCon.UseVisualStyleBackColor = true;
-            // 
             // l_Version
             // 
             this.l_Version.AutoSize = true;
-            this.l_Version.Location = new System.Drawing.Point(1539, 858);
+            this.l_Version.Location = new System.Drawing.Point(1508, 861);
             this.l_Version.Name = "l_Version";
-            this.l_Version.Size = new System.Drawing.Size(48, 13);
-            this.l_Version.TabIndex = 41;
-            this.l_Version.Text = "Version: ";
+            this.l_Version.Size = new System.Drawing.Size(87, 13);
+            this.l_Version.TabIndex = 0;
+            this.l_Version.Text = "SSUtility Version:";
+            // 
+            // firmwareUp
+            // 
+            this.firmwareUp.Controls.Add(this.Versionlabel);
+            this.firmwareUp.Controls.Add(this.ResetMemorybutton);
+            this.firmwareUp.Controls.Add(this.GetSNbutton);
+            this.firmwareUp.Controls.Add(this.Abortbutton);
+            this.firmwareUp.Controls.Add(this.Writebutton);
+            this.firmwareUp.Controls.Add(this.CamNolabel);
+            this.firmwareUp.Controls.Add(this.Erasebutton);
+            this.firmwareUp.Controls.Add(this.CamNoUpDown);
+            this.firmwareUp.Controls.Add(this.Checksumbutton);
+            this.firmwareUp.Controls.Add(this.SNtext);
+            this.firmwareUp.Controls.Add(this.LoadHexbutton);
+            this.firmwareUp.Controls.Add(this.Versiontext);
+            this.firmwareUp.Controls.Add(this.Activatebutton);
+            this.firmwareUp.Controls.Add(this.ClearLogbutton);
+            this.firmwareUp.Controls.Add(this.DeActivatebutton);
+            this.firmwareUp.Controls.Add(this.Loglabel);
+            this.firmwareUp.Controls.Add(this.Gobutton);
+            this.firmwareUp.Controls.Add(this.LogtextBox);
+            this.firmwareUp.Controls.Add(this.Speedlabel);
+            this.firmwareUp.Controls.Add(this.LoadSpeedlabel);
+            this.firmwareUp.Controls.Add(this.Portbutton);
+            this.firmwareUp.Controls.Add(this.SpeedcomboBox);
+            this.firmwareUp.Controls.Add(this.PortcomboBox);
+            this.firmwareUp.Controls.Add(this.LoadSpeedcomboBox);
+            this.firmwareUp.Controls.Add(this.Portlabel);
+            this.firmwareUp.Location = new System.Drawing.Point(4, 22);
+            this.firmwareUp.Name = "firmwareUp";
+            this.firmwareUp.Padding = new System.Windows.Forms.Padding(3);
+            this.firmwareUp.Size = new System.Drawing.Size(1651, 879);
+            this.firmwareUp.TabIndex = 0;
+            this.firmwareUp.Text = "Firmware Upgrade";
+            this.firmwareUp.UseVisualStyleBackColor = true;
             // 
             // tP_Settings
             // 
@@ -449,7 +457,7 @@ namespace SSLUtility2 {
             this.tP_Settings.Location = new System.Drawing.Point(4, 22);
             this.tP_Settings.Name = "tP_Settings";
             this.tP_Settings.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Settings.Size = new System.Drawing.Size(1637, 871);
+            this.tP_Settings.Size = new System.Drawing.Size(1651, 879);
             this.tP_Settings.TabIndex = 1;
             this.tP_Settings.Text = "Settings";
             this.tP_Settings.UseVisualStyleBackColor = true;
@@ -778,41 +786,6 @@ namespace SSLUtility2 {
             this.b_Settings_Apply.UseVisualStyleBackColor = true;
             this.b_Settings_Apply.Click += new System.EventHandler(this.b_Settings_Apply_Click);
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.Versionlabel);
-            this.tabPage1.Controls.Add(this.ResetMemorybutton);
-            this.tabPage1.Controls.Add(this.GetSNbutton);
-            this.tabPage1.Controls.Add(this.Abortbutton);
-            this.tabPage1.Controls.Add(this.Writebutton);
-            this.tabPage1.Controls.Add(this.CamNolabel);
-            this.tabPage1.Controls.Add(this.Erasebutton);
-            this.tabPage1.Controls.Add(this.CamNoUpDown);
-            this.tabPage1.Controls.Add(this.Checksumbutton);
-            this.tabPage1.Controls.Add(this.SNtext);
-            this.tabPage1.Controls.Add(this.LoadHexbutton);
-            this.tabPage1.Controls.Add(this.Versiontext);
-            this.tabPage1.Controls.Add(this.Activatebutton);
-            this.tabPage1.Controls.Add(this.ClearLogbutton);
-            this.tabPage1.Controls.Add(this.DeActivatebutton);
-            this.tabPage1.Controls.Add(this.Loglabel);
-            this.tabPage1.Controls.Add(this.Gobutton);
-            this.tabPage1.Controls.Add(this.LogtextBox);
-            this.tabPage1.Controls.Add(this.Speedlabel);
-            this.tabPage1.Controls.Add(this.LoadSpeedlabel);
-            this.tabPage1.Controls.Add(this.Portbutton);
-            this.tabPage1.Controls.Add(this.SpeedcomboBox);
-            this.tabPage1.Controls.Add(this.PortcomboBox);
-            this.tabPage1.Controls.Add(this.LoadSpeedcomboBox);
-            this.tabPage1.Controls.Add(this.Portlabel);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1651, 903);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Firmware Upgrade";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(28, 28);
@@ -878,71 +851,60 @@ namespace SSLUtility2 {
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // menuStrip1
+            // Menu
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.windowToolStripMenuItem,
-            this.finalTestModeToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1659, 24);
-            this.menuStrip1.TabIndex = 30;
-            this.menuStrip1.Text = "menuStrip1";
+            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Window,
+            this.Menu_Final});
+            this.Menu.Location = new System.Drawing.Point(0, 0);
+            this.Menu.Name = "Menu";
+            this.Menu.Size = new System.Drawing.Size(1659, 24);
+            this.Menu.TabIndex = 30;
+            this.Menu.Text = "menuStrip1";
             // 
-            // windowToolStripMenuItem
+            // Menu_Window
             // 
-            this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.detachedPlayerToolStripMenuItem,
-            this.pelcoDScriptingToolStripMenuItem,
-            this.responseLogToolStripMenuItem,
-            this.settingsToolStripMenuItem,
-            this.liteModeToolStripMenuItem});
-            this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
-            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
-            this.windowToolStripMenuItem.Text = "Window";
+            this.Menu_Window.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Window_Detached,
+            this.Menu_Window_PelcoD,
+            this.Menu_Window_Lite});
+            this.Menu_Window.Name = "Menu_Window";
+            this.Menu_Window.Size = new System.Drawing.Size(63, 20);
+            this.Menu_Window.Text = "Window";
             // 
-            // finalTestModeToolStripMenuItem
+            // Menu_Window_Detached
             // 
-            this.finalTestModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Window_Detached.Name = "Menu_Window_Detached";
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Text = "Detached Player";
+            this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
+            // 
+            // Menu_Window_PelcoD
+            // 
+            this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
+            this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
+            // 
+            // Menu_Window_Lite
+            // 
+            this.Menu_Window_Lite.Name = "Menu_Window_Lite";
+            this.Menu_Window_Lite.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Lite.Text = "Lite Mode";
+            this.Menu_Window_Lite.Click += new System.EventHandler(this.Menu_Window_Lite_Click);
+            // 
+            // Menu_Final
+            // 
+            this.Menu_Final.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem});
-            this.finalTestModeToolStripMenuItem.Name = "finalTestModeToolStripMenuItem";
-            this.finalTestModeToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
-            this.finalTestModeToolStripMenuItem.Text = "Final Test Mode";
-            // 
-            // detachedPlayerToolStripMenuItem
-            // 
-            this.detachedPlayerToolStripMenuItem.Name = "detachedPlayerToolStripMenuItem";
-            this.detachedPlayerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.detachedPlayerToolStripMenuItem.Text = "Detached Player";
-            // 
-            // pelcoDScriptingToolStripMenuItem
-            // 
-            this.pelcoDScriptingToolStripMenuItem.Name = "pelcoDScriptingToolStripMenuItem";
-            this.pelcoDScriptingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.pelcoDScriptingToolStripMenuItem.Text = "Pelco D Scripting";
-            // 
-            // responseLogToolStripMenuItem
-            // 
-            this.responseLogToolStripMenuItem.Name = "responseLogToolStripMenuItem";
-            this.responseLogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.responseLogToolStripMenuItem.Text = "Response Log";
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            // 
-            // liteModeToolStripMenuItem
-            // 
-            this.liteModeToolStripMenuItem.Name = "liteModeToolStripMenuItem";
-            this.liteModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.liteModeToolStripMenuItem.Text = "Lite Mode";
+            this.Menu_Final.Name = "Menu_Final";
+            this.Menu_Final.Size = new System.Drawing.Size(101, 20);
+            this.Menu_Final.Text = "Final Test Mode";
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.openToolStripMenuItem.Text = "Open...";
             // 
             // MainForm
@@ -952,19 +914,19 @@ namespace SSLUtility2 {
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1659, 929);
             this.Controls.Add(this.tC_Main);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.Menu);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.Menu;
             this.Name = "MainForm";
             this.Text = "SSUtility V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).EndInit();
             this.tC_Main.ResumeLayout(false);
             this.camControl.ResumeLayout(false);
-            this.tC_Control.ResumeLayout(false);
-            this.tP_CameraCon.ResumeLayout(false);
-            this.tP_CameraCon.PerformLayout();
+            this.camControl.PerformLayout();
+            this.firmwareUp.ResumeLayout(false);
+            this.firmwareUp.PerformLayout();
             this.tP_Settings.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -972,12 +934,10 @@ namespace SSLUtility2 {
             this.groupBox1.PerformLayout();
             this.gB_Paths.ResumeLayout(false);
             this.gB_Paths.PerformLayout();
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.Menu.ResumeLayout(false);
+            this.Menu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2005,7 +1965,7 @@ namespace SSLUtility2 {
 		} // end of ResetMemorybuttonClick()
 
         public TabControl tC_Main;
-        public TabPage tabPage1;
+        public TabPage firmwareUp;
         public StatusStrip statusStrip1;
         public ToolStripStatusLabel toolStripStatusLabel2;
         public ToolStripStatusLabel toolStripStatusLabel3;
@@ -2015,8 +1975,6 @@ namespace SSLUtility2 {
         public ToolStripStatusLabel toolStripStatusLabel1;
         public System.ComponentModel.BackgroundWorker backgroundWorker1;
         public TabPage camControl;
-        public TabControl tC_Control;
-        public TabPage tP_CameraCon;
         public TabPage tP_Settings;
         public GroupBox groupBox1;
         public ComboBox cB_Rec_Quality;
@@ -2044,20 +2002,18 @@ namespace SSLUtility2 {
         public Label l_Notifs;
         private CheckBox check_Not_Config;
         private CheckBox check_Not_Subnet;
-        private Label l_Version;
         private ContextMenuStrip contextMenuStrip1;
         private CheckBox check_Other_AutoPlay;
         public Label l_Other;
         private CheckBox check_Paths_Manual;
         public Label label1;
-        private MenuStrip menuStrip1;
-        private ToolStripMenuItem windowToolStripMenuItem;
-        private ToolStripMenuItem detachedPlayerToolStripMenuItem;
-        private ToolStripMenuItem pelcoDScriptingToolStripMenuItem;
-        private ToolStripMenuItem responseLogToolStripMenuItem;
-        private ToolStripMenuItem settingsToolStripMenuItem;
-        private ToolStripMenuItem liteModeToolStripMenuItem;
-        private ToolStripMenuItem finalTestModeToolStripMenuItem;
+        private MenuStrip Menu;
+        private ToolStripMenuItem Menu_Window;
+        private ToolStripMenuItem Menu_Window_Detached;
+        private ToolStripMenuItem Menu_Window_PelcoD;
+        private ToolStripMenuItem Menu_Window_Lite;
+        private ToolStripMenuItem Menu_Final;
         private ToolStripMenuItem openToolStripMenuItem;
+        private Label l_Version;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

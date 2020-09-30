@@ -23,10 +23,11 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.6.1";
+        public const string version = "v1.2.7.0";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
+        bool isOriginal = false;
         Control lab;
 
         public static Control[] saveList = new Control[0];
@@ -39,7 +40,7 @@ namespace SSLUtility2
             CameraCommunicate.mainRef = m;
             l_Version.Text = l_Version.Text + version;
             bool first = CheckIfFirstTime();
-            tC_Main.TabPages[1].Dispose(); //remove the firmware page
+            firmwareUp.Dispose(); //remove the firmware page
 
             AttachControlPanel();
             Detached playerL = AttachDetached(10);
@@ -193,18 +194,18 @@ namespace SSLUtility2
         }
 
         void AttachControlPanel() {
-            TabPage tp = tC_Control.TabPages[0];
+            TabPage tp = tC_Main.TabPages[0];
             ipCon = SpawnControlPanel(tp, false);
             ipCon.mainRef = m;
             PresetPanel pp = AttachPresetPanel(tp, ipCon);
             pp.cp = ipCon;
 
-            ipCon.isOriginal = true;
+            isOriginal = true;
             lab = ipCon.l_IPCon_Connected;
         }
 
         Detached AttachDetached(int xOffset) {
-            TabPage tp = tC_Control.TabPages[0];
+            TabPage tp = tC_Main.TabPages[0];
             GroupBox gb = new GroupBox();
             Detached d = DetachVid(false);
 
@@ -234,9 +235,9 @@ namespace SSLUtility2
             ControlPanel cp = SpawnControlPanel(tp);
             PresetPanel pp = AttachPresetPanel(tp, cp);
             pp.cp = cp;
-            cp.isOriginal = false;
-            cp.b_IPCon_LayoutMode.Text = "Swap To: Dual Mode";
-            foreach (TabPage tab in tC_Control.TabPages) {
+            isOriginal = false;
+            Menu_Window_Lite.Text = "Dual Mode";
+            foreach (TabPage tab in tC_Main.TabPages) {
                 if (tab != tp) {
                     tab.Dispose();
                 }
@@ -246,7 +247,7 @@ namespace SSLUtility2
         public TabPage LiteMode() {
             TabPage tp = new TabPage();
             tp.Text = "Camera Control";
-            tC_Control.Controls.Add(tp);
+            tC_Main.Controls.Add(tp);
             m.Size = new Size(300, 1000);
             AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
             lite = true;
@@ -342,7 +343,7 @@ namespace SSLUtility2
         public void SetFeatureToAllControls(Control.ControlCollection cc) {
             if (cc != null) {
                 foreach (Control control in cc) {
-                    if (control != tC_Control) {
+                    if (control != tC_Main) {
                         control.PreviewKeyDown += new PreviewKeyDownEventHandler(control_PreviewKeyDown);
                     }
                     SetFeatureToAllControls(control.Controls);
@@ -670,6 +671,27 @@ namespace SSLUtility2
             CameraCommunicate.CloseSock();
             if (!lite) {
                 AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
+            }
+        }
+
+        private void Menu_Window_Detached_Click(object sender, EventArgs e) {
+            Detached d = DetachVid(true);
+
+            d.tB_PlayerD_Adr.Text = ipCon.tB_IPCon_Adr.Text;
+            d.checkB_PlayerD_Manual.Checked = true;
+        }
+
+        private void Menu_Window_PelcoD_Click(object sender, EventArgs e) {
+            OpenPelco(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.cB_IPCon_Selected.Text);
+        }
+
+        private void Menu_Window_Lite_Click(object sender, EventArgs e) {
+            if (!isOriginal) {
+                Application.Restart();
+                Application.ExitThread();
+                this.Close();
+            } else {
+                InitLiteMode();
             }
         }
 

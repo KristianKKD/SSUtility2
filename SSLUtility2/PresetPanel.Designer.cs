@@ -35,12 +35,17 @@ namespace SSLUtility2
             this.b_Presets_Admin_MechMen = new System.Windows.Forms.Button();
             this.b_Presets_Admin_SetupMen = new System.Windows.Forms.Button();
             this.daylightPage = new System.Windows.Forms.TabPage();
+            this.b_Presets_Daylight_Extender = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_Stabilizer = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_WDR = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_Wiper = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_AF = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_ColMono = new System.Windows.Forms.Button();
             this.thermalPage = new System.Windows.Forms.TabPage();
+            this.b_Presets_Thermal_Cycle = new System.Windows.Forms.Button();
+            this.b_Presets_Thermal_Stabi = new System.Windows.Forms.Button();
+            this.b_Presets_Thermal_DigiNeg = new System.Windows.Forms.Button();
+            this.b_Presets_Thermal_DigiPos = new System.Windows.Forms.Button();
             this.b_Presets_ContrastPos = new System.Windows.Forms.Button();
             this.b_Presets_ContrastNeg = new System.Windows.Forms.Button();
             this.b_Presets_Thermal_BrightPos = new System.Windows.Forms.Button();
@@ -70,11 +75,6 @@ namespace SSLUtility2
             this.b_Presets_CHARM_Aquire = new System.Windows.Forms.Button();
             this.b_Presets_CHARM_Standby = new System.Windows.Forms.Button();
             this.l_Presets_Default = new System.Windows.Forms.Label();
-            this.b_Presets_Daylight_Extender = new System.Windows.Forms.Button();
-            this.b_Presets_Thermal_DigiPos = new System.Windows.Forms.Button();
-            this.b_Presets_Thermal_DigiNeg = new System.Windows.Forms.Button();
-            this.b_Presets_Thermal_Stabi = new System.Windows.Forms.Button();
-            this.b_Presets_Thermal_Cycle = new System.Windows.Forms.Button();
             this.tC_Presets_Default.SuspendLayout();
             this.adminPage.SuspendLayout();
             this.daylightPage.SuspendLayout();
@@ -93,7 +93,7 @@ namespace SSLUtility2
             this.tC_Presets_Default.Controls.Add(this.peakbeamPage);
             this.tC_Presets_Default.Controls.Add(this.charmPage);
             this.tC_Presets_Default.ItemSize = new System.Drawing.Size(40, 18);
-            this.tC_Presets_Default.Location = new System.Drawing.Point(12, 33);
+            this.tC_Presets_Default.Location = new System.Drawing.Point(12, 49);
             this.tC_Presets_Default.Name = "tC_Presets_Default";
             this.tC_Presets_Default.Padding = new System.Drawing.Point(0, 0);
             this.tC_Presets_Default.SelectedIndex = 0;
@@ -169,6 +169,16 @@ namespace SSLUtility2
             this.daylightPage.Text = "Daylight";
             this.daylightPage.UseVisualStyleBackColor = true;
             // 
+            // b_Presets_Daylight_Extender
+            // 
+            this.b_Presets_Daylight_Extender.Location = new System.Drawing.Point(7, 166);
+            this.b_Presets_Daylight_Extender.Name = "b_Presets_Daylight_Extender";
+            this.b_Presets_Daylight_Extender.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Daylight_Extender.TabIndex = 7;
+            this.b_Presets_Daylight_Extender.Text = "Extender";
+            this.b_Presets_Daylight_Extender.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_Extender.Click += new System.EventHandler(this.b_Presets_Daylight_Extender_Click);
+            // 
             // b_Presets_Daylight_Stabilizer
             // 
             this.b_Presets_Daylight_Stabilizer.Location = new System.Drawing.Point(7, 133);
@@ -242,6 +252,46 @@ namespace SSLUtility2
             this.thermalPage.TabIndex = 1;
             this.thermalPage.Text = "Thermal";
             this.thermalPage.UseVisualStyleBackColor = true;
+            // 
+            // b_Presets_Thermal_Cycle
+            // 
+            this.b_Presets_Thermal_Cycle.Location = new System.Drawing.Point(118, 72);
+            this.b_Presets_Thermal_Cycle.Name = "b_Presets_Thermal_Cycle";
+            this.b_Presets_Thermal_Cycle.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_Cycle.TabIndex = 10;
+            this.b_Presets_Thermal_Cycle.Text = "Cycle Palettes";
+            this.b_Presets_Thermal_Cycle.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_Cycle.Click += new System.EventHandler(this.b_Presets_Thermal_Cycle_Click);
+            // 
+            // b_Presets_Thermal_Stabi
+            // 
+            this.b_Presets_Thermal_Stabi.Location = new System.Drawing.Point(6, 72);
+            this.b_Presets_Thermal_Stabi.Name = "b_Presets_Thermal_Stabi";
+            this.b_Presets_Thermal_Stabi.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_Stabi.TabIndex = 9;
+            this.b_Presets_Thermal_Stabi.Text = "Stabilisation";
+            this.b_Presets_Thermal_Stabi.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_Stabi.Click += new System.EventHandler(this.b_Presets_Thermal_Stabi_Click);
+            // 
+            // b_Presets_Thermal_DigiNeg
+            // 
+            this.b_Presets_Thermal_DigiNeg.Location = new System.Drawing.Point(117, 105);
+            this.b_Presets_Thermal_DigiNeg.Name = "b_Presets_Thermal_DigiNeg";
+            this.b_Presets_Thermal_DigiNeg.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_DigiNeg.TabIndex = 8;
+            this.b_Presets_Thermal_DigiNeg.Text = "Digital Zoom Out";
+            this.b_Presets_Thermal_DigiNeg.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_DigiNeg.Click += new System.EventHandler(this.b_Presets_Thermal_DigiNeg_Click);
+            // 
+            // b_Presets_Thermal_DigiPos
+            // 
+            this.b_Presets_Thermal_DigiPos.Location = new System.Drawing.Point(7, 105);
+            this.b_Presets_Thermal_DigiPos.Name = "b_Presets_Thermal_DigiPos";
+            this.b_Presets_Thermal_DigiPos.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_DigiPos.TabIndex = 7;
+            this.b_Presets_Thermal_DigiPos.Text = "Digital Zoom In";
+            this.b_Presets_Thermal_DigiPos.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_DigiPos.Click += new System.EventHandler(this.b_Presets_Thermal_DigiPos_Click);
             // 
             // b_Presets_ContrastPos
             // 
@@ -539,67 +589,17 @@ namespace SSLUtility2
             // 
             this.l_Presets_Default.AutoSize = true;
             this.l_Presets_Default.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Presets_Default.Location = new System.Drawing.Point(12, 9);
+            this.l_Presets_Default.Location = new System.Drawing.Point(8, 13);
             this.l_Presets_Default.Name = "l_Presets_Default";
             this.l_Presets_Default.Size = new System.Drawing.Size(138, 20);
             this.l_Presets_Default.TabIndex = 76;
             this.l_Presets_Default.Text = "Quick Functions";
             // 
-            // b_Presets_Daylight_Extender
-            // 
-            this.b_Presets_Daylight_Extender.Location = new System.Drawing.Point(7, 166);
-            this.b_Presets_Daylight_Extender.Name = "b_Presets_Daylight_Extender";
-            this.b_Presets_Daylight_Extender.Size = new System.Drawing.Size(214, 27);
-            this.b_Presets_Daylight_Extender.TabIndex = 7;
-            this.b_Presets_Daylight_Extender.Text = "Extender";
-            this.b_Presets_Daylight_Extender.UseVisualStyleBackColor = true;
-            this.b_Presets_Daylight_Extender.Click += new System.EventHandler(this.b_Presets_Daylight_Extender_Click);
-            // 
-            // b_Presets_Thermal_DigiPos
-            // 
-            this.b_Presets_Thermal_DigiPos.Location = new System.Drawing.Point(7, 105);
-            this.b_Presets_Thermal_DigiPos.Name = "b_Presets_Thermal_DigiPos";
-            this.b_Presets_Thermal_DigiPos.Size = new System.Drawing.Size(100, 27);
-            this.b_Presets_Thermal_DigiPos.TabIndex = 7;
-            this.b_Presets_Thermal_DigiPos.Text = "Digital Zoom In";
-            this.b_Presets_Thermal_DigiPos.UseVisualStyleBackColor = true;
-            this.b_Presets_Thermal_DigiPos.Click += new System.EventHandler(this.b_Presets_Thermal_DigiPos_Click);
-            // 
-            // b_Presets_Thermal_DigiNeg
-            // 
-            this.b_Presets_Thermal_DigiNeg.Location = new System.Drawing.Point(117, 105);
-            this.b_Presets_Thermal_DigiNeg.Name = "b_Presets_Thermal_DigiNeg";
-            this.b_Presets_Thermal_DigiNeg.Size = new System.Drawing.Size(100, 27);
-            this.b_Presets_Thermal_DigiNeg.TabIndex = 8;
-            this.b_Presets_Thermal_DigiNeg.Text = "Digital Zoom Out";
-            this.b_Presets_Thermal_DigiNeg.UseVisualStyleBackColor = true;
-            this.b_Presets_Thermal_DigiNeg.Click += new System.EventHandler(this.b_Presets_Thermal_DigiNeg_Click);
-            // 
-            // b_Presets_Thermal_Stabi
-            // 
-            this.b_Presets_Thermal_Stabi.Location = new System.Drawing.Point(6, 72);
-            this.b_Presets_Thermal_Stabi.Name = "b_Presets_Thermal_Stabi";
-            this.b_Presets_Thermal_Stabi.Size = new System.Drawing.Size(100, 27);
-            this.b_Presets_Thermal_Stabi.TabIndex = 9;
-            this.b_Presets_Thermal_Stabi.Text = "Stabilisation";
-            this.b_Presets_Thermal_Stabi.UseVisualStyleBackColor = true;
-            this.b_Presets_Thermal_Stabi.Click += new System.EventHandler(this.b_Presets_Thermal_Stabi_Click);
-            // 
-            // b_Presets_Thermal_Cycle
-            // 
-            this.b_Presets_Thermal_Cycle.Location = new System.Drawing.Point(118, 72);
-            this.b_Presets_Thermal_Cycle.Name = "b_Presets_Thermal_Cycle";
-            this.b_Presets_Thermal_Cycle.Size = new System.Drawing.Size(100, 27);
-            this.b_Presets_Thermal_Cycle.TabIndex = 10;
-            this.b_Presets_Thermal_Cycle.Text = "Cycle Palettes";
-            this.b_Presets_Thermal_Cycle.UseVisualStyleBackColor = true;
-            this.b_Presets_Thermal_Cycle.Click += new System.EventHandler(this.b_Presets_Thermal_Cycle_Click);
-            // 
             // PresetPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 297);
+            this.ClientSize = new System.Drawing.Size(254, 313);
             this.Controls.Add(this.tC_Presets_Default);
             this.Controls.Add(this.l_Presets_Default);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

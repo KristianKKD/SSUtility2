@@ -44,7 +44,6 @@
             this.l_Presets = new System.Windows.Forms.Label();
             this.l_PTZCon = new System.Windows.Forms.Label();
             this.l_IPCon = new System.Windows.Forms.Label();
-            this.b_PlayerL_Detach = new System.Windows.Forms.Button();
             this.b_Presets_Learn = new System.Windows.Forms.Button();
             this.b_Presets_GoTo = new System.Windows.Forms.Button();
             this.b_PTZ_Down = new System.Windows.Forms.Button();
@@ -55,14 +54,12 @@
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.b_PTZ_Right = new System.Windows.Forms.Button();
             this.b_PTZ_Left = new System.Windows.Forms.Button();
-            this.b_IPCon_LayoutMode = new System.Windows.Forms.Button();
-            this.b_IPCon_CustomD = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).BeginInit();
             this.SuspendLayout();
             // 
             // tB_Presets_Number
             // 
-            this.tB_Presets_Number.Location = new System.Drawing.Point(117, 536);
+            this.tB_Presets_Number.Location = new System.Drawing.Point(114, 446);
             this.tB_Presets_Number.Name = "tB_Presets_Number";
             this.tB_Presets_Number.Size = new System.Drawing.Size(123, 20);
             this.tB_Presets_Number.TabIndex = 68;
@@ -96,7 +93,7 @@
             // track_PTZ_PTSpeed
             // 
             this.track_PTZ_PTSpeed.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(98, 359);
+            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(99, 359);
             this.track_PTZ_PTSpeed.Maximum = 63;
             this.track_PTZ_PTSpeed.Name = "track_PTZ_PTSpeed";
             this.track_PTZ_PTSpeed.Size = new System.Drawing.Size(132, 45);
@@ -167,7 +164,7 @@
             // l_IPCon_PTSpeed
             // 
             this.l_IPCon_PTSpeed.AutoSize = true;
-            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(12, 370);
+            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(13, 370);
             this.l_IPCon_PTSpeed.Name = "l_IPCon_PTSpeed";
             this.l_IPCon_PTSpeed.Size = new System.Drawing.Size(88, 13);
             this.l_IPCon_PTSpeed.TabIndex = 59;
@@ -176,7 +173,7 @@
             // l_Presets_Number
             // 
             this.l_Presets_Number.AutoSize = true;
-            this.l_Presets_Number.Location = new System.Drawing.Point(19, 539);
+            this.l_Presets_Number.Location = new System.Drawing.Point(16, 449);
             this.l_Presets_Number.Name = "l_Presets_Number";
             this.l_Presets_Number.Size = new System.Drawing.Size(47, 13);
             this.l_Presets_Number.TabIndex = 60;
@@ -204,7 +201,7 @@
             // 
             this.l_Presets.AutoSize = true;
             this.l_Presets.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Presets.Location = new System.Drawing.Point(12, 503);
+            this.l_Presets.Location = new System.Drawing.Point(9, 413);
             this.l_Presets.Name = "l_Presets";
             this.l_Presets.Size = new System.Drawing.Size(70, 20);
             this.l_Presets.TabIndex = 56;
@@ -224,25 +221,15 @@
             // 
             this.l_IPCon.AutoSize = true;
             this.l_IPCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_IPCon.Location = new System.Drawing.Point(12, 9);
+            this.l_IPCon.Location = new System.Drawing.Point(9, 9);
             this.l_IPCon.Name = "l_IPCon";
             this.l_IPCon.Size = new System.Drawing.Size(89, 20);
             this.l_IPCon.TabIndex = 54;
             this.l_IPCon.Text = "IP Control";
             // 
-            // b_PlayerL_Detach
-            // 
-            this.b_PlayerL_Detach.Location = new System.Drawing.Point(89, 410);
-            this.b_PlayerL_Detach.Name = "b_PlayerL_Detach";
-            this.b_PlayerL_Detach.Size = new System.Drawing.Size(75, 87);
-            this.b_PlayerL_Detach.TabIndex = 53;
-            this.b_PlayerL_Detach.Text = "Spawn Detached Video Player";
-            this.b_PlayerL_Detach.UseVisualStyleBackColor = true;
-            this.b_PlayerL_Detach.Click += new System.EventHandler(this.b_Detach);
-            // 
             // b_Presets_Learn
             // 
-            this.b_Presets_Learn.Location = new System.Drawing.Point(146, 562);
+            this.b_Presets_Learn.Location = new System.Drawing.Point(143, 472);
             this.b_Presets_Learn.Name = "b_Presets_Learn";
             this.b_Presets_Learn.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_Learn.TabIndex = 51;
@@ -252,7 +239,7 @@
             // 
             // b_Presets_GoTo
             // 
-            this.b_Presets_GoTo.Location = new System.Drawing.Point(22, 563);
+            this.b_Presets_GoTo.Location = new System.Drawing.Point(19, 473);
             this.b_Presets_GoTo.Name = "b_Presets_GoTo";
             this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_GoTo.TabIndex = 50;
@@ -352,33 +339,11 @@
             this.b_PTZ_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
             this.b_PTZ_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
-            // b_IPCon_LayoutMode
-            // 
-            this.b_IPCon_LayoutMode.Location = new System.Drawing.Point(167, 410);
-            this.b_IPCon_LayoutMode.Name = "b_IPCon_LayoutMode";
-            this.b_IPCon_LayoutMode.Size = new System.Drawing.Size(75, 87);
-            this.b_IPCon_LayoutMode.TabIndex = 75;
-            this.b_IPCon_LayoutMode.Text = "Swap To: Lite Mode";
-            this.b_IPCon_LayoutMode.UseVisualStyleBackColor = true;
-            this.b_IPCon_LayoutMode.Click += new System.EventHandler(this.b_IPCon_LayoutMode_Click);
-            // 
-            // b_IPCon_CustomD
-            // 
-            this.b_IPCon_CustomD.Location = new System.Drawing.Point(11, 410);
-            this.b_IPCon_CustomD.Name = "b_IPCon_CustomD";
-            this.b_IPCon_CustomD.Size = new System.Drawing.Size(75, 87);
-            this.b_IPCon_CustomD.TabIndex = 76;
-            this.b_IPCon_CustomD.Text = "Custom PelcoD";
-            this.b_IPCon_CustomD.UseVisualStyleBackColor = true;
-            this.b_IPCon_CustomD.Click += new System.EventHandler(this.b_IPCon_CustomD_Click);
-            // 
             // ControlPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 586);
-            this.Controls.Add(this.b_IPCon_CustomD);
-            this.Controls.Add(this.b_IPCon_LayoutMode);
+            this.ClientSize = new System.Drawing.Size(254, 533);
             this.Controls.Add(this.tB_Presets_Number);
             this.Controls.Add(this.tB_IPCon_Port);
             this.Controls.Add(this.tB_IPCon_Adr);
@@ -397,7 +362,6 @@
             this.Controls.Add(this.l_Presets);
             this.Controls.Add(this.l_PTZCon);
             this.Controls.Add(this.l_IPCon);
-            this.Controls.Add(this.b_PlayerL_Detach);
             this.Controls.Add(this.b_Presets_Learn);
             this.Controls.Add(this.b_Presets_GoTo);
             this.Controls.Add(this.b_PTZ_Down);
@@ -437,7 +401,6 @@
         public System.Windows.Forms.Label l_Presets;
         public System.Windows.Forms.Label l_PTZCon;
         public System.Windows.Forms.Label l_IPCon;
-        public System.Windows.Forms.Button b_PlayerL_Detach;
         public System.Windows.Forms.Button b_Presets_Learn;
         public System.Windows.Forms.Button b_Presets_GoTo;
         public System.Windows.Forms.Button b_PTZ_Down;
@@ -448,7 +411,5 @@
         public System.Windows.Forms.Button b_PTZ_ZoomPos;
         public System.Windows.Forms.Button b_PTZ_Right;
         public System.Windows.Forms.Button b_PTZ_Left;
-        public System.Windows.Forms.Button b_IPCon_LayoutMode;
-        public System.Windows.Forms.Button b_IPCon_CustomD;
     }
 }
