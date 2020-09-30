@@ -115,6 +115,15 @@ namespace SSLUtility2 {
             this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.windowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.finalTestModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.detachedPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pelcoDScriptingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.responseLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.liteModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
             this.tC_Main.SuspendLayout();
             this.camControl.SuspendLayout();
@@ -126,6 +135,7 @@ namespace SSLUtility2 {
             this.gB_Paths.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // GetSNbutton
@@ -381,10 +391,10 @@ namespace SSLUtility2 {
             this.tC_Main.Controls.Add(this.camControl);
             this.tC_Main.Controls.Add(this.tabPage1);
             this.tC_Main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tC_Main.Location = new System.Drawing.Point(0, 0);
+            this.tC_Main.Location = new System.Drawing.Point(0, 24);
             this.tC_Main.Name = "tC_Main";
             this.tC_Main.SelectedIndex = 0;
-            this.tC_Main.Size = new System.Drawing.Size(1659, 929);
+            this.tC_Main.Size = new System.Drawing.Size(1659, 905);
             this.tC_Main.TabIndex = 29;
             // 
             // camControl
@@ -393,7 +403,7 @@ namespace SSLUtility2 {
             this.camControl.Location = new System.Drawing.Point(4, 22);
             this.camControl.Name = "camControl";
             this.camControl.Padding = new System.Windows.Forms.Padding(3);
-            this.camControl.Size = new System.Drawing.Size(1651, 903);
+            this.camControl.Size = new System.Drawing.Size(1651, 879);
             this.camControl.TabIndex = 1;
             this.camControl.Text = "Control";
             this.camControl.UseVisualStyleBackColor = true;
@@ -406,7 +416,7 @@ namespace SSLUtility2 {
             this.tC_Control.Location = new System.Drawing.Point(3, 3);
             this.tC_Control.Name = "tC_Control";
             this.tC_Control.SelectedIndex = 0;
-            this.tC_Control.Size = new System.Drawing.Size(1645, 897);
+            this.tC_Control.Size = new System.Drawing.Size(1645, 873);
             this.tC_Control.TabIndex = 6;
             // 
             // tP_CameraCon
@@ -415,7 +425,7 @@ namespace SSLUtility2 {
             this.tP_CameraCon.Location = new System.Drawing.Point(4, 22);
             this.tP_CameraCon.Name = "tP_CameraCon";
             this.tP_CameraCon.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_CameraCon.Size = new System.Drawing.Size(1637, 871);
+            this.tP_CameraCon.Size = new System.Drawing.Size(1637, 847);
             this.tP_CameraCon.TabIndex = 0;
             this.tP_CameraCon.Text = "Camera Control";
             this.tP_CameraCon.UseVisualStyleBackColor = true;
@@ -868,6 +878,73 @@ namespace SSLUtility2 {
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.windowToolStripMenuItem,
+            this.finalTestModeToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1659, 24);
+            this.menuStrip1.TabIndex = 30;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // windowToolStripMenuItem
+            // 
+            this.windowToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.detachedPlayerToolStripMenuItem,
+            this.pelcoDScriptingToolStripMenuItem,
+            this.responseLogToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.liteModeToolStripMenuItem});
+            this.windowToolStripMenuItem.Name = "windowToolStripMenuItem";
+            this.windowToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.windowToolStripMenuItem.Text = "Window";
+            // 
+            // finalTestModeToolStripMenuItem
+            // 
+            this.finalTestModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem});
+            this.finalTestModeToolStripMenuItem.Name = "finalTestModeToolStripMenuItem";
+            this.finalTestModeToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
+            this.finalTestModeToolStripMenuItem.Text = "Final Test Mode";
+            // 
+            // detachedPlayerToolStripMenuItem
+            // 
+            this.detachedPlayerToolStripMenuItem.Name = "detachedPlayerToolStripMenuItem";
+            this.detachedPlayerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.detachedPlayerToolStripMenuItem.Text = "Detached Player";
+            // 
+            // pelcoDScriptingToolStripMenuItem
+            // 
+            this.pelcoDScriptingToolStripMenuItem.Name = "pelcoDScriptingToolStripMenuItem";
+            this.pelcoDScriptingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pelcoDScriptingToolStripMenuItem.Text = "Pelco D Scripting";
+            // 
+            // responseLogToolStripMenuItem
+            // 
+            this.responseLogToolStripMenuItem.Name = "responseLogToolStripMenuItem";
+            this.responseLogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.responseLogToolStripMenuItem.Text = "Response Log";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
+            // liteModeToolStripMenuItem
+            // 
+            this.liteModeToolStripMenuItem.Name = "liteModeToolStripMenuItem";
+            this.liteModeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.liteModeToolStripMenuItem.Text = "Lite Mode";
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.openToolStripMenuItem.Text = "Open...";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -875,8 +952,10 @@ namespace SSLUtility2 {
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1659, 929);
             this.Controls.Add(this.tC_Main);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "SSUtility V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -897,6 +976,8 @@ namespace SSLUtility2 {
             this.tabPage1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1969,5 +2050,14 @@ namespace SSLUtility2 {
         public Label l_Other;
         private CheckBox check_Paths_Manual;
         public Label label1;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem windowToolStripMenuItem;
+        private ToolStripMenuItem detachedPlayerToolStripMenuItem;
+        private ToolStripMenuItem pelcoDScriptingToolStripMenuItem;
+        private ToolStripMenuItem responseLogToolStripMenuItem;
+        private ToolStripMenuItem settingsToolStripMenuItem;
+        private ToolStripMenuItem liteModeToolStripMenuItem;
+        private ToolStripMenuItem finalTestModeToolStripMenuItem;
+        private ToolStripMenuItem openToolStripMenuItem;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

@@ -23,7 +23,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.6.0";
+        public const string version = "v1.2.6.1";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -76,6 +76,7 @@ namespace SSLUtility2
             SetFeatureToAllControls(m.Controls);
             AutoConnect(playerL, playerR);
         }
+
         public async Task PopulateSettingText() {
             tB_Paths_sCFolder.Text = ConfigControl.savedFolder;
             tB_Paths_vFolder.Text = ConfigControl.savedFolder;
@@ -122,6 +123,12 @@ namespace SSLUtility2
                             break;
                         case ConfigControl.configNotifVar:
                             ConfigControl.configNotif = val;
+                            break;
+                        case ConfigControl.automaticPathsVar:
+                            ConfigControl.automaticPaths = val;
+                            break;
+                        case ConfigControl.autoPlayVar:
+                            ConfigControl.autoPlay = val;
                             break;
                     }
                 } else {
@@ -421,7 +428,7 @@ namespace SSLUtility2
             }
         }
 
-        private async Task ApplyAll() { //
+        private async Task ApplyAll() { 
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
             MessageBox.Show("Applied settings to: " + ConfigControl.appFolder + ConfigControl.config);
         }
@@ -464,7 +471,7 @@ namespace SSLUtility2
         }
 
         public async Task SaveSnap(Detached player) {
-            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player.tB_PlayerD_Adr.Text, "Screenshots") + ".jpg";
+            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player.tB_PlayerD_SimpleAdr.Text, "Screenshots") + ".jpg";
 
             Image bmp = new Bitmap(player.VLCPlayer_D.Width, player.VLCPlayer_D.Height);
             Graphics gfx = Graphics.FromImage(bmp);
@@ -476,39 +483,38 @@ namespace SSLUtility2
             MessageBox.Show("Image saved : " + fullImagePath);
         }
 
-        public async Task<Recorder> StartRec(Detached player) {
-            string fullImagePath = GivePath(ConfigControl.vFolder, ConfigControl.vFileName, player.tB_PlayerD_Adr.Text, "Recordings") + ".avi";
-
-            Recorder rec = new Recorder(new Record(fullImagePath, int.Parse(ConfigControl.recFPS),
-                 SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(ConfigControl.recQual), player.VLCPlayer_D));
-
-            return rec;
-        }
-
-        public void StopRec(Recorder r) {
-            r.Dispose();
-        }
+        string inUsePath;
 
         public (bool, Recorder) StopStartRec(bool isPlaying, Detached player, Recorder r) {
             if (isPlaying) {
                 player.b_PlayerD_StartRec.Text = "START Recording";
                 isPlaying = false;
-                StopRec(r);
-                MessageBox.Show("Saved recording to: " + ConfigControl.appFolder + ConfigControl.vFolder); //NO
+                
+                r.Dispose();
+                
+                MessageBox.Show("Saved recording to: " + inUsePath);
+
                 return (isPlaying, null);
             } else {
+                string fullVideoPath = GivePath(ConfigControl.vFolder, ConfigControl.vFileName, player.tB_PlayerD_SimpleAdr.Text, "Recordings") + ".avi";
+                inUsePath = fullVideoPath;
                 player.b_PlayerD_StartRec.Text = "STOP Recording";
                 isPlaying = true;
-                return (isPlaying, StartRec(player).Result);
+
+                Recorder rec = new Recorder(new Record(fullVideoPath, int.Parse(ConfigControl.recFPS),
+                SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(ConfigControl.recQual), player.VLCPlayer_D));
+
+                return (isPlaying, rec);
             }
         }
 
         string GivePath(string orgFolder, string orgName, string adr, string folderType) {
             string folder = orgFolder;
             string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
+            adr = GetAdr(adr);
 
             if (ConfigControl.automaticPaths) {
-                folder = ConfigControl.savedFolder + @"\" + adr + @"\" + folderType; //need to find a way to extract ip from simple adr
+                folder = ConfigControl.savedFolder + @"\" + adr + @"\" + folderType;
                 string timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
                 fileName = orgName + " " + timeText;
             }
@@ -517,6 +523,11 @@ namespace SSLUtility2
 
             string full = folder + @"\" + fileName;
             return full;
+        }
+
+        public static string GetAdr(string orgAdr) {
+            Uri uriAddress = new Uri(orgAdr);
+            return uriAddress.Host;
         }
 
         static async Task<bool> CheckIfNameValid(char[] nameArray) {
@@ -601,6 +612,10 @@ namespace SSLUtility2
             b_Paths_vBrowse.Enabled = auto;
         }
 
+        private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
+            BrowseFolderButton(tB_Paths_sCFolder);
+        }
+
         private void b_Paths_vBrowse_Click(object sender, EventArgs e) {
             BrowseFolderButton(tB_Paths_vFolder);
         }
@@ -645,10 +660,6 @@ namespace SSLUtility2
             }
 
             ConfigControl.recFPS = cB_Rec_FPS.Text;
-        }
-
-        private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
-            BrowseFolderButton(tB_Paths_sCFolder);
         }
 
         private void b_Settings_Apply_Click(object sender, EventArgs e) {

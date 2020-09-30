@@ -81,8 +81,5 @@ namespace SSLUtility2 {
             tB_PlayerD_Password.Text = password;
         }
 
-        private void gB_PlayerD_Simple_Enter(object sender, EventArgs e) {
-
-        }
     }
 }

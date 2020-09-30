@@ -64,7 +64,6 @@
             this.gB_PlayerD_Simple.Size = new System.Drawing.Size(313, 236);
             this.gB_PlayerD_Simple.TabIndex = 48;
             this.gB_PlayerD_Simple.TabStop = false;
-            this.gB_PlayerD_Simple.Enter += new System.EventHandler(this.gB_PlayerD_Simple_Enter);
             // 
             // tB_PlayerD_SimpleAdr
             // 

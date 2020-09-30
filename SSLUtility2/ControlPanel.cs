@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSLUtility2
@@ -96,6 +98,12 @@ namespace SSLUtility2
         }
 
         private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {
+            DelayStop();
+        }
+
+        async Task DelayStop() {
+            CameraCommunicate.sendtoIPAsync(protocol.CameraStop(mainRef.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            Task.Delay(100);
             CameraCommunicate.sendtoIPAsync(protocol.CameraStop(mainRef.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
         }
 
