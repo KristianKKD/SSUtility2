@@ -1,15 +1,4 @@
-﻿/*
- * Created by SharpDevelop.
- * User: Alistair
- * Date: 17/03/2018
- * Time: 16:58
- * 
- * To change this template use Tools | Options | Coding | Edit Standard Headers.
- */
-/*
- * Based on ManagePTZ2 by Alistair Windram, with amendments by Filip Ionita
- * Form layout modelled on SSUTILITY Firmware tab for continuity
- */
+﻿using SSLUtility2.Forms.FinalTest;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -23,12 +12,11 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.7.0";
+        public const string version = "v1.2.8.0";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
         bool isOriginal = false;
-        Control lab;
 
         public static Control[] saveList = new Control[0];
 
@@ -103,7 +91,7 @@ namespace SSLUtility2
         }
 
         async Task AutoConnect(Detached playerL, Detached playerR) {
-            CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, lab, true);
+            CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.l_IPCon_Connected, true);
             if (ConfigControl.autoPlay) {
                 if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
                     Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false);
@@ -130,6 +118,9 @@ namespace SSLUtility2
                             break;
                         case ConfigControl.autoPlayVar:
                             ConfigControl.autoPlay = val;
+                            break;
+                        case ConfigControl.portableModeVar:
+                            ConfigControl.portableMode = val;
                             break;
                     }
                 } else {
@@ -191,6 +182,10 @@ namespace SSLUtility2
             await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
             FindVars();
             AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, first);
+
+            if (ConfigControl.portableMode) {
+                Menu_Final.Dispose();
+            }
         }
 
         void AttachControlPanel() {
@@ -200,8 +195,7 @@ namespace SSLUtility2
             PresetPanel pp = AttachPresetPanel(tp, ipCon);
             pp.cp = ipCon;
 
-            isOriginal = true;
-            lab = ipCon.l_IPCon_Connected;
+            isOriginal = true; 
         }
 
         Detached AttachDetached(int xOffset) {
@@ -325,6 +319,11 @@ namespace SSLUtility2
             g.Controls.AddRange(c.ToArray());
         }
 
+        void OpenFinal() {
+            Final fin = new Final();
+            fin.Show();
+        }
+
         public IEnumerable<Control> GetAll(Control control) {
             var controls = control.Controls.Cast<Control>();
 
@@ -420,7 +419,7 @@ namespace SSLUtility2
             }
         }
 
-        private void BrowseFolderButton(TextBox tb) {
+        public static void BrowseFolderButton(TextBox tb) {
             FolderBrowserDialog folderDlg = new FolderBrowserDialog();
             folderDlg.ShowNewFolderButton = true;
             DialogResult result = folderDlg.ShowDialog();
@@ -460,7 +459,7 @@ namespace SSLUtility2
                 code = protocol.CameraPan(address, pan, speed);
             }
 
-            CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
+            CameraCommunicate.sendtoIPAsync(code, ipCon.l_IPCon_Connected, ip, port);
         }
 
         public void PTZZoom(D.Zoom dir, uint address, string ip, string port, Control lcon) {
@@ -545,7 +544,9 @@ namespace SSLUtility2
         }
 
         public static async Task CheckCreateFile(string fileName, string folderName = null) {
-            CheckIfNameValid((fileName + folderName).ToCharArray());
+            if (!CheckIfNameValid((fileName + folderName).ToCharArray()).Result) {
+                return;
+            }
 
             if (folderName != null) {
                 if (!Directory.Exists(folderName)) {
@@ -693,6 +694,10 @@ namespace SSLUtility2
             } else {
                 InitLiteMode();
             }
+        }
+
+        private void Menu_FTM_Open_Click(object sender, EventArgs e) {
+            OpenFinal();
         }
 
     } // end of class MainForm

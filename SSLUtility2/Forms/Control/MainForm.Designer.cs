@@ -119,7 +119,7 @@ namespace SSLUtility2 {
             this.Menu_Window_PelcoD = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_FTM_Open = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
             this.tC_Main.SuspendLayout();
             this.camControl.SuspendLayout();
@@ -853,6 +853,7 @@ namespace SSLUtility2 {
             // 
             // Menu
             // 
+            this.Menu.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Window,
             this.Menu_Final});
@@ -875,37 +876,38 @@ namespace SSLUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(164, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(164, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Lite
             // 
             this.Menu_Window_Lite.Name = "Menu_Window_Lite";
-            this.Menu_Window_Lite.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Lite.Size = new System.Drawing.Size(164, 22);
             this.Menu_Window_Lite.Text = "Lite Mode";
             this.Menu_Window_Lite.Click += new System.EventHandler(this.Menu_Window_Lite_Click);
             // 
             // Menu_Final
             // 
             this.Menu_Final.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openToolStripMenuItem});
+            this.Menu_FTM_Open});
             this.Menu_Final.Name = "Menu_Final";
             this.Menu_Final.Size = new System.Drawing.Size(101, 20);
             this.Menu_Final.Text = "Final Test Mode";
             // 
-            // openToolStripMenuItem
+            // Menu_FTM_Open
             // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.openToolStripMenuItem.Text = "Open...";
+            this.Menu_FTM_Open.Name = "Menu_FTM_Open";
+            this.Menu_FTM_Open.Size = new System.Drawing.Size(180, 22);
+            this.Menu_FTM_Open.Text = "Open...";
+            this.Menu_FTM_Open.Click += new System.EventHandler(this.Menu_FTM_Open_Click);
             // 
             // MainForm
             // 
@@ -972,7 +974,18 @@ namespace SSLUtility2 {
 		private System.Windows.Forms.Button GetSNbutton;
 
 
-
+/*
+ * Created by SharpDevelop.
+ * User: Alistair
+ * Date: 17/03/2018
+ * Time: 16:58
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+/*
+ * Based on ManagePTZ2 by Alistair Windram, with amendments by Filip Ionita
+ * Form layout modelled on SSUTILITY Firmware tab for continuity
+ */
         #region Firmware Stuff
         public static byte Address;
         public static byte CheckSum;
@@ -2013,7 +2026,7 @@ namespace SSLUtility2 {
         private ToolStripMenuItem Menu_Window_PelcoD;
         private ToolStripMenuItem Menu_Window_Lite;
         private ToolStripMenuItem Menu_Final;
-        private ToolStripMenuItem openToolStripMenuItem;
+        private ToolStripMenuItem Menu_FTM_Open;
         private Label l_Version;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

@@ -42,6 +42,8 @@ namespace SSLUtility2 {
         public static bool configNotif;
         public static bool autoPlay;
         public static bool automaticPaths;
+
+        public static bool portableMode;
         //RuntimeVars//
 
         //SearchForVars//
@@ -62,6 +64,8 @@ namespace SSLUtility2 {
         public const string configNotifVar = "BadConfigNotificationHidden";
         public const string autoPlayVar = "AutoPlayLaunch";
         public const string automaticPathsVar = "AutomaticPaths";
+
+        public const string portableModeVar = "PortableMode";
         //SearchForVars//
 
         public static List<ConfigVar> stringVarList {
@@ -107,6 +111,9 @@ namespace SSLUtility2 {
             File.AppendAllText(path, varPrefix + configNotifVar + ":" + configNotif + "\n");
             File.AppendAllText(path, varPrefix + autoPlayVar + ":" + autoPlay + "\n");
             File.AppendAllText(path, varPrefix + automaticPathsVar + ":" + automaticPaths + "\n");
+
+            File.AppendAllText(path, varPrefix + portableModeVar + ":" + portableMode + "\n");
+
         }
 
         public static bool CheckVal(string v) {
