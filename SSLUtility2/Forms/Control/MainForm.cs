@@ -12,7 +12,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.8.0";
+        public const string version = "v1.2.9.0";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -173,6 +173,8 @@ namespace SSLUtility2
         }
 
         async Task FileStuff(bool first) {
+            CheckPortableMode();
+
             ConfigControl.SetToDefaults();
 
             CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
@@ -185,6 +187,12 @@ namespace SSLUtility2
 
             if (ConfigControl.portableMode) {
                 Menu_Final.Dispose();
+            }
+        }
+
+        void CheckPortableMode() {
+            if (File.Exists(Directory.GetCurrentDirectory() + @"\" + ConfigControl.config)) {
+                ConfigControl.appFolder = Directory.GetCurrentDirectory() + @"\";
             }
         }
 
