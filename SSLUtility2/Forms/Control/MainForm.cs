@@ -12,7 +12,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.9.0";
+        public const string version = "v1.2.9.1";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -538,12 +538,24 @@ namespace SSLUtility2
             return uriAddress.Host;
         }
 
-        static async Task<bool> CheckIfNameValid(char[] nameArray) {
+        public static async Task<bool> CheckIfNameValid(char[] nameArray, bool everythingBad = false) {
             foreach (Char c in nameArray) {
                 foreach (Char symbol in Path.GetInvalidFileNameChars()) {
-                    if (c == symbol && c.ToString() != ":" && c.ToString() != "\\") {
+                    bool isBad = false;
+                    if (c == symbol) {
+                        if (everythingBad) {
+                            isBad = true;
+                        } else {
+                            if (c.ToString() != ":" && c.ToString() != "\\") {
+                                isBad = false;
+                            }
+                        }
+
+                    }
+
+                    if (isBad) {
                         ShowError("Invalid character detected, Show more?", "Cannot create file",
-                        "Do not use invalid symbols in file names.\nInvalid character found: " + c);
+                            "Do not use invalid symbols in file names.\nInvalid character found: " + c);
                         return false;
                     }
                 }
@@ -551,9 +563,11 @@ namespace SSLUtility2
             return true;
         }
 
-        public static async Task CheckCreateFile(string fileName, string folderName = null) {
-            if (!CheckIfNameValid((fileName + folderName).ToCharArray()).Result) {
-                return;
+        public static async Task<bool> CheckCreateFile(string fileName, string folderName = null, bool returnValid = false) {
+            if (returnValid) {
+                if (!CheckIfNameValid((fileName + folderName).ToCharArray()).Result) {
+                    return false;
+                }
             }
 
             if (folderName != null) {
@@ -571,6 +585,7 @@ namespace SSLUtility2
                     }
                 }
             }
+            return true;
         }
        
         private void b_Settings_Default_Click(object sender, EventArgs e) {
