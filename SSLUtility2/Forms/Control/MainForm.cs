@@ -12,7 +12,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.9.1";
+        public const string version = "v1.2.9.2";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -519,10 +519,17 @@ namespace SSLUtility2
         string GivePath(string orgFolder, string orgName, string adr, string folderType) {
             string folder = orgFolder;
             string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
+
             adr = GetAdr(adr);
 
+            if (adr != "") {
+                adr += @"\";
+            } else {
+                folderType = "";
+            }
+
             if (ConfigControl.automaticPaths) {
-                folder = ConfigControl.savedFolder + @"\" + adr + @"\" + folderType;
+                folder = ConfigControl.savedFolder + adr + folderType;
                 string timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
                 fileName = orgName + " " + timeText;
             }
@@ -534,8 +541,16 @@ namespace SSLUtility2
         }
 
         public static string GetAdr(string orgAdr) {
-            Uri uriAddress = new Uri(orgAdr);
-            return uriAddress.Host;
+            if (orgAdr != "") {
+                try {
+                    Uri uriAddress = new Uri(orgAdr);
+                    return uriAddress.Host;
+                } catch {
+                    return "";
+                }
+            } else {
+                return "";
+            }
         }
 
         public static async Task<bool> CheckIfNameValid(char[] nameArray, bool everythingBad = false) {
