@@ -12,7 +12,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.9.2";
+        public const string version = "v1.2.9.3";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;

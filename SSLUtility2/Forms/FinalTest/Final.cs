@@ -10,7 +10,14 @@ namespace SSLUtility2.Forms.FinalTest
     {
         public Final() {
             InitializeComponent();
-            tB_Name_Path.Text = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string netPath = @"Z:\ProductionTesting\USB Files";
+
+            if(Directory.Exists(netPath)) {
+                tB_Name_Path.Text = netPath;
+            } else {
+                tB_Name_Path.Text = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            }
+
             tB_Name_PathFrom.Text = ConfigControl.appFolder;
         }
 
