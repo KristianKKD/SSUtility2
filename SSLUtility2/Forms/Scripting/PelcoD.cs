@@ -201,18 +201,11 @@ namespace SSLUtility2 {
         }
 
         private void b_PD_FireSingle_Click(object sender, EventArgs e) {
-            //CheckLine(tB_PD_Single.Text);
-            t();
-            //MessageBox.Show("Sent!");
-        }
-
-        async Task t() {
-            await CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, label1);
-            await WriteToResponses(CameraCommunicate.StringFromSock(tB_IPCon_Adr.Text,
-                            tB_IPCon_Port.Text, l_IPCon_Connected).Result);
+            CheckLine(tB_PD_Single.Text);
             MessageBox.Show("Sent!");
         }
 
+       
         private void b_PD_Stop_Click(object sender, EventArgs e) { //make it cancel current script
         
         }

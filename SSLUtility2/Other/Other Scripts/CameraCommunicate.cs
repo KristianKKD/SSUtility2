@@ -25,11 +25,11 @@ namespace SSLUtility2 {
         public static string lastIPPort = "1";
 
         public static async Task<bool> sendtoIPAsync(byte[] code, Control lab, string ip = null, string port = null) {
-            string m = "";
-            for (int i = 0; i < code.Length; i++) {
-                m += code[i].ToString() + " ";
-            }
-            MessageBox.Show(m);
+            //string m = "";
+            //for (int i = 0; i < code.Length; i++) {
+            //    m += code[i].ToString() + " ";
+            //}
+            //MessageBox.Show(m);
             try {
                 if (!sock.Connected) {
                     bool ableToConnect = Connect(ip, port, lab, false).Result;
@@ -132,7 +132,7 @@ namespace SSLUtility2 {
             }
             try {
                 byte[] buffer = new byte[7];
-                Receive(sock, buffer, 0, buffer.Length, 2000);
+                Receive(sock, buffer, 0, buffer.Length, 500);
                 string m = "";
                 for (int i = 0; i < buffer.Length; i++) {
                     m += buffer[i].ToString() + " ";

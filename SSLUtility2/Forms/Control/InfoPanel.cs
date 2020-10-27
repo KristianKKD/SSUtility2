@@ -17,6 +17,7 @@ namespace SSLUtility2 {
         }
 
         private Timer UpdateTimer;
+        public Detached d;
 
         public void InitTimer() {
             UpdateTimer = new Timer();
@@ -26,21 +27,56 @@ namespace SSLUtility2 {
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e) {
+            UpdateAll();
+        }
+
+        async Task UpdateAll() {
+            //await GetData();
+
             UpdatePan();
             UpdateTilt();
             UpdateFOV();
         }
 
-        void UpdatePan() {
-            l_Pan.Text = "PAN:" /* + receive function */ + "°";
+        int pan = 0;
+        int tilt = 0;
+        int fov = 0;
+        async Task GetData() {
+            GetPan();
+            GetTilt();
+            GetFOV();
+            
         }
 
-        void UpdateTilt() {
-            l_Tilt.Text = "TILT:" /* receive function */ + "°";
+        async Task<string> ReadResult() {
+            string result = CameraCommunicate.StringFromSock(d.GetCombined().Host, d.GetCombined().Port.ToString(), null).Result;
+            return result;
         }
 
-        void UpdateFOV() {
-            l_FOV.Text = "FOV:" /* receive function */ +  "°";
+        async Task GetPan() {
+            await CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, null);
+            ReadResult();
+        }
+
+        async Task GetTilt() {
+            await CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, null);
+            ReadResult();
+        }
+
+        async Task GetFOV() {
+        
+        }
+
+        async Task UpdatePan() {
+            l_Pan.Text = "PAN:" + pan.ToString() + "°";
+        }
+
+        async Task UpdateTilt() {
+            l_Tilt.Text = "TILT:" + tilt.ToString() + "°";
+        }
+
+        async Task UpdateFOV() {
+            l_FOV.Text = "FOV:" /* receive function */;
         }
 
     }

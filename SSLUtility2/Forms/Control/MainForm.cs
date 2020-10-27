@@ -12,7 +12,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.10.0";
+        public const string version = "v1.2.10.1";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -208,6 +208,7 @@ namespace SSLUtility2
             InfoPanel i = new InfoPanel();
             
             d.myInfoRef = i;
+            i.d = d;
 
             p.Size = i.Size;
             p.Location = new Point(d.VLCPlayer_D.Location.X + xOffset, d.VLCPlayer_D.Location.Y);
