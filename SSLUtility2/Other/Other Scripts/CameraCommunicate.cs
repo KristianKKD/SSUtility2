@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -24,11 +25,11 @@ namespace SSLUtility2 {
         public static string lastIPPort = "1";
 
         public static async Task<bool> sendtoIPAsync(byte[] code, Control lab, string ip = null, string port = null) {
-            //string m = "";
-            //for (int i = 0; i < code.Length; i++) {
-            //    m += code[i].ToString() + " ";
-            //}
-            //MessageBox.Show(m);
+            string m = "";
+            for (int i = 0; i < code.Length; i++) {
+                m += code[i].ToString() + " ";
+            }
+            MessageBox.Show(m);
             try {
                 if (!sock.Connected) {
                     bool ableToConnect = Connect(ip, port, lab, false).Result;
@@ -59,7 +60,9 @@ namespace SSLUtility2 {
                 CloseSock();
             }
 
-            if (!PingAdr(ipAdr).Result) {
+            Uri u = new Uri("http://" + ipAdr + ":" + port);
+
+            if (!PingAdr(u).Result) {
                 if (!stopError) {
                     MainForm.ShowError(failedConnectMsg, failedConnectCaption, ipAdr + ":" + port + " ping timed out with no response.");
                 }
@@ -75,6 +78,8 @@ namespace SSLUtility2 {
         }
 
         public static void LabelDisplay(bool connected, Control l) {
+            if (l == null)
+                return;
             if (connected) {
                 l.Text = "✓";
                 l.ForeColor = Color.Green;
@@ -84,7 +89,7 @@ namespace SSLUtility2 {
             }
         }
 
-        public static async Task<bool> PingAdr(string address) {
+        public static async Task<bool> PingAdr(Uri address) {
             Ping pinger = null;
 
             if (address == null) {
@@ -93,9 +98,14 @@ namespace SSLUtility2 {
 
             try {
                 pinger = new Ping();
-                PingReply reply = pinger.Send(address, 2);
+                PingReply reply = pinger.Send(address.Host, 2);
                 if (reply.Status == IPStatus.Success) {
-                    return true;
+                    if (address.Port == 0) {
+                        return true;
+                    }
+                    using (var client = new TcpClient(address.Host, address.Port)) {
+                        return true;
+                    }
                 }
             } catch {
             } finally {
@@ -112,6 +122,8 @@ namespace SSLUtility2 {
             return false;
         }
 
+        private const int _kport = 6791;
+
         public static async Task<string> StringFromSock(string ipAdr, string port, Control lCon, bool stopError = false) {
             if (!sock.Connected) {
                 if (!Connect(ipAdr, port, lCon, stopError).Result) {
@@ -119,40 +131,80 @@ namespace SSLUtility2 {
                 }
             }
             try {
-                byte[] buffer = new byte[4];
-                Receive(sock, buffer, 0, buffer.Length, 10000);
+                byte[] buffer = new byte[7];
+                Receive(sock, buffer, 0, buffer.Length, 2000);
                 string m = "";
                 for (int i = 0; i < buffer.Length; i++) {
                     m += buffer[i].ToString() + " ";
                 }
+                //    SocketServer server = new SocketServer(_kport);
+                //    Socket remote = new Socket(SocketType.Stream, ProtocolType.Tcp);
+                //    IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Loopback, _kport);
+
+                //    remote.Connect(remoteEndPoint);
+
+                //    using (NetworkStream stream = new NetworkStream(remote))
+                //    using (StreamReader reader = new StreamReader(stream))
+                //    using (StreamWriter writer = new StreamWriter(stream)) {
+                //        Task receiveTask = _Receive(reader);
+                //        string text;
+
+                //        Console.WriteLine("CLIENT: connected. Enter text to send...");
+
+                //        while ((text = Console.ReadLine()) != "") {
+                //            writer.WriteLine(text);
+                //            writer.Flush();
+                //        }
+
+                //        remote.Shutdown(SocketShutdown.Send);
+                //        receiveTask.Wait();
+                //    }
+
+                //    server.Stop();
+
+
                 return m;
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
                 return null;
             }
         }
+        
+        private static async Task _Receive(StreamReader reader) {
+            string receiveText;
+
+            while ((receiveText = await reader.ReadLineAsync()) != null) {
+                Console.WriteLine("CLIENT: received \"" + receiveText + "\"");
+            }
+
+            Console.WriteLine("CLIENT: end-of-stream");
+        }
 
         private static async void Receive(Socket socket, byte[] buffer, int offset, int size, int timeout) {
             int startTickCount = Environment.TickCount;
             int received = 0;  // how many bytes is already received
+
             while (received < size) {
                 if (Environment.TickCount > startTickCount + timeout)
-                    throw new Exception("Timeout.");
+                    return;
                 try {
+                    sock.ReceiveTimeout = timeout;
                     received += socket.Receive(buffer, offset + received, size - received, SocketFlags.None);
                 } catch (SocketException ex) {
                     if (ex.SocketErrorCode == SocketError.WouldBlock ||
                         ex.SocketErrorCode == SocketError.IOPending ||
                         ex.SocketErrorCode == SocketError.NoBufferSpaceAvailable) {
-                        // socket buffer is probably empty, wait and try again
-                        await Task.Delay(30);
+                        await Task.Delay(30);// socket buffer is probably empty, wait and try again
                     } else
-                        throw ex;  // any serious error occurr
+                        MessageBox.Show(received.ToString());
+                        MessageBox.Show(ex.ToString());
                 }
-            } 
+            }
         }
-       
-        public static void CloseSock() {
+
+        
+
+    public static void CloseSock() {
             if (sock != null && sock.Connected) {
                 sock.Shutdown(SocketShutdown.Both);
                 sock.Close();

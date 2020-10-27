@@ -19,8 +19,9 @@ namespace SSLUtility2 {
         public static string defVRecQual = "70";
         public static string defVRecFPS = "30";
 
+        public static string defVUpdateMs = "500";
+
         public static bool defSubnetNot = false;
-        public static bool defConfigNot = false;
         public static bool defAutoPlay = true;
         public static bool defAutomaticPaths = true;
 
@@ -37,9 +38,9 @@ namespace SSLUtility2 {
         public static string vFileName;
         public static string recQual;
         public static string recFPS;
+        public static string updateMs;
 
         public static bool subnetNotif;
-        public static bool configNotif;
         public static bool autoPlay;
         public static bool automaticPaths;
 
@@ -60,8 +61,9 @@ namespace SSLUtility2 {
         public const string recQualVar = "RecordingQuality";
         public const string recFPSVar = "RecordingFramerate";
 
+        public const string updateMsVar = "UpdateStatsTimerMs";
+
         public const string subnetNotifVar = "SubnetNotificationHidden";
-        public const string configNotifVar = "BadConfigNotificationHidden";
         public const string autoPlayVar = "AutoPlayLaunch";
         public const string automaticPathsVar = "AutomaticPaths";
 
@@ -87,9 +89,9 @@ namespace SSLUtility2 {
 
             recQual = defVRecQual;
             recFPS = defVRecFPS;
+            updateMs = defVUpdateMs;
 
             subnetNotif = defSubnetNot;
-            configNotif = defConfigNot;
             autoPlay = defAutoPlay;
             automaticPaths = defAutomaticPaths;
         }
@@ -106,9 +108,9 @@ namespace SSLUtility2 {
 
             File.AppendAllText(path, varPrefix + recQualVar + ":" + recQual + "\n");
             File.AppendAllText(path, varPrefix + recFPSVar + ":" + recFPS + "\n");
+            File.AppendAllText(path, varPrefix + updateMsVar + ":" + updateMs + "\n");
 
             File.AppendAllText(path, varPrefix + subnetNotifVar + ":" + subnetNotif + "\n");
-            File.AppendAllText(path, varPrefix + configNotifVar + ":" + configNotif + "\n");
             File.AppendAllText(path, varPrefix + autoPlayVar + ":" + autoPlay + "\n");
             File.AppendAllText(path, varPrefix + automaticPathsVar + ":" + automaticPaths + "\n");
 

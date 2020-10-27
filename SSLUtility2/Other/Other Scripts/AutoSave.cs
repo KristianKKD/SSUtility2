@@ -28,13 +28,13 @@ namespace SSLUtility2
 
             string[] lines = File.ReadAllLines(path);
 
-            if (MainForm.saveList.Length != lines.Length && !ConfigControl.configNotif) {
-                if (MainForm.ShowError("Misaligment of autosaved variables! \nWould you like to regenerate the file?" +
-                    "\n(Press 'yes' if you don't know what to do)", "Reset autosave?", null, false)) {
-                        ConfigControl.ResetFile(path);
-                        return;
-                }
-            }
+            //if (MainForm.saveList.Length != lines.Length && !ConfigControl.configNotif) {
+            //    if (MainForm.ShowError("Misaligment of autosaved variables! \nWould you like to regenerate the file?" +
+            //        "\n(Press 'yes' if you don't know what to do)", "Reset autosave?", null, false)) {
+            //            ConfigControl.ResetFile(path);
+            //            return;
+            //    }
+            //}
 
             for (int i = 0; i < MainForm.saveList.Length; i++) {
                 MainForm.saveList[i].Text = lines[i];

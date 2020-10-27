@@ -43,7 +43,8 @@ namespace SSLUtility2 {
                 byte[] send = CustomScriptCommands.CheckForCommands(line, mainRef.MakeAdr(cB_IPCon_Selected), this).Result;
                 if (send != noGo) {
                     if (send == null) {
-                        send = MakeBytes(line);
+                        //send = MakeBytes(line);
+                        send = MakeCommand(line);
                     }
                     if (!CameraCommunicate.sendtoIPAsync(send, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text).Result) {
                         WriteToResponses("Command: " + line + " could not be sent.");
@@ -97,48 +98,61 @@ namespace SSLUtility2 {
             return bytes;
         }
 
-        byte[] MakeBytes(string line) {
+        //byte[] MakeBytes(string line) {
 
-            List<int> spacePos = new List<int>();
-            char[] c = line.Trim().ToCharArray();
+        //    List<int> spacePos = new List<int>();
+        //    char[] c = line.Trim().ToCharArray();
 
-            for (int i = 0; i < c.Length; i++) {
-                if (i == 0) {
-                    spacePos.Add(0);
-                } else {
-                    if (c[i].ToString() == " ") {
-                        spacePos.Add(i+1);
-                    }
-                }
-            }
-            spacePos.Add(c.Length);
+        //    for (int i = 0; i < c.Length; i++) {
+        //        if (i == 0) {
+        //            spacePos.Add(0);
+        //        } else {
+        //            if (c[i].ToString() == " ") {
+        //                spacePos.Add(i+1);
+        //            }
+        //        }
+        //    }
+        //    spacePos.Add(c.Length);
 
-            byte[] bytes = new byte[spacePos.Count + 1];
-            byte checksum = 0x00;
+        //    byte[] bytes = new byte[spacePos.Count + 1];
+        //    int checksum = 0;
 
-            for (int i = 0; i < spacePos.Count - 1; i++) {
-                string subbed = "";
-                for (int cI = 0; cI < spacePos[i + 1] - spacePos[i]; cI++) {
-                    subbed += c[spacePos[i] + cI];
-                }
-                subbed = subbed.Trim();
+        //    for (int i = 0; i < spacePos.Count - 1; i++) {
+        //        string subbed = "";
+        //        for (int cI = 0; cI < spacePos[i + 1] - spacePos[i]; cI++) {
+        //            subbed += c[spacePos[i] + cI];
+        //        }
+        //        subbed = subbed.Trim();
 
-                if (!byte.TryParse(subbed, out byte result)) {
-                    string tryAgain = int.Parse(subbed, System.Globalization.NumberStyles.HexNumber).ToString();
-                    byte.TryParse(tryAgain, out result);
-                    if (int.Parse(result.ToString()) == int.Parse(D.Message.STX.ToString())) {
-                        result = D.Message.STX;
-                    }
-                }
-                bytes[i] = result;
+        //        if (!byte.TryParse(subbed, out byte result)) {
+        //            string tryAgain = int.Parse(subbed, System.Globalization.NumberStyles.HexNumber).ToString();
+        //            byte.TryParse(tryAgain, out result);
+        //            if (int.Parse(result.ToString()) == int.Parse(D.Message.STX.ToString())) {
+        //                result = D.Message.STX;
+        //            }
+        //        }
+        //        bytes[i] = result;
                 
-                if (result != D.Message.STX) {
-                    checksum += result;
-                }
+        //        if (result != D.Message.STX) {
+        //            checksum += result;
+        //        }
 
-            }
-            bytes[spacePos.Count - 1] = checksum;
-            return bytes;
+        //    }
+        //    bytes[spacePos.Count - 1] = (byte)(checksum % 256);
+        //    return bytes;
+        //}
+
+        byte[] MakeCommand(string line) {
+            uint cm1 = uint.Parse(line.Substring(0,2), System.Globalization.NumberStyles.HexNumber);
+            uint cm2 = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
+            uint d1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+            uint d2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
+            uint checksum = (cm1 + cm2 + d1 + d2 + mainRef.MakeAdr(cB_IPCon_Selected)) % 256;
+            MessageBox.Show(checksum.ToString());
+            byte[] fullCommand = new byte[7] { 0xFF, (byte)mainRef.MakeAdr(cB_IPCon_Selected), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum } ;
+
+            return fullCommand;
+
         }
 
         public async Task WriteToResponses(string text) {
@@ -162,7 +176,11 @@ namespace SSLUtility2 {
             SaveFile(rtb_PD_Commands.Lines, "PelcoScript");
         }
         private void b_PD_Fire_Click(object sender, EventArgs e) {
-            Fire();
+            if (CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, null, false).Result) {
+                Fire();
+            } else {
+                MessageBox.Show("Not connected to camera!");
+            }
         }
 
         private void b_PD_Load_Click(object sender, EventArgs e) {
@@ -181,9 +199,17 @@ namespace SSLUtility2 {
                 }
             }
         }
-        
+
         private void b_PD_FireSingle_Click(object sender, EventArgs e) {
-            CheckLine(tB_PD_Single.Text);
+            //CheckLine(tB_PD_Single.Text);
+            t();
+            //MessageBox.Show("Sent!");
+        }
+
+        async Task t() {
+            await CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, label1);
+            await WriteToResponses(CameraCommunicate.StringFromSock(tB_IPCon_Adr.Text,
+                            tB_IPCon_Port.Text, l_IPCon_Connected).Result);
             MessageBox.Show("Sent!");
         }
 

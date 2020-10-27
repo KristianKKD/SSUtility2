@@ -392,8 +392,8 @@ namespace SSLUtility2
                 }
 
                 CheckSum = (byte)((Address + Command1 + Command2 + Data1 + Data2) % 256);
-                //MessageBox.Show(STX.ToString() + " " + Address.ToString() + " " + Command1.ToString() + " " +
-                //    Command2.ToString() + " " + Data1.ToString() + " " + Data2.ToString() + " " + CheckSum.ToString());
+                MessageBox.Show(STX.ToString() + " " + Address.ToString() + " " + Command1.ToString() + " " +
+                    Command2.ToString() + " " + Data1.ToString() + " " + Data2.ToString() + " " + CheckSum.ToString());
                 return new byte[] { STX, Address, Command1, Command2, Data1, Data2, CheckSum };
             }
 

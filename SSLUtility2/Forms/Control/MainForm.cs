@@ -12,7 +12,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.9.3";
+        public const string version = "v1.2.10.0";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -33,6 +33,8 @@ namespace SSLUtility2
             AttachControlPanel();
             Detached playerL = AttachDetached(10);
             Detached playerR = AttachDetached(690);
+            AttachInfoPanel(playerL, 270);
+            AttachInfoPanel(playerR, 950);
 
             saveList = new Control[]{
                 ipCon.cB_IPCon_Type,
@@ -76,8 +78,9 @@ namespace SSLUtility2
             cB_Rec_Quality.Text = ConfigControl.recQual;
             cB_Rec_FPS.Text = ConfigControl.recFPS;
 
-            check_Not_Subnet.Checked = ConfigControl.subnetNotif;
-            check_Not_Config.Checked = ConfigControl.configNotif;
+            cB_Other_Rate.Text = ConfigControl.updateMs;
+
+            check_Other_Subnet.Checked = ConfigControl.subnetNotif;
             check_Other_AutoPlay.Checked = ConfigControl.autoPlay;
             check_Paths_Manual.Checked = ConfigControl.automaticPaths;
         }
@@ -95,9 +98,11 @@ namespace SSLUtility2
             if (ConfigControl.autoPlay) {
                 if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
                     Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false);
+                    //playerL.myInfoRef.InitTimer();
                 }
                 if (playerR.tB_PlayerD_SimpleAdr.Text != "") {
                     Play(playerR.VLCPlayer_D, playerR.GetCombined(), playerR.tB_PlayerD_SimpleAdr, playerR.tB_PlayerD_Buffering.Text, false);
+                    //playerR.myInfoRef.InitTimer();
                 }
             }
         }
@@ -109,9 +114,6 @@ namespace SSLUtility2
                     switch (v.name) {
                         case ConfigControl.subnetNotifVar:
                             ConfigControl.subnetNotif = val;
-                            break;
-                        case ConfigControl.configNotifVar:
-                            ConfigControl.configNotif = val;
                             break;
                         case ConfigControl.automaticPathsVar:
                             ConfigControl.automaticPaths = val;
@@ -142,6 +144,9 @@ namespace SSLUtility2
                             break;
                         case ConfigControl.recFPSVar:
                             ConfigControl.recFPS = v.value;
+                            break;
+                        case ConfigControl.updateMsVar:
+                            ConfigControl.updateMs = v.value;
                             break;
                     }
                 }
@@ -196,10 +201,29 @@ namespace SSLUtility2
             }
         }
 
+        void AttachInfoPanel(Detached d, int xOffset) {
+            TabPage tp = tC_Main.TabPages[0];
+
+            Panel p = new Panel();
+            InfoPanel i = new InfoPanel();
+            
+            d.myInfoRef = i;
+
+            p.Size = i.Size;
+            p.Location = new Point(d.VLCPlayer_D.Location.X + xOffset, d.VLCPlayer_D.Location.Y);
+
+            var c = GetAll(i);
+            p.Controls.AddRange(c.ToArray());
+
+            tp.Controls.Add(p);
+        }
+
         void AttachControlPanel() {
             TabPage tp = tC_Main.TabPages[0];
+            
             ipCon = SpawnControlPanel(tp, false);
             ipCon.mainRef = m;
+
             PresetPanel pp = AttachPresetPanel(tp, ipCon);
             pp.cp = ipCon;
 
@@ -224,8 +248,9 @@ namespace SSLUtility2
             gb.Controls.AddRange(c5.ToArray());
 
             d.VLCPlayer_D.Location = new Point(d.VLCPlayer_D.Location.X, d.VLCPlayer_D.Location.Y + 5);
+
             gb.Size = new Size(d.Width - 18, d.Height - 40);
-            gb.Location = new Point(ipCon.Location.X + ipCon.Size.Width + xOffset, ipCon.Location.Y + 25);
+            gb.Location = new Point(ipCon.Location.X + ipCon.Size.Width + xOffset, ipCon.Location.Y + 65);
 
             tp.Controls.Add(gb);
 
@@ -391,19 +416,20 @@ namespace SSLUtility2
             return res;
         }
 
-        public void Play(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, TextBox linkedTB, string buffering, bool showError) {
+        public async Task<bool> Play(AxAXVLC.AxVLCPlugin2 player, Uri combinedUrl, TextBox linkedTB, string buffering, bool showError) {
             if (showError) {
-                if (combinedUrl == "") {
+                if (combinedUrl.Host == "") {
                     MessageBox.Show("Address is invalid!");
-                    return;
+                    return false;
                 }
-                if (CameraCommunicate.PingAdr(combinedUrl).Result) {
-                    MessageBox.Show("Address could not be pinged!");
-                    return;
+                if (!CameraCommunicate.PingAdr(combinedUrl).Result) {
+                    MessageBox.Show("Address had no RTSP stream attached!");
+                    return false;
                 }
             }
-            linkedTB.Text = combinedUrl;
-            Replay(player, combinedUrl, buffering);
+            linkedTB.Text = combinedUrl.ToString();
+            Replay(player, combinedUrl.ToString(), buffering);
+            return true;
         }
 
         public void Replay(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, string buffering) {
@@ -626,15 +652,17 @@ namespace SSLUtility2
         }
 
         private void check_Not_Subnet_CheckedChanged(object sender, EventArgs e) {
-            ConfigControl.subnetNotif = check_Not_Subnet.Checked;
-        }
-
-        private void check_Not_Config_CheckedChanged(object sender, EventArgs e) {
-            ConfigControl.configNotif = check_Not_Config.Checked;
+            ConfigControl.subnetNotif = check_Other_Subnet.Checked;
         }
 
         private void check_Other_AutoPlay_CheckChanged(object sender, EventArgs e) {
             ConfigControl.autoPlay = check_Other_AutoPlay.Checked;
+        }
+
+        private void cB_Other_Rate_SelectedIndexChanged(object sender, EventArgs e) {
+            if (CheckIfNameValid(cB_Other_Rate.Text.ToCharArray(), true).Result){
+                ConfigControl.updateMs = cB_Other_Rate.Text;
+            }
         }
 
         private void check_Paths_Manual_CheckedChanged(object sender, EventArgs e) {
@@ -737,6 +765,7 @@ namespace SSLUtility2
         private void Menu_FTM_Open_Click(object sender, EventArgs e) {
             OpenFinal();
         }
+
 
     } // end of class MainForm
 } // end of namespace SSLUtility2

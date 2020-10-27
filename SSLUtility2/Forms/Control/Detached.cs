@@ -5,15 +5,15 @@ namespace SSLUtility2 {
 
     public partial class Detached : Form {
 
-        public MainForm mainRef { get;
-            set; }
+        public MainForm mainRef;
+        public InfoPanel myInfoRef;
 
         public Detached() {
             InitializeComponent();
         }
 
-        public string GetCombined() {
-            string combinedUrl;
+        public Uri GetCombined() {
+            Uri combinedUrl;
             if (checkB_PlayerD_Manual.Checked) { //make a function to automatically grab these from gB_...
                 string ipaddress = tB_PlayerD_Adr.Text; //is it possible? the variables need to be in an order
                 string port = tB_PlayerD_Port.Text;
@@ -21,17 +21,18 @@ namespace SSLUtility2 {
                 string username = tB_PlayerD_Username.Text;
                 string password = tB_PlayerD_Password.Text;
 
-                combinedUrl = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+                combinedUrl = new Uri("rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url);
             } else {
-                combinedUrl = tB_PlayerD_SimpleAdr.Text;
+                combinedUrl = new Uri(tB_PlayerD_SimpleAdr.Text);
             }
             return combinedUrl;
         }
 
         private void b_PlayerD_Play_Click(object sender, EventArgs e) {
-            string combined = GetCombined();
-
-            mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true);
+            Uri combined = GetCombined();
+            
+            if(mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result)
+                myInfoRef.InitTimer();
         }
 
         private void b_PlayerD_SaveSnap_Click(object sender, EventArgs e) {
@@ -56,6 +57,11 @@ namespace SSLUtility2 {
             string username = "";
             string password = "";
             string rtsp = "";
+
+            if (enc == "Daylight") {
+                cB_PlayerD_Type.Text = "IONodes - Daylight";
+                enc = cB_PlayerD_Type.Text;
+            }
 
             if (enc == "IONodes - Daylight") {
                 username = "admin";

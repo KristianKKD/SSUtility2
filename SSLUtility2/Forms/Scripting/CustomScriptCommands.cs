@@ -48,8 +48,12 @@ namespace SSLUtility2 {
                 case "stop":
                     code = protocol.CameraStop(adr);
                     break;
+                case "mono":
                 case "monocolour":
                     code = protocol.Preset((adr), 3, D.PresetAction.Goto);
+                    break;
+                case "getpan":
+                    code = new byte[] { 0XFF, adrByte, 0x00, 0x51, 0x00, 0x00, 0x00 };
                     break;
                
             }

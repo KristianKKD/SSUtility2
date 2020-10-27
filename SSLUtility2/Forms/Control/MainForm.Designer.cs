@@ -75,11 +75,11 @@ namespace SSLUtility2 {
             this.firmwareUp = new System.Windows.Forms.TabPage();
             this.tP_Settings = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cB_Other_Rate = new System.Windows.Forms.ComboBox();
             this.l_Other = new System.Windows.Forms.Label();
             this.check_Other_AutoPlay = new System.Windows.Forms.CheckBox();
-            this.check_Not_Config = new System.Windows.Forms.CheckBox();
-            this.check_Not_Subnet = new System.Windows.Forms.CheckBox();
-            this.l_Notifs = new System.Windows.Forms.Label();
+            this.l_Other_Rate = new System.Windows.Forms.Label();
+            this.check_Other_Subnet = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
             this.l_Rec_Quality = new System.Windows.Forms.Label();
@@ -464,22 +464,37 @@ namespace SSLUtility2 {
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cB_Other_Rate);
             this.groupBox2.Controls.Add(this.l_Other);
             this.groupBox2.Controls.Add(this.check_Other_AutoPlay);
-            this.groupBox2.Controls.Add(this.check_Not_Config);
-            this.groupBox2.Controls.Add(this.check_Not_Subnet);
-            this.groupBox2.Controls.Add(this.l_Notifs);
+            this.groupBox2.Controls.Add(this.l_Other_Rate);
+            this.groupBox2.Controls.Add(this.check_Other_Subnet);
             this.groupBox2.Location = new System.Drawing.Point(885, 6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(428, 194);
             this.groupBox2.TabIndex = 29;
             this.groupBox2.TabStop = false;
             // 
+            // cB_Other_Rate
+            // 
+            this.cB_Other_Rate.FormattingEnabled = true;
+            this.cB_Other_Rate.Items.AddRange(new object[] {
+            "500",
+            "1000",
+            "2000",
+            "5000",
+            "10000"});
+            this.cB_Other_Rate.Location = new System.Drawing.Point(166, 94);
+            this.cB_Other_Rate.Name = "cB_Other_Rate";
+            this.cB_Other_Rate.Size = new System.Drawing.Size(114, 21);
+            this.cB_Other_Rate.TabIndex = 28;
+            this.cB_Other_Rate.SelectedIndexChanged += new System.EventHandler(this.cB_Other_Rate_SelectedIndexChanged);
+            // 
             // l_Other
             // 
             this.l_Other.AutoSize = true;
             this.l_Other.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Other.Location = new System.Drawing.Point(9, 95);
+            this.l_Other.Location = new System.Drawing.Point(6, 16);
             this.l_Other.Name = "l_Other";
             this.l_Other.Size = new System.Drawing.Size(126, 20);
             this.l_Other.TabIndex = 31;
@@ -487,7 +502,7 @@ namespace SSLUtility2 {
             // 
             // check_Other_AutoPlay
             // 
-            this.check_Other_AutoPlay.Location = new System.Drawing.Point(13, 125);
+            this.check_Other_AutoPlay.Location = new System.Drawing.Point(6, 45);
             this.check_Other_AutoPlay.Name = "check_Other_AutoPlay";
             this.check_Other_AutoPlay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_Other_AutoPlay.Size = new System.Drawing.Size(174, 17);
@@ -497,39 +512,26 @@ namespace SSLUtility2 {
             this.check_Other_AutoPlay.UseVisualStyleBackColor = true;
             this.check_Other_AutoPlay.CheckedChanged += new System.EventHandler(this.check_Other_AutoPlay_CheckChanged);
             // 
-            // check_Not_Config
+            // l_Other_Rate
             // 
-            this.check_Not_Config.Location = new System.Drawing.Point(13, 72);
-            this.check_Not_Config.Name = "check_Not_Config";
-            this.check_Not_Config.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Not_Config.Size = new System.Drawing.Size(174, 17);
-            this.check_Not_Config.TabIndex = 29;
-            this.check_Not_Config.Text = "Hide Bad Config Notification";
-            this.check_Not_Config.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.check_Not_Config.UseVisualStyleBackColor = true;
-            this.check_Not_Config.CheckedChanged += new System.EventHandler(this.check_Not_Config_CheckedChanged);
+            this.l_Other_Rate.AutoSize = true;
+            this.l_Other_Rate.Location = new System.Drawing.Point(7, 97);
+            this.l_Other_Rate.Name = "l_Other_Rate";
+            this.l_Other_Rate.Size = new System.Drawing.Size(113, 13);
+            this.l_Other_Rate.TabIndex = 27;
+            this.l_Other_Rate.Text = "Info Refresh Rate (ms)";
             // 
-            // check_Not_Subnet
+            // check_Other_Subnet
             // 
-            this.check_Not_Subnet.Location = new System.Drawing.Point(13, 47);
-            this.check_Not_Subnet.Name = "check_Not_Subnet";
-            this.check_Not_Subnet.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Not_Subnet.Size = new System.Drawing.Size(174, 17);
-            this.check_Not_Subnet.TabIndex = 0;
-            this.check_Not_Subnet.Text = "Hide Subnet Notification";
-            this.check_Not_Subnet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.check_Not_Subnet.UseVisualStyleBackColor = true;
-            this.check_Not_Subnet.CheckedChanged += new System.EventHandler(this.check_Not_Subnet_CheckedChanged);
-            // 
-            // l_Notifs
-            // 
-            this.l_Notifs.AutoSize = true;
-            this.l_Notifs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Notifs.Location = new System.Drawing.Point(9, 16);
-            this.l_Notifs.Name = "l_Notifs";
-            this.l_Notifs.Size = new System.Drawing.Size(109, 20);
-            this.l_Notifs.TabIndex = 12;
-            this.l_Notifs.Text = "Notifications";
+            this.check_Other_Subnet.Location = new System.Drawing.Point(6, 68);
+            this.check_Other_Subnet.Name = "check_Other_Subnet";
+            this.check_Other_Subnet.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_Subnet.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_Subnet.TabIndex = 0;
+            this.check_Other_Subnet.Text = "Hide Subnet Notification";
+            this.check_Other_Subnet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.check_Other_Subnet.UseVisualStyleBackColor = true;
+            this.check_Other_Subnet.CheckedChanged += new System.EventHandler(this.check_Not_Subnet_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -550,12 +552,13 @@ namespace SSLUtility2 {
             // 
             // cB_Rec_Quality
             // 
+            this.cB_Rec_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
             this.cB_Rec_Quality.FormattingEnabled = true;
             this.cB_Rec_Quality.Items.AddRange(new object[] {
             "50",
             "70",
             "100"});
-            this.cB_Rec_Quality.Location = new System.Drawing.Point(126, 69);
+            this.cB_Rec_Quality.Location = new System.Drawing.Point(123, 69);
             this.cB_Rec_Quality.Name = "cB_Rec_Quality";
             this.cB_Rec_Quality.Size = new System.Drawing.Size(114, 21);
             this.cB_Rec_Quality.TabIndex = 26;
@@ -564,7 +567,7 @@ namespace SSLUtility2 {
             // l_Rec_Quality
             // 
             this.l_Rec_Quality.AutoSize = true;
-            this.l_Rec_Quality.Location = new System.Drawing.Point(11, 72);
+            this.l_Rec_Quality.Location = new System.Drawing.Point(7, 73);
             this.l_Rec_Quality.Name = "l_Rec_Quality";
             this.l_Rec_Quality.Size = new System.Drawing.Size(72, 13);
             this.l_Rec_Quality.TabIndex = 25;
@@ -573,7 +576,8 @@ namespace SSLUtility2 {
             // tB_Rec_scFileN
             // 
             this.tB_Rec_scFileN.Enabled = false;
-            this.tB_Rec_scFileN.Location = new System.Drawing.Point(126, 126);
+            this.tB_Rec_scFileN.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Rec_scFileN.Location = new System.Drawing.Point(123, 126);
             this.tB_Rec_scFileN.Name = "tB_Rec_scFileN";
             this.tB_Rec_scFileN.Size = new System.Drawing.Size(188, 20);
             this.tB_Rec_scFileN.TabIndex = 24;
@@ -582,7 +586,7 @@ namespace SSLUtility2 {
             // l_Rec_sCFileN
             // 
             this.l_Rec_sCFileN.AutoSize = true;
-            this.l_Rec_sCFileN.Location = new System.Drawing.Point(11, 129);
+            this.l_Rec_sCFileN.Location = new System.Drawing.Point(7, 129);
             this.l_Rec_sCFileN.Name = "l_Rec_sCFileN";
             this.l_Rec_sCFileN.Size = new System.Drawing.Size(111, 13);
             this.l_Rec_sCFileN.TabIndex = 23;
@@ -590,6 +594,7 @@ namespace SSLUtility2 {
             // 
             // cB_Rec_FPS
             // 
+            this.cB_Rec_FPS.ForeColor = System.Drawing.SystemColors.MenuText;
             this.cB_Rec_FPS.FormattingEnabled = true;
             this.cB_Rec_FPS.Items.AddRange(new object[] {
             "15",
@@ -597,7 +602,7 @@ namespace SSLUtility2 {
             "30",
             "45",
             "60"});
-            this.cB_Rec_FPS.Location = new System.Drawing.Point(126, 42);
+            this.cB_Rec_FPS.Location = new System.Drawing.Point(123, 42);
             this.cB_Rec_FPS.Name = "cB_Rec_FPS";
             this.cB_Rec_FPS.Size = new System.Drawing.Size(114, 21);
             this.cB_Rec_FPS.TabIndex = 16;
@@ -606,7 +611,8 @@ namespace SSLUtility2 {
             // tB_Rec_vFileN
             // 
             this.tB_Rec_vFileN.Enabled = false;
-            this.tB_Rec_vFileN.Location = new System.Drawing.Point(126, 97);
+            this.tB_Rec_vFileN.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Rec_vFileN.Location = new System.Drawing.Point(123, 97);
             this.tB_Rec_vFileN.Name = "tB_Rec_vFileN";
             this.tB_Rec_vFileN.Size = new System.Drawing.Size(188, 20);
             this.tB_Rec_vFileN.TabIndex = 22;
@@ -615,7 +621,7 @@ namespace SSLUtility2 {
             // l_Rec_vFileN
             // 
             this.l_Rec_vFileN.AutoSize = true;
-            this.l_Rec_vFileN.Location = new System.Drawing.Point(11, 100);
+            this.l_Rec_vFileN.Location = new System.Drawing.Point(7, 100);
             this.l_Rec_vFileN.Name = "l_Rec_vFileN";
             this.l_Rec_vFileN.Size = new System.Drawing.Size(84, 13);
             this.l_Rec_vFileN.TabIndex = 21;
@@ -625,7 +631,7 @@ namespace SSLUtility2 {
             // 
             this.l_Rec.AutoSize = true;
             this.l_Rec.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Rec.Location = new System.Drawing.Point(9, 16);
+            this.l_Rec.Location = new System.Drawing.Point(6, 16);
             this.l_Rec.Name = "l_Rec";
             this.l_Rec.Size = new System.Drawing.Size(91, 20);
             this.l_Rec.TabIndex = 12;
@@ -634,7 +640,7 @@ namespace SSLUtility2 {
             // l_Rec_FPS
             // 
             this.l_Rec_FPS.AutoSize = true;
-            this.l_Rec_FPS.Location = new System.Drawing.Point(10, 47);
+            this.l_Rec_FPS.Location = new System.Drawing.Point(7, 47);
             this.l_Rec_FPS.Name = "l_Rec_FPS";
             this.l_Rec_FPS.Size = new System.Drawing.Size(54, 13);
             this.l_Rec_FPS.TabIndex = 2;
@@ -751,7 +757,7 @@ namespace SSLUtility2 {
             // 
             this.l_Paths.AutoSize = true;
             this.l_Paths.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Paths.Location = new System.Drawing.Point(9, 16);
+            this.l_Paths.Location = new System.Drawing.Point(6, 16);
             this.l_Paths.Name = "l_Paths";
             this.l_Paths.Size = new System.Drawing.Size(55, 20);
             this.l_Paths.TabIndex = 12;
@@ -905,7 +911,7 @@ namespace SSLUtility2 {
             // Menu_FTM_Open
             // 
             this.Menu_FTM_Open.Name = "Menu_FTM_Open";
-            this.Menu_FTM_Open.Size = new System.Drawing.Size(180, 22);
+            this.Menu_FTM_Open.Size = new System.Drawing.Size(112, 22);
             this.Menu_FTM_Open.Text = "Open...";
             this.Menu_FTM_Open.Click += new System.EventHandler(this.Menu_FTM_Open_Click);
             // 
@@ -2012,9 +2018,7 @@ namespace SSLUtility2 {
         public Button b_Settings_Default;
         public Button b_Settings_Apply;
         public GroupBox groupBox2;
-        public Label l_Notifs;
-        private CheckBox check_Not_Config;
-        private CheckBox check_Not_Subnet;
+        private CheckBox check_Other_Subnet;
         private ContextMenuStrip contextMenuStrip1;
         private CheckBox check_Other_AutoPlay;
         public Label l_Other;
@@ -2028,5 +2032,7 @@ namespace SSLUtility2 {
         private ToolStripMenuItem Menu_Final;
         private ToolStripMenuItem Menu_FTM_Open;
         private Label l_Version;
+        public ComboBox cB_Other_Rate;
+        public Label l_Other_Rate;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
