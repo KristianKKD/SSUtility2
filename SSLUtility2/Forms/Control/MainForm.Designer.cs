@@ -588,9 +588,9 @@ namespace SSLUtility2 {
             this.l_Rec_sCFileN.AutoSize = true;
             this.l_Rec_sCFileN.Location = new System.Drawing.Point(7, 129);
             this.l_Rec_sCFileN.Name = "l_Rec_sCFileN";
-            this.l_Rec_sCFileN.Size = new System.Drawing.Size(111, 13);
+            this.l_Rec_sCFileN.Size = new System.Drawing.Size(102, 13);
             this.l_Rec_sCFileN.TabIndex = 23;
-            this.l_Rec_sCFileN.Text = "Screenshot File Name";
+            this.l_Rec_sCFileN.Text = "Snapshot File Name";
             // 
             // cB_Rec_FPS
             // 
@@ -768,9 +768,9 @@ namespace SSLUtility2 {
             this.l_Paths_sCFolder.AutoSize = true;
             this.l_Paths_sCFolder.Location = new System.Drawing.Point(12, 80);
             this.l_Paths_sCFolder.Name = "l_Paths_sCFolder";
-            this.l_Paths_sCFolder.Size = new System.Drawing.Size(93, 13);
+            this.l_Paths_sCFolder.Size = new System.Drawing.Size(84, 13);
             this.l_Paths_sCFolder.TabIndex = 2;
-            this.l_Paths_sCFolder.Text = "Screenshot Folder";
+            this.l_Paths_sCFolder.Text = "Snapshot Folder";
             // 
             // b_Settings_Default
             // 

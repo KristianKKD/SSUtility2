@@ -9,14 +9,29 @@ namespace SSLUtility2 {
 
     public static class CustomScriptCommands {
 
+        public static async Task<string> CheckForQueries(string line) {
+            string returnVal = "";
+            byte[] code = null;
+
+            switch (line) {
+                case "querytilt":
+                    code = new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 };
+                    break;
+                case "querypan":
+                    code = new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 };
+                    break;
+            }
+
+            string response = CameraCommunicate.Query(code, null, null).Result;
+            return response;
+        }
+
         public static async Task<byte[]> CheckForCommands(string line, uint adr, PelcoD pdRef) {
-            D protocol = new D();
             byte[] code = null;
             line = line.ToLower();
             string start = line;
             int value = 0;
             int firstSpace = line.IndexOf(" ");
-            Console.WriteLine(firstSpace);
             if (firstSpace != -1) {
                 start = line.Substring(0, firstSpace);
             }

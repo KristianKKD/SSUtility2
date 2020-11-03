@@ -13,6 +13,8 @@ namespace SSLUtility2 {
         string responses;
         ResponseLog rl;
 
+        bool stop;
+
         public static byte[] noGo = { 9, 9, 9, 9 };
 
         public PelcoD() {
@@ -23,7 +25,12 @@ namespace SSLUtility2 {
             try {
                 for (int i = 0; i < rtb_PD_Commands.Lines.Length; i++) {
                     string l = rtb_PD_Commands.Lines[i];
-                    CheckLine(l);
+                    if (!stop) {
+                        CheckLine(l);
+                    } else {
+                        stop = false;
+                        break;
+                    }
                 }
             }catch(Exception e) {
                 MessageBox.Show(e.ToString());
@@ -36,7 +43,7 @@ namespace SSLUtility2 {
                 line = line.Replace(",", "");
                 line = line.ToLower().Replace("x", "0");
                 if (check_PD_Perfect.Checked) {
-                    byte[] perfect = PerfectMakeBytes(line);
+                    byte[] perfect = FullCommand(line);
                     CameraCommunicate.sendtoIPAsync(perfect, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
                     return;
                 }
@@ -58,101 +65,33 @@ namespace SSLUtility2 {
 
         }
 
-        byte[] PerfectMakeBytes(string line) {
-            List<int> spacePos = new List<int>();
-            line = line.ToLower().Replace(" ", "");
-            char[] c = line.Trim().ToCharArray();
-
-            for (int i = 0; i < c.Length; i++) {
-                if (i == 0) {
-                    spacePos.Add(0);
-                } else {
-                    if (i % 4 == 0) {
-                        spacePos.Add(i);
-                    }
-                }
-            }
-            spacePos.Add(c.Length);
-
-            byte[] bytes = new byte[spacePos.Count + 1];
-
-            for (int i = 0; i < spacePos.Count - 1; i++) {
-
-                string subbed = "";
-                for (int cI = 0; cI < spacePos[i + 1] - spacePos[i]; cI++) {
-                    subbed += c[spacePos[i] + cI];
-                }
-                subbed = subbed.Trim();
-
-                if (!byte.TryParse(subbed, out byte result)) {
-                    string tryAgain = int.Parse(subbed, System.Globalization.NumberStyles.HexNumber).ToString();
-                    byte.TryParse(tryAgain, out result);
-                    if (int.Parse(result.ToString()) == int.Parse(D.Message.STX.ToString())) {
-                        result = D.Message.STX;
-                    }
-                }
-                bytes[i] = result;
-
-            }
-
-            return bytes;
+        byte[] FullCommand(string line) {
+            line = line.Trim();
+            uint send = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            uint camAdr = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
+            uint cm1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+            uint cm2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
+            uint d1 = uint.Parse(line.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
+            uint d2 = uint.Parse(line.Substring(15, 2), System.Globalization.NumberStyles.HexNumber);
+            uint checksum = uint.Parse(line.Substring(18, 2), System.Globalization.NumberStyles.HexNumber);
+            
+            byte[] fullCommand = new byte[7] {(byte)send, (byte)camAdr, (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
+            
+            return fullCommand;
         }
 
-        //byte[] MakeBytes(string line) {
-
-        //    List<int> spacePos = new List<int>();
-        //    char[] c = line.Trim().ToCharArray();
-
-        //    for (int i = 0; i < c.Length; i++) {
-        //        if (i == 0) {
-        //            spacePos.Add(0);
-        //        } else {
-        //            if (c[i].ToString() == " ") {
-        //                spacePos.Add(i+1);
-        //            }
-        //        }
-        //    }
-        //    spacePos.Add(c.Length);
-
-        //    byte[] bytes = new byte[spacePos.Count + 1];
-        //    int checksum = 0;
-
-        //    for (int i = 0; i < spacePos.Count - 1; i++) {
-        //        string subbed = "";
-        //        for (int cI = 0; cI < spacePos[i + 1] - spacePos[i]; cI++) {
-        //            subbed += c[spacePos[i] + cI];
-        //        }
-        //        subbed = subbed.Trim();
-
-        //        if (!byte.TryParse(subbed, out byte result)) {
-        //            string tryAgain = int.Parse(subbed, System.Globalization.NumberStyles.HexNumber).ToString();
-        //            byte.TryParse(tryAgain, out result);
-        //            if (int.Parse(result.ToString()) == int.Parse(D.Message.STX.ToString())) {
-        //                result = D.Message.STX;
-        //            }
-        //        }
-        //        bytes[i] = result;
-                
-        //        if (result != D.Message.STX) {
-        //            checksum += result;
-        //        }
-
-        //    }
-        //    bytes[spacePos.Count - 1] = (byte)(checksum % 256);
-        //    return bytes;
-        //}
 
         byte[] MakeCommand(string line) {
+            line = line.Trim();
             uint cm1 = uint.Parse(line.Substring(0,2), System.Globalization.NumberStyles.HexNumber);
             uint cm2 = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
             uint d1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
             uint d2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
             uint checksum = (cm1 + cm2 + d1 + d2 + mainRef.MakeAdr(cB_IPCon_Selected)) % 256;
-            MessageBox.Show(checksum.ToString());
+            
             byte[] fullCommand = new byte[7] { 0xFF, (byte)mainRef.MakeAdr(cB_IPCon_Selected), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum } ;
 
             return fullCommand;
-
         }
 
         public async Task WriteToResponses(string text) {
@@ -204,7 +143,6 @@ namespace SSLUtility2 {
             CheckLine(tB_PD_Single.Text);
             MessageBox.Show("Sent!");
         }
-
        
         private void b_PD_Stop_Click(object sender, EventArgs e) { //make it cancel current script
         
@@ -226,3 +164,86 @@ namespace SSLUtility2 {
         }
     }
 }
+//byte[] PerfectMakeBytes(string line) {
+//    List<int> spacePos = new List<int>();
+//    line = line.ToLower().Replace(" ", "");
+//    char[] c = line.Trim().ToCharArray();
+
+//    for (int i = 0; i < c.Length; i++) {
+//        if (i == 0) {
+//            spacePos.Add(0);
+//        } else {
+//            if (i % 4 == 0) {
+//                spacePos.Add(i);
+//            }
+//        }
+//    }
+//    spacePos.Add(c.Length);
+
+//    byte[] bytes = new byte[spacePos.Count + 1];
+
+//    for (int i = 0; i < spacePos.Count - 1; i++) {
+
+//        string subbed = "";
+//        for (int cI = 0; cI < spacePos[i + 1] - spacePos[i]; cI++) {
+//            subbed += c[spacePos[i] + cI];
+//        }
+//        subbed = subbed.Trim();
+
+//        if (!byte.TryParse(subbed, out byte result)) {
+//            string tryAgain = int.Parse(subbed, System.Globalization.NumberStyles.HexNumber).ToString();
+//            byte.TryParse(tryAgain, out result);
+//            if (int.Parse(result.ToString()) == int.Parse(D.Message.STX.ToString())) {
+//                result = D.Message.STX;
+//            }
+//        }
+//        bytes[i] = result;
+
+//    }
+
+//    return bytes;
+//}
+
+//byte[] MakeBytes(string line) {
+
+//    List<int> spacePos = new List<int>();
+//    char[] c = line.Trim().ToCharArray();
+
+//    for (int i = 0; i < c.Length; i++) {
+//        if (i == 0) {
+//            spacePos.Add(0);
+//        } else {
+//            if (c[i].ToString() == " ") {
+//                spacePos.Add(i+1);
+//            }
+//        }
+//    }
+//    spacePos.Add(c.Length);
+
+//    byte[] bytes = new byte[spacePos.Count + 1];
+//    int checksum = 0;
+
+//    for (int i = 0; i < spacePos.Count - 1; i++) {
+//        string subbed = "";
+//        for (int cI = 0; cI < spacePos[i + 1] - spacePos[i]; cI++) {
+//            subbed += c[spacePos[i] + cI];
+//        }
+//        subbed = subbed.Trim();
+
+//        if (!byte.TryParse(subbed, out byte result)) {
+//            string tryAgain = int.Parse(subbed, System.Globalization.NumberStyles.HexNumber).ToString();
+//            byte.TryParse(tryAgain, out result);
+//            if (int.Parse(result.ToString()) == int.Parse(D.Message.STX.ToString())) {
+//                result = D.Message.STX;
+//            }
+//        }
+//        bytes[i] = result;
+
+//        if (result != D.Message.STX) {
+//            checksum += result;
+//        }
+
+//    }
+//    bytes[spacePos.Count - 1] = (byte)(checksum % 256);
+//    return bytes;
+//}

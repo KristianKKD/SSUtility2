@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
@@ -47,7 +48,11 @@ namespace SSLUtility2 {
             }
         }
 
-        public static async Task<bool> Connect(string ipAdr, string port, Control lCon, bool stopError = false) {
+        public static async Task<bool> Connect(string ipAdr, string port, Control lCon, bool stopError = false, Socket usedSock = null) {
+            if (usedSock == null) {
+                usedSock = sock;
+            }
+
             LabelDisplay(false, lCon);
             if (!stopError && !ConfigControl.subnetNotif) {
                 if (!CheckIsSameSubnet(ipAdr)) {
@@ -56,7 +61,7 @@ namespace SSLUtility2 {
                 }
             }
 
-            if (sock.Connected) {
+            if (usedSock.Connected) {
                 CloseSock();
             }
 
@@ -71,10 +76,16 @@ namespace SSLUtility2 {
             LabelDisplay(true, lCon);
 
             serverAddr = IPAddress.Parse(ipAdr);
-            sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            usedSock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(port));
-            sock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
+            usedSock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
             return true;
+        }
+
+        public static async Task<string> Query(byte[] code, Socket usedSock, Uri addr) {
+            SendToSocket(code, usedSock);
+            string result = StringFromSock(addr.Host, addr.Port.ToString(), null, true, usedSock).Result;
+            return result;
         }
 
         public static void LabelDisplay(bool connected, Control l) {
@@ -100,12 +111,13 @@ namespace SSLUtility2 {
                 pinger = new Ping();
                 PingReply reply = pinger.Send(address.Host, 2);
                 if (reply.Status == IPStatus.Success) {
-                    if (address.Port == 0) {
-                        return true;
-                    }
-                    using (var client = new TcpClient(address.Host, address.Port)) {
-                        return true;
-                    }
+                    //if (address.Port == 0 || address.ToString().Contains("w")) {
+                    //    return true;
+                    //}
+                    //using (var client = new TcpClient(address.Host, address.Port)) {
+                    //    return true;
+                    //}
+                    return true;
                 }
             } catch {
             } finally {
@@ -114,70 +126,43 @@ namespace SSLUtility2 {
             return false;
         }
 
-        private static async Task<bool> SendToSocket(byte[] code) {
+        public static async Task<bool> SendToSocket(byte[] code, Socket usedSock = null) {
+            if (usedSock == null) {
+                usedSock = sock;
+            }
             if (code != null) {
-                sock.SendTo(code, endPoint);
+                usedSock.SendTo(code, endPoint);
                 return true;
             }
             return false;
         }
 
-        private const int _kport = 6791;
-
-        public static async Task<string> StringFromSock(string ipAdr, string port, Control lCon, bool stopError = false) {
-            if (!sock.Connected) {
+        public static async Task<string> StringFromSock(string ipAdr, string port, Control lCon, bool stopError = false, Socket usedSock = null) {
+            if (usedSock == null) {
+                usedSock = sock;
+            }
+            if (!usedSock.Connected) {
                 if (!Connect(ipAdr, port, lCon, stopError).Result) {
                     return null;
                 }
             }
             try {
                 byte[] buffer = new byte[7];
-                Receive(sock, buffer, 0, buffer.Length, 500);
+                Receive(usedSock, buffer, 0, buffer.Length, 500);
                 string m = "";
                 for (int i = 0; i < buffer.Length; i++) {
-                    m += buffer[i].ToString() + " ";
+                    string hex = buffer[i].ToString("X");
+                    if (int.Parse(buffer[i].ToString()) < 10) {
+                        hex = "0" + hex;
+                    }
+                    m += hex + " ";
                 }
-                //    SocketServer server = new SocketServer(_kport);
-                //    Socket remote = new Socket(SocketType.Stream, ProtocolType.Tcp);
-                //    IPEndPoint remoteEndPoint = new IPEndPoint(IPAddress.Loopback, _kport);
-
-                //    remote.Connect(remoteEndPoint);
-
-                //    using (NetworkStream stream = new NetworkStream(remote))
-                //    using (StreamReader reader = new StreamReader(stream))
-                //    using (StreamWriter writer = new StreamWriter(stream)) {
-                //        Task receiveTask = _Receive(reader);
-                //        string text;
-
-                //        Console.WriteLine("CLIENT: connected. Enter text to send...");
-
-                //        while ((text = Console.ReadLine()) != "") {
-                //            writer.WriteLine(text);
-                //            writer.Flush();
-                //        }
-
-                //        remote.Shutdown(SocketShutdown.Send);
-                //        receiveTask.Wait();
-                //    }
-
-                //    server.Stop();
-
-
+                m = m.Trim();
                 return m;
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
                 return null;
             }
-        }
-        
-        private static async Task _Receive(StreamReader reader) {
-            string receiveText;
-
-            while ((receiveText = await reader.ReadLineAsync()) != null) {
-                Console.WriteLine("CLIENT: received \"" + receiveText + "\"");
-            }
-
-            Console.WriteLine("CLIENT: end-of-stream");
         }
 
         private static async void Receive(Socket socket, byte[] buffer, int offset, int size, int timeout) {
@@ -196,18 +181,19 @@ namespace SSLUtility2 {
                         ex.SocketErrorCode == SocketError.NoBufferSpaceAvailable) {
                         await Task.Delay(30);// socket buffer is probably empty, wait and try again
                     } else
-                        MessageBox.Show(received.ToString());
-                        MessageBox.Show(ex.ToString());
+                        //MessageBox.Show(received.ToString());
+                        //MessageBox.Show(ex.ToString());
                 }
             }
         }
 
-        
-
-    public static void CloseSock() {
-            if (sock != null && sock.Connected) {
-                sock.Shutdown(SocketShutdown.Both);
-                sock.Close();
+        public static void CloseSock(Socket usedSock = null) {
+            if (usedSock == null) {
+                usedSock = sock;
+            }
+            if (usedSock != null && usedSock.Connected) {
+                usedSock.Shutdown(SocketShutdown.Both);
+                usedSock.Close();
             }
         }
 
@@ -228,6 +214,7 @@ namespace SSLUtility2 {
                 return true;
             }
         }
+
         static string FindSubnet(string ip) {
             string difference = ip.Substring(ip.IndexOf(".", ip.IndexOf(".") + 1));
             string endChunk = ip.Substring(ip.LastIndexOf("."));

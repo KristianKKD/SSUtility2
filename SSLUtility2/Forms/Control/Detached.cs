@@ -30,9 +30,11 @@ namespace SSLUtility2 {
 
         private void b_PlayerD_Play_Click(object sender, EventArgs e) {
             Uri combined = GetCombined();
-            
-            if(mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result)
-                myInfoRef.InitTimer();
+
+            if (mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result)
+                if (int.Parse(ConfigControl.updateMs) != 0) {
+                    myInfoRef.InitTimer();
+                }
         }
 
         private void b_PlayerD_SaveSnap_Click(object sender, EventArgs e) {

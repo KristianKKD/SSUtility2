@@ -71,7 +71,7 @@ namespace SSLUtility2
             this.b_Presets_Peak_ZoomIn = new System.Windows.Forms.Button();
             this.b_Presets_Peak_LampOff = new System.Windows.Forms.Button();
             this.b_Presets_Peak_StrobeLamp = new System.Windows.Forms.Button();
-            this.charmPage = new System.Windows.Forms.TabPage();
+            //this.charmPage = new System.Windows.Forms.TabPage();
             this.b_Presets_CHARM_Aquire = new System.Windows.Forms.Button();
             this.b_Presets_CHARM_Standby = new System.Windows.Forms.Button();
             this.l_Presets_Default = new System.Windows.Forms.Label();
@@ -81,7 +81,7 @@ namespace SSLUtility2
             this.thermalPage.SuspendLayout();
             this.slgPage.SuspendLayout();
             this.peakbeamPage.SuspendLayout();
-            this.charmPage.SuspendLayout();
+            //this.charmPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tC_Presets_Default
@@ -91,7 +91,7 @@ namespace SSLUtility2
             this.tC_Presets_Default.Controls.Add(this.thermalPage);
             this.tC_Presets_Default.Controls.Add(this.slgPage);
             this.tC_Presets_Default.Controls.Add(this.peakbeamPage);
-            this.tC_Presets_Default.Controls.Add(this.charmPage);
+            //this.tC_Presets_Default.Controls.Add(this.charmPage);
             this.tC_Presets_Default.ItemSize = new System.Drawing.Size(40, 18);
             this.tC_Presets_Default.Location = new System.Drawing.Point(12, 49);
             this.tC_Presets_Default.Name = "tC_Presets_Default";
@@ -556,14 +556,14 @@ namespace SSLUtility2
             // 
             // charmPage
             // 
-            this.charmPage.Controls.Add(this.b_Presets_CHARM_Aquire);
-            this.charmPage.Controls.Add(this.b_Presets_CHARM_Standby);
-            this.charmPage.Location = new System.Drawing.Point(4, 22);
-            this.charmPage.Name = "charmPage";
-            this.charmPage.Size = new System.Drawing.Size(231, 226);
-            this.charmPage.TabIndex = 5;
-            this.charmPage.Text = "CHARM";
-            this.charmPage.UseVisualStyleBackColor = true;
+            //this.charmPage.Controls.Add(this.b_Presets_CHARM_Aquire);
+            //this.charmPage.Controls.Add(this.b_Presets_CHARM_Standby);
+            //this.charmPage.Location = new System.Drawing.Point(4, 22);
+            //this.charmPage.Name = "charmPage";
+            //this.charmPage.Size = new System.Drawing.Size(231, 226);
+            //this.charmPage.TabIndex = 5;
+            //this.charmPage.Text = "CHARM";
+            //this.charmPage.UseVisualStyleBackColor = true;
             // 
             // b_Presets_CHARM_Aquire
             // 
@@ -611,7 +611,7 @@ namespace SSLUtility2
             this.thermalPage.ResumeLayout(false);
             this.slgPage.ResumeLayout(false);
             this.peakbeamPage.ResumeLayout(false);
-            this.charmPage.ResumeLayout(false);
+            //this.charmPage.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -668,7 +668,7 @@ namespace SSLUtility2
         public System.Windows.Forms.Button b_Presets_Peak_ZoomIn;
         public System.Windows.Forms.Button b_Presets_Peak_LampOff;
         public System.Windows.Forms.Button b_Presets_Peak_StrobeLamp;
-        public System.Windows.Forms.TabPage charmPage;
+        //public System.Windows.Forms.TabPage charmPage;
         public System.Windows.Forms.Button b_Presets_CHARM_Aquire;
         public System.Windows.Forms.Button b_Presets_CHARM_Standby;
         public System.Windows.Forms.Label l_Presets_Default;

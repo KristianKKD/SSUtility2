@@ -12,7 +12,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.10.1";
+        public const string version = "v1.2.11.0";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -506,7 +506,7 @@ namespace SSLUtility2
         }
 
         public async Task SaveSnap(Detached player) {
-            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player.tB_PlayerD_SimpleAdr.Text, "Screenshots") + ".jpg";
+            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player.tB_PlayerD_SimpleAdr.Text, "Snapshot") + ".jpg";
 
             Image bmp = new Bitmap(player.VLCPlayer_D.Width, player.VLCPlayer_D.Height);
             Graphics gfx = Graphics.FromImage(bmp);
