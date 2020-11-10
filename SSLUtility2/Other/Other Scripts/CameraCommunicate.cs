@@ -80,15 +80,24 @@ namespace SSLUtility2 {
 
         public static async Task<string> Query(byte[] code, Uri addr) {
             SendToSocket(code);
-            string result = StringFromSock(addr.Host, addr.Port.ToString(), null, true).Result;
+            if (!sock.Connected) {
+                if (!Connect(addr.Host, addr.Port.ToString(), null, true).Result) {
+                    return null;
+                }
+            }
+
+            string result = StringFromSock().Result;
             return result;
         }
 
-        public static async Task<bool> CheckPelcoCam(Uri adr) {
-            SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x0D, 0x00, 0x00, 0x0E });
-            string result = StringFromSock(adr.Host, adr.Port.ToString(), null, true).Result;
-            MessageBox.Show(result);
-            return false;
+        public static async Task<bool> CheckPelcoCam() {
+            SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
+            string result = StringFromSock().Result;
+            if (result == "0") {
+                return false;
+            } else {
+                return true;
+            }
         }
 
         public static void LabelDisplay(bool connected, Control l) {
@@ -137,15 +146,7 @@ namespace SSLUtility2 {
             return false;
         }
 
-        public static async Task<string> StringFromSock(string ipAdr, string port, Control lCon, bool stopError = false) {
-            if (sock == null) {
-                sock = sock;
-            }
-            if (!sock.Connected) {
-                if (!Connect(ipAdr, port, lCon, stopError).Result) {
-                    return null;
-                }
-            }
+        public static async Task<string> StringFromSock() {
             try {
                 byte[] buffer = new byte[7];
                 Receive(sock, buffer, 0, buffer.Length, 500);

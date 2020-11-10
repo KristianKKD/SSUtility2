@@ -8,11 +8,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2
-{
+namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.11.3";
+        public const string version = "v1.2.11.4";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -661,7 +660,7 @@ namespace SSLUtility2
             ConfigControl.autoPlay = check_Other_AutoPlay.Checked;
         }
 
-        private void cB_Other_Rate_SelectedIndexChanged(object sender, EventArgs e) {
+        private void cB_Other_Rate_TextChanged(object sender, EventArgs e) {
             if (CheckIfNameValid(cB_Other_Rate.Text.ToCharArray(), true).Result){
                 ConfigControl.updateMs = cB_Other_Rate.Text;
             }

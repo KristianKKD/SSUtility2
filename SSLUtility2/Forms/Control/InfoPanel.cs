@@ -27,7 +27,7 @@ namespace SSLUtility2 {
         public bool fovOnly;
 
         public void InitTimer() {
-            MessageBox.Show(fovOnly.ToString());
+            ShowAll();
             UpdateTimer = new Timer();
             UpdateTimer.Tick += new EventHandler(UpdateTimer_Tick);
             int updateInterval = int.Parse(ConfigControl.updateMs);
@@ -36,7 +36,28 @@ namespace SSLUtility2 {
                 UpdateTimer.Enabled = true;
             }
             //TryConnect();
-            //CameraCommunicate.CheckPelcoCam(d.GetCombined());
+        }
+
+        public void CheckCam() {
+            if (!CameraCommunicate.CheckPelcoCam().Result) {
+                HideAll();
+            } else {
+                ShowAll();
+            }
+        }
+
+        public void HideAll() {
+            l_Pan.Hide();
+            l_Tilt.Hide();
+            l_FOV.Hide();
+        }
+
+        public void ShowAll() {
+            if (!fovOnly) {
+                l_Pan.Show();
+                l_Tilt.Show();
+            }
+            l_FOV.Show();
         }
 
         public void HideNotFOV() {
@@ -58,34 +79,33 @@ namespace SSLUtility2 {
         }
 
         async Task UpdateAll() {
-            if (d.VLCPlayer_D.playlist.isPlaying && mySock.Connected) {
-                if (!fovOnly) {
-                    GetPan();
-                    GetTilt();
-                }
-                GetFOV();
-            } 
+            if (!fovOnly) {
+                GetPan();
+                GetTilt();
+            }
+            GetFOV();
             //else if (d.VLCPlayer_D.playlist.isPlaying) {
             //    TryConnect();
             //}
         }
 
-        async Task ReadResult(byte[] query) {
+        async Task ReadResult(byte[] query) { //currently needs both IPcontrol ip and vlcplayer ip to be on the camera, 
+                                                //don't know if it can distinguish between thermal and daylight either
+                                                //need to open a new sock per Detached
             string result = CameraCommunicate.Query(query, d.GetCombined()).Result;
 
             if (result.Length < 14) {
                 return;
             }
 
-            Console.WriteLine(result);
 
             string commandType = result.Substring(9, 2);
             string d1 = result.Substring(12, 2);
             string d2 = result.Substring(15, 2);
 
             string added = int.Parse(d1 + d2, System.Globalization.NumberStyles.HexNumber).ToString();
-
             string finalResult = (float.Parse(added) / 100f).ToString();
+            
             finalResult += " °";
 
 
@@ -100,6 +120,11 @@ namespace SSLUtility2 {
                     l_FOV.Text = "FOV: " + finalResult;
                     break;
             }
+
+            //FF 01 00 5B 00 69 C5 = 1.05
+            //FF 01 00 5B FF 70 CB = 653.92  
+            //FF 01 00 5B F6 C6 18 = 631.74
+            //FF 01 00 5B 03 2C 8B = 8.12
 
         }
 
