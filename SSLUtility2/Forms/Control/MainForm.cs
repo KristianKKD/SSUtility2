@@ -12,7 +12,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.11.1";
+        public const string version = "v1.2.11.2";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -98,11 +98,11 @@ namespace SSLUtility2
             if (ConfigControl.autoPlay) {
                 if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
                     Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false);
-                    //playerL.myInfoRef.InitTimer();
+                    playerL.StartInfo();
                 }
                 if (playerR.tB_PlayerD_SimpleAdr.Text != "") {
                     Play(playerR.VLCPlayer_D, playerR.GetCombined(), playerR.tB_PlayerD_SimpleAdr, playerR.tB_PlayerD_Buffering.Text, false);
-                    //playerR.myInfoRef.InitTimer();
+                    playerR.StartInfo();
                 }
             }
         }

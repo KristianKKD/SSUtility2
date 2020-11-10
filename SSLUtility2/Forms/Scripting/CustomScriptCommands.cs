@@ -22,12 +22,13 @@ namespace SSLUtility2 {
                     break;
             }
 
-            string response = CameraCommunicate.Query(code, null, null).Result;
+            string response = CameraCommunicate.Query(code, null).Result;
             return response;
         }
 
         public static async Task<byte[]> CheckForCommands(string line, uint adr, PelcoD pdRef) {
             byte[] code = null;
+            D protocol = new D();
             line = line.ToLower();
             string start = line;
             int value = 0;

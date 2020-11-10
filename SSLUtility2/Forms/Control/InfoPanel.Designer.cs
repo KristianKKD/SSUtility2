@@ -54,7 +54,7 @@
             // 
             this.l_FOV.AutoSize = true;
             this.l_FOV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.l_FOV.Location = new System.Drawing.Point(12, 35);
+            this.l_FOV.Location = new System.Drawing.Point(562, 9);
             this.l_FOV.Name = "l_FOV";
             this.l_FOV.Size = new System.Drawing.Size(44, 17);
             this.l_FOV.TabIndex = 2;
@@ -64,7 +64,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(568, 61);
+            this.ClientSize = new System.Drawing.Size(789, 61);
             this.Controls.Add(this.l_FOV);
             this.Controls.Add(this.l_Tilt);
             this.Controls.Add(this.l_Pan);

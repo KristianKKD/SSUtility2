@@ -27,15 +27,20 @@ namespace SSLUtility2 {
         public void InitTimer() {
             UpdateTimer = new Timer();
             UpdateTimer.Tick += new EventHandler(UpdateTimer_Tick);
-            UpdateTimer.Interval = int.Parse(ConfigControl.updateMs);
-            UpdateTimer.Enabled = true;
-            TryConnect();
+            int updateInterval = int.Parse(ConfigControl.updateMs);
+            if (updateInterval > 0) {
+                UpdateTimer.Interval = updateInterval;
+                UpdateTimer.Enabled = true;
+            }
+            //TryConnect();
+            //CameraCommunicate.CheckPelcoCam(d.GetCombined());
         }
 
         void TryConnect() {
             mySock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
             myUri = new Uri(d.tB_PlayerD_SimpleAdr.Text);
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse(myUri.Host), myUri.Port);
+            MessageBox.Show(d.VLCPlayer_D.playlist.currentItem.ToString());
             mySock.Connect(ep);
         }
 
@@ -48,47 +53,55 @@ namespace SSLUtility2 {
                 GetPan();
                 GetTilt();
                 GetFOV();
-            } else if (d.VLCPlayer_D.playlist.isPlaying) {
-                TryConnect();
-            }
+            } 
+            //else if (d.VLCPlayer_D.playlist.isPlaying) {
+            //    TryConnect();
+            //}
         }
 
         async Task ReadResult(byte[] query) {
-            //string result = CameraCommunicate.StringFromSock(d.GetCombined().Host, d.GetCombined().Port.ToString(), null).Result;
-            string result = CameraCommunicate.Query(query, mySock, myUri).Result;
+            string result = CameraCommunicate.Query(query, d.GetCombined()).Result;
+
+            if (result.Length < 14) {
+                return;
+            }
+
+            Console.WriteLine(result);
 
             string commandType = result.Substring(9, 2);
             string d1 = result.Substring(12, 2);
             string d2 = result.Substring(15, 2);
 
-            string finalResult = (float.Parse(d1 + d2, System.Globalization.NumberStyles.HexNumber) / 100f).ToString();
+            string added = int.Parse(d1 + d2, System.Globalization.NumberStyles.HexNumber).ToString();
+
+            string finalResult = (float.Parse(added) / 100f).ToString();
             finalResult += " °";
+
 
             switch (commandType) {
                 case "59":
                     l_Pan.Text = "PAN: " + finalResult;
                     break;
                 case "5B":
-                    l_Pan.Text = "TILT: " + finalResult;
+                    l_Tilt.Text = "TILT: " + finalResult;
+                    break;
+                case "6D":
+                    l_FOV.Text = "FOV: " + finalResult;
                     break;
             }
 
         }
 
         public async Task GetPan() {
-            //string response = CameraCommunicate.Query(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, mySock, myUri).Result;
-            //return ReadResult(response).Result;
             ReadResult(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 });
         }
 
         public async Task GetTilt() {
-            //string response = CameraCommunicate.Query(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, mySock, myUri).Result;
-            //return ReadResult(response).Result;
             ReadResult(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
         }
 
-        public async Task<string> GetFOV() {
-            return null;
+        public async Task GetFOV() {
+            ReadResult(new byte[] { 0xFF, 0x01, 0x0A, 0x6B, 0x00, 0x00, 0x76 });
         }
 
 

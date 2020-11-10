@@ -14,6 +14,8 @@ namespace SSLUtility2 {
 
         public Uri GetCombined() {
             Uri combinedUrl;
+
+
             if (checkB_PlayerD_Manual.Checked) { //make a function to automatically grab these from gB_...
                 string ipaddress = tB_PlayerD_Adr.Text; //is it possible? the variables need to be in an order
                 string port = tB_PlayerD_Port.Text;
@@ -23,18 +25,29 @@ namespace SSLUtility2 {
 
                 combinedUrl = new Uri("rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url);
             } else {
-                combinedUrl = new Uri(tB_PlayerD_SimpleAdr.Text);
+                if(tB_PlayerD_SimpleAdr.Text != "") {
+                    combinedUrl = new Uri(tB_PlayerD_SimpleAdr.Text);
+                }
+                else {
+                    combinedUrl = new Uri("http://0.0.0.0:1234");
+                }
             }
+
             return combinedUrl;
         }
 
         private void b_PlayerD_Play_Click(object sender, EventArgs e) {
             Uri combined = GetCombined();
 
-            if (mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result)
-                if (int.Parse(ConfigControl.updateMs) != 0) {
-                    myInfoRef.InitTimer();
-                }
+            if (mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result) {
+                StartInfo();
+            }
+        }
+
+        public void StartInfo() {
+            if (int.Parse(ConfigControl.updateMs) != 0 && myInfoRef != null) {
+                myInfoRef.InitTimer();
+            }
         }
 
         private void b_PlayerD_SaveSnap_Click(object sender, EventArgs e) {

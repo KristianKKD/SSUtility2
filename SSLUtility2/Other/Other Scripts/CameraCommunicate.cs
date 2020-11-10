@@ -48,11 +48,7 @@ namespace SSLUtility2 {
             }
         }
 
-        public static async Task<bool> Connect(string ipAdr, string port, Control lCon, bool stopError = false, Socket usedSock = null) {
-            if (usedSock == null) {
-                usedSock = sock;
-            }
-
+        public static async Task<bool> Connect(string ipAdr, string port, Control lCon, bool stopError = false) {
             LabelDisplay(false, lCon);
             if (!stopError && !ConfigControl.subnetNotif) {
                 if (!CheckIsSameSubnet(ipAdr)) {
@@ -61,7 +57,7 @@ namespace SSLUtility2 {
                 }
             }
 
-            if (usedSock.Connected) {
+            if (sock.Connected) {
                 CloseSock();
             }
 
@@ -76,16 +72,23 @@ namespace SSLUtility2 {
             LabelDisplay(true, lCon);
 
             serverAddr = IPAddress.Parse(ipAdr);
-            usedSock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(port));
-            usedSock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
+            sock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
             return true;
         }
 
-        public static async Task<string> Query(byte[] code, Socket usedSock, Uri addr) {
-            SendToSocket(code, usedSock);
-            string result = StringFromSock(addr.Host, addr.Port.ToString(), null, true, usedSock).Result;
+        public static async Task<string> Query(byte[] code, Uri addr) {
+            SendToSocket(code);
+            string result = StringFromSock(addr.Host, addr.Port.ToString(), null, true).Result;
             return result;
+        }
+
+        public static async Task<bool> CheckPelcoCam(Uri adr) {
+            SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x0D, 0x00, 0x00, 0x0E });
+            string result = StringFromSock(adr.Host, adr.Port.ToString(), null, true).Result;
+            MessageBox.Show(result);
+            return false;
         }
 
         public static void LabelDisplay(bool connected, Control l) {
@@ -126,38 +129,43 @@ namespace SSLUtility2 {
             return false;
         }
 
-        public static async Task<bool> SendToSocket(byte[] code, Socket usedSock = null) {
-            if (usedSock == null) {
-                usedSock = sock;
-            }
+        public static async Task<bool> SendToSocket(byte[] code) {
             if (code != null) {
-                usedSock.SendTo(code, endPoint);
+                sock.SendTo(code, endPoint);
                 return true;
             }
             return false;
         }
 
-        public static async Task<string> StringFromSock(string ipAdr, string port, Control lCon, bool stopError = false, Socket usedSock = null) {
-            if (usedSock == null) {
-                usedSock = sock;
+        public static async Task<string> StringFromSock(string ipAdr, string port, Control lCon, bool stopError = false) {
+            if (sock == null) {
+                sock = sock;
             }
-            if (!usedSock.Connected) {
+            if (!sock.Connected) {
                 if (!Connect(ipAdr, port, lCon, stopError).Result) {
                     return null;
                 }
             }
             try {
                 byte[] buffer = new byte[7];
-                Receive(usedSock, buffer, 0, buffer.Length, 500);
+                Receive(sock, buffer, 0, buffer.Length, 500);
                 string m = "";
+                int zeroCount = 0;
                 for (int i = 0; i < buffer.Length; i++) {
                     string hex = buffer[i].ToString("X");
-                    if (int.Parse(buffer[i].ToString()) < 10) {
+                    if (int.Parse(buffer[i].ToString()) <= 10) {
                         hex = "0" + hex;
+                        if(hex == "00") {
+                            zeroCount++;
+                        }
+                        if(zeroCount > 6) {
+                            return "0";
+                        }
                     }
                     m += hex + " ";
                 }
                 m = m.Trim();
+
                 return m;
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -180,9 +188,11 @@ namespace SSLUtility2 {
                         ex.SocketErrorCode == SocketError.IOPending ||
                         ex.SocketErrorCode == SocketError.NoBufferSpaceAvailable) {
                         await Task.Delay(30);// socket buffer is probably empty, wait and try again
-                    } else
+                    } else {
+
                         //MessageBox.Show(received.ToString());
                         //MessageBox.Show(ex.ToString());
+                    }
                 }
             }
         }

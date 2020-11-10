@@ -50,7 +50,6 @@ namespace SSLUtility2 {
                 byte[] send = CustomScriptCommands.CheckForCommands(line, mainRef.MakeAdr(cB_IPCon_Selected), this).Result;
                 if (send != noGo) {
                     if (send == null) {
-                        //send = MakeBytes(line);
                         send = MakeCommand(line);
                     }
                     if (!CameraCommunicate.sendtoIPAsync(send, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text).Result) {
@@ -62,7 +61,6 @@ namespace SSLUtility2 {
                     }
                 }
             }
-
         }
 
         byte[] FullCommand(string line) {
@@ -79,7 +77,6 @@ namespace SSLUtility2 {
             
             return fullCommand;
         }
-
 
         byte[] MakeCommand(string line) {
             line = line.Trim();
@@ -164,86 +161,3 @@ namespace SSLUtility2 {
         }
     }
 }
-//byte[] PerfectMakeBytes(string line) {
-//    List<int> spacePos = new List<int>();
-//    line = line.ToLower().Replace(" ", "");
-//    char[] c = line.Trim().ToCharArray();
-
-//    for (int i = 0; i < c.Length; i++) {
-//        if (i == 0) {
-//            spacePos.Add(0);
-//        } else {
-//            if (i % 4 == 0) {
-//                spacePos.Add(i);
-//            }
-//        }
-//    }
-//    spacePos.Add(c.Length);
-
-//    byte[] bytes = new byte[spacePos.Count + 1];
-
-//    for (int i = 0; i < spacePos.Count - 1; i++) {
-
-//        string subbed = "";
-//        for (int cI = 0; cI < spacePos[i + 1] - spacePos[i]; cI++) {
-//            subbed += c[spacePos[i] + cI];
-//        }
-//        subbed = subbed.Trim();
-
-//        if (!byte.TryParse(subbed, out byte result)) {
-//            string tryAgain = int.Parse(subbed, System.Globalization.NumberStyles.HexNumber).ToString();
-//            byte.TryParse(tryAgain, out result);
-//            if (int.Parse(result.ToString()) == int.Parse(D.Message.STX.ToString())) {
-//                result = D.Message.STX;
-//            }
-//        }
-//        bytes[i] = result;
-
-//    }
-
-//    return bytes;
-//}
-
-//byte[] MakeBytes(string line) {
-
-//    List<int> spacePos = new List<int>();
-//    char[] c = line.Trim().ToCharArray();
-
-//    for (int i = 0; i < c.Length; i++) {
-//        if (i == 0) {
-//            spacePos.Add(0);
-//        } else {
-//            if (c[i].ToString() == " ") {
-//                spacePos.Add(i+1);
-//            }
-//        }
-//    }
-//    spacePos.Add(c.Length);
-
-//    byte[] bytes = new byte[spacePos.Count + 1];
-//    int checksum = 0;
-
-//    for (int i = 0; i < spacePos.Count - 1; i++) {
-//        string subbed = "";
-//        for (int cI = 0; cI < spacePos[i + 1] - spacePos[i]; cI++) {
-//            subbed += c[spacePos[i] + cI];
-//        }
-//        subbed = subbed.Trim();
-
-//        if (!byte.TryParse(subbed, out byte result)) {
-//            string tryAgain = int.Parse(subbed, System.Globalization.NumberStyles.HexNumber).ToString();
-//            byte.TryParse(tryAgain, out result);
-//            if (int.Parse(result.ToString()) == int.Parse(D.Message.STX.ToString())) {
-//                result = D.Message.STX;
-//            }
-//        }
-//        bytes[i] = result;
-
-//        if (result != D.Message.STX) {
-//            checksum += result;
-//        }
-
-//    }
-//    bytes[spacePos.Count - 1] = (byte)(checksum % 256);
-//    return bytes;
-//}
