@@ -24,7 +24,10 @@ namespace SSLUtility2 {
         Socket mySock;
         Uri myUri;
 
+        public bool fovOnly;
+
         public void InitTimer() {
+            MessageBox.Show(fovOnly.ToString());
             UpdateTimer = new Timer();
             UpdateTimer.Tick += new EventHandler(UpdateTimer_Tick);
             int updateInterval = int.Parse(ConfigControl.updateMs);
@@ -34,6 +37,12 @@ namespace SSLUtility2 {
             }
             //TryConnect();
             //CameraCommunicate.CheckPelcoCam(d.GetCombined());
+        }
+
+        public void HideNotFOV() {
+            l_Pan.Hide();
+            l_Tilt.Hide();
+            fovOnly = true;
         }
 
         void TryConnect() {
@@ -50,8 +59,10 @@ namespace SSLUtility2 {
 
         async Task UpdateAll() {
             if (d.VLCPlayer_D.playlist.isPlaying && mySock.Connected) {
-                GetPan();
-                GetTilt();
+                if (!fovOnly) {
+                    GetPan();
+                    GetTilt();
+                }
                 GetFOV();
             } 
             //else if (d.VLCPlayer_D.playlist.isPlaying) {

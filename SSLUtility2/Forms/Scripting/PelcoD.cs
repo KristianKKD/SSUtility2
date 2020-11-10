@@ -15,7 +15,7 @@ namespace SSLUtility2 {
 
         bool stop;
 
-        public static byte[] noGo = { 9, 9, 9, 9 };
+        public static byte[] pause = { 1, 2, 3, 4 };
 
         public PelcoD() {
             InitializeComponent();
@@ -35,31 +35,44 @@ namespace SSLUtility2 {
             }catch(Exception e) {
                 MessageBox.Show(e.ToString());
             }
+
             MessageBox.Show("Finished sending commands!");
         }
 
         async Task CheckLine(string line) {
             if (line != "") {
+
                 line = line.Replace(",", "");
                 line = line.ToLower().Replace("x", "0");
+
+                if (tB_IPCon_Adr.Text == "" || tB_IPCon_Port.Text == null) {
+                    WriteToResponses("No IP/Port found");
+                }
+
+                Uri u = new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text);
+
                 if (check_PD_Perfect.Checked) {
                     byte[] perfect = FullCommand(line);
                     CameraCommunicate.sendtoIPAsync(perfect, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
                     return;
                 }
+
                 byte[] send = CustomScriptCommands.CheckForCommands(line, mainRef.MakeAdr(cB_IPCon_Selected), this).Result;
-                if (send != noGo) {
-                    if (send == null) {
-                        send = MakeCommand(line);
-                    }
-                    if (!CameraCommunicate.sendtoIPAsync(send, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text).Result) {
-                        WriteToResponses("Command: " + line + " could not be sent.");
-                    } else {
-                        WriteToResponses(CameraCommunicate.StringFromSock(tB_IPCon_Adr.Text,
-                            tB_IPCon_Port.Text, l_IPCon_Connected).Result);
-                        //wait for response
-                    }
+
+                if (send == null) {
+                    send = MakeCommand(line);
+                } else if (send == pause) {
+                    return;
                 }
+
+                string response = CameraCommunicate.Query(send, u).Result;
+
+                if (response == "0") {
+                    WriteToResponses("Command: " + line + " could not be sent.");
+                } else {
+                    WriteToResponses(response);
+                }
+
             }
         }
 

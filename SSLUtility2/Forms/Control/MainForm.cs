@@ -12,7 +12,7 @@ namespace SSLUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.11.2";
+        public const string version = "v1.2.11.3";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -35,6 +35,7 @@ namespace SSLUtility2
             Detached playerR = AttachDetached(690);
             AttachInfoPanel(playerL, 270);
             AttachInfoPanel(playerR, 950);
+            playerR.myInfoRef.HideNotFOV();
 
             saveList = new Control[]{
                 ipCon.cB_IPCon_Type,
