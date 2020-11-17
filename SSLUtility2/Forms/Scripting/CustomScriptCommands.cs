@@ -35,7 +35,9 @@ namespace SSLUtility2 {
         static async Task<byte[]> RefineCode(byte[] code, uint adr, PelcoD pdRef, int value) {
             if (code == PelcoD.pause) {
                 await Task.Delay(value).ConfigureAwait(false);
-                pdRef.WriteToResponses("Waiting: " + value.ToString());
+                if (pdRef != null) {
+                    pdRef.WriteToResponses("Waiting: " + value.ToString());
+                }
             }
             if (code == null || code == PelcoD.pause) {
                 return code;
@@ -88,6 +90,12 @@ namespace SSLUtility2 {
                 case "tilt":
                     break;
                 case "fov":
+                    break;
+
+                case "setzoomspeed":
+                    code = new byte[] { 0x25, 0x00, 0x00 };
+                    break;
+                case "setpantiltspeed":
                     break;
 
                 // no values // 

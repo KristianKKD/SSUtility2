@@ -54,7 +54,10 @@
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.b_PTZ_Right = new System.Windows.Forms.Button();
             this.b_PTZ_Left = new System.Windows.Forms.Button();
+            this.track_IPCon_Zoom = new System.Windows.Forms.TrackBar();
+            this.l_IPCon_Zoom = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.track_IPCon_Zoom)).BeginInit();
             this.SuspendLayout();
             // 
             // tB_Presets_Number
@@ -92,8 +95,8 @@
             // 
             // track_PTZ_PTSpeed
             // 
-            this.track_PTZ_PTSpeed.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(99, 359);
+            this.track_PTZ_PTSpeed.BackColor = System.Drawing.SystemColors.Control;
+            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(99, 332);
             this.track_PTZ_PTSpeed.Maximum = 63;
             this.track_PTZ_PTSpeed.Name = "track_PTZ_PTSpeed";
             this.track_PTZ_PTSpeed.Size = new System.Drawing.Size(132, 45);
@@ -164,7 +167,7 @@
             // l_IPCon_PTSpeed
             // 
             this.l_IPCon_PTSpeed.AutoSize = true;
-            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(13, 370);
+            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(10, 348);
             this.l_IPCon_PTSpeed.Name = "l_IPCon_PTSpeed";
             this.l_IPCon_PTSpeed.Size = new System.Drawing.Size(88, 13);
             this.l_IPCon_PTSpeed.TabIndex = 59;
@@ -249,7 +252,7 @@
             // 
             // b_PTZ_Down
             // 
-            this.b_PTZ_Down.Location = new System.Drawing.Point(94, 304);
+            this.b_PTZ_Down.Location = new System.Drawing.Point(94, 290);
             this.b_PTZ_Down.Name = "b_PTZ_Down";
             this.b_PTZ_Down.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Down.TabIndex = 49;
@@ -260,7 +263,7 @@
             // 
             // b_PTZ_Up
             // 
-            this.b_PTZ_Up.Location = new System.Drawing.Point(94, 220);
+            this.b_PTZ_Up.Location = new System.Drawing.Point(94, 206);
             this.b_PTZ_Up.Name = "b_PTZ_Up";
             this.b_PTZ_Up.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Up.TabIndex = 48;
@@ -272,7 +275,7 @@
             // b_PTZ_FocusNeg
             // 
             this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.Aqua;
-            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(16, 306);
+            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(16, 292);
             this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
             this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusNeg.TabIndex = 47;
@@ -284,7 +287,7 @@
             // b_PTZ_ZoomNeg
             // 
             this.b_PTZ_ZoomNeg.BackColor = System.Drawing.Color.GreenYellow;
-            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(16, 219);
+            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(16, 205);
             this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
             this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(59, 35);
             this.b_PTZ_ZoomNeg.TabIndex = 46;
@@ -296,7 +299,7 @@
             // b_PTZ_FocusPos
             // 
             this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.Aqua;
-            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(171, 306);
+            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(171, 292);
             this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
             this.b_PTZ_FocusPos.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusPos.TabIndex = 45;
@@ -308,7 +311,7 @@
             // b_PTZ_ZoomPos
             // 
             this.b_PTZ_ZoomPos.BackColor = System.Drawing.Color.GreenYellow;
-            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(171, 220);
+            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(171, 206);
             this.b_PTZ_ZoomPos.Name = "b_PTZ_ZoomPos";
             this.b_PTZ_ZoomPos.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_ZoomPos.TabIndex = 44;
@@ -319,7 +322,7 @@
             // 
             // b_PTZ_Right
             // 
-            this.b_PTZ_Right.Location = new System.Drawing.Point(152, 262);
+            this.b_PTZ_Right.Location = new System.Drawing.Point(152, 248);
             this.b_PTZ_Right.Name = "b_PTZ_Right";
             this.b_PTZ_Right.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Right.TabIndex = 52;
@@ -330,7 +333,7 @@
             // 
             // b_PTZ_Left
             // 
-            this.b_PTZ_Left.Location = new System.Drawing.Point(36, 262);
+            this.b_PTZ_Left.Location = new System.Drawing.Point(36, 248);
             this.b_PTZ_Left.Name = "b_PTZ_Left";
             this.b_PTZ_Left.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Left.TabIndex = 43;
@@ -339,16 +342,37 @@
             this.b_PTZ_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
             this.b_PTZ_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
+            // track_IPCon_Zoom
+            // 
+            this.track_IPCon_Zoom.BackColor = System.Drawing.SystemColors.Control;
+            this.track_IPCon_Zoom.Location = new System.Drawing.Point(98, 374);
+            this.track_IPCon_Zoom.Maximum = 63;
+            this.track_IPCon_Zoom.Name = "track_IPCon_Zoom";
+            this.track_IPCon_Zoom.Size = new System.Drawing.Size(132, 45);
+            this.track_IPCon_Zoom.TabIndex = 73;
+            this.track_IPCon_Zoom.Value = 63;
+            this.track_IPCon_Zoom.Scroll += new System.EventHandler(this.track_IPCon_Zoom_Scroll);
+            // 
+            // l_IPCon_Zoom
+            // 
+            this.l_IPCon_Zoom.AutoSize = true;
+            this.l_IPCon_Zoom.Location = new System.Drawing.Point(13, 386);
+            this.l_IPCon_Zoom.Name = "l_IPCon_Zoom";
+            this.l_IPCon_Zoom.Size = new System.Drawing.Size(68, 13);
+            this.l_IPCon_Zoom.TabIndex = 72;
+            this.l_IPCon_Zoom.Text = "Zoom Speed";
+            // 
             // ControlPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(254, 533);
+            this.Controls.Add(this.track_IPCon_Zoom);
+            this.Controls.Add(this.l_IPCon_Zoom);
             this.Controls.Add(this.tB_Presets_Number);
             this.Controls.Add(this.tB_IPCon_Port);
             this.Controls.Add(this.tB_IPCon_Adr);
             this.Controls.Add(this.l_IPCon_Connected);
-            this.Controls.Add(this.track_PTZ_PTSpeed);
             this.Controls.Add(this.cB_IPCon_Type);
             this.Controls.Add(this.cB_IPCon_KeyboardCon);
             this.Controls.Add(this.cB_IPCon_Selected);
@@ -372,11 +396,13 @@
             this.Controls.Add(this.b_PTZ_ZoomPos);
             this.Controls.Add(this.b_PTZ_Right);
             this.Controls.Add(this.b_PTZ_Left);
+            this.Controls.Add(this.track_PTZ_PTSpeed);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ControlPanel";
             this.Text = "ControlPanel";
             this.Load += new System.EventHandler(this.ControlPanel_Load);
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.track_IPCon_Zoom)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -411,5 +437,7 @@
         public System.Windows.Forms.Button b_PTZ_ZoomPos;
         public System.Windows.Forms.Button b_PTZ_Right;
         public System.Windows.Forms.Button b_PTZ_Left;
+        public System.Windows.Forms.TrackBar track_IPCon_Zoom;
+        public System.Windows.Forms.Label l_IPCon_Zoom;
     }
 }

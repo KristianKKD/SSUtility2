@@ -123,7 +123,7 @@ namespace SSLUtility2 {
                 uint ptSpeed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
                 byte[] code = null;
 
-                switch (k) { //is there a command that accepts diagonal? // there is but its in byte codes
+                switch (k) { //is there a command that accepts diagonal? // there is but its in byte codes // need to accept multiple keys
                     case Keys.Up:
                         code = protocol.CameraTilt(address, D.Tilt.Up, ptSpeed);
                         break;
@@ -146,6 +146,12 @@ namespace SSLUtility2 {
 
                 CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
             }
+        }
+
+        private void track_IPCon_Zoom_Scroll(object sender, EventArgs e) {
+            int zoomSpeed = track_IPCon_Zoom.Value;
+            byte[] code = CustomScriptCommands.CheckForCommands("setzoomspeed " + zoomSpeed.ToString(), mainRef.MakeAdr(), null).Result;
+            CameraCommunicate.sendtoIPAsync(code, null);
         }
 
     }

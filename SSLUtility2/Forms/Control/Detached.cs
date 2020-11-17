@@ -42,8 +42,7 @@ namespace SSLUtility2 {
 
             if (mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result) {
                 StartInfo();
-            }
-            else {
+            } else {
                 myInfoRef.HideAll();
             }
         }

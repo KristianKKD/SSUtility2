@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.11.4";
+        public const string version = "v1.2.11.5";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -32,9 +32,12 @@ namespace SSLUtility2 {
             AttachControlPanel();
             Detached playerL = AttachDetached(10);
             Detached playerR = AttachDetached(690);
+
             AttachInfoPanel(playerL, 270);
             AttachInfoPanel(playerR, 950);
-            playerR.myInfoRef.HideNotFOV();
+            playerL.myInfoRef.otherD = playerR;
+            playerR.myInfoRef.otherD = playerL;
+
 
             saveList = new Control[]{
                 ipCon.cB_IPCon_Type,
@@ -94,15 +97,23 @@ namespace SSLUtility2 {
         }
 
         async Task AutoConnect(Detached playerL, Detached playerR) {
-            CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.l_IPCon_Connected, true);
+            bool connected = CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.l_IPCon_Connected, true).Result;
             if (ConfigControl.autoPlay) {
                 if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
-                    Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false);
-                    playerL.StartInfo();
+                    if (Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false).Result
+                        && connected && playerL.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
+                        playerL.StartInfo();
+                    } else {
+                        playerL.myInfoRef.HideAll();
+                    }
                 }
                 if (playerR.tB_PlayerD_SimpleAdr.Text != "") {
-                    Play(playerR.VLCPlayer_D, playerR.GetCombined(), playerR.tB_PlayerD_SimpleAdr, playerR.tB_PlayerD_Buffering.Text, false);
-                    playerR.StartInfo();
+                    if (Play(playerR.VLCPlayer_D, playerR.GetCombined(), playerR.tB_PlayerD_SimpleAdr, playerR.tB_PlayerD_Buffering.Text, false).Result
+                        && connected && playerR.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
+                        playerR.StartInfo();
+                    } else {
+                        playerR.myInfoRef.HideAll();
+                    }
                 }
             }
         }

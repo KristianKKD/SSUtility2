@@ -20,14 +20,27 @@ namespace SSLUtility2 {
 
         private Timer UpdateTimer;
         public Detached d;
+        public Detached otherD;
 
-        Socket mySock;
-        Uri myUri;
+        public bool thermalCam;
 
-        public bool fovOnly;
+        public bool isActive;
 
         public void InitTimer() {
-            ShowAll();
+            CheckTypeToDisplay();
+        }
+
+        void StartTimer() {
+            if (!CheckCam()) {
+                if (thermalCam) {
+                    HideAll();
+                } else {
+                    HideNotFOV();
+                    l_FOV.Text = "Camera check failed!";
+                }
+                return;
+            }
+
             UpdateTimer = new Timer();
             UpdateTimer.Tick += new EventHandler(UpdateTimer_Tick);
             int updateInterval = int.Parse(ConfigControl.updateMs);
@@ -35,15 +48,23 @@ namespace SSLUtility2 {
                 UpdateTimer.Interval = updateInterval;
                 UpdateTimer.Enabled = true;
             }
-            //TryConnect();
+            isActive = true;
         }
 
-        public void CheckCam() {
-            if (!CameraCommunicate.CheckPelcoCam().Result) {
+        public void StopTimer() {
+            UpdateTimer.Stop();
+        }
+
+        public bool CheckCam() {
+            bool result = CameraCommunicate.CheckPelcoCam().Result;
+            
+            if (!result) {
                 HideAll();
             } else {
                 ShowAll();
             }
+
+            return result;
         }
 
         public void HideAll() {
@@ -53,7 +74,7 @@ namespace SSLUtility2 {
         }
 
         public void ShowAll() {
-            if (!fovOnly) {
+            if (!thermalCam) {
                 l_Pan.Show();
                 l_Tilt.Show();
             }
@@ -63,15 +84,29 @@ namespace SSLUtility2 {
         public void HideNotFOV() {
             l_Pan.Hide();
             l_Tilt.Hide();
-            fovOnly = true;
         }
 
-        void TryConnect() {
-            mySock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
-            myUri = new Uri(d.tB_PlayerD_SimpleAdr.Text);
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(myUri.Host), myUri.Port);
-            MessageBox.Show(d.VLCPlayer_D.playlist.currentItem.ToString());
-            mySock.Connect(ep);
+        void CheckTypeToDisplay() {
+            string curType = d.cB_PlayerD_Type.Text;
+
+            thermalCam = !curType.Contains("Daylight");
+
+            if (!thermalCam) {
+                if (otherD.myInfoRef.isActive) {
+                    otherD.myInfoRef.StopTimer();
+                }
+                StartTimer();
+            } else {
+                if (!otherD.myInfoRef.isActive) {
+                    StartTimer();
+                } else {
+                    HideNotFOV();
+                }
+            }
+
+            //check if the current player is the only one and also if its a thermal or daylight. use the current sock ip
+            //not the d player ip.
+
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e) {
@@ -79,25 +114,20 @@ namespace SSLUtility2 {
         }
 
         async Task UpdateAll() {
-            if (!fovOnly) {
+            if (!thermalCam) {
                 GetPan();
                 GetTilt();
             }
             GetFOV();
-            //else if (d.VLCPlayer_D.playlist.isPlaying) {
-            //    TryConnect();
-            //}
         }
 
-        async Task ReadResult(byte[] query) { //currently needs both IPcontrol ip and vlcplayer ip to be on the camera, 
-                                                //don't know if it can distinguish between thermal and daylight either
-                                                //need to open a new sock per Detached
-            string result = CameraCommunicate.Query(query, d.GetCombined()).Result;
+        async Task ReadResult(byte[] query) {
+            Uri currentlyConnected = new Uri(CameraCommunicate.GetSockEndpoint());
+            string result = CameraCommunicate.Query(query, currentlyConnected).Result;
 
             if (result.Length < 14) {
                 return;
             }
-
 
             string commandType = result.Substring(9, 2);
             string d1 = result.Substring(12, 2);
