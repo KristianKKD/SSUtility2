@@ -86,12 +86,25 @@ namespace SSLUtility2 {
                 }
             }
 
+            string defaultResult = "00 00 00 00 00 00 00";
+
             string result = StringFromSock().Result;
-            return result;
+             if(result.Length == 20) {
+                string subbed = result.Substring(0, 2);
+                if(subbed == "FF") {
+                    return result;
+                }
+             } 
+
+            return defaultResult;
         }
 
-        public static async Task<bool> CheckPelcoCam() {
-            SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
+        public static async Task<bool> CheckPelcoCam(bool thermalCam) {
+            if (thermalCam) {
+                SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
+            } else {
+                SendToSocket(new byte[] { 0xFF, 0x00, 0x00, 0x53, 0x00, 0x00, 0x54 });
+            }
             string result = StringFromSock().Result;
             if (result == "0") {
                 return false;
@@ -149,7 +162,7 @@ namespace SSLUtility2 {
         public static async Task<string> StringFromSock() {
             try {
                 byte[] buffer = new byte[7];
-                Receive(sock, buffer, 0, buffer.Length, 500);
+                Receive(sock, buffer, 0, buffer.Length, 1000);
                 string m = "";
                 int zeroCount = 0;
                 for (int i = 0; i < buffer.Length; i++) {
@@ -160,7 +173,7 @@ namespace SSLUtility2 {
                             zeroCount++;
                         }
                         if(zeroCount > 6) {
-                            return "0";
+                            return "00 00 00 00 00 00 00";
                         }
                     }
                     m += hex + " ";

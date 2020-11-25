@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SSLUtility2 {
 
@@ -61,7 +62,7 @@ namespace SSLUtility2 {
 
             string start = line;
             
-            int markerPos = line.IndexOf(":");
+            int markerPos = line.IndexOf(" ");
 
             if (markerPos > 0) {
                 start = line.Substring(0, markerPos);
@@ -103,6 +104,7 @@ namespace SSLUtility2 {
                     code = new byte[] { 0x00, 0x00, 0x00 };
                     break;
                 case "mono":
+                case "monocolor":
                 case "monocolour":
                     code = new byte[] { 0x00, 0x07, 0x03 };
                     break;
@@ -116,7 +118,12 @@ namespace SSLUtility2 {
                     code = new byte[] { 0x00, 0x53, 0x00 };
                     break;
                 case "queryfov":
-                    code = new byte[] { 0x0A, 0x6B, 0x00 };
+                case "queryzoom":
+                    code = new byte[] { 0x00, 0x55, 0x00 };
+                    break;
+
+                default:
+                    code = null;
                     break;
             }
 

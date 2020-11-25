@@ -59,10 +59,22 @@ namespace SSLUtility2 {
 
                 byte[] send = CustomScriptCommands.CheckForCommands(line, mainRef.MakeAdr(cB_IPCon_Selected), this).Result;
 
+                //if(send != null) {
+                //    string m = "";
+                //    for (int i = 0; i < send.Length; i++) {
+                //        m += send[i].ToString() + " ";
+                //    }
+                //    MessageBox.Show(m);
+                //}
+
+                //MessageBox.Show("NULL");
+
                 if (send == null) {
                     send = MakeCommand(line);
                 } else if (send == pause) {
                     return;
+                } else {
+                    WriteToResponses("Firing: " + line);
                 }
 
                 string response = CameraCommunicate.Query(send, u).Result;

@@ -346,12 +346,13 @@
             // 
             this.track_IPCon_Zoom.BackColor = System.Drawing.SystemColors.Control;
             this.track_IPCon_Zoom.Location = new System.Drawing.Point(98, 374);
-            this.track_IPCon_Zoom.Maximum = 63;
+            this.track_IPCon_Zoom.Maximum = 3;
+            this.track_IPCon_Zoom.Minimum = 1;
             this.track_IPCon_Zoom.Name = "track_IPCon_Zoom";
             this.track_IPCon_Zoom.Size = new System.Drawing.Size(132, 45);
             this.track_IPCon_Zoom.TabIndex = 73;
-            this.track_IPCon_Zoom.Value = 63;
-            this.track_IPCon_Zoom.Scroll += new System.EventHandler(this.track_IPCon_Zoom_Scroll);
+            this.track_IPCon_Zoom.Value = 3;
+            this.track_IPCon_Zoom.MouseUp += new System.Windows.Forms.MouseEventHandler(this.track_IPCon_Zoom_MouseUp);
             // 
             // l_IPCon_Zoom
             // 

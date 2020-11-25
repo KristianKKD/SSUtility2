@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.11.5";
+        public const string version = "v1.2.11.6b";
         D protocol = new D();
         public static MainForm m;
         public bool lite = false;
@@ -33,10 +33,10 @@ namespace SSLUtility2 {
             Detached playerL = AttachDetached(10);
             Detached playerR = AttachDetached(690);
 
-            AttachInfoPanel(playerL, 270);
-            AttachInfoPanel(playerR, 950);
-            playerL.myInfoRef.otherD = playerR;
-            playerR.myInfoRef.otherD = playerL;
+            //AttachInfoPanel(playerL, 270);
+            //AttachInfoPanel(playerR, 950);
+            //playerL.myInfoRef.otherD = playerR;
+            //playerR.myInfoRef.otherD = playerL;
 
 
             saveList = new Control[]{

@@ -148,10 +148,13 @@ namespace SSLUtility2 {
             }
         }
 
-        private void track_IPCon_Zoom_Scroll(object sender, EventArgs e) {
+        private void track_IPCon_Zoom_MouseUp(object sender, MouseEventArgs e) {
             int zoomSpeed = track_IPCon_Zoom.Value;
-            byte[] code = CustomScriptCommands.CheckForCommands("setzoomspeed " + zoomSpeed.ToString(), mainRef.MakeAdr(), null).Result;
-            CameraCommunicate.sendtoIPAsync(code, null);
+            byte[] code = CustomScriptCommands.CheckForCommands("setzoomspeed " + zoomSpeed.ToString(), mainRef.MakeAdr(cB_IPCon_Selected), null).Result;
+            //CameraCommunicate.sendtoIPAsync(code, null);
+            string text = CameraCommunicate.Query(code, new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text)).Result;
+            MessageBox.Show(text);
+
         }
 
     }
