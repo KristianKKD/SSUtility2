@@ -38,18 +38,18 @@ namespace SSLUtility2 {
         private void b_PlayerD_Play_Click(object sender, EventArgs e) {
             Uri combined = GetCombined();
 
-            myInfoRef.CheckCam();
+            //myInfoRef.CheckCam();
 
             if (mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result) {
                 StartInfo();
             } else {
-                myInfoRef.HideAll();
+                //myInfoRef.HideAll();
             }
         }
 
         public void StartInfo() {
             if (int.Parse(ConfigControl.updateMs) != 0 && myInfoRef != null) {
-                myInfoRef.InitTimer();
+                //myInfoRef.InitTimer();
             }
         }
 
