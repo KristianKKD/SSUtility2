@@ -13,16 +13,12 @@ namespace SSLUtility2 {
                     "Would you like to see more information?";
         static string failedConnectCaption = "Error";
 
-        static Socket sock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
+        public static Socket sock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
 
         public static string lastIPPort = "1";
 
         public static async Task<bool> sendtoIPAsync(byte[] code, Control lab, string ip = null, string port = null) {
-            //string m = "";
-            //for (int i = 0; i < code.Length; i++) {
-            //    m += code[i].ToString() + " ";
-            //}
-            //MessageBox.Show(m);
+            //MainForm.m.ReadCommand(code, true);
             try {
                 if (!sock.Connected) {
                     bool ableToConnect = Connect(ip, port, lab, false).Result;
@@ -84,10 +80,12 @@ namespace SSLUtility2 {
              if(result.Length == 20) {
                 string subbed = result.Substring(0, 2);
                 if(subbed == "FF") {
+                    MainForm.m.WriteToResponses(subbed, false);
                     return result;
                 }
-             } 
-
+             }
+            
+            MainForm.m.WriteToResponses("Failed to get a response", false);
             return defaultResult;
         }
 
@@ -145,6 +143,7 @@ namespace SSLUtility2 {
 
         public static async Task<bool> SendToSocket(byte[] code) {
             if (code != null) {
+                MainForm.m.WriteToResponses(MainForm.m.ReadCommand(code, false), true);
                 sock.SendTo(code, sock.RemoteEndPoint);
                 return true;
             }

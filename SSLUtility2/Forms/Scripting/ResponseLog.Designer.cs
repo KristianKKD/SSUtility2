@@ -30,6 +30,7 @@
             this.b_RL_Clear = new System.Windows.Forms.Button();
             this.b_RL_Save = new System.Windows.Forms.Button();
             this.l_RL_RL = new System.Windows.Forms.Label();
+            this.check_RL_All = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // rtb_Log
@@ -71,11 +72,22 @@
             this.l_RL_RL.TabIndex = 14;
             this.l_RL_RL.Text = "Response Log";
             // 
+            // check_RL_All
+            // 
+            this.check_RL_All.AutoSize = true;
+            this.check_RL_All.Location = new System.Drawing.Point(358, 9);
+            this.check_RL_All.Name = "check_RL_All";
+            this.check_RL_All.Size = new System.Drawing.Size(112, 17);
+            this.check_RL_All.TabIndex = 15;
+            this.check_RL_All.Text = "All Communication";
+            this.check_RL_All.UseVisualStyleBackColor = true;
+            // 
             // ResponseLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(478, 446);
+            this.Controls.Add(this.check_RL_All);
             this.Controls.Add(this.l_RL_RL);
             this.Controls.Add(this.b_RL_Save);
             this.Controls.Add(this.b_RL_Clear);
@@ -95,5 +107,6 @@
         public System.Windows.Forms.Button b_RL_Clear;
         public System.Windows.Forms.Button b_RL_Save;
         public System.Windows.Forms.Label l_RL_RL;
+        public System.Windows.Forms.CheckBox check_RL_All;
     }
 }

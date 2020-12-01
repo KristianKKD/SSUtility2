@@ -41,44 +41,33 @@ namespace SSLUtility2
                 line = line.ToLower().Replace("x", "0");
 
                 if (tB_IPCon_Adr.Text == "" || tB_IPCon_Port.Text == null) {
-                    MainForm.m.WriteToResponses("No IP/Port found");
+                    MainForm.m.WriteToResponses("No IP/Port found", false);
                 }
 
                 Uri u = new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text);
 
+                byte[] send;
                 if (check_PD_Perfect.Checked) {
-                    byte[] perfect = FullCommand(line);
-                    CameraCommunicate.sendtoIPAsync(perfect, l_IPCon_Connected, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
-                    return;
+                    send = FullCommand(line);
+                } else {
+                    send = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
                 }
-
-                byte[] send = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
-
-                //if(send != null) {
-                //    string m = "";
-                //    for (int i = 0; i < send.Length; i++) {
-                //        m += send[i].ToString() + " ";
-                //    }
-                //    MessageBox.Show(m);
-                //}
-
-                //MessageBox.Show("NULL");
 
                 if (send == null) {
                     send = MakeCommand(line);
                 } else if (send == pause) {
                     return;
                 } else {
-                    MainForm.m.WriteToResponses("Firing: " + line);
+                    MainForm.m.WriteToResponses("Firing: " + line, true);
                 }
 
                 string response = CameraCommunicate.Query(send, u).Result;
 
-                if (response == "0") {
-                    MainForm.m.WriteToResponses("Command: " + line + " could not be sent.");
-                } else {
-                    MainForm.m.WriteToResponses(response);
-                }
+                //if (response == "0") {
+                //    MainForm.m.WriteToResponses("Command: " + line + " could not be sent.");
+                //} else {
+                //    MainForm.m.WriteToResponses(response);
+                //}
 
             }
         }
@@ -158,7 +147,7 @@ namespace SSLUtility2
         }
 
         private void b_PD_RL_Click(object sender, EventArgs e) {
-            
+            MainForm.m.OpenResponseLog(true);
         }
     }
 }

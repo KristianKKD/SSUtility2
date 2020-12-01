@@ -7,6 +7,9 @@ namespace SSLUtility2 {
 
         public InfoPanel myInfoRef;
 
+        bool Dplaying = false;
+        Recorder recorderD;
+
         public Detached() {
             InitializeComponent();
         }
@@ -35,20 +38,43 @@ namespace SSLUtility2 {
         }
 
         private void b_PlayerD_Play_Click(object sender, EventArgs e) {
+            StartPlaying();
+        }
+
+        public void StartPlaying() {
             Uri combined = GetCombined();
 
-            //myInfoRef.CheckCam();
+            if (myInfoRef != null) {
+                if (myInfoRef.CheckCam()) {
+                    check_PlayerD_StatsEnabled.Show();
+                } else {
+                    check_PlayerD_StatsEnabled.Hide();
+                }
+            }
 
-            if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result) {
-                StartInfo();
+            if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr,
+                tB_PlayerD_Buffering.Text, true).Result) {
+
+                if (check_PlayerD_StatsEnabled.Checked) {
+                    StartInfo();
+                }
+
+                b_PlayerD_Stop.Show();
+
             } else {
-                //myInfoRef.HideAll();
+                if (myInfoRef != null) {
+                    myInfoRef.HideAll();
+                }
+
+                b_PlayerD_Stop.Hide();
             }
         }
 
         public void StartInfo() {
-            if (int.Parse(ConfigControl.updateMs) != 0 && myInfoRef != null) {
-                //myInfoRef.InitTimer();
+            if (int.Parse(ConfigControl.updateMs) != 0 && myInfoRef != null
+                && CameraCommunicate.sock.Connected &&
+                check_PlayerD_StatsEnabled.Checked) {
+                myInfoRef.InitializeTimer();
             }
         }
 
@@ -59,9 +85,6 @@ namespace SSLUtility2 {
         private void checkB_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
             MainForm.m.ExtendOptions(checkB_PlayerD_Manual.Checked, gB_PlayerD_Extended, gB_PlayerD_Simple);
         }
-
-        bool Dplaying = false;
-        Recorder recorderD;
 
         private void b_PlayerD_StartRec_Click(object sender, EventArgs e) {
             (bool, Recorder) vals = MainForm.m.StopStartRec(Dplaying, this, recorderD);
@@ -104,5 +127,31 @@ namespace SSLUtility2 {
             tB_PlayerD_Password.Text = password;
         }
 
+        private void check_PlayerD_StatsEnabled_CheckedChanged(object sender, EventArgs e) {
+            if (myInfoRef != null) {
+                if (check_PlayerD_StatsEnabled.Checked) {
+                    myInfoRef.ShowAll();
+                    if (!myInfoRef.UpdateTimer.Enabled) {
+                        StartInfo();
+                    }
+                } else {
+                    if (myInfoRef.UpdateTimer.Enabled) {
+                        myInfoRef.UpdateTimer.Stop();
+                        AsyncSocket.Disconnect();
+                    }
+                    myInfoRef.HideAll();
+                }
+            } else {
+                check_PlayerD_StatsEnabled.Hide();
+            }
+            
+        }
+
+        private void b_PlayerD_Stop_Click(object sender, EventArgs e) {
+            VLCPlayer_D.playlist.stop();
+            b_PlayerD_Stop.Hide();
+            myInfoRef.UpdateTimer.Stop();
+            AsyncSocket.Disconnect();
+        }
     }
 }

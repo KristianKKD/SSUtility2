@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -8,78 +6,122 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSLUtility2 {
-    class AsyncSocket : Form {
+    class AsyncSocket {
 
-        Socket sock;
-        byte[] receiveBuffer;
+        static Socket sock;
+        static byte[] receiveBuffer;
 
-        void ConnectAsync(IPAddress ip, int port) {
+        public static void ConnectAsync(Uri addr) {
             try {
+                if (sock != null) {
+                    if (sock.Connected) {
+                        Disconnect();
+                    }
+                }
+                IPAddress ip = IPAddress.Parse(addr.Host);
+                int port = addr.Port;
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 IPEndPoint endPoint = new IPEndPoint(ip, port);
                 sock.BeginConnect(endPoint, ConnectCallback, null);
             } catch (SocketException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
+            } catch(Exception e) {
+                MessageBox.Show(e.ToString());
             }
         }
 
-        void SendAsync(byte[] send) {
+        public static void Disconnect() {
             try {
-                // Serialize the textBoxes text before sending.
+                sock.Shutdown(SocketShutdown.Both);
+                sock.Close();
+            } catch { }
+        }
+
+        public static void SendAsync(byte[] send) {
+            try {
                 sock.BeginSend(send, 0, send.Length, SocketFlags.None, SendCallback, null);
             } catch (SocketException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
             }
         }
 
-        private void ConnectCallback(IAsyncResult AR) {
+        private static void ConnectCallback(IAsyncResult AR) {
             try {
                 sock.EndConnect(AR);
                 receiveBuffer = new byte[sock.ReceiveBufferSize];
                 sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
             } catch (SocketException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
             }
         }
 
-        private void ReceiveCallback(IAsyncResult AR) {
+        private static void ReceiveCallback(IAsyncResult AR) {
             try {
                 int received = sock.EndReceive(AR);
                 if (received == 0) {
                     return;
                 }
 
-                string message = Encoding.ASCII.GetString(receiveBuffer);
-
-                Invoke((Action)delegate {
-                    MainForm.m.WriteToResponses("Server says: " + message);
-                });
+                GetResponse();
 
                 sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
             }
-            // Avoid Pokemon exception handling in cases like these.
             catch (SocketException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
             }
         }
 
-        private void SendCallback(IAsyncResult AR) {
+        static async Task GetResponse() {
+            try {
+                string m = "";
+                int comCount = 0;
+                for (int i = 0; i < receiveBuffer.Length; i++) {
+                    string hex = receiveBuffer[i].ToString("X").ToUpper();
+                    if (hex == "FF") {
+                        comCount = 7;
+                    }
+                    if (comCount > 0) {
+                        if (hex.Length == 1) {
+                            hex = "0" + hex;
+                        }
+                        m += hex + " ";
+                        comCount--;
+                    }
+
+                }
+                m = m.Trim();
+                if (m.Length > 1) {
+                    MainForm.m.WriteToResponses("Server says: " + m, false);
+                    InfoPanel.ReadResult(m);
+                }
+            } catch { }
+        }
+
+        private static void SendCallback(IAsyncResult AR) {
             try {
                 sock.EndSend(AR);
             } catch (SocketException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
-                MainForm.m.WriteToResponses(ex.Message);
+                MainForm.m.WriteToResponses(ex.Message, false);
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
             }
         }
-
+    
     }
 }

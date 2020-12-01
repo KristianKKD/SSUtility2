@@ -2,23 +2,26 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2
-{
-
+namespace SSLUtility2 {
     public partial class InfoPanel : Form { //PROBLEM: CURRENTLY THIS LOCKS UP THE MAIN SOCK SO WHEN ITS ACTIVE, 
         //COMMANDS/RESPONSES MAY GET MIXED UP
 
         public InfoPanel() {
             InitializeComponent();
+            HideAll();
+            UpdateTimer = new Timer();
+            UpdateTimer.Tick += new EventHandler(UpdateTimer_Tick);
         }
 
-        private Timer UpdateTimer;
+        public Timer UpdateTimer;
         public Detached d;
         public Detached otherD;
 
         public bool thermalCam;
 
         public bool isActive;
+
+        int commandPos;
         enum CamConfig {
             SSTraditional,
             Strict,
@@ -26,13 +29,20 @@ namespace SSLUtility2
             Legacy
         }
 
-        CamConfig myConfig;
+        static CamConfig myConfig;
 
-        public void InitTimer() {
-            CheckTypeToDisplay();
+        public void InitializeTimer() {
+            if (CameraCommunicate.sock.Connected) {
+                Uri currentlyConnected = new Uri("http://" + CameraCommunicate.GetSockEndpoint());
+                AsyncSocket.ConnectAsync(currentlyConnected);
+                CheckTypeToDisplay();
+                commandPos = 0;
+            } else {
+                MessageBox.Show("Couldn't start the info panel collection socket!");
+            }
         }
 
-        void StartTimer() {
+        void StartTicking() {
             if (!CheckCam()) {
                 if (thermalCam) {
                     HideAll();
@@ -45,9 +55,7 @@ namespace SSLUtility2
 
             CheckConfiguration();
 
-            UpdateTimer = new Timer();
-            UpdateTimer.Tick += new EventHandler(UpdateTimer_Tick);
-            int updateInterval = int.Parse(ConfigControl.updateMs);
+            int updateInterval = Convert.ToInt32(Math.Round(float.Parse(ConfigControl.updateMs)/4f));
             if (updateInterval > 0) {
                 UpdateTimer.Interval = updateInterval;
                 UpdateTimer.Enabled = true;
@@ -55,18 +63,8 @@ namespace SSLUtility2
             isActive = true;
         }
 
-        public void StopTimer() {
-            UpdateTimer.Stop();
-        }
-
         public bool CheckCam() {
             bool result = CameraCommunicate.CheckPelcoCam(thermalCam).Result;
-            
-            if (!result) {
-                HideAll();
-            } else {
-                ShowAll();
-            }
 
             return result;
         }
@@ -103,23 +101,9 @@ namespace SSLUtility2
                     ShowAll();
                 }
             }
-            StartTimer();
-
-            //if (!thermalCam) {
-            //    if (otherD.myInfoRef.isActive) {
-            //        otherD.myInfoRef.StopTimer();
-            //    }
-            //    StartTimer();
-            //} else {
-            //    if (!otherD.myInfoRef.isActive) {
-            //        StartTimer();
-            //    } else {
-            //        HideNotFOV();
-            //    }
-            //}
+            StartTicking();
 
         }
-
 
         void CheckConfiguration() {
             string result = GetQueryResults(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F });
@@ -150,13 +134,29 @@ namespace SSLUtility2
         }
 
         async Task UpdateAll() {
+            if (commandPos == 3) {
+                commandPos = 0;
+            }
+
             if (!thermalCam) {
-                await GetPan();
-                await GetTilt();
-                await GetFOV();
+                switch (commandPos) {
+                    case 0:
+                        GetPan();
+                        break;
+                    case 1:
+                        GetTilt();
+                        break;
+                    case 2:
+                        GetFOV();
+                        break;
+                }
             } else {
                 //GetThermalFOV();
             }
+            commandPos++;
+            l_Tilt.Text = "TILT: " + tilt.ToString() + " °";
+            l_FOV.Text = "FOV: " + fov.ToString() + " °";
+            l_Pan.Text = "PAN: " + pan.ToString() + " °";
         }
 
         string GetQueryResults(byte[] query) {
@@ -169,36 +169,30 @@ namespace SSLUtility2
             return result;
         }
 
-        async Task ReadResult(byte[] query) {
-            string result = GetQueryResults(query);
+        static float pan;
+        static float tilt;
+        static float fov;
 
-            if (result.Length < 14) {
-                return;
-            }
-
+        public static async Task ReadResult(string result) {
+            //string result = GetQueryResults(query);
             string commandType = result.Substring(9, 2);
-            
+
             //finalResult += " °";
 
             switch (commandType) {
                 case "59": //pan
-                    float pan = CalculatePan(result);
-                    l_Pan.Text = "PAN: " + pan.ToString();
+                    pan = CalculatePan(result);
                     break;
                 case "5B": //tilt
-                    float tilt = CalculateTilt(result);
-                    l_Tilt.Text = "TILT: " + tilt.ToString();
+                    tilt = CalculateTilt(result);
                     break;
                 case "5D": //fov
-                    float fov = ReturnedHexValToFloat(result);
-                    l_FOV.Text = "FOV: " + fov.ToString();
+                    fov = ReturnedHexValToFloat(result);
                     break;
-            }
-
-
+                }
         }
 
-        float CalculateTilt(string code) {
+        static float CalculateTilt(string code) {
             float full = ReturnedHexValToFloat(code);
 
             switch (myConfig) {
@@ -228,7 +222,7 @@ namespace SSLUtility2
             return full;
         }
 
-        float CalculatePan(string code) {
+        static float CalculatePan(string code) {
             float finalResult = 0;
             float full = ReturnedHexValToFloat(code);
 
@@ -252,7 +246,7 @@ namespace SSLUtility2
             return finalResult;
         }
 
-        float ReturnedHexValToFloat(string code) {
+        static float ReturnedHexValToFloat(string code) {
             string combined = GetCombinedDataInHex(code);
 
             string added = int.Parse(combined, System.Globalization.NumberStyles.HexNumber).ToString();
@@ -260,7 +254,7 @@ namespace SSLUtility2
             return finalResult;
         }
 
-        string GetCombinedDataInHex(string code) {
+        static string GetCombinedDataInHex(string code) {
             string d1 = code.Substring(12, 2);
             string d2 = code.Substring(15, 2);
 
@@ -268,15 +262,15 @@ namespace SSLUtility2
         }
 
         public async Task GetPan() {
-            ReadResult(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 });
+            AsyncSocket.SendAsync(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 });
         }
 
         public async Task GetTilt() {
-            ReadResult(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
+            AsyncSocket.SendAsync(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
         }
 
         public async Task GetFOV() {
-            ReadResult(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 });
+            AsyncSocket.SendAsync(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 });
         }
 
         public async Task GetThermalFOV() {

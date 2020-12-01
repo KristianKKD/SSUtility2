@@ -27,13 +27,21 @@ namespace SSLUtility2 {
         static async Task<byte[]> RefineCode(byte[] code, uint adr, int value) {
             if (code == PelcoD.pause) {
                 await Task.Delay(value).ConfigureAwait(false);
-                MainForm.m.WriteToResponses("Waiting: " + value.ToString());
+                MainForm.m.WriteToResponses("Waiting: " + value.ToString(), true);
             }
 
             if (code == null || code == PelcoD.pause) {
                 return code;
             }
 
+            uint checksum = GetCheckSum(code, adr, value);
+
+            code = new byte[] { 0xFF, (byte)adr, code[0], code[1], code[2], Convert.ToByte(value), (byte)checksum };
+
+            return code;
+        }
+
+        public static uint GetCheckSum(byte[] code, uint adr, int value) {
             uint checksum = 0;
             for (int i = 0; i < code.Length; i++) {
                 checksum += code[i];
@@ -42,9 +50,7 @@ namespace SSLUtility2 {
             checksum += Convert.ToByte(value);
             checksum = checksum % 256;
 
-            code = new byte[]{ 0xFF, (byte)adr, code[0], code[1], code[2], Convert.ToByte(value), (byte)checksum };
-
-            return code;
+            return checksum;
         }
 
         public static async Task<byte[]> CheckForPresets(string line) {
@@ -84,7 +90,7 @@ namespace SSLUtility2 {
                     break;
 
                 case "setzoomspeed":
-                    code = new byte[] { 0x25, 0x00, 0x00 };
+                    code = new byte[] { 0x00, 0x25, 0x00 };
                     break;
                 case "setpantiltspeed":
                     break;

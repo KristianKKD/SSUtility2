@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.12.0b";
+        public const string version = "v1.3.0.0";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -34,9 +34,9 @@ namespace SSLUtility2 {
             Detached playerL = AttachDetached(10);
             Detached playerR = AttachDetached(690);
 
-            CreateResponseLog(false);
+            OpenResponseLog(false);
 
-            //InfoPanelStuff(playerL, playerR);
+            CreateInfoPanels(playerL, playerR);
 
             saveList = new Control[]{
                 ipCon.cB_IPCon_Type,
@@ -70,7 +70,7 @@ namespace SSLUtility2 {
             AutoConnect(playerL, playerR);
         }
 
-        private void CreateResponseLog(bool show) {
+        public void OpenResponseLog(bool show) {
             if (rl == null) {
                 rl = new ResponseLog();
             }
@@ -118,7 +118,7 @@ namespace SSLUtility2 {
                 if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
                     if (Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false).Result
                         && connected && playerL.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
-                        playerL.StartInfo();
+                        playerL.StartPlaying();
                     } else {
                         playerL.myInfoRef.HideAll();
                     }
@@ -126,7 +126,7 @@ namespace SSLUtility2 {
                 if (playerR.tB_PlayerD_SimpleAdr.Text != "") {
                     if (Play(playerR.VLCPlayer_D, playerR.GetCombined(), playerR.tB_PlayerD_SimpleAdr, playerR.tB_PlayerD_Buffering.Text, false).Result
                         && connected && playerR.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
-                        playerR.StartInfo();
+                        playerR.StartPlaying();
                     } else {
                         playerR.myInfoRef.HideAll();
                     }
@@ -501,9 +501,25 @@ namespace SSLUtility2 {
             }
         }
 
-        public void WriteToResponses(string text) {
+        public string ReadCommand(byte[] command, bool show = false) {
+            string m = "";
+            for (int i = 0; i < command.Length; i++) {
+                m += command[i].ToString() + " ";
+            }
+            if (show) {
+                MessageBox.Show(m);
+            }
+            return m;
+        }
+
+        public void WriteToResponses(string text, bool hide) {
             this.Invoke((MethodInvoker)delegate {
-                rl.rtb_Log.Text += "[" + DateTime.Now + "]: " + text + "\n";
+                if (rl.rtb_Log.Text.Length > 2000000000) {
+                    rl.rtb_Log.Clear();
+                }
+                if (!hide || rl.check_RL_All.Checked) {
+                    rl.rtb_Log.AppendText("[" + CameraCommunicate.GetSockEndpoint() + " at " + DateTime.Now + "]: " + text + "\n");
+                }
             });
         }
 
@@ -796,7 +812,7 @@ namespace SSLUtility2 {
         }
 
         private void Menu_Window_Response_Click(object sender, EventArgs e) {
-            CreateResponseLog(true);
+            OpenResponseLog(true);
         }
     } // end of class MainForm
 } // end of namespace SSLUtility2

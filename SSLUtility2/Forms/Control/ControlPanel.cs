@@ -147,11 +147,13 @@ namespace SSLUtility2
 
         private void track_IPCon_Zoom_MouseUp(object sender, MouseEventArgs e) {
             int zoomSpeed = track_IPCon_Zoom.Value;
-            byte[] code = CustomScriptCommands.CheckForCommands("setzoomspeed " + zoomSpeed.ToString(), MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
+            //byte[] code = CustomScriptCommands.CheckForCommands("setzoomspeed " + zoomSpeed.ToString(), MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
             //CameraCommunicate.sendtoIPAsync(code, null);
-            string text = CameraCommunicate.Query(code, new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text)).Result;
-            MessageBox.Show(text);
+            byte[] code = new byte[] { 0xFF, 0x01, 0x00, 0x25, 0x00, Convert.ToByte(zoomSpeed), 0x00 };
+            uint checksum = CustomScriptCommands.GetCheckSum(code, 1, zoomSpeed);
+            code[6] = (byte)checksum;
 
+            string text = CameraCommunicate.Query(code, new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text)).Result;
         }
 
     }

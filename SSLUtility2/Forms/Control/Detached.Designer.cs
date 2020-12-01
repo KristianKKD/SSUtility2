@@ -49,6 +49,8 @@
             this.b_PlayerD_StartRec = new System.Windows.Forms.Button();
             this.b_PlayerD_SaveSnap = new System.Windows.Forms.Button();
             this.b_PlayerD_Play = new System.Windows.Forms.Button();
+            this.check_PlayerD_StatsEnabled = new System.Windows.Forms.CheckBox();
+            this.b_PlayerD_Stop = new System.Windows.Forms.Button();
             this.gB_PlayerD_Simple.SuspendLayout();
             this.gB_PlayerD_Extended.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_D)).BeginInit();
@@ -247,7 +249,7 @@
             this.VLCPlayer_D.Location = new System.Drawing.Point(0, 0);
             this.VLCPlayer_D.Name = "VLCPlayer_D";
             this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
-            this.VLCPlayer_D.Size = new System.Drawing.Size(640, 513);
+            this.VLCPlayer_D.Size = new System.Drawing.Size(639, 512);
             this.VLCPlayer_D.TabIndex = 41;
             // 
             // checkB_PlayerD_Manual
@@ -291,11 +293,35 @@
             this.b_PlayerD_Play.UseVisualStyleBackColor = true;
             this.b_PlayerD_Play.Click += new System.EventHandler(this.b_PlayerD_Play_Click);
             // 
+            // check_PlayerD_StatsEnabled
+            // 
+            this.check_PlayerD_StatsEnabled.AutoSize = true;
+            this.check_PlayerD_StatsEnabled.Location = new System.Drawing.Point(321, 632);
+            this.check_PlayerD_StatsEnabled.Name = "check_PlayerD_StatsEnabled";
+            this.check_PlayerD_StatsEnabled.Size = new System.Drawing.Size(125, 17);
+            this.check_PlayerD_StatsEnabled.TabIndex = 49;
+            this.check_PlayerD_StatsEnabled.Text = "Enable Camera Stats";
+            this.check_PlayerD_StatsEnabled.UseVisualStyleBackColor = true;
+            this.check_PlayerD_StatsEnabled.Visible = false;
+            this.check_PlayerD_StatsEnabled.CheckedChanged += new System.EventHandler(this.check_PlayerD_StatsEnabled_CheckedChanged);
+            // 
+            // b_PlayerD_Stop
+            // 
+            this.b_PlayerD_Stop.Location = new System.Drawing.Point(501, 624);
+            this.b_PlayerD_Stop.Name = "b_PlayerD_Stop";
+            this.b_PlayerD_Stop.Size = new System.Drawing.Size(134, 31);
+            this.b_PlayerD_Stop.TabIndex = 50;
+            this.b_PlayerD_Stop.Text = "Stop Video Playback";
+            this.b_PlayerD_Stop.UseVisualStyleBackColor = true;
+            this.b_PlayerD_Stop.Click += new System.EventHandler(this.b_PlayerD_Stop_Click);
+            // 
             // Detached
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(639, 761);
+            this.Controls.Add(this.b_PlayerD_Stop);
+            this.Controls.Add(this.check_PlayerD_StatsEnabled);
             this.Controls.Add(this.gB_PlayerD_Extended);
             this.Controls.Add(this.gB_PlayerD_Simple);
             this.Controls.Add(this.VLCPlayer_D);
@@ -342,5 +368,7 @@
         public System.Windows.Forms.Button b_PlayerD_SaveSnap;
         public System.Windows.Forms.Button b_PlayerD_Play;
         public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.CheckBox check_PlayerD_StatsEnabled;
+        public System.Windows.Forms.Button b_PlayerD_Stop;
     }
 }
