@@ -1,31 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace SSLUtility2 {
-
     public static class CustomScriptCommands {
 
-
-        public static async Task<byte[]> CheckForCommands(string line, uint adr, PelcoD pdRef) {
+        public static async Task<byte[]> CheckForCommands(string line, uint adr) {
             byte[] code = new byte[3];
 
             code = CheckForPresets(line).Result;
-
-            int value = CheckForVal(line);
-            code = RefineCode(code, adr, pdRef, value).Result;
+            code = RefineCode(code, adr, CheckForVal(line)).Result;
 
             return code;
         }
 
         static int CheckForVal(string line) {
             int value = 0;
-
             int marker = line.IndexOf(":");
+            
             if (marker != -1) {
                 value = int.Parse(line.Substring(marker + 1));
             }
@@ -33,13 +24,12 @@ namespace SSLUtility2 {
             return value;
         }
 
-        static async Task<byte[]> RefineCode(byte[] code, uint adr, PelcoD pdRef, int value) {
+        static async Task<byte[]> RefineCode(byte[] code, uint adr, int value) {
             if (code == PelcoD.pause) {
                 await Task.Delay(value).ConfigureAwait(false);
-                if (pdRef != null) {
-                    pdRef.WriteToResponses("Waiting: " + value.ToString());
-                }
+                MainForm.m.WriteToResponses("Waiting: " + value.ToString());
             }
+
             if (code == null || code == PelcoD.pause) {
                 return code;
             }

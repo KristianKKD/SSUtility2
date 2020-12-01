@@ -118,6 +118,7 @@ namespace SSLUtility2 {
             this.Menu_Window_Detached = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_PelcoD = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Lite = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Window_Response = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_FTM_Open = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
@@ -874,7 +875,8 @@ namespace SSLUtility2 {
             this.Menu_Window.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Window_Detached,
             this.Menu_Window_PelcoD,
-            this.Menu_Window_Lite});
+            this.Menu_Window_Lite,
+            this.Menu_Window_Response});
             this.Menu_Window.Name = "Menu_Window";
             this.Menu_Window.Size = new System.Drawing.Size(63, 20);
             this.Menu_Window.Text = "Window";
@@ -882,23 +884,30 @@ namespace SSLUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(164, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(164, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Lite
             // 
             this.Menu_Window_Lite.Name = "Menu_Window_Lite";
-            this.Menu_Window_Lite.Size = new System.Drawing.Size(164, 22);
+            this.Menu_Window_Lite.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Lite.Text = "Lite Mode";
             this.Menu_Window_Lite.Click += new System.EventHandler(this.Menu_Window_Lite_Click);
+            // 
+            // Menu_Window_Response
+            // 
+            this.Menu_Window_Response.Name = "Menu_Window_Response";
+            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Response.Text = "Response Log";
+            this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Final
             // 
@@ -2034,5 +2043,6 @@ namespace SSLUtility2 {
         private Label l_Version;
         public ComboBox cB_Other_Rate;
         public Label l_Other_Rate;
+        private ToolStripMenuItem Menu_Window_Response;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

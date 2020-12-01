@@ -251,7 +251,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PelcoD";
             this.Text = "PelcoD";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PelcoD_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

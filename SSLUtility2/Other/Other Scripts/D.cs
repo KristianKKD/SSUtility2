@@ -25,8 +25,6 @@
  * Version: 1.4
  * ------------------------------------------------------------------------------*/
 using System;
-using System.Text;
-using System.Windows.Forms;
 
 namespace SSLUtility2
 {
@@ -35,7 +33,7 @@ namespace SSLUtility2
     /// </summary>
     public class D
     {
-
+        public static D protocol { get; set; }
 
 
         #region Pan and Tilt Commands
