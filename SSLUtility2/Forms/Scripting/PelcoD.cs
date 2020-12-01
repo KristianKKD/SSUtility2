@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSLUtility2
+{
 
     public partial class PelcoD : Form {
-
-        public MainForm mainRef;
-        string responses;
-        ResponseLog rl;
 
         bool stop;
 
@@ -46,7 +41,7 @@ namespace SSLUtility2 {
                 line = line.ToLower().Replace("x", "0");
 
                 if (tB_IPCon_Adr.Text == "" || tB_IPCon_Port.Text == null) {
-                    WriteToResponses("No IP/Port found");
+                    MainForm.m.WriteToResponses("No IP/Port found");
                 }
 
                 Uri u = new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text);
@@ -57,7 +52,7 @@ namespace SSLUtility2 {
                     return;
                 }
 
-                byte[] send = CustomScriptCommands.CheckForCommands(line, mainRef.MakeAdr(cB_IPCon_Selected), this).Result;
+                byte[] send = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
 
                 //if(send != null) {
                 //    string m = "";
@@ -74,15 +69,15 @@ namespace SSLUtility2 {
                 } else if (send == pause) {
                     return;
                 } else {
-                    WriteToResponses("Firing: " + line);
+                    MainForm.m.WriteToResponses("Firing: " + line);
                 }
 
                 string response = CameraCommunicate.Query(send, u).Result;
 
                 if (response == "0") {
-                    WriteToResponses("Command: " + line + " could not be sent.");
+                    MainForm.m.WriteToResponses("Command: " + line + " could not be sent.");
                 } else {
-                    WriteToResponses(response);
+                    MainForm.m.WriteToResponses(response);
                 }
 
             }
@@ -109,19 +104,11 @@ namespace SSLUtility2 {
             uint cm2 = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
             uint d1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
             uint d2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
-            uint checksum = (cm1 + cm2 + d1 + d2 + mainRef.MakeAdr(cB_IPCon_Selected)) % 256;
+            uint checksum = (cm1 + cm2 + d1 + d2 + MainForm.m.MakeAdr(cB_IPCon_Selected)) % 256;
             
-            byte[] fullCommand = new byte[7] { 0xFF, (byte)mainRef.MakeAdr(cB_IPCon_Selected), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum } ;
+            byte[] fullCommand = new byte[7] { 0xFF, (byte)MainForm.m.MakeAdr(cB_IPCon_Selected), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum } ;
 
             return fullCommand;
-        }
-
-        public async Task WriteToResponses(string text) {
-            responses += "[" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text + " at "
-                + DateTime.Now + "]: " + text + "\n";
-            if (rl != null) {
-                rl.rtb_Log.Text = responses;
-            }
         }
 
         public static void SaveFile(string[] lines, string name = null) {
@@ -171,18 +158,7 @@ namespace SSLUtility2 {
         }
 
         private void b_PD_RL_Click(object sender, EventArgs e) {
-            if (rl == null) {
-                rl = new ResponseLog();
-            }
-            rl.rtb_Log.Text = responses;
-            rl.BringToFront();
-            rl.Show();
-        }
-
-        private void PelcoD_FormClosing(object sender, FormClosingEventArgs e) {
-            if (rl != null) {
-                rl.Dispose();
-            }
+            
         }
     }
 }

@@ -2,9 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2
-{
-
+namespace SSLUtility2 {
     class AutoSave {
 
         public static async Task SaveAuto(string path) {
@@ -13,7 +11,6 @@ namespace SSLUtility2
             foreach (Control c in MainForm.saveList) {
                 File.AppendAllText(path, c.Text + "\n");
             }
-
         }
 
         public static async Task LoadAuto(string path, bool firstTime) {
@@ -28,22 +25,11 @@ namespace SSLUtility2
 
             string[] lines = File.ReadAllLines(path);
 
-            //if (MainForm.saveList.Length != lines.Length && !ConfigControl.configNotif) {
-            //    if (MainForm.ShowError("Misaligment of autosaved variables! \nWould you like to regenerate the file?" +
-            //        "\n(Press 'yes' if you don't know what to do)", "Reset autosave?", null, false)) {
-            //            ConfigControl.ResetFile(path);
-            //            return;
-            //    }
-            //}
-
             for (int i = 0; i < MainForm.saveList.Length; i++) {
                 MainForm.saveList[i].Text = lines[i];
             }
-
-
         }
 
 
     }
-
 }

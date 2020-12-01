@@ -11,20 +11,21 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.2.11.6c";
-        D protocol = new D();
-        public static MainForm m;
+        public const string version = "v1.2.12.0b";
         public bool lite = false;
         bool isOriginal = false;
+        public ResponseLog rl;
 
         public static Control[] saveList = new Control[0];
 
         ControlPanel ipCon;
 
+        public static MainForm m { get; set; }
+
         public async Task StartupStuff() {
             m = this;
+            D.protocol = new D();
             lite = false;
-            CameraCommunicate.mainRef = m;
             l_Version.Text = l_Version.Text + version;
             bool first = CheckIfFirstTime();
             firmwareUp.Dispose(); //remove the firmware page
@@ -33,11 +34,9 @@ namespace SSLUtility2 {
             Detached playerL = AttachDetached(10);
             Detached playerR = AttachDetached(690);
 
-            //AttachInfoPanel(playerL, 270);
-            //AttachInfoPanel(playerR, 950);
-            //playerL.myInfoRef.otherD = playerR;
-            //playerR.myInfoRef.otherD = playerL;
+            CreateResponseLog(false);
 
+            //InfoPanelStuff(playerL, playerR);
 
             saveList = new Control[]{
                 ipCon.cB_IPCon_Type,
@@ -69,6 +68,23 @@ namespace SSLUtility2 {
             PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
             AutoConnect(playerL, playerR);
+        }
+
+        private void CreateResponseLog(bool show) {
+            if (rl == null) {
+                rl = new ResponseLog();
+            }
+            rl.BringToFront();
+            if (show) {
+                rl.Show();
+            }
+        }
+
+        void CreateInfoPanels(Detached playerL, Detached playerR) {
+            AttachInfoPanel(playerL, 270);
+            AttachInfoPanel(playerR, 950);
+            playerL.myInfoRef.otherD = playerR;
+            playerR.myInfoRef.otherD = playerL;
         }
 
         public async Task PopulateSettingText() {
@@ -234,7 +250,6 @@ namespace SSLUtility2 {
             TabPage tp = tC_Main.TabPages[0];
             
             ipCon = SpawnControlPanel(tp, false);
-            ipCon.mainRef = m;
 
             PresetPanel pp = AttachPresetPanel(tp, ipCon);
             pp.cp = ipCon;
@@ -298,14 +313,12 @@ namespace SSLUtility2 {
             if (show) {
                 dv.Show();
             }
-            dv.mainRef = m;
             SetFeatureToAllControls(dv.Controls);
             return dv;
         }
 
         public PelcoD OpenPelco(string ip, string port, string selected) {
             PelcoD pd = new PelcoD();
-            pd.mainRef = m;
             pd.tB_IPCon_Adr.Text = ip;
             pd.tB_IPCon_Port.Text = port;
             pd.cB_IPCon_Selected.Text = selected;
@@ -319,8 +332,6 @@ namespace SSLUtility2 {
             ControlPanel cp = new ControlPanel();
 
             if (makeLite) {
-                cp.mainRef = m;
-                cp.pathToAuto = ConfigControl.appFolder + ConfigControl.autoSave;
                 cp.cB_IPCon_Type.Text = ipCon.cB_IPCon_Type.Text;
                 cp.tB_IPCon_Adr.Text = ipCon.tB_IPCon_Adr.Text;
                 cp.tB_IPCon_Port.Text = ipCon.tB_IPCon_Port.Text;
@@ -490,6 +501,12 @@ namespace SSLUtility2 {
             }
         }
 
+        public void WriteToResponses(string text) {
+            this.Invoke((MethodInvoker)delegate {
+                rl.rtb_Log.Text += "[" + DateTime.Now + "]: " + text + "\n";
+            });
+        }
+
         public void PTZMove(bool IsTilt, uint address, uint speed,
             D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left,
             string ip = null, string port = null, Control lcon = null) {
@@ -500,9 +517,9 @@ namespace SSLUtility2 {
             }
 
             if (IsTilt) {
-                code = protocol.CameraTilt(address, tilt, speed);
+                code = D.protocol.CameraTilt(address, tilt, speed);
             } else {
-                code = protocol.CameraPan(address, pan, speed);
+                code = D.protocol.CameraPan(address, pan, speed);
             }
 
             CameraCommunicate.sendtoIPAsync(code, ipCon.l_IPCon_Connected, ip, port);
@@ -513,7 +530,7 @@ namespace SSLUtility2 {
                 CameraCommunicate.Connect(ip, port, lcon);
             }
 
-            CameraCommunicate.sendtoIPAsync(protocol.CameraZoom(address, dir), lcon, ip, port);
+            CameraCommunicate.sendtoIPAsync(D.protocol.CameraZoom(address, dir), lcon, ip, port);
         }
 
         public async Task SaveSnap(Detached player) {
@@ -778,6 +795,8 @@ namespace SSLUtility2 {
             OpenFinal();
         }
 
-
+        private void Menu_Window_Response_Click(object sender, EventArgs e) {
+            CreateResponseLog(true);
+        }
     } // end of class MainForm
 } // end of namespace SSLUtility2

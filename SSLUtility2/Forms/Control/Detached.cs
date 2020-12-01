@@ -5,7 +5,6 @@ namespace SSLUtility2 {
 
     public partial class Detached : Form {
 
-        public MainForm mainRef;
         public InfoPanel myInfoRef;
 
         public Detached() {
@@ -40,7 +39,7 @@ namespace SSLUtility2 {
 
             //myInfoRef.CheckCam();
 
-            if (mainRef.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result) {
+            if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr, tB_PlayerD_Buffering.Text, true).Result) {
                 StartInfo();
             } else {
                 //myInfoRef.HideAll();
@@ -54,18 +53,18 @@ namespace SSLUtility2 {
         }
 
         private void b_PlayerD_SaveSnap_Click(object sender, EventArgs e) {
-            mainRef.SaveSnap(this);
+            MainForm.m.SaveSnap(this);
         }
 
         private void checkB_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
-            mainRef.ExtendOptions(checkB_PlayerD_Manual.Checked, gB_PlayerD_Extended, gB_PlayerD_Simple);
+            MainForm.m.ExtendOptions(checkB_PlayerD_Manual.Checked, gB_PlayerD_Extended, gB_PlayerD_Simple);
         }
 
         bool Dplaying = false;
         Recorder recorderD;
 
         private void b_PlayerD_StartRec_Click(object sender, EventArgs e) {
-            (bool, Recorder) vals = mainRef.StopStartRec(Dplaying, this, recorderD);
+            (bool, Recorder) vals = MainForm.m.StopStartRec(Dplaying, this, recorderD);
             Dplaying = vals.Item1;
             recorderD = vals.Item2;
         }

@@ -1,27 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSLUtility2 {
 
     class CameraCommunicate {
-        public static MainForm mainRef;
-
         static string failedConnectMsg = "Issue connecting to TCP Port\n" +
                     "Would you like to see more information?";
         static string failedConnectCaption = "Error";
 
-        static IPAddress serverAddr = null;
         static Socket sock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
-        static IPEndPoint endPoint = new IPEndPoint(0, 0);
 
         public static string lastIPPort = "1";
 
@@ -71,9 +63,9 @@ namespace SSLUtility2 {
             }
             LabelDisplay(true, lCon);
 
-            serverAddr = IPAddress.Parse(ipAdr);
+            IPAddress serverAddr = IPAddress.Parse(ipAdr);
+            IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(port));
             sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(port));
             sock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
             return true;
         }
@@ -153,7 +145,7 @@ namespace SSLUtility2 {
 
         public static async Task<bool> SendToSocket(byte[] code) {
             if (code != null) {
-                sock.SendTo(code, endPoint);
+                sock.SendTo(code, sock.RemoteEndPoint);
                 return true;
             }
             return false;
@@ -202,10 +194,6 @@ namespace SSLUtility2 {
                         ex.SocketErrorCode == SocketError.IOPending ||
                         ex.SocketErrorCode == SocketError.NoBufferSpaceAvailable) {
                         await Task.Delay(30);// socket buffer is probably empty, wait and try again
-                    } else {
-
-                        //MessageBox.Show(received.ToString());
-                        //MessageBox.Show(ex.ToString());
                     }
                 }
             }
