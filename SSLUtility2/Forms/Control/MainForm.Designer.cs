@@ -42,68 +42,8 @@ namespace SSLUtility2 {
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.GetSNbutton = new System.Windows.Forms.Button();
-            this.Versionlabel = new System.Windows.Forms.Label();
-            this.Writebutton = new System.Windows.Forms.Button();
-            this.Erasebutton = new System.Windows.Forms.Button();
-            this.Checksumbutton = new System.Windows.Forms.Button();
-            this.LoadHexbutton = new System.Windows.Forms.Button();
-            this.Activatebutton = new System.Windows.Forms.Button();
-            this.DeActivatebutton = new System.Windows.Forms.Button();
-            this.Gobutton = new System.Windows.Forms.Button();
-            this.Speedlabel = new System.Windows.Forms.Label();
-            this.LoadSpeedlabel = new System.Windows.Forms.Label();
-            this.SpeedcomboBox = new System.Windows.Forms.ComboBox();
-            this.LoadSpeedcomboBox = new System.Windows.Forms.ComboBox();
             this.serialPort1 = new System.IO.Ports.SerialPort(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.Portlabel = new System.Windows.Forms.Label();
-            this.PortcomboBox = new System.Windows.Forms.ComboBox();
-            this.Portbutton = new System.Windows.Forms.Button();
-            this.LogtextBox = new System.Windows.Forms.TextBox();
-            this.Loglabel = new System.Windows.Forms.Label();
-            this.ClearLogbutton = new System.Windows.Forms.Button();
-            this.Versiontext = new System.Windows.Forms.Label();
-            this.SNtext = new System.Windows.Forms.Label();
-            this.CamNoUpDown = new System.Windows.Forms.NumericUpDown();
-            this.CamNolabel = new System.Windows.Forms.Label();
-            this.Abortbutton = new System.Windows.Forms.Button();
-            this.ResetMemorybutton = new System.Windows.Forms.Button();
-            this.tC_Main = new System.Windows.Forms.TabControl();
-            this.camControl = new System.Windows.Forms.TabPage();
-            this.l_Version = new System.Windows.Forms.Label();
-            this.firmwareUp = new System.Windows.Forms.TabPage();
-            this.tP_Settings = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cB_Other_Rate = new System.Windows.Forms.ComboBox();
-            this.l_Other = new System.Windows.Forms.Label();
-            this.check_Other_AutoPlay = new System.Windows.Forms.CheckBox();
-            this.l_Other_Rate = new System.Windows.Forms.Label();
-            this.check_Other_Subnet = new System.Windows.Forms.CheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
-            this.l_Rec_Quality = new System.Windows.Forms.Label();
-            this.tB_Rec_scFileN = new System.Windows.Forms.TextBox();
-            this.l_Rec_sCFileN = new System.Windows.Forms.Label();
-            this.cB_Rec_FPS = new System.Windows.Forms.ComboBox();
-            this.tB_Rec_vFileN = new System.Windows.Forms.TextBox();
-            this.l_Rec_vFileN = new System.Windows.Forms.Label();
-            this.l_Rec = new System.Windows.Forms.Label();
-            this.l_Rec_FPS = new System.Windows.Forms.Label();
-            this.gB_Paths = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.check_Paths_Manual = new System.Windows.Forms.CheckBox();
-            this.l_Paths_sCCheck = new System.Windows.Forms.Label();
-            this.l_Paths_vCheck = new System.Windows.Forms.Label();
-            this.b_Paths_vBrowse = new System.Windows.Forms.Button();
-            this.tB_Paths_vFolder = new System.Windows.Forms.TextBox();
-            this.l_Paths_vFolder = new System.Windows.Forms.Label();
-            this.tB_Paths_sCFolder = new System.Windows.Forms.TextBox();
-            this.b_Paths_sCBrowse = new System.Windows.Forms.Button();
-            this.l_Paths = new System.Windows.Forms.Label();
-            this.l_Paths_sCFolder = new System.Windows.Forms.Label();
-            this.b_Settings_Default = new System.Windows.Forms.Button();
-            this.b_Settings_Apply = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -124,684 +64,83 @@ namespace SSLUtility2 {
             this.Menu_QC_PanZero = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_FTM_Open = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
-            this.tC_Main.SuspendLayout();
-            this.camControl.SuspendLayout();
-            this.firmwareUp.SuspendLayout();
-            this.tP_Settings.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.gB_Paths.SuspendLayout();
+            this.tP_Settings = new System.Windows.Forms.TabPage();
+            this.b_Settings_Apply = new System.Windows.Forms.Button();
+            this.b_Settings_Default = new System.Windows.Forms.Button();
+            this.gB_Paths = new System.Windows.Forms.GroupBox();
+            this.l_Paths_sCFolder = new System.Windows.Forms.Label();
+            this.l_Paths = new System.Windows.Forms.Label();
+            this.b_Paths_sCBrowse = new System.Windows.Forms.Button();
+            this.tB_Paths_sCFolder = new System.Windows.Forms.TextBox();
+            this.l_Paths_vFolder = new System.Windows.Forms.Label();
+            this.tB_Paths_vFolder = new System.Windows.Forms.TextBox();
+            this.b_Paths_vBrowse = new System.Windows.Forms.Button();
+            this.l_Paths_vCheck = new System.Windows.Forms.Label();
+            this.l_Paths_sCCheck = new System.Windows.Forms.Label();
+            this.check_Paths_Manual = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.l_Rec_FPS = new System.Windows.Forms.Label();
+            this.l_Rec = new System.Windows.Forms.Label();
+            this.l_Rec_vFileN = new System.Windows.Forms.Label();
+            this.tB_Rec_vFileN = new System.Windows.Forms.TextBox();
+            this.cB_Rec_FPS = new System.Windows.Forms.ComboBox();
+            this.l_Rec_sCFileN = new System.Windows.Forms.Label();
+            this.tB_Rec_scFileN = new System.Windows.Forms.TextBox();
+            this.l_Rec_Quality = new System.Windows.Forms.Label();
+            this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.check_Other_Subnet = new System.Windows.Forms.CheckBox();
+            this.l_Other_Rate = new System.Windows.Forms.Label();
+            this.check_Other_AutoPlay = new System.Windows.Forms.CheckBox();
+            this.l_Other = new System.Windows.Forms.Label();
+            this.cB_Other_Rate = new System.Windows.Forms.ComboBox();
+            this.firmwareUp = new System.Windows.Forms.TabPage();
+            this.Portlabel = new System.Windows.Forms.Label();
+            this.LoadSpeedcomboBox = new System.Windows.Forms.ComboBox();
+            this.PortcomboBox = new System.Windows.Forms.ComboBox();
+            this.SpeedcomboBox = new System.Windows.Forms.ComboBox();
+            this.Portbutton = new System.Windows.Forms.Button();
+            this.LoadSpeedlabel = new System.Windows.Forms.Label();
+            this.Speedlabel = new System.Windows.Forms.Label();
+            this.LogtextBox = new System.Windows.Forms.TextBox();
+            this.Gobutton = new System.Windows.Forms.Button();
+            this.Loglabel = new System.Windows.Forms.Label();
+            this.DeActivatebutton = new System.Windows.Forms.Button();
+            this.ClearLogbutton = new System.Windows.Forms.Button();
+            this.Activatebutton = new System.Windows.Forms.Button();
+            this.Versiontext = new System.Windows.Forms.Label();
+            this.LoadHexbutton = new System.Windows.Forms.Button();
+            this.SNtext = new System.Windows.Forms.Label();
+            this.Checksumbutton = new System.Windows.Forms.Button();
+            this.CamNoUpDown = new System.Windows.Forms.NumericUpDown();
+            this.Erasebutton = new System.Windows.Forms.Button();
+            this.CamNolabel = new System.Windows.Forms.Label();
+            this.Writebutton = new System.Windows.Forms.Button();
+            this.Abortbutton = new System.Windows.Forms.Button();
+            this.GetSNbutton = new System.Windows.Forms.Button();
+            this.ResetMemorybutton = new System.Windows.Forms.Button();
+            this.Versionlabel = new System.Windows.Forms.Label();
+            this.camControl = new System.Windows.Forms.TabPage();
+            this.l_Version = new System.Windows.Forms.Label();
+            this.tC_Main = new System.Windows.Forms.TabControl();
             this.statusStrip1.SuspendLayout();
             this.Menu.SuspendLayout();
+            this.tP_Settings.SuspendLayout();
+            this.gB_Paths.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.firmwareUp.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
+            this.camControl.SuspendLayout();
+            this.tC_Main.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // GetSNbutton
-            // 
-            this.GetSNbutton.Location = new System.Drawing.Point(6, 36);
-            this.GetSNbutton.Name = "GetSNbutton";
-            this.GetSNbutton.Size = new System.Drawing.Size(75, 23);
-            this.GetSNbutton.TabIndex = 0;
-            this.GetSNbutton.Text = "GetSN";
-            this.GetSNbutton.UseVisualStyleBackColor = true;
-            this.GetSNbutton.Click += new System.EventHandler(this.GetSNbuttonClick);
-            // 
-            // Versionlabel
-            // 
-            this.Versionlabel.Location = new System.Drawing.Point(6, 14);
-            this.Versionlabel.Name = "Versionlabel";
-            this.Versionlabel.Size = new System.Drawing.Size(75, 19);
-            this.Versionlabel.TabIndex = 1;
-            this.Versionlabel.Text = "BootLoader:";
-            // 
-            // Writebutton
-            // 
-            this.Writebutton.Location = new System.Drawing.Point(6, 94);
-            this.Writebutton.Name = "Writebutton";
-            this.Writebutton.Size = new System.Drawing.Size(75, 23);
-            this.Writebutton.TabIndex = 5;
-            this.Writebutton.Text = "Write";
-            this.Writebutton.UseVisualStyleBackColor = true;
-            this.Writebutton.Click += new System.EventHandler(this.WritebuttonClick);
-            // 
-            // Erasebutton
-            // 
-            this.Erasebutton.Location = new System.Drawing.Point(6, 124);
-            this.Erasebutton.Name = "Erasebutton";
-            this.Erasebutton.Size = new System.Drawing.Size(75, 23);
-            this.Erasebutton.TabIndex = 6;
-            this.Erasebutton.Text = "Erase";
-            this.Erasebutton.UseVisualStyleBackColor = true;
-            this.Erasebutton.Click += new System.EventHandler(this.ErasebuttonClick);
-            // 
-            // Checksumbutton
-            // 
-            this.Checksumbutton.Location = new System.Drawing.Point(6, 154);
-            this.Checksumbutton.Name = "Checksumbutton";
-            this.Checksumbutton.Size = new System.Drawing.Size(75, 23);
-            this.Checksumbutton.TabIndex = 7;
-            this.Checksumbutton.Text = "Checksum";
-            this.Checksumbutton.UseVisualStyleBackColor = true;
-            this.Checksumbutton.Click += new System.EventHandler(this.ChecksumbuttonClick);
-            // 
-            // LoadHexbutton
-            // 
-            this.LoadHexbutton.Location = new System.Drawing.Point(139, 93);
-            this.LoadHexbutton.Name = "LoadHexbutton";
-            this.LoadHexbutton.Size = new System.Drawing.Size(75, 23);
-            this.LoadHexbutton.TabIndex = 8;
-            this.LoadHexbutton.Text = "LoadHex";
-            this.LoadHexbutton.UseVisualStyleBackColor = true;
-            this.LoadHexbutton.Click += new System.EventHandler(this.LoadHexbuttonClick);
-            // 
-            // Activatebutton
-            // 
-            this.Activatebutton.Location = new System.Drawing.Point(139, 124);
-            this.Activatebutton.Name = "Activatebutton";
-            this.Activatebutton.Size = new System.Drawing.Size(75, 23);
-            this.Activatebutton.TabIndex = 9;
-            this.Activatebutton.Text = "Activate";
-            this.Activatebutton.UseVisualStyleBackColor = true;
-            this.Activatebutton.Click += new System.EventHandler(this.ActivatebuttonClick);
-            // 
-            // DeActivatebutton
-            // 
-            this.DeActivatebutton.Location = new System.Drawing.Point(139, 153);
-            this.DeActivatebutton.Name = "DeActivatebutton";
-            this.DeActivatebutton.Size = new System.Drawing.Size(75, 23);
-            this.DeActivatebutton.TabIndex = 10;
-            this.DeActivatebutton.Text = "DeActivate";
-            this.DeActivatebutton.UseVisualStyleBackColor = true;
-            this.DeActivatebutton.Click += new System.EventHandler(this.DeActivatebuttonClick);
-            // 
-            // Gobutton
-            // 
-            this.Gobutton.Location = new System.Drawing.Point(245, 94);
-            this.Gobutton.Name = "Gobutton";
-            this.Gobutton.Size = new System.Drawing.Size(75, 82);
-            this.Gobutton.TabIndex = 11;
-            this.Gobutton.Text = "GO";
-            this.Gobutton.UseVisualStyleBackColor = true;
-            this.Gobutton.Click += new System.EventHandler(this.GobuttonClick);
-            // 
-            // Speedlabel
-            // 
-            this.Speedlabel.Location = new System.Drawing.Point(34, 198);
-            this.Speedlabel.Name = "Speedlabel";
-            this.Speedlabel.Size = new System.Drawing.Size(47, 23);
-            this.Speedlabel.TabIndex = 12;
-            this.Speedlabel.Text = "Speed";
-            // 
-            // LoadSpeedlabel
-            // 
-            this.LoadSpeedlabel.Location = new System.Drawing.Point(139, 198);
-            this.LoadSpeedlabel.Name = "LoadSpeedlabel";
-            this.LoadSpeedlabel.Size = new System.Drawing.Size(75, 23);
-            this.LoadSpeedlabel.TabIndex = 13;
-            this.LoadSpeedlabel.Text = "Load Speed";
-            // 
-            // SpeedcomboBox
-            // 
-            this.SpeedcomboBox.FormattingEnabled = true;
-            this.SpeedcomboBox.Location = new System.Drawing.Point(6, 224);
-            this.SpeedcomboBox.Name = "SpeedcomboBox";
-            this.SpeedcomboBox.Size = new System.Drawing.Size(90, 21);
-            this.SpeedcomboBox.TabIndex = 14;
-            // 
-            // LoadSpeedcomboBox
-            // 
-            this.LoadSpeedcomboBox.FormattingEnabled = true;
-            this.LoadSpeedcomboBox.Location = new System.Drawing.Point(114, 223);
-            this.LoadSpeedcomboBox.Name = "LoadSpeedcomboBox";
-            this.LoadSpeedcomboBox.Size = new System.Drawing.Size(100, 21);
-            this.LoadSpeedcomboBox.TabIndex = 15;
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.Filter = "Hex files|*.hex";
             this.openFileDialog1.InitialDirectory = "C:\\";
             this.openFileDialog1.Title = "Open Firmware File";
-            // 
-            // Portlabel
-            // 
-            this.Portlabel.Location = new System.Drawing.Point(268, 198);
-            this.Portlabel.Name = "Portlabel";
-            this.Portlabel.Size = new System.Drawing.Size(31, 13);
-            this.Portlabel.TabIndex = 16;
-            this.Portlabel.Text = "Port";
-            // 
-            // PortcomboBox
-            // 
-            this.PortcomboBox.FormattingEnabled = true;
-            this.PortcomboBox.Location = new System.Drawing.Point(245, 223);
-            this.PortcomboBox.Name = "PortcomboBox";
-            this.PortcomboBox.Size = new System.Drawing.Size(75, 21);
-            this.PortcomboBox.TabIndex = 17;
-            // 
-            // Portbutton
-            // 
-            this.Portbutton.Location = new System.Drawing.Point(245, 35);
-            this.Portbutton.Name = "Portbutton";
-            this.Portbutton.Size = new System.Drawing.Size(75, 23);
-            this.Portbutton.TabIndex = 18;
-            this.Portbutton.Text = "Open Port";
-            this.Portbutton.UseVisualStyleBackColor = true;
-            this.Portbutton.Click += new System.EventHandler(this.PortbuttonClick);
-            // 
-            // LogtextBox
-            // 
-            this.LogtextBox.Location = new System.Drawing.Point(5, 273);
-            this.LogtextBox.Multiline = true;
-            this.LogtextBox.Name = "LogtextBox";
-            this.LogtextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.LogtextBox.Size = new System.Drawing.Size(1157, 218);
-            this.LogtextBox.TabIndex = 20;
-            this.LogtextBox.WordWrap = false;
-            // 
-            // Loglabel
-            // 
-            this.Loglabel.Location = new System.Drawing.Point(6, 248);
-            this.Loglabel.Name = "Loglabel";
-            this.Loglabel.Size = new System.Drawing.Size(43, 22);
-            this.Loglabel.TabIndex = 21;
-            this.Loglabel.Text = "Log";
-            // 
-            // ClearLogbutton
-            // 
-            this.ClearLogbutton.Location = new System.Drawing.Point(356, 221);
-            this.ClearLogbutton.Name = "ClearLogbutton";
-            this.ClearLogbutton.Size = new System.Drawing.Size(75, 23);
-            this.ClearLogbutton.TabIndex = 22;
-            this.ClearLogbutton.Text = "Clear Log";
-            this.ClearLogbutton.UseVisualStyleBackColor = true;
-            this.ClearLogbutton.Click += new System.EventHandler(this.ClearLogbuttonClick);
-            // 
-            // Versiontext
-            // 
-            this.Versiontext.Location = new System.Drawing.Point(100, 14);
-            this.Versiontext.Name = "Versiontext";
-            this.Versiontext.Size = new System.Drawing.Size(100, 15);
-            this.Versiontext.TabIndex = 23;
-            this.Versiontext.Text = "version";
-            // 
-            // SNtext
-            // 
-            this.SNtext.Location = new System.Drawing.Point(100, 40);
-            this.SNtext.Name = "SNtext";
-            this.SNtext.Size = new System.Drawing.Size(100, 19);
-            this.SNtext.TabIndex = 24;
-            this.SNtext.Text = "serial_no";
-            // 
-            // CamNoUpDown
-            // 
-            this.CamNoUpDown.AllowDrop = true;
-            this.CamNoUpDown.InterceptArrowKeys = false;
-            this.CamNoUpDown.Location = new System.Drawing.Point(365, 38);
-            this.CamNoUpDown.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.CamNoUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.CamNoUpDown.Name = "CamNoUpDown";
-            this.CamNoUpDown.Size = new System.Drawing.Size(66, 20);
-            this.CamNoUpDown.TabIndex = 25;
-            this.CamNoUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // CamNolabel
-            // 
-            this.CamNolabel.Location = new System.Drawing.Point(365, 14);
-            this.CamNolabel.Name = "CamNolabel";
-            this.CamNolabel.Size = new System.Drawing.Size(52, 18);
-            this.CamNolabel.TabIndex = 26;
-            this.CamNolabel.Text = "Camera";
-            // 
-            // Abortbutton
-            // 
-            this.Abortbutton.Location = new System.Drawing.Point(356, 94);
-            this.Abortbutton.Name = "Abortbutton";
-            this.Abortbutton.Size = new System.Drawing.Size(75, 42);
-            this.Abortbutton.TabIndex = 27;
-            this.Abortbutton.Text = "Abort";
-            this.Abortbutton.UseVisualStyleBackColor = true;
-            this.Abortbutton.Click += new System.EventHandler(this.AbortbuttonClick);
-            // 
-            // ResetMemorybutton
-            // 
-            this.ResetMemorybutton.Location = new System.Drawing.Point(356, 143);
-            this.ResetMemorybutton.Name = "ResetMemorybutton";
-            this.ResetMemorybutton.Size = new System.Drawing.Size(75, 33);
-            this.ResetMemorybutton.TabIndex = 28;
-            this.ResetMemorybutton.Text = "reset mem";
-            this.ResetMemorybutton.UseVisualStyleBackColor = true;
-            this.ResetMemorybutton.Click += new System.EventHandler(this.ResetMemorybuttonClick);
-            // 
-            // tC_Main
-            // 
-            this.tC_Main.Controls.Add(this.camControl);
-            this.tC_Main.Controls.Add(this.firmwareUp);
-            this.tC_Main.Controls.Add(this.tP_Settings);
-            this.tC_Main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tC_Main.Location = new System.Drawing.Point(0, 24);
-            this.tC_Main.Name = "tC_Main";
-            this.tC_Main.SelectedIndex = 0;
-            this.tC_Main.Size = new System.Drawing.Size(1659, 905);
-            this.tC_Main.TabIndex = 29;
-            // 
-            // camControl
-            // 
-            this.camControl.Controls.Add(this.l_Version);
-            this.camControl.Location = new System.Drawing.Point(4, 22);
-            this.camControl.Name = "camControl";
-            this.camControl.Padding = new System.Windows.Forms.Padding(3);
-            this.camControl.Size = new System.Drawing.Size(1651, 879);
-            this.camControl.TabIndex = 1;
-            this.camControl.Text = "Control";
-            this.camControl.UseVisualStyleBackColor = true;
-            // 
-            // l_Version
-            // 
-            this.l_Version.AutoSize = true;
-            this.l_Version.Location = new System.Drawing.Point(1508, 861);
-            this.l_Version.Name = "l_Version";
-            this.l_Version.Size = new System.Drawing.Size(87, 13);
-            this.l_Version.TabIndex = 0;
-            this.l_Version.Text = "SSUtility Version:";
-            // 
-            // firmwareUp
-            // 
-            this.firmwareUp.Controls.Add(this.Versionlabel);
-            this.firmwareUp.Controls.Add(this.ResetMemorybutton);
-            this.firmwareUp.Controls.Add(this.GetSNbutton);
-            this.firmwareUp.Controls.Add(this.Abortbutton);
-            this.firmwareUp.Controls.Add(this.Writebutton);
-            this.firmwareUp.Controls.Add(this.CamNolabel);
-            this.firmwareUp.Controls.Add(this.Erasebutton);
-            this.firmwareUp.Controls.Add(this.CamNoUpDown);
-            this.firmwareUp.Controls.Add(this.Checksumbutton);
-            this.firmwareUp.Controls.Add(this.SNtext);
-            this.firmwareUp.Controls.Add(this.LoadHexbutton);
-            this.firmwareUp.Controls.Add(this.Versiontext);
-            this.firmwareUp.Controls.Add(this.Activatebutton);
-            this.firmwareUp.Controls.Add(this.ClearLogbutton);
-            this.firmwareUp.Controls.Add(this.DeActivatebutton);
-            this.firmwareUp.Controls.Add(this.Loglabel);
-            this.firmwareUp.Controls.Add(this.Gobutton);
-            this.firmwareUp.Controls.Add(this.LogtextBox);
-            this.firmwareUp.Controls.Add(this.Speedlabel);
-            this.firmwareUp.Controls.Add(this.LoadSpeedlabel);
-            this.firmwareUp.Controls.Add(this.Portbutton);
-            this.firmwareUp.Controls.Add(this.SpeedcomboBox);
-            this.firmwareUp.Controls.Add(this.PortcomboBox);
-            this.firmwareUp.Controls.Add(this.LoadSpeedcomboBox);
-            this.firmwareUp.Controls.Add(this.Portlabel);
-            this.firmwareUp.Location = new System.Drawing.Point(4, 22);
-            this.firmwareUp.Name = "firmwareUp";
-            this.firmwareUp.Padding = new System.Windows.Forms.Padding(3);
-            this.firmwareUp.Size = new System.Drawing.Size(1651, 879);
-            this.firmwareUp.TabIndex = 0;
-            this.firmwareUp.Text = "Firmware Upgrade";
-            this.firmwareUp.UseVisualStyleBackColor = true;
-            // 
-            // tP_Settings
-            // 
-            this.tP_Settings.Controls.Add(this.groupBox2);
-            this.tP_Settings.Controls.Add(this.groupBox1);
-            this.tP_Settings.Controls.Add(this.gB_Paths);
-            this.tP_Settings.Controls.Add(this.b_Settings_Default);
-            this.tP_Settings.Controls.Add(this.b_Settings_Apply);
-            this.tP_Settings.Location = new System.Drawing.Point(4, 22);
-            this.tP_Settings.Name = "tP_Settings";
-            this.tP_Settings.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Settings.Size = new System.Drawing.Size(1651, 879);
-            this.tP_Settings.TabIndex = 1;
-            this.tP_Settings.Text = "Settings";
-            this.tP_Settings.UseVisualStyleBackColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.cB_Other_Rate);
-            this.groupBox2.Controls.Add(this.l_Other);
-            this.groupBox2.Controls.Add(this.check_Other_AutoPlay);
-            this.groupBox2.Controls.Add(this.l_Other_Rate);
-            this.groupBox2.Controls.Add(this.check_Other_Subnet);
-            this.groupBox2.Location = new System.Drawing.Point(885, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(428, 194);
-            this.groupBox2.TabIndex = 29;
-            this.groupBox2.TabStop = false;
-            // 
-            // cB_Other_Rate
-            // 
-            this.cB_Other_Rate.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_Other_Rate.FormattingEnabled = true;
-            this.cB_Other_Rate.Items.AddRange(new object[] {
-            "500",
-            "1000",
-            "2000",
-            "5000",
-            "10000"});
-            this.cB_Other_Rate.Location = new System.Drawing.Point(166, 94);
-            this.cB_Other_Rate.Name = "cB_Other_Rate";
-            this.cB_Other_Rate.Size = new System.Drawing.Size(114, 21);
-            this.cB_Other_Rate.TabIndex = 28;
-            this.cB_Other_Rate.TextChanged += new System.EventHandler(this.cB_Other_Rate_TextChanged);
-            // 
-            // l_Other
-            // 
-            this.l_Other.AutoSize = true;
-            this.l_Other.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Other.Location = new System.Drawing.Point(6, 16);
-            this.l_Other.Name = "l_Other";
-            this.l_Other.Size = new System.Drawing.Size(126, 20);
-            this.l_Other.TabIndex = 31;
-            this.l_Other.Text = "Other Settings";
-            // 
-            // check_Other_AutoPlay
-            // 
-            this.check_Other_AutoPlay.Location = new System.Drawing.Point(6, 45);
-            this.check_Other_AutoPlay.Name = "check_Other_AutoPlay";
-            this.check_Other_AutoPlay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Other_AutoPlay.Size = new System.Drawing.Size(174, 17);
-            this.check_Other_AutoPlay.TabIndex = 30;
-            this.check_Other_AutoPlay.Text = "Autoplay Videos on Launch";
-            this.check_Other_AutoPlay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.check_Other_AutoPlay.UseVisualStyleBackColor = true;
-            this.check_Other_AutoPlay.CheckedChanged += new System.EventHandler(this.check_Other_AutoPlay_CheckChanged);
-            // 
-            // l_Other_Rate
-            // 
-            this.l_Other_Rate.AutoSize = true;
-            this.l_Other_Rate.Location = new System.Drawing.Point(7, 97);
-            this.l_Other_Rate.Name = "l_Other_Rate";
-            this.l_Other_Rate.Size = new System.Drawing.Size(113, 13);
-            this.l_Other_Rate.TabIndex = 27;
-            this.l_Other_Rate.Text = "Info Refresh Rate (ms)";
-            // 
-            // check_Other_Subnet
-            // 
-            this.check_Other_Subnet.Location = new System.Drawing.Point(6, 68);
-            this.check_Other_Subnet.Name = "check_Other_Subnet";
-            this.check_Other_Subnet.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Other_Subnet.Size = new System.Drawing.Size(174, 17);
-            this.check_Other_Subnet.TabIndex = 0;
-            this.check_Other_Subnet.Text = "Hide Subnet Notification";
-            this.check_Other_Subnet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.check_Other_Subnet.UseVisualStyleBackColor = true;
-            this.check_Other_Subnet.CheckedChanged += new System.EventHandler(this.check_Not_Subnet_CheckedChanged);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.cB_Rec_Quality);
-            this.groupBox1.Controls.Add(this.l_Rec_Quality);
-            this.groupBox1.Controls.Add(this.tB_Rec_scFileN);
-            this.groupBox1.Controls.Add(this.l_Rec_sCFileN);
-            this.groupBox1.Controls.Add(this.cB_Rec_FPS);
-            this.groupBox1.Controls.Add(this.tB_Rec_vFileN);
-            this.groupBox1.Controls.Add(this.l_Rec_vFileN);
-            this.groupBox1.Controls.Add(this.l_Rec);
-            this.groupBox1.Controls.Add(this.l_Rec_FPS);
-            this.groupBox1.Location = new System.Drawing.Point(451, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(428, 194);
-            this.groupBox1.TabIndex = 28;
-            this.groupBox1.TabStop = false;
-            // 
-            // cB_Rec_Quality
-            // 
-            this.cB_Rec_Quality.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_Rec_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.cB_Rec_Quality.FormattingEnabled = true;
-            this.cB_Rec_Quality.Items.AddRange(new object[] {
-            "50",
-            "70",
-            "100"});
-            this.cB_Rec_Quality.Location = new System.Drawing.Point(123, 69);
-            this.cB_Rec_Quality.Name = "cB_Rec_Quality";
-            this.cB_Rec_Quality.Size = new System.Drawing.Size(114, 21);
-            this.cB_Rec_Quality.TabIndex = 26;
-            this.cB_Rec_Quality.TextChanged += new System.EventHandler(this.cB_Rec_Quality_TextChanged);
-            // 
-            // l_Rec_Quality
-            // 
-            this.l_Rec_Quality.AutoSize = true;
-            this.l_Rec_Quality.Location = new System.Drawing.Point(7, 73);
-            this.l_Rec_Quality.Name = "l_Rec_Quality";
-            this.l_Rec_Quality.Size = new System.Drawing.Size(72, 13);
-            this.l_Rec_Quality.TabIndex = 25;
-            this.l_Rec_Quality.Text = "Quality(1-100)";
-            // 
-            // tB_Rec_scFileN
-            // 
-            this.tB_Rec_scFileN.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Rec_scFileN.Enabled = false;
-            this.tB_Rec_scFileN.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Rec_scFileN.Location = new System.Drawing.Point(123, 126);
-            this.tB_Rec_scFileN.Name = "tB_Rec_scFileN";
-            this.tB_Rec_scFileN.Size = new System.Drawing.Size(188, 20);
-            this.tB_Rec_scFileN.TabIndex = 24;
-            this.tB_Rec_scFileN.TextChanged += new System.EventHandler(this.tB_Rec_sCFileN_TextChanged);
-            // 
-            // l_Rec_sCFileN
-            // 
-            this.l_Rec_sCFileN.AutoSize = true;
-            this.l_Rec_sCFileN.Location = new System.Drawing.Point(7, 129);
-            this.l_Rec_sCFileN.Name = "l_Rec_sCFileN";
-            this.l_Rec_sCFileN.Size = new System.Drawing.Size(102, 13);
-            this.l_Rec_sCFileN.TabIndex = 23;
-            this.l_Rec_sCFileN.Text = "Snapshot File Name";
-            // 
-            // cB_Rec_FPS
-            // 
-            this.cB_Rec_FPS.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_Rec_FPS.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.cB_Rec_FPS.FormattingEnabled = true;
-            this.cB_Rec_FPS.Items.AddRange(new object[] {
-            "15",
-            "24",
-            "30",
-            "45",
-            "60"});
-            this.cB_Rec_FPS.Location = new System.Drawing.Point(123, 42);
-            this.cB_Rec_FPS.Name = "cB_Rec_FPS";
-            this.cB_Rec_FPS.Size = new System.Drawing.Size(114, 21);
-            this.cB_Rec_FPS.TabIndex = 16;
-            this.cB_Rec_FPS.TextChanged += new System.EventHandler(this.cB_Rec_FPS_TextChanged);
-            // 
-            // tB_Rec_vFileN
-            // 
-            this.tB_Rec_vFileN.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Rec_vFileN.Enabled = false;
-            this.tB_Rec_vFileN.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Rec_vFileN.Location = new System.Drawing.Point(123, 97);
-            this.tB_Rec_vFileN.Name = "tB_Rec_vFileN";
-            this.tB_Rec_vFileN.Size = new System.Drawing.Size(188, 20);
-            this.tB_Rec_vFileN.TabIndex = 22;
-            this.tB_Rec_vFileN.TextChanged += new System.EventHandler(this.tB_Rec_vFileN_TextChanged);
-            // 
-            // l_Rec_vFileN
-            // 
-            this.l_Rec_vFileN.AutoSize = true;
-            this.l_Rec_vFileN.Location = new System.Drawing.Point(7, 100);
-            this.l_Rec_vFileN.Name = "l_Rec_vFileN";
-            this.l_Rec_vFileN.Size = new System.Drawing.Size(84, 13);
-            this.l_Rec_vFileN.TabIndex = 21;
-            this.l_Rec_vFileN.Text = "Video File Name";
-            // 
-            // l_Rec
-            // 
-            this.l_Rec.AutoSize = true;
-            this.l_Rec.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Rec.Location = new System.Drawing.Point(6, 16);
-            this.l_Rec.Name = "l_Rec";
-            this.l_Rec.Size = new System.Drawing.Size(91, 20);
-            this.l_Rec.TabIndex = 12;
-            this.l_Rec.Text = "Recording";
-            // 
-            // l_Rec_FPS
-            // 
-            this.l_Rec_FPS.AutoSize = true;
-            this.l_Rec_FPS.Location = new System.Drawing.Point(7, 47);
-            this.l_Rec_FPS.Name = "l_Rec_FPS";
-            this.l_Rec_FPS.Size = new System.Drawing.Size(54, 13);
-            this.l_Rec_FPS.TabIndex = 2;
-            this.l_Rec_FPS.Text = "Framerate";
-            // 
-            // gB_Paths
-            // 
-            this.gB_Paths.Controls.Add(this.label1);
-            this.gB_Paths.Controls.Add(this.check_Paths_Manual);
-            this.gB_Paths.Controls.Add(this.l_Paths_sCCheck);
-            this.gB_Paths.Controls.Add(this.l_Paths_vCheck);
-            this.gB_Paths.Controls.Add(this.b_Paths_vBrowse);
-            this.gB_Paths.Controls.Add(this.tB_Paths_vFolder);
-            this.gB_Paths.Controls.Add(this.l_Paths_vFolder);
-            this.gB_Paths.Controls.Add(this.tB_Paths_sCFolder);
-            this.gB_Paths.Controls.Add(this.b_Paths_sCBrowse);
-            this.gB_Paths.Controls.Add(this.l_Paths);
-            this.gB_Paths.Controls.Add(this.l_Paths_sCFolder);
-            this.gB_Paths.Location = new System.Drawing.Point(17, 6);
-            this.gB_Paths.Name = "gB_Paths";
-            this.gB_Paths.Size = new System.Drawing.Size(428, 194);
-            this.gB_Paths.TabIndex = 27;
-            this.gB_Paths.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(115, 166);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(307, 13);
-            this.label1.TabIndex = 27;
-            this.label1.Text = "Automatic paths are Documents/SSUtility/Saved/[CAMERA IP]";
-            // 
-            // check_Paths_Manual
-            // 
-            this.check_Paths_Manual.Checked = true;
-            this.check_Paths_Manual.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.check_Paths_Manual.Location = new System.Drawing.Point(13, 45);
-            this.check_Paths_Manual.Name = "check_Paths_Manual";
-            this.check_Paths_Manual.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Paths_Manual.Size = new System.Drawing.Size(119, 21);
-            this.check_Paths_Manual.TabIndex = 32;
-            this.check_Paths_Manual.Text = "Automatic Paths";
-            this.check_Paths_Manual.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.check_Paths_Manual.UseVisualStyleBackColor = true;
-            this.check_Paths_Manual.CheckedChanged += new System.EventHandler(this.check_Paths_Manual_CheckedChanged);
-            // 
-            // l_Paths_sCCheck
-            // 
-            this.l_Paths_sCCheck.AutoSize = true;
-            this.l_Paths_sCCheck.Location = new System.Drawing.Point(380, 80);
-            this.l_Paths_sCCheck.Name = "l_Paths_sCCheck";
-            this.l_Paths_sCCheck.Size = new System.Drawing.Size(0, 13);
-            this.l_Paths_sCCheck.TabIndex = 16;
-            // 
-            // l_Paths_vCheck
-            // 
-            this.l_Paths_vCheck.AutoSize = true;
-            this.l_Paths_vCheck.Location = new System.Drawing.Point(380, 113);
-            this.l_Paths_vCheck.Name = "l_Paths_vCheck";
-            this.l_Paths_vCheck.Size = new System.Drawing.Size(0, 13);
-            this.l_Paths_vCheck.TabIndex = 20;
-            // 
-            // b_Paths_vBrowse
-            // 
-            this.b_Paths_vBrowse.Enabled = false;
-            this.b_Paths_vBrowse.Location = new System.Drawing.Point(313, 108);
-            this.b_Paths_vBrowse.Name = "b_Paths_vBrowse";
-            this.b_Paths_vBrowse.Size = new System.Drawing.Size(61, 22);
-            this.b_Paths_vBrowse.TabIndex = 19;
-            this.b_Paths_vBrowse.Text = "Browse";
-            this.b_Paths_vBrowse.UseVisualStyleBackColor = true;
-            this.b_Paths_vBrowse.Click += new System.EventHandler(this.b_Paths_vBrowse_Click);
-            // 
-            // tB_Paths_vFolder
-            // 
-            this.tB_Paths_vFolder.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Paths_vFolder.Enabled = false;
-            this.tB_Paths_vFolder.Location = new System.Drawing.Point(119, 110);
-            this.tB_Paths_vFolder.Name = "tB_Paths_vFolder";
-            this.tB_Paths_vFolder.Size = new System.Drawing.Size(188, 20);
-            this.tB_Paths_vFolder.TabIndex = 18;
-            this.tB_Paths_vFolder.TextChanged += new System.EventHandler(this.OnFinishedTypingVFolder);
-            // 
-            // l_Paths_vFolder
-            // 
-            this.l_Paths_vFolder.AutoSize = true;
-            this.l_Paths_vFolder.Location = new System.Drawing.Point(12, 113);
-            this.l_Paths_vFolder.Name = "l_Paths_vFolder";
-            this.l_Paths_vFolder.Size = new System.Drawing.Size(101, 13);
-            this.l_Paths_vFolder.TabIndex = 17;
-            this.l_Paths_vFolder.Text = "Video Output Folder";
-            // 
-            // tB_Paths_sCFolder
-            // 
-            this.tB_Paths_sCFolder.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Paths_sCFolder.Enabled = false;
-            this.tB_Paths_sCFolder.Location = new System.Drawing.Point(119, 77);
-            this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
-            this.tB_Paths_sCFolder.Size = new System.Drawing.Size(188, 20);
-            this.tB_Paths_sCFolder.TabIndex = 16;
-            this.tB_Paths_sCFolder.TextChanged += new System.EventHandler(this.OnFinishedTypingScFolder);
-            // 
-            // b_Paths_sCBrowse
-            // 
-            this.b_Paths_sCBrowse.Enabled = false;
-            this.b_Paths_sCBrowse.Location = new System.Drawing.Point(313, 75);
-            this.b_Paths_sCBrowse.Name = "b_Paths_sCBrowse";
-            this.b_Paths_sCBrowse.Size = new System.Drawing.Size(61, 22);
-            this.b_Paths_sCBrowse.TabIndex = 13;
-            this.b_Paths_sCBrowse.Text = "Browse";
-            this.b_Paths_sCBrowse.UseVisualStyleBackColor = true;
-            this.b_Paths_sCBrowse.Click += new System.EventHandler(this.b_Paths_sCBrowse_Click);
-            // 
-            // l_Paths
-            // 
-            this.l_Paths.AutoSize = true;
-            this.l_Paths.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Paths.Location = new System.Drawing.Point(6, 16);
-            this.l_Paths.Name = "l_Paths";
-            this.l_Paths.Size = new System.Drawing.Size(55, 20);
-            this.l_Paths.TabIndex = 12;
-            this.l_Paths.Text = "Paths";
-            // 
-            // l_Paths_sCFolder
-            // 
-            this.l_Paths_sCFolder.AutoSize = true;
-            this.l_Paths_sCFolder.Location = new System.Drawing.Point(12, 80);
-            this.l_Paths_sCFolder.Name = "l_Paths_sCFolder";
-            this.l_Paths_sCFolder.Size = new System.Drawing.Size(84, 13);
-            this.l_Paths_sCFolder.TabIndex = 2;
-            this.l_Paths_sCFolder.Text = "Snapshot Folder";
-            // 
-            // b_Settings_Default
-            // 
-            this.b_Settings_Default.Location = new System.Drawing.Point(1156, 206);
-            this.b_Settings_Default.Name = "b_Settings_Default";
-            this.b_Settings_Default.Size = new System.Drawing.Size(75, 23);
-            this.b_Settings_Default.TabIndex = 14;
-            this.b_Settings_Default.Text = "Default All";
-            this.b_Settings_Default.UseVisualStyleBackColor = true;
-            this.b_Settings_Default.Click += new System.EventHandler(this.b_Settings_Default_Click);
-            // 
-            // b_Settings_Apply
-            // 
-            this.b_Settings_Apply.Location = new System.Drawing.Point(1237, 206);
-            this.b_Settings_Apply.Name = "b_Settings_Apply";
-            this.b_Settings_Apply.Size = new System.Drawing.Size(75, 23);
-            this.b_Settings_Apply.TabIndex = 15;
-            this.b_Settings_Apply.Text = "Save All";
-            this.b_Settings_Apply.UseVisualStyleBackColor = true;
-            this.b_Settings_Apply.Click += new System.EventHandler(this.b_Settings_Apply_Click);
             // 
             // statusStrip1
             // 
@@ -896,35 +235,35 @@ namespace SSLUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(164, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(164, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Lite
             // 
             this.Menu_Window_Lite.Name = "Menu_Window_Lite";
-            this.Menu_Window_Lite.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Lite.Size = new System.Drawing.Size(164, 22);
             this.Menu_Window_Lite.Text = "Lite Mode";
             this.Menu_Window_Lite.Click += new System.EventHandler(this.Menu_Window_Lite_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(164, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Settings
             // 
             this.Menu_Window_Settings.Name = "Menu_Window_Settings";
-            this.Menu_Window_Settings.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Settings.Size = new System.Drawing.Size(164, 22);
             this.Menu_Window_Settings.Text = "Settings";
             this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
             // 
@@ -958,6 +297,667 @@ namespace SSLUtility2 {
             this.Menu_FTM_Open.Text = "Open...";
             this.Menu_FTM_Open.Click += new System.EventHandler(this.Menu_FTM_Open_Click);
             // 
+            // tP_Settings
+            // 
+            this.tP_Settings.Controls.Add(this.groupBox2);
+            this.tP_Settings.Controls.Add(this.groupBox1);
+            this.tP_Settings.Controls.Add(this.gB_Paths);
+            this.tP_Settings.Controls.Add(this.b_Settings_Default);
+            this.tP_Settings.Controls.Add(this.b_Settings_Apply);
+            this.tP_Settings.Location = new System.Drawing.Point(4, 22);
+            this.tP_Settings.Name = "tP_Settings";
+            this.tP_Settings.Padding = new System.Windows.Forms.Padding(3);
+            this.tP_Settings.Size = new System.Drawing.Size(1651, 879);
+            this.tP_Settings.TabIndex = 1;
+            this.tP_Settings.Text = "Settings";
+            this.tP_Settings.UseVisualStyleBackColor = true;
+            // 
+            // b_Settings_Apply
+            // 
+            this.b_Settings_Apply.Location = new System.Drawing.Point(1237, 206);
+            this.b_Settings_Apply.Name = "b_Settings_Apply";
+            this.b_Settings_Apply.Size = new System.Drawing.Size(75, 23);
+            this.b_Settings_Apply.TabIndex = 15;
+            this.b_Settings_Apply.Text = "Save All";
+            this.b_Settings_Apply.UseVisualStyleBackColor = true;
+            this.b_Settings_Apply.Click += new System.EventHandler(this.b_Settings_Apply_Click);
+            // 
+            // b_Settings_Default
+            // 
+            this.b_Settings_Default.Location = new System.Drawing.Point(1156, 206);
+            this.b_Settings_Default.Name = "b_Settings_Default";
+            this.b_Settings_Default.Size = new System.Drawing.Size(75, 23);
+            this.b_Settings_Default.TabIndex = 14;
+            this.b_Settings_Default.Text = "Default All";
+            this.b_Settings_Default.UseVisualStyleBackColor = true;
+            this.b_Settings_Default.Click += new System.EventHandler(this.b_Settings_Default_Click);
+            // 
+            // gB_Paths
+            // 
+            this.gB_Paths.Controls.Add(this.label1);
+            this.gB_Paths.Controls.Add(this.check_Paths_Manual);
+            this.gB_Paths.Controls.Add(this.l_Paths_sCCheck);
+            this.gB_Paths.Controls.Add(this.l_Paths_vCheck);
+            this.gB_Paths.Controls.Add(this.b_Paths_vBrowse);
+            this.gB_Paths.Controls.Add(this.tB_Paths_vFolder);
+            this.gB_Paths.Controls.Add(this.l_Paths_vFolder);
+            this.gB_Paths.Controls.Add(this.tB_Paths_sCFolder);
+            this.gB_Paths.Controls.Add(this.b_Paths_sCBrowse);
+            this.gB_Paths.Controls.Add(this.l_Paths);
+            this.gB_Paths.Controls.Add(this.l_Paths_sCFolder);
+            this.gB_Paths.Location = new System.Drawing.Point(17, 6);
+            this.gB_Paths.Name = "gB_Paths";
+            this.gB_Paths.Size = new System.Drawing.Size(428, 194);
+            this.gB_Paths.TabIndex = 27;
+            this.gB_Paths.TabStop = false;
+            // 
+            // l_Paths_sCFolder
+            // 
+            this.l_Paths_sCFolder.AutoSize = true;
+            this.l_Paths_sCFolder.Location = new System.Drawing.Point(12, 80);
+            this.l_Paths_sCFolder.Name = "l_Paths_sCFolder";
+            this.l_Paths_sCFolder.Size = new System.Drawing.Size(84, 13);
+            this.l_Paths_sCFolder.TabIndex = 2;
+            this.l_Paths_sCFolder.Text = "Snapshot Folder";
+            // 
+            // l_Paths
+            // 
+            this.l_Paths.AutoSize = true;
+            this.l_Paths.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Paths.Location = new System.Drawing.Point(6, 16);
+            this.l_Paths.Name = "l_Paths";
+            this.l_Paths.Size = new System.Drawing.Size(55, 20);
+            this.l_Paths.TabIndex = 12;
+            this.l_Paths.Text = "Paths";
+            // 
+            // b_Paths_sCBrowse
+            // 
+            this.b_Paths_sCBrowse.Enabled = false;
+            this.b_Paths_sCBrowse.Location = new System.Drawing.Point(313, 75);
+            this.b_Paths_sCBrowse.Name = "b_Paths_sCBrowse";
+            this.b_Paths_sCBrowse.Size = new System.Drawing.Size(61, 22);
+            this.b_Paths_sCBrowse.TabIndex = 13;
+            this.b_Paths_sCBrowse.Text = "Browse";
+            this.b_Paths_sCBrowse.UseVisualStyleBackColor = true;
+            this.b_Paths_sCBrowse.Click += new System.EventHandler(this.b_Paths_sCBrowse_Click);
+            // 
+            // tB_Paths_sCFolder
+            // 
+            this.tB_Paths_sCFolder.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Paths_sCFolder.Enabled = false;
+            this.tB_Paths_sCFolder.Location = new System.Drawing.Point(119, 77);
+            this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
+            this.tB_Paths_sCFolder.Size = new System.Drawing.Size(188, 20);
+            this.tB_Paths_sCFolder.TabIndex = 16;
+            this.tB_Paths_sCFolder.TextChanged += new System.EventHandler(this.OnFinishedTypingScFolder);
+            // 
+            // l_Paths_vFolder
+            // 
+            this.l_Paths_vFolder.AutoSize = true;
+            this.l_Paths_vFolder.Location = new System.Drawing.Point(12, 113);
+            this.l_Paths_vFolder.Name = "l_Paths_vFolder";
+            this.l_Paths_vFolder.Size = new System.Drawing.Size(101, 13);
+            this.l_Paths_vFolder.TabIndex = 17;
+            this.l_Paths_vFolder.Text = "Video Output Folder";
+            // 
+            // tB_Paths_vFolder
+            // 
+            this.tB_Paths_vFolder.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Paths_vFolder.Enabled = false;
+            this.tB_Paths_vFolder.Location = new System.Drawing.Point(119, 110);
+            this.tB_Paths_vFolder.Name = "tB_Paths_vFolder";
+            this.tB_Paths_vFolder.Size = new System.Drawing.Size(188, 20);
+            this.tB_Paths_vFolder.TabIndex = 18;
+            this.tB_Paths_vFolder.TextChanged += new System.EventHandler(this.OnFinishedTypingVFolder);
+            // 
+            // b_Paths_vBrowse
+            // 
+            this.b_Paths_vBrowse.Enabled = false;
+            this.b_Paths_vBrowse.Location = new System.Drawing.Point(313, 108);
+            this.b_Paths_vBrowse.Name = "b_Paths_vBrowse";
+            this.b_Paths_vBrowse.Size = new System.Drawing.Size(61, 22);
+            this.b_Paths_vBrowse.TabIndex = 19;
+            this.b_Paths_vBrowse.Text = "Browse";
+            this.b_Paths_vBrowse.UseVisualStyleBackColor = true;
+            this.b_Paths_vBrowse.Click += new System.EventHandler(this.b_Paths_vBrowse_Click);
+            // 
+            // l_Paths_vCheck
+            // 
+            this.l_Paths_vCheck.AutoSize = true;
+            this.l_Paths_vCheck.Location = new System.Drawing.Point(380, 113);
+            this.l_Paths_vCheck.Name = "l_Paths_vCheck";
+            this.l_Paths_vCheck.Size = new System.Drawing.Size(0, 13);
+            this.l_Paths_vCheck.TabIndex = 20;
+            // 
+            // l_Paths_sCCheck
+            // 
+            this.l_Paths_sCCheck.AutoSize = true;
+            this.l_Paths_sCCheck.Location = new System.Drawing.Point(380, 80);
+            this.l_Paths_sCCheck.Name = "l_Paths_sCCheck";
+            this.l_Paths_sCCheck.Size = new System.Drawing.Size(0, 13);
+            this.l_Paths_sCCheck.TabIndex = 16;
+            // 
+            // check_Paths_Manual
+            // 
+            this.check_Paths_Manual.Checked = true;
+            this.check_Paths_Manual.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.check_Paths_Manual.Location = new System.Drawing.Point(13, 45);
+            this.check_Paths_Manual.Name = "check_Paths_Manual";
+            this.check_Paths_Manual.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Paths_Manual.Size = new System.Drawing.Size(119, 21);
+            this.check_Paths_Manual.TabIndex = 32;
+            this.check_Paths_Manual.Text = "Automatic Paths";
+            this.check_Paths_Manual.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.check_Paths_Manual.UseVisualStyleBackColor = true;
+            this.check_Paths_Manual.CheckedChanged += new System.EventHandler(this.check_Paths_Manual_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(115, 166);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(307, 13);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "Automatic paths are Documents/SSUtility/Saved/[CAMERA IP]";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cB_Rec_Quality);
+            this.groupBox1.Controls.Add(this.l_Rec_Quality);
+            this.groupBox1.Controls.Add(this.tB_Rec_scFileN);
+            this.groupBox1.Controls.Add(this.l_Rec_sCFileN);
+            this.groupBox1.Controls.Add(this.cB_Rec_FPS);
+            this.groupBox1.Controls.Add(this.tB_Rec_vFileN);
+            this.groupBox1.Controls.Add(this.l_Rec_vFileN);
+            this.groupBox1.Controls.Add(this.l_Rec);
+            this.groupBox1.Controls.Add(this.l_Rec_FPS);
+            this.groupBox1.Location = new System.Drawing.Point(451, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(428, 194);
+            this.groupBox1.TabIndex = 28;
+            this.groupBox1.TabStop = false;
+            // 
+            // l_Rec_FPS
+            // 
+            this.l_Rec_FPS.AutoSize = true;
+            this.l_Rec_FPS.Location = new System.Drawing.Point(7, 47);
+            this.l_Rec_FPS.Name = "l_Rec_FPS";
+            this.l_Rec_FPS.Size = new System.Drawing.Size(54, 13);
+            this.l_Rec_FPS.TabIndex = 2;
+            this.l_Rec_FPS.Text = "Framerate";
+            // 
+            // l_Rec
+            // 
+            this.l_Rec.AutoSize = true;
+            this.l_Rec.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Rec.Location = new System.Drawing.Point(6, 16);
+            this.l_Rec.Name = "l_Rec";
+            this.l_Rec.Size = new System.Drawing.Size(91, 20);
+            this.l_Rec.TabIndex = 12;
+            this.l_Rec.Text = "Recording";
+            // 
+            // l_Rec_vFileN
+            // 
+            this.l_Rec_vFileN.AutoSize = true;
+            this.l_Rec_vFileN.Location = new System.Drawing.Point(7, 100);
+            this.l_Rec_vFileN.Name = "l_Rec_vFileN";
+            this.l_Rec_vFileN.Size = new System.Drawing.Size(84, 13);
+            this.l_Rec_vFileN.TabIndex = 21;
+            this.l_Rec_vFileN.Text = "Video File Name";
+            // 
+            // tB_Rec_vFileN
+            // 
+            this.tB_Rec_vFileN.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Rec_vFileN.Enabled = false;
+            this.tB_Rec_vFileN.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Rec_vFileN.Location = new System.Drawing.Point(123, 97);
+            this.tB_Rec_vFileN.Name = "tB_Rec_vFileN";
+            this.tB_Rec_vFileN.Size = new System.Drawing.Size(188, 20);
+            this.tB_Rec_vFileN.TabIndex = 22;
+            this.tB_Rec_vFileN.TextChanged += new System.EventHandler(this.tB_Rec_vFileN_TextChanged);
+            // 
+            // cB_Rec_FPS
+            // 
+            this.cB_Rec_FPS.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_Rec_FPS.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.cB_Rec_FPS.FormattingEnabled = true;
+            this.cB_Rec_FPS.Items.AddRange(new object[] {
+            "15",
+            "24",
+            "30",
+            "45",
+            "60"});
+            this.cB_Rec_FPS.Location = new System.Drawing.Point(123, 42);
+            this.cB_Rec_FPS.Name = "cB_Rec_FPS";
+            this.cB_Rec_FPS.Size = new System.Drawing.Size(114, 21);
+            this.cB_Rec_FPS.TabIndex = 16;
+            this.cB_Rec_FPS.TextChanged += new System.EventHandler(this.cB_Rec_FPS_TextChanged);
+            // 
+            // l_Rec_sCFileN
+            // 
+            this.l_Rec_sCFileN.AutoSize = true;
+            this.l_Rec_sCFileN.Location = new System.Drawing.Point(7, 129);
+            this.l_Rec_sCFileN.Name = "l_Rec_sCFileN";
+            this.l_Rec_sCFileN.Size = new System.Drawing.Size(102, 13);
+            this.l_Rec_sCFileN.TabIndex = 23;
+            this.l_Rec_sCFileN.Text = "Snapshot File Name";
+            // 
+            // tB_Rec_scFileN
+            // 
+            this.tB_Rec_scFileN.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Rec_scFileN.Enabled = false;
+            this.tB_Rec_scFileN.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Rec_scFileN.Location = new System.Drawing.Point(123, 126);
+            this.tB_Rec_scFileN.Name = "tB_Rec_scFileN";
+            this.tB_Rec_scFileN.Size = new System.Drawing.Size(188, 20);
+            this.tB_Rec_scFileN.TabIndex = 24;
+            this.tB_Rec_scFileN.TextChanged += new System.EventHandler(this.tB_Rec_sCFileN_TextChanged);
+            // 
+            // l_Rec_Quality
+            // 
+            this.l_Rec_Quality.AutoSize = true;
+            this.l_Rec_Quality.Location = new System.Drawing.Point(7, 73);
+            this.l_Rec_Quality.Name = "l_Rec_Quality";
+            this.l_Rec_Quality.Size = new System.Drawing.Size(72, 13);
+            this.l_Rec_Quality.TabIndex = 25;
+            this.l_Rec_Quality.Text = "Quality(1-100)";
+            // 
+            // cB_Rec_Quality
+            // 
+            this.cB_Rec_Quality.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_Rec_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.cB_Rec_Quality.FormattingEnabled = true;
+            this.cB_Rec_Quality.Items.AddRange(new object[] {
+            "50",
+            "70",
+            "100"});
+            this.cB_Rec_Quality.Location = new System.Drawing.Point(123, 69);
+            this.cB_Rec_Quality.Name = "cB_Rec_Quality";
+            this.cB_Rec_Quality.Size = new System.Drawing.Size(114, 21);
+            this.cB_Rec_Quality.TabIndex = 26;
+            this.cB_Rec_Quality.TextChanged += new System.EventHandler(this.cB_Rec_Quality_TextChanged);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cB_Other_Rate);
+            this.groupBox2.Controls.Add(this.l_Other);
+            this.groupBox2.Controls.Add(this.check_Other_AutoPlay);
+            this.groupBox2.Controls.Add(this.l_Other_Rate);
+            this.groupBox2.Controls.Add(this.check_Other_Subnet);
+            this.groupBox2.Location = new System.Drawing.Point(885, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(428, 194);
+            this.groupBox2.TabIndex = 29;
+            this.groupBox2.TabStop = false;
+            // 
+            // check_Other_Subnet
+            // 
+            this.check_Other_Subnet.Location = new System.Drawing.Point(6, 68);
+            this.check_Other_Subnet.Name = "check_Other_Subnet";
+            this.check_Other_Subnet.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_Subnet.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_Subnet.TabIndex = 0;
+            this.check_Other_Subnet.Text = "Hide Subnet Notification";
+            this.check_Other_Subnet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.check_Other_Subnet.UseVisualStyleBackColor = true;
+            this.check_Other_Subnet.CheckedChanged += new System.EventHandler(this.check_Not_Subnet_CheckedChanged);
+            // 
+            // l_Other_Rate
+            // 
+            this.l_Other_Rate.AutoSize = true;
+            this.l_Other_Rate.Location = new System.Drawing.Point(7, 97);
+            this.l_Other_Rate.Name = "l_Other_Rate";
+            this.l_Other_Rate.Size = new System.Drawing.Size(113, 13);
+            this.l_Other_Rate.TabIndex = 27;
+            this.l_Other_Rate.Text = "Info Refresh Rate (ms)";
+            // 
+            // check_Other_AutoPlay
+            // 
+            this.check_Other_AutoPlay.Location = new System.Drawing.Point(6, 45);
+            this.check_Other_AutoPlay.Name = "check_Other_AutoPlay";
+            this.check_Other_AutoPlay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_AutoPlay.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_AutoPlay.TabIndex = 30;
+            this.check_Other_AutoPlay.Text = "Autoplay Videos on Launch";
+            this.check_Other_AutoPlay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.check_Other_AutoPlay.UseVisualStyleBackColor = true;
+            this.check_Other_AutoPlay.CheckedChanged += new System.EventHandler(this.check_Other_AutoPlay_CheckChanged);
+            // 
+            // l_Other
+            // 
+            this.l_Other.AutoSize = true;
+            this.l_Other.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Other.Location = new System.Drawing.Point(6, 16);
+            this.l_Other.Name = "l_Other";
+            this.l_Other.Size = new System.Drawing.Size(126, 20);
+            this.l_Other.TabIndex = 31;
+            this.l_Other.Text = "Other Settings";
+            // 
+            // cB_Other_Rate
+            // 
+            this.cB_Other_Rate.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_Other_Rate.FormattingEnabled = true;
+            this.cB_Other_Rate.Items.AddRange(new object[] {
+            "500",
+            "1000",
+            "2000",
+            "5000",
+            "10000"});
+            this.cB_Other_Rate.Location = new System.Drawing.Point(166, 94);
+            this.cB_Other_Rate.Name = "cB_Other_Rate";
+            this.cB_Other_Rate.Size = new System.Drawing.Size(114, 21);
+            this.cB_Other_Rate.TabIndex = 28;
+            this.cB_Other_Rate.TextChanged += new System.EventHandler(this.cB_Other_Rate_TextChanged);
+            // 
+            // firmwareUp
+            // 
+            this.firmwareUp.Controls.Add(this.Versionlabel);
+            this.firmwareUp.Controls.Add(this.ResetMemorybutton);
+            this.firmwareUp.Controls.Add(this.GetSNbutton);
+            this.firmwareUp.Controls.Add(this.Abortbutton);
+            this.firmwareUp.Controls.Add(this.Writebutton);
+            this.firmwareUp.Controls.Add(this.CamNolabel);
+            this.firmwareUp.Controls.Add(this.Erasebutton);
+            this.firmwareUp.Controls.Add(this.CamNoUpDown);
+            this.firmwareUp.Controls.Add(this.Checksumbutton);
+            this.firmwareUp.Controls.Add(this.SNtext);
+            this.firmwareUp.Controls.Add(this.LoadHexbutton);
+            this.firmwareUp.Controls.Add(this.Versiontext);
+            this.firmwareUp.Controls.Add(this.Activatebutton);
+            this.firmwareUp.Controls.Add(this.ClearLogbutton);
+            this.firmwareUp.Controls.Add(this.DeActivatebutton);
+            this.firmwareUp.Controls.Add(this.Loglabel);
+            this.firmwareUp.Controls.Add(this.Gobutton);
+            this.firmwareUp.Controls.Add(this.LogtextBox);
+            this.firmwareUp.Controls.Add(this.Speedlabel);
+            this.firmwareUp.Controls.Add(this.LoadSpeedlabel);
+            this.firmwareUp.Controls.Add(this.Portbutton);
+            this.firmwareUp.Controls.Add(this.SpeedcomboBox);
+            this.firmwareUp.Controls.Add(this.PortcomboBox);
+            this.firmwareUp.Controls.Add(this.LoadSpeedcomboBox);
+            this.firmwareUp.Controls.Add(this.Portlabel);
+            this.firmwareUp.Location = new System.Drawing.Point(4, 22);
+            this.firmwareUp.Name = "firmwareUp";
+            this.firmwareUp.Padding = new System.Windows.Forms.Padding(3);
+            this.firmwareUp.Size = new System.Drawing.Size(1651, 879);
+            this.firmwareUp.TabIndex = 0;
+            this.firmwareUp.Text = "Firmware Upgrade";
+            this.firmwareUp.UseVisualStyleBackColor = true;
+            // 
+            // Portlabel
+            // 
+            this.Portlabel.Location = new System.Drawing.Point(268, 198);
+            this.Portlabel.Name = "Portlabel";
+            this.Portlabel.Size = new System.Drawing.Size(31, 13);
+            this.Portlabel.TabIndex = 16;
+            this.Portlabel.Text = "Port";
+            // 
+            // LoadSpeedcomboBox
+            // 
+            this.LoadSpeedcomboBox.FormattingEnabled = true;
+            this.LoadSpeedcomboBox.Location = new System.Drawing.Point(114, 223);
+            this.LoadSpeedcomboBox.Name = "LoadSpeedcomboBox";
+            this.LoadSpeedcomboBox.Size = new System.Drawing.Size(100, 21);
+            this.LoadSpeedcomboBox.TabIndex = 15;
+            // 
+            // PortcomboBox
+            // 
+            this.PortcomboBox.FormattingEnabled = true;
+            this.PortcomboBox.Location = new System.Drawing.Point(245, 223);
+            this.PortcomboBox.Name = "PortcomboBox";
+            this.PortcomboBox.Size = new System.Drawing.Size(75, 21);
+            this.PortcomboBox.TabIndex = 17;
+            // 
+            // SpeedcomboBox
+            // 
+            this.SpeedcomboBox.FormattingEnabled = true;
+            this.SpeedcomboBox.Location = new System.Drawing.Point(6, 224);
+            this.SpeedcomboBox.Name = "SpeedcomboBox";
+            this.SpeedcomboBox.Size = new System.Drawing.Size(90, 21);
+            this.SpeedcomboBox.TabIndex = 14;
+            // 
+            // Portbutton
+            // 
+            this.Portbutton.Location = new System.Drawing.Point(245, 35);
+            this.Portbutton.Name = "Portbutton";
+            this.Portbutton.Size = new System.Drawing.Size(75, 23);
+            this.Portbutton.TabIndex = 18;
+            this.Portbutton.Text = "Open Port";
+            this.Portbutton.UseVisualStyleBackColor = true;
+            this.Portbutton.Click += new System.EventHandler(this.PortbuttonClick);
+            // 
+            // LoadSpeedlabel
+            // 
+            this.LoadSpeedlabel.Location = new System.Drawing.Point(139, 198);
+            this.LoadSpeedlabel.Name = "LoadSpeedlabel";
+            this.LoadSpeedlabel.Size = new System.Drawing.Size(75, 23);
+            this.LoadSpeedlabel.TabIndex = 13;
+            this.LoadSpeedlabel.Text = "Load Speed";
+            // 
+            // Speedlabel
+            // 
+            this.Speedlabel.Location = new System.Drawing.Point(34, 198);
+            this.Speedlabel.Name = "Speedlabel";
+            this.Speedlabel.Size = new System.Drawing.Size(47, 23);
+            this.Speedlabel.TabIndex = 12;
+            this.Speedlabel.Text = "Speed";
+            // 
+            // LogtextBox
+            // 
+            this.LogtextBox.Location = new System.Drawing.Point(5, 273);
+            this.LogtextBox.Multiline = true;
+            this.LogtextBox.Name = "LogtextBox";
+            this.LogtextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.LogtextBox.Size = new System.Drawing.Size(1157, 218);
+            this.LogtextBox.TabIndex = 20;
+            this.LogtextBox.WordWrap = false;
+            // 
+            // Gobutton
+            // 
+            this.Gobutton.Location = new System.Drawing.Point(245, 94);
+            this.Gobutton.Name = "Gobutton";
+            this.Gobutton.Size = new System.Drawing.Size(75, 82);
+            this.Gobutton.TabIndex = 11;
+            this.Gobutton.Text = "GO";
+            this.Gobutton.UseVisualStyleBackColor = true;
+            this.Gobutton.Click += new System.EventHandler(this.GobuttonClick);
+            // 
+            // Loglabel
+            // 
+            this.Loglabel.Location = new System.Drawing.Point(6, 248);
+            this.Loglabel.Name = "Loglabel";
+            this.Loglabel.Size = new System.Drawing.Size(43, 22);
+            this.Loglabel.TabIndex = 21;
+            this.Loglabel.Text = "Log";
+            // 
+            // DeActivatebutton
+            // 
+            this.DeActivatebutton.Location = new System.Drawing.Point(139, 153);
+            this.DeActivatebutton.Name = "DeActivatebutton";
+            this.DeActivatebutton.Size = new System.Drawing.Size(75, 23);
+            this.DeActivatebutton.TabIndex = 10;
+            this.DeActivatebutton.Text = "DeActivate";
+            this.DeActivatebutton.UseVisualStyleBackColor = true;
+            this.DeActivatebutton.Click += new System.EventHandler(this.DeActivatebuttonClick);
+            // 
+            // ClearLogbutton
+            // 
+            this.ClearLogbutton.Location = new System.Drawing.Point(356, 221);
+            this.ClearLogbutton.Name = "ClearLogbutton";
+            this.ClearLogbutton.Size = new System.Drawing.Size(75, 23);
+            this.ClearLogbutton.TabIndex = 22;
+            this.ClearLogbutton.Text = "Clear Log";
+            this.ClearLogbutton.UseVisualStyleBackColor = true;
+            this.ClearLogbutton.Click += new System.EventHandler(this.ClearLogbuttonClick);
+            // 
+            // Activatebutton
+            // 
+            this.Activatebutton.Location = new System.Drawing.Point(139, 124);
+            this.Activatebutton.Name = "Activatebutton";
+            this.Activatebutton.Size = new System.Drawing.Size(75, 23);
+            this.Activatebutton.TabIndex = 9;
+            this.Activatebutton.Text = "Activate";
+            this.Activatebutton.UseVisualStyleBackColor = true;
+            this.Activatebutton.Click += new System.EventHandler(this.ActivatebuttonClick);
+            // 
+            // Versiontext
+            // 
+            this.Versiontext.Location = new System.Drawing.Point(100, 14);
+            this.Versiontext.Name = "Versiontext";
+            this.Versiontext.Size = new System.Drawing.Size(100, 15);
+            this.Versiontext.TabIndex = 23;
+            this.Versiontext.Text = "version";
+            // 
+            // LoadHexbutton
+            // 
+            this.LoadHexbutton.Location = new System.Drawing.Point(139, 93);
+            this.LoadHexbutton.Name = "LoadHexbutton";
+            this.LoadHexbutton.Size = new System.Drawing.Size(75, 23);
+            this.LoadHexbutton.TabIndex = 8;
+            this.LoadHexbutton.Text = "LoadHex";
+            this.LoadHexbutton.UseVisualStyleBackColor = true;
+            this.LoadHexbutton.Click += new System.EventHandler(this.LoadHexbuttonClick);
+            // 
+            // SNtext
+            // 
+            this.SNtext.Location = new System.Drawing.Point(100, 40);
+            this.SNtext.Name = "SNtext";
+            this.SNtext.Size = new System.Drawing.Size(100, 19);
+            this.SNtext.TabIndex = 24;
+            this.SNtext.Text = "serial_no";
+            // 
+            // Checksumbutton
+            // 
+            this.Checksumbutton.Location = new System.Drawing.Point(6, 154);
+            this.Checksumbutton.Name = "Checksumbutton";
+            this.Checksumbutton.Size = new System.Drawing.Size(75, 23);
+            this.Checksumbutton.TabIndex = 7;
+            this.Checksumbutton.Text = "Checksum";
+            this.Checksumbutton.UseVisualStyleBackColor = true;
+            this.Checksumbutton.Click += new System.EventHandler(this.ChecksumbuttonClick);
+            // 
+            // CamNoUpDown
+            // 
+            this.CamNoUpDown.AllowDrop = true;
+            this.CamNoUpDown.InterceptArrowKeys = false;
+            this.CamNoUpDown.Location = new System.Drawing.Point(365, 38);
+            this.CamNoUpDown.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.CamNoUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.CamNoUpDown.Name = "CamNoUpDown";
+            this.CamNoUpDown.Size = new System.Drawing.Size(66, 20);
+            this.CamNoUpDown.TabIndex = 25;
+            this.CamNoUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // Erasebutton
+            // 
+            this.Erasebutton.Location = new System.Drawing.Point(6, 124);
+            this.Erasebutton.Name = "Erasebutton";
+            this.Erasebutton.Size = new System.Drawing.Size(75, 23);
+            this.Erasebutton.TabIndex = 6;
+            this.Erasebutton.Text = "Erase";
+            this.Erasebutton.UseVisualStyleBackColor = true;
+            this.Erasebutton.Click += new System.EventHandler(this.ErasebuttonClick);
+            // 
+            // CamNolabel
+            // 
+            this.CamNolabel.Location = new System.Drawing.Point(365, 14);
+            this.CamNolabel.Name = "CamNolabel";
+            this.CamNolabel.Size = new System.Drawing.Size(52, 18);
+            this.CamNolabel.TabIndex = 26;
+            this.CamNolabel.Text = "Camera";
+            // 
+            // Writebutton
+            // 
+            this.Writebutton.Location = new System.Drawing.Point(6, 94);
+            this.Writebutton.Name = "Writebutton";
+            this.Writebutton.Size = new System.Drawing.Size(75, 23);
+            this.Writebutton.TabIndex = 5;
+            this.Writebutton.Text = "Write";
+            this.Writebutton.UseVisualStyleBackColor = true;
+            this.Writebutton.Click += new System.EventHandler(this.WritebuttonClick);
+            // 
+            // Abortbutton
+            // 
+            this.Abortbutton.Location = new System.Drawing.Point(356, 94);
+            this.Abortbutton.Name = "Abortbutton";
+            this.Abortbutton.Size = new System.Drawing.Size(75, 42);
+            this.Abortbutton.TabIndex = 27;
+            this.Abortbutton.Text = "Abort";
+            this.Abortbutton.UseVisualStyleBackColor = true;
+            this.Abortbutton.Click += new System.EventHandler(this.AbortbuttonClick);
+            // 
+            // GetSNbutton
+            // 
+            this.GetSNbutton.Location = new System.Drawing.Point(6, 36);
+            this.GetSNbutton.Name = "GetSNbutton";
+            this.GetSNbutton.Size = new System.Drawing.Size(75, 23);
+            this.GetSNbutton.TabIndex = 0;
+            this.GetSNbutton.Text = "GetSN";
+            this.GetSNbutton.UseVisualStyleBackColor = true;
+            this.GetSNbutton.Click += new System.EventHandler(this.GetSNbuttonClick);
+            // 
+            // ResetMemorybutton
+            // 
+            this.ResetMemorybutton.Location = new System.Drawing.Point(356, 143);
+            this.ResetMemorybutton.Name = "ResetMemorybutton";
+            this.ResetMemorybutton.Size = new System.Drawing.Size(75, 33);
+            this.ResetMemorybutton.TabIndex = 28;
+            this.ResetMemorybutton.Text = "reset mem";
+            this.ResetMemorybutton.UseVisualStyleBackColor = true;
+            this.ResetMemorybutton.Click += new System.EventHandler(this.ResetMemorybuttonClick);
+            // 
+            // Versionlabel
+            // 
+            this.Versionlabel.Location = new System.Drawing.Point(6, 14);
+            this.Versionlabel.Name = "Versionlabel";
+            this.Versionlabel.Size = new System.Drawing.Size(75, 19);
+            this.Versionlabel.TabIndex = 1;
+            this.Versionlabel.Text = "BootLoader:";
+            // 
+            // camControl
+            // 
+            this.camControl.Controls.Add(this.l_Version);
+            this.camControl.Location = new System.Drawing.Point(4, 22);
+            this.camControl.Name = "camControl";
+            this.camControl.Padding = new System.Windows.Forms.Padding(3);
+            this.camControl.Size = new System.Drawing.Size(1651, 879);
+            this.camControl.TabIndex = 1;
+            this.camControl.Text = "Control";
+            this.camControl.UseVisualStyleBackColor = true;
+            // 
+            // l_Version
+            // 
+            this.l_Version.AutoSize = true;
+            this.l_Version.Location = new System.Drawing.Point(1508, 861);
+            this.l_Version.Name = "l_Version";
+            this.l_Version.Size = new System.Drawing.Size(87, 13);
+            this.l_Version.TabIndex = 0;
+            this.l_Version.Text = "SSUtility Version:";
+            // 
+            // tC_Main
+            // 
+            this.tC_Main.Controls.Add(this.camControl);
+            this.tC_Main.Controls.Add(this.firmwareUp);
+            this.tC_Main.Controls.Add(this.tP_Settings);
+            this.tC_Main.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tC_Main.Location = new System.Drawing.Point(0, 24);
+            this.tC_Main.Name = "tC_Main";
+            this.tC_Main.SelectedIndex = 0;
+            this.tC_Main.Size = new System.Drawing.Size(1659, 905);
+            this.tC_Main.TabIndex = 29;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -972,55 +972,29 @@ namespace SSLUtility2 {
             this.Name = "MainForm";
             this.Text = "SSUtility V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).EndInit();
-            this.tC_Main.ResumeLayout(false);
-            this.camControl.ResumeLayout(false);
-            this.camControl.PerformLayout();
-            this.firmwareUp.ResumeLayout(false);
-            this.firmwareUp.PerformLayout();
-            this.tP_Settings.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.gB_Paths.ResumeLayout(false);
-            this.gB_Paths.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.Menu.ResumeLayout(false);
             this.Menu.PerformLayout();
+            this.tP_Settings.ResumeLayout(false);
+            this.gB_Paths.ResumeLayout(false);
+            this.gB_Paths.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.firmwareUp.ResumeLayout(false);
+            this.firmwareUp.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).EndInit();
+            this.camControl.ResumeLayout(false);
+            this.camControl.PerformLayout();
+            this.tC_Main.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
-
-        private System.Windows.Forms.Button ResetMemorybutton;
-		private System.Windows.Forms.Button Abortbutton;
-		private System.Windows.Forms.Label CamNolabel;
-		private System.Windows.Forms.NumericUpDown CamNoUpDown;
-		private System.Windows.Forms.Label SNtext;
-		private System.Windows.Forms.Label Versiontext;
-		private System.Windows.Forms.Button ClearLogbutton;
-		private System.Windows.Forms.Label Loglabel;
-		private System.Windows.Forms.TextBox LogtextBox;
-		private System.Windows.Forms.Button Portbutton;
-		private System.Windows.Forms.ComboBox PortcomboBox;
-		private System.Windows.Forms.Label Portlabel;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.IO.Ports.SerialPort serialPort1;
-		private System.Windows.Forms.ComboBox LoadSpeedcomboBox;
-		private System.Windows.Forms.ComboBox SpeedcomboBox;
-		private System.Windows.Forms.Label LoadSpeedlabel;
-		private System.Windows.Forms.Label Speedlabel;
-		private System.Windows.Forms.Button Gobutton;
-		private System.Windows.Forms.Button DeActivatebutton;
-		private System.Windows.Forms.Button Activatebutton;
-		private System.Windows.Forms.Button LoadHexbutton;
-		private System.Windows.Forms.Button Checksumbutton;
-		private System.Windows.Forms.Button Erasebutton;
-		private System.Windows.Forms.Button Writebutton;
-		private System.Windows.Forms.Label Versionlabel;
-		private System.Windows.Forms.Button GetSNbutton;
 
 
 /*
@@ -2025,9 +1999,6 @@ namespace SSLUtility2 {
 				else			this.LogtextBox.AppendText("Memory reset failed!!" + Environment.NewLine);
 			}
 		} // end of ResetMemorybuttonClick()
-
-        public TabControl tC_Main;
-        public TabPage firmwareUp;
         public StatusStrip statusStrip1;
         public ToolStripStatusLabel toolStripStatusLabel2;
         public ToolStripStatusLabel toolStripStatusLabel3;
@@ -2036,8 +2007,25 @@ namespace SSLUtility2 {
         public ToolStripStatusLabel toolStripStatusLabel6;
         public ToolStripStatusLabel toolStripStatusLabel1;
         public System.ComponentModel.BackgroundWorker backgroundWorker1;
-        public TabPage camControl;
+        private ContextMenuStrip contextMenuStrip1;
+        private MenuStrip Menu;
+        private ToolStripMenuItem Menu_Window;
+        private ToolStripMenuItem Menu_Window_Detached;
+        private ToolStripMenuItem Menu_Window_PelcoD;
+        private ToolStripMenuItem Menu_Window_Lite;
+        private ToolStripMenuItem Menu_Final;
+        private ToolStripMenuItem Menu_FTM_Open;
+        private ToolStripMenuItem Menu_Window_Response;
+        private ToolStripMenuItem Menu_QC;
+        private ToolStripMenuItem Menu_QC_PanZero;
+        private ToolStripMenuItem Menu_Window_Settings;
         public TabPage tP_Settings;
+        public GroupBox groupBox2;
+        public ComboBox cB_Other_Rate;
+        public Label l_Other;
+        private CheckBox check_Other_AutoPlay;
+        public Label l_Other_Rate;
+        private CheckBox check_Other_Subnet;
         public GroupBox groupBox1;
         public ComboBox cB_Rec_Quality;
         public Label l_Rec_Quality;
@@ -2048,8 +2036,10 @@ namespace SSLUtility2 {
         public Label l_Rec_vFileN;
         public Label l_Rec;
         public Label l_Rec_FPS;
-        public Label l_Paths_sCCheck;
         public GroupBox gB_Paths;
+        public Label label1;
+        private CheckBox check_Paths_Manual;
+        public Label l_Paths_sCCheck;
         public Label l_Paths_vCheck;
         public Button b_Paths_vBrowse;
         public TextBox tB_Paths_vFolder;
@@ -2060,26 +2050,34 @@ namespace SSLUtility2 {
         public Label l_Paths_sCFolder;
         public Button b_Settings_Default;
         public Button b_Settings_Apply;
-        public GroupBox groupBox2;
-        private CheckBox check_Other_Subnet;
-        private ContextMenuStrip contextMenuStrip1;
-        private CheckBox check_Other_AutoPlay;
-        public Label l_Other;
-        private CheckBox check_Paths_Manual;
-        public Label label1;
-        private MenuStrip Menu;
-        private ToolStripMenuItem Menu_Window;
-        private ToolStripMenuItem Menu_Window_Detached;
-        private ToolStripMenuItem Menu_Window_PelcoD;
-        private ToolStripMenuItem Menu_Window_Lite;
-        private ToolStripMenuItem Menu_Final;
-        private ToolStripMenuItem Menu_FTM_Open;
+        public TabPage firmwareUp;
+        private Label Versionlabel;
+        private Button ResetMemorybutton;
+        private Button GetSNbutton;
+        private Button Abortbutton;
+        private Button Writebutton;
+        private Label CamNolabel;
+        private Button Erasebutton;
+        private NumericUpDown CamNoUpDown;
+        private Button Checksumbutton;
+        private Label SNtext;
+        private Button LoadHexbutton;
+        private Label Versiontext;
+        private Button Activatebutton;
+        private Button ClearLogbutton;
+        private Button DeActivatebutton;
+        private Label Loglabel;
+        private Button Gobutton;
+        private TextBox LogtextBox;
+        private Label Speedlabel;
+        private Label LoadSpeedlabel;
+        private Button Portbutton;
+        private ComboBox SpeedcomboBox;
+        private ComboBox PortcomboBox;
+        private ComboBox LoadSpeedcomboBox;
+        private Label Portlabel;
+        public TabPage camControl;
         private Label l_Version;
-        public ComboBox cB_Other_Rate;
-        public Label l_Other_Rate;
-        private ToolStripMenuItem Menu_Window_Response;
-        private ToolStripMenuItem Menu_QC;
-        private ToolStripMenuItem Menu_QC_PanZero;
-        private ToolStripMenuItem Menu_Window_Settings;
+        public TabControl tC_Main;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

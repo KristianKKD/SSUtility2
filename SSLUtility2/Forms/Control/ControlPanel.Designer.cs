@@ -225,7 +225,7 @@
             // 
             // b_Presets_Learn
             // 
-            this.b_Presets_Learn.Location = new System.Drawing.Point(138, 475);
+            this.b_Presets_Learn.Location = new System.Drawing.Point(138, 481);
             this.b_Presets_Learn.Name = "b_Presets_Learn";
             this.b_Presets_Learn.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_Learn.TabIndex = 51;
@@ -235,7 +235,7 @@
             // 
             // b_Presets_GoTo
             // 
-            this.b_Presets_GoTo.Location = new System.Drawing.Point(14, 476);
+            this.b_Presets_GoTo.Location = new System.Drawing.Point(14, 482);
             this.b_Presets_GoTo.Name = "b_Presets_GoTo";
             this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_GoTo.TabIndex = 50;
