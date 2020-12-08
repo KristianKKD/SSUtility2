@@ -65,7 +65,6 @@ namespace SSLUtility2 {
 
         public bool CheckCam() {
             bool result = CameraCommunicate.CheckPelcoCam(thermalCam).Result;
-
             return result;
         }
 
@@ -262,15 +261,15 @@ namespace SSLUtility2 {
         }
 
         public async Task GetPan() {
-            AsyncSocket.SendAsync(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 });
+            CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, true);
         }
 
         public async Task GetTilt() {
-            AsyncSocket.SendAsync(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
+            CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, true);
         }
 
         public async Task GetFOV() {
-            AsyncSocket.SendAsync(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 });
+            CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 }, true);
         }
 
         public async Task GetThermalFOV() {

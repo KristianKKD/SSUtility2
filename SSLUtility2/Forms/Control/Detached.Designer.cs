@@ -25,10 +25,8 @@
         /// </summary>
         public void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Detached));
-            this.gB_PlayerD_Simple = new System.Windows.Forms.GroupBox();
             this.tB_PlayerD_SimpleAdr = new System.Windows.Forms.TextBox();
             this.l_PlayerD_SimpleAdr = new System.Windows.Forms.Label();
-            this.gB_PlayerD_Extended = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.l_PlayerD_Type = new System.Windows.Forms.Label();
             this.l_PlayerD_RTSP = new System.Windows.Forms.Label();
@@ -44,32 +42,23 @@
             this.l_PlayerD_Buffering = new System.Windows.Forms.Label();
             this.tB_PlayerD_Password = new System.Windows.Forms.TextBox();
             this.cB_PlayerD_Type = new System.Windows.Forms.ComboBox();
-            this.VLCPlayer_D = new AxAXVLC.AxVLCPlugin2();
             this.checkB_PlayerD_Manual = new System.Windows.Forms.CheckBox();
             this.b_PlayerD_StartRec = new System.Windows.Forms.Button();
             this.b_PlayerD_SaveSnap = new System.Windows.Forms.Button();
             this.b_PlayerD_Play = new System.Windows.Forms.Button();
             this.check_PlayerD_StatsEnabled = new System.Windows.Forms.CheckBox();
             this.b_PlayerD_Stop = new System.Windows.Forms.Button();
-            this.gB_PlayerD_Simple.SuspendLayout();
-            this.gB_PlayerD_Extended.SuspendLayout();
+            this.VLCPlayer_D = new AxAXVLC.AxVLCPlugin2();
+            this.p_PlayerD_Extended = new System.Windows.Forms.Panel();
+            this.p_PlayerD_Simple = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_D)).BeginInit();
+            this.p_PlayerD_Extended.SuspendLayout();
+            this.p_PlayerD_Simple.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // gB_PlayerD_Simple
-            // 
-            this.gB_PlayerD_Simple.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.gB_PlayerD_Simple.Controls.Add(this.tB_PlayerD_SimpleAdr);
-            this.gB_PlayerD_Simple.Controls.Add(this.l_PlayerD_SimpleAdr);
-            this.gB_PlayerD_Simple.Location = new System.Drawing.Point(2, 519);
-            this.gB_PlayerD_Simple.Name = "gB_PlayerD_Simple";
-            this.gB_PlayerD_Simple.Size = new System.Drawing.Size(313, 236);
-            this.gB_PlayerD_Simple.TabIndex = 48;
-            this.gB_PlayerD_Simple.TabStop = false;
             // 
             // tB_PlayerD_SimpleAdr
             // 
-            this.tB_PlayerD_SimpleAdr.Location = new System.Drawing.Point(89, 26);
+            this.tB_PlayerD_SimpleAdr.Location = new System.Drawing.Point(89, 14);
             this.tB_PlayerD_SimpleAdr.Name = "tB_PlayerD_SimpleAdr";
             this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerD_SimpleAdr.TabIndex = 28;
@@ -77,41 +66,16 @@
             // l_PlayerD_SimpleAdr
             // 
             this.l_PlayerD_SimpleAdr.AutoSize = true;
-            this.l_PlayerD_SimpleAdr.Location = new System.Drawing.Point(3, 27);
+            this.l_PlayerD_SimpleAdr.Location = new System.Drawing.Point(3, 15);
             this.l_PlayerD_SimpleAdr.Name = "l_PlayerD_SimpleAdr";
             this.l_PlayerD_SimpleAdr.Size = new System.Drawing.Size(80, 13);
             this.l_PlayerD_SimpleAdr.TabIndex = 27;
             this.l_PlayerD_SimpleAdr.Text = "RTSP Address:";
             // 
-            // gB_PlayerD_Extended
-            // 
-            this.gB_PlayerD_Extended.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.gB_PlayerD_Extended.Controls.Add(this.label1);
-            this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_Type);
-            this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_RTSP);
-            this.gB_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Adr);
-            this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_Password);
-            this.gB_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Port);
-            this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_Port);
-            this.gB_PlayerD_Extended.Controls.Add(this.tB_PlayerD_RTSP);
-            this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_Adr);
-            this.gB_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Username);
-            this.gB_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Buffering);
-            this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_Username);
-            this.gB_PlayerD_Extended.Controls.Add(this.l_PlayerD_Buffering);
-            this.gB_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Password);
-            this.gB_PlayerD_Extended.Controls.Add(this.cB_PlayerD_Type);
-            this.gB_PlayerD_Extended.Location = new System.Drawing.Point(2, 519);
-            this.gB_PlayerD_Extended.Name = "gB_PlayerD_Extended";
-            this.gB_PlayerD_Extended.Size = new System.Drawing.Size(313, 236);
-            this.gB_PlayerD_Extended.TabIndex = 26;
-            this.gB_PlayerD_Extended.TabStop = false;
-            this.gB_PlayerD_Extended.Visible = false;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 193);
+            this.label1.Location = new System.Drawing.Point(7, 193);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(275, 13);
             this.label1.TabIndex = 49;
@@ -120,7 +84,7 @@
             // l_PlayerD_Type
             // 
             this.l_PlayerD_Type.AutoSize = true;
-            this.l_PlayerD_Type.Location = new System.Drawing.Point(6, 17);
+            this.l_PlayerD_Type.Location = new System.Drawing.Point(3, 17);
             this.l_PlayerD_Type.Name = "l_PlayerD_Type";
             this.l_PlayerD_Type.Size = new System.Drawing.Size(77, 13);
             this.l_PlayerD_Type.TabIndex = 2;
@@ -129,7 +93,7 @@
             // l_PlayerD_RTSP
             // 
             this.l_PlayerD_RTSP.AutoSize = true;
-            this.l_PlayerD_RTSP.Location = new System.Drawing.Point(6, 91);
+            this.l_PlayerD_RTSP.Location = new System.Drawing.Point(3, 91);
             this.l_PlayerD_RTSP.Name = "l_PlayerD_RTSP";
             this.l_PlayerD_RTSP.Size = new System.Drawing.Size(69, 13);
             this.l_PlayerD_RTSP.TabIndex = 2;
@@ -137,7 +101,7 @@
             // 
             // tB_PlayerD_Adr
             // 
-            this.tB_PlayerD_Adr.Location = new System.Drawing.Point(89, 41);
+            this.tB_PlayerD_Adr.Location = new System.Drawing.Point(86, 41);
             this.tB_PlayerD_Adr.Name = "tB_PlayerD_Adr";
             this.tB_PlayerD_Adr.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerD_Adr.TabIndex = 4;
@@ -146,7 +110,7 @@
             // l_PlayerD_Password
             // 
             this.l_PlayerD_Password.AutoSize = true;
-            this.l_PlayerD_Password.Location = new System.Drawing.Point(6, 168);
+            this.l_PlayerD_Password.Location = new System.Drawing.Point(3, 168);
             this.l_PlayerD_Password.Name = "l_PlayerD_Password";
             this.l_PlayerD_Password.Size = new System.Drawing.Size(56, 13);
             this.l_PlayerD_Password.TabIndex = 2;
@@ -154,7 +118,7 @@
             // 
             // tB_PlayerD_Port
             // 
-            this.tB_PlayerD_Port.Location = new System.Drawing.Point(89, 67);
+            this.tB_PlayerD_Port.Location = new System.Drawing.Point(86, 67);
             this.tB_PlayerD_Port.Name = "tB_PlayerD_Port";
             this.tB_PlayerD_Port.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerD_Port.TabIndex = 4;
@@ -163,7 +127,7 @@
             // l_PlayerD_Port
             // 
             this.l_PlayerD_Port.AutoSize = true;
-            this.l_PlayerD_Port.Location = new System.Drawing.Point(6, 66);
+            this.l_PlayerD_Port.Location = new System.Drawing.Point(13, 59);
             this.l_PlayerD_Port.Name = "l_PlayerD_Port";
             this.l_PlayerD_Port.Size = new System.Drawing.Size(29, 13);
             this.l_PlayerD_Port.TabIndex = 2;
@@ -171,7 +135,7 @@
             // 
             // tB_PlayerD_RTSP
             // 
-            this.tB_PlayerD_RTSP.Location = new System.Drawing.Point(89, 92);
+            this.tB_PlayerD_RTSP.Location = new System.Drawing.Point(86, 92);
             this.tB_PlayerD_RTSP.Name = "tB_PlayerD_RTSP";
             this.tB_PlayerD_RTSP.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerD_RTSP.TabIndex = 4;
@@ -180,7 +144,7 @@
             // l_PlayerD_Adr
             // 
             this.l_PlayerD_Adr.AutoSize = true;
-            this.l_PlayerD_Adr.Location = new System.Drawing.Point(6, 43);
+            this.l_PlayerD_Adr.Location = new System.Drawing.Point(3, 43);
             this.l_PlayerD_Adr.Name = "l_PlayerD_Adr";
             this.l_PlayerD_Adr.Size = new System.Drawing.Size(61, 13);
             this.l_PlayerD_Adr.TabIndex = 2;
@@ -188,7 +152,7 @@
             // 
             // tB_PlayerD_Username
             // 
-            this.tB_PlayerD_Username.Location = new System.Drawing.Point(89, 144);
+            this.tB_PlayerD_Username.Location = new System.Drawing.Point(86, 144);
             this.tB_PlayerD_Username.Name = "tB_PlayerD_Username";
             this.tB_PlayerD_Username.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerD_Username.TabIndex = 4;
@@ -196,7 +160,7 @@
             // 
             // tB_PlayerD_Buffering
             // 
-            this.tB_PlayerD_Buffering.Location = new System.Drawing.Point(89, 118);
+            this.tB_PlayerD_Buffering.Location = new System.Drawing.Point(86, 118);
             this.tB_PlayerD_Buffering.Name = "tB_PlayerD_Buffering";
             this.tB_PlayerD_Buffering.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerD_Buffering.TabIndex = 4;
@@ -205,7 +169,7 @@
             // l_PlayerD_Username
             // 
             this.l_PlayerD_Username.AutoSize = true;
-            this.l_PlayerD_Username.Location = new System.Drawing.Point(6, 143);
+            this.l_PlayerD_Username.Location = new System.Drawing.Point(3, 143);
             this.l_PlayerD_Username.Name = "l_PlayerD_Username";
             this.l_PlayerD_Username.Size = new System.Drawing.Size(58, 13);
             this.l_PlayerD_Username.TabIndex = 2;
@@ -214,7 +178,7 @@
             // l_PlayerD_Buffering
             // 
             this.l_PlayerD_Buffering.AutoSize = true;
-            this.l_PlayerD_Buffering.Location = new System.Drawing.Point(6, 117);
+            this.l_PlayerD_Buffering.Location = new System.Drawing.Point(3, 117);
             this.l_PlayerD_Buffering.Name = "l_PlayerD_Buffering";
             this.l_PlayerD_Buffering.Size = new System.Drawing.Size(77, 13);
             this.l_PlayerD_Buffering.TabIndex = 2;
@@ -222,7 +186,7 @@
             // 
             // tB_PlayerD_Password
             // 
-            this.tB_PlayerD_Password.Location = new System.Drawing.Point(89, 170);
+            this.tB_PlayerD_Password.Location = new System.Drawing.Point(86, 170);
             this.tB_PlayerD_Password.Name = "tB_PlayerD_Password";
             this.tB_PlayerD_Password.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerD_Password.TabIndex = 4;
@@ -236,21 +200,12 @@
             "IONodes - Thermal",
             "VIVOTEK",
             "BOSCH"});
-            this.cB_PlayerD_Type.Location = new System.Drawing.Point(89, 14);
+            this.cB_PlayerD_Type.Location = new System.Drawing.Point(86, 14);
             this.cB_PlayerD_Type.Name = "cB_PlayerD_Type";
             this.cB_PlayerD_Type.Size = new System.Drawing.Size(214, 21);
             this.cB_PlayerD_Type.TabIndex = 5;
             this.cB_PlayerD_Type.Text = "Daylight";
             this.cB_PlayerD_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_Type_SelectedIndexChanged);
-            // 
-            // VLCPlayer_D
-            // 
-            this.VLCPlayer_D.Enabled = true;
-            this.VLCPlayer_D.Location = new System.Drawing.Point(0, 0);
-            this.VLCPlayer_D.Name = "VLCPlayer_D";
-            this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
-            this.VLCPlayer_D.Size = new System.Drawing.Size(639, 512);
-            this.VLCPlayer_D.TabIndex = 41;
             // 
             // checkB_PlayerD_Manual
             // 
@@ -313,17 +268,59 @@
             this.b_PlayerD_Stop.TabIndex = 50;
             this.b_PlayerD_Stop.Text = "Stop Video Playback";
             this.b_PlayerD_Stop.UseVisualStyleBackColor = true;
+            this.b_PlayerD_Stop.Visible = false;
             this.b_PlayerD_Stop.Click += new System.EventHandler(this.b_PlayerD_Stop_Click);
+            // 
+            // VLCPlayer_D
+            // 
+            this.VLCPlayer_D.Enabled = true;
+            this.VLCPlayer_D.Location = new System.Drawing.Point(0, 0);
+            this.VLCPlayer_D.Name = "VLCPlayer_D";
+            this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
+            this.VLCPlayer_D.Size = new System.Drawing.Size(640, 513);
+            this.VLCPlayer_D.TabIndex = 41;
+            // 
+            // p_PlayerD_Extended
+            // 
+            this.p_PlayerD_Extended.Controls.Add(this.label1);
+            this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Type);
+            this.p_PlayerD_Extended.Controls.Add(this.cB_PlayerD_Type);
+            this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_RTSP);
+            this.p_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Password);
+            this.p_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Adr);
+            this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Buffering);
+            this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Password);
+            this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Username);
+            this.p_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Port);
+            this.p_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Buffering);
+            this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Port);
+            this.p_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Username);
+            this.p_PlayerD_Extended.Controls.Add(this.tB_PlayerD_RTSP);
+            this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Adr);
+            this.p_PlayerD_Extended.Location = new System.Drawing.Point(2, 519);
+            this.p_PlayerD_Extended.Name = "p_PlayerD_Extended";
+            this.p_PlayerD_Extended.Size = new System.Drawing.Size(313, 236);
+            this.p_PlayerD_Extended.TabIndex = 51;
+            // 
+            // p_PlayerD_Simple
+            // 
+            this.p_PlayerD_Simple.Controls.Add(this.tB_PlayerD_SimpleAdr);
+            this.p_PlayerD_Simple.Controls.Add(this.l_PlayerD_SimpleAdr);
+            this.p_PlayerD_Simple.Location = new System.Drawing.Point(2, 519);
+            this.p_PlayerD_Simple.Name = "p_PlayerD_Simple";
+            this.p_PlayerD_Simple.Size = new System.Drawing.Size(313, 236);
+            this.p_PlayerD_Simple.TabIndex = 52;
             // 
             // Detached
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(639, 761);
+            this.Controls.Add(this.p_PlayerD_Simple);
+            this.Controls.Add(this.p_PlayerD_Extended);
             this.Controls.Add(this.b_PlayerD_Stop);
             this.Controls.Add(this.check_PlayerD_StatsEnabled);
-            this.Controls.Add(this.gB_PlayerD_Extended);
-            this.Controls.Add(this.gB_PlayerD_Simple);
             this.Controls.Add(this.VLCPlayer_D);
             this.Controls.Add(this.checkB_PlayerD_Manual);
             this.Controls.Add(this.b_PlayerD_StartRec);
@@ -332,22 +329,19 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Detached";
             this.Text = "Player";
-            this.gB_PlayerD_Simple.ResumeLayout(false);
-            this.gB_PlayerD_Simple.PerformLayout();
-            this.gB_PlayerD_Extended.ResumeLayout(false);
-            this.gB_PlayerD_Extended.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_D)).EndInit();
+            this.p_PlayerD_Extended.ResumeLayout(false);
+            this.p_PlayerD_Extended.PerformLayout();
+            this.p_PlayerD_Simple.ResumeLayout(false);
+            this.p_PlayerD_Simple.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        public System.Windows.Forms.GroupBox gB_PlayerD_Simple;
         public System.Windows.Forms.TextBox tB_PlayerD_SimpleAdr;
         public System.Windows.Forms.Label l_PlayerD_SimpleAdr;
-        public System.Windows.Forms.GroupBox gB_PlayerD_Extended;
         public System.Windows.Forms.Label l_PlayerD_Type;
         public System.Windows.Forms.Label l_PlayerD_RTSP;
         public System.Windows.Forms.TextBox tB_PlayerD_Adr;
@@ -370,5 +364,7 @@
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.CheckBox check_PlayerD_StatsEnabled;
         public System.Windows.Forms.Button b_PlayerD_Stop;
+        private System.Windows.Forms.Panel p_PlayerD_Extended;
+        private System.Windows.Forms.Panel p_PlayerD_Simple;
     }
 }

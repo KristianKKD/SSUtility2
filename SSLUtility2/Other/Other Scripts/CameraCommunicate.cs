@@ -11,13 +11,16 @@ namespace SSLUtility2 {
     class CameraCommunicate {
         static string failedConnectMsg = "Issue connecting to TCP Port\n" +
                     "Would you like to see more information?";
-        static string failedConnectCaption = "Error";
+        static string errorCaption = "Error Occured!";
 
         public static Socket sock = new Socket(AddressFamily.Unspecified, SocketType.Stream, ProtocolType.Tcp);
 
         public static string lastIPPort = "1";
 
-        public static async Task<bool> sendtoIPAsync(byte[] code, Control lab, string ip = null, string port = null) {
+        public const string defaultResult = "00 00 00 00 00 00 00";
+
+
+        public static async Task<bool> sendtoIPAsync(byte[] code, Control lab = null, string ip = null, string port = null) {
             //MainForm.m.ReadCommand(code, true);
             try {
                 if (!sock.Connected) {
@@ -31,72 +34,81 @@ namespace SSLUtility2 {
                 bool success = SendToSocket(code).Result;
                 return success;
             } catch (Exception e) {
-                MainForm.ShowError(failedConnectMsg, failedConnectCaption, e.ToString());
+                MainForm.ShowError(failedConnectMsg, errorCaption, e.ToString());
                 return false;
             }
         }
 
         public static async Task<bool> Connect(string ipAdr, string port, Control lCon, bool stopError = false) {
-            LabelDisplay(false, lCon);
-            if (!stopError && !ConfigControl.subnetNotif) {
-                if (!CheckIsSameSubnet(ipAdr)) {
+            try {
+                LabelDisplay(false, lCon);
+                if (!stopError && !ConfigControl.subnetNotif) {
+                    if (!CheckIsSameSubnet(ipAdr)) {
+                        CloseSock();
+                        return false;
+                    }
+                }
+
+                if (sock.Connected) {
                     CloseSock();
+                }
+
+                Uri u = new Uri("http://" + ipAdr + ":" + port);
+
+                if (!PingAdr(u).Result) {
+                    if (!stopError) {
+                        MainForm.ShowError(failedConnectMsg, errorCaption, ipAdr + ":" + port + " ping timed out with no response.");
+                    }
                     return false;
                 }
-            }
+                LabelDisplay(true, lCon);
 
-            if (sock.Connected) {
-                CloseSock();
-            }
-
-            Uri u = new Uri("http://" + ipAdr + ":" + port);
-
-            if (!PingAdr(u).Result) {
-                if (!stopError) {
-                    MainForm.ShowError(failedConnectMsg, failedConnectCaption, ipAdr + ":" + port + " ping timed out with no response.");
-                }
+                IPAddress serverAddr = IPAddress.Parse(ipAdr);
+                IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(port));
+                sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                sock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
+                return true;
+            } catch (Exception e){
+                MainForm.ShowError(failedConnectMsg, errorCaption, e.ToString(), true);
                 return false;
             }
-            LabelDisplay(true, lCon);
-
-            IPAddress serverAddr = IPAddress.Parse(ipAdr);
-            IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(port));
-            sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            sock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
-            return true;
         }
 
         public static async Task<string> Query(byte[] code, Uri addr) {
-            SendToSocket(code);
-            if (!sock.Connected) {
-                if (!Connect(addr.Host, addr.Port.ToString(), null, true).Result) {
-                    return null;
+            try {
+                SendToSocket(code, false); // might want to consider using sendtoip //also maybe swap to async?
+                if (!sock.Connected) {
+                    if (!Connect(addr.Host, addr.Port.ToString(), null, true).Result) {
+                        return defaultResult;
+                    }
                 }
-            }
 
-            string defaultResult = "00 00 00 00 00 00 00";
-
-            string result = StringFromSock().Result;
-             if(result.Length == 20) {
-                string subbed = result.Substring(0, 2);
-                if(subbed == "FF") {
-                    MainForm.m.WriteToResponses(subbed, false);
-                    return result;
-                }
-             }
+                string result = StringFromSock().Result;
+                 if(result.Length == 20) {
+                    string subbed = result.Substring(0, 2);
+                    if(subbed == "FF") {
+                        MainForm.m.WriteToResponses(subbed, false);
+                        return result;
+                    }
+                 }
             
-            MainForm.m.WriteToResponses("Failed to get a response", false);
-            return defaultResult;
+                MainForm.m.WriteToResponses("Failed to get a response", false);
+                return defaultResult;
+            } catch (Exception e){
+                MainForm.m.WriteToResponses("An error occured whilst trying to query the camera!", false);
+                MainForm.m.WriteToResponses(e.ToString(), true);
+                return defaultResult;
+            }
         }
 
         public static async Task<bool> CheckPelcoCam(bool thermalCam) {
             if (thermalCam) {
-                SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
+                SendToSocket(new byte[] { 0xFF, 0x00, 0x00, 0x53, 0x00, 0x00, 0x53 });
             } else {
-                SendToSocket(new byte[] { 0xFF, 0x00, 0x00, 0x53, 0x00, 0x00, 0x54 });
+                SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
             }
             string result = StringFromSock().Result;
-            if (result == "0") {
+            if (result == defaultResult) {
                 return false;
             } else {
                 return true;
@@ -141,13 +153,23 @@ namespace SSLUtility2 {
             return false;
         }
 
-        public static async Task<bool> SendToSocket(byte[] code) {
-            if (code != null) {
-                MainForm.m.WriteToResponses(MainForm.m.ReadCommand(code, false), true);
-                sock.SendTo(code, sock.RemoteEndPoint);
-                return true;
-            }
-            return false;
+        public static async Task<bool> SendToSocket(byte[] code, bool async = false) {
+            try {
+                if (code != null) {
+                    MainForm.m.WriteToResponses(MainForm.m.ReadCommand(code, false), true);
+                    if (async) {
+                        AsyncSocket.SendAsync(code);
+                    } else {
+                        sock.SendTo(code, sock.RemoteEndPoint);
+                    }
+                    return true;
+                }
+                return false;
+            } catch (Exception e) {
+                MainForm.m.WriteToResponses("An error occured whilst trying to send a command to the camera", false);
+                MainForm.m.WriteToResponses(e.ToString(), true);
+                return false;
+            };
         }
 
         public static async Task<string> StringFromSock() {
@@ -164,7 +186,7 @@ namespace SSLUtility2 {
                             zeroCount++;
                         }
                         if(zeroCount > 6) {
-                            return "00 00 00 00 00 00 00";
+                            return defaultResult;
                         }
                     }
                     m += hex + " ";
@@ -173,7 +195,7 @@ namespace SSLUtility2 {
 
                 return m;
             } catch (Exception e) {
-                MessageBox.Show(e.ToString());
+                MainForm.ShowError("Failed to receive response!\nShow more?", errorCaption, e.ToString(), true);
                 return null;
             }
         }
@@ -209,6 +231,10 @@ namespace SSLUtility2 {
         }
 
         public static bool CheckIsSameSubnet(string newIp) {
+            if (!IPAddress.TryParse(newIp, out IPAddress dontuse)) {
+                return false;
+            }
+
             string rawIp = GetLocalIPAddress();
             string mySub = FindSubnet(rawIp);
             string newSub = FindSubnet(newIp);
@@ -217,7 +243,7 @@ namespace SSLUtility2 {
             Int32.TryParse(newSub, out int other);
 
             if (mine != other) {
-                MainForm.ShowError("Local IP subnet is not the same as the camera subnet!\nShow possible fix?", "Incorrect subnet!",
+                MainForm.ShowError("Local IP subnet is not the same as the camera subnet!\nShow possible fix?", errorCaption,
                     "Try changing your IP from: " + rawIp + "\n To: " + rawIp.Replace(mySub, newSub) +
                     "\nThe new IP will also have to be static!");
                 return false;

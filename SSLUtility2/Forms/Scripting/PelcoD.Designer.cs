@@ -25,6 +25,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PelcoD));
             this.b_PD_Load = new System.Windows.Forms.Button();
             this.b_PD_Save = new System.Windows.Forms.Button();
@@ -45,6 +46,7 @@
             this.b_PD_Stop = new System.Windows.Forms.Button();
             this.b_PD_RL = new System.Windows.Forms.Button();
             this.check_PD_Perfect = new System.Windows.Forms.CheckBox();
+            this.tt_CommandFormat = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // b_PD_Load
@@ -79,6 +81,7 @@
             // 
             // rtb_PD_Commands
             // 
+            this.rtb_PD_Commands.BackColor = System.Drawing.SystemColors.Control;
             this.rtb_PD_Commands.Location = new System.Drawing.Point(12, 32);
             this.rtb_PD_Commands.Name = "rtb_PD_Commands";
             this.rtb_PD_Commands.Size = new System.Drawing.Size(330, 385);
@@ -223,11 +226,13 @@
             this.check_PD_Perfect.TabIndex = 92;
             this.check_PD_Perfect.Text = "Perfect Format";
             this.check_PD_Perfect.UseVisualStyleBackColor = true;
+            this.check_PD_Perfect.CheckedChanged += new System.EventHandler(this.check_PD_Perfect_CheckedChanged);
             // 
             // PelcoD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(470, 467);
             this.Controls.Add(this.check_PD_Perfect);
             this.Controls.Add(this.b_PD_RL);
@@ -277,5 +282,6 @@
         private System.Windows.Forms.Button b_PD_Stop;
         private System.Windows.Forms.Button b_PD_RL;
         private System.Windows.Forms.CheckBox check_PD_Perfect;
+        private System.Windows.Forms.ToolTip tt_CommandFormat;
     }
 }

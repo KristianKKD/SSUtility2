@@ -67,6 +67,7 @@
             // 
             // tB_Name_Path
             // 
+            this.tB_Name_Path.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Name_Path.Location = new System.Drawing.Point(292, 54);
             this.tB_Name_Path.Name = "tB_Name_Path";
             this.tB_Name_Path.Size = new System.Drawing.Size(177, 20);
@@ -74,6 +75,7 @@
             // 
             // rtb_Name_NameList
             // 
+            this.rtb_Name_NameList.BackColor = System.Drawing.SystemColors.Control;
             this.rtb_Name_NameList.Location = new System.Drawing.Point(12, 32);
             this.rtb_Name_NameList.Name = "rtb_Name_NameList";
             this.rtb_Name_NameList.Size = new System.Drawing.Size(274, 350);
@@ -111,6 +113,7 @@
             // 
             // tB_Name_PathFrom
             // 
+            this.tB_Name_PathFrom.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Name_PathFrom.Location = new System.Drawing.Point(292, 135);
             this.tB_Name_PathFrom.Name = "tB_Name_PathFrom";
             this.tB_Name_PathFrom.Size = new System.Drawing.Size(177, 20);
@@ -120,6 +123,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(486, 394);
             this.Controls.Add(this.b_Name_BrowseFrom);
             this.Controls.Add(this.l_Name_From);

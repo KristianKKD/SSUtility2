@@ -11,14 +11,14 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.0.0";
+        public const string version = "v1.3.1.0";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
 
         public static Control[] saveList = new Control[0];
 
-        ControlPanel ipCon;
+        public ControlPanel ipCon;
 
         public static MainForm m { get; set; }
 
@@ -259,27 +259,27 @@ namespace SSLUtility2 {
 
         Detached AttachDetached(int xOffset) {
             TabPage tp = tC_Main.TabPages[0];
-            GroupBox gb = new GroupBox();
+            Panel pan = new Panel();
             Detached d = DetachVid(false);
 
-            var c = GetAllType(d, typeof(GroupBox));
+            var c = GetAllType(d, typeof(Panel));
             var c2 = GetAllType(d, typeof(Button));
             var c3 = GetAllType(d, typeof(Label));
             var c4 = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
             var c5 = GetAllType(d, typeof(CheckBox));
 
-            gb.Controls.AddRange(c.ToArray());
-            gb.Controls.AddRange(c2.ToArray());
-            gb.Controls.AddRange(c3.ToArray());
-            gb.Controls.AddRange(c4.ToArray());
-            gb.Controls.AddRange(c5.ToArray());
+            pan.Controls.AddRange(c.ToArray());
+            pan.Controls.AddRange(c2.ToArray());
+            pan.Controls.AddRange(c3.ToArray());
+            pan.Controls.AddRange(c4.ToArray());
+            pan.Controls.AddRange(c5.ToArray());
 
             d.VLCPlayer_D.Location = new Point(d.VLCPlayer_D.Location.X, d.VLCPlayer_D.Location.Y + 5);
 
-            gb.Size = new Size(d.Width - 18, d.Height - 40);
-            gb.Location = new Point(ipCon.Location.X + ipCon.Size.Width + xOffset, ipCon.Location.Y + 65);
+            pan.Size = new Size(d.Width - 18, d.Height - 40);
+            pan.Location = new Point(ipCon.Location.X + ipCon.Size.Width + xOffset, ipCon.Location.Y + 65);
 
-            tp.Controls.Add(gb);
+            tp.Controls.Add(pan);
 
             return d;
         }
@@ -328,7 +328,7 @@ namespace SSLUtility2 {
         }
 
         ControlPanel SpawnControlPanel(TabPage tp, bool makeLite = true) {
-            GroupBox gb = new GroupBox();
+            Panel pan = new Panel();
             ControlPanel cp = new ControlPanel();
 
             if (makeLite) {
@@ -343,36 +343,36 @@ namespace SSLUtility2 {
 
             cp.StartConnect();
 
-            gb.Size = new Size(cp.Size.Width, cp.Size.Height - 30);
-            tp.Controls.Add(gb);
+            pan.Size = new Size(cp.Size.Width, cp.Size.Height - 30);
+            tp.Controls.Add(pan);
 
-            AddControls(gb, cp);
+            AddControls(pan, cp);
             return cp;
         }
 
         PresetPanel AttachPresetPanel(TabPage tp, ControlPanel panel) {
-            GroupBox gb = new GroupBox();
+            Panel pan = new Panel();
             PresetPanel pp = new PresetPanel();
             
             SetFeatureToAllControls(pp.Controls);
             pp.mainRef = m;
             panel.SendToBack();
 
-            gb.Location = new Point(0, panel.Size.Height - 40);
-            gb.Size = pp.Size;
+            pan.Location = new Point(0, panel.Size.Height - 40);
+            pan.Size = pp.Size;
 
-            tp.Controls.Add(gb);
+            tp.Controls.Add(pan);
 
             var c = GetAllType(pp, typeof(TabControl));
             var cTwo = GetAllType(pp, typeof(Label));
-            gb.Controls.AddRange(c.ToArray());
-            gb.Controls.AddRange(cTwo.ToArray());
+            pan.Controls.AddRange(c.ToArray());
+            pan.Controls.AddRange(cTwo.ToArray());
             return pp;
         }
 
-        void AddControls(GroupBox g, Control panel) {
+        void AddControls(Panel pan, Control panel) {
             var c = GetAll(panel);
-            g.Controls.AddRange(c.ToArray());
+            pan.Controls.AddRange(c.ToArray());
         }
 
         void OpenFinal() {
@@ -466,7 +466,7 @@ namespace SSLUtility2 {
             player.playlist.play();
         }
 
-        public void ExtendOptions(bool check, GroupBox gbExt, GroupBox gbSim) {
+        public void ExtendOptions(bool check, Panel gbExt, Panel gbSim) {
             if (check) {
                 gbSim.Hide();
                 gbExt.Show();
@@ -814,5 +814,14 @@ namespace SSLUtility2 {
         private void Menu_Window_Response_Click(object sender, EventArgs e) {
             OpenResponseLog(true);
         }
+
+        private void Menu_QC_PanZero_Click(object sender, EventArgs e) {
+            CustomScriptCommands.QuickCommand("panzero");
+        }
+
+        private void Menu_Window_Settings_Click(object sender, EventArgs e) {
+
+        }
+
     } // end of class MainForm
 } // end of namespace SSLUtility2

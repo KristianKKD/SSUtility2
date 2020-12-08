@@ -83,7 +83,7 @@ namespace SSLUtility2 {
         }
 
         private void checkB_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
-            MainForm.m.ExtendOptions(checkB_PlayerD_Manual.Checked, gB_PlayerD_Extended, gB_PlayerD_Simple);
+            MainForm.m.ExtendOptions(checkB_PlayerD_Manual.Checked, p_PlayerD_Extended, p_PlayerD_Simple);
         }
 
         private void b_PlayerD_StartRec_Click(object sender, EventArgs e) {

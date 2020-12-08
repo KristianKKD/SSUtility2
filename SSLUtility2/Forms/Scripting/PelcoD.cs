@@ -14,6 +14,7 @@ namespace SSLUtility2
 
         public PelcoD() {
             InitializeComponent();
+            tt_CommandFormat.SetToolTip(check_PD_Perfect, "Perfect Format disabled example: 00 53 00 00");
         }
 
         async Task Fire() {
@@ -63,11 +64,9 @@ namespace SSLUtility2
 
                 string response = CameraCommunicate.Query(send, u).Result;
 
-                //if (response == "0") {
-                //    MainForm.m.WriteToResponses("Command: " + line + " could not be sent.");
-                //} else {
-                //    MainForm.m.WriteToResponses(response);
-                //}
+                if (response == CameraCommunicate.defaultResult) {
+                    MainForm.m.WriteToResponses("Command: " + line + " could not be sent.", false);
+                }
 
             }
         }
@@ -143,11 +142,20 @@ namespace SSLUtility2
         }
        
         private void b_PD_Stop_Click(object sender, EventArgs e) { //make it cancel current script
-        
+            stop = true;
         }
 
         private void b_PD_RL_Click(object sender, EventArgs e) {
             MainForm.m.OpenResponseLog(true);
         }
+
+        private void check_PD_Perfect_CheckedChanged(object sender, EventArgs e) {
+            if (check_PD_Perfect.Checked) {
+                tt_CommandFormat.SetToolTip(check_PD_Perfect, "Perfect Format enabled example: FF 01 00 53 00 00 54");
+            } else {
+                tt_CommandFormat.SetToolTip(check_PD_Perfect, "Perfect Format disabled example: 00 53 00 00");
+            }
+        }
+
     }
 }

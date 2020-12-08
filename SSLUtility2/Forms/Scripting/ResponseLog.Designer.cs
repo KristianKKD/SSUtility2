@@ -86,6 +86,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(478, 446);
             this.Controls.Add(this.check_RL_All);
             this.Controls.Add(this.l_RL_RL);

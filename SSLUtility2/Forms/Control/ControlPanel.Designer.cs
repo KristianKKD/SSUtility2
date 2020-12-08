@@ -34,7 +34,6 @@
             this.cB_IPCon_Type = new System.Windows.Forms.ComboBox();
             this.cB_IPCon_KeyboardCon = new System.Windows.Forms.CheckBox();
             this.cB_IPCon_Selected = new System.Windows.Forms.ComboBox();
-            this.l_IPCon_KeyControl = new System.Windows.Forms.Label();
             this.l_IPCon_SelectedCam = new System.Windows.Forms.Label();
             this.l_IPCon_Port = new System.Windows.Forms.Label();
             this.l_IPCon_PTSpeed = new System.Windows.Forms.Label();
@@ -62,14 +61,14 @@
             // 
             // tB_Presets_Number
             // 
-            this.tB_Presets_Number.Location = new System.Drawing.Point(114, 446);
+            this.tB_Presets_Number.Location = new System.Drawing.Point(109, 449);
             this.tB_Presets_Number.Name = "tB_Presets_Number";
             this.tB_Presets_Number.Size = new System.Drawing.Size(123, 20);
             this.tB_Presets_Number.TabIndex = 68;
             // 
             // tB_IPCon_Port
             // 
-            this.tB_IPCon_Port.Location = new System.Drawing.Point(108, 91);
+            this.tB_IPCon_Port.Location = new System.Drawing.Point(109, 87);
             this.tB_IPCon_Port.Name = "tB_IPCon_Port";
             this.tB_IPCon_Port.Size = new System.Drawing.Size(123, 20);
             this.tB_IPCon_Port.TabIndex = 65;
@@ -77,7 +76,7 @@
             // 
             // tB_IPCon_Adr
             // 
-            this.tB_IPCon_Adr.Location = new System.Drawing.Point(108, 65);
+            this.tB_IPCon_Adr.Location = new System.Drawing.Point(109, 61);
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
             this.tB_IPCon_Adr.TabIndex = 64;
@@ -88,15 +87,15 @@
             // l_IPCon_Connected
             // 
             this.l_IPCon_Connected.AutoSize = true;
-            this.l_IPCon_Connected.Location = new System.Drawing.Point(237, 65);
+            this.l_IPCon_Connected.Location = new System.Drawing.Point(238, 61);
             this.l_IPCon_Connected.Name = "l_IPCon_Connected";
             this.l_IPCon_Connected.Size = new System.Drawing.Size(0, 13);
             this.l_IPCon_Connected.TabIndex = 71;
             // 
             // track_PTZ_PTSpeed
             // 
-            this.track_PTZ_PTSpeed.BackColor = System.Drawing.SystemColors.Control;
-            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(99, 332);
+            this.track_PTZ_PTSpeed.BackColor = System.Drawing.SystemColors.Window;
+            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(100, 328);
             this.track_PTZ_PTSpeed.Maximum = 63;
             this.track_PTZ_PTSpeed.Name = "track_PTZ_PTSpeed";
             this.track_PTZ_PTSpeed.Size = new System.Drawing.Size(132, 45);
@@ -109,7 +108,7 @@
             this.cB_IPCon_Type.Items.AddRange(new object[] {
             "Encoder",
             "MOXA nPort"});
-            this.cB_IPCon_Type.Location = new System.Drawing.Point(108, 38);
+            this.cB_IPCon_Type.Location = new System.Drawing.Point(109, 34);
             this.cB_IPCon_Type.Name = "cB_IPCon_Type";
             this.cB_IPCon_Type.Size = new System.Drawing.Size(123, 21);
             this.cB_IPCon_Type.TabIndex = 69;
@@ -119,10 +118,13 @@
             // cB_IPCon_KeyboardCon
             // 
             this.cB_IPCon_KeyboardCon.AutoSize = true;
-            this.cB_IPCon_KeyboardCon.Location = new System.Drawing.Point(108, 153);
+            this.cB_IPCon_KeyboardCon.Location = new System.Drawing.Point(12, 141);
             this.cB_IPCon_KeyboardCon.Name = "cB_IPCon_KeyboardCon";
-            this.cB_IPCon_KeyboardCon.Size = new System.Drawing.Size(15, 14);
+            this.cB_IPCon_KeyboardCon.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cB_IPCon_KeyboardCon.Size = new System.Drawing.Size(110, 17);
             this.cB_IPCon_KeyboardCon.TabIndex = 67;
+            this.cB_IPCon_KeyboardCon.Text = " Keyboard Control";
+            this.cB_IPCon_KeyboardCon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.cB_IPCon_KeyboardCon.UseVisualStyleBackColor = true;
             // 
             // cB_IPCon_Selected
@@ -131,25 +133,16 @@
             this.cB_IPCon_Selected.Items.AddRange(new object[] {
             "Daylight",
             "Thermal"});
-            this.cB_IPCon_Selected.Location = new System.Drawing.Point(108, 118);
+            this.cB_IPCon_Selected.Location = new System.Drawing.Point(109, 114);
             this.cB_IPCon_Selected.Name = "cB_IPCon_Selected";
             this.cB_IPCon_Selected.Size = new System.Drawing.Size(123, 21);
             this.cB_IPCon_Selected.TabIndex = 66;
             this.cB_IPCon_Selected.Text = "Daylight";
             // 
-            // l_IPCon_KeyControl
-            // 
-            this.l_IPCon_KeyControl.AutoSize = true;
-            this.l_IPCon_KeyControl.Location = new System.Drawing.Point(13, 153);
-            this.l_IPCon_KeyControl.Name = "l_IPCon_KeyControl";
-            this.l_IPCon_KeyControl.Size = new System.Drawing.Size(91, 13);
-            this.l_IPCon_KeyControl.TabIndex = 63;
-            this.l_IPCon_KeyControl.Text = "Keyboard Control:";
-            // 
             // l_IPCon_SelectedCam
             // 
             this.l_IPCon_SelectedCam.AutoSize = true;
-            this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(13, 121);
+            this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(12, 117);
             this.l_IPCon_SelectedCam.Name = "l_IPCon_SelectedCam";
             this.l_IPCon_SelectedCam.Size = new System.Drawing.Size(91, 13);
             this.l_IPCon_SelectedCam.TabIndex = 62;
@@ -158,16 +151,16 @@
             // l_IPCon_Port
             // 
             this.l_IPCon_Port.AutoSize = true;
-            this.l_IPCon_Port.Location = new System.Drawing.Point(13, 91);
+            this.l_IPCon_Port.Location = new System.Drawing.Point(12, 90);
             this.l_IPCon_Port.Name = "l_IPCon_Port";
-            this.l_IPCon_Port.Size = new System.Drawing.Size(29, 13);
+            this.l_IPCon_Port.Size = new System.Drawing.Size(70, 13);
             this.l_IPCon_Port.TabIndex = 61;
-            this.l_IPCon_Port.Text = "Port:";
+            this.l_IPCon_Port.Text = "Address Port:";
             // 
             // l_IPCon_PTSpeed
             // 
             this.l_IPCon_PTSpeed.AutoSize = true;
-            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(10, 348);
+            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(15, 337);
             this.l_IPCon_PTSpeed.Name = "l_IPCon_PTSpeed";
             this.l_IPCon_PTSpeed.Size = new System.Drawing.Size(88, 13);
             this.l_IPCon_PTSpeed.TabIndex = 59;
@@ -176,7 +169,7 @@
             // l_Presets_Number
             // 
             this.l_Presets_Number.AutoSize = true;
-            this.l_Presets_Number.Location = new System.Drawing.Point(16, 449);
+            this.l_Presets_Number.Location = new System.Drawing.Point(11, 452);
             this.l_Presets_Number.Name = "l_Presets_Number";
             this.l_Presets_Number.Size = new System.Drawing.Size(47, 13);
             this.l_Presets_Number.TabIndex = 60;
@@ -185,7 +178,7 @@
             // l_IPCon_ConType
             // 
             this.l_IPCon_ConType.AutoSize = true;
-            this.l_IPCon_ConType.Location = new System.Drawing.Point(13, 41);
+            this.l_IPCon_ConType.Location = new System.Drawing.Point(12, 37);
             this.l_IPCon_ConType.Name = "l_IPCon_ConType";
             this.l_IPCon_ConType.Size = new System.Drawing.Size(70, 13);
             this.l_IPCon_ConType.TabIndex = 58;
@@ -194,7 +187,7 @@
             // l_IPCon_Adr
             // 
             this.l_IPCon_Adr.AutoSize = true;
-            this.l_IPCon_Adr.Location = new System.Drawing.Point(13, 65);
+            this.l_IPCon_Adr.Location = new System.Drawing.Point(12, 64);
             this.l_IPCon_Adr.Name = "l_IPCon_Adr";
             this.l_IPCon_Adr.Size = new System.Drawing.Size(61, 13);
             this.l_IPCon_Adr.TabIndex = 57;
@@ -204,7 +197,7 @@
             // 
             this.l_Presets.AutoSize = true;
             this.l_Presets.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Presets.Location = new System.Drawing.Point(9, 413);
+            this.l_Presets.Location = new System.Drawing.Point(11, 423);
             this.l_Presets.Name = "l_Presets";
             this.l_Presets.Size = new System.Drawing.Size(70, 20);
             this.l_Presets.TabIndex = 56;
@@ -214,7 +207,7 @@
             // 
             this.l_PTZCon.AutoSize = true;
             this.l_PTZCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_PTZCon.Location = new System.Drawing.Point(12, 182);
+            this.l_PTZCon.Location = new System.Drawing.Point(9, 168);
             this.l_PTZCon.Name = "l_PTZCon";
             this.l_PTZCon.Size = new System.Drawing.Size(104, 20);
             this.l_PTZCon.TabIndex = 55;
@@ -232,7 +225,7 @@
             // 
             // b_Presets_Learn
             // 
-            this.b_Presets_Learn.Location = new System.Drawing.Point(143, 472);
+            this.b_Presets_Learn.Location = new System.Drawing.Point(138, 475);
             this.b_Presets_Learn.Name = "b_Presets_Learn";
             this.b_Presets_Learn.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_Learn.TabIndex = 51;
@@ -242,7 +235,7 @@
             // 
             // b_Presets_GoTo
             // 
-            this.b_Presets_GoTo.Location = new System.Drawing.Point(19, 473);
+            this.b_Presets_GoTo.Location = new System.Drawing.Point(14, 476);
             this.b_Presets_GoTo.Name = "b_Presets_GoTo";
             this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_GoTo.TabIndex = 50;
@@ -252,7 +245,7 @@
             // 
             // b_PTZ_Down
             // 
-            this.b_PTZ_Down.Location = new System.Drawing.Point(94, 290);
+            this.b_PTZ_Down.Location = new System.Drawing.Point(93, 276);
             this.b_PTZ_Down.Name = "b_PTZ_Down";
             this.b_PTZ_Down.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Down.TabIndex = 49;
@@ -263,7 +256,7 @@
             // 
             // b_PTZ_Up
             // 
-            this.b_PTZ_Up.Location = new System.Drawing.Point(94, 206);
+            this.b_PTZ_Up.Location = new System.Drawing.Point(93, 192);
             this.b_PTZ_Up.Name = "b_PTZ_Up";
             this.b_PTZ_Up.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Up.TabIndex = 48;
@@ -275,7 +268,7 @@
             // b_PTZ_FocusNeg
             // 
             this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.Aqua;
-            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(16, 292);
+            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(15, 278);
             this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
             this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusNeg.TabIndex = 47;
@@ -287,7 +280,7 @@
             // b_PTZ_ZoomNeg
             // 
             this.b_PTZ_ZoomNeg.BackColor = System.Drawing.Color.GreenYellow;
-            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(16, 205);
+            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(15, 191);
             this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
             this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(59, 35);
             this.b_PTZ_ZoomNeg.TabIndex = 46;
@@ -299,7 +292,7 @@
             // b_PTZ_FocusPos
             // 
             this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.Aqua;
-            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(171, 292);
+            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(170, 278);
             this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
             this.b_PTZ_FocusPos.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusPos.TabIndex = 45;
@@ -311,7 +304,7 @@
             // b_PTZ_ZoomPos
             // 
             this.b_PTZ_ZoomPos.BackColor = System.Drawing.Color.GreenYellow;
-            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(171, 206);
+            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(170, 192);
             this.b_PTZ_ZoomPos.Name = "b_PTZ_ZoomPos";
             this.b_PTZ_ZoomPos.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_ZoomPos.TabIndex = 44;
@@ -322,7 +315,7 @@
             // 
             // b_PTZ_Right
             // 
-            this.b_PTZ_Right.Location = new System.Drawing.Point(152, 248);
+            this.b_PTZ_Right.Location = new System.Drawing.Point(151, 234);
             this.b_PTZ_Right.Name = "b_PTZ_Right";
             this.b_PTZ_Right.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Right.TabIndex = 52;
@@ -333,7 +326,7 @@
             // 
             // b_PTZ_Left
             // 
-            this.b_PTZ_Left.Location = new System.Drawing.Point(36, 248);
+            this.b_PTZ_Left.Location = new System.Drawing.Point(35, 234);
             this.b_PTZ_Left.Name = "b_PTZ_Left";
             this.b_PTZ_Left.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Left.TabIndex = 43;
@@ -344,8 +337,8 @@
             // 
             // track_IPCon_Zoom
             // 
-            this.track_IPCon_Zoom.BackColor = System.Drawing.SystemColors.Control;
-            this.track_IPCon_Zoom.Location = new System.Drawing.Point(98, 374);
+            this.track_IPCon_Zoom.BackColor = System.Drawing.SystemColors.Window;
+            this.track_IPCon_Zoom.Location = new System.Drawing.Point(100, 370);
             this.track_IPCon_Zoom.Maximum = 3;
             this.track_IPCon_Zoom.Minimum = 1;
             this.track_IPCon_Zoom.Name = "track_IPCon_Zoom";
@@ -357,7 +350,7 @@
             // l_IPCon_Zoom
             // 
             this.l_IPCon_Zoom.AutoSize = true;
-            this.l_IPCon_Zoom.Location = new System.Drawing.Point(13, 386);
+            this.l_IPCon_Zoom.Location = new System.Drawing.Point(15, 378);
             this.l_IPCon_Zoom.Name = "l_IPCon_Zoom";
             this.l_IPCon_Zoom.Size = new System.Drawing.Size(68, 13);
             this.l_IPCon_Zoom.TabIndex = 72;
@@ -367,7 +360,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(254, 533);
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.ClientSize = new System.Drawing.Size(254, 521);
             this.Controls.Add(this.track_IPCon_Zoom);
             this.Controls.Add(this.l_IPCon_Zoom);
             this.Controls.Add(this.tB_Presets_Number);
@@ -377,7 +371,6 @@
             this.Controls.Add(this.cB_IPCon_Type);
             this.Controls.Add(this.cB_IPCon_KeyboardCon);
             this.Controls.Add(this.cB_IPCon_Selected);
-            this.Controls.Add(this.l_IPCon_KeyControl);
             this.Controls.Add(this.l_IPCon_SelectedCam);
             this.Controls.Add(this.l_IPCon_Port);
             this.Controls.Add(this.l_IPCon_PTSpeed);
@@ -418,7 +411,6 @@
         public System.Windows.Forms.ComboBox cB_IPCon_Type;
         public System.Windows.Forms.CheckBox cB_IPCon_KeyboardCon;
         public System.Windows.Forms.ComboBox cB_IPCon_Selected;
-        public System.Windows.Forms.Label l_IPCon_KeyControl;
         public System.Windows.Forms.Label l_IPCon_SelectedCam;
         public System.Windows.Forms.Label l_IPCon_Port;
         public System.Windows.Forms.Label l_IPCon_PTSpeed;

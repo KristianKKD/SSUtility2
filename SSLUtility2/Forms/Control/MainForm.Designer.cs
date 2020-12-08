@@ -119,6 +119,9 @@ namespace SSLUtility2 {
             this.Menu_Window_PelcoD = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Response = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_QC = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_QC_PanZero = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_FTM_Open = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).BeginInit();
@@ -478,6 +481,7 @@ namespace SSLUtility2 {
             // 
             // cB_Other_Rate
             // 
+            this.cB_Other_Rate.BackColor = System.Drawing.SystemColors.Window;
             this.cB_Other_Rate.FormattingEnabled = true;
             this.cB_Other_Rate.Items.AddRange(new object[] {
             "500",
@@ -553,6 +557,7 @@ namespace SSLUtility2 {
             // 
             // cB_Rec_Quality
             // 
+            this.cB_Rec_Quality.BackColor = System.Drawing.SystemColors.Window;
             this.cB_Rec_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
             this.cB_Rec_Quality.FormattingEnabled = true;
             this.cB_Rec_Quality.Items.AddRange(new object[] {
@@ -576,6 +581,7 @@ namespace SSLUtility2 {
             // 
             // tB_Rec_scFileN
             // 
+            this.tB_Rec_scFileN.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Rec_scFileN.Enabled = false;
             this.tB_Rec_scFileN.ForeColor = System.Drawing.SystemColors.MenuText;
             this.tB_Rec_scFileN.Location = new System.Drawing.Point(123, 126);
@@ -595,6 +601,7 @@ namespace SSLUtility2 {
             // 
             // cB_Rec_FPS
             // 
+            this.cB_Rec_FPS.BackColor = System.Drawing.SystemColors.Window;
             this.cB_Rec_FPS.ForeColor = System.Drawing.SystemColors.MenuText;
             this.cB_Rec_FPS.FormattingEnabled = true;
             this.cB_Rec_FPS.Items.AddRange(new object[] {
@@ -611,6 +618,7 @@ namespace SSLUtility2 {
             // 
             // tB_Rec_vFileN
             // 
+            this.tB_Rec_vFileN.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Rec_vFileN.Enabled = false;
             this.tB_Rec_vFileN.ForeColor = System.Drawing.SystemColors.MenuText;
             this.tB_Rec_vFileN.Location = new System.Drawing.Point(123, 97);
@@ -718,6 +726,7 @@ namespace SSLUtility2 {
             // 
             // tB_Paths_vFolder
             // 
+            this.tB_Paths_vFolder.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Paths_vFolder.Enabled = false;
             this.tB_Paths_vFolder.Location = new System.Drawing.Point(119, 110);
             this.tB_Paths_vFolder.Name = "tB_Paths_vFolder";
@@ -736,6 +745,7 @@ namespace SSLUtility2 {
             // 
             // tB_Paths_sCFolder
             // 
+            this.tB_Paths_sCFolder.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Paths_sCFolder.Enabled = false;
             this.tB_Paths_sCFolder.Location = new System.Drawing.Point(119, 77);
             this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
@@ -863,6 +873,7 @@ namespace SSLUtility2 {
             this.Menu.BackColor = System.Drawing.SystemColors.ControlDark;
             this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Window,
+            this.Menu_QC,
             this.Menu_Final});
             this.Menu.Location = new System.Drawing.Point(0, 0);
             this.Menu.Name = "Menu";
@@ -876,7 +887,8 @@ namespace SSLUtility2 {
             this.Menu_Window_Detached,
             this.Menu_Window_PelcoD,
             this.Menu_Window_Lite,
-            this.Menu_Window_Response});
+            this.Menu_Window_Response,
+            this.Menu_Window_Settings});
             this.Menu_Window.Name = "Menu_Window";
             this.Menu_Window.Size = new System.Drawing.Size(63, 20);
             this.Menu_Window.Text = "Window";
@@ -909,6 +921,28 @@ namespace SSLUtility2 {
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
+            // Menu_Window_Settings
+            // 
+            this.Menu_Window_Settings.Name = "Menu_Window_Settings";
+            this.Menu_Window_Settings.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Settings.Text = "Settings";
+            this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
+            // 
+            // Menu_QC
+            // 
+            this.Menu_QC.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_QC_PanZero});
+            this.Menu_QC.Name = "Menu_QC";
+            this.Menu_QC.Size = new System.Drawing.Size(115, 20);
+            this.Menu_QC.Text = "Quick Commands";
+            // 
+            // Menu_QC_PanZero
+            // 
+            this.Menu_QC_PanZero.Name = "Menu_QC_PanZero";
+            this.Menu_QC_PanZero.Size = new System.Drawing.Size(133, 22);
+            this.Menu_QC_PanZero.Text = "Set Pan = 0";
+            this.Menu_QC_PanZero.Click += new System.EventHandler(this.Menu_QC_PanZero_Click);
+            // 
             // Menu_Final
             // 
             this.Menu_Final.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -928,7 +962,7 @@ namespace SSLUtility2 {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1659, 929);
             this.Controls.Add(this.tC_Main);
             this.Controls.Add(this.Menu);
@@ -2044,5 +2078,8 @@ namespace SSLUtility2 {
         public ComboBox cB_Other_Rate;
         public Label l_Other_Rate;
         private ToolStripMenuItem Menu_Window_Response;
+        private ToolStripMenuItem Menu_QC;
+        private ToolStripMenuItem Menu_QC_PanZero;
+        private ToolStripMenuItem Menu_Window_Settings;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
