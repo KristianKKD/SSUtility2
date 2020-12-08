@@ -197,6 +197,7 @@
             // 
             // b_PD_Stop
             // 
+            this.b_PD_Stop.Enabled = false;
             this.b_PD_Stop.Location = new System.Drawing.Point(348, 367);
             this.b_PD_Stop.Name = "b_PD_Stop";
             this.b_PD_Stop.Size = new System.Drawing.Size(111, 50);

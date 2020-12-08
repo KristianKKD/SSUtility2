@@ -19,6 +19,8 @@ namespace SSLUtility2
 
         async Task Fire() {
             try {
+                stop = false;
+                b_PD_Stop.Enabled = true;
                 for (int i = 0; i < rtb_PD_Commands.Lines.Length; i++) {
                     string l = rtb_PD_Commands.Lines[i];
                     if (!stop) {
@@ -33,6 +35,7 @@ namespace SSLUtility2
             }
 
             MessageBox.Show("Finished sending commands!");
+            b_PD_Stop.Enabled = true;
         }
 
         async Task CheckLine(string line) {
@@ -143,6 +146,7 @@ namespace SSLUtility2
        
         private void b_PD_Stop_Click(object sender, EventArgs e) { //make it cancel current script
             stop = true;
+            b_PD_Stop.Enabled = false;
         }
 
         private void b_PD_RL_Click(object sender, EventArgs e) {
