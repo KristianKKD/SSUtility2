@@ -38,10 +38,10 @@ namespace SSLUtility2 {
         }
 
         private void b_PlayerD_Play_Click(object sender, EventArgs e) {
-            StartPlaying();
+            StartPlaying(true);
         }
 
-        public void StartPlaying() {
+        public void StartPlaying(bool showErrors) {
             Uri combined = GetCombined();
 
             if (myInfoRef != null) {
@@ -53,7 +53,7 @@ namespace SSLUtility2 {
             }
 
             if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr,
-                tB_PlayerD_Buffering.Text, true).Result) {
+                tB_PlayerD_Buffering.Text, showErrors).Result) {
 
                 if (check_PlayerD_StatsEnabled.Checked) {
                     StartInfo();

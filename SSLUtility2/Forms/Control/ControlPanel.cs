@@ -90,9 +90,9 @@ namespace SSLUtility2
         }
 
         async Task DelayStop() {
-            CameraCommunicate.sendtoIPAsync(D.protocol.CameraStop(MainForm.m.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            CameraCommunicate.sendtoIPAsync(D.protocol.CameraStop(MainForm.m.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, true);
             Task.Delay(100);
-            CameraCommunicate.sendtoIPAsync(D.protocol.CameraStop(MainForm.m.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            CameraCommunicate.sendtoIPAsync(D.protocol.CameraStop(MainForm.m.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, true);
         }
 
         private void tB_IPCon_Adr_Leave(object sender, EventArgs e) {
@@ -106,7 +106,7 @@ namespace SSLUtility2
         }
 
         private void ControlPanel_Load(object sender, EventArgs e) {
-            MainForm.m.PopulateSettingText();
+            MainForm.m.setPage.PopulateSettingText();
         }
 
         public void StopCam() {

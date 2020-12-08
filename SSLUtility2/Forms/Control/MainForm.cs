@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.1.1";
+        public const string version = "v1.3.2.0";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -19,22 +19,23 @@ namespace SSLUtility2 {
         public static Control[] saveList = new Control[0];
 
         public ControlPanel ipCon;
+        public SettingsPage setPage;
 
         public static MainForm m { get; set; }
 
         public async Task StartupStuff() {
             m = this;
+            setPage = new SettingsPage();
+            rl = new ResponseLog();
             D.protocol = new D();
+
             lite = false;
             l_Version.Text = l_Version.Text + version;
             bool first = CheckIfFirstTime();
-            firmwareUp.Dispose(); //remove the firmware page
 
             AttachControlPanel();
             Detached playerL = AttachDetached(10);
             Detached playerR = AttachDetached(690);
-
-            OpenResponseLog(false);
 
             CreateInfoPanels(playerL, playerR);
 
@@ -65,19 +66,9 @@ namespace SSLUtility2 {
 
             FileStuff(first);
 
-            PopulateSettingText();
+            setPage.PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
             AutoConnect(playerL, playerR);
-        }
-
-        public void OpenResponseLog(bool show) {
-            if (rl == null) {
-                rl = new ResponseLog();
-            }
-            rl.BringToFront();
-            if (show) {
-                rl.Show();
-            }
         }
 
         void CreateInfoPanels(Detached playerL, Detached playerR) {
@@ -85,23 +76,6 @@ namespace SSLUtility2 {
             AttachInfoPanel(playerR, 950);
             playerL.myInfoRef.otherD = playerR;
             playerR.myInfoRef.otherD = playerL;
-        }
-
-        public async Task PopulateSettingText() {
-            tB_Paths_sCFolder.Text = ConfigControl.savedFolder;
-            tB_Paths_vFolder.Text = ConfigControl.savedFolder;
-
-            tB_Rec_vFileN.Text = ConfigControl.vFileName;
-            tB_Rec_scFileN.Text = ConfigControl.scFileName;
-
-            cB_Rec_Quality.Text = ConfigControl.recQual;
-            cB_Rec_FPS.Text = ConfigControl.recFPS;
-
-            cB_Other_Rate.Text = ConfigControl.updateMs;
-
-            check_Other_Subnet.Checked = ConfigControl.subnetNotif;
-            check_Other_AutoPlay.Checked = ConfigControl.autoPlay;
-            check_Paths_Manual.Checked = ConfigControl.automaticPaths;
         }
 
         bool CheckIfFirstTime() {
@@ -118,7 +92,7 @@ namespace SSLUtility2 {
                 if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
                     if (Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false).Result
                         && connected && playerL.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
-                        playerL.StartPlaying();
+                        playerL.StartPlaying(false);
                     } else {
                         playerL.myInfoRef.HideAll();
                     }
@@ -126,7 +100,7 @@ namespace SSLUtility2 {
                 if (playerR.tB_PlayerD_SimpleAdr.Text != "") {
                     if (Play(playerR.VLCPlayer_D, playerR.GetCombined(), playerR.tB_PlayerD_SimpleAdr, playerR.tB_PlayerD_Buffering.Text, false).Result
                         && connected && playerR.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
-                        playerR.StartPlaying();
+                        playerR.StartPlaying(false);
                     } else {
                         playerR.myInfoRef.HideAll();
                     }
@@ -229,8 +203,6 @@ namespace SSLUtility2 {
         }
 
         void AttachInfoPanel(Detached d, int xOffset) {
-            TabPage tp = tC_Main.TabPages[0];
-
             Panel p = new Panel();
             InfoPanel i = new InfoPanel();
             
@@ -243,22 +215,19 @@ namespace SSLUtility2 {
             var c = GetAll(i);
             p.Controls.AddRange(c.ToArray());
 
-            tp.Controls.Add(p);
+            p_Control.Controls.Add(p);
         }
 
         void AttachControlPanel() {
-            TabPage tp = tC_Main.TabPages[0];
-            
-            ipCon = SpawnControlPanel(tp, false);
+            ipCon = SpawnControlPanel(p_Control, false);
 
-            PresetPanel pp = AttachPresetPanel(tp, ipCon);
+            PresetPanel pp = AttachPresetPanel(p_Control, ipCon);
             pp.cp = ipCon;
 
             isOriginal = true; 
         }
 
         Detached AttachDetached(int xOffset) {
-            TabPage tp = tC_Main.TabPages[0];
             Panel pan = new Panel();
             Detached d = DetachVid(false);
 
@@ -279,33 +248,32 @@ namespace SSLUtility2 {
             pan.Size = new Size(d.Width - 18, d.Height - 40);
             pan.Location = new Point(ipCon.Location.X + ipCon.Size.Width + xOffset, ipCon.Location.Y + 65);
 
-            tp.Controls.Add(pan);
+            p_Control.Controls.Add(pan);
 
             return d;
         }
        
         public void InitLiteMode() {
-            TabPage tp = LiteMode();
-            ControlPanel cp = SpawnControlPanel(tp);
-            PresetPanel pp = AttachPresetPanel(tp, cp);
+            m.Size = new Size(300, Height);
+            AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
+            lite = true;
+            
+            p_Control.Dispose();
+
+            ControlPanel cp = SpawnControlPanel(p_Main);
+            PresetPanel pp = AttachPresetPanel(p_Main, cp);
+            saveList = new Control[]{
+                cp.cB_IPCon_Type,
+                cp.tB_IPCon_Adr,
+                cp.tB_IPCon_Port,
+                cp.cB_IPCon_Selected,
+            };
+
+            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, false);
+
             pp.cp = cp;
             isOriginal = false;
             Menu_Window_Lite.Text = "Dual Mode";
-            foreach (TabPage tab in tC_Main.TabPages) {
-                if (tab != tp) {
-                    tab.Dispose();
-                }
-            }
-        }
-
-        public TabPage LiteMode() {
-            TabPage tp = new TabPage();
-            tp.Text = "Camera Control";
-            tC_Main.Controls.Add(tp);
-            m.Size = new Size(300, 1000);
-            AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
-            lite = true;
-            return tp;
         }
 
         public Detached DetachVid(bool show) {
@@ -327,7 +295,7 @@ namespace SSLUtility2 {
             return pd;
         }
 
-        ControlPanel SpawnControlPanel(TabPage tp, bool makeLite = true) {
+        ControlPanel SpawnControlPanel(Panel p, bool makeLite = true) {
             Panel pan = new Panel();
             ControlPanel cp = new ControlPanel();
 
@@ -344,13 +312,14 @@ namespace SSLUtility2 {
             cp.StartConnect();
 
             pan.Size = new Size(cp.Size.Width, cp.Size.Height - 30);
-            tp.Controls.Add(pan);
+            pan.Location = new Point(pan.Location.X, pan.Location.Y);
+            p.Controls.Add(pan);
 
             AddControls(pan, cp);
             return cp;
         }
 
-        PresetPanel AttachPresetPanel(TabPage tp, ControlPanel panel) {
+        PresetPanel AttachPresetPanel(Panel p, ControlPanel panel) {
             Panel pan = new Panel();
             PresetPanel pp = new PresetPanel();
             
@@ -361,7 +330,7 @@ namespace SSLUtility2 {
             pan.Location = new Point(0, panel.Size.Height - 40);
             pan.Size = pp.Size;
 
-            tp.Controls.Add(pan);
+            p.Controls.Add(pan);
 
             var c = GetAllType(pp, typeof(TabControl));
             var cTwo = GetAllType(pp, typeof(Label));
@@ -398,7 +367,7 @@ namespace SSLUtility2 {
         public void SetFeatureToAllControls(Control.ControlCollection cc) {
             if (cc != null) {
                 foreach (Control control in cc) {
-                    if (control != tC_Main) {
+                    if (control != p_Control) {
                         control.PreviewKeyDown += new PreviewKeyDownEventHandler(control_PreviewKeyDown);
                     }
                     SetFeatureToAllControls(control.Controls);
@@ -414,7 +383,7 @@ namespace SSLUtility2 {
             }
         }
 
-        async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
+        public async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
             if (tb.Text.Length < 1) {
                 tb.Text = ConfigControl.appFolder;
                 return false;
@@ -485,11 +454,6 @@ namespace SSLUtility2 {
             }
         }
 
-        private async Task ApplyAll() { 
-            ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
-            MessageBox.Show("Applied settings to: " + ConfigControl.appFolder + ConfigControl.config);
-        }
-
         public uint MakeAdr(Control comboBox = null) {
             if (comboBox == null) {
                 comboBox = ipCon.cB_IPCon_Selected;
@@ -538,7 +502,7 @@ namespace SSLUtility2 {
                 code = D.protocol.CameraPan(address, pan, speed);
             }
 
-            CameraCommunicate.sendtoIPAsync(code, ipCon.l_IPCon_Connected, ip, port);
+            CameraCommunicate.sendtoIPAsync(code, ipCon.l_IPCon_Connected, ip, port, true);
         }
 
         public void PTZZoom(D.Zoom dir, uint address, string ip, string port, Control lcon) {
@@ -546,7 +510,7 @@ namespace SSLUtility2 {
                 CameraCommunicate.Connect(ip, port, lcon);
             }
 
-            CameraCommunicate.sendtoIPAsync(D.protocol.CameraZoom(address, dir), lcon, ip, port);
+            CameraCommunicate.sendtoIPAsync(D.protocol.CameraZoom(address, dir), lcon, ip, port, true);
         }
 
         public async Task SaveSnap(Detached player) {
@@ -673,111 +637,6 @@ namespace SSLUtility2 {
             }
             return true;
         }
-       
-        private void b_Settings_Default_Click(object sender, EventArgs e) {
-            DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
-                "Settings will not automatically be applied so the user may edit the defaults before applying.",
-                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (d == DialogResult.Yes) {
-                ConfigControl.SetToDefaults();
-                PopulateSettingText();
-            }
-        }
-
-        private void OnFinishedTypingScFolder(object sender, EventArgs e) {
-            if (CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
-                ConfigControl.scFolder = tB_Paths_sCFolder.Text;
-            }
-        }
-
-        private void OnFinishedTypingVFolder(object sender, EventArgs e) {
-            if (CheckFinishedTypingPath(tB_Paths_vFolder, l_Paths_vCheck).Result) {
-                ConfigControl.vFolder = tB_Paths_vFolder.Text;
-            }
-        }
-
-        private void check_Not_Subnet_CheckedChanged(object sender, EventArgs e) {
-            ConfigControl.subnetNotif = check_Other_Subnet.Checked;
-        }
-
-        private void check_Other_AutoPlay_CheckChanged(object sender, EventArgs e) {
-            ConfigControl.autoPlay = check_Other_AutoPlay.Checked;
-        }
-
-        private void cB_Other_Rate_TextChanged(object sender, EventArgs e) {
-            if (CheckIfNameValid(cB_Other_Rate.Text.ToCharArray(), true).Result){
-                ConfigControl.updateMs = cB_Other_Rate.Text;
-            }
-        }
-
-        private void check_Paths_Manual_CheckedChanged(object sender, EventArgs e) {
-            bool auto = !check_Paths_Manual.Checked;
-
-            ConfigControl.automaticPaths = !auto;
-            
-            tB_Paths_sCFolder.Enabled = auto;
-            tB_Paths_vFolder.Enabled = auto;
-
-            tB_Rec_vFileN.Enabled = auto;
-            tB_Rec_scFileN.Enabled = auto;
-
-            b_Paths_sCBrowse.Enabled = auto;
-            b_Paths_vBrowse.Enabled = auto;
-        }
-
-        private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
-            BrowseFolderButton(tB_Paths_sCFolder);
-        }
-
-        private void b_Paths_vBrowse_Click(object sender, EventArgs e) {
-            BrowseFolderButton(tB_Paths_vFolder);
-        }
-
-        private void tB_Rec_vFileN_TextChanged(object sender, EventArgs e) {
-            if (CheckIfNameValid(tB_Rec_vFileN.Text.ToCharArray()).Result) {
-                ConfigControl.vFileName = tB_Rec_vFileN.Text;
-            } else {
-                tB_Rec_vFileN.Text = ConfigControl.vFileName;
-            }
-        }
-
-        private void tB_Rec_sCFileN_TextChanged(object sender, EventArgs e) {
-            if (CheckIfNameValid(tB_Rec_scFileN.Text.ToCharArray()).Result) {
-                ConfigControl.scFileName = tB_Rec_scFileN.Text;
-            } else {
-                tB_Rec_vFileN.Text = ConfigControl.scFileName;
-            }
-        }
-
-        private void cB_Rec_Quality_TextChanged(object sender, EventArgs e) {
-            if (!int.TryParse(cB_Rec_Quality.Text, out int q)) {
-                cB_Rec_Quality.Text = q.ToString();
-                return;
-            }
-            if (q > 100) {
-                cB_Rec_Quality.Text = "100";
-            } else if (q < 1) {
-                cB_Rec_Quality.Text = "1";
-            }
-
-            ConfigControl.recQual = cB_Rec_Quality.Text;
-        }
-
-        private void cB_Rec_FPS_TextChanged(object sender, EventArgs e) {
-            if (!int.TryParse(cB_Rec_Quality.Text, out int fps)) {
-                cB_Rec_FPS.Text = fps.ToString();
-                return;
-            }
-            if (fps < 1) {
-                cB_Rec_FPS.Text = "1";
-            }
-
-            ConfigControl.recFPS = cB_Rec_FPS.Text;
-        }
-
-        private void b_Settings_Apply_Click(object sender, EventArgs e) {
-            ApplyAll();
-        }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             CameraCommunicate.CloseSock();
@@ -812,7 +671,13 @@ namespace SSLUtility2 {
         }
 
         private void Menu_Window_Response_Click(object sender, EventArgs e) {
-            OpenResponseLog(true);
+            OpenResponseLog();
+            OpenResponseLog();
+        }
+
+        public void OpenResponseLog() {
+            rl.Show();
+            rl.BringToFront();
         }
 
         private void Menu_QC_PanZero_Click(object sender, EventArgs e) {
@@ -820,7 +685,8 @@ namespace SSLUtility2 {
         }
 
         private void Menu_Window_Settings_Click(object sender, EventArgs e) {
-
+            setPage.Show();
+            setPage.BringToFront();
         }
 
     } // end of class MainForm

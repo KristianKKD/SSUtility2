@@ -146,7 +146,7 @@ namespace SSLUtility2
         }
 
         private void b_PD_RL_Click(object sender, EventArgs e) {
-            MainForm.m.OpenResponseLog(true);
+            MainForm.m.OpenResponseLog();
         }
 
         private void check_PD_Perfect_CheckedChanged(object sender, EventArgs e) {

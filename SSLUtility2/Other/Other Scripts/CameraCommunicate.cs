@@ -20,11 +20,11 @@ namespace SSLUtility2 {
         public const string defaultResult = "00 00 00 00 00 00 00";
 
 
-        public static async Task<bool> sendtoIPAsync(byte[] code, Control lab = null, string ip = null, string port = null) {
+        public static async Task<bool> sendtoIPAsync(byte[] code, Control lab = null, string ip = null, string port = null, bool hideError = false) {
             //MainForm.m.ReadCommand(code, true);
             try {
                 if (!sock.Connected) {
-                    bool ableToConnect = Connect(ip, port, lab, false).Result;
+                    bool ableToConnect = Connect(ip, port, lab, hideError).Result;
                     if (!ableToConnect) {
                         return false;
                     }
@@ -34,7 +34,9 @@ namespace SSLUtility2 {
                 bool success = SendToSocket(code).Result;
                 return success;
             } catch (Exception e) {
-                MainForm.ShowError(failedConnectMsg, errorCaption, e.ToString());
+                if (!hideError) {
+                    MainForm.ShowError(failedConnectMsg, errorCaption, e.ToString());
+                }
                 return false;
             }
         }
@@ -53,7 +55,12 @@ namespace SSLUtility2 {
                     CloseSock();
                 }
 
-                Uri u = new Uri("http://" + ipAdr + ":" + port);
+                Uri u;
+                if (ipAdr != null && port != null && ipAdr != "" && port != "") {
+                    u = new Uri("http://" + ipAdr + ":" + port);
+                } else {
+                    return false;
+                }
 
                 if (!PingAdr(u).Result) {
                     if (!stopError) {

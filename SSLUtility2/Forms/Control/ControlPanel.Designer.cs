@@ -95,7 +95,7 @@
             // track_PTZ_PTSpeed
             // 
             this.track_PTZ_PTSpeed.BackColor = System.Drawing.SystemColors.Window;
-            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(100, 328);
+            this.track_PTZ_PTSpeed.Location = new System.Drawing.Point(100, 335);
             this.track_PTZ_PTSpeed.Maximum = 63;
             this.track_PTZ_PTSpeed.Name = "track_PTZ_PTSpeed";
             this.track_PTZ_PTSpeed.Size = new System.Drawing.Size(132, 45);
@@ -160,7 +160,7 @@
             // l_IPCon_PTSpeed
             // 
             this.l_IPCon_PTSpeed.AutoSize = true;
-            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(15, 337);
+            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(15, 344);
             this.l_IPCon_PTSpeed.Name = "l_IPCon_PTSpeed";
             this.l_IPCon_PTSpeed.Size = new System.Drawing.Size(88, 13);
             this.l_IPCon_PTSpeed.TabIndex = 59;
@@ -207,7 +207,7 @@
             // 
             this.l_PTZCon.AutoSize = true;
             this.l_PTZCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_PTZCon.Location = new System.Drawing.Point(9, 168);
+            this.l_PTZCon.Location = new System.Drawing.Point(9, 172);
             this.l_PTZCon.Name = "l_PTZCon";
             this.l_PTZCon.Size = new System.Drawing.Size(104, 20);
             this.l_PTZCon.TabIndex = 55;
@@ -245,7 +245,7 @@
             // 
             // b_PTZ_Down
             // 
-            this.b_PTZ_Down.Location = new System.Drawing.Point(93, 276);
+            this.b_PTZ_Down.Location = new System.Drawing.Point(93, 283);
             this.b_PTZ_Down.Name = "b_PTZ_Down";
             this.b_PTZ_Down.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Down.TabIndex = 49;
@@ -256,7 +256,7 @@
             // 
             // b_PTZ_Up
             // 
-            this.b_PTZ_Up.Location = new System.Drawing.Point(93, 192);
+            this.b_PTZ_Up.Location = new System.Drawing.Point(93, 199);
             this.b_PTZ_Up.Name = "b_PTZ_Up";
             this.b_PTZ_Up.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Up.TabIndex = 48;
@@ -268,7 +268,7 @@
             // b_PTZ_FocusNeg
             // 
             this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.Aqua;
-            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(15, 278);
+            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(15, 285);
             this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
             this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusNeg.TabIndex = 47;
@@ -280,7 +280,7 @@
             // b_PTZ_ZoomNeg
             // 
             this.b_PTZ_ZoomNeg.BackColor = System.Drawing.Color.GreenYellow;
-            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(15, 191);
+            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(15, 198);
             this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
             this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(59, 35);
             this.b_PTZ_ZoomNeg.TabIndex = 46;
@@ -292,7 +292,7 @@
             // b_PTZ_FocusPos
             // 
             this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.Aqua;
-            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(170, 278);
+            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(170, 285);
             this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
             this.b_PTZ_FocusPos.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusPos.TabIndex = 45;
@@ -304,7 +304,7 @@
             // b_PTZ_ZoomPos
             // 
             this.b_PTZ_ZoomPos.BackColor = System.Drawing.Color.GreenYellow;
-            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(170, 192);
+            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(170, 199);
             this.b_PTZ_ZoomPos.Name = "b_PTZ_ZoomPos";
             this.b_PTZ_ZoomPos.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_ZoomPos.TabIndex = 44;
@@ -315,7 +315,7 @@
             // 
             // b_PTZ_Right
             // 
-            this.b_PTZ_Right.Location = new System.Drawing.Point(151, 234);
+            this.b_PTZ_Right.Location = new System.Drawing.Point(151, 241);
             this.b_PTZ_Right.Name = "b_PTZ_Right";
             this.b_PTZ_Right.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Right.TabIndex = 52;
@@ -326,7 +326,7 @@
             // 
             // b_PTZ_Left
             // 
-            this.b_PTZ_Left.Location = new System.Drawing.Point(35, 234);
+            this.b_PTZ_Left.Location = new System.Drawing.Point(35, 241);
             this.b_PTZ_Left.Name = "b_PTZ_Left";
             this.b_PTZ_Left.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Left.TabIndex = 43;
@@ -338,7 +338,7 @@
             // track_IPCon_Zoom
             // 
             this.track_IPCon_Zoom.BackColor = System.Drawing.SystemColors.Window;
-            this.track_IPCon_Zoom.Location = new System.Drawing.Point(100, 370);
+            this.track_IPCon_Zoom.Location = new System.Drawing.Point(100, 377);
             this.track_IPCon_Zoom.Maximum = 3;
             this.track_IPCon_Zoom.Minimum = 1;
             this.track_IPCon_Zoom.Name = "track_IPCon_Zoom";
@@ -350,7 +350,7 @@
             // l_IPCon_Zoom
             // 
             this.l_IPCon_Zoom.AutoSize = true;
-            this.l_IPCon_Zoom.Location = new System.Drawing.Point(15, 378);
+            this.l_IPCon_Zoom.Location = new System.Drawing.Point(15, 385);
             this.l_IPCon_Zoom.Name = "l_IPCon_Zoom";
             this.l_IPCon_Zoom.Size = new System.Drawing.Size(68, 13);
             this.l_IPCon_Zoom.TabIndex = 72;
