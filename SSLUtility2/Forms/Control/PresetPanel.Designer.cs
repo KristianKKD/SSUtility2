@@ -112,42 +112,50 @@ namespace SSLUtility2
             // 
             // b_Presets_Admin_DefaultMen
             // 
-            this.b_Presets_Admin_DefaultMen.Location = new System.Drawing.Point(7, 71);
+            this.b_Presets_Admin_DefaultMen.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Admin_DefaultMen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Presets_Admin_DefaultMen.Location = new System.Drawing.Point(7, 78);
             this.b_Presets_Admin_DefaultMen.Name = "b_Presets_Admin_DefaultMen";
             this.b_Presets_Admin_DefaultMen.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Admin_DefaultMen.TabIndex = 10;
             this.b_Presets_Admin_DefaultMen.Text = "Default Menu";
-            this.b_Presets_Admin_DefaultMen.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_DefaultMen.UseVisualStyleBackColor = false;
             this.b_Presets_Admin_DefaultMen.Click += new System.EventHandler(this.b_Presets_Admin_DefaultMen_Click);
             // 
             // b_Presets_Admin_DebugToggle
             // 
-            this.b_Presets_Admin_DebugToggle.Location = new System.Drawing.Point(7, 100);
+            this.b_Presets_Admin_DebugToggle.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Admin_DebugToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Presets_Admin_DebugToggle.Location = new System.Drawing.Point(7, 111);
             this.b_Presets_Admin_DebugToggle.Name = "b_Presets_Admin_DebugToggle";
             this.b_Presets_Admin_DebugToggle.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Admin_DebugToggle.TabIndex = 10;
             this.b_Presets_Admin_DebugToggle.Text = "Debug Toggle";
-            this.b_Presets_Admin_DebugToggle.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_DebugToggle.UseVisualStyleBackColor = false;
             this.b_Presets_Admin_DebugToggle.Click += new System.EventHandler(this.b_Presets_Admin_DebugToggle_Click);
             // 
             // b_Presets_Admin_MechMen
             // 
+            this.b_Presets_Admin_MechMen.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Admin_MechMen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Admin_MechMen.Location = new System.Drawing.Point(7, 12);
             this.b_Presets_Admin_MechMen.Name = "b_Presets_Admin_MechMen";
             this.b_Presets_Admin_MechMen.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Admin_MechMen.TabIndex = 9;
             this.b_Presets_Admin_MechMen.Text = "Mechanical Menu";
-            this.b_Presets_Admin_MechMen.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_MechMen.UseVisualStyleBackColor = false;
             this.b_Presets_Admin_MechMen.Click += new System.EventHandler(this.b_Presets_Admin_MechMen_Click);
             // 
             // b_Presets_Admin_SetupMen
             // 
-            this.b_Presets_Admin_SetupMen.Location = new System.Drawing.Point(7, 41);
+            this.b_Presets_Admin_SetupMen.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Admin_SetupMen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Presets_Admin_SetupMen.Location = new System.Drawing.Point(7, 45);
             this.b_Presets_Admin_SetupMen.Name = "b_Presets_Admin_SetupMen";
             this.b_Presets_Admin_SetupMen.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Admin_SetupMen.TabIndex = 9;
             this.b_Presets_Admin_SetupMen.Text = "Setup Menu";
-            this.b_Presets_Admin_SetupMen.UseVisualStyleBackColor = true;
+            this.b_Presets_Admin_SetupMen.UseVisualStyleBackColor = false;
             this.b_Presets_Admin_SetupMen.Click += new System.EventHandler(this.b_Presets_Admin_SetupMen_Click);
             // 
             // daylightPage
@@ -168,62 +176,74 @@ namespace SSLUtility2
             // 
             // b_Presets_Daylight_Extender
             // 
+            this.b_Presets_Daylight_Extender.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Daylight_Extender.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Daylight_Extender.Location = new System.Drawing.Point(7, 166);
             this.b_Presets_Daylight_Extender.Name = "b_Presets_Daylight_Extender";
             this.b_Presets_Daylight_Extender.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Daylight_Extender.TabIndex = 7;
             this.b_Presets_Daylight_Extender.Text = "Extender";
-            this.b_Presets_Daylight_Extender.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_Extender.UseVisualStyleBackColor = false;
             this.b_Presets_Daylight_Extender.Click += new System.EventHandler(this.b_Presets_Daylight_Extender_Click);
             // 
             // b_Presets_Daylight_Stabilizer
             // 
+            this.b_Presets_Daylight_Stabilizer.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Daylight_Stabilizer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Daylight_Stabilizer.Location = new System.Drawing.Point(7, 133);
             this.b_Presets_Daylight_Stabilizer.Name = "b_Presets_Daylight_Stabilizer";
             this.b_Presets_Daylight_Stabilizer.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Daylight_Stabilizer.TabIndex = 6;
             this.b_Presets_Daylight_Stabilizer.Text = "Toggle Stabiliser";
-            this.b_Presets_Daylight_Stabilizer.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_Stabilizer.UseVisualStyleBackColor = false;
             this.b_Presets_Daylight_Stabilizer.Click += new System.EventHandler(this.b_Presets_Daylight_Stabilizer_Click);
             // 
             // b_Presets_Daylight_WDR
             // 
+            this.b_Presets_Daylight_WDR.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Daylight_WDR.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Daylight_WDR.Location = new System.Drawing.Point(7, 100);
             this.b_Presets_Daylight_WDR.Name = "b_Presets_Daylight_WDR";
             this.b_Presets_Daylight_WDR.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Daylight_WDR.TabIndex = 6;
             this.b_Presets_Daylight_WDR.Text = "WDR On / Off (Sony Only)";
-            this.b_Presets_Daylight_WDR.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_WDR.UseVisualStyleBackColor = false;
             this.b_Presets_Daylight_WDR.Click += new System.EventHandler(this.b_Presets_Daylight_WDR_Click);
             // 
             // b_Presets_Daylight_Wiper
             // 
+            this.b_Presets_Daylight_Wiper.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Daylight_Wiper.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Daylight_Wiper.Location = new System.Drawing.Point(7, 69);
             this.b_Presets_Daylight_Wiper.Name = "b_Presets_Daylight_Wiper";
             this.b_Presets_Daylight_Wiper.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Daylight_Wiper.TabIndex = 6;
             this.b_Presets_Daylight_Wiper.Text = "Wiper";
-            this.b_Presets_Daylight_Wiper.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_Wiper.UseVisualStyleBackColor = false;
             this.b_Presets_Daylight_Wiper.Click += new System.EventHandler(this.b_Presets_Daylight_Wiper_Click);
             // 
             // b_Presets_Daylight_AF
             // 
+            this.b_Presets_Daylight_AF.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Daylight_AF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Daylight_AF.Location = new System.Drawing.Point(7, 4);
             this.b_Presets_Daylight_AF.Name = "b_Presets_Daylight_AF";
             this.b_Presets_Daylight_AF.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Daylight_AF.TabIndex = 6;
             this.b_Presets_Daylight_AF.Text = "AutoFocus ";
-            this.b_Presets_Daylight_AF.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_AF.UseVisualStyleBackColor = false;
             this.b_Presets_Daylight_AF.Click += new System.EventHandler(this.b_Presets_Daylight_AF_Click);
             // 
             // b_Presets_Daylight_ColMono
             // 
+            this.b_Presets_Daylight_ColMono.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Daylight_ColMono.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Daylight_ColMono.Location = new System.Drawing.Point(7, 37);
             this.b_Presets_Daylight_ColMono.Name = "b_Presets_Daylight_ColMono";
             this.b_Presets_Daylight_ColMono.Size = new System.Drawing.Size(214, 27);
             this.b_Presets_Daylight_ColMono.TabIndex = 6;
             this.b_Presets_Daylight_ColMono.Text = "Colour / Mono";
-            this.b_Presets_Daylight_ColMono.UseVisualStyleBackColor = true;
+            this.b_Presets_Daylight_ColMono.UseVisualStyleBackColor = false;
             this.b_Presets_Daylight_ColMono.Click += new System.EventHandler(this.b_Presets_Daylight_ColMono_Click);
             // 
             // thermalPage
@@ -252,142 +272,170 @@ namespace SSLUtility2
             // 
             // b_Presets_Thermal_Cycle
             // 
+            this.b_Presets_Thermal_Cycle.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_Cycle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_Cycle.Location = new System.Drawing.Point(118, 72);
             this.b_Presets_Thermal_Cycle.Name = "b_Presets_Thermal_Cycle";
             this.b_Presets_Thermal_Cycle.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_Cycle.TabIndex = 10;
             this.b_Presets_Thermal_Cycle.Text = "Cycle Palettes";
-            this.b_Presets_Thermal_Cycle.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_Cycle.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_Cycle.Click += new System.EventHandler(this.b_Presets_Thermal_Cycle_Click);
             // 
             // b_Presets_Thermal_Stabi
             // 
+            this.b_Presets_Thermal_Stabi.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_Stabi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_Stabi.Location = new System.Drawing.Point(6, 72);
             this.b_Presets_Thermal_Stabi.Name = "b_Presets_Thermal_Stabi";
             this.b_Presets_Thermal_Stabi.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_Stabi.TabIndex = 9;
             this.b_Presets_Thermal_Stabi.Text = "Stabilisation";
-            this.b_Presets_Thermal_Stabi.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_Stabi.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_Stabi.Click += new System.EventHandler(this.b_Presets_Thermal_Stabi_Click);
             // 
             // b_Presets_Thermal_DigiNeg
             // 
+            this.b_Presets_Thermal_DigiNeg.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_DigiNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_DigiNeg.Location = new System.Drawing.Point(117, 105);
             this.b_Presets_Thermal_DigiNeg.Name = "b_Presets_Thermal_DigiNeg";
             this.b_Presets_Thermal_DigiNeg.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_DigiNeg.TabIndex = 8;
             this.b_Presets_Thermal_DigiNeg.Text = "Digital Zoom Out";
-            this.b_Presets_Thermal_DigiNeg.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_DigiNeg.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_DigiNeg.Click += new System.EventHandler(this.b_Presets_Thermal_DigiNeg_Click);
             // 
             // b_Presets_Thermal_DigiPos
             // 
+            this.b_Presets_Thermal_DigiPos.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_DigiPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_DigiPos.Location = new System.Drawing.Point(7, 105);
             this.b_Presets_Thermal_DigiPos.Name = "b_Presets_Thermal_DigiPos";
             this.b_Presets_Thermal_DigiPos.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_DigiPos.TabIndex = 7;
             this.b_Presets_Thermal_DigiPos.Text = "Digital Zoom In";
-            this.b_Presets_Thermal_DigiPos.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_DigiPos.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_DigiPos.Click += new System.EventHandler(this.b_Presets_Thermal_DigiPos_Click);
             // 
             // b_Presets_ContrastPos
             // 
+            this.b_Presets_ContrastPos.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_ContrastPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_ContrastPos.Location = new System.Drawing.Point(118, 198);
             this.b_Presets_ContrastPos.Name = "b_Presets_ContrastPos";
             this.b_Presets_ContrastPos.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_ContrastPos.TabIndex = 6;
             this.b_Presets_ContrastPos.Text = "Contrast +";
-            this.b_Presets_ContrastPos.UseVisualStyleBackColor = true;
+            this.b_Presets_ContrastPos.UseVisualStyleBackColor = false;
             this.b_Presets_ContrastPos.Click += new System.EventHandler(this.b_Presets_ContrastPos_Click);
             // 
             // b_Presets_ContrastNeg
             // 
+            this.b_Presets_ContrastNeg.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_ContrastNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_ContrastNeg.Location = new System.Drawing.Point(6, 198);
             this.b_Presets_ContrastNeg.Name = "b_Presets_ContrastNeg";
             this.b_Presets_ContrastNeg.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_ContrastNeg.TabIndex = 6;
             this.b_Presets_ContrastNeg.Text = "Contrast -";
-            this.b_Presets_ContrastNeg.UseVisualStyleBackColor = true;
+            this.b_Presets_ContrastNeg.UseVisualStyleBackColor = false;
             this.b_Presets_ContrastNeg.Click += new System.EventHandler(this.b_Presets_ContrastNeg_Click);
             // 
             // b_Presets_Thermal_BrightPos
             // 
+            this.b_Presets_Thermal_BrightPos.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_BrightPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_BrightPos.Location = new System.Drawing.Point(118, 168);
             this.b_Presets_Thermal_BrightPos.Name = "b_Presets_Thermal_BrightPos";
             this.b_Presets_Thermal_BrightPos.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_BrightPos.TabIndex = 6;
             this.b_Presets_Thermal_BrightPos.Text = "Brightness +";
-            this.b_Presets_Thermal_BrightPos.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_BrightPos.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_BrightPos.Click += new System.EventHandler(this.b_Presets_Thermal_BrightPos_Click);
             // 
             // b_Presets_Thermal_BrightNeg
             // 
+            this.b_Presets_Thermal_BrightNeg.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_BrightNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_BrightNeg.Location = new System.Drawing.Point(6, 168);
             this.b_Presets_Thermal_BrightNeg.Name = "b_Presets_Thermal_BrightNeg";
             this.b_Presets_Thermal_BrightNeg.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_Thermal_BrightNeg.TabIndex = 6;
             this.b_Presets_Thermal_BrightNeg.Text = "Brightness -";
-            this.b_Presets_Thermal_BrightNeg.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_BrightNeg.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_BrightNeg.Click += new System.EventHandler(this.b_Presets_Thermal_BrightNeg_Click);
             // 
             // b_Presets_Thermal_ICEPos
             // 
+            this.b_Presets_Thermal_ICEPos.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_ICEPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_ICEPos.Location = new System.Drawing.Point(118, 135);
             this.b_Presets_Thermal_ICEPos.Name = "b_Presets_Thermal_ICEPos";
             this.b_Presets_Thermal_ICEPos.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_ICEPos.TabIndex = 6;
             this.b_Presets_Thermal_ICEPos.Text = "ICE / CLAHE +";
-            this.b_Presets_Thermal_ICEPos.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_ICEPos.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_ICEPos.Click += new System.EventHandler(this.b_Presets_Thermal_ICEPos_Click);
             // 
             // b_Presets_Thermal_ICENeg
             // 
+            this.b_Presets_Thermal_ICENeg.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_ICENeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_ICENeg.Location = new System.Drawing.Point(6, 135);
             this.b_Presets_Thermal_ICENeg.Name = "b_Presets_Thermal_ICENeg";
             this.b_Presets_Thermal_ICENeg.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_ICENeg.TabIndex = 6;
             this.b_Presets_Thermal_ICENeg.Text = "ICE / CLAHE -";
-            this.b_Presets_Thermal_ICENeg.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_ICENeg.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_ICENeg.Click += new System.EventHandler(this.b_Presets_Thermal_ICENeg_Click);
             // 
             // b_Presets_Thermal_ICE
             // 
+            this.b_Presets_Thermal_ICE.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_ICE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_ICE.Location = new System.Drawing.Point(118, 39);
             this.b_Presets_Thermal_ICE.Name = "b_Presets_Thermal_ICE";
             this.b_Presets_Thermal_ICE.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_ICE.TabIndex = 6;
             this.b_Presets_Thermal_ICE.Text = "ICE / CLAHE";
-            this.b_Presets_Thermal_ICE.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_ICE.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_ICE.Click += new System.EventHandler(this.b_Presets_Thermal_ICE_Click);
             // 
             // b_Presets_Thermal_WhiteBlack
             // 
+            this.b_Presets_Thermal_WhiteBlack.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_WhiteBlack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_WhiteBlack.Location = new System.Drawing.Point(6, 39);
             this.b_Presets_Thermal_WhiteBlack.Name = "b_Presets_Thermal_WhiteBlack";
             this.b_Presets_Thermal_WhiteBlack.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_WhiteBlack.TabIndex = 6;
             this.b_Presets_Thermal_WhiteBlack.Text = "White/Black Hot";
-            this.b_Presets_Thermal_WhiteBlack.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_WhiteBlack.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_WhiteBlack.Click += new System.EventHandler(this.b_Presets_Thermal_WhiteBlack_Click);
             // 
             // b_Presets_Thermal_NUC
             // 
+            this.b_Presets_Thermal_NUC.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_NUC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_NUC.Location = new System.Drawing.Point(117, 6);
             this.b_Presets_Thermal_NUC.Name = "b_Presets_Thermal_NUC";
             this.b_Presets_Thermal_NUC.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_Thermal_NUC.TabIndex = 6;
             this.b_Presets_Thermal_NUC.Text = "Do NUC";
-            this.b_Presets_Thermal_NUC.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_NUC.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_NUC.Click += new System.EventHandler(this.b_Presets_Thermal_NUC_Click);
             // 
             // b_Presets_Thermal_AF
             // 
+            this.b_Presets_Thermal_AF.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Thermal_AF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Thermal_AF.Location = new System.Drawing.Point(6, 6);
             this.b_Presets_Thermal_AF.Name = "b_Presets_Thermal_AF";
             this.b_Presets_Thermal_AF.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Thermal_AF.TabIndex = 6;
             this.b_Presets_Thermal_AF.Text = "AutoFocus";
-            this.b_Presets_Thermal_AF.UseVisualStyleBackColor = true;
+            this.b_Presets_Thermal_AF.UseVisualStyleBackColor = false;
             this.b_Presets_Thermal_AF.Click += new System.EventHandler(this.b_Presets_Thermal_AF_Click);
             // 
             // slgPage
@@ -408,72 +456,86 @@ namespace SSLUtility2
             // 
             // b_Presets_SLG_AllLightsOff
             // 
+            this.b_Presets_SLG_AllLightsOff.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_SLG_AllLightsOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_SLG_AllLightsOff.Location = new System.Drawing.Point(7, 149);
             this.b_Presets_SLG_AllLightsOff.Name = "b_Presets_SLG_AllLightsOff";
             this.b_Presets_SLG_AllLightsOff.Size = new System.Drawing.Size(212, 27);
             this.b_Presets_SLG_AllLightsOff.TabIndex = 12;
             this.b_Presets_SLG_AllLightsOff.Text = "All Lights Off";
-            this.b_Presets_SLG_AllLightsOff.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_AllLightsOff.UseVisualStyleBackColor = false;
             this.b_Presets_SLG_AllLightsOff.Click += new System.EventHandler(this.b_Presets_SLG_AllLightsOff_Click);
             // 
             // b_Presets_SLG_SteadyGreen
             // 
+            this.b_Presets_SLG_SteadyGreen.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_SLG_SteadyGreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_SLG_SteadyGreen.Location = new System.Drawing.Point(7, 12);
             this.b_Presets_SLG_SteadyGreen.Name = "b_Presets_SLG_SteadyGreen";
             this.b_Presets_SLG_SteadyGreen.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_SLG_SteadyGreen.TabIndex = 8;
             this.b_Presets_SLG_SteadyGreen.Text = "Steady Green On";
-            this.b_Presets_SLG_SteadyGreen.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_SteadyGreen.UseVisualStyleBackColor = false;
             this.b_Presets_SLG_SteadyGreen.Click += new System.EventHandler(this.b_Presets_SLG_SteadyGreen_Click);
             // 
             // b_Presets_SLG_FlashingRG
             // 
+            this.b_Presets_SLG_FlashingRG.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_SLG_FlashingRG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_SLG_FlashingRG.Location = new System.Drawing.Point(6, 83);
             this.b_Presets_SLG_FlashingRG.Name = "b_Presets_SLG_FlashingRG";
             this.b_Presets_SLG_FlashingRG.Size = new System.Drawing.Size(212, 27);
             this.b_Presets_SLG_FlashingRG.TabIndex = 7;
             this.b_Presets_SLG_FlashingRG.Text = "Flashing Red / Green";
-            this.b_Presets_SLG_FlashingRG.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_FlashingRG.UseVisualStyleBackColor = false;
             this.b_Presets_SLG_FlashingRG.Click += new System.EventHandler(this.b_Presets_SLG_FlashingRG_Click);
             // 
             // b_Presets_SLG_FlashingWhite
             // 
+            this.b_Presets_SLG_FlashingWhite.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_SLG_FlashingWhite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_SLG_FlashingWhite.Location = new System.Drawing.Point(6, 116);
             this.b_Presets_SLG_FlashingWhite.Name = "b_Presets_SLG_FlashingWhite";
             this.b_Presets_SLG_FlashingWhite.Size = new System.Drawing.Size(212, 27);
             this.b_Presets_SLG_FlashingWhite.TabIndex = 7;
             this.b_Presets_SLG_FlashingWhite.Text = "Flashing White On";
-            this.b_Presets_SLG_FlashingWhite.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_FlashingWhite.UseVisualStyleBackColor = false;
             this.b_Presets_SLG_FlashingWhite.Click += new System.EventHandler(this.b_Presets_SLG_FlashingWhite_Click);
             // 
             // b_Presets_SLG_FlashingRed
             // 
+            this.b_Presets_SLG_FlashingRed.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_SLG_FlashingRed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_SLG_FlashingRed.Location = new System.Drawing.Point(118, 44);
             this.b_Presets_SLG_FlashingRed.Name = "b_Presets_SLG_FlashingRed";
             this.b_Presets_SLG_FlashingRed.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_SLG_FlashingRed.TabIndex = 7;
             this.b_Presets_SLG_FlashingRed.Text = "Flashing Red On";
-            this.b_Presets_SLG_FlashingRed.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_FlashingRed.UseVisualStyleBackColor = false;
             this.b_Presets_SLG_FlashingRed.Click += new System.EventHandler(this.b_Presets_SLG_FlashingRed_Click);
             // 
             // b_Presets_SLG_SteadyRed
             // 
+            this.b_Presets_SLG_SteadyRed.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_SLG_SteadyRed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_SLG_SteadyRed.Location = new System.Drawing.Point(117, 12);
             this.b_Presets_SLG_SteadyRed.Name = "b_Presets_SLG_SteadyRed";
             this.b_Presets_SLG_SteadyRed.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_SLG_SteadyRed.TabIndex = 7;
             this.b_Presets_SLG_SteadyRed.Text = "Steady Red On";
-            this.b_Presets_SLG_SteadyRed.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_SteadyRed.UseVisualStyleBackColor = false;
             this.b_Presets_SLG_SteadyRed.Click += new System.EventHandler(this.b_Presets_SLG_SteadyRed_Click);
             // 
             // b_Presets_SLG_FlashingGreen
             // 
+            this.b_Presets_SLG_FlashingGreen.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_SLG_FlashingGreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_SLG_FlashingGreen.Location = new System.Drawing.Point(7, 46);
             this.b_Presets_SLG_FlashingGreen.Name = "b_Presets_SLG_FlashingGreen";
             this.b_Presets_SLG_FlashingGreen.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_SLG_FlashingGreen.TabIndex = 7;
             this.b_Presets_SLG_FlashingGreen.Text = "Flashing Green On";
-            this.b_Presets_SLG_FlashingGreen.UseVisualStyleBackColor = true;
+            this.b_Presets_SLG_FlashingGreen.UseVisualStyleBackColor = false;
             this.b_Presets_SLG_FlashingGreen.Click += new System.EventHandler(this.b_Presets_SLG_FlashingGreen_Click);
             // 
             // peakbeamPage
@@ -493,62 +555,74 @@ namespace SSLUtility2
             // 
             // b_Presets_Peak_SteadyLamp
             // 
+            this.b_Presets_Peak_SteadyLamp.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Peak_SteadyLamp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Peak_SteadyLamp.Location = new System.Drawing.Point(119, 23);
             this.b_Presets_Peak_SteadyLamp.Name = "b_Presets_Peak_SteadyLamp";
             this.b_Presets_Peak_SteadyLamp.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_SteadyLamp.TabIndex = 14;
             this.b_Presets_Peak_SteadyLamp.Text = "Lamp On Steady";
-            this.b_Presets_Peak_SteadyLamp.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_SteadyLamp.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_SteadyLamp.Click += new System.EventHandler(this.b_Presets_Peak_SteadyLamp_Click);
             // 
             // b_Presets_Peak_StopZoom
             // 
+            this.b_Presets_Peak_StopZoom.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Peak_StopZoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Peak_StopZoom.Location = new System.Drawing.Point(7, 142);
             this.b_Presets_Peak_StopZoom.Name = "b_Presets_Peak_StopZoom";
             this.b_Presets_Peak_StopZoom.Size = new System.Drawing.Size(212, 27);
             this.b_Presets_Peak_StopZoom.TabIndex = 9;
             this.b_Presets_Peak_StopZoom.Text = "Stop Zooming";
-            this.b_Presets_Peak_StopZoom.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_StopZoom.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_StopZoom.Click += new System.EventHandler(this.b_Presets_Peak_StopZoom_Click);
             // 
             // b_Presets_Peak_ZoomOut
             // 
+            this.b_Presets_Peak_ZoomOut.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Peak_ZoomOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Peak_ZoomOut.Location = new System.Drawing.Point(7, 109);
             this.b_Presets_Peak_ZoomOut.Name = "b_Presets_Peak_ZoomOut";
             this.b_Presets_Peak_ZoomOut.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_ZoomOut.TabIndex = 10;
             this.b_Presets_Peak_ZoomOut.Text = "Start Zoom Out";
-            this.b_Presets_Peak_ZoomOut.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_ZoomOut.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_ZoomOut.Click += new System.EventHandler(this.b_Presets_Peak_ZoomOut_Click);
             // 
             // b_Presets_Peak_ZoomIn
             // 
+            this.b_Presets_Peak_ZoomIn.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Peak_ZoomIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Peak_ZoomIn.Location = new System.Drawing.Point(119, 109);
             this.b_Presets_Peak_ZoomIn.Name = "b_Presets_Peak_ZoomIn";
             this.b_Presets_Peak_ZoomIn.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_ZoomIn.TabIndex = 11;
             this.b_Presets_Peak_ZoomIn.Text = "Start Zoom In";
-            this.b_Presets_Peak_ZoomIn.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_ZoomIn.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_ZoomIn.Click += new System.EventHandler(this.b_Presets_Peak_ZoomIn_Click);
             // 
             // b_Presets_Peak_LampOff
             // 
+            this.b_Presets_Peak_LampOff.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Peak_LampOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Peak_LampOff.Location = new System.Drawing.Point(7, 56);
             this.b_Presets_Peak_LampOff.Name = "b_Presets_Peak_LampOff";
             this.b_Presets_Peak_LampOff.Size = new System.Drawing.Size(212, 27);
             this.b_Presets_Peak_LampOff.TabIndex = 12;
             this.b_Presets_Peak_LampOff.Text = "Lamp Off";
-            this.b_Presets_Peak_LampOff.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_LampOff.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_LampOff.Click += new System.EventHandler(this.b_Presets_Peak_LampOff_Click);
             // 
             // b_Presets_Peak_StrobeLamp
             // 
+            this.b_Presets_Peak_StrobeLamp.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Peak_StrobeLamp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Peak_StrobeLamp.Location = new System.Drawing.Point(7, 23);
             this.b_Presets_Peak_StrobeLamp.Name = "b_Presets_Peak_StrobeLamp";
             this.b_Presets_Peak_StrobeLamp.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_StrobeLamp.TabIndex = 13;
             this.b_Presets_Peak_StrobeLamp.Text = "Lamp on Strobe";
-            this.b_Presets_Peak_StrobeLamp.UseVisualStyleBackColor = true;
+            this.b_Presets_Peak_StrobeLamp.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_StrobeLamp.Click += new System.EventHandler(this.b_Presets_Peak_StrobeLamp_Click);
             // 
             // b_Presets_CHARM_Aquire

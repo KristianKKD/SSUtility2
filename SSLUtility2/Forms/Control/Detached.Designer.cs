@@ -58,7 +58,7 @@
             // 
             // tB_PlayerD_SimpleAdr
             // 
-            this.tB_PlayerD_SimpleAdr.Location = new System.Drawing.Point(89, 14);
+            this.tB_PlayerD_SimpleAdr.Location = new System.Drawing.Point(86, 41);
             this.tB_PlayerD_SimpleAdr.Name = "tB_PlayerD_SimpleAdr";
             this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(214, 20);
             this.tB_PlayerD_SimpleAdr.TabIndex = 28;
@@ -66,7 +66,7 @@
             // l_PlayerD_SimpleAdr
             // 
             this.l_PlayerD_SimpleAdr.AutoSize = true;
-            this.l_PlayerD_SimpleAdr.Location = new System.Drawing.Point(3, 15);
+            this.l_PlayerD_SimpleAdr.Location = new System.Drawing.Point(3, 42);
             this.l_PlayerD_SimpleAdr.Name = "l_PlayerD_SimpleAdr";
             this.l_PlayerD_SimpleAdr.Size = new System.Drawing.Size(80, 13);
             this.l_PlayerD_SimpleAdr.TabIndex = 27;
@@ -127,7 +127,7 @@
             // l_PlayerD_Port
             // 
             this.l_PlayerD_Port.AutoSize = true;
-            this.l_PlayerD_Port.Location = new System.Drawing.Point(13, 59);
+            this.l_PlayerD_Port.Location = new System.Drawing.Point(3, 68);
             this.l_PlayerD_Port.Name = "l_PlayerD_Port";
             this.l_PlayerD_Port.Size = new System.Drawing.Size(29, 13);
             this.l_PlayerD_Port.TabIndex = 2;
@@ -220,32 +220,38 @@
             // 
             // b_PlayerD_StartRec
             // 
+            this.b_PlayerD_StartRec.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PlayerD_StartRec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PlayerD_StartRec.Location = new System.Drawing.Point(321, 582);
             this.b_PlayerD_StartRec.Name = "b_PlayerD_StartRec";
             this.b_PlayerD_StartRec.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerD_StartRec.TabIndex = 45;
             this.b_PlayerD_StartRec.Text = "START Recording";
-            this.b_PlayerD_StartRec.UseVisualStyleBackColor = true;
+            this.b_PlayerD_StartRec.UseVisualStyleBackColor = false;
             this.b_PlayerD_StartRec.Click += new System.EventHandler(this.b_PlayerD_StartRec_Click);
             // 
             // b_PlayerD_SaveSnap
             // 
+            this.b_PlayerD_SaveSnap.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PlayerD_SaveSnap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PlayerD_SaveSnap.Location = new System.Drawing.Point(321, 553);
             this.b_PlayerD_SaveSnap.Name = "b_PlayerD_SaveSnap";
             this.b_PlayerD_SaveSnap.Size = new System.Drawing.Size(172, 23);
             this.b_PlayerD_SaveSnap.TabIndex = 46;
             this.b_PlayerD_SaveSnap.Text = "Save Snapshot";
-            this.b_PlayerD_SaveSnap.UseVisualStyleBackColor = true;
+            this.b_PlayerD_SaveSnap.UseVisualStyleBackColor = false;
             this.b_PlayerD_SaveSnap.Click += new System.EventHandler(this.b_PlayerD_SaveSnap_Click);
             // 
             // b_PlayerD_Play
             // 
+            this.b_PlayerD_Play.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PlayerD_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PlayerD_Play.Location = new System.Drawing.Point(320, 662);
             this.b_PlayerD_Play.Name = "b_PlayerD_Play";
             this.b_PlayerD_Play.Size = new System.Drawing.Size(315, 93);
             this.b_PlayerD_Play.TabIndex = 42;
             this.b_PlayerD_Play.Text = "Play";
-            this.b_PlayerD_Play.UseVisualStyleBackColor = true;
+            this.b_PlayerD_Play.UseVisualStyleBackColor = false;
             this.b_PlayerD_Play.Click += new System.EventHandler(this.b_PlayerD_Play_Click);
             // 
             // check_PlayerD_StatsEnabled
@@ -262,12 +268,14 @@
             // 
             // b_PlayerD_Stop
             // 
+            this.b_PlayerD_Stop.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PlayerD_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PlayerD_Stop.Location = new System.Drawing.Point(501, 624);
             this.b_PlayerD_Stop.Name = "b_PlayerD_Stop";
             this.b_PlayerD_Stop.Size = new System.Drawing.Size(134, 31);
             this.b_PlayerD_Stop.TabIndex = 50;
             this.b_PlayerD_Stop.Text = "Stop Video Playback";
-            this.b_PlayerD_Stop.UseVisualStyleBackColor = true;
+            this.b_PlayerD_Stop.UseVisualStyleBackColor = false;
             this.b_PlayerD_Stop.Visible = false;
             this.b_PlayerD_Stop.Click += new System.EventHandler(this.b_PlayerD_Stop_Click);
             // 
@@ -277,7 +285,7 @@
             this.VLCPlayer_D.Location = new System.Drawing.Point(0, 0);
             this.VLCPlayer_D.Name = "VLCPlayer_D";
             this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
-            this.VLCPlayer_D.Size = new System.Drawing.Size(640, 513);
+            this.VLCPlayer_D.Size = new System.Drawing.Size(639, 512);
             this.VLCPlayer_D.TabIndex = 41;
             // 
             // p_PlayerD_Extended

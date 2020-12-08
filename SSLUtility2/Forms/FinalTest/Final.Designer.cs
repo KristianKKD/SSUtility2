@@ -38,12 +38,14 @@
             // 
             // b_Final_Next
             // 
+            this.b_Final_Next.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Final_Next.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Final_Next.Location = new System.Drawing.Point(295, 309);
             this.b_Final_Next.Name = "b_Final_Next";
             this.b_Final_Next.Size = new System.Drawing.Size(174, 73);
             this.b_Final_Next.TabIndex = 0;
             this.b_Final_Next.Text = "Next";
-            this.b_Final_Next.UseVisualStyleBackColor = true;
+            this.b_Final_Next.UseVisualStyleBackColor = false;
             this.b_Final_Next.Click += new System.EventHandler(this.b_Final_Next_Click);
             // 
             // l_Name_Path
@@ -84,22 +86,26 @@
             // 
             // b_Final_Browse
             // 
+            this.b_Final_Browse.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Final_Browse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Final_Browse.Location = new System.Drawing.Point(408, 30);
             this.b_Final_Browse.Name = "b_Final_Browse";
             this.b_Final_Browse.Size = new System.Drawing.Size(61, 22);
             this.b_Final_Browse.TabIndex = 20;
             this.b_Final_Browse.Text = "Browse";
-            this.b_Final_Browse.UseVisualStyleBackColor = true;
+            this.b_Final_Browse.UseVisualStyleBackColor = false;
             this.b_Final_Browse.Click += new System.EventHandler(this.b_Final_Browse_Click);
             // 
             // b_Name_BrowseFrom
             // 
+            this.b_Name_BrowseFrom.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Name_BrowseFrom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Name_BrowseFrom.Location = new System.Drawing.Point(408, 111);
             this.b_Name_BrowseFrom.Name = "b_Name_BrowseFrom";
             this.b_Name_BrowseFrom.Size = new System.Drawing.Size(61, 22);
             this.b_Name_BrowseFrom.TabIndex = 23;
             this.b_Name_BrowseFrom.Text = "Browse";
-            this.b_Name_BrowseFrom.UseVisualStyleBackColor = true;
+            this.b_Name_BrowseFrom.UseVisualStyleBackColor = false;
             this.b_Name_BrowseFrom.Click += new System.EventHandler(this.b_Name_BrowseFrom_Click);
             // 
             // l_Name_From

@@ -51,32 +51,38 @@
             // 
             // b_PD_Load
             // 
+            this.b_PD_Load.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PD_Load.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_Load.Location = new System.Drawing.Point(348, 110);
             this.b_PD_Load.Name = "b_PD_Load";
             this.b_PD_Load.Size = new System.Drawing.Size(111, 33);
             this.b_PD_Load.TabIndex = 9;
             this.b_PD_Load.Text = "Load Script";
-            this.b_PD_Load.UseVisualStyleBackColor = true;
+            this.b_PD_Load.UseVisualStyleBackColor = false;
             this.b_PD_Load.Click += new System.EventHandler(this.b_PD_Load_Click);
             // 
             // b_PD_Save
             // 
+            this.b_PD_Save.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PD_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_Save.Location = new System.Drawing.Point(348, 71);
             this.b_PD_Save.Name = "b_PD_Save";
             this.b_PD_Save.Size = new System.Drawing.Size(111, 33);
             this.b_PD_Save.TabIndex = 8;
             this.b_PD_Save.Text = "Save Script";
-            this.b_PD_Save.UseVisualStyleBackColor = true;
+            this.b_PD_Save.UseVisualStyleBackColor = false;
             this.b_PD_Save.Click += new System.EventHandler(this.b_PD_Save_Click);
             // 
             // b_PD_Fire
             // 
+            this.b_PD_Fire.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PD_Fire.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_Fire.Location = new System.Drawing.Point(348, 32);
             this.b_PD_Fire.Name = "b_PD_Fire";
             this.b_PD_Fire.Size = new System.Drawing.Size(111, 33);
             this.b_PD_Fire.TabIndex = 7;
             this.b_PD_Fire.Text = "Fire Commands";
-            this.b_PD_Fire.UseVisualStyleBackColor = true;
+            this.b_PD_Fire.UseVisualStyleBackColor = false;
             this.b_PD_Fire.Click += new System.EventHandler(this.b_PD_Fire_Click);
             // 
             // rtb_PD_Commands
@@ -109,12 +115,14 @@
             // 
             // b_PD_FireSingle
             // 
+            this.b_PD_FireSingle.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PD_FireSingle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_FireSingle.Location = new System.Drawing.Point(271, 434);
             this.b_PD_FireSingle.Name = "b_PD_FireSingle";
             this.b_PD_FireSingle.Size = new System.Drawing.Size(75, 21);
             this.b_PD_FireSingle.TabIndex = 15;
             this.b_PD_FireSingle.Text = "Fire";
-            this.b_PD_FireSingle.UseVisualStyleBackColor = true;
+            this.b_PD_FireSingle.UseVisualStyleBackColor = false;
             this.b_PD_FireSingle.Click += new System.EventHandler(this.b_PD_FireSingle_Click);
             // 
             // tB_PD_Single
@@ -197,23 +205,27 @@
             // 
             // b_PD_Stop
             // 
+            this.b_PD_Stop.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Stop.Enabled = false;
+            this.b_PD_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_Stop.Location = new System.Drawing.Point(348, 367);
             this.b_PD_Stop.Name = "b_PD_Stop";
             this.b_PD_Stop.Size = new System.Drawing.Size(111, 50);
             this.b_PD_Stop.TabIndex = 89;
             this.b_PD_Stop.Text = "Stop Script Execution";
-            this.b_PD_Stop.UseVisualStyleBackColor = true;
+            this.b_PD_Stop.UseVisualStyleBackColor = false;
             this.b_PD_Stop.Click += new System.EventHandler(this.b_PD_Stop_Click);
             // 
             // b_PD_RL
             // 
+            this.b_PD_RL.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PD_RL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_RL.Location = new System.Drawing.Point(348, 311);
             this.b_PD_RL.Name = "b_PD_RL";
             this.b_PD_RL.Size = new System.Drawing.Size(111, 50);
             this.b_PD_RL.TabIndex = 90;
             this.b_PD_RL.Text = "Open Response Log";
-            this.b_PD_RL.UseVisualStyleBackColor = true;
+            this.b_PD_RL.UseVisualStyleBackColor = false;
             this.b_PD_RL.Click += new System.EventHandler(this.b_PD_RL_Click);
             // 
             // check_PD_Perfect

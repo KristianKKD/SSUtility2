@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.2.3";
+        public const string version = "v1.3.3.0";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -20,6 +20,11 @@ namespace SSLUtility2 {
 
         public ControlPanel ipCon;
         public SettingsPage setPage;
+
+        public Detached playerL;
+        public Detached playerR;
+
+        bool movedUp = true;
 
         public static MainForm m { get; set; }
 
@@ -33,9 +38,11 @@ namespace SSLUtility2 {
             l_Version.Text = l_Version.Text + version;
             bool first = CheckIfFirstTime();
 
+            p_Main.Select();
+
             AttachControlPanel();
-            Detached playerL = AttachDetached(10);
-            Detached playerR = AttachDetached(690);
+            playerL = AttachDetached(10);
+            playerR = AttachDetached(690);
 
             CreateInfoPanels(playerL, playerR);
 
@@ -246,7 +253,7 @@ namespace SSLUtility2 {
             d.VLCPlayer_D.Location = new Point(d.VLCPlayer_D.Location.X, d.VLCPlayer_D.Location.Y + 5);
 
             pan.Size = new Size(d.Width - 18, d.Height - 40);
-            pan.Location = new Point(ipCon.Location.X + ipCon.Size.Width + xOffset, ipCon.Location.Y + 65);
+            pan.Location = new Point(ipCon.Location.X + ipCon.Size.Width + xOffset, ipCon.Location.Y + 45);
 
             p_Control.Controls.Add(pan);
 
@@ -274,6 +281,29 @@ namespace SSLUtility2 {
             pp.cp = cp;
             isOriginal = false;
             Menu_Window_Lite.Text = "Dual Mode";
+        }
+
+
+        public void MovePlayers(bool showingStats) {
+            Control parL = playerL.b_PlayerD_Play.Parent;
+            Control parR = playerR.b_PlayerD_Play.Parent;
+
+            if (movedUp) {
+                if (showingStats) {
+                    parR.Location = new Point(parR.Location.X, parR.Location.Y + 20);
+                    parL.Location = new Point(parL.Location.X, parL.Location.Y + 20);
+                    movedUp = false;
+                }
+            } else {
+                if (!showingStats) {
+                    if (!playerL.check_PlayerD_StatsEnabled.Checked && !playerR.check_PlayerD_StatsEnabled.Checked) {
+                        parL.Location = new Point(parL.Location.X, parL.Location.Y - 20);
+                        parR.Location = new Point(parR.Location.X, parR.Location.Y - 20);
+                        movedUp = true;
+                    }
+                }
+            }
+
         }
 
         public Detached DetachVid(bool show) {

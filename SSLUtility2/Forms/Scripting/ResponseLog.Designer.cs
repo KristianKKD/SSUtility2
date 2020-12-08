@@ -44,22 +44,26 @@
             // 
             // b_RL_Clear
             // 
+            this.b_RL_Clear.BackColor = System.Drawing.SystemColors.Control;
+            this.b_RL_Clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_RL_Clear.Location = new System.Drawing.Point(395, 61);
             this.b_RL_Clear.Name = "b_RL_Clear";
             this.b_RL_Clear.Size = new System.Drawing.Size(75, 23);
             this.b_RL_Clear.TabIndex = 1;
             this.b_RL_Clear.Text = "Clear";
-            this.b_RL_Clear.UseVisualStyleBackColor = true;
+            this.b_RL_Clear.UseVisualStyleBackColor = false;
             this.b_RL_Clear.Click += new System.EventHandler(this.b_RL_Clear_Click);
             // 
             // b_RL_Save
             // 
+            this.b_RL_Save.BackColor = System.Drawing.SystemColors.Control;
+            this.b_RL_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_RL_Save.Location = new System.Drawing.Point(395, 32);
             this.b_RL_Save.Name = "b_RL_Save";
             this.b_RL_Save.Size = new System.Drawing.Size(75, 23);
             this.b_RL_Save.TabIndex = 2;
             this.b_RL_Save.Text = "Save";
-            this.b_RL_Save.UseVisualStyleBackColor = true;
+            this.b_RL_Save.UseVisualStyleBackColor = false;
             this.b_RL_Save.Click += new System.EventHandler(this.b_RL_Save_Click);
             // 
             // l_RL_RL

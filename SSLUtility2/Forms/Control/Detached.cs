@@ -47,6 +47,7 @@ namespace SSLUtility2 {
             if (myInfoRef != null) {
                 if (myInfoRef.CheckCam()) {
                     check_PlayerD_StatsEnabled.Show();
+                    checkB_PlayerD_Manual.Checked = false;
                 } else {
                     check_PlayerD_StatsEnabled.Hide();
                 }
@@ -130,6 +131,7 @@ namespace SSLUtility2 {
         private void check_PlayerD_StatsEnabled_CheckedChanged(object sender, EventArgs e) {
             if (myInfoRef != null) {
                 if (check_PlayerD_StatsEnabled.Checked) {
+                    MainForm.m.MovePlayers(true);
                     myInfoRef.ShowAll();
                     if (!myInfoRef.UpdateTimer.Enabled) {
                         StartInfo();
@@ -139,12 +141,12 @@ namespace SSLUtility2 {
                         myInfoRef.UpdateTimer.Stop();
                         AsyncSocket.Disconnect();
                     }
+                    MainForm.m.MovePlayers(false);
                     myInfoRef.HideAll();
                 }
             } else {
                 check_PlayerD_StatsEnabled.Hide();
             }
-            
         }
 
         private void b_PlayerD_Stop_Click(object sender, EventArgs e) {

@@ -225,49 +225,58 @@
             // 
             // b_Presets_Learn
             // 
+            this.b_Presets_Learn.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Learn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Learn.Location = new System.Drawing.Point(138, 481);
             this.b_Presets_Learn.Name = "b_Presets_Learn";
             this.b_Presets_Learn.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_Learn.TabIndex = 51;
             this.b_Presets_Learn.Text = "Learn";
-            this.b_Presets_Learn.UseVisualStyleBackColor = true;
+            this.b_Presets_Learn.UseVisualStyleBackColor = false;
             this.b_Presets_Learn.Click += new System.EventHandler(this.b_Presets_Learn_Click);
             // 
             // b_Presets_GoTo
             // 
+            this.b_Presets_GoTo.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_GoTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_GoTo.Location = new System.Drawing.Point(14, 482);
             this.b_Presets_GoTo.Name = "b_Presets_GoTo";
             this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_GoTo.TabIndex = 50;
             this.b_Presets_GoTo.Text = "Go To";
-            this.b_Presets_GoTo.UseVisualStyleBackColor = true;
+            this.b_Presets_GoTo.UseVisualStyleBackColor = false;
             this.b_Presets_GoTo.Click += new System.EventHandler(this.b_Presets_GoTo_Click);
             // 
             // b_PTZ_Down
             // 
+            this.b_PTZ_Down.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.b_PTZ_Down.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PTZ_Down.Location = new System.Drawing.Point(93, 283);
             this.b_PTZ_Down.Name = "b_PTZ_Down";
             this.b_PTZ_Down.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Down.TabIndex = 49;
             this.b_PTZ_Down.Text = "Down";
-            this.b_PTZ_Down.UseVisualStyleBackColor = true;
+            this.b_PTZ_Down.UseVisualStyleBackColor = false;
             this.b_PTZ_Down.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Down_MouseDown);
             this.b_PTZ_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
             // b_PTZ_Up
             // 
+            this.b_PTZ_Up.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.b_PTZ_Up.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PTZ_Up.Location = new System.Drawing.Point(93, 199);
             this.b_PTZ_Up.Name = "b_PTZ_Up";
             this.b_PTZ_Up.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Up.TabIndex = 48;
             this.b_PTZ_Up.Text = "Up";
-            this.b_PTZ_Up.UseVisualStyleBackColor = true;
+            this.b_PTZ_Up.UseVisualStyleBackColor = false;
             this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
             this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
             // b_PTZ_FocusNeg
             // 
-            this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.Aqua;
+            this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.YellowGreen;
+            this.b_PTZ_FocusNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(15, 285);
             this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
             this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(59, 34);
@@ -279,7 +288,8 @@
             // 
             // b_PTZ_ZoomNeg
             // 
-            this.b_PTZ_ZoomNeg.BackColor = System.Drawing.Color.GreenYellow;
+            this.b_PTZ_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_PTZ_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(15, 198);
             this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
             this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(59, 35);
@@ -291,7 +301,8 @@
             // 
             // b_PTZ_FocusPos
             // 
-            this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.Aqua;
+            this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
+            this.b_PTZ_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PTZ_FocusPos.Location = new System.Drawing.Point(170, 285);
             this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
             this.b_PTZ_FocusPos.Size = new System.Drawing.Size(59, 34);
@@ -303,7 +314,8 @@
             // 
             // b_PTZ_ZoomPos
             // 
-            this.b_PTZ_ZoomPos.BackColor = System.Drawing.Color.GreenYellow;
+            this.b_PTZ_ZoomPos.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_PTZ_ZoomPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(170, 199);
             this.b_PTZ_ZoomPos.Name = "b_PTZ_ZoomPos";
             this.b_PTZ_ZoomPos.Size = new System.Drawing.Size(59, 36);
@@ -315,23 +327,27 @@
             // 
             // b_PTZ_Right
             // 
+            this.b_PTZ_Right.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.b_PTZ_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PTZ_Right.Location = new System.Drawing.Point(151, 241);
             this.b_PTZ_Right.Name = "b_PTZ_Right";
             this.b_PTZ_Right.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Right.TabIndex = 52;
             this.b_PTZ_Right.Text = "Right";
-            this.b_PTZ_Right.UseVisualStyleBackColor = true;
+            this.b_PTZ_Right.UseVisualStyleBackColor = false;
             this.b_PTZ_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Right_MouseDown);
             this.b_PTZ_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
             // b_PTZ_Left
             // 
+            this.b_PTZ_Left.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.b_PTZ_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PTZ_Left.Location = new System.Drawing.Point(35, 241);
             this.b_PTZ_Left.Name = "b_PTZ_Left";
             this.b_PTZ_Left.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_Left.TabIndex = 43;
             this.b_PTZ_Left.Text = "Left";
-            this.b_PTZ_Left.UseVisualStyleBackColor = true;
+            this.b_PTZ_Left.UseVisualStyleBackColor = false;
             this.b_PTZ_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
             this.b_PTZ_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 

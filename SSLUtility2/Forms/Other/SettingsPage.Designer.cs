@@ -210,13 +210,15 @@ namespace SSLUtility2
             // 
             // b_Paths_vBrowse
             // 
+            this.b_Paths_vBrowse.BackColor = System.Drawing.SystemColors.Control;
             this.b_Paths_vBrowse.Enabled = false;
+            this.b_Paths_vBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Paths_vBrowse.Location = new System.Drawing.Point(313, 108);
             this.b_Paths_vBrowse.Name = "b_Paths_vBrowse";
             this.b_Paths_vBrowse.Size = new System.Drawing.Size(61, 22);
             this.b_Paths_vBrowse.TabIndex = 19;
             this.b_Paths_vBrowse.Text = "Browse";
-            this.b_Paths_vBrowse.UseVisualStyleBackColor = true;
+            this.b_Paths_vBrowse.UseVisualStyleBackColor = false;
             this.b_Paths_vBrowse.Click += new System.EventHandler(this.b_Paths_vBrowse_Click);
             // 
             // tB_Paths_vFolder
@@ -250,13 +252,15 @@ namespace SSLUtility2
             // 
             // b_Paths_sCBrowse
             // 
+            this.b_Paths_sCBrowse.BackColor = System.Drawing.SystemColors.Control;
             this.b_Paths_sCBrowse.Enabled = false;
+            this.b_Paths_sCBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Paths_sCBrowse.Location = new System.Drawing.Point(313, 75);
             this.b_Paths_sCBrowse.Name = "b_Paths_sCBrowse";
             this.b_Paths_sCBrowse.Size = new System.Drawing.Size(61, 22);
             this.b_Paths_sCBrowse.TabIndex = 13;
             this.b_Paths_sCBrowse.Text = "Browse";
-            this.b_Paths_sCBrowse.UseVisualStyleBackColor = true;
+            this.b_Paths_sCBrowse.UseVisualStyleBackColor = false;
             this.b_Paths_sCBrowse.Click += new System.EventHandler(this.b_Paths_sCBrowse_Click);
             // 
             // l_Paths
@@ -397,22 +401,26 @@ namespace SSLUtility2
             // 
             // b_Settings_Apply
             // 
+            this.b_Settings_Apply.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Settings_Apply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Settings_Apply.Location = new System.Drawing.Point(1235, 211);
             this.b_Settings_Apply.Name = "b_Settings_Apply";
             this.b_Settings_Apply.Size = new System.Drawing.Size(75, 23);
             this.b_Settings_Apply.TabIndex = 15;
             this.b_Settings_Apply.Text = "Save All";
-            this.b_Settings_Apply.UseVisualStyleBackColor = true;
+            this.b_Settings_Apply.UseVisualStyleBackColor = false;
             this.b_Settings_Apply.Click += new System.EventHandler(this.b_Settings_Apply_Click);
             // 
             // b_Settings_Default
             // 
+            this.b_Settings_Default.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Settings_Default.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Settings_Default.Location = new System.Drawing.Point(1154, 211);
             this.b_Settings_Default.Name = "b_Settings_Default";
             this.b_Settings_Default.Size = new System.Drawing.Size(75, 23);
             this.b_Settings_Default.TabIndex = 14;
             this.b_Settings_Default.Text = "Default All";
-            this.b_Settings_Default.UseVisualStyleBackColor = true;
+            this.b_Settings_Default.UseVisualStyleBackColor = false;
             this.b_Settings_Default.Click += new System.EventHandler(this.b_Settings_Default_Click);
             // 
             // SettingsPage
