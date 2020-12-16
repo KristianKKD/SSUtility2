@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.3.0";
+        public const string version = "v1.3.3.1";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -275,7 +275,7 @@ namespace SSLUtility2 {
                 cp.tB_IPCon_Port,
                 cp.cB_IPCon_Selected,
             };
-
+            ipCon = cp;
             AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, false);
 
             pp.cp = cp;
@@ -303,7 +303,6 @@ namespace SSLUtility2 {
                     }
                 }
             }
-
         }
 
         public Detached DetachVid(bool show) {
@@ -490,8 +489,10 @@ namespace SSLUtility2 {
             }
             if (comboBox.Text == "Daylight") {
                 return 1;
-            } else {
+            } else if (comboBox.Text == "Thermal") {
                 return 2;
+            } else {
+                return uint.Parse(comboBox.Text);
             }
         }
 
@@ -574,11 +575,16 @@ namespace SSLUtility2 {
                 player.b_PlayerD_StartRec.Text = "STOP Recording";
                 isPlaying = true;
 
-                Recorder rec = new Recorder(new Record(fullVideoPath, int.Parse(ConfigControl.recFPS),
-                SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(ConfigControl.recQual), player.VLCPlayer_D));
+                Recorder rec = Record(fullVideoPath, player.VLCPlayer_D);
 
                 return (isPlaying, rec);
             }
+        }
+
+        private Recorder Record(string path, AxAXVLC.AxVLCPlugin2 player) {
+            Recorder rec = new Recorder(new Record(path, int.Parse(ConfigControl.recFPS),
+                    SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(ConfigControl.recQual), player));
+            return rec;
         }
 
         string GivePath(string orgFolder, string orgName, string adr, string folderType) {
@@ -717,6 +723,24 @@ namespace SSLUtility2 {
         private void Menu_Window_Settings_Click(object sender, EventArgs e) {
             setPage.Show();
             setPage.BringToFront();
+        }
+
+        Recorder screenRec;
+        string lastName;
+        private void Menu_Record_Click(object sender, EventArgs e) {
+            if (screenRec != null) {
+                screenRec.Dispose();
+                screenRec = null;
+                Menu_Record.Text = "Record SSUtility2";
+                MessageBox.Show("Saved recording to: " + lastName);
+            } else {
+                CheckCreateFile(null, ConfigControl.vFolder + @"\SSUtility2\");
+                string folder = ConfigControl.vFolder + @"\SSUtility2\";
+                lastName = folder + "ScreenRecording" + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
+                screenRec = Record(lastName, null);
+                Menu_Record.Text = "Stop Recording";
+            }
+
         }
 
     } // end of class MainForm

@@ -21,10 +21,16 @@ namespace SSLUtility2 {
             Codec = Encoder;
             this.Quality = Quality;
 
-            Height = player.Height;
-            Width = player.Width;
-            Rectangle rec = player.RectangleToScreen(player.ClientRectangle);
-            pos = rec.Location;
+            if (player != null) {
+                Height = player.Height;
+                Width = player.Width;
+                Rectangle rec = player.RectangleToScreen(player.ClientRectangle);
+                pos = rec.Location;
+            } else {
+                Height = MainForm.m.Height - 11;
+                Width = MainForm.m.Width - 12; 
+                pos = new Point(MainForm.m.Location.X + 6, MainForm.m.Location.Y + 5);
+            }
         }
 
         string FileName;
