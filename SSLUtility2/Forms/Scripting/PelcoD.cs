@@ -114,6 +114,7 @@ namespace SSLUtility2
         private void b_PD_Save_Click(object sender, EventArgs e) {
             SaveFile(rtb_PD_Commands.Lines, "PelcoScript");
         }
+
         private void b_PD_Fire_Click(object sender, EventArgs e) {
             if (CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, null, false).Result) {
                 Fire();

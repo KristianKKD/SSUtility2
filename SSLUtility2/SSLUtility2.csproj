@@ -95,11 +95,13 @@
     <Compile Include="Forms\Control\InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\Other Scripts\AsyncCameraCommunicate.cs" />
     <Compile Include="Other\Other Scripts\AsyncSocket.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Other\Other Scripts\AutoSave.cs" />
     <Compile Include="Other\Other Scripts\CameraCommunicate.cs" />
+    <Compile Include="Other\Other Scripts\Command.cs" />
     <Compile Include="Other\Other Scripts\ConfigControl.cs" />
     <Compile Include="Forms\Control\ControlPanel.cs">
       <SubType>Form</SubType>

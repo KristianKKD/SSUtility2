@@ -76,7 +76,11 @@ namespace SSLUtility2 {
                 && CameraCommunicate.sock.Connected &&
                 check_PlayerD_StatsEnabled.Checked) {
                 myInfoRef.InitializeTimer();
+                return;
+            } else if (int.Parse(ConfigControl.updateMs) == 0) {
+                MessageBox.Show("Info panel refresh rate is set to 0!\nPanel will be hidden!");
             }
+            myInfoRef.HideAll();
         }
 
         private void b_PlayerD_SaveSnap_Click(object sender, EventArgs e) {

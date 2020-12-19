@@ -163,7 +163,7 @@ namespace SSLUtility2 {
         public static async Task<bool> SendToSocket(byte[] code, bool async = false) {
             try {
                 if (code != null) {
-                    MainForm.m.WriteToResponses(MainForm.m.ReadCommand(code, false), true);
+                    MainForm.m.WriteToResponses("Sending command: " + MainForm.m.ReadCommand(code, false), true);
                     if (async) {
                         AsyncSocket.SendAsync(code);
                     } else {
@@ -182,7 +182,7 @@ namespace SSLUtility2 {
         public static async Task<string> StringFromSock() {
             try {
                 byte[] buffer = new byte[7];
-                Receive(sock, buffer, 0, buffer.Length, 1000);
+                Receive(sock, buffer, 0, buffer.Length, 1500);
                 string m = "";
                 int zeroCount = 0;
                 for (int i = 0; i < buffer.Length; i++) {

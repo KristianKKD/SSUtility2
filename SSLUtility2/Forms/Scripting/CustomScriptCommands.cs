@@ -4,13 +4,6 @@ using System.Threading.Tasks;
 namespace SSLUtility2 {
     public static class CustomScriptCommands {
 
-        public static async Task QuickCommand(string command) {
-            if (CameraCommunicate.Connect(MainForm.m.ipCon.l_IPCon_Adr.Text, MainForm.m.ipCon.l_IPCon_Port.Text, MainForm.m.ipCon.l_IPCon_Connected, true).Result) {
-                byte[] code = CheckForCommands(command, MainForm.m.MakeAdr(MainForm.m.ipCon.cB_IPCon_Selected)).Result;
-                CameraCommunicate.sendtoIPAsync(code);
-            }
-        }
-
         public static async Task<byte[]> CheckForCommands(string line, uint adr) {
             byte[] code = new byte[3];
 
@@ -23,7 +16,7 @@ namespace SSLUtility2 {
         static int CheckForVal(string line) {
             int value = 0;
             int marker = line.IndexOf(" ");
-            
+
             if (marker != -1) {
                 value = int.Parse(line.Substring(marker + 1));
             }
@@ -72,7 +65,7 @@ namespace SSLUtility2 {
             byte[] code = null;
 
             string start = line;
-            
+
             int markerPos = line.IndexOf(" ");
 
             if (markerPos > 0) {
@@ -86,7 +79,7 @@ namespace SSLUtility2 {
                 case "pause":
                     code = PelcoD.pause;
                     break;
-                
+
                 case "up":
                     code = new byte[] { 0x00, 0x08, 0x00, 0x00 };
                     break;
@@ -125,7 +118,7 @@ namespace SSLUtility2 {
                 case "mono":
                 case "monocolor":
                 case "monocolour":
-                    code = new byte[] { 0x00, 0x07, 0x00, 0x03 }; // was 0x00 0x07 0x03
+                    code = new byte[] { 0x00, 0x07, 0x00, 0x03 };
                     break;
                 case "zeropan":
                 case "panzero":
@@ -149,7 +142,9 @@ namespace SSLUtility2 {
                 case "querypost":
                     code = new byte[] { 0x07, 0x6B, 0x00, 0x00 }; //test
                     break;
-
+                case "queryconfig":
+                    code = new byte[] { 0x03, 0x6B, 0x00, 0x00 };
+                    break;
                 default:
                     code = null;
                     break;
@@ -157,6 +152,14 @@ namespace SSLUtility2 {
 
             return code;
         }
+
+        public static async Task QuickCommand(string command) {
+            if (CameraCommunicate.Connect(MainForm.m.ipCon.l_IPCon_Adr.Text, MainForm.m.ipCon.l_IPCon_Port.Text, MainForm.m.ipCon.l_IPCon_Connected, true).Result) {
+                byte[] code = CheckForCommands(command, MainForm.m.MakeAdr(MainForm.m.ipCon.cB_IPCon_Selected)).Result;
+                CameraCommunicate.sendtoIPAsync(code);
+            }
+        }
+
 
     }
 }

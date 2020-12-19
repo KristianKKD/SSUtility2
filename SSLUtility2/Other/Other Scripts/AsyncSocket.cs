@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     class AsyncSocket {
 
-        static Socket sock;
+        public static Socket sock;
         static byte[] receiveBuffer;
 
         public static void ConnectAsync(Uri addr) {
