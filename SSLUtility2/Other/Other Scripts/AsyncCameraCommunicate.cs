@@ -17,7 +17,6 @@ namespace SSLUtility2 {
 
         static byte[] receiveBuffer;
 
-
         public static int SendNewCommand(byte[] code) {
             Command com = new Command(code);
             if (com.invalid) {
@@ -27,6 +26,14 @@ namespace SSLUtility2 {
             CommandQueue.header = com.id;
             Send();
             return com.id;
+        }
+
+        public static void SendExistingCommand(int id) {
+            Command com = CommandQueue.FindCommandByID(id);
+            if (com != null) {
+                CommandQueue.MoveHeaderToCommand(com);
+                Send();
+            }
         }
 
         public static void Connect(IPEndPoint ep = null) {
@@ -57,6 +64,7 @@ namespace SSLUtility2 {
                 MessageBox.Show(e.ToString());
             }
         }
+
         private static void ConnectCallback(IAsyncResult AR) {
             try {
                 sock.EndConnect(AR);
@@ -70,7 +78,6 @@ namespace SSLUtility2 {
                 MessageBox.Show(e.ToString());
             }
         }
-
 
         public static void Disconnect() {
             try {
@@ -137,7 +144,8 @@ namespace SSLUtility2 {
 
             }
             m = m.Trim();
-            new ReturnCommand(-1, m);
+            ReturnCommand com = CommandQueue.FindReturnByID(CommandQueue.GetCurCommand().id); //might cause issues
+            com.UpdateReturnMsg(m);
         }
 
     }

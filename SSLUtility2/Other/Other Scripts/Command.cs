@@ -17,6 +17,9 @@ namespace SSLUtility2 {
         public static int header {
             get; set;
         }
+        public static int total {
+            get; set;
+        }
 
         public static Command GetCurCommand() {
             return queueList[header];
@@ -28,9 +31,17 @@ namespace SSLUtility2 {
             }
         }
 
-        public static ReturnCommand GetReturnMsg(int id) {
+        public static Command FindCommandByID(int id) {
+            for (int i = 0; i < queueList.Count; i++) {
+                if (id == queueList[i].id) {
+                    return queueList[i];
+                }
+            }
+            return null;
+        }
+        public static ReturnCommand FindReturnByID(int id) {
             for (int i = 0; i < returnList.Count; i++) {
-                if (id == returnList[i].id) {
+                if (id == returnList[i].comID) {
                     return returnList[i];
                 }
             }
@@ -40,7 +51,7 @@ namespace SSLUtility2 {
         public static void MoveHeaderToCommand(Command com) {
             int prevHeader = header;
             for (int i = 0; i < queueList.Count; i++) {
-                if (queueList[i] == com) {
+                if (com == queueList[i]) {
                     header = i;
                     break;
                 }
@@ -53,20 +64,21 @@ namespace SSLUtility2 {
     }
 
     public class ReturnCommand {
-        public int id;
+        public int comID;
         public string msg;
         public bool invalid;
+        public bool done;
 
-        public ReturnCommand(int commandId, string content) {
+        public ReturnCommand(int id) {
+            comID = id;
+        }
+
+        public void UpdateReturnMsg(string content) {
             if (content == CameraCommunicate.defaultResult || content.Length == 0) {
                 invalid = true;
             }
-            if (commandId == -1) {
-                id = CommandQueue.header;
-            } else {
-                id = commandId;
-            }
             msg = content;
+            done = true;
         }
 
     }
@@ -83,7 +95,9 @@ namespace SSLUtility2 {
                 invalid = true;
             }
             content = code;
-            id = CommandQueue.queueList.Count;
+            CommandQueue.total++;
+            id = CommandQueue.total;
+            ReturnCommand com = new ReturnCommand(id, "temp");
             CommandQueue.queueList.Add(this);
         }
 
