@@ -26,6 +26,10 @@ namespace SSLUtility2 {
                 string names = "";
                 for (int x = 0; x < curCom.names.Length; x++) {
                     names += curCom.names[x];
+                    if (curCom.valueAccepting) {
+                        names += " 0";
+                    }
+
                     if (x < curCom.names.Length - 1)
                         names += ", ";
                 }
