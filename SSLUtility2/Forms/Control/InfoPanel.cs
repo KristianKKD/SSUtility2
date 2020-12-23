@@ -106,7 +106,6 @@ namespace SSLUtility2 {
 
         void CheckConfiguration() {
             string result = GetQueryResults(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F });
-            MessageBox.Show(result);
             int type = int.Parse(result.Substring(12, 1));
 
             switch (type) {

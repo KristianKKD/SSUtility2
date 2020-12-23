@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.4.1";
+        public const string version = "v1.3.4.3";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -78,7 +78,7 @@ namespace SSLUtility2 {
 
             setPage.PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
-            AutoConnect(playerL, playerR);
+            AutoConnect();
         }
 
         void CreateInfoPanels(Detached playerL, Detached playerR) {
@@ -96,8 +96,9 @@ namespace SSLUtility2 {
             }
         }
 
-        async Task AutoConnect(Detached playerL, Detached playerR) {
+        async Task AutoConnect() {
             bool connected = CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.l_IPCon_Connected, true).Result;
+            await Task.Delay(1000);
             if (ConfigControl.autoPlay) {
                 if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
                     if (Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false).Result
@@ -322,7 +323,7 @@ namespace SSLUtility2 {
             pd.tB_IPCon_Port.Text = port;
             pd.cB_IPCon_Selected.Text = selected;
             pd.Show();
-            SetFeatureToAllControls(pd.Controls);
+            pd.BringToFront();
             return pd;
         }
 
@@ -514,14 +515,15 @@ namespace SSLUtility2 {
             return msg;
         }
 
-        public void WriteToResponses(string text, bool hide) {
+        public void WriteToResponses(string text, bool hide, bool isSpam = false) {
             this.Invoke((MethodInvoker)delegate {
                 if (rl.rtb_Log.Text.Length > 2000000000) {
                     rl.rtb_Log.Clear();
                 }
                 string sender = CameraCommunicate.GetSockEndpoint();
-                if (hide)
+                if (hide && !isSpam) {
                     sender = "CLIENT";
+                }
                 if (!hide || rl.check_RL_All.Checked) {
                     rl.rtb_Log.AppendText("[" + sender + " at " + DateTime.Now + "]: " + text + "\n");
                 }
@@ -717,7 +719,6 @@ namespace SSLUtility2 {
         }
 
         private void Menu_Window_Response_Click(object sender, EventArgs e) {
-            OpenResponseLog();
             OpenResponseLog();
         }
 

@@ -104,7 +104,7 @@ namespace SSLUtility2 {
                 }
                 m = m.Trim();
                 if (m.Length > 1) {
-                    MainForm.m.WriteToResponses("Server says: " + m, false);
+                    MainForm.m.WriteToResponses("Server says: " + m, true, false);
                     InfoPanel.ReadResult(m);
                 }
             } catch { }
