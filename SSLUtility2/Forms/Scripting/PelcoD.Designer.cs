@@ -47,15 +47,16 @@
             this.b_PD_RL = new System.Windows.Forms.Button();
             this.check_PD_Perfect = new System.Windows.Forms.CheckBox();
             this.tt_CommandFormat = new System.Windows.Forms.ToolTip(this.components);
+            this.b_PD_ComList = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // b_PD_Load
             // 
             this.b_PD_Load.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Load.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_Load.Location = new System.Drawing.Point(348, 110);
+            this.b_PD_Load.Location = new System.Drawing.Point(348, 118);
             this.b_PD_Load.Name = "b_PD_Load";
-            this.b_PD_Load.Size = new System.Drawing.Size(111, 33);
+            this.b_PD_Load.Size = new System.Drawing.Size(111, 38);
             this.b_PD_Load.TabIndex = 9;
             this.b_PD_Load.Text = "Load Script";
             this.b_PD_Load.UseVisualStyleBackColor = false;
@@ -65,9 +66,9 @@
             // 
             this.b_PD_Save.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_Save.Location = new System.Drawing.Point(348, 71);
+            this.b_PD_Save.Location = new System.Drawing.Point(348, 76);
             this.b_PD_Save.Name = "b_PD_Save";
-            this.b_PD_Save.Size = new System.Drawing.Size(111, 33);
+            this.b_PD_Save.Size = new System.Drawing.Size(111, 38);
             this.b_PD_Save.TabIndex = 8;
             this.b_PD_Save.Text = "Save Script";
             this.b_PD_Save.UseVisualStyleBackColor = false;
@@ -79,7 +80,7 @@
             this.b_PD_Fire.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_Fire.Location = new System.Drawing.Point(348, 32);
             this.b_PD_Fire.Name = "b_PD_Fire";
-            this.b_PD_Fire.Size = new System.Drawing.Size(111, 33);
+            this.b_PD_Fire.Size = new System.Drawing.Size(111, 38);
             this.b_PD_Fire.TabIndex = 7;
             this.b_PD_Fire.Text = "Fire Commands";
             this.b_PD_Fire.UseVisualStyleBackColor = false;
@@ -90,7 +91,7 @@
             this.rtb_PD_Commands.BackColor = System.Drawing.SystemColors.Control;
             this.rtb_PD_Commands.Location = new System.Drawing.Point(12, 32);
             this.rtb_PD_Commands.Name = "rtb_PD_Commands";
-            this.rtb_PD_Commands.Size = new System.Drawing.Size(330, 385);
+            this.rtb_PD_Commands.Size = new System.Drawing.Size(330, 398);
             this.rtb_PD_Commands.TabIndex = 6;
             this.rtb_PD_Commands.Text = "";
             // 
@@ -107,7 +108,7 @@
             // l_PD_Single
             // 
             this.l_PD_Single.AutoSize = true;
-            this.l_PD_Single.Location = new System.Drawing.Point(13, 437);
+            this.l_PD_Single.Location = new System.Drawing.Point(12, 439);
             this.l_PD_Single.Name = "l_PD_Single";
             this.l_PD_Single.Size = new System.Drawing.Size(127, 13);
             this.l_PD_Single.TabIndex = 16;
@@ -117,7 +118,7 @@
             // 
             this.b_PD_FireSingle.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_FireSingle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_FireSingle.Location = new System.Drawing.Point(271, 434);
+            this.b_PD_FireSingle.Location = new System.Drawing.Point(270, 435);
             this.b_PD_FireSingle.Name = "b_PD_FireSingle";
             this.b_PD_FireSingle.Size = new System.Drawing.Size(75, 21);
             this.b_PD_FireSingle.TabIndex = 15;
@@ -127,7 +128,7 @@
             // 
             // tB_PD_Single
             // 
-            this.tB_PD_Single.Location = new System.Drawing.Point(146, 434);
+            this.tB_PD_Single.Location = new System.Drawing.Point(145, 436);
             this.tB_PD_Single.Name = "tB_PD_Single";
             this.tB_PD_Single.Size = new System.Drawing.Size(119, 20);
             this.tB_PD_Single.TabIndex = 14;
@@ -142,7 +143,7 @@
             // 
             // tB_IPCon_Port
             // 
-            this.tB_IPCon_Port.Location = new System.Drawing.Point(348, 224);
+            this.tB_IPCon_Port.Location = new System.Drawing.Point(348, 237);
             this.tB_IPCon_Port.Name = "tB_IPCon_Port";
             this.tB_IPCon_Port.Size = new System.Drawing.Size(111, 20);
             this.tB_IPCon_Port.TabIndex = 85;
@@ -150,7 +151,7 @@
             // 
             // tB_IPCon_Adr
             // 
-            this.tB_IPCon_Adr.Location = new System.Drawing.Point(348, 185);
+            this.tB_IPCon_Adr.Location = new System.Drawing.Point(348, 198);
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(111, 20);
             this.tB_IPCon_Adr.TabIndex = 84;
@@ -170,7 +171,7 @@
             this.cB_IPCon_Selected.Items.AddRange(new object[] {
             "Daylight",
             "Thermal"});
-            this.cB_IPCon_Selected.Location = new System.Drawing.Point(348, 263);
+            this.cB_IPCon_Selected.Location = new System.Drawing.Point(348, 276);
             this.cB_IPCon_Selected.Name = "cB_IPCon_Selected";
             this.cB_IPCon_Selected.Size = new System.Drawing.Size(111, 21);
             this.cB_IPCon_Selected.TabIndex = 86;
@@ -179,7 +180,7 @@
             // l_IPCon_SelectedCam
             // 
             this.l_IPCon_SelectedCam.AutoSize = true;
-            this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(345, 247);
+            this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(345, 260);
             this.l_IPCon_SelectedCam.Name = "l_IPCon_SelectedCam";
             this.l_IPCon_SelectedCam.Size = new System.Drawing.Size(91, 13);
             this.l_IPCon_SelectedCam.TabIndex = 83;
@@ -188,7 +189,7 @@
             // l_IPCon_Port
             // 
             this.l_IPCon_Port.AutoSize = true;
-            this.l_IPCon_Port.Location = new System.Drawing.Point(345, 208);
+            this.l_IPCon_Port.Location = new System.Drawing.Point(344, 221);
             this.l_IPCon_Port.Name = "l_IPCon_Port";
             this.l_IPCon_Port.Size = new System.Drawing.Size(29, 13);
             this.l_IPCon_Port.TabIndex = 82;
@@ -197,7 +198,7 @@
             // l_IPCon_Adr
             // 
             this.l_IPCon_Adr.AutoSize = true;
-            this.l_IPCon_Adr.Location = new System.Drawing.Point(345, 169);
+            this.l_IPCon_Adr.Location = new System.Drawing.Point(345, 182);
             this.l_IPCon_Adr.Name = "l_IPCon_Adr";
             this.l_IPCon_Adr.Size = new System.Drawing.Size(61, 13);
             this.l_IPCon_Adr.TabIndex = 80;
@@ -208,9 +209,9 @@
             this.b_PD_Stop.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Stop.Enabled = false;
             this.b_PD_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_Stop.Location = new System.Drawing.Point(348, 367);
+            this.b_PD_Stop.Location = new System.Drawing.Point(347, 391);
             this.b_PD_Stop.Name = "b_PD_Stop";
-            this.b_PD_Stop.Size = new System.Drawing.Size(111, 50);
+            this.b_PD_Stop.Size = new System.Drawing.Size(111, 39);
             this.b_PD_Stop.TabIndex = 89;
             this.b_PD_Stop.Text = "Stop Script Execution";
             this.b_PD_Stop.UseVisualStyleBackColor = false;
@@ -220,9 +221,9 @@
             // 
             this.b_PD_RL.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_RL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_RL.Location = new System.Drawing.Point(348, 311);
+            this.b_PD_RL.Location = new System.Drawing.Point(348, 303);
             this.b_PD_RL.Name = "b_PD_RL";
-            this.b_PD_RL.Size = new System.Drawing.Size(111, 50);
+            this.b_PD_RL.Size = new System.Drawing.Size(111, 38);
             this.b_PD_RL.TabIndex = 90;
             this.b_PD_RL.Text = "Open Response Log";
             this.b_PD_RL.UseVisualStyleBackColor = false;
@@ -232,7 +233,7 @@
             // 
             this.check_PD_Perfect.AccessibleDescription = "E.g. \"0021 0002 0153 0004\"";
             this.check_PD_Perfect.AutoSize = true;
-            this.check_PD_Perfect.Location = new System.Drawing.Point(348, 149);
+            this.check_PD_Perfect.Location = new System.Drawing.Point(348, 162);
             this.check_PD_Perfect.Name = "check_PD_Perfect";
             this.check_PD_Perfect.Size = new System.Drawing.Size(95, 17);
             this.check_PD_Perfect.TabIndex = 92;
@@ -240,12 +241,25 @@
             this.check_PD_Perfect.UseVisualStyleBackColor = true;
             this.check_PD_Perfect.CheckedChanged += new System.EventHandler(this.check_PD_Perfect_CheckedChanged);
             // 
+            // b_PD_ComList
+            // 
+            this.b_PD_ComList.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PD_ComList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PD_ComList.Location = new System.Drawing.Point(348, 347);
+            this.b_PD_ComList.Name = "b_PD_ComList";
+            this.b_PD_ComList.Size = new System.Drawing.Size(111, 38);
+            this.b_PD_ComList.TabIndex = 93;
+            this.b_PD_ComList.Text = "Open Command List";
+            this.b_PD_ComList.UseVisualStyleBackColor = false;
+            this.b_PD_ComList.Click += new System.EventHandler(this.b_PD_ComList_Click);
+            // 
             // PelcoD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(470, 467);
+            this.ClientSize = new System.Drawing.Size(470, 471);
+            this.Controls.Add(this.b_PD_ComList);
             this.Controls.Add(this.check_PD_Perfect);
             this.Controls.Add(this.b_PD_RL);
             this.Controls.Add(this.b_PD_Stop);
@@ -268,6 +282,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PelcoD";
             this.Text = "PelcoD";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PelcoD_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,7 +293,7 @@
         private System.Windows.Forms.Button b_PD_Load;
         private System.Windows.Forms.Button b_PD_Save;
         private System.Windows.Forms.Button b_PD_Fire;
-        private System.Windows.Forms.RichTextBox rtb_PD_Commands;
+        public System.Windows.Forms.RichTextBox rtb_PD_Commands;
         public System.Windows.Forms.Label l_PD_Scripting;
         private System.Windows.Forms.Label l_PD_Single;
         private System.Windows.Forms.Button b_PD_FireSingle;
@@ -295,5 +310,6 @@
         private System.Windows.Forms.Button b_PD_RL;
         private System.Windows.Forms.CheckBox check_PD_Perfect;
         private System.Windows.Forms.ToolTip tt_CommandFormat;
+        private System.Windows.Forms.Button b_PD_ComList;
     }
 }

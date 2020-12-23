@@ -4,13 +4,13 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2
-{
+namespace SSLUtility2 {
 
     public partial class PelcoD : Form {
 
         bool stop;
 
+        public static byte[] noCommand = { 2, 3, 4, 5 };
         public static byte[] pause = { 1, 2, 3, 4 };
 
         public PelcoD() {
@@ -59,14 +59,13 @@ namespace SSLUtility2
                     send = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
                 }
 
-                if (send == null) {
-                    send = MakeCommand(line);
-                } else if (send == pause) {
+                if (send == pause) {
                     return;
-                } else {
-                    MainForm.m.WriteToResponses("Firing: " + line, true);
+                } else if (send == noCommand) {
+                    send = MakeCommand(line);
                 }
-
+                
+                MainForm.m.WriteToResponses("Firing: " + line, true);
                 AsyncCameraCommunicate.SendNewCommand(send);
                 //have a way for this to see if it failed
 
@@ -158,11 +157,26 @@ namespace SSLUtility2
             MainForm.m.rl.Location = new System.Drawing.Point(Location.X + MainForm.m.rl.Width, Location.Y);
         }
 
+        CommandListWindow clw = null;
+        private void b_PD_ComList_Click(object sender, EventArgs e) {
+            if (clw == null) {
+                clw = new CommandListWindow();
+            }
+            clw.Show();
+        }
+
         private void check_PD_Perfect_CheckedChanged(object sender, EventArgs e) {
             if (check_PD_Perfect.Checked) {
                 tt_CommandFormat.SetToolTip(check_PD_Perfect, "Perfect Format enabled example: FF 01 00 53 00 00 54");
             } else {
                 tt_CommandFormat.SetToolTip(check_PD_Perfect, "Perfect Format disabled example: 00 53 00 00");
+            }
+        }
+
+        private void PelcoD_FormClosing(object sender, FormClosingEventArgs e) {
+            if (e.CloseReason == CloseReason.UserClosing) {
+                e.Cancel = true;
+                Hide();
             }
         }
 

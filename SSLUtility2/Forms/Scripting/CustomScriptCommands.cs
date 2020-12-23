@@ -2,12 +2,44 @@
 using System.Threading.Tasks;
 
 namespace SSLUtility2 {
-    public static class CustomScriptCommands {
+    public class ScriptCommand {
+        public string[] names;
+        public byte[] codeContent;
+        public string description;
+        public bool custom;
+
+        public ScriptCommand(string[] n, byte[] code, string text, bool scriptCommand = false) {
+            names = n;
+            codeContent = code;
+            description = text;
+            custom = scriptCommand;
+        }
+    }
+
+    public class CustomScriptCommands {
+
+        public static ScriptCommand[] cameraCommands = new ScriptCommand[]{
+            new ScriptCommand(new string[] {"pause", "wait"}, PelcoD.pause, "Pause the script execution for X milliseconds", true),
+
+            new ScriptCommand(new string[] {"stop"}, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing"),
+            new ScriptCommand(new string[] {"mono", "monocolour", "monocolor"}, new byte[] { 0x00, 0x07, 0x00, 0x03 }, "Camera video toggles between color and black/white pallete"),
+            new ScriptCommand(new string[] {"panzero", "zeropan", "azimuth"}, new byte[] { 0x00, 0x49, 0x00, 0x00 }, "Sets camera pan to zero"),
+
+            new ScriptCommand(new string[] {"setzoomspeed"}, new byte[] { 0x00, 0x25, 0x00, 0x00 }, "Sets camera zoom speed to X (DATA 2)"),
+            new ScriptCommand(new string[] {"setpantiltspeed"}, new byte[] { 0x00, 0x4B, 0x00, 0x00 }, "Sets camera pan and tilt speed to X (DATA 2)"),
+            new ScriptCommand(new string[] {"setpanpos"}, new byte[] { 0x00, 0x4B, 0x00, 0x00 }, "Sets camera pan position to X (DATA 1 & DATA 2)"),
+            new ScriptCommand(new string[] {"settiltpos"}, new byte[] { 0x00, 0x4D, 0x00, 0x00 }, "Sets camera tilt position to X (DATA 1 & DATA 2)"),
+
+            new ScriptCommand(new string[] {"querytilt"}, new byte[] { 0x00, 0x51, 0x00, 0x00 }, "Returns camera tilt position"),
+            new ScriptCommand(new string[] {"querypan"}, new byte[] { 0x00, 0x53, 0x00, 0x00 }, "Returns camera pan position"),
+            new ScriptCommand(new string[] {"queryzoom", "queryzoom"}, new byte[] { 0x00, 0x55, 0x00, 0x00 }, "Returns camera FOV"),
+            new ScriptCommand(new string[] {"queryfocus"}, new byte[] { 0x01, 0x55, 0x00, 0x00 }, "Returns camera focus value"),
+            new ScriptCommand(new string[] {"querypost"}, new byte[] { 0x07, 0x6B, 0x00, 0x00 }, "Returns camera test data"),
+            new ScriptCommand(new string[] {"queryconfig"}, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config"),
+        };
 
         public static async Task<byte[]> CheckForCommands(string line, uint adr) {
-            byte[] code = new byte[3];
-
-            code = CheckForPresets(line).Result;
+            byte[] code = CheckForPresets(line).Result;
             code = RefineCode(code, adr, CheckForVal(line)).Result;
 
             return code;
@@ -25,21 +57,21 @@ namespace SSLUtility2 {
         }
 
         static async Task<byte[]> RefineCode(byte[] code, uint adr, int value) {
+            if (code == PelcoD.pause) {
+                MainForm.m.WriteToResponses("Waiting: " + value.ToString() + "ms", true);
+                await Task.Delay(value).ConfigureAwait(false);
+            }
+
+            if (code == PelcoD.noCommand || code == PelcoD.pause) {
+                return code;
+            }
+
             if (value > 255) { //need to test
                 code[2] = 0x01;
                 value -= 255;
             }
             if (code[3] == 0x00) {
                 code[3] = Convert.ToByte(value);
-            }
-
-            if (code == PelcoD.pause) {
-                await Task.Delay(value).ConfigureAwait(false);
-                MainForm.m.WriteToResponses("Waiting: " + value.ToString(), true);
-            }
-
-            if (code == null || code == PelcoD.pause) {
-                return code;
             }
 
             uint checksum = GetCheckSum(code, adr, value);
@@ -62,8 +94,6 @@ namespace SSLUtility2 {
         }
 
         public static async Task<byte[]> CheckForPresets(string line) {
-            byte[] code = null;
-
             string start = line;
 
             int markerPos = line.IndexOf(" ");
@@ -73,84 +103,15 @@ namespace SSLUtility2 {
                 start = start.Trim();
             }
 
-            switch (start) {
-                // value accepting //
-                case "wait":
-                case "pause":
-                    code = PelcoD.pause;
-                    break;
-
-                case "up":
-                    code = new byte[] { 0x00, 0x08, 0x00, 0x00 };
-                    break;
-                case "down":
-                    break;
-                case "left":
-                    break;
-                case "right":
-                    break;
-
-                case "pan":
-                    break;
-                case "tilt":
-                    break;
-                case "fov":
-                    break;
-
-                case "setzoomspeed":
-                    code = new byte[] { 0x00, 0x25, 0x00, 0x00 }; //keep trying to get this work//try 0x19
-                    break;
-                case "setpantiltspeed":
-                    code = new byte[] { 0x00, 0x4B, 0x00, 0x00 };
-                    break;
-
-                case "setpanpos":
-                    code = new byte[] { 0x00, 0x4B, 0x00, 0x00 }; //test
-                    break;
-                case "settiltpos":
-                    code = new byte[] { 0x00, 0x4D, 0x00, 0x00 }; //test
-                    break;
-
-                // no values // 
-                case "stop":
-                    code = new byte[] { 0x00, 0x00, 0x00, 0x00 };
-                    break;
-                case "mono":
-                case "monocolor":
-                case "monocolour":
-                    code = new byte[] { 0x00, 0x07, 0x00, 0x03 };
-                    break;
-                case "zeropan":
-                case "panzero":
-                    code = new byte[] { 0x00, 0x49, 0x00, 0x00 }; //test
-                    break;
-
-                // queries //
-                case "querytilt":
-                    code = new byte[] { 0x00, 0x51, 0x00, 0x00 };
-                    break;
-                case "querypan":
-                    code = new byte[] { 0x00, 0x53, 0x00, 0x00 };
-                    break;
-                case "queryfov":
-                case "queryzoom":
-                    code = new byte[] { 0x00, 0x55, 0x00, 0x00 }; //test
-                    break;
-                case "queryfocus":
-                    code = new byte[] { 0x01, 0x55, 0x00, 0x00 }; //test
-                    break;
-                case "querypost":
-                    code = new byte[] { 0x07, 0x6B, 0x00, 0x00 }; //test
-                    break;
-                case "queryconfig":
-                    code = new byte[] { 0x03, 0x6B, 0x00, 0x00 };
-                    break;
-                default:
-                    code = null;
-                    break;
+            for (int i = 0; i < cameraCommands.Length; i++) {
+                for (int x = 0; x < cameraCommands[i].names.Length; x++) {
+                    if (cameraCommands[i].names[x] == start) {
+                        return cameraCommands[i].codeContent;
+                    }
+                }
             }
 
-            return code;
+            return PelcoD.noCommand;
         }
 
         public static async Task QuickCommand(string command) {

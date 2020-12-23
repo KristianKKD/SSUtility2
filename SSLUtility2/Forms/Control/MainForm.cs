@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.3.3";
+        public const string version = "v1.3.3.4";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -20,6 +20,7 @@ namespace SSLUtility2 {
 
         public ControlPanel ipCon;
         public SettingsPage setPage;
+        public PelcoD pd;
 
         public Detached playerL;
         public Detached playerR;
@@ -32,6 +33,7 @@ namespace SSLUtility2 {
             m = this;
             setPage = new SettingsPage();
             rl = new ResponseLog();
+            pd = new PelcoD();
             D.protocol = new D();
             CommandQueue.Init();
 
@@ -316,7 +318,6 @@ namespace SSLUtility2 {
         }
 
         public PelcoD OpenPelco(string ip, string port, string selected) {
-            PelcoD pd = new PelcoD();
             pd.tB_IPCon_Adr.Text = ip;
             pd.tB_IPCon_Port.Text = port;
             pd.cB_IPCon_Selected.Text = selected;
@@ -498,14 +499,19 @@ namespace SSLUtility2 {
         }
 
         public string ReadCommand(byte[] command, bool hide = false) {
-            string m = "";
+            string msg = "";
             for (int i = 0; i < command.Length; i++) {
-                m += command[i].ToString() + " ";
+                string hex = command[i].ToString("X").ToUpper();
+                if (hex.Length == 1) {
+                    hex = "0" + hex;
+                }
+                msg += hex + " ";
             }
+            msg = msg.Trim();
             if (!hide) {
-                MessageBox.Show(m);
+                MessageBox.Show(msg);
             }
-            return m;
+            return msg;
         }
 
         public void WriteToResponses(string text, bool hide) {

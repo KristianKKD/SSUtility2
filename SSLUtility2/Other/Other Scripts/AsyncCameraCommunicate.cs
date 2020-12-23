@@ -122,7 +122,6 @@ namespace SSLUtility2 {
 
         private static void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent?
             try {
-                MainForm.m.WriteToResponses("receiving",false);
                 int received = sock.EndReceive(AR);
                 if(received == 0) {
                     return;
@@ -143,6 +142,7 @@ namespace SSLUtility2 {
             string msg = "";
             int comCount = 0;
             bool startedCom = false;
+
             for (int i = 0; i < receiveBuffer.Length; i++) {
                 string hex = receiveBuffer[i].ToString("X").ToUpper();
                 if (hex != "0" && !startedCom) {
@@ -156,8 +156,8 @@ namespace SSLUtility2 {
                     msg += hex + " ";
                     comCount--;
                 }
-
             }
+
             msg = msg.Trim();
             ReturnCommand com = CommandQueue.FindReturnByID(CommandQueue.GetCurCommand().id); //might cause issues
             com.UpdateReturnMsg(msg);

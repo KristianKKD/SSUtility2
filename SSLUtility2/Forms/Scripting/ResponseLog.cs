@@ -10,7 +10,9 @@ namespace SSLUtility2
         }
 
         private void b_RL_Clear_Click(object sender, EventArgs e) {
-            rtb_Log.Clear();
+            bool clear = MainForm.ShowError("Are you sure you want to clear the response log?", "Clear Response Log", "", false);
+            if(clear)
+                rtb_Log.Clear();
         }
 
         private void b_RL_Save_Click(object sender, EventArgs e) {

@@ -95,6 +95,12 @@
     <Compile Include="Forms\Control\InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Scripting\CommandList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Scripting\CommandList.Designer.cs">
+      <DependentUpon>CommandList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Other\Other Scripts\AsyncCameraCommunicate.cs" />
     <Compile Include="Other\Other Scripts\AsyncSocket.cs">
       <SubType>Form</SubType>
@@ -117,10 +123,10 @@
     <Compile Include="Forms\Control\Detached.Designer.cs">
       <DependentUpon>Detached.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\FinalTest\Final.cs">
+    <Compile Include="Forms\Control\Final.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\FinalTest\Final.Designer.cs">
+    <Compile Include="Forms\Control\Final.Designer.cs">
       <DependentUpon>Final.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Control\MainForm.cs">
@@ -177,6 +183,9 @@
     <EmbeddedResource Include="Forms\Control\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Scripting\CommandList.resx">
+      <DependentUpon>CommandList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Scripting\PelcoD.resx">
       <DependentUpon>PelcoD.cs</DependentUpon>
     </EmbeddedResource>
@@ -186,7 +195,7 @@
     <EmbeddedResource Include="Forms\Scripting\ResponseLog.resx">
       <DependentUpon>ResponseLog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FinalTest\Final.resx">
+    <EmbeddedResource Include="Forms\Control\Final.resx">
       <DependentUpon>Final.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Other\FirmwareUpgrade.resx">
