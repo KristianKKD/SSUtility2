@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -19,6 +20,7 @@ namespace SSLUtility2
 
         async Task Fire() {
             try {
+                AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text)));
                 stop = false;
                 b_PD_Stop.Enabled = true;
                 for (int i = 0; i < rtb_PD_Commands.Lines.Length; i++) {
@@ -65,11 +67,12 @@ namespace SSLUtility2
                     MainForm.m.WriteToResponses("Firing: " + line, true);
                 }
 
-                string response = CameraCommunicate.Query(send, u).Result;
+                AsyncCameraCommunicate.SendNewCommand(send);
+                //have a way for this to see if it failed
 
-                if (response == CameraCommunicate.defaultResult) {
-                    MainForm.m.WriteToResponses("Command: " + line + " could not be sent.", false);
-                }
+                //if (response == CameraCommunicate.defaultResult) {
+                //    MainForm.m.WriteToResponses("Command: " + line + " could not be sent.", false);
+                //}
 
             }
         }
@@ -152,6 +155,7 @@ namespace SSLUtility2
 
         private void b_PD_RL_Click(object sender, EventArgs e) {
             MainForm.m.OpenResponseLog();
+            MainForm.m.rl.Location = new System.Drawing.Point(Location.X + MainForm.m.rl.Width, Location.Y);
         }
 
         private void check_PD_Perfect_CheckedChanged(object sender, EventArgs e) {

@@ -147,6 +147,7 @@
     <Compile Include="Forms\Other\FirmwareUpgrade.Designer.cs">
       <DependentUpon>FirmwareUpgrade.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\Other Scripts\OtherCameraCommunication.cs" />
     <Compile Include="Other\Other Scripts\Program.cs" />
     <Compile Include="Forms\Other\SettingsPage.cs">
       <SubType>Form</SubType>

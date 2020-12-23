@@ -38,7 +38,7 @@
             this.rtb_Log.Location = new System.Drawing.Point(12, 32);
             this.rtb_Log.Name = "rtb_Log";
             this.rtb_Log.ReadOnly = true;
-            this.rtb_Log.Size = new System.Drawing.Size(377, 402);
+            this.rtb_Log.Size = new System.Drawing.Size(429, 402);
             this.rtb_Log.TabIndex = 0;
             this.rtb_Log.Text = "";
             // 
@@ -46,7 +46,7 @@
             // 
             this.b_RL_Clear.BackColor = System.Drawing.SystemColors.Control;
             this.b_RL_Clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_RL_Clear.Location = new System.Drawing.Point(395, 61);
+            this.b_RL_Clear.Location = new System.Drawing.Point(449, 61);
             this.b_RL_Clear.Name = "b_RL_Clear";
             this.b_RL_Clear.Size = new System.Drawing.Size(75, 23);
             this.b_RL_Clear.TabIndex = 1;
@@ -58,7 +58,7 @@
             // 
             this.b_RL_Save.BackColor = System.Drawing.SystemColors.Control;
             this.b_RL_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_RL_Save.Location = new System.Drawing.Point(395, 32);
+            this.b_RL_Save.Location = new System.Drawing.Point(449, 32);
             this.b_RL_Save.Name = "b_RL_Save";
             this.b_RL_Save.Size = new System.Drawing.Size(75, 23);
             this.b_RL_Save.TabIndex = 2;
@@ -79,7 +79,7 @@
             // check_RL_All
             // 
             this.check_RL_All.AutoSize = true;
-            this.check_RL_All.Location = new System.Drawing.Point(358, 9);
+            this.check_RL_All.Location = new System.Drawing.Point(412, 9);
             this.check_RL_All.Name = "check_RL_All";
             this.check_RL_All.Size = new System.Drawing.Size(112, 17);
             this.check_RL_All.TabIndex = 15;
@@ -91,7 +91,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(478, 446);
+            this.ClientSize = new System.Drawing.Size(533, 446);
             this.Controls.Add(this.check_RL_All);
             this.Controls.Add(this.l_RL_RL);
             this.Controls.Add(this.b_RL_Save);

@@ -35,11 +35,11 @@ namespace SSLUtility2 {
         }
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
-            DoPreset(mainRef.MakeAdr(cp.l), 196);
+            DoPreset(mainRef.MakeAdr(cp.cB_IPCon_Selected), 196);
         }
 
         private void b_Presets_Admin_DefaultMen_Click(object sender, EventArgs e) {
-            DoPreset(mainRef.MakeAdr(cp.l), 2);
+            DoPreset(mainRef.MakeAdr(cp.cB_IPCon_Selected), 2);
         }
 
         private void b_Presets_Daylight_Wiper_Click(object sender, EventArgs e) {

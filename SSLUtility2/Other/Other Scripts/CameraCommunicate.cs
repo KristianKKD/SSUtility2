@@ -20,7 +20,7 @@ namespace SSLUtility2 {
         public const string defaultResult = "00 00 00 00 00 00 00";
 
 
-        public static async Task<bool> sendtoIPAsync(byte[] code, Control lab = null, string ip = null, string port = null, bool hideError = false) {
+        public static async Task<bool> sendtoIPAsync(byte[] code, Label lab = null, string ip = null, string port = null, bool hideError = false) {
             //MainForm.m.ReadCommand(code, true);
             try {
                 if (!sock.Connected) {
@@ -163,7 +163,7 @@ namespace SSLUtility2 {
         public static async Task<bool> SendToSocket(byte[] code, bool async = false) {
             try {
                 if (code != null) {
-                    MainForm.m.WriteToResponses("Sending command: " + MainForm.m.ReadCommand(code, false), true);
+                    MainForm.m.WriteToResponses("Sending command: " + MainForm.m.ReadCommand(code, true), true);
                     if (async) {
                         AsyncSocket.SendAsync(code);
                     } else {

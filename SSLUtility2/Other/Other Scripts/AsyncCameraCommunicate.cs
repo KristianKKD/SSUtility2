@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSLUtility2 {
-    class AsyncCameraCommunicate {
+    public class AsyncCameraCommunicate {
         public static Socket sock;
 
         public const string defaultResult = "00 00 00 00 00 00 00";
@@ -40,23 +40,32 @@ namespace SSLUtility2 {
             try {
                 if (sock != null) {
                     if (sock.Connected) {
-                        Disconnect();
-                    }
-                }
-                if (ep == null) {
-                    bool parsedIP = IPAddress.TryParse(MainForm.m.ipCon.tB_IPCon_Adr.Text, out IPAddress ip);
-                    bool parsedPort = int.TryParse(MainForm.m.ipCon.tB_IPCon_Port.Text, out int port);
-                    if (!parsedIP || !parsedPort) {
-                        MainForm.ShowError("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
-                            "IP parsed: " + parsedIP.ToString() +"\nPort parsed: " + parsedPort.ToString());
+                        //Disconnect();
                         return;
                     }
-                    ep = new IPEndPoint(ip, port);
                 }
+
+                bool parsedIP = IPAddress.TryParse(MainForm.m.ipCon.tB_IPCon_Adr.Text, out IPAddress ip);
+                bool parsedPort = int.TryParse(MainForm.m.ipCon.tB_IPCon_Port.Text, out int port);
+                if (ep == null && (!parsedIP || !parsedPort)) {
+                    MainForm.ShowError("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
+                                        "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());
+                    return;
+                }
+
+                if (!OtherCameraCommunication.PingAdr(ep.Address).Result) {
+                    MainForm.ShowError("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
+                                        "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());
+                    return;
+                }
+                
+                ep = new IPEndPoint(ip, port);
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 sock.BeginConnect(ep, ConnectCallback, null);
-            } catch (SocketException ex) {
+                MainForm.m.WriteToResponses("Successfully connected to: " + ep.Address.ToString() + ":" + ep.Port.ToString(), true);
+            }
+            catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
@@ -111,9 +120,13 @@ namespace SSLUtility2 {
             }
         }
 
-        private static void ReceiveCallback(IAsyncResult AR) {
+        private static void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent?
             try {
-                sock.EndReceive(AR);
+                MainForm.m.WriteToResponses("receiving",false);
+                int received = sock.EndReceive(AR);
+                if(received == 0) {
+                    return;
+                }
                 SaveResponse();
 
                 sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
@@ -127,25 +140,32 @@ namespace SSLUtility2 {
         }
 
         static void SaveResponse() {
-            string m = "";
+            string msg = "";
             int comCount = 0;
+            bool startedCom = false;
             for (int i = 0; i < receiveBuffer.Length; i++) {
                 string hex = receiveBuffer[i].ToString("X").ToUpper();
-                if (hex == "FF") {
+                if (hex != "0" && !startedCom) {
                     comCount = 7;
+                    startedCom = true;
                 }
                 if (comCount > 0) {
                     if (hex.Length == 1) {
                         hex = "0" + hex;
                     }
-                    m += hex + " ";
+                    msg += hex + " ";
                     comCount--;
                 }
 
             }
-            m = m.Trim();
+            msg = msg.Trim();
             ReturnCommand com = CommandQueue.FindReturnByID(CommandQueue.GetCurCommand().id); //might cause issues
-            com.UpdateReturnMsg(m);
+            com.UpdateReturnMsg(msg);
+            MainForm.m.WriteToResponses(msg, false);
+        }
+
+        public static string GetSockEndpoint() {
+            return sock.RemoteEndPoint.ToString();
         }
 
     }

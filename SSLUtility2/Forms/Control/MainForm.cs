@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.3.2b";
+        public const string version = "v1.3.3.3";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -33,6 +33,7 @@ namespace SSLUtility2 {
             setPage = new SettingsPage();
             rl = new ResponseLog();
             D.protocol = new D();
+            CommandQueue.Init();
 
             lite = false;
             l_Version.Text = l_Version.Text + version;
@@ -483,7 +484,7 @@ namespace SSLUtility2 {
             }
         }
 
-        public uint MakeAdr(Control comboBox = null) {
+        public uint MakeAdr(ComboBox comboBox = null) {
             if (comboBox == null) {
                 comboBox = ipCon.cB_IPCon_Selected;
             }
@@ -496,12 +497,12 @@ namespace SSLUtility2 {
             }
         }
 
-        public string ReadCommand(byte[] command, bool show = false) {
+        public string ReadCommand(byte[] command, bool hide = false) {
             string m = "";
             for (int i = 0; i < command.Length; i++) {
                 m += command[i].ToString() + " ";
             }
-            if (show) {
+            if (!hide) {
                 MessageBox.Show(m);
             }
             return m;
@@ -512,8 +513,11 @@ namespace SSLUtility2 {
                 if (rl.rtb_Log.Text.Length > 2000000000) {
                     rl.rtb_Log.Clear();
                 }
+                string sender = CameraCommunicate.GetSockEndpoint();
+                if (hide)
+                    sender = "CLIENT";
                 if (!hide || rl.check_RL_All.Checked) {
-                    rl.rtb_Log.AppendText("[" + CameraCommunicate.GetSockEndpoint() + " at " + DateTime.Now + "]: " + text + "\n");
+                    rl.rtb_Log.AppendText("[" + sender + " at " + DateTime.Now + "]: " + text + "\n");
                 }
             });
         }
@@ -536,7 +540,7 @@ namespace SSLUtility2 {
             CameraCommunicate.sendtoIPAsync(code, ipCon.l_IPCon_Connected, ip, port, true);
         }
 
-        public void PTZZoom(D.Zoom dir, uint address, string ip, string port, Control lcon) {
+        public void PTZZoom(D.Zoom dir, uint address, string ip, string port, Label lcon) {
             if (CameraCommunicate.lastIPPort != ip + port) {
                 CameraCommunicate.Connect(ip, port, lcon);
             }

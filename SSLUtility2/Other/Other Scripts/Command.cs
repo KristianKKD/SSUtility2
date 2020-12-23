@@ -8,21 +8,26 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public class CommandQueue {
 
-        public static List<Command> queueList { 
-            get;
-        }
-        public static List<ReturnCommand> returnList {
-            get;
-        }
-        public static int header {
-            get; set;
-        }
-        public static int total {
-            get; set;
+
+
+        public static List<Command> queueList;
+        public static List<ReturnCommand> returnList;
+        public static int header;
+        public static int total;
+
+        public static void Init() {
+            queueList = new List<Command>();
+            returnList = new List<ReturnCommand>();
+            header = 0;
+            total = 0;
         }
 
         public static Command GetCurCommand() {
-            return queueList[header];
+            return queueList[header - 1];
+        }
+
+        public static ReturnCommand GetCurReturn() {
+            return returnList[header - 1];
         }
 
         public static void QueueCommand(Command com) {
@@ -97,7 +102,9 @@ namespace SSLUtility2 {
             content = code;
             CommandQueue.total++;
             id = CommandQueue.total;
-            ReturnCommand com = new ReturnCommand(id, "temp");
+            ReturnCommand com = new ReturnCommand(id);
+
+            CommandQueue.returnList.Add(com);
             CommandQueue.queueList.Add(this);
         }
 

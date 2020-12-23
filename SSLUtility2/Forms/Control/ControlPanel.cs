@@ -7,7 +7,7 @@ namespace SSLUtility2
 
     public partial class ControlPanel : Form {
     
-        public Control l;
+        public Label l;
 
         public ControlPanel() {
             InitializeComponent();
@@ -115,7 +115,7 @@ namespace SSLUtility2
             }
         }
 
-        public void KeyControl(Control lab, Keys k, uint address, string ip, string port) { //test this
+        public void KeyControl(Label lab, Keys k, uint address, string ip, string port) { //test this
             if (cB_IPCon_KeyboardCon.Checked == true) {
                 uint ptSpeed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
                 byte[] code = null;
@@ -154,7 +154,7 @@ namespace SSLUtility2
             code[6] = (byte)checksum;
 
             string text = CameraCommunicate.Query(code, new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text)).Result;
-            MainForm.m.ReadCommand(code, true);
+            MainForm.m.ReadCommand(code, false);
             MessageBox.Show(text);
         }
 
