@@ -12,10 +12,14 @@ namespace SSLUtility2 {
     public partial class MainForm : Form {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public const string version = "v1.3.5.0";
 =======
         public const string version = "v1.3.4.4";
 >>>>>>> 1038c28df20a42e3f56ec3c1faab91c3bab624c2
+=======
+        public const string version = "v1.3.4.3";
+>>>>>>> parent of 5d0f1cd (1.3.5.0, fixed some socket stuff, changed the scripting a bit (currently it doesn't work for anything other than preset commands), added quickcommandentry)
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -756,14 +760,6 @@ namespace SSLUtility2 {
                 Menu_Record.Text = "Stop Recording";
             }
 
-        }
-
-        private void Menu_QC_Pan_Click(object sender, EventArgs e) {
-            new QuickCommandEntry("setpan", "Enter pan pos value");
-        }
-
-        private void Menu_QC_Tilt_Click(object sender, EventArgs e) {
-            new QuickCommandEntry("settilt", "Enter tilt pos value");
         }
 
     } // end of class MainForm

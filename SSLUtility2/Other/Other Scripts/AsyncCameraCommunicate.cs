@@ -12,7 +12,6 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public class AsyncCameraCommunicate {
         public static Socket sock;
-        public static Socket receiveSock;
 
         public const string defaultResult = "00 00 00 00 00 00 00";
 
@@ -21,7 +20,6 @@ namespace SSLUtility2 {
         public static int SendNewCommand(byte[] code) {
             Command com = new Command(code);
             if (com.invalid) {
-                MainForm.m.WriteToResponses("Failed to send " + MainForm.m.ReadCommand(code), true);
                 //do something
                 return -1;
             }
@@ -42,7 +40,7 @@ namespace SSLUtility2 {
             try {
                 if (sock != null) {
                     if (sock.Connected) {
-                        //Disconnect(); //need to be able to reconnect with new ip
+                        //Disconnect();
                         return;
                     }
                 }
@@ -64,12 +62,10 @@ namespace SSLUtility2 {
                 ep = new IPEndPoint(ip, port);
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                receiveSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
                 sock.BeginConnect(ep, ConnectCallback, null);
-
                 MainForm.m.WriteToResponses("Successfully connected to: " + ep.Address.ToString() + ":" + ep.Port.ToString(), true);
-            } catch (SocketException ex) {
+            }
+            catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
@@ -81,23 +77,8 @@ namespace SSLUtility2 {
         private static void ConnectCallback(IAsyncResult AR) {
             try {
                 sock.EndConnect(AR);
-                receiveSock.BeginConnect(sock.RemoteEndPoint, ReceiveConnectCallback, null);
-            }
-            catch (SocketException ex) {
-                MainForm.m.WriteToResponses(ex.Message, false);
-            } catch (ObjectDisposedException ex) {
-                MainForm.m.WriteToResponses(ex.Message, false);
-            } catch (Exception e) {
-                MessageBox.Show(e.ToString());
-            }
-        }
-
-        private static void ReceiveConnectCallback(IAsyncResult AR) {
-            try {
-                receiveSock.EndConnect(AR);
-
-                receiveBuffer = new byte[receiveSock.ReceiveBufferSize];
-                receiveSock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
+                receiveBuffer = new byte[sock.ReceiveBufferSize];
+                sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
@@ -111,8 +92,6 @@ namespace SSLUtility2 {
             try {
                 sock.Shutdown(SocketShutdown.Both);
                 sock.Close();
-                receiveSock.Shutdown(SocketShutdown.Both);
-                receiveSock.Close();
             } catch { }
         }
 
@@ -141,21 +120,15 @@ namespace SSLUtility2 {
             }
         }
 
-        private static void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent? //too fast?
+        private static void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent?
             try {
-                if(receiveBuffer.Length < 7) {
-                    return;
-                }
-                
-                int received = receiveSock.EndReceive(AR);
+                int received = sock.EndReceive(AR);
                 if(received == 0) {
                     return;
                 }
-
                 SaveResponse();
 
-                receiveBuffer = new byte[receiveSock.ReceiveBufferSize];
-                receiveSock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
+                sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
@@ -165,19 +138,17 @@ namespace SSLUtility2 {
             }
         }
 
-        static async Task SaveResponse() {
+        static void SaveResponse() {
             string msg = "";
             int comCount = 0;
             bool startedCom = false;
 
             for (int i = 0; i < receiveBuffer.Length; i++) {
                 string hex = receiveBuffer[i].ToString("X").ToUpper();
-                
                 if (hex != "0" && !startedCom) {
                     comCount = 7;
                     startedCom = true;
                 }
-
                 if (comCount > 0) {
                     if (hex.Length == 1) {
                         hex = "0" + hex;
@@ -185,15 +156,12 @@ namespace SSLUtility2 {
                     msg += hex + " ";
                     comCount--;
                 }
-                else {
-                    break;
-                }
             }
 
             msg = msg.Trim();
-            ReturnCommand com = CommandQueue.FindReturnByID(CommandQueue.GetCurCommand().id);
+            ReturnCommand com = CommandQueue.FindReturnByID(CommandQueue.GetCurCommand().id); //might cause issues
             com.UpdateReturnMsg(msg);
-            MainForm.m.WriteToResponses("Received: " + msg, false);
+            MainForm.m.WriteToResponses(msg, false);
         }
 
         public static string GetSockEndpoint() {
