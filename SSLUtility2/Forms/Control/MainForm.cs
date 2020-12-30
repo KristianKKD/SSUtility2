@@ -13,10 +13,14 @@ namespace SSLUtility2 {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         public const string version = "v1.3.5.0";
 =======
         public const string version = "v1.3.4.4";
 >>>>>>> 1038c28df20a42e3f56ec3c1faab91c3bab624c2
+=======
+        public const string version = "v1.3.4.3";
+>>>>>>> parent of 5d0f1cd (1.3.5.0, fixed some socket stuff, changed the scripting a bit (currently it doesn't work for anything other than preset commands), added quickcommandentry)
 =======
         public const string version = "v1.3.4.3";
 >>>>>>> parent of 5d0f1cd (1.3.5.0, fixed some socket stuff, changed the scripting a bit (currently it doesn't work for anything other than preset commands), added quickcommandentry)
