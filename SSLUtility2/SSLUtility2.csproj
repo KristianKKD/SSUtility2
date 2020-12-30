@@ -101,12 +101,15 @@
     <Compile Include="Forms\Other\CommandList.Designer.cs">
       <DependentUpon>CommandList.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Forms\Other\QuickCommandEntry.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Other\QuickCommandEntry.Designer.cs">
       <DependentUpon>QuickCommandEntry.cs</DependentUpon>
     </Compile>
+=======
+>>>>>>> 1038c28df20a42e3f56ec3c1faab91c3bab624c2
     <Compile Include="Other\Communication\AsyncCameraCommunicate.cs" />
     <Compile Include="Other\Other Scripts\AsyncSocket.cs">
       <SubType>Form</SubType>
