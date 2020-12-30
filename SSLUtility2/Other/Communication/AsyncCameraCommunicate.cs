@@ -20,6 +20,7 @@ namespace SSLUtility2 {
         public static int SendNewCommand(byte[] code) {
             Command com = new Command(code);
             if (com.invalid) {
+                MainForm.m.WriteToResponses("Failed to send " + MainForm.m.ReadCommand(code), true);
                 //do something
                 return -1;
             }
