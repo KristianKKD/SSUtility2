@@ -95,13 +95,19 @@
     <Compile Include="Forms\Control\InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Scripting\CommandList.cs">
+    <Compile Include="Forms\Other\CommandList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Scripting\CommandList.Designer.cs">
+    <Compile Include="Forms\Other\CommandList.Designer.cs">
       <DependentUpon>CommandList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Other\Other Scripts\AsyncCameraCommunicate.cs" />
+    <Compile Include="Forms\Other\QuickCommandEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Other\QuickCommandEntry.Designer.cs">
+      <DependentUpon>QuickCommandEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Other\Communication\AsyncCameraCommunicate.cs" />
     <Compile Include="Other\Other Scripts\AsyncSocket.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,8 +189,11 @@
     <EmbeddedResource Include="Forms\Control\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Scripting\CommandList.resx">
+    <EmbeddedResource Include="Forms\Other\CommandList.resx">
       <DependentUpon>CommandList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Other\QuickCommandEntry.resx">
+      <DependentUpon>QuickCommandEntry.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Scripting\PelcoD.resx">
       <DependentUpon>PelcoD.cs</DependentUpon>
