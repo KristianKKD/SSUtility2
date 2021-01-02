@@ -95,11 +95,11 @@
     <Compile Include="Forms\Control\InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Other\CommandList.cs">
+    <Compile Include="Forms\Other\CommandHelper.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\CommandList.Designer.cs">
-      <DependentUpon>CommandList.cs</DependentUpon>
+    <Compile Include="Forms\Other\CommandHelper.Designer.cs">
+      <DependentUpon>CommandHelper.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Other\QuickCommandEntry.cs">
       <SubType>Form</SubType>
@@ -189,8 +189,8 @@
     <EmbeddedResource Include="Forms\Control\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\CommandList.resx">
-      <DependentUpon>CommandList.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Other\CommandHelper.resx">
+      <DependentUpon>CommandHelper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Other\QuickCommandEntry.resx">
       <DependentUpon>QuickCommandEntry.cs</DependentUpon>

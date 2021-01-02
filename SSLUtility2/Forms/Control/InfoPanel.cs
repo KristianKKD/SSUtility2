@@ -103,7 +103,7 @@ namespace SSLUtility2 {
             StartTicking();
 
         }
-
+        
         void CheckConfiguration() {
             string result = GetQueryResults(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F });
             int type = int.Parse(result.Substring(12, 1));
@@ -129,7 +129,10 @@ namespace SSLUtility2 {
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e) {
-            UpdateAll();
+            if (CommandQueue.lowPriority) {
+                Console.WriteLine("lowprio");
+                UpdateAll();
+            }
         }
 
         async Task UpdateAll() {
@@ -261,14 +264,17 @@ namespace SSLUtility2 {
         }
 
         public async Task GetPan() {
+            //CustomScriptCommands.QuickCommand("querypan");
             CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, true);
         }
 
         public async Task GetTilt() {
+            //CustomScriptCommands.QuickCommand("querytilt");
             CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, true);
         }
 
         public async Task GetFOV() {
+            //CustomScriptCommands.QuickCommand("queryfov");
             CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 }, true);
         }
 

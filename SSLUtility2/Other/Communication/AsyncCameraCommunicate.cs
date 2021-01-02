@@ -25,8 +25,8 @@ namespace SSLUtility2 {
                 //do something
                 return -1;
             }
-            CommandQueue.header = com.id;
-            Send();
+            //CommandQueue.MoveHeaderToCommand(com);
+            //Send();
             return com.id;
         }
 
@@ -34,8 +34,13 @@ namespace SSLUtility2 {
             Command com = CommandQueue.FindCommandByID(id);
             if (com != null) {
                 CommandQueue.MoveHeaderToCommand(com);
-                Send();
+                //Send();
             }
+        }
+
+        public static void QueueRepeatingCommand(int id) {
+            Command oldCom = CommandQueue.FindCommandByID(id);
+            Command com = new Command(oldCom.content, true);
         }
 
         public static void Connect(IPEndPoint ep = null) {
@@ -91,6 +96,15 @@ namespace SSLUtility2 {
                 MessageBox.Show(e.ToString());
             }
         }
+        
+        public static void Disconnect() {
+            try {
+                sock.Shutdown(SocketShutdown.Both);
+                sock.Close();
+                receiveSock.Shutdown(SocketShutdown.Both);
+                receiveSock.Close();
+            } catch { }
+        }
 
         private static void ReceiveConnectCallback(IAsyncResult AR) {
             try {
@@ -106,19 +120,12 @@ namespace SSLUtility2 {
                 MessageBox.Show(e.ToString());
             }
         }
-
-        public static void Disconnect() {
-            try {
-                sock.Shutdown(SocketShutdown.Both);
-                sock.Close();
-                receiveSock.Shutdown(SocketShutdown.Both);
-                receiveSock.Close();
-            } catch { }
-        }
-
-        static void Send() {
+        
+        public static void SendCurrent() {
             try {
                 Command com = CommandQueue.GetCurCommand();
+                Console.WriteLine("sending");
+
                 sock.BeginSend(com.content, 0, com.content.Length, SocketFlags.None, SendCallback, null);
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
@@ -132,7 +139,9 @@ namespace SSLUtility2 {
         private static void SendCallback(IAsyncResult AR) {
             try {
                 sock.EndSend(AR);
-            } catch (SocketException ex) {
+                CommandQueue.MoveHeaderNext(); //need to have it not ignore failed command, this is temporary
+            }
+            catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
@@ -141,9 +150,9 @@ namespace SSLUtility2 {
             }
         }
 
-        private static void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent? //too fast?
+        private static void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent?
             try {
-                if(receiveBuffer.Length < 7) {
+                if (receiveBuffer.Length < 7) {
                     return;
                 }
                 
@@ -153,6 +162,8 @@ namespace SSLUtility2 {
                 }
 
                 SaveResponse();
+
+                //CommandQueue.MoveHeaderNext();
 
                 receiveBuffer = new byte[receiveSock.ReceiveBufferSize];
                 receiveSock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
@@ -191,8 +202,12 @@ namespace SSLUtility2 {
             }
 
             msg = msg.Trim();
-            ReturnCommand com = CommandQueue.FindReturnByID(CommandQueue.GetCurCommand().id);
-            com.UpdateReturnMsg(msg);
+
+            Command sendCom = CommandQueue.GetCurCommand();
+            sendCom.Finish();
+            ReturnCommand returnCom = sendCom.myReturn;
+            returnCom.UpdateReturnMsg(msg);
+
             MainForm.m.WriteToResponses("Received: " + msg, false);
         }
 

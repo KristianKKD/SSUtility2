@@ -21,7 +21,6 @@ namespace SSLUtility2 {
     }
 
     public class CustomScriptCommands {
-        static ScriptCommand noCommand = new ScriptCommand(new string[] { "none" }, PelcoD.noCommand, "Do nothing", false, false, true);
 
         public static ScriptCommand[] cameraCommands = new ScriptCommand[]{
             new ScriptCommand(new string[] {"pause", "wait"}, PelcoD.pause, "Pause the script execution for X milliseconds", true, false, true),
@@ -40,12 +39,22 @@ namespace SSLUtility2 {
             new ScriptCommand(new string[] {"queryzoom", "queryfov"}, new byte[] { 0x00, 0x55, 0x00, 0x00 }, "Returns camera FOV"),
             new ScriptCommand(new string[] {"queryfocus"}, new byte[] { 0x01, 0x55, 0x00, 0x00 }, "Returns camera focus value"),
             new ScriptCommand(new string[] {"querypost"}, new byte[] { 0x07, 0x6B, 0x00, 0x00 }, "Returns camera test data"),
-            new ScriptCommand(new string[] {"queryconfig"}, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config"),
+            new ScriptCommand(new string[] {"queryconfig"}, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config, (thermal only)"),
         };
 
         public static async Task<byte[]> CheckForCommands(string line, uint adr) {
             ScriptCommand com = CheckForPresets(line).Result;
-            byte[] code = RefineCode(com, adr, CheckForVal(line)).Result;
+            int value = CheckForVal(line);
+
+            if (com == null) {
+                return PelcoD.noCommand;
+            } else if (com.codeContent == PelcoD.pause) {
+                MainForm.m.WriteToResponses("Waiting: " + value.ToString() + "ms", true);
+                await Task.Delay(value).ConfigureAwait(false);
+                return PelcoD.pause;
+            }
+
+            byte[] code = RefineCode(com, adr, value).Result;
             MainForm.m.WriteToResponses("Sending: " + MainForm.m.ReadCommand(code, true) + " (" + com.names[0] + ")", true);
 
             return code;
@@ -56,7 +65,7 @@ namespace SSLUtility2 {
             int marker = line.IndexOf(" ");
 
             if (marker != -1) {
-                value = int.Parse(line.Substring(marker + 1));
+                int.TryParse(line.Substring(marker + 1), out value);
             }
 
             return value;
@@ -64,15 +73,6 @@ namespace SSLUtility2 {
 
         static async Task<byte[]> RefineCode(ScriptCommand com, uint adr, int value) {
             byte[] code = com.codeContent;
-
-            if (com.codeContent == PelcoD.pause) {
-                MainForm.m.WriteToResponses("Waiting: " + value.ToString() + "ms", true);
-                await Task.Delay(value).ConfigureAwait(false);
-            }
-
-            if (com.codeContent == PelcoD.noCommand || com.codeContent == PelcoD.pause) {
-                return code;
-            }
 
             if (com.valueAccepting) {
                 //if (com.dualValue) {
@@ -122,7 +122,8 @@ namespace SSLUtility2 {
                 }
             }
 
-            return noCommand;
+            //return new ScriptCommand(new string[] { "none" }, PelcoD.noCommand, "Do nothing", false, false, true);
+            return null;
         }
 
         public static async Task QuickCommand(string command) {

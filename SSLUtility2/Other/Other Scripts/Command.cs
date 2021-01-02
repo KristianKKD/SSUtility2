@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,26 +9,51 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public class CommandQueue {
 
-
-
         public static List<Command> queueList;
-        public static List<ReturnCommand> returnList;
         public static int header;
         public static int total;
 
+        public static bool lowPriority;
+
         public static void Init() {
             queueList = new List<Command>();
-            returnList = new List<ReturnCommand>();
-            header = 0;
+            header = 1;
             total = 0;
+
+            StartTimer();
+        }
+
+        static Timer SendTimer;
+        public static void StartTimer() {
+            SendTimer = new Timer();
+            SendTimer.Interval = 300;
+            SendTimer.Tick += new EventHandler(SendCurrentCommand);
+            SendTimer.Start();
+        }
+
+        private static void SendCurrentCommand(object sender, EventArgs e) {
+            Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " HEADER: " + header.ToString());
+
+            if (queueList.Count >= header && queueList.Count > 0) {
+                lowPriority = false;
+
+                Command com = queueList[header - 1];
+                if (!com.invalid && !com.sent && !com.repeatable) {
+                    AsyncCameraCommunicate.SendCurrent();
+                } else {
+                    MoveHeaderNext();
+                }
+            } else {
+                lowPriority = true;
+            }
+        }
+
+        public static void MoveHeaderNext() { // make a way so it doesnt move when waiting for a command to finish
+            header++;
         }
 
         public static Command GetCurCommand() {
             return queueList[header - 1];
-        }
-
-        public static ReturnCommand GetCurReturn() {
-            return returnList[header - 1];
         }
 
         public static void QueueCommand(Command com) {
@@ -40,14 +66,6 @@ namespace SSLUtility2 {
             for (int i = 0; i < queueList.Count; i++) {
                 if (id == queueList[i].id) {
                     return queueList[i];
-                }
-            }
-            return null;
-        }
-        public static ReturnCommand FindReturnByID(int id) {
-            for (int i = 0; i < returnList.Count; i++) {
-                if (id == returnList[i].comID) {
-                    return returnList[i];
                 }
             }
             return null;
@@ -69,14 +87,9 @@ namespace SSLUtility2 {
     }
 
     public class ReturnCommand {
-        public int comID;
         public string msg;
         public bool invalid;
         public bool done;
-
-        public ReturnCommand(int id) {
-            comID = id;
-        }
 
         public void UpdateReturnMsg(string content) {
             if (content == CameraCommunicate.defaultResult || content.Length == 0) {
@@ -93,19 +106,31 @@ namespace SSLUtility2 {
         public int id;
         public byte[] content;
         public bool invalid;
+        public bool repeatable;
+
         public bool sent;
 
-        public Command(byte[] code) {
+        public ReturnCommand myReturn;
+
+        public Command(byte[] code, bool repeat = false) {
             if (code == null || code.Length == 0) {
                 invalid = true;
             }
             content = code;
+            repeatable = repeat;
+
             CommandQueue.total++;
             id = CommandQueue.total;
-            ReturnCommand com = new ReturnCommand(id);
+            
+            myReturn = new ReturnCommand();
 
-            CommandQueue.returnList.Add(com);
             CommandQueue.queueList.Add(this);
+        }
+
+        public void Finish() {
+            if (!repeatable) {
+                sent = true;
+            }
         }
 
     }

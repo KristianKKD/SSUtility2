@@ -65,7 +65,10 @@ namespace SSLUtility2 {
                     send = MakeCommand(line);
                 }
 
-                AsyncCameraCommunicate.SendNewCommand(send);
+                var t = Task.Factory.StartNew(() => {
+                    int comNum = AsyncCameraCommunicate.SendNewCommand(send);
+                });
+                Task.WaitAll();
                 //have a way for this to see if it failed
 
                 //if (response == CameraCommunicate.defaultResult) {
@@ -93,6 +96,7 @@ namespace SSLUtility2 {
 
         byte[] MakeCommand(string line) {
             line = line.Trim();
+
             uint cm1 = uint.Parse(line.Substring(0,2), System.Globalization.NumberStyles.HexNumber);
             uint cm2 = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
             uint d1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
