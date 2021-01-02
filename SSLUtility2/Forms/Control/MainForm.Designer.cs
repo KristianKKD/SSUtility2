@@ -50,12 +50,14 @@ namespace SSLUtility2 {
             this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_PanZero = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_QC_Pan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_FTM_Open = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Main = new System.Windows.Forms.Panel();
             this.p_Control = new System.Windows.Forms.Panel();
             this.l_Version = new System.Windows.Forms.Label();
-            this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_QC_Tilt = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu.SuspendLayout();
             this.p_Main.SuspendLayout();
             this.p_Control.SuspendLayout();
@@ -92,42 +94,44 @@ namespace SSLUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Lite
             // 
             this.Menu_Window_Lite.Name = "Menu_Window_Lite";
-            this.Menu_Window_Lite.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Lite.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Lite.Text = "Lite Mode";
             this.Menu_Window_Lite.Click += new System.EventHandler(this.Menu_Window_Lite_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Settings
             // 
             this.Menu_Window_Settings.Name = "Menu_Window_Settings";
-            this.Menu_Window_Settings.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Settings.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Settings.Text = "Settings";
             this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
             // 
             // Menu_QC
             // 
             this.Menu_QC.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Menu_QC_PanZero});
+            this.Menu_QC_PanZero,
+            this.Menu_QC_Pan,
+            this.Menu_QC_Tilt});
             this.Menu_QC.Name = "Menu_QC";
             this.Menu_QC.Size = new System.Drawing.Size(117, 20);
             this.Menu_QC.Text = "Quick Commands";
@@ -138,6 +142,13 @@ namespace SSLUtility2 {
             this.Menu_QC_PanZero.Size = new System.Drawing.Size(180, 22);
             this.Menu_QC_PanZero.Text = "Set Pan = 0";
             this.Menu_QC_PanZero.Click += new System.EventHandler(this.Menu_QC_PanZero_Click);
+            // 
+            // Menu_QC_Pan
+            // 
+            this.Menu_QC_Pan.Name = "Menu_QC_Pan";
+            this.Menu_QC_Pan.Size = new System.Drawing.Size(180, 22);
+            this.Menu_QC_Pan.Text = "Quick Pan";
+            this.Menu_QC_Pan.Click += new System.EventHandler(this.Menu_QC_Pan_Click);
             // 
             // Menu_Final
             // 
@@ -150,9 +161,16 @@ namespace SSLUtility2 {
             // Menu_FTM_Open
             // 
             this.Menu_FTM_Open.Name = "Menu_FTM_Open";
-            this.Menu_FTM_Open.Size = new System.Drawing.Size(180, 22);
+            this.Menu_FTM_Open.Size = new System.Drawing.Size(113, 22);
             this.Menu_FTM_Open.Text = "Open...";
             this.Menu_FTM_Open.Click += new System.EventHandler(this.Menu_FTM_Open_Click);
+            // 
+            // Menu_Record
+            // 
+            this.Menu_Record.Name = "Menu_Record";
+            this.Menu_Record.Size = new System.Drawing.Size(114, 20);
+            this.Menu_Record.Text = "Record SSUtility2";
+            this.Menu_Record.Click += new System.EventHandler(this.Menu_Record_Click);
             // 
             // p_Main
             // 
@@ -181,12 +199,12 @@ namespace SSLUtility2 {
             this.l_Version.TabIndex = 0;
             this.l_Version.Text = "SSUtility2 Version:";
             // 
-            // Menu_Record
+            // Menu_QC_Tilt
             // 
-            this.Menu_Record.Name = "Menu_Record";
-            this.Menu_Record.Size = new System.Drawing.Size(114, 20);
-            this.Menu_Record.Text = "Record SSUtility2";
-            this.Menu_Record.Click += new System.EventHandler(this.Menu_Record_Click);
+            this.Menu_QC_Tilt.Name = "Menu_QC_Tilt";
+            this.Menu_QC_Tilt.Size = new System.Drawing.Size(180, 22);
+            this.Menu_QC_Tilt.Text = "Quick TIlt";
+            this.Menu_QC_Tilt.Click += new System.EventHandler(this.Menu_QC_Tilt_Click);
             // 
             // MainForm
             // 
@@ -1016,5 +1034,7 @@ namespace SSLUtility2 {
         private Label l_Version;
         private Panel p_Control;
         private ToolStripMenuItem Menu_Record;
+        private ToolStripMenuItem Menu_QC_Pan;
+        private ToolStripMenuItem Menu_QC_Tilt;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
