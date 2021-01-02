@@ -150,7 +150,7 @@ namespace SSLUtility2
             //byte[] code = CustomScriptCommands.CheckForCommands("setzoomspeed " + zoomSpeed.ToString(), MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
             //CameraCommunicate.sendtoIPAsync(code, null);
             byte[] code = new byte[] { 0xFF, 0x01, 0x00, 0x19, 0x00, Convert.ToByte(zoomSpeed), 0x00 }; //try 0x19 or 0x25 //try swap back to quick commands
-            uint checksum = CustomScriptCommands.GetCheckSum(code, 1);
+            uint checksum = CustomScriptCommands.GetCheckSum(code, 1, 0);
             code[6] = (byte)checksum;
 
             string text = CameraCommunicate.Query(code, new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text)).Result;

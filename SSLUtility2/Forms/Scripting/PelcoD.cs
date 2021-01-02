@@ -19,9 +19,8 @@ namespace SSLUtility2 {
         }
 
         async Task Fire() {
-            AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text)));
-            try
-            {
+            try {
+                AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text)));
                 stop = false;
                 b_PD_Stop.Enabled = true;
                 for (int i = 0; i < rtb_PD_Commands.Lines.Length; i++) {
@@ -32,7 +31,6 @@ namespace SSLUtility2 {
                         stop = false;
                         break;
                     }
-                    await Task.Delay(800);
                 }
             }catch(Exception e) {
                 MessageBox.Show(e.ToString());
@@ -52,8 +50,10 @@ namespace SSLUtility2 {
                     MainForm.m.WriteToResponses("No IP/Port found", false);
                 }
 
+                Uri u = new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text);
+
                 byte[] send;
-                if (check_PD_Perfect.Checked) { //CANT SEND ANY CUSTOM COMMANDS (00 4b 01 00)
+                if (check_PD_Perfect.Checked) {
                     send = FullCommand(line);
                 } else {
                     send = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
@@ -64,11 +64,17 @@ namespace SSLUtility2 {
                 } else if (send == noCommand) {
                     send = MakeCommand(line);
                 }
+<<<<<<< HEAD
 
                 var t = Task.Factory.StartNew(() => {
                     int comNum = AsyncCameraCommunicate.SendNewCommand(send);
                 });
                 Task.WaitAll();
+=======
+                
+                MainForm.m.WriteToResponses("Firing: " + line, true);
+                AsyncCameraCommunicate.SendNewCommand(send);
+>>>>>>> 77ec14a31a32f7a14babd619bc7a095ff38ed2a0
                 //have a way for this to see if it failed
 
                 //if (response == CameraCommunicate.defaultResult) {
@@ -89,8 +95,7 @@ namespace SSLUtility2 {
             uint checksum = uint.Parse(line.Substring(18, 2), System.Globalization.NumberStyles.HexNumber);
             
             byte[] fullCommand = new byte[7] {(byte)send, (byte)camAdr, (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
-            MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand), true);
-
+            
             return fullCommand;
         }
 
@@ -104,7 +109,6 @@ namespace SSLUtility2 {
             uint checksum = (cm1 + cm2 + d1 + d2 + MainForm.m.MakeAdr(cB_IPCon_Selected)) % 256;
             
             byte[] fullCommand = new byte[7] { 0xFF, (byte)MainForm.m.MakeAdr(cB_IPCon_Selected), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum } ;
-            MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand), true);
 
             return fullCommand;
         }
@@ -168,7 +172,6 @@ namespace SSLUtility2 {
                 clw = new CommandListWindow();
             }
             clw.Show();
-            clw.BringToFront();
         }
 
         private void check_PD_Perfect_CheckedChanged(object sender, EventArgs e) {
