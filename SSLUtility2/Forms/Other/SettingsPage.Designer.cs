@@ -176,7 +176,7 @@ namespace SSLUtility2
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(307, 13);
             this.label1.TabIndex = 27;
-            this.label1.Text = "Automatic paths are Documents/SSUtility/Saved/[CAMERA IP]";
+            this.label1.Text = "Automatic paths are Documents\\SSUtility\\Saved\\[CAMERA IP]";
             // 
             // check_Paths_Manual
             // 
@@ -319,9 +319,9 @@ namespace SSLUtility2
             this.l_Rec_Quality.AutoSize = true;
             this.l_Rec_Quality.Location = new System.Drawing.Point(7, 73);
             this.l_Rec_Quality.Name = "l_Rec_Quality";
-            this.l_Rec_Quality.Size = new System.Drawing.Size(72, 13);
+            this.l_Rec_Quality.Size = new System.Drawing.Size(75, 13);
             this.l_Rec_Quality.TabIndex = 25;
-            this.l_Rec_Quality.Text = "Quality(1-100)";
+            this.l_Rec_Quality.Text = "Quality (1-100)";
             // 
             // tB_Rec_scFileN
             // 
@@ -395,9 +395,9 @@ namespace SSLUtility2
             this.l_Rec_FPS.AutoSize = true;
             this.l_Rec_FPS.Location = new System.Drawing.Point(7, 47);
             this.l_Rec_FPS.Name = "l_Rec_FPS";
-            this.l_Rec_FPS.Size = new System.Drawing.Size(54, 13);
+            this.l_Rec_FPS.Size = new System.Drawing.Size(57, 13);
             this.l_Rec_FPS.TabIndex = 2;
-            this.l_Rec_FPS.Text = "Framerate";
+            this.l_Rec_FPS.Text = "Frame rate";
             // 
             // b_Settings_Apply
             // 

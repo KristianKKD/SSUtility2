@@ -285,7 +285,7 @@
             this.VLCPlayer_D.Location = new System.Drawing.Point(0, 0);
             this.VLCPlayer_D.Name = "VLCPlayer_D";
             this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
-            this.VLCPlayer_D.Size = new System.Drawing.Size(639, 512);
+            this.VLCPlayer_D.Size = new System.Drawing.Size(640, 513);
             this.VLCPlayer_D.TabIndex = 41;
             // 
             // p_PlayerD_Extended

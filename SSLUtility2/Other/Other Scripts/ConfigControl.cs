@@ -9,12 +9,12 @@ namespace SSLUtility2 {
     class ConfigControl {
 
         //Defaults//
-        public static string defScFolder = @"Screenshots\";
+        public static string defScFolder = @"Snapshots\";
         public static string defVFolder = @"Videos\";
         public static string defSavedFolder = @"Saved\";
 
         public static string defVName = "Video";
-        public static string defScName = "Screenshot";
+        public static string defScName = "Snapshot";
 
         public static string defVRecQual = "70";
         public static string defVRecFPS = "30";
@@ -52,11 +52,11 @@ namespace SSLUtility2 {
 
         public const string varPrefix = "v"; //What the prefix of the actual value is (ScreenshotFolder:bin/obj/)
 
-        public const string screenshotFolderVar = "ScreenshotFolder";
+        public const string screenshotFolderVar = "SnapshotFolder";
         public const string videoFolderVar = "VideoFolder";
 
         public const string videoFileNVar = "VideoFileName";
-        public const string scFileNVar = "ScreenshotFileName";
+        public const string scFileNVar = "SnapshotFileName";
 
         public const string recQualVar = "RecordingQuality";
         public const string recFPSVar = "RecordingFramerate";

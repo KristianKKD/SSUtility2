@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.6.1";
+        public const string version = "v1.3.6.2";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -557,7 +557,7 @@ namespace SSLUtility2 {
         }
 
         public async Task SaveSnap(Detached player) {
-            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player.tB_PlayerD_SimpleAdr.Text, "Snapshot") + ".jpg";
+            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player.tB_PlayerD_SimpleAdr.Text, "Snapshots") + ".jpg";
 
             Image bmp = new Bitmap(player.VLCPlayer_D.Width, player.VLCPlayer_D.Height);
             Graphics gfx = Graphics.FromImage(bmp);
