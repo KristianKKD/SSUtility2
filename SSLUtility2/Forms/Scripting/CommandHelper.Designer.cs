@@ -95,7 +95,7 @@ namespace SSLUtility2
             this.ClientSize = new System.Drawing.Size(683, 450);
             this.Controls.Add(this.dgv_Coms);
             this.Name = "CommandListWindow";
-            this.Text = "CommandListWindow";
+            this.Text = "Command List Window";
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Coms)).EndInit();
             this.ResumeLayout(false);
 
