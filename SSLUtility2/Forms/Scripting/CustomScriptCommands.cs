@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace SSLUtility2 {
@@ -122,13 +123,23 @@ namespace SSLUtility2 {
                 }
             }
 
-            //return new ScriptCommand(new string[] { "none" }, PelcoD.noCommand, "Do nothing", false, false, true);
             return null;
         }
 
         public static async Task QuickCommand(string command) {
+            AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text), int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text)));
+            await Task.Delay(200);
+            if (!AsyncCameraCommunicate.sock.Connected) {
+                MainForm.ShowError("Failed to connect to camera!\nShow More?", "Quick Command Failed", 
+                    "Failed to connect to:\n"+ MainForm.m.ipCon.tB_IPCon_Adr.Text + ":" + MainForm.m.ipCon.tB_IPCon_Port.Text, true);
+                return;
+            }
+
             byte[] code = CheckForCommands(command, MainForm.m.MakeAdr(MainForm.m.ipCon.cB_IPCon_Selected)).Result;
-            AsyncCameraCommunicate.SendNewCommand(code);
+            var t = Task.Factory.StartNew(() => {
+                AsyncCameraCommunicate.SendNewCommand(code);
+            });
+            Task.WaitAll();
         }
 
 

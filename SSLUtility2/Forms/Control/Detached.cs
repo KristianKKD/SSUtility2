@@ -141,12 +141,8 @@ namespace SSLUtility2 {
                         StartInfo();
                     }
                 } else {
-                    if (myInfoRef.UpdateTimer.Enabled) {
-                        myInfoRef.UpdateTimer.Stop();
-                        AsyncSocket.Disconnect();
-                    }
+                    myInfoRef.StopTicking();
                     MainForm.m.MovePlayers(false);
-                    myInfoRef.HideAll();
                 }
             } else {
                 check_PlayerD_StatsEnabled.Hide();

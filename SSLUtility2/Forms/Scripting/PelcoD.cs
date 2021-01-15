@@ -68,6 +68,7 @@ namespace SSLUtility2 {
                 var t = Task.Factory.StartNew(() => {
                     int comNum = AsyncCameraCommunicate.SendNewCommand(send);
                 });
+
                 Task.WaitAll();
                 //have a way for this to see if it failed
 
@@ -89,7 +90,7 @@ namespace SSLUtility2 {
             uint checksum = uint.Parse(line.Substring(18, 2), System.Globalization.NumberStyles.HexNumber);
             
             byte[] fullCommand = new byte[7] {(byte)send, (byte)camAdr, (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
-            MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand), true);
+            MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand, true), true);
 
             return fullCommand;
         }
@@ -104,7 +105,7 @@ namespace SSLUtility2 {
             uint checksum = (cm1 + cm2 + d1 + d2 + MainForm.m.MakeAdr(cB_IPCon_Selected)) % 256;
             
             byte[] fullCommand = new byte[7] { 0xFF, (byte)MainForm.m.MakeAdr(cB_IPCon_Selected), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum } ;
-            MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand), true);
+            MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand, true), true);
 
             return fullCommand;
         }
@@ -155,6 +156,7 @@ namespace SSLUtility2 {
         private void b_PD_Stop_Click(object sender, EventArgs e) { //make it cancel current script
             stop = true;
             b_PD_Stop.Enabled = false;
+            CustomScriptCommands.QuickCommand("stop");
         }
 
         private void b_PD_RL_Click(object sender, EventArgs e) {

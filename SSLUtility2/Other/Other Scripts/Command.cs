@@ -32,20 +32,22 @@ namespace SSLUtility2 {
         }
 
         private static void SendCurrentCommand(object sender, EventArgs e) {
-            Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " HEADER: " + header.ToString());
+            try {
+                Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " HEADER: " + header.ToString());
 
-            if (queueList.Count >= header && queueList.Count > 0) {
-                lowPriority = false;
+                if (queueList.Count >= header && queueList.Count > 0) {
+                    lowPriority = false;
 
-                Command com = queueList[header - 1];
-                if (!com.invalid && !com.sent && !com.repeatable) {
-                    AsyncCameraCommunicate.SendCurrent();
+                    Command com = queueList[header - 1];
+                    if (!com.invalid && !com.sent && !com.repeatable) {
+                        AsyncCameraCommunicate.SendCurrent();
+                    } else {
+                        MoveHeaderNext();
+                    }
                 } else {
-                    MoveHeaderNext();
+                    lowPriority = true;
                 }
-            } else {
-                lowPriority = true;
-            }
+            } catch { }
         }
 
         public static void MoveHeaderNext() { // make a way so it doesnt move when waiting for a command to finish

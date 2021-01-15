@@ -28,6 +28,7 @@
             this.l_Pan = new System.Windows.Forms.Label();
             this.l_Tilt = new System.Windows.Forms.Label();
             this.l_FOV = new System.Windows.Forms.Label();
+            this.l_TFOV = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // l_Pan
@@ -56,9 +57,20 @@
             this.l_FOV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.l_FOV.Location = new System.Drawing.Point(12, 35);
             this.l_FOV.Name = "l_FOV";
-            this.l_FOV.Size = new System.Drawing.Size(44, 17);
+            this.l_FOV.Size = new System.Drawing.Size(117, 17);
             this.l_FOV.TabIndex = 2;
-            this.l_FOV.Text = "FOV: ";
+            this.l_FOV.Text = "DAYLIGHT FOV: ";
+            // 
+            // l_TFOV
+            // 
+            this.l_TFOV.AutoSize = true;
+            this.l_TFOV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.l_TFOV.Location = new System.Drawing.Point(287, 35);
+            this.l_TFOV.Name = "l_TFOV";
+            this.l_TFOV.Size = new System.Drawing.Size(114, 17);
+            this.l_TFOV.TabIndex = 3;
+            this.l_TFOV.Text = "THERMAL FOV: ";
+            this.l_TFOV.Visible = false;
             // 
             // InfoPanel
             // 
@@ -66,6 +78,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(526, 61);
+            this.Controls.Add(this.l_TFOV);
             this.Controls.Add(this.l_FOV);
             this.Controls.Add(this.l_Tilt);
             this.Controls.Add(this.l_Pan);
@@ -81,5 +94,6 @@
         private System.Windows.Forms.Label l_Pan;
         private System.Windows.Forms.Label l_Tilt;
         private System.Windows.Forms.Label l_FOV;
+        private System.Windows.Forms.Label l_TFOV;
     }
 }

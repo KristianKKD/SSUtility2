@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -11,6 +12,7 @@ namespace SSLUtility2 {
             HideAll();
             UpdateTimer = new Timer();
             UpdateTimer.Tick += new EventHandler(UpdateTimer_Tick);
+            oldLocation = l_TFOV.Location;
         }
 
         public Timer UpdateTimer;
@@ -21,7 +23,9 @@ namespace SSLUtility2 {
 
         public bool isActive;
 
-        int commandPos;
+        static int commandPos;
+        Point oldLocation;
+
         enum CamConfig {
             SSTraditional,
             Strict,
@@ -44,12 +48,8 @@ namespace SSLUtility2 {
 
         void StartTicking() {
             if (!CheckCam()) {
-                if (thermalCam) {
-                    HideAll();
-                } else {
-                    HideNotFOV();
-                    l_FOV.Text = "Camera check failed!";
-                }
+                HideNotTFOV();
+                l_TFOV.Text = "Camera check failed!";
                 return;
             }
 
@@ -63,6 +63,12 @@ namespace SSLUtility2 {
             isActive = true;
         }
 
+        public void StopTicking() {
+            HideAll();
+            isActive = false;
+            UpdateTimer.Stop();
+        }
+
         public bool CheckCam() {
             bool result = CameraCommunicate.CheckPelcoCam(thermalCam).Result;
             return result;
@@ -72,19 +78,24 @@ namespace SSLUtility2 {
             l_Pan.Hide();
             l_Tilt.Hide();
             l_FOV.Hide();
+            l_TFOV.Hide();
         }
 
         public void ShowAll() {
-            if (!thermalCam) {
-                l_Pan.Show();
-                l_Tilt.Show();
-            }
+            l_Pan.Show();
+            l_Tilt.Show();
             l_FOV.Show();
+            l_TFOV.Show();
         }
 
-        public void HideNotFOV() {
+        public void HideNotTFOV() {
             l_Pan.Hide();
             l_Tilt.Hide();
+            l_FOV.Hide();
+        }
+
+        public void HideTFOV() {
+            l_TFOV.Hide();
         }
 
         void CheckTypeToDisplay() {
@@ -94,13 +105,18 @@ namespace SSLUtility2 {
 
             if (thermalCam) {
                 if (otherD.myInfoRef.isActive) {
-                    HideNotFOV();
-                }
-                else {
+                    HideAll();
+                    StopTicking();
+                } else {
                     ShowAll();
+                    StartTicking();
                 }
+            } else {
+                if (otherD.myInfoRef.isActive && otherD.myInfoRef.thermalCam) {
+                    otherD.myInfoRef.StopTicking();
+                }
+                StartTicking();
             }
-            StartTicking();
 
         }
         
@@ -136,28 +152,29 @@ namespace SSLUtility2 {
         }
 
         async Task UpdateAll() {
-            if (commandPos == 3) {
+            if (commandPos == 4) {
                 commandPos = 0;
             }
 
-            if (!thermalCam) {
-                switch (commandPos) {
-                    case 0:
-                        GetPan();
-                        break;
-                    case 1:
-                        GetTilt();
-                        break;
-                    case 2:
-                        GetFOV();
-                        break;
-                }
-            } else {
-                //GetThermalFOV();
+            switch (commandPos) {
+                case 0:
+                    GetPan();
+                    break;
+                case 1:
+                    GetTilt();
+                    break;
+                case 2:
+                    GetFOV();
+                    break;
+                case 3:
+                    GetThermalFOV();
+                    break;
             }
+
             commandPos++;
             l_Tilt.Text = "TILT: " + tilt.ToString() + " °";
-            l_FOV.Text = "FOV: " + fov.ToString() + " °";
+            l_FOV.Text = "DAYLIGHT FOV: " + fov.ToString() + " °";
+            l_TFOV.Text = "THERMAL FOV: " + tfov.ToString() + " °";
             l_Pan.Text = "PAN: " + pan.ToString() + " °";
         }
 
@@ -174,6 +191,7 @@ namespace SSLUtility2 {
         static float pan;
         static float tilt;
         static float fov;
+        static float tfov;
 
         public static async Task ReadResult(string result) {
             //string result = GetQueryResults(query);
@@ -189,7 +207,11 @@ namespace SSLUtility2 {
                     tilt = CalculateTilt(result);
                     break;
                 case "5D": //fov
-                    fov = ReturnedHexValToFloat(result);
+                    if (commandPos == 3) {
+                        fov = ReturnedHexValToFloat(result);
+                    } else {
+                        tfov = ReturnedHexValToFloat(result);
+                    }
                     break;
                 }
         }
@@ -279,7 +301,7 @@ namespace SSLUtility2 {
         }
 
         public async Task GetThermalFOV() {
-            //ReadResult(new byte[] { 0xFF, 0x00, 0x00, 0x55, 0x00, 0x00, 0x55 }); //doesn't work?
+            CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x02, 0x00, 0x55, 0x00, 0x00, 0x57 }, true);
         }
 
 

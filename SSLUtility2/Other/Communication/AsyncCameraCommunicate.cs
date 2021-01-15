@@ -43,7 +43,7 @@ namespace SSLUtility2 {
             Command com = new Command(oldCom.content, true);
         }
 
-        public static void Connect(IPEndPoint ep = null) {
+        public static void Connect(IPEndPoint ep) {
             try {
                 if (sock != null) {
                     if (sock.Connected) {
@@ -124,7 +124,6 @@ namespace SSLUtility2 {
         public static void SendCurrent() {
             try {
                 Command com = CommandQueue.GetCurCommand();
-                Console.WriteLine("sending");
 
                 sock.BeginSend(com.content, 0, com.content.Length, SocketFlags.None, SendCallback, null);
             } catch (SocketException ex) {
