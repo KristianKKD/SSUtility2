@@ -46,7 +46,7 @@ namespace SSLUtility2 {
             for (int i = 3; i < 4 && !checkPassed; i++) {
                 OsirisComs.Send(command);
 
-                for (int x = 0; x < 5 && !OsirisComs.doneReceive; x++) { //maybe add an escape after some time?
+                for (int x = 0; x < 5 && !OsirisComs.doneReceive; x++) {
                     Task.Delay(100);
                 }
                 checkPassed = CheckResponse(OsirisComs.lastMsg);
@@ -109,8 +109,6 @@ namespace SSLUtility2 {
             return totalCRC;
         }
 
-        bool series3k;
-
         void CheckConfig() {
             ConfigUpdateControls();
             ReadSystemHealth();
@@ -165,6 +163,13 @@ namespace SSLUtility2 {
             string focusActuatorConfig = response.Substring(23,2);
             string focusActuatorReturn = response.Substring(25,2);
 
+            if (lampInd == "1") {
+                l_Status.Text = "Lamp Status: ON";
+            } else {
+                l_Status.Text = "Lamp Status: OFF";
+            }
+
+
             //change stuff
 
         }
@@ -182,7 +187,11 @@ namespace SSLUtility2 {
                 return;
             }
 
+            bool series3k = false;
+
             string lampType = response.Substring(6, 2);
+            string filter = response.Substring(10, 1);
+            string focus = response.Substring(11, 1);
 
             l_Series.Show();
             l_LampType.Show();
@@ -203,6 +212,10 @@ namespace SSLUtility2 {
                     break;
             }
             l_LampType.Text = msg;
+
+            if (filter == "1" || focus == "1") {
+                series3k = true;
+            }
 
             if (series3k) {
                 l_Series.Text = "MR3000";
@@ -281,7 +294,9 @@ namespace SSLUtility2 {
 
         private void b_Connect_Click(object sender, EventArgs e) {
             //Connect();
-            Console.WriteLine(GetCRC(uint.Parse(tB_IP.Text)));
+            byte[] b = new byte[] { (byte)GetCRC(uint.Parse(tB_IP.Text)) };
+            Console.WriteLine(MainForm.m.ReadCommand(b, false));
         }
+
     }
 }

@@ -41,6 +41,8 @@
             this.l_LampType = new System.Windows.Forms.Label();
             this.l_Series = new System.Windows.Forms.Label();
             this.cB_Actuator = new System.Windows.Forms.ComboBox();
+            this.l_Status = new System.Windows.Forms.Label();
+            this.l_Health = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tB_Port
@@ -96,7 +98,7 @@
             // l_Mode
             // 
             this.l_Mode.AutoSize = true;
-            this.l_Mode.Location = new System.Drawing.Point(12, 69);
+            this.l_Mode.Location = new System.Drawing.Point(12, 49);
             this.l_Mode.Name = "l_Mode";
             this.l_Mode.Size = new System.Drawing.Size(34, 13);
             this.l_Mode.TabIndex = 20;
@@ -105,7 +107,7 @@
             // l_Beam
             // 
             this.l_Beam.AutoSize = true;
-            this.l_Beam.Location = new System.Drawing.Point(128, 69);
+            this.l_Beam.Location = new System.Drawing.Point(128, 49);
             this.l_Beam.Name = "l_Beam";
             this.l_Beam.Size = new System.Drawing.Size(34, 13);
             this.l_Beam.TabIndex = 21;
@@ -144,7 +146,7 @@
             "PULSE",
             "STROBE",
             "CONTINUOUS"});
-            this.cB_Mode.Location = new System.Drawing.Point(15, 85);
+            this.cB_Mode.Location = new System.Drawing.Point(15, 65);
             this.cB_Mode.Name = "cB_Mode";
             this.cB_Mode.Size = new System.Drawing.Size(89, 21);
             this.cB_Mode.TabIndex = 29;
@@ -157,7 +159,7 @@
             "LOW",
             "HIGH",
             "OFF"});
-            this.cB_Beam.Location = new System.Drawing.Point(131, 85);
+            this.cB_Beam.Location = new System.Drawing.Point(131, 65);
             this.cB_Beam.Name = "cB_Beam";
             this.cB_Beam.Size = new System.Drawing.Size(89, 21);
             this.cB_Beam.TabIndex = 30;
@@ -176,17 +178,17 @@
             // l_LampType
             // 
             this.l_LampType.AutoSize = true;
-            this.l_LampType.Location = new System.Drawing.Point(343, 96);
+            this.l_LampType.Location = new System.Drawing.Point(12, 96);
             this.l_LampType.Name = "l_LampType";
-            this.l_LampType.Size = new System.Drawing.Size(36, 13);
+            this.l_LampType.Size = new System.Drawing.Size(63, 13);
             this.l_LampType.TabIndex = 31;
-            this.l_LampType.Text = "Lamp:";
+            this.l_LampType.Text = "Lamp Type:";
             this.l_LampType.Visible = false;
             // 
             // l_Series
             // 
             this.l_Series.AutoSize = true;
-            this.l_Series.Location = new System.Drawing.Point(261, 96);
+            this.l_Series.Location = new System.Drawing.Point(128, 96);
             this.l_Series.Name = "l_Series";
             this.l_Series.Size = new System.Drawing.Size(39, 13);
             this.l_Series.TabIndex = 33;
@@ -206,12 +208,34 @@
             this.cB_Actuator.Visible = false;
             this.cB_Actuator.SelectedIndexChanged += new System.EventHandler(this.cB_Actuator_SelectedIndexChanged);
             // 
+            // l_Status
+            // 
+            this.l_Status.AutoSize = true;
+            this.l_Status.Location = new System.Drawing.Point(205, 96);
+            this.l_Status.Name = "l_Status";
+            this.l_Status.Size = new System.Drawing.Size(69, 13);
+            this.l_Status.TabIndex = 35;
+            this.l_Status.Text = "Lamp Status:";
+            this.l_Status.Visible = false;
+            // 
+            // l_Health
+            // 
+            this.l_Health.AutoSize = true;
+            this.l_Health.Location = new System.Drawing.Point(322, 96);
+            this.l_Health.Name = "l_Health";
+            this.l_Health.Size = new System.Drawing.Size(41, 13);
+            this.l_Health.TabIndex = 36;
+            this.l_Health.Text = "Health:";
+            this.l_Health.Visible = false;
+            // 
             // Osiris
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(437, 126);
+            this.ClientSize = new System.Drawing.Size(437, 117);
+            this.Controls.Add(this.l_Health);
+            this.Controls.Add(this.l_Status);
             this.Controls.Add(this.l_Series);
             this.Controls.Add(this.b_Connect);
             this.Controls.Add(this.l_LampType);
@@ -252,5 +276,7 @@
         private System.Windows.Forms.Label l_LampType;
         private System.Windows.Forms.Label l_Series;
         private System.Windows.Forms.ComboBox cB_Actuator;
+        private System.Windows.Forms.Label l_Status;
+        private System.Windows.Forms.Label l_Health;
     }
 }
