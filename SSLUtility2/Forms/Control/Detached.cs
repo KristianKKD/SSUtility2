@@ -56,11 +56,11 @@ namespace SSLUtility2 {
             if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr,
                 tB_PlayerD_Buffering.Text, showErrors).Result) {
 
+                b_PlayerD_Stop.Show();
+
                 if (check_PlayerD_StatsEnabled.Checked) {
                     StartInfo();
                 }
-
-                b_PlayerD_Stop.Show();
 
             } else {
                 if (myInfoRef != null) {

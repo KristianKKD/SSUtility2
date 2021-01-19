@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.7.0";
+        public const string version = "v1.3.8.0";
         public bool lite = false;
         bool isOriginal = false;
         public ResponseLog rl;
@@ -379,6 +379,13 @@ namespace SSLUtility2 {
         void OpenFinal() {
             Final fin = new Final();
             fin.Show();
+            fin.BringToFront();
+        }
+
+        public static void OpenOsiris() {
+            Osiris o = new Osiris();
+            o.Show();
+            o.BringToFront();
         }
 
         public IEnumerable<Control> GetAll(Control control) {
@@ -761,6 +768,11 @@ namespace SSLUtility2 {
         private void Menu_QC_Tilt_Click(object sender, EventArgs e) {
             new QuickCommandEntry("settilt", "Enter tilt pos value");
         }
+
+        private void Menu_Window_Osiris_Click(object sender, EventArgs e) {
+            OpenOsiris();
+        }
+
 
     } // end of class MainForm
 } // end of namespace SSLUtility2

@@ -33,8 +33,9 @@ namespace SSLUtility2 {
 
         public static void Disconnect() {
             try {
-                sock.Shutdown(SocketShutdown.Both);
-                sock.Close();
+                sock = null;
+                //sock.Shutdown(SocketShutdown.Both);
+                //sock.Close();
             } catch { }
         }
 

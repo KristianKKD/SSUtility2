@@ -278,7 +278,16 @@ namespace SSLUtility2 {
         }
 
         public static string GetSockEndpoint() {
-            return sock.RemoteEndPoint.ToString();
+            try {
+                if (!sock.Connected) {
+                    if (!Connect(MainForm.m.ipCon.tB_IPCon_Adr.Text, MainForm.m.ipCon.tB_IPCon_Port.Text, MainForm.m.ipCon.l_IPCon_Connected, false).Result) {
+                        return null;
+                    }
+                }
+                return sock.RemoteEndPoint.ToString();
+            } catch {
+                return null;
+            }
         }
 
     }

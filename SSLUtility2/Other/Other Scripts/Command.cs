@@ -33,7 +33,7 @@ namespace SSLUtility2 {
 
         private static void SendCurrentCommand(object sender, EventArgs e) {
             try {
-                Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " HEADER: " + header.ToString());
+                //Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " HEADER: " + header.ToString());
 
                 if (queueList.Count >= header && queueList.Count > 0) {
                     lowPriority = false;

@@ -107,7 +107,14 @@
     <Compile Include="Forms\Other\QuickCommandEntry.Designer.cs">
       <DependentUpon>QuickCommandEntry.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Other\Osiris.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Other\Osiris.Designer.cs">
+      <DependentUpon>Osiris.cs</DependentUpon>
+    </Compile>
     <Compile Include="Other\Communication\AsyncCameraCommunicate.cs" />
+    <Compile Include="Other\Communication\OsirisComs.cs" />
     <Compile Include="Other\Other Scripts\AsyncSocket.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -213,6 +220,9 @@
     <EmbeddedResource Include="Forms\Other\SettingsPage.resx">
       <DependentUpon>SettingsPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Other\Osiris.resx">
+      <DependentUpon>Osiris.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -224,6 +234,7 @@
   <ItemGroup>
     <None Include="Other\app.config" />
     <None Include="Other\packages.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="AXVLC">

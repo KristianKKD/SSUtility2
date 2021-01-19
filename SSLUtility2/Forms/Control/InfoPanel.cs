@@ -180,6 +180,9 @@ namespace SSLUtility2 {
 
         string GetQueryResults(byte[] query) {
             Uri currentlyConnected = new Uri("http://" + CameraCommunicate.GetSockEndpoint());
+            if (currentlyConnected == null) {
+                return null;
+            }
             string result = CameraCommunicate.Query(query, currentlyConnected).Result.Trim();
 
             //if(thermalCam)

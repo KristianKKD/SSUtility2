@@ -75,17 +75,17 @@ namespace SSLUtility2 {
         static async Task<byte[]> RefineCode(ScriptCommand com, uint adr, int value) {
             byte[] code = com.codeContent;
 
-            if (com.valueAccepting) {
-                //if (com.dualValue) {
-                //    if (value > 255) {
-                //        code[2] = 0xFF;
-                //        code[3] = Convert.ToByte(value - 255);
-                //    } else {
-                //        code[2] = Convert.ToByte(value);
-                //    }
-                //} else {
+            if (com.valueAccepting) { //test this
+                if (com.dualValue) {
+                    if (value > 255) {
+                        code[2] = 0xFF;
+                        code[3] = Convert.ToByte(value - 255);
+                    } else {
+                        code[2] = Convert.ToByte(value);
+                    }
+                } else {
                     code[3] = Convert.ToByte(value);
-                //}
+                }
             }
 
             uint checksum = GetCheckSum(code, adr);
