@@ -11,6 +11,10 @@ namespace SSLUtility2 {
             foreach (Control c in MainForm.saveList) {
                 File.AppendAllText(path, c.Text + "\n");
             }
+
+            if (MainForm.m.finalMode) {
+                MainForm.CopySingleFile(MainForm.m.finalSS + ConfigControl.autoSave, path);
+            }
         }
 
         public static async Task LoadAuto(string path, bool firstTime) {

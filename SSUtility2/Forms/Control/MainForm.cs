@@ -11,21 +11,29 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.8.1";
+        public const string version = "v1.3.9.0";
         public bool lite = false;
-        bool isOriginal = false;
-        public ResponseLog rl;
+        private bool isOriginal = false;
+        private bool movedUp = true;
+        public bool finalMode = false;
 
         public static Control[] saveList = new Control[0];
 
         public ControlPanel ipCon;
         public SettingsPage setPage;
         public PelcoD pd;
+        public ResponseLog rl;
 
         public Detached playerL;
         public Detached playerR;
 
-        bool movedUp = true;
+        Recorder screenRec;
+
+        string inUseVideoPath;
+        string lastName;
+        
+        public string finalDest;
+        public string finalSS;
 
         public static MainForm m { get; set; }
 
@@ -388,6 +396,12 @@ namespace SSLUtility2 {
             o.BringToFront();
         }
 
+        public void ActivateFinalMode(string destination, string SS) {
+            finalMode = true;
+            finalDest = destination;
+            finalSS = SS;
+        }
+
         public IEnumerable<Control> GetAll(Control control) {
             var controls = control.Controls.Cast<Control>();
 
@@ -574,9 +588,12 @@ namespace SSLUtility2 {
             bmp.Save(fullImagePath, ImageFormat.Jpeg);
 
             MessageBox.Show("Image saved : " + fullImagePath);
-        }
 
-        string inUsePath;
+            if (fullImagePath.Contains("SSUtility") && finalMode) {
+                Task.Delay(200);
+                CopySingleFile(finalSS + fullImagePath.Replace(ConfigControl.appFolder, ""), fullImagePath);
+            }
+        }
 
         public (bool, Recorder) StopStartRec(bool isPlaying, Detached player, Recorder r) {
             if (isPlaying) {
@@ -584,13 +601,20 @@ namespace SSLUtility2 {
                 isPlaying = false;
                 
                 r.Dispose();
-                
-                MessageBox.Show("Saved recording to: " + inUsePath);
+
+                MessageBox.Show("Saved recording to: " + inUseVideoPath);
+
+                if (inUseVideoPath.Contains("SSUtility") && finalMode) {
+                    Task.Delay(200);
+                    //int nameStartIndex = inUseVideoPath.IndexOf(ConfigControl.vFileName);
+
+                    CopySingleFile(finalSS + inUseVideoPath.Replace(ConfigControl.appFolder, ""), inUseVideoPath);
+                }
 
                 return (isPlaying, null);
             } else {
                 string fullVideoPath = GivePath(ConfigControl.vFolder, ConfigControl.vFileName, player.tB_PlayerD_SimpleAdr.Text, "Recordings") + ".avi";
-                inUsePath = fullVideoPath;
+                inUseVideoPath = fullVideoPath;
                 player.b_PlayerD_StartRec.Text = "STOP Recording";
                 isPlaying = true;
 
@@ -628,6 +652,70 @@ namespace SSLUtility2 {
 
             string full = folder + @"\" + fileName;
             return full;
+        }
+
+        public static void CopySingleFile(string destination, string sourceFile, bool copyingDirectory = false) {
+            string curFile = string.Empty;
+            string newLocation = string.Empty;
+            try {
+                string name = sourceFile.Substring(sourceFile.LastIndexOf("\\") + 1);
+                curFile = sourceFile;
+                newLocation = destination + name;
+
+                if (copyingDirectory) {
+                    destination += @"\";
+                    string tempFile = destination + @"CopiedFile";
+
+                    if (!File.Exists(newLocation)) {
+                        if (name == ConfigControl.config) {
+                            ConfigControl.portableMode = true;
+                            ConfigControl.CreateConfig(destination + @"\" + ConfigControl.config);
+                            ConfigControl.portableMode = false;
+                        } else {
+                            File.Copy(sourceFile, tempFile, true);
+                            File.Move(tempFile, destination + @"\" + name); //renames file
+                        }
+                    }
+
+                } else {
+                    File.Copy(sourceFile, destination, true);
+                }
+            } catch (Exception e) {
+                MainForm.ShowError("Couldn't copy individual file to new directory!\nShow more info?", 
+                    "Copy failed!", "File: " + curFile + "\nfailed to copy to:\n" + newLocation + 
+                    "\n\nError: " + e.ToString());
+            }
+        }
+
+        public static void CopyFiles(string destination, string[] sourceDir) {
+            foreach (string file in sourceDir) {
+                CopySingleFile(destination, file, true);
+            }
+        }
+
+        public static void CopyDirs(string pathTo, string[] copyDir) {
+            string curDir = string.Empty;
+            string newLocation = string.Empty;
+            try {
+                foreach (string subDir in copyDir) {
+                    string name = subDir.Substring(subDir.LastIndexOf("\\"));
+                    curDir = subDir;
+                    newLocation = pathTo + name;
+
+                    DirectoryInfo newDir = Directory.CreateDirectory(pathTo + name);
+
+                    if (Directory.GetFiles(subDir).Length > 0) {
+                        CopyFiles(newDir.FullName, Directory.GetFiles(subDir));
+                    }
+                    if (Directory.GetDirectories(subDir).Length > 0) {
+                        CopyDirs(newDir.FullName, Directory.GetDirectories(subDir));
+                    }
+                }
+            } catch (Exception e) {
+                MainForm.ShowError("Couldn't copy directory to new location!\nShow more info?", 
+                    "Copy failed!", "Directory: " + curDir + "\nfailed to copy to:\n" + newLocation + 
+                    "\n\nError: " + e.ToString());
+            }
         }
 
         public static string GetAdr(string orgAdr) {
@@ -738,13 +826,15 @@ namespace SSLUtility2 {
             CustomScriptCommands.QuickCommand("panzero");
         }
 
+        private void Menu_Window_Osiris_Click(object sender, EventArgs e) {
+            OpenOsiris();
+        }
+
         private void Menu_Window_Settings_Click(object sender, EventArgs e) {
             setPage.Show();
             setPage.BringToFront();
         }
 
-        Recorder screenRec;
-        string lastName;
         private void Menu_Record_Click(object sender, EventArgs e) {
             if (screenRec != null) {
                 screenRec.Dispose();
@@ -767,10 +857,6 @@ namespace SSLUtility2 {
 
         private void Menu_QC_Tilt_Click(object sender, EventArgs e) {
             new QuickCommandEntry("settilt", "Enter tilt pos value");
-        }
-
-        private void Menu_Window_Osiris_Click(object sender, EventArgs e) {
-            OpenOsiris();
         }
 
 

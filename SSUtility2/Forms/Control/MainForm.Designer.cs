@@ -213,7 +213,7 @@ namespace SSLUtility2 {
             this.l_Version.Name = "l_Version";
             this.l_Version.Size = new System.Drawing.Size(93, 13);
             this.l_Version.TabIndex = 0;
-            this.l_Version.Text = "SSUtility2 Version:";
+            this.l_Version.Text = "SSUtility2.0 Version:";
             // 
             // MainForm
             // 

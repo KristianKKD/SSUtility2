@@ -116,6 +116,9 @@ namespace SSLUtility2 {
 
             File.AppendAllText(path, varPrefix + portableModeVar + ":" + portableMode + "\n");
 
+            if (MainForm.m.finalMode) {
+                MainForm.CopySingleFile(MainForm.m.finalSS + config, path);
+            }
         }
 
         public static bool CheckVal(string v) {
