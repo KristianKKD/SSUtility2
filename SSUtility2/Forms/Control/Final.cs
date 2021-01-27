@@ -37,7 +37,7 @@ namespace SSLUtility2.Forms.FinalTest {
                 }
 
                 string ip = HasIP(tB_Source.Text);
-                if (ip != null) {
+                if (ip != "") {
                     if (!OtherCameraCommunication.PingAdr(IPAddress.Parse(ip)).Result) {
                         MainForm.ShowError("Couldn't ping address given within Source Folder input!\nShow more?",
                             "Final Mode Failed!", "Tried to ping: " + ip);
@@ -86,7 +86,11 @@ namespace SSLUtility2.Forms.FinalTest {
         public static string HasIP(String text) {
             Regex ip = new Regex(@"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b");
             MatchCollection result = ip.Matches(text);
-            return result[0].ToString();
+            if (result.Count == 0) {
+                return "";
+            } else {
+                return result[0].ToString();
+            }
         }
 
         private void b_BrowseSource_Click(object sender, EventArgs e) {
