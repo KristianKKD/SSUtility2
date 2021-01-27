@@ -110,8 +110,8 @@ namespace SSLUtility2 {
             return fullCommand;
         }
 
-        public static void SaveFile(string[] lines, string name = null) {
-            SaveFileDialog fdg = MainForm.SaveTxt(name);
+        public static void SaveScript(string[] lines, string name = null) {
+            SaveFileDialog fdg = MainForm.SaveFile(name, ".txt", ConfigControl.savedFolder);
             DialogResult result = fdg.ShowDialog();
             if (result == DialogResult.OK) {
                 ConfigControl.ResetFile(fdg.FileName);
@@ -120,7 +120,7 @@ namespace SSLUtility2 {
         }
 
         private void b_PD_Save_Click(object sender, EventArgs e) {
-            SaveFile(rtb_PD_Commands.Lines, "PelcoScript");
+            SaveScript(rtb_PD_Commands.Lines, "PelcoScript");
         }
 
         private void b_PD_Fire_Click(object sender, EventArgs e) {
@@ -132,7 +132,7 @@ namespace SSLUtility2 {
         }
 
         private void b_PD_Load_Click(object sender, EventArgs e) {
-            OpenFileDialog fdg = MainForm.OpenTxt();
+            OpenFileDialog fdg = MainForm.OpenFile();
             DialogResult result = fdg.ShowDialog();
             if (result == DialogResult.OK) {
                 if (fdg.FileName.Contains(".txt")) {

@@ -13,7 +13,7 @@ namespace SSLUtility2 {
             }
 
             if (MainForm.m.finalMode) {
-                MainForm.CopySingleFile(MainForm.m.finalSS + ConfigControl.autoSave, path);
+                MainForm.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + ConfigControl.autoSave, path);
             }
         }
 

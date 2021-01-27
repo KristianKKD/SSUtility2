@@ -54,7 +54,7 @@ namespace SSLUtility2 {
             this.Menu_QC_Pan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Tilt = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_FTM_Open = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Main = new System.Windows.Forms.Panel();
             this.p_Control = new System.Windows.Forms.Panel();
@@ -148,38 +148,38 @@ namespace SSLUtility2 {
             // Menu_QC_PanZero
             // 
             this.Menu_QC_PanZero.Name = "Menu_QC_PanZero";
-            this.Menu_QC_PanZero.Size = new System.Drawing.Size(137, 22);
+            this.Menu_QC_PanZero.Size = new System.Drawing.Size(180, 22);
             this.Menu_QC_PanZero.Text = "Set Pan = 0";
             this.Menu_QC_PanZero.Click += new System.EventHandler(this.Menu_QC_PanZero_Click);
             // 
             // Menu_QC_Pan
             // 
             this.Menu_QC_Pan.Name = "Menu_QC_Pan";
-            this.Menu_QC_Pan.Size = new System.Drawing.Size(137, 22);
+            this.Menu_QC_Pan.Size = new System.Drawing.Size(180, 22);
             this.Menu_QC_Pan.Text = "Quick Pan";
             this.Menu_QC_Pan.Click += new System.EventHandler(this.Menu_QC_Pan_Click);
             // 
             // Menu_QC_Tilt
             // 
             this.Menu_QC_Tilt.Name = "Menu_QC_Tilt";
-            this.Menu_QC_Tilt.Size = new System.Drawing.Size(137, 22);
+            this.Menu_QC_Tilt.Size = new System.Drawing.Size(180, 22);
             this.Menu_QC_Tilt.Text = "Quick TIlt";
             this.Menu_QC_Tilt.Click += new System.EventHandler(this.Menu_QC_Tilt_Click);
             // 
             // Menu_Final
             // 
             this.Menu_Final.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Menu_FTM_Open});
+            this.Menu_Final_Open});
             this.Menu_Final.Name = "Menu_Final";
             this.Menu_Final.Size = new System.Drawing.Size(107, 20);
             this.Menu_Final.Text = "Final Test Mode";
             // 
-            // Menu_FTM_Open
+            // Menu_Final_Open
             // 
-            this.Menu_FTM_Open.Name = "Menu_FTM_Open";
-            this.Menu_FTM_Open.Size = new System.Drawing.Size(113, 22);
-            this.Menu_FTM_Open.Text = "Open...";
-            this.Menu_FTM_Open.Click += new System.EventHandler(this.Menu_FTM_Open_Click);
+            this.Menu_Final_Open.Name = "Menu_Final_Open";
+            this.Menu_Final_Open.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Final_Open.Text = "Open...";
+            this.Menu_Final_Open.Click += new System.EventHandler(this.Menu_Final_Open_Click);
             // 
             // Menu_Record
             // 
@@ -211,7 +211,7 @@ namespace SSLUtility2 {
             this.l_Version.AutoSize = true;
             this.l_Version.Location = new System.Drawing.Point(1453, 838);
             this.l_Version.Name = "l_Version";
-            this.l_Version.Size = new System.Drawing.Size(93, 13);
+            this.l_Version.Size = new System.Drawing.Size(102, 13);
             this.l_Version.TabIndex = 0;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
@@ -1034,7 +1034,7 @@ namespace SSLUtility2 {
         private ToolStripMenuItem Menu_Window_PelcoD;
         private ToolStripMenuItem Menu_Window_Lite;
         private ToolStripMenuItem Menu_Final;
-        private ToolStripMenuItem Menu_FTM_Open;
+        private ToolStripMenuItem Menu_Final_Open;
         private ToolStripMenuItem Menu_Window_Response;
         private ToolStripMenuItem Menu_QC;
         private ToolStripMenuItem Menu_QC_PanZero;

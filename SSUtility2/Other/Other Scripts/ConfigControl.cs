@@ -9,25 +9,29 @@ namespace SSLUtility2 {
     class ConfigControl {
 
         //Defaults//
-        public static string defScFolder = @"Snapshots\";
-        public static string defVFolder = @"Videos\";
-        public static string defSavedFolder = @"Saved\";
+        private static string defScFolder = @"Snapshots\";
+        private static string defVFolder = @"Videos\";
+        private static string defSavedFolder = @"Saved\";
 
-        public static string defVName = "Video";
-        public static string defScName = "Snapshot";
+        private static string defVName = "Video";
+        private static string defScName = "Snapshot";
 
-        public static string defVRecQual = "70";
-        public static string defVRecFPS = "30";
+        private static string defVRecQual = "70";
+        private static string defVRecFPS = "30";
 
-        public static string defVUpdateMs = "500";
+        private static string defVUpdateMs = "500";
 
-        public static bool defSubnetNot = false;
-        public static bool defAutoPlay = true;
-        public static bool defAutomaticPaths = true;
+        private static bool defSubnetNot = false;
+        private static bool defAutoPlay = true;
+        private static bool defAutomaticPaths = true;
+
+        private static string defFinalSource = @"\\192.168.1.118\netdrive\ProductionTesting\DEFAULT FILES";
+        private static string defFinalDestination = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
         public static string config = "config.txt";
         public const string autoSave = "auto.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
+        public static string ScreenRecordingName = "Recording";
         //Defaults//
 
         //RuntimeVars//
@@ -45,29 +49,34 @@ namespace SSLUtility2 {
         public static bool automaticPaths;
 
         public static bool portableMode;
+        public static string finalSource;
+        public static string finalDestination;
+
         //RuntimeVars//
 
         //SearchForVars//
         static string configPath = "";
 
-        public const string varPrefix = "v"; //What the prefix of the actual value is (ScreenshotFolder:bin/obj/)
+        private const string varPrefix = "v"; //What the prefix of the actual value is (ScreenshotFolder:bin/obj/)
 
-        public const string screenshotFolderVar = "SnapshotFolder";
-        public const string videoFolderVar = "VideoFolder";
+        private const string screenshotFolderVar = "SnapshotFolder";
+        private const string videoFolderVar = "VideoFolder";
 
-        public const string videoFileNVar = "VideoFileName";
-        public const string scFileNVar = "SnapshotFileName";
+        private const string videoFileNVar = "VideoFileName";
+        private const string scFileNVar = "SnapshotFileName";
 
-        public const string recQualVar = "RecordingQuality";
-        public const string recFPSVar = "RecordingFramerate";
+        private const string recQualVar = "RecordingQuality";
+        private const string recFPSVar = "RecordingFramerate";
 
-        public const string updateMsVar = "UpdateStatsTimerMs";
+        private const string updateMsVar = "UpdateStatsTimerMs";
 
-        public const string subnetNotifVar = "SubnetNotificationHidden";
-        public const string autoPlayVar = "AutoPlayLaunch";
-        public const string automaticPathsVar = "AutomaticPaths";
+        private const string subnetNotifVar = "SubnetNotificationHidden";
+        private const string autoPlayVar = "AutoPlayLaunch";
+        private const string automaticPathsVar = "AutomaticPaths";
 
-        public const string portableModeVar = "PortableMode";
+        private const string portableModeVar = "PortableMode";
+        private const string finalSourceVar = "FinalModeSourceFolder";
+        private const string finalDestinationVar = "FinalModeDestinationFolder";
         //SearchForVars//
 
         public static List<ConfigVar> stringVarList {
@@ -94,30 +103,101 @@ namespace SSLUtility2 {
             subnetNotif = defSubnetNot;
             autoPlay = defAutoPlay;
             automaticPaths = defAutomaticPaths;
+
+            finalSource = defFinalSource;
+            finalDestination = defFinalDestination;
         }
 
         public static void CreateConfig(string path) {
             ResetFile(path);
             configPath = path;
 
-            File.AppendAllText(path, varPrefix + screenshotFolderVar + ":" + scFolder + "\n");
-            File.AppendAllText(path, varPrefix + videoFolderVar + ":" + vFolder + "\n");
+            (string, string)[] configArray = new (string, string)[] {
+                (screenshotFolderVar, scFolder),
+                (videoFolderVar, vFolder),
 
-            File.AppendAllText(path, varPrefix + scFileNVar + ":" + scFileName + "\n");
-            File.AppendAllText(path, varPrefix + videoFileNVar + ":" + vFileName + "\n");
+                (scFileNVar, scFileName),
+                (videoFileNVar, vFileName),
 
-            File.AppendAllText(path, varPrefix + recQualVar + ":" + recQual + "\n");
-            File.AppendAllText(path, varPrefix + recFPSVar + ":" + recFPS + "\n");
-            File.AppendAllText(path, varPrefix + updateMsVar + ":" + updateMs + "\n");
+                (recQualVar, recQual),
+                (recFPSVar, recFPS),
+                (updateMsVar, updateMs),
 
-            File.AppendAllText(path, varPrefix + subnetNotifVar + ":" + subnetNotif + "\n");
-            File.AppendAllText(path, varPrefix + autoPlayVar + ":" + autoPlay + "\n");
-            File.AppendAllText(path, varPrefix + automaticPathsVar + ":" + automaticPaths + "\n");
+                (subnetNotifVar, subnetNotif.ToString()),
+                (autoPlayVar, autoPlay.ToString()),
+                (automaticPathsVar, automaticPaths.ToString()),
 
-            File.AppendAllText(path, varPrefix + portableModeVar + ":" + portableMode + "\n");
+                (portableModeVar, portableMode.ToString()),
+                (finalSourceVar, finalSource),
+                (finalDestinationVar, finalDestination),
+            };
+
+            foreach ((string, string) line in configArray) {
+                if (!portableMode && (line.Item1 == finalSourceVar || line.Item1 == finalDestinationVar)) {
+                    continue;
+                }
+
+                ConfigLine(path, line.Item1, line.Item2);
+            }
 
             if (MainForm.m.finalMode) {
-                MainForm.CopySingleFile(MainForm.m.finalSS + config, path);
+                MainForm.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
+            }
+        }
+
+        static void ConfigLine(string path, string variable, string value) {
+            File.AppendAllText(path, varPrefix + variable + ":" + value + "\n");
+        }
+
+        public static async Task FindVars() {
+            foreach (ConfigVar v in stringVarList) {
+                if (v.value.ToLower() == "false" || v.value.ToLower() == "true") {
+                    bool val = CheckVal(v.value);
+                    switch (v.name) {
+                        case subnetNotifVar:
+                            subnetNotif = val;
+                            break;
+                        case automaticPathsVar:
+                            automaticPaths = val;
+                            break;
+                        case autoPlayVar:
+                            autoPlay = val;
+                            break;
+                        case portableModeVar:
+                            portableMode = val;
+                            break;
+                    }
+                } else {
+                    switch (v.name) {
+                        case screenshotFolderVar:
+                            scFolder = v.value;
+                            break;
+                        case videoFolderVar:
+                            vFolder = v.value;
+                            break;
+                        case scFileNVar:
+                            scFileName = v.value;
+                            break;
+                        case videoFileNVar:
+                            vFileName = v.value;
+                            break;
+                        case recQualVar:
+                            recQual = v.value;
+                            break;
+                        case recFPSVar:
+                            recFPS = v.value;
+                            break;
+                        case updateMsVar:
+                            updateMs = v.value;
+                            break;
+                        case finalSourceVar:
+                            finalSource = v.value;
+                            break;
+                        case finalDestinationVar:
+                            finalDestination = v.value;
+                            break;
+                    }
+                }
             }
         }
 

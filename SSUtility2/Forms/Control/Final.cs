@@ -1,60 +1,92 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SSLUtility2.Forms.FinalTest {
     public partial class Final : Form {
         public Final() {
             InitializeComponent();
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            tB_Destination.Text = desktopPath;
-
-            string sourceFolder = @"\\192.168.1.118\netdrive\ProductionTesting\DEFAULT FILES";
-            //string sourceFolder = ConfigControl.appFolder;
-
-            tB_Source.Text = sourceFolder;
+            tB_Destination.Text = ConfigControl.finalDestination;
+            tB_Source.Text = ConfigControl.finalSource;
         }
 
         private void b_Final_Next_Click(object sender, EventArgs e) {
-            bool notCompleted = false;
-            var textboxList = MainForm.m.GetAllType(this, typeof(TextBox));
+            try {
+                bool notCompleted = false;
+                var textboxList = MainForm.m.GetAllType(this, typeof(TextBox));
 
-            foreach (TextBox tb in textboxList) {
-                if (tb.Text.Length < 1) {
-                    notCompleted = true;
+                foreach (TextBox tb in textboxList) {
+                    if (tb.Text.Length < 1) {
+                        notCompleted = true;
+                    }
                 }
+                if (notCompleted) {
+                    MessageBox.Show("Some fields are empty!");
+                    return;
+                }
+
+                string customer = tB_SO.Text + "_" + tB_Customer.Text;
+
+                if (Directory.Exists(tB_Destination.Text + @"\" + customer + @"\")) {
+                    MessageBox.Show("Folder already exists!");
+                    return;
+                }
+
+                string ip = HasIP(tB_Source.Text);
+                if (ip != null) {
+                    if (!OtherCameraCommunication.PingAdr(IPAddress.Parse(ip)).Result) {
+                        MainForm.ShowError("Couldn't ping address given within Source Folder input!\nShow more?",
+                            "Final Mode Failed!", "Tried to ping: " + ip);
+                        return;
+                    }
+                }
+
+                if (!Directory.Exists(tB_Source.Text)) {
+                    MessageBox.Show("Source folder doesn't exist!");
+                    return;
+                }
+
+                string dest = Directory.CreateDirectory(tB_Destination.Text + @"\" + customer + @"\").FullName;
+                string appFolder = Directory.CreateDirectory(dest + @"SSUtility2\").FullName;
+                string manuals = Directory.CreateDirectory(dest + @"Manuals\").FullName;
+                string evidence = Directory.CreateDirectory(dest + @"Test Evidence\").FullName;
+                string useful = Directory.CreateDirectory(dest + @"Useful Applications\").FullName;
+
+                this.Hide();
+
+                string self = Process.GetCurrentProcess().MainModule.FileName;
+                File.Copy(self, appFolder + System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName);
+
+                if (MainForm.CheckIfNameValid(dest.ToCharArray(), false).Result &&
+                    MainForm.CheckIfNameValid(tB_Source.Text.ToCharArray(), false).Result) {
+
+                    if (check_Default.Checked) {
+                        ConfigControl.finalSource = tB_Source.Text;
+                        ConfigControl.finalDestination = tB_Destination.Text;
+                        ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
+                    }
+
+                    if (check_Old.Checked) {
+                        MainForm.CopyFiles(appFolder, Directory.GetFiles(tB_Source.Text));
+                        MainForm.CopyDirs(appFolder, Directory.GetDirectories(tB_Source.Text));
+                    }
+                }
+
+                MainForm.m.Text = "FINAL TEST MODE - " + customer.Replace("_", " ");
+                MainForm.m.ToggleFinalMode(dest);
+            } catch (Exception error){
+                MainForm.ShowError("Failed to start Final Test Mode!\nShow more?", "Final Test Mode Failed!", error.ToString());
             }
-            if (notCompleted) {
-                MessageBox.Show("Some fields are empty!");
-                return;
-            }
+        }
 
-            string customer = tB_SO.Text + "_" + tB_Customer.Text;
-
-            string dest = Directory.CreateDirectory(tB_Destination.Text + @"\" + customer + @"\").FullName;
-            string appFolder = Directory.CreateDirectory(dest + @"SSUtility2\").FullName;
-            string manuals = Directory.CreateDirectory(dest + @"Manuals\").FullName;
-            string evidence = Directory.CreateDirectory(dest + @"Test Evidence\").FullName;
-            string useful = Directory.CreateDirectory(dest + @"Useful Applications\").FullName;
-            
-            //copy config file and record it
-            //copy any new and old saved snapshots/recordings,etc
-
-            this.Hide();
-
-            //string self = Process.GetCurrentProcess().MainModule.FileName;
-            //File.Copy(self, dest + @"\" + System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName);
-
-            if (MainForm.CheckIfNameValid(dest.ToCharArray(), false).Result) {
-                MainForm.CopyFiles(appFolder, Directory.GetFiles(tB_Source.Text));
-                MainForm.CopyDirs(appFolder, Directory.GetDirectories(tB_Source.Text));
-            }
-
-            MainForm.m.Text = "FINAL TEST MODE - " + customer.Replace("_", " ");
-            MainForm.m.ActivateFinalMode(dest, appFolder);
-
+        public static string HasIP(String text) {
+            Regex ip = new Regex(@"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b");
+            MatchCollection result = ip.Matches(text);
+            return result[0].ToString();
         }
 
         private void b_BrowseSource_Click(object sender, EventArgs e) {

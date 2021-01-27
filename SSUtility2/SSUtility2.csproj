@@ -6,8 +6,8 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SSLUtility2</RootNamespace>
-    <AssemblyName>SSLUtility2</AssemblyName>
+    <RootNamespace>SSUtility2</RootNamespace>
+    <AssemblyName>SSUtility2</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>

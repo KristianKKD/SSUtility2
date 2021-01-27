@@ -16,7 +16,7 @@ namespace SSLUtility2
         }
 
         private void b_RL_Save_Click(object sender, EventArgs e) {
-            PelcoD.SaveFile(rtb_Log.Lines, "ResponseLog");
+            PelcoD.SaveScript(rtb_Log.Lines, "ResponseLog");
         }
 
         private void ResponseLog_FormClosing(object sender, FormClosingEventArgs e) {

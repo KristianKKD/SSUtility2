@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.9.0";
+        public const string version = "v1.3.9.1";
         public bool lite = false;
         private bool isOriginal = false;
         private bool movedUp = true;
@@ -30,10 +30,9 @@ namespace SSLUtility2 {
         Recorder screenRec;
 
         string inUseVideoPath;
-        string lastName;
+        string screenRecordName;
         
         public string finalDest;
-        public string finalSS;
 
         public static MainForm m { get; set; }
 
@@ -127,53 +126,7 @@ namespace SSLUtility2 {
             }
         }
 
-        async Task FindVars() {
-            foreach (ConfigVar v in ConfigControl.stringVarList) {
-                if (v.value.ToLower() == "false" || v.value.ToLower() == "true") {
-                    bool val = ConfigControl.CheckVal(v.value);
-                    switch (v.name) {
-                        case ConfigControl.subnetNotifVar:
-                            ConfigControl.subnetNotif = val;
-                            break;
-                        case ConfigControl.automaticPathsVar:
-                            ConfigControl.automaticPaths = val;
-                            break;
-                        case ConfigControl.autoPlayVar:
-                            ConfigControl.autoPlay = val;
-                            break;
-                        case ConfigControl.portableModeVar:
-                            ConfigControl.portableMode = val;
-                            break;
-                    }
-                } else {
-                    switch (v.name) {
-                        case ConfigControl.screenshotFolderVar:
-                            ConfigControl.scFolder = v.value;
-                            break;
-                        case ConfigControl.videoFolderVar:
-                            ConfigControl.vFolder = v.value;
-                            break;
-                        case ConfigControl.scFileNVar:
-                            ConfigControl.scFileName = v.value;
-                            break;
-                        case ConfigControl.videoFileNVar:
-                            ConfigControl.vFileName = v.value;
-                            break;
-                        case ConfigControl.recQualVar:
-                            ConfigControl.recQual = v.value;
-                            break;
-                        case ConfigControl.recFPSVar:
-                            ConfigControl.recFPS = v.value;
-                            break;
-                        case ConfigControl.updateMsVar:
-                            ConfigControl.updateMs = v.value;
-                            break;
-                    }
-                }
-            }
-        }
-
-        public static OpenFileDialog OpenTxt() {
+        public static OpenFileDialog OpenFile() {
             OpenFileDialog fileDlg = new OpenFileDialog();
             fileDlg.InitialDirectory = ConfigControl.savedFolder;
             fileDlg.Multiselect = false;
@@ -185,14 +138,14 @@ namespace SSLUtility2 {
             return fileDlg;
         }
 
-        public static SaveFileDialog SaveTxt(string name) {
+        public static SaveFileDialog SaveFile(string name, string extension, string startDir) {
             SaveFileDialog fileDlg = new SaveFileDialog();
-            fileDlg.InitialDirectory = ConfigControl.savedFolder;
-            fileDlg.DefaultExt = ".txt";
-            fileDlg.Filter = "Text File (*.txt)|*.txt|All files (*.*)|*.*";
+            fileDlg.InitialDirectory = startDir;
+            fileDlg.DefaultExt = extension;
+            fileDlg.Filter = "All files (*.*)|*.*";
             fileDlg.FilterIndex = 1;
             fileDlg.RestoreDirectory = true;
-            fileDlg.Title = "Select Text File";
+            fileDlg.Title = "Select File";
             fileDlg.FileName = name;
             return fileDlg;
         }
@@ -207,7 +160,7 @@ namespace SSLUtility2 {
             CheckCreateFile(null, ConfigControl.savedFolder);
 
             await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
-            FindVars();
+            ConfigControl.FindVars();
             AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, first);
 
             if (ConfigControl.portableMode) {
@@ -396,10 +349,16 @@ namespace SSLUtility2 {
             o.BringToFront();
         }
 
-        public void ActivateFinalMode(string destination, string SS) {
-            finalMode = true;
+        public void ToggleFinalMode(string destination) {
+            if (destination == "") {
+                finalMode = false;
+                Text = "SSUtility2";
+                Menu_Final_Open.Text = "Open...";
+            } else {
+                finalMode = true;
+                Menu_Final_Open.Text = "Stop File Recording";
+            }
             finalDest = destination;
-            finalSS = SS;
         }
 
         public IEnumerable<Control> GetAll(Control control) {
@@ -577,7 +536,7 @@ namespace SSLUtility2 {
             CameraCommunicate.sendtoIPAsync(D.protocol.CameraZoom(address, dir), lcon, ip, port, true);
         }
 
-        public async Task SaveSnap(Detached player) {
+        public void SaveSnap(Detached player) {
             string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player.tB_PlayerD_SimpleAdr.Text, "Snapshots") + ".jpg";
 
             Image bmp = new Bitmap(player.VLCPlayer_D.Width, player.VLCPlayer_D.Height);
@@ -587,11 +546,17 @@ namespace SSLUtility2 {
 
             bmp.Save(fullImagePath, ImageFormat.Jpeg);
 
-            MessageBox.Show("Image saved : " + fullImagePath);
-
-            if (fullImagePath.Contains("SSUtility") && finalMode) {
-                Task.Delay(200);
-                CopySingleFile(finalSS + fullImagePath.Replace(ConfigControl.appFolder, ""), fullImagePath);
+            if (finalMode) {
+                SaveFileDialog fdg = SaveFile(ConfigControl.scFileName, ".jpg", finalDest);
+                DialogResult result = fdg.ShowDialog();
+                if (result == DialogResult.OK) {
+                    CopySingleFile(fdg.FileName, fullImagePath);
+                }
+                //CopySingleFile(finalSS + fullImagePath.Replace(ConfigControl.appFolder, ""), fullImagePath);
+                MessageBox.Show("Image saved : " + fullImagePath +
+                        "\nFinal saved: " + fdg.FileName);
+            } else {
+                MessageBox.Show("Image saved : " + fullImagePath);
             }
         }
 
@@ -602,13 +567,17 @@ namespace SSLUtility2 {
                 
                 r.Dispose();
 
-                MessageBox.Show("Saved recording to: " + inUseVideoPath);
-
-                if (inUseVideoPath.Contains("SSUtility") && finalMode) {
-                    Task.Delay(200);
-                    //int nameStartIndex = inUseVideoPath.IndexOf(ConfigControl.vFileName);
-
-                    CopySingleFile(finalSS + inUseVideoPath.Replace(ConfigControl.appFolder, ""), inUseVideoPath);
+                if (finalMode) {
+                    SaveFileDialog fdg = SaveFile(ConfigControl.vFileName, ".avi", finalDest);
+                    DialogResult result = fdg.ShowDialog();
+                    if (result == DialogResult.OK) {
+                        CopySingleFile(fdg.FileName, inUseVideoPath);
+                    }
+                    //CopySingleFile(finalSS + inUseVideoPath.Replace(ConfigControl.appFolder, ""), inUseVideoPath);
+                    MessageBox.Show("Saved recording to: " + inUseVideoPath +
+                        "\nFinal saved: " + fdg.FileName);
+                } else {
+                    MessageBox.Show("Saved recording to: " + inUseVideoPath);
                 }
 
                 return (isPlaying, null);
@@ -622,6 +591,35 @@ namespace SSLUtility2 {
 
                 return (isPlaying, rec);
             }
+        }
+
+        private void Menu_Record_Click(object sender, EventArgs e) {
+            if (screenRec != null) {
+                screenRec.Dispose();
+                screenRec = null;
+                Menu_Record.Text = "Record SSUtility2";
+
+                if (finalMode) {
+                    SaveFileDialog fdg = SaveFile(ConfigControl.ScreenRecordingName, ".avi", finalDest);
+                    DialogResult result = fdg.ShowDialog();
+                    if (result == DialogResult.OK) {
+                        CopySingleFile(fdg.FileName, screenRecordName);
+                    }
+                    //CopySingleFile(finalSS + screenRecordName.Replace(ConfigControl.appFolder, ""), screenRecordName);
+                    MessageBox.Show("Saved recording to: " + screenRecordName +
+                        "\nFinal saved: " + fdg.FileName);
+                } else {
+                    MessageBox.Show("Saved recording to: " + screenRecordName);
+                }
+
+            } else {
+                CheckCreateFile(null, ConfigControl.vFolder + @"\SSUtility2\");
+                string folder = ConfigControl.vFolder + @"\SSUtility2\";
+                screenRecordName = folder + ConfigControl.ScreenRecordingName + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
+                screenRec = Record(screenRecordName, null);
+                Menu_Record.Text = "Stop Recording";
+            }
+
         }
 
         private Recorder Record(string path, AxAXVLC.AxVLCPlugin2 player) {
@@ -809,8 +807,12 @@ namespace SSLUtility2 {
             }
         }
 
-        private void Menu_FTM_Open_Click(object sender, EventArgs e) {
-            OpenFinal();
+        private void Menu_Final_Open_Click(object sender, EventArgs e) {
+            if (finalMode) {
+                ToggleFinalMode("");
+            } else {
+                OpenFinal();
+            }
         }
 
         private void Menu_Window_Response_Click(object sender, EventArgs e) {
@@ -833,22 +835,6 @@ namespace SSLUtility2 {
         private void Menu_Window_Settings_Click(object sender, EventArgs e) {
             setPage.Show();
             setPage.BringToFront();
-        }
-
-        private void Menu_Record_Click(object sender, EventArgs e) {
-            if (screenRec != null) {
-                screenRec.Dispose();
-                screenRec = null;
-                Menu_Record.Text = "Record SSUtility2";
-                MessageBox.Show("Saved recording to: " + lastName);
-            } else {
-                CheckCreateFile(null, ConfigControl.vFolder + @"\SSUtility2\");
-                string folder = ConfigControl.vFolder + @"\SSUtility2\";
-                lastName = folder + "ScreenRecording" + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
-                screenRec = Record(lastName, null);
-                Menu_Record.Text = "Stop Recording";
-            }
-
         }
 
         private void Menu_QC_Pan_Click(object sender, EventArgs e) {
