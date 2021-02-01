@@ -96,42 +96,42 @@ namespace SSLUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Lite
             // 
             this.Menu_Window_Lite.Name = "Menu_Window_Lite";
-            this.Menu_Window_Lite.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Lite.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Lite.Text = "Lite Mode";
             this.Menu_Window_Lite.Click += new System.EventHandler(this.Menu_Window_Lite_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Osiris
             // 
             this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Osiris.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Osiris.Text = "Osiris Control";
             this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
             // 
             // Menu_Window_Settings
             // 
             this.Menu_Window_Settings.Name = "Menu_Window_Settings";
-            this.Menu_Window_Settings.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Settings.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Settings.Text = "Settings";
             this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
             // 
@@ -148,21 +148,21 @@ namespace SSLUtility2 {
             // Menu_QC_PanZero
             // 
             this.Menu_QC_PanZero.Name = "Menu_QC_PanZero";
-            this.Menu_QC_PanZero.Size = new System.Drawing.Size(180, 22);
+            this.Menu_QC_PanZero.Size = new System.Drawing.Size(137, 22);
             this.Menu_QC_PanZero.Text = "Set Pan = 0";
             this.Menu_QC_PanZero.Click += new System.EventHandler(this.Menu_QC_PanZero_Click);
             // 
             // Menu_QC_Pan
             // 
             this.Menu_QC_Pan.Name = "Menu_QC_Pan";
-            this.Menu_QC_Pan.Size = new System.Drawing.Size(180, 22);
+            this.Menu_QC_Pan.Size = new System.Drawing.Size(137, 22);
             this.Menu_QC_Pan.Text = "Quick Pan";
             this.Menu_QC_Pan.Click += new System.EventHandler(this.Menu_QC_Pan_Click);
             // 
             // Menu_QC_Tilt
             // 
             this.Menu_QC_Tilt.Name = "Menu_QC_Tilt";
-            this.Menu_QC_Tilt.Size = new System.Drawing.Size(180, 22);
+            this.Menu_QC_Tilt.Size = new System.Drawing.Size(137, 22);
             this.Menu_QC_Tilt.Text = "Quick TIlt";
             this.Menu_QC_Tilt.Click += new System.EventHandler(this.Menu_QC_Tilt_Click);
             // 
@@ -177,7 +177,7 @@ namespace SSLUtility2 {
             // Menu_Final_Open
             // 
             this.Menu_Final_Open.Name = "Menu_Final_Open";
-            this.Menu_Final_Open.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Final_Open.Size = new System.Drawing.Size(113, 22);
             this.Menu_Final_Open.Text = "Open...";
             this.Menu_Final_Open.Click += new System.EventHandler(this.Menu_Final_Open_Click);
             // 
@@ -208,6 +208,7 @@ namespace SSLUtility2 {
             // 
             // l_Version
             // 
+            this.l_Version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.l_Version.AutoSize = true;
             this.l_Version.Location = new System.Drawing.Point(1453, 838);
             this.l_Version.Name = "l_Version";

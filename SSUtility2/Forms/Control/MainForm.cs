@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.9.2";
+        public const string version = "v1.3.10.0";
         public bool lite = false;
         private bool isOriginal = false;
         private bool movedUp = true;
@@ -70,6 +70,7 @@ namespace SSLUtility2 {
                 playerL.tB_PlayerD_Username,
                 playerL.tB_PlayerD_Password,
                 playerL.tB_PlayerD_SimpleAdr,
+                playerL.tB_PlayerD_Name,
 
                 playerR.cB_PlayerD_Type,
                 playerR.tB_PlayerD_Adr,
@@ -79,6 +80,7 @@ namespace SSLUtility2 {
                 playerR.tB_PlayerD_Username,
                 playerR.tB_PlayerD_Password,
                 playerR.tB_PlayerD_SimpleAdr,
+                playerR.tB_PlayerD_Name,
             };
 
             FileStuff(first);
@@ -110,17 +112,15 @@ namespace SSLUtility2 {
                 if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
                     if (Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false).Result
                         && connected && playerL.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
+
                         playerL.StartPlaying(false);
-                    } else {
-                        playerL.myInfoRef.HideAll();
                     }
                 }
                 if (playerR.tB_PlayerD_SimpleAdr.Text != "") {
                     if (Play(playerR.VLCPlayer_D, playerR.GetCombined(), playerR.tB_PlayerD_SimpleAdr, playerR.tB_PlayerD_Buffering.Text, false).Result
                         && connected && playerR.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
+
                         playerR.StartPlaying(false);
-                    } else {
-                        playerR.myInfoRef.HideAll();
                     }
                 }
             }
@@ -208,12 +208,14 @@ namespace SSLUtility2 {
             var c3 = GetAllType(d, typeof(Label));
             var c4 = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
             var c5 = GetAllType(d, typeof(CheckBox));
+            var c6 = GetAllType(d, typeof(TextBox));
 
             pan.Controls.AddRange(c.ToArray());
             pan.Controls.AddRange(c2.ToArray());
             pan.Controls.AddRange(c3.ToArray());
             pan.Controls.AddRange(c4.ToArray());
             pan.Controls.AddRange(c5.ToArray());
+            pan.Controls.AddRange(c6.ToArray());
 
             d.VLCPlayer_D.Location = new Point(d.VLCPlayer_D.Location.X, d.VLCPlayer_D.Location.Y + 5);
 
@@ -537,7 +539,7 @@ namespace SSLUtility2 {
         }
 
         public void SaveSnap(Detached player) {
-            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player.tB_PlayerD_SimpleAdr.Text, "Snapshots") + ".jpg";
+            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player, "Snapshots") + ".jpg";
 
             Image bmp = new Bitmap(player.VLCPlayer_D.Width, player.VLCPlayer_D.Height);
             Graphics gfx = Graphics.FromImage(bmp);
@@ -582,7 +584,7 @@ namespace SSLUtility2 {
 
                 return (isPlaying, null);
             } else {
-                string fullVideoPath = GivePath(ConfigControl.vFolder, ConfigControl.vFileName, player.tB_PlayerD_SimpleAdr.Text, "Recordings") + ".avi";
+                string fullVideoPath = GivePath(ConfigControl.vFolder, ConfigControl.vFileName, player, "Recordings") + ".avi";
                 inUseVideoPath = fullVideoPath;
                 player.b_PlayerD_StartRec.Text = "STOP Recording";
                 isPlaying = true;
@@ -628,11 +630,10 @@ namespace SSLUtility2 {
             return rec;
         }
 
-        string GivePath(string orgFolder, string orgName, string adr, string folderType) {
+        string GivePath(string orgFolder, string orgName, Detached detachedPlayer, string folderType) {
             string folder = orgFolder;
             string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
-
-            adr = GetAdr(adr);
+            string adr = GetPlayerAdrOrName(detachedPlayer);
 
             if (adr != "") {
                 adr += @"\";
@@ -716,20 +717,33 @@ namespace SSLUtility2 {
             }
         }
 
-        public static string GetAdr(string orgAdr) {
-            if (orgAdr != "") {
-                try {
-                    Uri uriAddress = new Uri(orgAdr);
-                    return uriAddress.Host;
-                } catch {
+        public static string GetPlayerAdrOrName(Detached player) {
+            try {
+                string nameText = player.tB_PlayerD_Name.Text;
+                string adrText = player.tB_PlayerD_SimpleAdr.Text;
+
+                if (adrText != "" && nameText != "") {
+                    Uri uriAddress = new Uri(adrText);
+                    string returnString = uriAddress.Host;
+
+                    if (adrText != nameText && nameText != "") {
+                        returnString = nameText;
+                    }
+                    if (!CheckIfNameValid(returnString, false)) {
+                        return "";
+                    }
+
+                    return returnString;
+                } else {
                     return "";
                 }
-            } else {
+            } catch {
                 return "";
-            }
+            } 
         }
 
-        public static async Task<bool> CheckIfNameValid(char[] nameArray, bool everythingBad = false) {
+        public static bool CheckIfNameValid(string name, bool everythingBad = false) {
+            char[] nameArray = name.ToCharArray();
             foreach (Char c in nameArray) {
                 foreach (Char symbol in Path.GetInvalidFileNameChars()) {
                     bool isBad = false;
@@ -756,7 +770,7 @@ namespace SSLUtility2 {
 
         public static async Task<bool> CheckCreateFile(string fileName, string folderName = null, bool returnValid = false) {
             if (returnValid) {
-                if (!CheckIfNameValid((fileName + folderName).ToCharArray()).Result) {
+                if (!CheckIfNameValid((fileName + folderName))) {
                     return false;
                 }
             }

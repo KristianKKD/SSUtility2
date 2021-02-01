@@ -61,8 +61,8 @@ namespace SSLUtility2.Forms.FinalTest {
                 string self = Process.GetCurrentProcess().MainModule.FileName;
                 File.Copy(self, appFolder + System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName);
 
-                if (MainForm.CheckIfNameValid(dest.ToCharArray(), false).Result &&
-                    MainForm.CheckIfNameValid(tB_Source.Text.ToCharArray(), false).Result) {
+                if (MainForm.CheckIfNameValid(dest, false) &&
+                    MainForm.CheckIfNameValid(tB_Source.Text, false)) {
 
                     if (check_Default.Checked) {
                         ConfigControl.finalSource = tB_Source.Text;

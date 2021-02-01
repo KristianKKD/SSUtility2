@@ -15,26 +15,34 @@ namespace SSLUtility2 {
         }
 
         public Uri GetCombined() {
-            Uri combinedUrl;
+            Uri defaultAdr = new Uri("http://0.0.0.0:1234");
+            try {
+                Uri combinedUrl;
 
-            if (checkB_PlayerD_Manual.Checked) { //make a function to automatically grab these from gB_...
-                string ipaddress = tB_PlayerD_Adr.Text; //is it possible? the variables need to be in an order
-                string port = tB_PlayerD_Port.Text;
-                string url = tB_PlayerD_RTSP.Text;
-                string username = tB_PlayerD_Username.Text;
-                string password = tB_PlayerD_Password.Text;
+                if (checkB_PlayerD_Manual.Checked) { //make a function to automatically grab these from gB_...
+                    string ipaddress = tB_PlayerD_Adr.Text; //is it possible? the variables need to be in an order
+                    string port = tB_PlayerD_Port.Text;
+                    string url = tB_PlayerD_RTSP.Text;
+                    string username = tB_PlayerD_Username.Text;
+                    string password = tB_PlayerD_Password.Text;
 
-                combinedUrl = new Uri("rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url);
-            } else {
-                if(tB_PlayerD_SimpleAdr.Text != "") {
-                    combinedUrl = new Uri(tB_PlayerD_SimpleAdr.Text);
+                    combinedUrl = new Uri("rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url);
+                } else {
+                    if (tB_PlayerD_SimpleAdr.Text != "") {
+                        combinedUrl = new Uri(tB_PlayerD_SimpleAdr.Text);
+                    } else {
+                        combinedUrl = defaultAdr;
+                    }
                 }
-                else {
-                    combinedUrl = new Uri("http://0.0.0.0:1234");
+
+                if (combinedUrl != defaultAdr) {
+                    tB_PlayerD_Name.Text = combinedUrl.Host;
                 }
+
+                return combinedUrl;
+            } catch {
+                return defaultAdr;
             }
-
-            return combinedUrl;
         }
 
         private void b_PlayerD_Play_Click(object sender, EventArgs e) {
@@ -44,17 +52,17 @@ namespace SSLUtility2 {
         public void StartPlaying(bool showErrors) {
             Uri combined = GetCombined();
 
-            if (myInfoRef != null) {
-                if (myInfoRef.CheckCam()) {
-                    check_PlayerD_StatsEnabled.Show();
-                    checkB_PlayerD_Manual.Checked = false;
-                } else {
-                    check_PlayerD_StatsEnabled.Hide();
-                }
-            }
-
             if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr,
                 tB_PlayerD_Buffering.Text, showErrors).Result) {
+
+                if (myInfoRef != null) {
+                    if (myInfoRef.CheckCam()) {
+                        check_PlayerD_StatsEnabled.Show();
+                        checkB_PlayerD_Manual.Checked = false;
+                    } else {
+                        check_PlayerD_StatsEnabled.Hide();
+                    }
+                }
 
                 b_PlayerD_Stop.Show();
 

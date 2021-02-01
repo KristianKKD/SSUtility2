@@ -68,7 +68,7 @@ namespace SSLUtility2 {
         }
 
         private void cB_Other_RefreshRate_TextChanged(object sender, EventArgs e) {
-            if (MainForm.CheckIfNameValid(cB_Other_RefreshRate.Text.ToCharArray(), true).Result) {
+            if (MainForm.CheckIfNameValid(cB_Other_RefreshRate.Text, true)) {
                 ConfigControl.updateMs = cB_Other_RefreshRate.Text;
             }
         }
@@ -121,7 +121,7 @@ namespace SSLUtility2 {
         }
 
         private void tB_Rec_vFileN_TextChanged(object sender, EventArgs e) {
-            if (MainForm.CheckIfNameValid(tB_Rec_vFileN.Text.ToCharArray()).Result) {
+            if (MainForm.CheckIfNameValid(tB_Rec_vFileN.Text)) {
                 ConfigControl.vFileName = tB_Rec_vFileN.Text;
             } else {
                 tB_Rec_vFileN.Text = ConfigControl.vFileName;
@@ -129,7 +129,7 @@ namespace SSLUtility2 {
         }
 
         private void tB_Rec_scFileN_TextChanged(object sender, EventArgs e) {
-            if (MainForm.CheckIfNameValid(tB_Rec_scFileN.Text.ToCharArray()).Result) {
+            if (MainForm.CheckIfNameValid(tB_Rec_scFileN.Text)) {
                 ConfigControl.scFileName = tB_Rec_scFileN.Text;
             } else {
                 tB_Rec_vFileN.Text = ConfigControl.scFileName;

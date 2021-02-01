@@ -51,6 +51,8 @@
             this.VLCPlayer_D = new AxAXVLC.AxVLCPlugin2();
             this.p_PlayerD_Extended = new System.Windows.Forms.Panel();
             this.p_PlayerD_Simple = new System.Windows.Forms.Panel();
+            this.tB_PlayerD_Name = new System.Windows.Forms.TextBox();
+            this.l_Name = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_D)).BeginInit();
             this.p_PlayerD_Extended.SuspendLayout();
             this.p_PlayerD_Simple.SuspendLayout();
@@ -210,7 +212,7 @@
             // checkB_PlayerD_Manual
             // 
             this.checkB_PlayerD_Manual.AutoSize = true;
-            this.checkB_PlayerD_Manual.Location = new System.Drawing.Point(321, 526);
+            this.checkB_PlayerD_Manual.Location = new System.Drawing.Point(320, 559);
             this.checkB_PlayerD_Manual.Name = "checkB_PlayerD_Manual";
             this.checkB_PlayerD_Manual.Size = new System.Drawing.Size(144, 17);
             this.checkB_PlayerD_Manual.TabIndex = 47;
@@ -222,9 +224,9 @@
             // 
             this.b_PlayerD_StartRec.BackColor = System.Drawing.SystemColors.Control;
             this.b_PlayerD_StartRec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PlayerD_StartRec.Location = new System.Drawing.Point(321, 582);
+            this.b_PlayerD_StartRec.Location = new System.Drawing.Point(501, 587);
             this.b_PlayerD_StartRec.Name = "b_PlayerD_StartRec";
-            this.b_PlayerD_StartRec.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerD_StartRec.Size = new System.Drawing.Size(134, 31);
             this.b_PlayerD_StartRec.TabIndex = 45;
             this.b_PlayerD_StartRec.Text = "START Recording";
             this.b_PlayerD_StartRec.UseVisualStyleBackColor = false;
@@ -234,9 +236,9 @@
             // 
             this.b_PlayerD_SaveSnap.BackColor = System.Drawing.SystemColors.Control;
             this.b_PlayerD_SaveSnap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PlayerD_SaveSnap.Location = new System.Drawing.Point(321, 553);
+            this.b_PlayerD_SaveSnap.Location = new System.Drawing.Point(501, 551);
             this.b_PlayerD_SaveSnap.Name = "b_PlayerD_SaveSnap";
-            this.b_PlayerD_SaveSnap.Size = new System.Drawing.Size(172, 23);
+            this.b_PlayerD_SaveSnap.Size = new System.Drawing.Size(134, 30);
             this.b_PlayerD_SaveSnap.TabIndex = 46;
             this.b_PlayerD_SaveSnap.Text = "Save Snapshot";
             this.b_PlayerD_SaveSnap.UseVisualStyleBackColor = false;
@@ -257,7 +259,7 @@
             // check_PlayerD_StatsEnabled
             // 
             this.check_PlayerD_StatsEnabled.AutoSize = true;
-            this.check_PlayerD_StatsEnabled.Location = new System.Drawing.Point(321, 632);
+            this.check_PlayerD_StatsEnabled.Location = new System.Drawing.Point(320, 632);
             this.check_PlayerD_StatsEnabled.Name = "check_PlayerD_StatsEnabled";
             this.check_PlayerD_StatsEnabled.Size = new System.Drawing.Size(125, 17);
             this.check_PlayerD_StatsEnabled.TabIndex = 49;
@@ -319,12 +321,30 @@
             this.p_PlayerD_Simple.Size = new System.Drawing.Size(313, 236);
             this.p_PlayerD_Simple.TabIndex = 52;
             // 
+            // tB_PlayerD_Name
+            // 
+            this.tB_PlayerD_Name.Location = new System.Drawing.Point(397, 525);
+            this.tB_PlayerD_Name.Name = "tB_PlayerD_Name";
+            this.tB_PlayerD_Name.Size = new System.Drawing.Size(238, 20);
+            this.tB_PlayerD_Name.TabIndex = 29;
+            // 
+            // l_Name
+            // 
+            this.l_Name.AutoSize = true;
+            this.l_Name.Location = new System.Drawing.Point(317, 528);
+            this.l_Name.Name = "l_Name";
+            this.l_Name.Size = new System.Drawing.Size(70, 13);
+            this.l_Name.TabIndex = 53;
+            this.l_Name.Text = "Player Name:";
+            // 
             // Detached
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(639, 761);
+            this.Controls.Add(this.l_Name);
+            this.Controls.Add(this.tB_PlayerD_Name);
             this.Controls.Add(this.p_PlayerD_Simple);
             this.Controls.Add(this.p_PlayerD_Extended);
             this.Controls.Add(this.b_PlayerD_Stop);
@@ -374,5 +394,7 @@
         public System.Windows.Forms.Button b_PlayerD_Stop;
         private System.Windows.Forms.Panel p_PlayerD_Extended;
         private System.Windows.Forms.Panel p_PlayerD_Simple;
+        public System.Windows.Forms.TextBox tB_PlayerD_Name;
+        private System.Windows.Forms.Label l_Name;
     }
 }
