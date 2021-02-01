@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.10.0";
+        public const string version = "v1.3.10.1";
         public bool lite = false;
         private bool isOriginal = false;
         private bool movedUp = true;

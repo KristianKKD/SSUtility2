@@ -28,7 +28,7 @@ namespace SSLUtility2 {
             Int32.TryParse(mySub, out int mine);
             Int32.TryParse(newSub, out int other);
 
-            if (mine != other) {
+            if (mine != other && !ConfigControl.subnetNotif) {
                 MainForm.ShowError("Local IP subnet is not the same as the camera subnet!\nShow possible fix?", errorCaption,
                     "Try changing your IP from: " + rawIp + "\n To: " + rawIp.Replace(mySub, newSub) +
                     "\nThe new IP will also have to be static!");
