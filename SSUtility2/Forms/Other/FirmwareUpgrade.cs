@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2.Other.Other_Scripts
+namespace SSUtility2.Other.Other_Scripts
 {
     public partial class FirmwareUpgrade : Form
     {

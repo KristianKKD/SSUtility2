@@ -2,7 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
     public class ScriptCommand {
         public string[] names;
         public byte[] codeContent;
@@ -130,7 +130,7 @@ namespace SSLUtility2 {
             AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text), int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text)));
             await Task.Delay(200);
             if (!AsyncCameraCommunicate.sock.Connected) {
-                MainForm.ShowError("Failed to connect to camera!\nShow More?", "Quick Command Failed", 
+                MainForm.ShowPopup("Failed to connect to camera!\nShow More?", "Quick Command Failed", 
                     "Failed to connect to:\n"+ MainForm.m.ipCon.tB_IPCon_Adr.Text + ":" + MainForm.m.ipCon.tB_IPCon_Port.Text, true);
                 return;
             }

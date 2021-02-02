@@ -1,5 +1,5 @@
 ﻿
-namespace SSLUtility2
+namespace SSUtility2
 {
     partial class SettingsPage
     {
@@ -58,6 +58,7 @@ namespace SSLUtility2
             this.l_Rec_FPS = new System.Windows.Forms.Label();
             this.b_Settings_Apply = new System.Windows.Forms.Button();
             this.b_Settings_Default = new System.Windows.Forms.Button();
+            this.b_ChangeDir = new System.Windows.Forms.Button();
             this.p_Main.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Paths.SuspendLayout();
@@ -67,6 +68,7 @@ namespace SSLUtility2
             // p_Main
             // 
             this.p_Main.BackColor = System.Drawing.SystemColors.Window;
+            this.p_Main.Controls.Add(this.b_ChangeDir);
             this.p_Main.Controls.Add(this.groupBox2);
             this.p_Main.Controls.Add(this.gB_Paths);
             this.p_Main.Controls.Add(this.groupBox1);
@@ -423,6 +425,18 @@ namespace SSLUtility2
             this.b_Settings_Default.UseVisualStyleBackColor = false;
             this.b_Settings_Default.Click += new System.EventHandler(this.b_Settings_Default_Click);
             // 
+            // b_ChangeDir
+            // 
+            this.b_ChangeDir.BackColor = System.Drawing.SystemColors.Control;
+            this.b_ChangeDir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_ChangeDir.Location = new System.Drawing.Point(15, 211);
+            this.b_ChangeDir.Name = "b_ChangeDir";
+            this.b_ChangeDir.Size = new System.Drawing.Size(113, 23);
+            this.b_ChangeDir.TabIndex = 30;
+            this.b_ChangeDir.Text = "Change Directory";
+            this.b_ChangeDir.UseVisualStyleBackColor = false;
+            this.b_ChangeDir.Click += new System.EventHandler(this.b_ChangeDir_Click);
+            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -477,5 +491,6 @@ namespace SSLUtility2
         public System.Windows.Forms.Label l_Rec_FPS;
         public System.Windows.Forms.Button b_Settings_Apply;
         public System.Windows.Forms.Button b_Settings_Default;
+        public System.Windows.Forms.Button b_ChangeDir;
     }
 }

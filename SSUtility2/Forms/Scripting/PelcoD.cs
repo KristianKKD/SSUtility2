@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
 
     public partial class PelcoD : Form {
 
@@ -142,7 +142,7 @@ namespace SSLUtility2 {
                         rtb_PD_Commands.Text += line + "\n";
                     }
                 } else {
-                    MainForm.ShowError("Please open a .txt file!\nYou tried to open an unsupported file type! Show more info?", "Invalid File Type!",
+                    MainForm.ShowPopup("Please open a .txt file!\nYou tried to open an unsupported file type! Show more info?", "Invalid File Type!",
                         "You tried opening: " + fdg.FileName + "\nTry opening a .txt file instead.");
                 }
             }

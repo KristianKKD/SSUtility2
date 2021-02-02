@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
     public class CommandQueue {
 
         public static List<Command> queueList;
@@ -82,7 +82,7 @@ namespace SSLUtility2 {
                 }
             }
             if (prevHeader == header) {
-                MainForm.ShowError("Failed to find command in command queue!", "Command Search Failed!",
+                MainForm.ShowPopup("Failed to find command in command queue!", "Command Search Failed!",
                     com.id.ToString() + "Couldn't be found in queue list!", true);
             }
         }

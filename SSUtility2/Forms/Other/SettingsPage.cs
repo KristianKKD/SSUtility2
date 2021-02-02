@@ -1,8 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
     public partial class SettingsPage : Form {
         public SettingsPage() {
             InitializeComponent();
@@ -144,6 +145,28 @@ namespace SSLUtility2 {
                 e.Cancel = true;
                 Hide();
             }
+        }
+
+        private void b_ChangeDir_Click(object sender, EventArgs e) {
+            bool confirm = MainForm.ShowPopup("Moving the directory will reset app configuration AND WILL ALSO DELETE ALL FILES WITHIN THE OLD APP FOLDER!\nYou will have the option to save these files.\nAre you sure you want to continue?", "Warning", null, false);
+            if (confirm) {
+                bool moveFiles = MainForm.ShowPopup("Would you like to move all current directory files to the new directory too?", "Move files?", null, false);
+                string oldAppFolder = ConfigControl.appFolder;
+
+                MainForm.ChooseNewDirectory();
+                ConfigControl.SetToDefaults();
+                MainForm.CreateConfigFiles();
+
+                if (oldAppFolder != ConfigControl.appFolder && oldAppFolder != ConfigControl.appFolder + @"SSUtility\") {
+                    if (moveFiles) {
+                        MainForm.CopyFiles(ConfigControl.appFolder, Directory.GetFiles(oldAppFolder));
+                    }
+
+                    MainForm.DeleteDirectory(oldAppFolder);
+                }
+
+            }
+            MessageBox.Show("Finished changing directories!");
         }
     }
 }

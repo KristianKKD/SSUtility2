@@ -10,7 +10,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
 
 	partial class MainForm {
 

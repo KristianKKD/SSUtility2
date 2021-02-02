@@ -4,21 +4,26 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
 
     class ConfigControl {
 
-        public static string config = "config.txt";
-        public const string autoSave = "auto.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
-        public static string ScreenRecordingName = "Recording";
-        public static string savedFolder = appFolder + @"Saved\";
-        private const string varPrefix = "v"; //What the prefix of the actual value is ([varPrefix]ScreenshotFolder:bin/obj/)
+        public const string config = "config.txt";
+        public const string autoSave = "auto.txt";
 
+        public static string savedFolder = appFolder + @"Saved\";
+
+        public static string dirCheck = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SSUtility\";
+        public static string dirLocationFile = dirCheck + "location.txt";
+
+        private const string varPrefix = "v"; //What the prefix of the actual value is ([varPrefix]ScreenshotFolder:bin/obj/)
+        
         public static ConfigSetting scFolder = new ConfigSetting(savedFolder, "SnapshotFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting vFolder = new ConfigSetting(savedFolder, "VideoFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting vFileName = new ConfigSetting("Video", "VideoFileName", ConfigSetting.VarType.strings);
         public static ConfigSetting scFileName = new ConfigSetting("Snapshot", "SnapshotFileName", ConfigSetting.VarType.strings);
+        public static ConfigSetting screencapFileName = new ConfigSetting("Recording", "ScreenRecordingFileName", ConfigSetting.VarType.strings);
         public static ConfigSetting recQual = new ConfigSetting("70", "RecordingQuality", ConfigSetting.VarType.integer);
         public static ConfigSetting recFPS = new ConfigSetting("30", "RecordingFramerate", ConfigSetting.VarType.integer);
         public static ConfigSetting updateMs = new ConfigSetting("500", "UpdateStatsTimerMs", ConfigSetting.VarType.integer);
@@ -30,7 +35,7 @@ namespace SSLUtility2 {
         public static ConfigSetting finalDestination = new ConfigSetting(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "FinalModeDestinationFolder", ConfigSetting.VarType.strings);
 
 
-        public static ConfigSetting[] configArray = new ConfigSetting[] {
+        public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved
             scFolder,
             vFolder,
             vFileName,
@@ -53,6 +58,10 @@ namespace SSLUtility2 {
         }
 
         public static async Task SetToDefaults() {
+            savedFolder = appFolder + @"Saved\";
+            scFolder.ChangeDefault(savedFolder);
+            vFolder.ChangeDefault(savedFolder);
+
             foreach (ConfigSetting setting in configArray) {
                 setting.UpdateValue(setting.defaultVal);
             }
@@ -105,13 +114,20 @@ namespace SSLUtility2 {
             newFile.Close();
         }
 
-        public static async Task<bool> CheckIfExists(TextBox tb, Label linkedLabel) {
-            if (!Directory.Exists(tb.Text)) {
-                linkedLabel.Text = "❌";
-                return false;
+        public static bool CheckIfExists(TextBox tb, Label linkedLabel) {
+            bool exists;
+            string lText;
+            exists = Directory.Exists(tb.Text);
+
+            if (linkedLabel != null) {
+                if (exists) {
+                    lText = "✓";
+                } else {
+                    lText = "❌";
+                }
+                linkedLabel.Text = lText;
             }
-            linkedLabel.Text = "✓";
-            return true;
+            return exists;
         }
 
         public async static Task SearchForVarsAsync(string path) {
@@ -193,6 +209,10 @@ namespace SSLUtility2 {
                     break;
             }
             stringVal = val;
+        }
+
+        public void ChangeDefault(string val) {
+            defaultVal = val;
         }
 
     }

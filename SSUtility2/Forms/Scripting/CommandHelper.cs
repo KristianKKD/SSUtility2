@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
     public partial class CommandListWindow : Form {
         public CommandListWindow() {
             InitializeComponent();

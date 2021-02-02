@@ -11,7 +11,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
     /// <summary>
     /// Class with program entry point.
     /// </summary>

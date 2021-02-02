@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
 
     public partial class Osiris : Form {
         public Osiris() {
@@ -23,7 +23,7 @@ namespace SSLUtility2 {
             string port = tB_Port.Text;
 
             if (ip.Length == 0 || port.Length == 0) {
-                MainForm.ShowError("Connection fields are empty!\nShow more?", "Can't Connect!",
+                MainForm.ShowPopup("Connection fields are empty!\nShow more?", "Can't Connect!",
                     "Full address: " + ip + ":" + port);
                 return;
             }
@@ -53,7 +53,7 @@ namespace SSLUtility2 {
             }
 
             if (!checkPassed) {
-                MainForm.ShowError("Failed to send message!\nShow more?", "Send Failed!",
+                MainForm.ShowPopup("Failed to send message!\nShow more?", "Send Failed!",
                     "Failed to send:\n" + MainForm.m.ReadCommand(command, true));
                 return "";
             }

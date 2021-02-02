@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
     public class AsyncCameraCommunicate {
         public static Socket sock;
         public static Socket receiveSock;
@@ -55,13 +55,13 @@ namespace SSLUtility2 {
                 bool parsedIP = IPAddress.TryParse(MainForm.m.ipCon.tB_IPCon_Adr.Text, out IPAddress ip);
                 bool parsedPort = int.TryParse(MainForm.m.ipCon.tB_IPCon_Port.Text, out int port);
                 if (ep == null && (!parsedIP || !parsedPort)) {
-                    MainForm.ShowError("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
+                    MainForm.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());
                     return;
                 }
 
                 if (!OtherCameraCommunication.PingAdr(ep.Address).Result) {
-                    MainForm.ShowError("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
+                    MainForm.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());
                     return;
                 }

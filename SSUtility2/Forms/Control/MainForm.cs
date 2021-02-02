@@ -1,4 +1,4 @@
-﻿using SSLUtility2.Forms.FinalTest;
+﻿using SSUtility2.Forms.FinalTest;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -8,11 +8,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.11.0";
-        public bool lite = false;
+        public const string version = "v1.3.12.0";
+
+        private bool lite = false;
         private bool isOriginal = false;
         private bool movedUp = true;
         public bool finalMode = false;
@@ -27,10 +28,10 @@ namespace SSLUtility2 {
         public Detached playerL;
         public Detached playerR;
 
-        Recorder screenRec;
-
-        string inUseVideoPath;
-        string screenRecordName;
+        private Recorder screenRec;
+        
+        private string inUseVideoPath;
+        private string screenRecordName;
         
         public string finalDest;
 
@@ -152,12 +153,11 @@ namespace SSLUtility2 {
 
         async Task FileStuff(bool first) {
             CheckPortableMode();
+            CheckForNewDir();
 
             ConfigControl.SetToDefaults();
-
-            CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
-            CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
-            CheckCreateFile(null, ConfigControl.savedFolder);
+            
+            CreateConfigFiles();
 
             await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
             ConfigControl.FindVars();
@@ -168,9 +168,58 @@ namespace SSLUtility2 {
             }
         }
 
+        public static void CreateConfigFiles() {
+            CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
+            CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
+            CheckCreateFile(null, ConfigControl.savedFolder);
+        }
+
+        string CheckFileForDir() {
+            try {
+                string[] lines = File.ReadAllLines(ConfigControl.dirLocationFile);
+
+                foreach (string line in lines) {
+                    string currentLine = line.Trim();
+                    if (currentLine.Contains(@":\")) {
+                        if (CheckIfNameValid(currentLine)) {
+                            CheckCreateFile(null, currentLine);
+                        }
+                        return currentLine;
+                    }
+                }
+            } catch { }
+            return null;   
+        }
+
+        void CheckForNewDir() {
+            bool noFile = CheckCreateFile(null, ConfigControl.dirCheck).Result;
+
+            if (noFile) {
+                ChooseNewDirectory();
+            } else {
+                string appLocation = CheckFileForDir();
+                if (appLocation != null) {
+                    ConfigControl.appFolder = appLocation;
+                } else {
+                    File.Delete(ConfigControl.dirCheck + "location.txt");
+                    ChooseNewDirectory();
+                }
+            }
+        }
+
+        public static void ChooseNewDirectory() {
+            bool choose = ShowPopup("Would you like to change your default directory?\nCurrent app folder: " + ConfigControl.appFolder, "Choose your directory", null, false);
+            if (choose) {
+                DirectoryChooser dc = new DirectoryChooser();
+                dc.ShowDialog();
+            }
+            ConfigControl.ResetFile(ConfigControl.dirLocationFile);
+            File.AppendAllText(ConfigControl.dirLocationFile, ConfigControl.appFolder);
+        }
+
         void CheckPortableMode() {
             if (File.Exists(Directory.GetCurrentDirectory() + @"\" + ConfigControl.config)) {
-                ConfigControl.appFolder = Directory.GetCurrentDirectory() + @"\";
+                ConfigControl.appFolder = (Directory.GetCurrentDirectory() + @"\");
             }
         }
 
@@ -402,13 +451,13 @@ namespace SSLUtility2 {
                 tb.Text = ConfigControl.appFolder;
                 return false;
             }
-            if (ConfigControl.CheckIfExists(tb, linkLabel).Result) {
+            if (ConfigControl.CheckIfExists(tb, linkLabel)) {
                 return true;
             }
             return false;
         }
 
-        public static bool ShowError(string message, string caption, string error, bool showError = true) {
+        public static bool ShowPopup(string message, string caption, string error, bool showError = true) {
             bool res = false;
             DialogResult d = MessageBox.Show(message, caption,
                                 MessageBoxButtons.YesNo,
@@ -602,7 +651,7 @@ namespace SSLUtility2 {
                 Menu_Record.Text = "Record SSUtility2";
 
                 if (finalMode) {
-                    SaveFileDialog fdg = SaveFile(ConfigControl.ScreenRecordingName, ".avi", finalDest);
+                    SaveFileDialog fdg = SaveFile(ConfigControl.screencapFileName.stringVal, ".avi", finalDest);
                     DialogResult result = fdg.ShowDialog();
                     if (result == DialogResult.OK) {
                         CopySingleFile(fdg.FileName, screenRecordName);
@@ -617,7 +666,7 @@ namespace SSLUtility2 {
             } else {
                 CheckCreateFile(null, ConfigControl.vFolder + @"\SSUtility2\");
                 string folder = ConfigControl.vFolder + @"\SSUtility2\";
-                screenRecordName = folder + ConfigControl.ScreenRecordingName + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
+                screenRecordName = folder + ConfigControl.screencapFileName.stringVal + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
                 screenRec = Record(screenRecordName, null);
                 Menu_Record.Text = "Stop Recording";
             }
@@ -680,7 +729,7 @@ namespace SSLUtility2 {
                     File.Copy(sourceFile, destination, true);
                 }
             } catch (Exception e) {
-                MainForm.ShowError("Couldn't copy individual file to new directory!\nShow more info?", 
+                MainForm.ShowPopup("Couldn't copy individual file to new directory!\nShow more info?", 
                     "Copy failed!", "File: " + curFile + "\nfailed to copy to:\n" + newLocation + 
                     "\n\nError: " + e.ToString());
             }
@@ -690,6 +739,22 @@ namespace SSLUtility2 {
             foreach (string file in sourceDir) {
                 CopySingleFile(destination, file, true);
             }
+        }
+
+        public static void DeleteDirectory(string oldFolderPath) {
+            string[] files = Directory.GetFiles(oldFolderPath);
+            string[] dirs = Directory.GetDirectories(oldFolderPath);
+
+            foreach (string file in files) {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs) {
+                DeleteDirectory(dir);
+            }
+
+            Directory.Delete(oldFolderPath, false);
         }
 
         public static void CopyDirs(string pathTo, string[] copyDir) {
@@ -711,7 +776,7 @@ namespace SSLUtility2 {
                     }
                 }
             } catch (Exception e) {
-                MainForm.ShowError("Couldn't copy directory to new location!\nShow more info?", 
+                MainForm.ShowPopup("Couldn't copy directory to new location!\nShow more info?", 
                     "Copy failed!", "Directory: " + curDir + "\nfailed to copy to:\n" + newLocation + 
                     "\n\nError: " + e.ToString());
             }
@@ -759,7 +824,7 @@ namespace SSLUtility2 {
                     }
 
                     if (isBad) {
-                        ShowError("Invalid character detected, Show more?", "Cannot create file",
+                        ShowPopup("Invalid character detected, Show more?", "Cannot create file",
                             "Do not use invalid symbols in file names.\nInvalid character found: " + c);
                         return false;
                     }
@@ -768,16 +833,13 @@ namespace SSLUtility2 {
             return true;
         }
 
-        public static async Task<bool> CheckCreateFile(string fileName, string folderName = null, bool returnValid = false) {
-            if (returnValid) {
-                if (!CheckIfNameValid((fileName + folderName))) {
-                    return false;
-                }
-            }
+        public static async Task<bool> CheckCreateFile(string fileName, string folderName = null) {
+            bool didntExist = false;
 
             if (folderName != null) {
                 if (!Directory.Exists(folderName)) {
                     Directory.CreateDirectory(folderName);
+                    didntExist = true;
                 }
             }
             if (fileName != null) {
@@ -788,9 +850,10 @@ namespace SSLUtility2 {
                         var newFile = File.Create(ConfigControl.appFolder + fileName);
                         newFile.Close();
                     }
+                    didntExist = true;
                 }
             }
-            return true;
+            return didntExist;
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {

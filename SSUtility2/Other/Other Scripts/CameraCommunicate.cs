@@ -6,7 +6,7 @@ using System.Net.Sockets;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
 
     class CameraCommunicate {
         static string failedConnectMsg = "Issue connecting to TCP Port\n" +
@@ -35,7 +35,7 @@ namespace SSLUtility2 {
                 return success;
             } catch (Exception e) {
                 if (!hideError) {
-                    MainForm.ShowError(failedConnectMsg, errorCaption, e.ToString());
+                    MainForm.ShowPopup(failedConnectMsg, errorCaption, e.ToString());
                 }
                 return false;
             }
@@ -64,7 +64,7 @@ namespace SSLUtility2 {
 
                 if (!PingAdr(u).Result) {
                     if (!stopError) {
-                        MainForm.ShowError(failedConnectMsg, errorCaption, ipAdr + ":" + port + " ping timed out with no response.");
+                        MainForm.ShowPopup(failedConnectMsg, errorCaption, ipAdr + ":" + port + " ping timed out with no response.");
                     }
                     return false;
                 }
@@ -76,7 +76,7 @@ namespace SSLUtility2 {
                 sock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
                 return true;
             } catch (Exception e){
-                MainForm.ShowError(failedConnectMsg, errorCaption, e.ToString(), true);
+                MainForm.ShowPopup(failedConnectMsg, errorCaption, e.ToString(), true);
                 return false;
             }
         }
@@ -202,7 +202,7 @@ namespace SSLUtility2 {
 
                 return m;
             } catch (Exception e) {
-                MainForm.ShowError("Failed to receive response!\nShow more?", errorCaption, e.ToString(), true);
+                MainForm.ShowPopup("Failed to receive response!\nShow more?", errorCaption, e.ToString(), true);
                 return null;
             }
         }
@@ -250,7 +250,7 @@ namespace SSLUtility2 {
             Int32.TryParse(newSub, out int other);
 
             if (mine != other) {
-                MainForm.ShowError("Local IP subnet is not the same as the camera subnet!\nShow possible fix?", errorCaption,
+                MainForm.ShowPopup("Local IP subnet is not the same as the camera subnet!\nShow possible fix?", errorCaption,
                     "Try changing your IP from: " + rawIp + "\n To: " + rawIp.Replace(mySub, newSub) +
                     "\nThe new IP will also have to be static!");
                 return false;

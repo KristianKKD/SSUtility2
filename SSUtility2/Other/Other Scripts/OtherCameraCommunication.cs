@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
     class OtherCameraCommunication {
 
         static string failedConnectMsg = "Issue connecting to TCP Port\n" +
@@ -29,7 +29,7 @@ namespace SSLUtility2 {
             Int32.TryParse(newSub, out int other);
 
             if (mine != other && !ConfigControl.subnetNotif.boolVal) {
-                MainForm.ShowError("Local IP subnet is not the same as the camera subnet!\nShow possible fix?", errorCaption,
+                MainForm.ShowPopup("Local IP subnet is not the same as the camera subnet!\nShow possible fix?", errorCaption,
                     "Try changing your IP from: " + rawIp + "\n To: " + rawIp.Replace(mySub, newSub) +
                     "\nThe new IP will also have to be static!");
                 return false;

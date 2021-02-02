@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SSLUtility2
+namespace SSUtility2
 {
     public partial class ResponseLog : Form {
 
@@ -10,7 +10,7 @@ namespace SSLUtility2
         }
 
         private void b_RL_Clear_Click(object sender, EventArgs e) {
-            bool clear = MainForm.ShowError("Are you sure you want to clear the response log?", "Clear Response Log", "", false);
+            bool clear = MainForm.ShowPopup("Are you sure you want to clear the response log?", "Clear Response Log", "", false);
             if(clear)
                 rtb_Log.Clear();
         }

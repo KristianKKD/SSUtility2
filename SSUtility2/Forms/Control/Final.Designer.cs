@@ -1,4 +1,4 @@
-﻿namespace SSLUtility2.Forms.FinalTest
+﻿namespace SSUtility2.Forms.FinalTest
 {
     partial class Final
     {

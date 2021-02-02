@@ -1,4 +1,4 @@
-﻿namespace SSLUtility2
+﻿namespace SSUtility2
 {
     partial class Osiris
     {

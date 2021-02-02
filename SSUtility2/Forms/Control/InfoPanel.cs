@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
     public partial class InfoPanel : Form { //PROBLEM: CURRENTLY THIS LOCKS UP THE MAIN SOCK SO WHEN ITS ACTIVE, 
         //COMMANDS/RESPONSES MAY GET MIXED UP
 

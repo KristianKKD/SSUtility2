@@ -11,7 +11,7 @@ using SharpAvi.Output;
 //Big credit to Mathew Sachin for the majority of the code, can be found here:
 //https://stackoverflow.com/questions/4068414/how-to-capture-screen-to-be-video-using-c-sharp-net
 
-namespace SSLUtility2 {
+namespace SSUtility2 {
 
     public class Record {
 

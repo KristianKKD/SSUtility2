@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace SSLUtility2.Forms.FinalTest {
+namespace SSUtility2.Forms.FinalTest {
     public partial class Final : Form {
         public Final() {
             InitializeComponent();
@@ -39,7 +39,7 @@ namespace SSLUtility2.Forms.FinalTest {
                 string ip = HasIP(tB_Source.Text);
                 if (ip != "") {
                     if (!OtherCameraCommunication.PingAdr(IPAddress.Parse(ip)).Result) {
-                        MainForm.ShowError("Couldn't ping address given within Source Folder input!\nShow more?",
+                        MainForm.ShowPopup("Couldn't ping address given within Source Folder input!\nShow more?",
                             "Final Mode Failed!", "Tried to ping: " + ip);
                         return;
                     }
@@ -79,7 +79,7 @@ namespace SSLUtility2.Forms.FinalTest {
                 MainForm.m.Text = "FINAL TEST MODE - " + customer.Replace("_", " ");
                 MainForm.m.ToggleFinalMode(dest);
             } catch (Exception error){
-                MainForm.ShowError("Failed to start Final Test Mode!\nShow more?", "Final Test Mode Failed!", error.ToString());
+                MainForm.ShowPopup("Failed to start Final Test Mode!\nShow more?", "Final Test Mode Failed!", error.ToString());
             }
         }
 

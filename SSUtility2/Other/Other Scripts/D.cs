@@ -26,7 +26,7 @@
  * ------------------------------------------------------------------------------*/
 using System;
 
-namespace SSLUtility2
+namespace SSUtility2
 {
     /// <summary>
     /// dot.NET Implementation of Pelco D Protocol

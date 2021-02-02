@@ -1,5 +1,5 @@
 ﻿
-namespace SSLUtility2.Other.Other_Scripts
+namespace SSUtility2.Other.Other_Scripts
 {
     partial class FirmwareUpgrade
     {
