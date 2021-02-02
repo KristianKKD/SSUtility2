@@ -10,8 +10,8 @@ namespace SSLUtility2.Forms.FinalTest {
     public partial class Final : Form {
         public Final() {
             InitializeComponent();
-            tB_Destination.Text = ConfigControl.finalDestination;
-            tB_Source.Text = ConfigControl.finalSource;
+            tB_Destination.Text = ConfigControl.finalDestination.stringVal;
+            tB_Source.Text = ConfigControl.finalSource.stringVal;
         }
 
         private void b_Final_Next_Click(object sender, EventArgs e) {
@@ -65,8 +65,8 @@ namespace SSLUtility2.Forms.FinalTest {
                     MainForm.CheckIfNameValid(tB_Source.Text, false)) {
 
                     if (check_Default.Checked) {
-                        ConfigControl.finalSource = tB_Source.Text;
-                        ConfigControl.finalDestination = tB_Destination.Text;
+                        ConfigControl.finalSource.UpdateValue(tB_Source.Text);
+                        ConfigControl.finalDestination.UpdateValue(tB_Destination.Text);
                         ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
                     }
 

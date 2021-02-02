@@ -90,6 +90,10 @@ namespace SSLUtility2
         }
 
         async Task DelayStop() {
+            if (!CameraCommunicate.sock.Connected) {
+                return;
+            }
+
             CameraCommunicate.sendtoIPAsync(D.protocol.CameraStop(MainForm.m.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, true);
             Task.Delay(100);
             CameraCommunicate.sendtoIPAsync(D.protocol.CameraStop(MainForm.m.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, true);

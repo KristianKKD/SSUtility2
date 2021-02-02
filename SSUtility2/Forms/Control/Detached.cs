@@ -80,12 +80,12 @@ namespace SSLUtility2 {
         }
 
         public void StartInfo() {
-            if (int.Parse(ConfigControl.updateMs) != 0 && myInfoRef != null
+            if (ConfigControl.updateMs.intVal != 0 && myInfoRef != null
                 && CameraCommunicate.sock.Connected &&
                 check_PlayerD_StatsEnabled.Checked) {
                 myInfoRef.InitializeTimer();
                 return;
-            } else if (int.Parse(ConfigControl.updateMs) == 0) {
+            } else if (ConfigControl.updateMs.intVal == 0) {
                 MessageBox.Show("Info panel refresh rate is set to 0!\nPanel will be hidden!");
             }
             myInfoRef.HideAll();

@@ -44,7 +44,7 @@ namespace SSLUtility2 {
         public static async Task<bool> Connect(string ipAdr, string port, Control lCon, bool stopError = false) {
             try {
                 LabelDisplay(false, lCon);
-                if (!stopError && !ConfigControl.subnetNotif) {
+                if (!stopError && !ConfigControl.subnetNotif.boolVal) {
                     if (!CheckIsSameSubnet(ipAdr)) {
                         CloseSock();
                         return false;

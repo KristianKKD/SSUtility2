@@ -9,20 +9,23 @@ namespace SSLUtility2 {
         }
 
         public async Task PopulateSettingText() {
-            tB_Paths_sCFolder.Text = ConfigControl.savedFolder;
-            tB_Paths_vFolder.Text = ConfigControl.savedFolder;
+            tB_Paths_sCFolder.Text = ConfigControl.scFolder.stringVal;
+            tB_Paths_vFolder.Text = ConfigControl.vFolder.stringVal;
 
-            tB_Rec_vFileN.Text = ConfigControl.vFileName;
-            tB_Rec_scFileN.Text = ConfigControl.scFileName;
+            tB_Rec_vFileN.Text = ConfigControl.vFileName.stringVal;
+            tB_Rec_scFileN.Text = ConfigControl.scFileName.stringVal;
 
-            cB_Rec_Quality.Text = ConfigControl.recQual;
-            cB_Rec_FPS.Text = ConfigControl.recFPS;
+            cB_Rec_Quality.Text = ConfigControl.recQual.stringVal;
+            cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
-            cB_Other_RefreshRate.Text = ConfigControl.updateMs;
+            cB_Other_RefreshRate.Text = ConfigControl.updateMs.stringVal;
 
-            check_Other_Subnet.Checked = ConfigControl.subnetNotif;
-            check_Other_AutoPlay.Checked = ConfigControl.autoPlay;
-            check_Paths_Manual.Checked = ConfigControl.automaticPaths;
+            check_Other_Subnet.Checked = ConfigControl.subnetNotif.boolVal;
+            check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
+            check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
+
+            ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
+            ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
         }
 
         private void b_Settings_Apply_Click(object sender, EventArgs e) {
@@ -45,17 +48,17 @@ namespace SSLUtility2 {
         }
 
         private void check_Other_AutoPlay_CheckedChanged(object sender, EventArgs e) {
-            ConfigControl.autoPlay = check_Other_AutoPlay.Checked;
+            ConfigControl.autoPlay.UpdateValue(check_Other_AutoPlay.Checked.ToString());
         }
 
         private void check_Other_Subnet_CheckedChanged(object sender, EventArgs e) {
-            ConfigControl.subnetNotif = check_Other_Subnet.Checked;
+            ConfigControl.subnetNotif.UpdateValue(check_Other_Subnet.Checked.ToString());
         }
 
         private void check_Paths_Manual_CheckedChanged(object sender, EventArgs e) {
             bool auto = !check_Paths_Manual.Checked;
 
-            ConfigControl.automaticPaths = !auto;
+            ConfigControl.automaticPaths.UpdateValue((!auto).ToString());
 
             tB_Paths_sCFolder.Enabled = auto;
             tB_Paths_vFolder.Enabled = auto;
@@ -69,7 +72,7 @@ namespace SSLUtility2 {
 
         private void cB_Other_RefreshRate_TextChanged(object sender, EventArgs e) {
             if (MainForm.CheckIfNameValid(cB_Other_RefreshRate.Text, true)) {
-                ConfigControl.updateMs = cB_Other_RefreshRate.Text;
+                ConfigControl.updateMs.UpdateValue(cB_Other_RefreshRate.Text);
             }
         }
 
@@ -84,13 +87,13 @@ namespace SSLUtility2 {
 
         private void tB_Paths_sCFolder_TextChanged(object sender, EventArgs e) {
             if (MainForm.m.CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
-                ConfigControl.scFolder = tB_Paths_sCFolder.Text;
+                ConfigControl.scFolder.UpdateValue(tB_Paths_sCFolder.Text);
             }
         }
 
         private void tB_Paths_vFolder_TextChanged(object sender, EventArgs e) {
             if (MainForm.m.CheckFinishedTypingPath(tB_Paths_vFolder, l_Paths_vCheck).Result) {
-                ConfigControl.vFolder = tB_Paths_vFolder.Text;
+                ConfigControl.vFolder.UpdateValue(tB_Paths_vFolder.Text);
             }
         }
 
@@ -103,7 +106,7 @@ namespace SSLUtility2 {
                 cB_Rec_FPS.Text = "1";
             }
 
-            ConfigControl.recFPS = cB_Rec_FPS.Text;
+            ConfigControl.recFPS.UpdateValue(cB_Rec_FPS.Text);
         }
 
         private void cB_Rec_Quality_TextChanged(object sender, EventArgs e) {
@@ -117,22 +120,22 @@ namespace SSLUtility2 {
                 cB_Rec_Quality.Text = "1";
             }
 
-            ConfigControl.recQual = cB_Rec_Quality.Text;
+            ConfigControl.recQual.UpdateValue(cB_Rec_Quality.Text);
         }
 
         private void tB_Rec_vFileN_TextChanged(object sender, EventArgs e) {
             if (MainForm.CheckIfNameValid(tB_Rec_vFileN.Text)) {
-                ConfigControl.vFileName = tB_Rec_vFileN.Text;
+                ConfigControl.vFileName.UpdateValue(tB_Rec_vFileN.Text);
             } else {
-                tB_Rec_vFileN.Text = ConfigControl.vFileName;
+                tB_Rec_vFileN.Text = ConfigControl.vFileName.stringVal;
             }
         }
 
         private void tB_Rec_scFileN_TextChanged(object sender, EventArgs e) {
             if (MainForm.CheckIfNameValid(tB_Rec_scFileN.Text)) {
-                ConfigControl.scFileName = tB_Rec_scFileN.Text;
+                ConfigControl.scFileName.UpdateValue(tB_Rec_scFileN.Text);
             } else {
-                tB_Rec_vFileN.Text = ConfigControl.scFileName;
+                tB_Rec_vFileN.Text = ConfigControl.scFileName.stringVal;
             }
         }
 

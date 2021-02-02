@@ -55,7 +55,7 @@ namespace SSLUtility2 {
 
             CheckConfiguration();
 
-            int updateInterval = Convert.ToInt32(Math.Round(float.Parse(ConfigControl.updateMs)/4f));
+            int updateInterval = Convert.ToInt32(Math.Round(float.Parse(ConfigControl.updateMs.intVal.ToString())/4f));
             if (updateInterval > 0) {
                 UpdateTimer.Interval = updateInterval;
                 UpdateTimer.Enabled = true;

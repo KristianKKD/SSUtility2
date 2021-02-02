@@ -8,76 +8,44 @@ namespace SSLUtility2 {
 
     class ConfigControl {
 
-        //Defaults//
-        private static string defScFolder = @"Snapshots\";
-        private static string defVFolder = @"Videos\";
-        private static string defSavedFolder = @"Saved\";
-
-        private static string defVName = "Video";
-        private static string defScName = "Snapshot";
-
-        private static string defVRecQual = "70";
-        private static string defVRecFPS = "30";
-
-        private static string defVUpdateMs = "500";
-
-        private static bool defSubnetNot = false;
-        private static bool defAutoPlay = true;
-        private static bool defAutomaticPaths = true;
-
-        private static string defFinalSource = @"\\192.168.1.118\netdrive\ProductionTesting\DEFAULT FILES";
-        private static string defFinalDestination = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
         public static string config = "config.txt";
         public const string autoSave = "auto.txt";
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
         public static string ScreenRecordingName = "Recording";
-        //Defaults//
+        public static string savedFolder = appFolder + @"Saved\";
+        private const string varPrefix = "v"; //What the prefix of the actual value is ([varPrefix]ScreenshotFolder:bin/obj/)
 
-        //RuntimeVars//
-        public static string scFolder;
-        public static string vFolder;
-        public static string savedFolder;
-        public static string scFileName;
-        public static string vFileName;
-        public static string recQual;
-        public static string recFPS;
-        public static string updateMs;
+        public static ConfigSetting scFolder = new ConfigSetting(savedFolder, "SnapshotFolder", ConfigSetting.VarType.strings);
+        public static ConfigSetting vFolder = new ConfigSetting(savedFolder, "VideoFolder", ConfigSetting.VarType.strings);
+        public static ConfigSetting vFileName = new ConfigSetting("Video", "VideoFileName", ConfigSetting.VarType.strings);
+        public static ConfigSetting scFileName = new ConfigSetting("Snapshot", "SnapshotFileName", ConfigSetting.VarType.strings);
+        public static ConfigSetting recQual = new ConfigSetting("70", "RecordingQuality", ConfigSetting.VarType.integer);
+        public static ConfigSetting recFPS = new ConfigSetting("30", "RecordingFramerate", ConfigSetting.VarType.integer);
+        public static ConfigSetting updateMs = new ConfigSetting("500", "UpdateStatsTimerMs", ConfigSetting.VarType.integer);
+        public static ConfigSetting subnetNotif = new ConfigSetting("false", "SubnetNotificationHidden", ConfigSetting.VarType.boolean);
+        public static ConfigSetting autoPlay = new ConfigSetting("true", "AutoPlayLaunch", ConfigSetting.VarType.boolean);
+        public static ConfigSetting automaticPaths = new ConfigSetting("true", "AutomaticPaths", ConfigSetting.VarType.boolean);
+        public static ConfigSetting portableMode = new ConfigSetting("false", "PortableMode", ConfigSetting.VarType.boolean);
+        public static ConfigSetting finalSource = new ConfigSetting(@"\\192.168.1.118\netdrive\ProductionTesting\DEFAULT FILES", "FinalModeSourceFolder", ConfigSetting.VarType.strings);
+        public static ConfigSetting finalDestination = new ConfigSetting(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "FinalModeDestinationFolder", ConfigSetting.VarType.strings);
 
-        public static bool subnetNotif;
-        public static bool autoPlay;
-        public static bool automaticPaths;
 
-        public static bool portableMode;
-        public static string finalSource;
-        public static string finalDestination;
+        public static ConfigSetting[] configArray = new ConfigSetting[] {
+            scFolder,
+            vFolder,
+            vFileName,
+            scFileName,
+            recQual,
+            recFPS,
+            updateMs,
+            subnetNotif,
+            autoPlay,
+            automaticPaths,
+            portableMode,
+            finalSource,
+            finalDestination,
+        };
 
-        //RuntimeVars//
-
-        //SearchForVars//
-        static string configPath = "";
-
-        private const string varPrefix = "v"; //What the prefix of the actual value is (ScreenshotFolder:bin/obj/)
-
-        private const string screenshotFolderVar = "SnapshotFolder";
-        private const string videoFolderVar = "VideoFolder";
-
-        private const string videoFileNVar = "VideoFileName";
-        private const string scFileNVar = "SnapshotFileName";
-
-        private const string recQualVar = "RecordingQuality";
-        private const string recFPSVar = "RecordingFramerate";
-
-        private const string updateMsVar = "UpdateStatsTimerMs";
-
-        private const string subnetNotifVar = "SubnetNotificationHidden";
-        private const string autoPlayVar = "AutoPlayLaunch";
-        private const string automaticPathsVar = "AutomaticPaths";
-
-        private const string portableModeVar = "PortableMode";
-        private const string finalSourceVar = "FinalModeSourceFolder";
-        private const string finalDestinationVar = "FinalModeDestinationFolder";
-        //SearchForVars//
 
         public static List<ConfigVar> stringVarList {
             get;
@@ -85,60 +53,22 @@ namespace SSLUtility2 {
         }
 
         public static async Task SetToDefaults() {
-            defScFolder = appFolder + defScFolder;
-            defVFolder = appFolder + defVFolder;
-            defSavedFolder = appFolder + defSavedFolder;
-
-            scFolder = defScFolder;
-            vFolder = defVFolder;
-            savedFolder = defSavedFolder;
-
-            scFileName = defScName;
-            vFileName = defVName;
-
-            recQual = defVRecQual;
-            recFPS = defVRecFPS;
-            updateMs = defVUpdateMs;
-
-            subnetNotif = defSubnetNot;
-            autoPlay = defAutoPlay;
-            automaticPaths = defAutomaticPaths;
-
-            finalSource = defFinalSource;
-            finalDestination = defFinalDestination;
+            foreach (ConfigSetting setting in configArray) {
+                setting.UpdateValue(setting.defaultVal);
+            }
         }
 
         public static void CreateConfig(string path) {
             ResetFile(path);
-            configPath = path;
 
-            (string, string)[] configArray = new (string, string)[] {
-                (screenshotFolderVar, scFolder),
-                (videoFolderVar, vFolder),
-
-                (scFileNVar, scFileName),
-                (videoFileNVar, vFileName),
-
-                (recQualVar, recQual),
-                (recFPSVar, recFPS),
-                (updateMsVar, updateMs),
-
-                (subnetNotifVar, subnetNotif.ToString()),
-                (autoPlayVar, autoPlay.ToString()),
-                (automaticPathsVar, automaticPaths.ToString()),
-
-                (portableModeVar, portableMode.ToString()),
-                (finalSourceVar, finalSource),
-                (finalDestinationVar, finalDestination),
-            };
-
-            foreach ((string, string) line in configArray) {
-                if (!portableMode && (line.Item1 == finalSourceVar || line.Item1 == finalDestinationVar)) {
+            foreach (ConfigSetting setting in configArray) {
+                if (!portableMode.boolVal && (setting.settingName == finalSource.settingName || setting.settingName == finalDestination.settingName)) {
                     continue;
                 }
 
-                ConfigLine(path, line.Item1, line.Item2);
+                ConfigLine(path, setting.settingName, setting.stringVal);
             }
+
 
             if (MainForm.m.finalMode) {
                 MainForm.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
@@ -151,51 +81,9 @@ namespace SSLUtility2 {
 
         public static async Task FindVars() {
             foreach (ConfigVar v in stringVarList) {
-                if (v.value.ToLower() == "false" || v.value.ToLower() == "true") {
-                    bool val = CheckVal(v.value);
-                    switch (v.name) {
-                        case subnetNotifVar:
-                            subnetNotif = val;
-                            break;
-                        case automaticPathsVar:
-                            automaticPaths = val;
-                            break;
-                        case autoPlayVar:
-                            autoPlay = val;
-                            break;
-                        case portableModeVar:
-                            portableMode = val;
-                            break;
-                    }
-                } else {
-                    switch (v.name) {
-                        case screenshotFolderVar:
-                            scFolder = v.value;
-                            break;
-                        case videoFolderVar:
-                            vFolder = v.value;
-                            break;
-                        case scFileNVar:
-                            scFileName = v.value;
-                            break;
-                        case videoFileNVar:
-                            vFileName = v.value;
-                            break;
-                        case recQualVar:
-                            recQual = v.value;
-                            break;
-                        case recFPSVar:
-                            recFPS = v.value;
-                            break;
-                        case updateMsVar:
-                            updateMs = v.value;
-                            break;
-                        case finalSourceVar:
-                            finalSource = v.value;
-                            break;
-                        case finalDestinationVar:
-                            finalDestination = v.value;
-                            break;
+                foreach (ConfigSetting setting in configArray) {
+                    if (v.name == setting.settingName) {
+                        setting.UpdateValue(v.value);
                     }
                 }
             }
@@ -215,13 +103,6 @@ namespace SSLUtility2 {
             }
             var newFile = File.Create(path);
             newFile.Close();
-        }
-
-        public static void Append(string text) {
-            if (configPath == "") {
-                configPath = appFolder + config;
-            }
-            File.AppendAllText(configPath, varPrefix + text);
         }
 
         public static async Task<bool> CheckIfExists(TextBox tb, Label linkedLabel) {
@@ -268,4 +149,51 @@ namespace SSLUtility2 {
 
     }
 
+
+    class ConfigSetting {
+
+        public string defaultVal;
+        public string settingName;
+
+        public string stringVal;
+        public bool boolVal;
+        public int intVal;
+
+        public enum VarType {
+            strings,
+            boolean,
+            integer,
+        }
+        
+        public VarType myType;
+
+        public ConfigSetting(string defVal, string varName, VarType type) {
+            defaultVal = defVal;
+            settingName = varName;
+            myType = type;
+            stringVal = defVal;
+
+            switch (type) {
+                case VarType.boolean:
+                    boolVal = ConfigControl.CheckVal(defVal);
+                    break;
+                case VarType.integer:
+                    intVal = int.Parse(defVal);
+                    break;
+            }
+        }
+
+        public void UpdateValue(string val) {
+            switch (myType) {
+                case VarType.boolean:
+                    boolVal = ConfigControl.CheckVal(val);
+                    break;
+                case VarType.integer:
+                    intVal = int.Parse(val);
+                    break;
+            }
+            stringVal = val;
+        }
+
+    }
 }

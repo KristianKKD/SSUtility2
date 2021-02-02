@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSLUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.10.1";
+        public const string version = "v1.3.11.0";
         public bool lite = false;
         private bool isOriginal = false;
         private bool movedUp = true;
@@ -108,7 +108,7 @@ namespace SSLUtility2 {
         async Task AutoConnect() {
             bool connected = CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.l_IPCon_Connected, true).Result;
             await Task.Delay(1000);
-            if (ConfigControl.autoPlay) {
+            if (ConfigControl.autoPlay.boolVal) {
                 if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
                     if (Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false).Result
                         && connected && playerL.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
@@ -163,7 +163,7 @@ namespace SSLUtility2 {
             ConfigControl.FindVars();
             AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, first);
 
-            if (ConfigControl.portableMode) {
+            if (ConfigControl.portableMode.boolVal) {
                 Menu_Final.Dispose();
             }
         }
@@ -539,7 +539,7 @@ namespace SSLUtility2 {
         }
 
         public void SaveSnap(Detached player) {
-            string fullImagePath = GivePath(ConfigControl.scFolder, ConfigControl.scFileName, player, "Snapshots") + ".jpg";
+            string fullImagePath = GivePath(ConfigControl.scFolder.stringVal, ConfigControl.scFileName.stringVal, player, "Snapshots") + ".jpg";
 
             Image bmp = new Bitmap(player.VLCPlayer_D.Width, player.VLCPlayer_D.Height);
             Graphics gfx = Graphics.FromImage(bmp);
@@ -549,7 +549,7 @@ namespace SSLUtility2 {
             bmp.Save(fullImagePath, ImageFormat.Jpeg);
 
             if (finalMode) {
-                SaveFileDialog fdg = SaveFile(ConfigControl.scFileName, ".jpg", finalDest);
+                SaveFileDialog fdg = SaveFile(ConfigControl.scFileName.stringVal, ".jpg", finalDest);
                 DialogResult result = fdg.ShowDialog();
                 if (result == DialogResult.OK) {
                     CopySingleFile(fdg.FileName, fullImagePath);
@@ -570,7 +570,7 @@ namespace SSLUtility2 {
                 r.Dispose();
 
                 if (finalMode) {
-                    SaveFileDialog fdg = SaveFile(ConfigControl.vFileName, ".avi", finalDest);
+                    SaveFileDialog fdg = SaveFile(ConfigControl.vFileName.stringVal, ".avi", finalDest);
                     DialogResult result = fdg.ShowDialog();
                     if (result == DialogResult.OK) {
                         CopySingleFile(fdg.FileName, inUseVideoPath);
@@ -584,7 +584,7 @@ namespace SSLUtility2 {
 
                 return (isPlaying, null);
             } else {
-                string fullVideoPath = GivePath(ConfigControl.vFolder, ConfigControl.vFileName, player, "Recordings") + ".avi";
+                string fullVideoPath = GivePath(ConfigControl.vFolder.stringVal, ConfigControl.vFileName.stringVal, player, "Recordings") + ".avi";
                 inUseVideoPath = fullVideoPath;
                 player.b_PlayerD_StartRec.Text = "STOP Recording";
                 isPlaying = true;
@@ -625,8 +625,8 @@ namespace SSLUtility2 {
         }
 
         private Recorder Record(string path, AxAXVLC.AxVLCPlugin2 player) {
-            Recorder rec = new Recorder(new Record(path, int.Parse(ConfigControl.recFPS),
-                    SharpAvi.KnownFourCCs.Codecs.MotionJpeg, int.Parse(ConfigControl.recQual), player));
+            Recorder rec = new Recorder(new Record(path, ConfigControl.recFPS.intVal,
+                    SharpAvi.KnownFourCCs.Codecs.MotionJpeg, ConfigControl.recQual.intVal, player));
             return rec;
         }
 
@@ -641,7 +641,7 @@ namespace SSLUtility2 {
                 folderType = "";
             }
 
-            if (ConfigControl.automaticPaths) {
+            if (ConfigControl.automaticPaths.boolVal) {
                 folder = ConfigControl.savedFolder + adr + folderType;
                 string timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
                 fileName = orgName + " " + timeText;
@@ -667,9 +667,9 @@ namespace SSLUtility2 {
 
                     if (!File.Exists(newLocation)) {
                         if (name == ConfigControl.config) {
-                            ConfigControl.portableMode = true;
+                            ConfigControl.portableMode.UpdateValue("true");
                             ConfigControl.CreateConfig(destination + @"\" + ConfigControl.config);
-                            ConfigControl.portableMode = false;
+                            ConfigControl.portableMode.UpdateValue("false");
                         } else {
                             File.Copy(sourceFile, tempFile, true);
                             File.Move(tempFile, destination + @"\" + name); //renames file
