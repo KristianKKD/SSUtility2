@@ -164,9 +164,8 @@ namespace SSUtility2 {
 
                     MainForm.DeleteDirectory(oldAppFolder);
                 }
-
+                MessageBox.Show("Finished changing directories!");
             }
-            MessageBox.Show("Finished changing directories!");
         }
     }
 }

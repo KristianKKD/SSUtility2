@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.12.0";
+        public const string version = "v1.3.12.1";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -603,7 +603,6 @@ namespace SSUtility2 {
                 if (result == DialogResult.OK) {
                     CopySingleFile(fdg.FileName, fullImagePath);
                 }
-                //CopySingleFile(finalSS + fullImagePath.Replace(ConfigControl.appFolder, ""), fullImagePath);
                 MessageBox.Show("Image saved : " + fullImagePath +
                         "\nFinal saved: " + fdg.FileName);
             } else {
@@ -624,7 +623,6 @@ namespace SSUtility2 {
                     if (result == DialogResult.OK) {
                         CopySingleFile(fdg.FileName, inUseVideoPath);
                     }
-                    //CopySingleFile(finalSS + inUseVideoPath.Replace(ConfigControl.appFolder, ""), inUseVideoPath);
                     MessageBox.Show("Saved recording to: " + inUseVideoPath +
                         "\nFinal saved: " + fdg.FileName);
                 } else {
@@ -656,7 +654,6 @@ namespace SSUtility2 {
                     if (result == DialogResult.OK) {
                         CopySingleFile(fdg.FileName, screenRecordName);
                     }
-                    //CopySingleFile(finalSS + screenRecordName.Replace(ConfigControl.appFolder, ""), screenRecordName);
                     MessageBox.Show("Saved recording to: " + screenRecordName +
                         "\nFinal saved: " + fdg.FileName);
                 } else {
@@ -664,8 +661,8 @@ namespace SSUtility2 {
                 }
 
             } else {
-                CheckCreateFile(null, ConfigControl.vFolder + @"\SSUtility2\");
-                string folder = ConfigControl.vFolder + @"\SSUtility2\";
+                CheckCreateFile(null, ConfigControl.vFolder.stringVal + @"\SSUtility2\");
+                string folder = ConfigControl.vFolder.stringVal + @"\SSUtility2\";
                 screenRecordName = folder + ConfigControl.screencapFileName.stringVal + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
                 screenRec = Record(screenRecordName, null);
                 Menu_Record.Text = "Stop Recording";
@@ -786,22 +783,20 @@ namespace SSUtility2 {
             try {
                 string nameText = player.tB_PlayerD_Name.Text;
                 string adrText = player.tB_PlayerD_SimpleAdr.Text;
+                string returnString = "";
 
-                if (adrText != "" && nameText != "") {
+                if (adrText != "") {
                     Uri uriAddress = new Uri(adrText);
-                    string returnString = uriAddress.Host;
-
-                    if (adrText != nameText && nameText != "") {
-                        returnString = nameText;
-                    }
-                    if (!CheckIfNameValid(returnString, false)) {
-                        return "";
-                    }
-
-                    return returnString;
-                } else {
+                    returnString = uriAddress.Host;
+                }
+                if (nameText != "") {
+                    returnString = nameText;
+                }
+                if (!CheckIfNameValid(returnString, false)) {
                     return "";
                 }
+
+                return returnString;
             } catch {
                 return "";
             } 
