@@ -9,16 +9,16 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public class CommandQueue {
 
+        public static List<Command> savedCommandList;
         public static List<Command> queueList;
-        public static int header;
-        public static int total;
+
+        public static int total = 0;
 
         public static bool lowPriority;
 
         public static void Init() {
+            savedCommandList = new List<Command>();
             queueList = new List<Command>();
-            header = 1;
-            total = 0;
 
             StartTimer();
         }
@@ -35,27 +35,47 @@ namespace SSUtility2 {
             try {
                 //Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " HEADER: " + header.ToString());
 
-                if (queueList.Count >= header && queueList.Count > 0) {
+                if (queueList.Count > 0) {
                     lowPriority = false;
 
-                    Command com = queueList[header - 1];
+                    Command com = queueList[0];
                     if (!com.invalid && !com.sent && !com.repeatable) {
-                        AsyncCameraCommunicate.SendCurrent();
-                    } else {
-                        MoveHeaderNext();
+                        var result = WaitForCommandResponse(com).Result;
                     }
                 } else {
                     lowPriority = true;
                 }
-            } catch { }
+            } catch (Exception err){
+                MessageBox.Show("Error in queuelist.\n" + err.ToString());
+            }
         }
 
-        public static void MoveHeaderNext() { // make a way so it doesnt move when waiting for a command to finish
-            header++;
+        static async Task<bool> WaitForCommandResponse(Command com) {
+            bool done = false;
+            //int i = 0;
+            //while (i < 3 && !com.myReturn.done) {
+            AsyncCameraCommunicate.SendCurrent();
+            //await Task.Delay(1000);
+
+            //MessageBox.Show(i.ToString());
+            //if (com.myReturn.done) {
+            //    done = true;
+            //    //break;
+            //}
+            ////    //await Task.Delay(1000);
+            ////    i++;
+            ////}
+
+            //if (!done) {
+            //    MainForm.m.WriteToResponses("Failed to get response", false, false);
+            //}
+            queueList.RemoveAt(0);
+
+            return done;
         }
 
         public static Command GetCurCommand() {
-            return queueList[header - 1];
+            return queueList[0];
         }
 
         public static void QueueCommand(Command com) {
@@ -65,27 +85,27 @@ namespace SSUtility2 {
         }
 
         public static Command FindCommandByID(int id) {
-            for (int i = 0; i < queueList.Count; i++) {
-                if (id == queueList[i].id) {
-                    return queueList[i];
+            for (int i = 0; i < savedCommandList.Count; i++) {
+                if (id == savedCommandList[i].id) {
+                    return savedCommandList[i];
                 }
             }
             return null;
         }
 
-        public static void MoveHeaderToCommand(Command com) {
-            int prevHeader = header;
-            for (int i = 0; i < queueList.Count; i++) {
-                if (com == queueList[i]) {
-                    header = i;
-                    break;
-                }
-            }
-            if (prevHeader == header) {
-                MainForm.ShowPopup("Failed to find command in command queue!", "Command Search Failed!",
-                    com.id.ToString() + "Couldn't be found in queue list!", true);
-            }
-        }
+        //public static void MoveHeaderToCommand(Command com) {
+        //    int prevCount = header;
+        //    for (int i = 0; i < queueList.Count; i++) {
+        //        if (com == queueList[i]) {
+        //            header = i;
+        //            break;
+        //        }
+        //    }
+        //    if (prevCount == header) {
+        //        MainForm.ShowPopup("Failed to find command in command queue!", "Command Search Failed!",
+        //            com.id.ToString() + "Couldn't be found in queue list!", true);
+        //    }
+        //}
     }
 
     public class ReturnCommand {
@@ -121,18 +141,19 @@ namespace SSUtility2 {
             content = code;
             repeatable = repeat;
 
-            CommandQueue.total++;
-            id = CommandQueue.total;
-            
+            id = ++CommandQueue.total;
+
             myReturn = new ReturnCommand();
 
-            CommandQueue.queueList.Add(this);
+            if (repeat) {
+                CommandQueue.savedCommandList.Add(this);
+            } else {
+                CommandQueue.queueList.Add(this);
+            }
         }
 
         public void Finish() {
-            if (!repeatable) {
-                sent = true;
-            }
+            sent = true;
         }
 
     }

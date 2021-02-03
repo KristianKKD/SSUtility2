@@ -12,10 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public class AsyncCameraCommunicate {
         public static Socket sock;
-        public static Socket receiveSock;
-
         public const string defaultResult = "00 00 00 00 00 00 00";
-
         static byte[] receiveBuffer;
 
         public static int SendNewCommand(byte[] code) {
@@ -25,22 +22,15 @@ namespace SSUtility2 {
                 //do something
                 return -1;
             }
-            //CommandQueue.MoveHeaderToCommand(com);
-            //Send();
             return com.id;
-        }
-
-        public static void SendExistingCommand(int id) {
-            Command com = CommandQueue.FindCommandByID(id);
-            if (com != null) {
-                CommandQueue.MoveHeaderToCommand(com);
-                //Send();
-            }
         }
 
         public static void QueueRepeatingCommand(int id) {
             Command oldCom = CommandQueue.FindCommandByID(id);
-            Command com = new Command(oldCom.content, true);
+            if (oldCom != null) {
+                Command com = new Command(oldCom.content);
+            }
+            //return response
         }
 
         public static void Connect(IPEndPoint ep) {
@@ -69,8 +59,6 @@ namespace SSUtility2 {
                 ep = new IPEndPoint(ip, port);
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                receiveSock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
                 sock.BeginConnect(ep, ConnectCallback, null);
 
                 MainForm.m.WriteToResponses("Successfully connected to: " + ep.Address.ToString() + ":" + ep.Port.ToString(), true);
@@ -86,7 +74,8 @@ namespace SSUtility2 {
         private static void ConnectCallback(IAsyncResult AR) {
             try {
                 sock.EndConnect(AR);
-                receiveSock.BeginConnect(sock.RemoteEndPoint, ReceiveConnectCallback, null);
+                receiveBuffer = new byte[sock.ReceiveBufferSize];
+                sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
             }
             catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
@@ -101,26 +90,9 @@ namespace SSUtility2 {
             try {
                 sock.Shutdown(SocketShutdown.Both);
                 sock.Close();
-                receiveSock.Shutdown(SocketShutdown.Both);
-                receiveSock.Close();
             } catch { }
         }
 
-        private static void ReceiveConnectCallback(IAsyncResult AR) {
-            try {
-                receiveSock.EndConnect(AR);
-
-                receiveBuffer = new byte[receiveSock.ReceiveBufferSize];
-                receiveSock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
-            } catch (SocketException ex) {
-                MainForm.m.WriteToResponses(ex.Message, false);
-            } catch (ObjectDisposedException ex) {
-                MainForm.m.WriteToResponses(ex.Message, false);
-            } catch (Exception e) {
-                MessageBox.Show(e.ToString());
-            }
-        }
-        
         public static void SendCurrent() {
             try {
                 Command com = CommandQueue.GetCurCommand();
@@ -138,7 +110,6 @@ namespace SSUtility2 {
         private static void SendCallback(IAsyncResult AR) {
             try {
                 sock.EndSend(AR);
-                CommandQueue.MoveHeaderNext(); //need to have it not ignore failed command, this is temporary
             }
             catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
@@ -149,23 +120,20 @@ namespace SSUtility2 {
             }
         }
 
-        private static void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent?
+        private static async void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent?
             try {
                 if (receiveBuffer.Length < 7) {
                     return;
                 }
                 
-                int received = receiveSock.EndReceive(AR);
+                int received = sock.EndReceive(AR);
                 if(received == 0) {
                     return;
                 }
 
-                SaveResponse();
+                await SaveResponse();
 
-                //CommandQueue.MoveHeaderNext();
-
-                receiveBuffer = new byte[receiveSock.ReceiveBufferSize];
-                receiveSock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
+                sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
@@ -176,38 +144,49 @@ namespace SSUtility2 {
         }
 
         static async Task SaveResponse() {
-            string msg = "";
-            int comCount = 0;
-            bool startedCom = false;
+            try {
+                string msg = "";
+                int comCount = 0;
+                bool startedCom = false;
 
-            for (int i = 0; i < receiveBuffer.Length; i++) {
-                string hex = receiveBuffer[i].ToString("X").ToUpper();
-                
-                if (hex != "0" && !startedCom) {
-                    comCount = 7;
-                    startedCom = true;
-                }
+                for (int i = 0; i < receiveBuffer.Length; i++) {
+                    string hex = receiveBuffer[i].ToString("X").ToUpper();
 
-                if (comCount > 0) {
-                    if (hex.Length == 1) {
-                        hex = "0" + hex;
+                    if (hex != "0" && !startedCom) {
+                        comCount = 7;
+                        startedCom = true;
                     }
-                    msg += hex + " ";
-                    comCount--;
+
+                    if (comCount > 0) {
+                        if (hex.Length == 1) {
+                            hex = "0" + hex;
+                        }
+                        msg += hex + " ";
+                        comCount--;
+                    } else {
+                        break;
+                    }
                 }
-                else {
-                    break;
+
+                if (msg.Length > 5 && msg.Contains("F")) {
+                    //Command sendCom = CommandQueue.GetCurCommand();
+                    //sendCom.Finish();
+
+                    //ReturnCommand returnCom = sendCom.myReturn;
+                    //returnCom.UpdateReturnMsg(msg);
+
+                    //if (sendCom.repeatable) {
+                    //    InfoPanel.ReadResult(msg);
+                    //}
+
+                    MainForm.m.WriteToResponses("Received: " + msg, false);
+                } else {
+                    MainForm.m.WriteToResponses("Received corrupted response", true);
                 }
-            }
 
-            msg = msg.Trim();
-
-            Command sendCom = CommandQueue.GetCurCommand();
-            sendCom.Finish();
-            ReturnCommand returnCom = sendCom.myReturn;
-            returnCom.UpdateReturnMsg(msg);
-
-            MainForm.m.WriteToResponses("Received: " + msg, false);
+            } catch (Exception e) {
+                MessageBox.Show("Error in message processing\n" + e.ToString());
+            };
         }
 
         public static string GetSockEndpoint() {

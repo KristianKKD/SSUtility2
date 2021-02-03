@@ -20,8 +20,7 @@ namespace SSUtility2 {
 
         async Task Fire() {
             AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text)));
-            try
-            {
+            try {
                 stop = false;
                 b_PD_Stop.Enabled = true;
                 for (int i = 0; i < rtb_PD_Commands.Lines.Length; i++) {
@@ -39,7 +38,8 @@ namespace SSUtility2 {
             }
 
             MessageBox.Show("Finished sending commands!");
-            b_PD_Stop.Enabled = true;
+            stop = false;
+            b_PD_Stop.Enabled = false;
         }
 
         async Task CheckLine(string line) {
@@ -65,11 +65,8 @@ namespace SSUtility2 {
                     send = MakeCommand(line);
                 }
 
-                var t = Task.Factory.StartNew(() => {
-                    int comNum = AsyncCameraCommunicate.SendNewCommand(send);
-                });
+                int comNum = AsyncCameraCommunicate.SendNewCommand(send);
 
-                Task.WaitAll();
                 //have a way for this to see if it failed
 
                 //if (response == CameraCommunicate.defaultResult) {

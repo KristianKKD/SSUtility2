@@ -12,7 +12,6 @@ namespace SSUtility2 {
             HideAll();
             UpdateTimer = new Timer();
             UpdateTimer.Tick += new EventHandler(UpdateTimer_Tick);
-            oldLocation = l_TFOV.Location;
         }
 
         public Timer UpdateTimer;
@@ -24,7 +23,11 @@ namespace SSUtility2 {
         public bool isActive;
 
         static int commandPos;
-        Point oldLocation;
+
+        int panID;
+        int tiltID;
+        int fovID;
+        int tFovID;
 
         enum CamConfig {
             SSTraditional,
@@ -37,8 +40,8 @@ namespace SSUtility2 {
 
         public void InitializeTimer() {
             if (CameraCommunicate.sock.Connected) {
-                Uri currentlyConnected = new Uri("http://" + CameraCommunicate.GetSockEndpoint());
-                AsyncSocket.ConnectAsync(currentlyConnected);
+                //Uri currentlyConnected = new Uri("http://" + CameraCommunicate.GetSockEndpoint());
+                //AsyncSocket.ConnectAsync(currentlyConnected);
                 CheckTypeToDisplay();
                 commandPos = 0;
             } else {
@@ -47,20 +50,25 @@ namespace SSUtility2 {
         }
 
         void StartTicking() {
-            if (!CheckCam()) {
-                HideNotTFOV();
-                l_TFOV.Text = "Camera check failed!";
-                return;
-            }
+            try {
+                if (!CheckCam()) {
+                    HideNotTFOV();
+                    l_TFOV.Text = "Camera check failed!";
+                    return;
+                }
 
-            CheckConfiguration();
+                CheckConfiguration();
+                GenCommands();
 
-            int updateInterval = Convert.ToInt32(Math.Round(float.Parse(ConfigControl.updateMs.intVal.ToString())/4f));
-            if (updateInterval > 0) {
-                UpdateTimer.Interval = updateInterval;
-                UpdateTimer.Enabled = true;
+                int updateInterval = Convert.ToInt32(Math.Round(float.Parse(ConfigControl.updateMs.intVal.ToString()) / 4f));
+                if (updateInterval > 0) {
+                    UpdateTimer.Interval = updateInterval;
+                    UpdateTimer.Enabled = true;
+                }
+                isActive = true;
+            } catch(Exception e) {
+                MainForm.ShowPopup("Error in updating info panel!", "Failed to update info panel!", e.ToString());
             }
-            isActive = true;
         }
 
         public void StopTicking() {
@@ -145,7 +153,7 @@ namespace SSUtility2 {
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e) {
-            if (CommandQueue.lowPriority) {
+            if (CommandQueue.lowPriority && AsyncCameraCommunicate.sock.Connected) {
                 Console.WriteLine("lowprio");
                 UpdateAll();
             }
@@ -288,23 +296,31 @@ namespace SSUtility2 {
             return (d1 + d2);
         }
 
+        void GenCommands() {
+            panID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, true).id;
+            tiltID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, true).id;
+            fovID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 }, true).id;
+            tFovID = new Command(new byte[] { 0xFF, 0x02, 0x00, 0x55, 0x00, 0x00, 0x57 }, true).id;
+        }
+
         public async Task GetPan() {
-            //CustomScriptCommands.QuickCommand("querypan");
-            CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, true);
+            //CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, true);
+            AsyncCameraCommunicate.QueueRepeatingCommand(panID);
         }
 
         public async Task GetTilt() {
-            //CustomScriptCommands.QuickCommand("querytilt");
-            CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, true);
+            //CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, true);
+            AsyncCameraCommunicate.QueueRepeatingCommand(tiltID);
         }
 
         public async Task GetFOV() {
-            //CustomScriptCommands.QuickCommand("queryfov");
-            CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 }, true);
+            //CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 }, true);
+            AsyncCameraCommunicate.QueueRepeatingCommand(fovID);
         }
 
         public async Task GetThermalFOV() {
-            CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x02, 0x00, 0x55, 0x00, 0x00, 0x57 }, true);
+            //CameraCommunicate.SendToSocket(new byte[] { 0xFF, 0x02, 0x00, 0x55, 0x00, 0x00, 0x57 }, true);
+            AsyncCameraCommunicate.QueueRepeatingCommand(tFovID);
         }
 
 
