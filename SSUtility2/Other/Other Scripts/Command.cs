@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace SSUtility2 {
 
         public static List<Command> savedCommandList;
         public static List<Command> queueList;
+        public static List<Command> oldList; //need to add response log handling for this
 
         public static int total = 0;
 
@@ -19,28 +21,37 @@ namespace SSUtility2 {
         public static void Init() {
             savedCommandList = new List<Command>();
             queueList = new List<Command>();
+            oldList = new List<Command>();
 
             StartTimer();
         }
 
         static Timer SendTimer;
+
         public static void StartTimer() {
             SendTimer = new Timer();
-            SendTimer.Interval = 300;
+            SendTimer.Interval = 500;
             SendTimer.Tick += new EventHandler(SendCurrentCommand);
             SendTimer.Start();
         }
 
-        private static void SendCurrentCommand(object sender, EventArgs e) {
+        private static void SendCurrentCommand(object sender, EventArgs e) {  //too many commands overload
             try {
-                //Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " HEADER: " + header.ToString());
+                Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " LOWPRIORITY: " + lowPriority.ToString());
+                if (!AsyncCameraCommunicate.sock.Connected) {
+                    return;
+                }
 
-                if (queueList.Count > 0) {
+                if (queueList.Count > 0) { //first command broken
                     lowPriority = false;
 
                     Command com = queueList[0];
-                    if (!com.invalid && !com.sent && !com.repeatable) {
-                        var result = WaitForCommandResponse(com).Result;
+
+                    if (!com.invalid && !com.sent && com != null) {
+                        AsyncCameraCommunicate.currentCom = com;
+                        WaitForCommandResponse(com).ConfigureAwait(false);
+                    } else {
+                        queueList.RemoveAt(0);
                     }
                 } else {
                     lowPriority = true;
@@ -50,28 +61,36 @@ namespace SSUtility2 {
             }
         }
 
-        static async Task<bool> WaitForCommandResponse(Command com) {
-            bool done = false;
-            //int i = 0;
-            //while (i < 3 && !com.myReturn.done) {
-            AsyncCameraCommunicate.SendCurrent();
-            //await Task.Delay(1000);
+        static async Task WaitForCommandResponse(Command com) {
+            try {
+                SendTimer.Stop();
 
-            //MessageBox.Show(i.ToString());
-            //if (com.myReturn.done) {
-            //    done = true;
-            //    //break;
-            //}
-            ////    //await Task.Delay(1000);
-            ////    i++;
-            ////}
+                if (com.repeatable)
+                    com.myReturn.done = false;
 
-            //if (!done) {
-            //    MainForm.m.WriteToResponses("Failed to get response", false, false);
-            //}
-            queueList.RemoveAt(0);
+                int i = 0;
+                while (i < 4) {
+                    AsyncCameraCommunicate.SendCurrent();
+                    await Task.Delay(700);
+                    if (com.myReturn.done) {
+                        break;
+                    }
+                    i++;
+                }
 
-            return done;
+                if (!com.myReturn.done) {
+                    MainForm.m.WriteToResponses("Failed to get response", false, true);
+                } else {
+                    MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false);
+                }
+
+                queueList.Remove(queueList[0]);
+                
+                
+                SendTimer.Start();
+            } catch (Exception e) {
+                MainForm.ShowPopup("Failed to process message return!\nShow more?", "Response Failed!", e.ToString());
+            }
         }
 
         public static Command GetCurCommand() {
@@ -93,19 +112,14 @@ namespace SSUtility2 {
             return null;
         }
 
-        //public static void MoveHeaderToCommand(Command com) {
-        //    int prevCount = header;
-        //    for (int i = 0; i < queueList.Count; i++) {
-        //        if (com == queueList[i]) {
-        //            header = i;
-        //            break;
-        //        }
-        //    }
-        //    if (prevCount == header) {
-        //        MainForm.ShowPopup("Failed to find command in command queue!", "Command Search Failed!",
-        //            com.id.ToString() + "Couldn't be found in queue list!", true);
-        //    }
-        //}
+         public static Command FindResultByID(int id) {
+            for (int i = 0; i < oldList.Count; i++) {
+                if (id == oldList[i].id) {
+                    return oldList[i];
+                }
+            }
+            return null;
+        }
     }
 
     public class ReturnCommand {
@@ -134,7 +148,7 @@ namespace SSUtility2 {
 
         public ReturnCommand myReturn;
 
-        public Command(byte[] code, bool repeat = false) {
+        public Command(byte[] code, bool repeat = false, bool isCopy = false) {
             if (code == null || code.Length == 0) {
                 invalid = true;
             }
@@ -145,7 +159,7 @@ namespace SSUtility2 {
 
             myReturn = new ReturnCommand();
 
-            if (repeat) {
+            if (repeat && !isCopy) {
                 CommandQueue.savedCommandList.Add(this);
             } else {
                 CommandQueue.queueList.Add(this);

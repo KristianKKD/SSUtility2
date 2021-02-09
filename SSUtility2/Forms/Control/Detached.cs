@@ -50,32 +50,36 @@ namespace SSUtility2 {
         }
 
         public void StartPlaying(bool showErrors) {
-            Uri combined = GetCombined();
+            try {
+                Uri combined = GetCombined();
 
-            if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr,
-                tB_PlayerD_Buffering.Text, showErrors).Result) {
+                if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr,
+                    tB_PlayerD_Buffering.Text, showErrors).Result) {
 
-                if (myInfoRef != null) {
-                    if (myInfoRef.CheckCam()) {
-                        check_PlayerD_StatsEnabled.Show();
-                        checkB_PlayerD_Manual.Checked = false;
-                    } else {
-                        check_PlayerD_StatsEnabled.Hide();
+                    if (myInfoRef != null) {
+                        if (myInfoRef.CheckCam()) {
+                            check_PlayerD_StatsEnabled.Show();
+                            checkB_PlayerD_Manual.Checked = false;
+                        } else {
+                            check_PlayerD_StatsEnabled.Hide();
+                        }
                     }
+
+                    b_PlayerD_Stop.Show();
+
+                    if (check_PlayerD_StatsEnabled.Checked) {
+                        StartInfo();
+                    }
+
+                } else {
+                    if (myInfoRef != null) {
+                        myInfoRef.HideAll();
+                    }
+
+                    b_PlayerD_Stop.Hide();
                 }
-
-                b_PlayerD_Stop.Show();
-
-                if (check_PlayerD_StatsEnabled.Checked) {
-                    StartInfo();
-                }
-
-            } else {
-                if (myInfoRef != null) {
-                    myInfoRef.HideAll();
-                }
-
-                b_PlayerD_Stop.Hide();
+            } catch (Exception e) {
+                MainForm.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
             }
         }
 
@@ -161,7 +165,6 @@ namespace SSUtility2 {
             VLCPlayer_D.playlist.stop();
             b_PlayerD_Stop.Hide();
             myInfoRef.UpdateTimer.Stop();
-            AsyncSocket.Disconnect();
         }
     }
 }

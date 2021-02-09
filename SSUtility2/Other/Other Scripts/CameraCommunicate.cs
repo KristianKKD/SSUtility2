@@ -30,7 +30,9 @@ namespace SSUtility2 {
                     }
                 }
                 lastIPPort = ip + port;
-                
+                if (!AsyncCameraCommunicate.sock.Connected) { //to move this i need to completely move all startup checks
+                    AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(ip), int.Parse(port)));
+                }
                 bool success = SendToSocket(code).Result;
                 return success;
             } catch (Exception e) {
@@ -73,7 +75,8 @@ namespace SSUtility2 {
                 IPAddress serverAddr = IPAddress.Parse(ipAdr);
                 IPEndPoint endPoint = new IPEndPoint(serverAddr, Convert.ToInt32(port));
                 sock = new Socket(serverAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                sock.Connect(endPoint); //used to be async (maybe i can get it back at some point)
+                sock.Connect(endPoint);
+                
                 return true;
             } catch (Exception e){
                 MainForm.ShowPopup(failedConnectMsg, errorCaption, e.ToString(), true);
@@ -109,16 +112,27 @@ namespace SSUtility2 {
         }
 
         public static async Task<bool> CheckPelcoCam(bool thermalCam) {
-            if (thermalCam) {
-                SendToSocket(new byte[] { 0xFF, 0x00, 0x00, 0x53, 0x00, 0x00, 0x53 });
-            } else {
-                SendToSocket(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 });
-            }
-            string result = StringFromSock().Result;
-            if (result == defaultResult) {
+            try {
+                if (!AsyncCameraCommunicate.sock.Connected) {
+                    return false;
+                }
+
+                byte[] send = new byte[7];
+                if (thermalCam ) {
+                    send = new byte[] { 0xFF, 0x00, 0x00, 0x53, 0x00, 0x00, 0x53 };
+                } else {
+                    send = new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 };
+                }
+
+                string result = AsyncCameraCommunicate.QueryNewCommand(send).Result;
+
+                if (result == defaultResult) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch {
                 return false;
-            } else {
-                return true;
             }
         }
 
@@ -164,11 +178,7 @@ namespace SSUtility2 {
             try {
                 if (code != null) {
                     MainForm.m.WriteToResponses("Sending command: " + MainForm.m.ReadCommand(code, true), true);
-                    if (async) {
-                        AsyncSocket.SendAsync(code);
-                    } else {
-                        sock.SendTo(code, sock.RemoteEndPoint);
-                    }
+                    sock.SendTo(code, sock.RemoteEndPoint);
                     return true;
                 }
                 return false;
@@ -203,7 +213,7 @@ namespace SSUtility2 {
                 return m;
             } catch (Exception e) {
                 MainForm.ShowPopup("Failed to receive response!\nShow more?", errorCaption, e.ToString(), true);
-                return null;
+                return defaultResult;
             }
         }
 

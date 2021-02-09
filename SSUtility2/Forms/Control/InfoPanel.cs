@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
-    public partial class InfoPanel : Form { //PROBLEM: CURRENTLY THIS LOCKS UP THE MAIN SOCK SO WHEN ITS ACTIVE, 
-        //COMMANDS/RESPONSES MAY GET MIXED UP
+    public partial class InfoPanel : Form {
 
         public InfoPanel() {
             InitializeComponent();
@@ -60,9 +59,8 @@ namespace SSUtility2 {
                 CheckConfiguration();
                 GenCommands();
 
-                int updateInterval = Convert.ToInt32(Math.Round(float.Parse(ConfigControl.updateMs.intVal.ToString()) / 4f));
-                if (updateInterval > 0) {
-                    UpdateTimer.Interval = updateInterval;
+                if (ConfigControl.updateMs.intVal > 0) {
+                    UpdateTimer.Interval = ConfigControl.updateMs.intVal;
                     UpdateTimer.Enabled = true;
                 }
                 isActive = true;
@@ -71,13 +69,17 @@ namespace SSUtility2 {
             }
         }
 
+        public void UpdateTickInterval() {
+            UpdateTimer.Interval = ConfigControl.updateMs.intVal;
+        }
+
         public void StopTicking() {
             HideAll();
             isActive = false;
             UpdateTimer.Stop();
         }
 
-        public bool CheckCam() {
+        public bool CheckCam() { //remove this
             bool result = CameraCommunicate.CheckPelcoCam(thermalCam).Result;
             return result;
         }
@@ -129,20 +131,21 @@ namespace SSUtility2 {
         }
         
         void CheckConfiguration() {
-            string result = GetQueryResults(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F });
-            int type = int.Parse(result.Substring(12, 1));
+            string result = AsyncCameraCommunicate.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).Result;
+            //MessageBox.Show("config " + result);
+            string type = result.Substring(12, 1);
 
-            switch (type) {
-                case 0:
+            switch (type) { //maybe add defaultresult handling? also currently has a different setting than expected?
+                case "0":
                     myConfig = CamConfig.SSTraditional;
                     break;
-                case 1:
+                case "1":
                     myConfig = CamConfig.Strict;
                     break;
-                case 2:
+                case "2":
                     myConfig = CamConfig.RevTilt;
                     break;
-                case 3:
+                case "3":
                     myConfig = CamConfig.Legacy;
                     break;
                 default:
@@ -152,7 +155,7 @@ namespace SSUtility2 {
            
         }
 
-        private void UpdateTimer_Tick(object sender, EventArgs e) {
+        private void UpdateTimer_Tick(object sender, EventArgs e) { //maybe have command reference this instead
             if (CommandQueue.lowPriority && AsyncCameraCommunicate.sock.Connected) {
                 Console.WriteLine("lowprio");
                 UpdateAll();
@@ -186,29 +189,13 @@ namespace SSUtility2 {
             l_Pan.Text = "PAN: " + pan.ToString() + " °";
         }
 
-        string GetQueryResults(byte[] query) {
-            Uri currentlyConnected = new Uri("http://" + CameraCommunicate.GetSockEndpoint());
-            if (currentlyConnected == null) {
-                return null;
-            }
-            string result = CameraCommunicate.Query(query, currentlyConnected).Result.Trim();
-
-            //if(thermalCam)
-            //MessageBox.Show(result);
-
-            return result;
-        }
-
         static float pan;
         static float tilt;
         static float fov;
         static float tfov;
 
         public static async Task ReadResult(string result) {
-            //string result = GetQueryResults(query);
             string commandType = result.Substring(9, 2);
-
-            //finalResult += " °";
 
             switch (commandType) {
                 case "59": //pan
@@ -227,13 +214,12 @@ namespace SSUtility2 {
                 }
         }
 
-        static float CalculateTilt(string code) {
+        static float CalculateTilt(string code) { //need to revist this and change value handling
             float full = ReturnedHexValToFloat(code);
 
             switch (myConfig) {
                 case CamConfig.SSTraditional:
                 case CamConfig.Legacy:
-
                     break;
                 case CamConfig.Strict:
                     break;

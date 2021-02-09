@@ -82,6 +82,9 @@ namespace SSUtility2 {
             if (MainForm.m.finalMode) {
                 MainForm.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
             }
+            if (MainForm.m.playerL.myInfoRef != null) {
+                MainForm.m.playerL.myInfoRef.UpdateTickInterval();
+            }
         }
 
         static void ConfigLine(string path, string variable, string value) {

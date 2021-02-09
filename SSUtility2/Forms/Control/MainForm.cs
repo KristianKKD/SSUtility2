@@ -5,13 +5,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.13.0";
+        public const string version = "v1.3.13.2";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -125,6 +126,8 @@ namespace SSUtility2 {
                     }
                 }
             }
+            await Task.Delay(500);
+            AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(ipCon.tB_IPCon_Adr.Text), int.Parse(ipCon.tB_IPCon_Port.Text)));
         }
 
         public static OpenFileDialog OpenFile() {
@@ -472,6 +475,7 @@ namespace SSUtility2 {
         }
 
         public async Task<bool> Play(AxAXVLC.AxVLCPlugin2 player, Uri combinedUrl, TextBox linkedTB, string buffering, bool showError) {
+            try {
             if (showError) {
                 if (combinedUrl.Host == "") {
                     MessageBox.Show("Address is invalid!");
@@ -485,6 +489,10 @@ namespace SSUtility2 {
             linkedTB.Text = combinedUrl.ToString();
             Replay(player, combinedUrl.ToString(), buffering);
             return true;
+            } catch (Exception e) {
+                ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
+                return false;
+            }
         }
 
         public void Replay(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, string buffering) {
@@ -493,7 +501,7 @@ namespace SSUtility2 {
                 player.playlist.items.clear();
             }
 
-            player.playlist.add(combinedUrl, null, ":network-caching=" +buffering);
+            player.playlist.add(combinedUrl, null, ":avcodec -hw:network -caching=" + buffering); //might have to look at more options
             player.playlist.next();
             player.playlist.play();
         }

@@ -121,9 +121,6 @@
     </Compile>
     <Compile Include="Other\Communication\AsyncCameraCommunicate.cs" />
     <Compile Include="Other\Communication\OsirisComs.cs" />
-    <Compile Include="Other\Other Scripts\AsyncSocket.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Other\Other Scripts\AutoSave.cs" />
     <Compile Include="Other\Other Scripts\CameraCommunicate.cs" />
     <Compile Include="Other\Other Scripts\Command.cs" />

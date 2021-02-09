@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace SSUtility2 {
     public class AsyncCameraCommunicate {
-        public static Socket sock;
+        public static Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         public const string defaultResult = "00 00 00 00 00 00 00";
         static byte[] receiveBuffer;
 
@@ -20,27 +20,43 @@ namespace SSUtility2 {
             if (com.invalid) {
                 MainForm.m.WriteToResponses("Failed to send " + MainForm.m.ReadCommand(code), true);
                 //do something
-                return -1;
+                return -2;
             }
-            return com.id;
+            return com.id - 1;
+        }
+
+        public async static Task<string> QueryNewCommand(byte[] send) {
+            int comNum = SendNewCommand(send);
+            await Task.Delay(300).ConfigureAwait(false);
+            string result = CheckCommandResult(comNum);
+            return result;
+        }
+         
+        public static string CheckCommandResult(int id) {
+            //MessageBox.Show(id.ToString() + " " + CommandQueue.oldList.Count.ToString());
+            Command oldCom = CommandQueue.FindResultByID(id);
+            if(oldCom != null && !oldCom.myReturn.invalid) {
+                return oldCom.myReturn.msg;
+            }
+            return defaultResult;
         }
 
         public static void QueueRepeatingCommand(int id) {
             Command oldCom = CommandQueue.FindCommandByID(id);
             if (oldCom != null) {
-                Command com = new Command(oldCom.content);
+                Command com = new Command(oldCom.content, true, true);
             }
-            //return response
         }
 
         public static void Connect(IPEndPoint ep) {
             try {
                 if (sock != null) {
-                    if (sock.Connected) {
-                        //Disconnect(); //need to be able to reconnect with new ip
+                    if (sock.Connected && ep == sock.RemoteEndPoint as IPEndPoint) {
                         return;
                     }
                 }
+
+                sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
                 bool parsedIP = IPAddress.TryParse(MainForm.m.ipCon.tB_IPCon_Adr.Text, out IPAddress ip);
                 bool parsedPort = int.TryParse(MainForm.m.ipCon.tB_IPCon_Port.Text, out int port);
@@ -52,13 +68,12 @@ namespace SSUtility2 {
 
                 if (!OtherCameraCommunication.PingAdr(ep.Address).Result) {
                     MainForm.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
-                                        "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());
+                                        "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString() + "\nPing: Failed");
                     return;
                 }
                 
                 ep = new IPEndPoint(ip, port);
 
-                sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 sock.BeginConnect(ep, ConnectCallback, null);
 
                 MainForm.m.WriteToResponses("Successfully connected to: " + ep.Address.ToString() + ":" + ep.Port.ToString(), true);
@@ -67,7 +82,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("CONNECT\n" + e.ToString());
             }
         }
 
@@ -93,11 +108,20 @@ namespace SSUtility2 {
             } catch { }
         }
 
+        public static Command currentCom;
+
         public static void SendCurrent() {
             try {
-                Command com = CommandQueue.GetCurCommand();
+                if (!sock.Connected) {
+                    Connect(null);
+                }
+                Console.WriteLine("\nSending new command");
+                if(currentCom == null) {
+                    MessageBox.Show("Send command returned null!");
+                    return;
+                }
 
-                sock.BeginSend(com.content, 0, com.content.Length, SocketFlags.None, SendCallback, null);
+                sock.BeginSend(currentCom.content, 0, currentCom.content.Length, SocketFlags.None, SendCallback, null);
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
@@ -121,17 +145,15 @@ namespace SSUtility2 {
         }
 
         private static async void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent?
-            try {
+            try { 
                 if (receiveBuffer.Length < 7) {
                     return;
                 }
                 
                 int received = sock.EndReceive(AR);
-                if(received == 0) {
-                    return;
+                if(received > 0) {
+                    await SaveResponse();
                 }
-
-                await SaveResponse();
 
                 sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
             } catch (SocketException ex) {
@@ -168,22 +190,31 @@ namespace SSUtility2 {
                     }
                 }
 
+
+                msg = msg.Trim();
+
                 if (msg.Length > 5 && msg.Contains("F")) {
-                    //Command sendCom = CommandQueue.GetCurCommand();
-                    //sendCom.Finish();
+                    if (currentCom.repeatable) {
+                        InfoPanel.ReadResult(msg);
+                    }
 
-                    //ReturnCommand returnCom = sendCom.myReturn;
-                    //returnCom.UpdateReturnMsg(msg);
+                    if(currentCom == null) {
+                        return;
+                    }
 
-                    //if (sendCom.repeatable) {
-                    //    InfoPanel.ReadResult(msg);
-                    //}
+                    CommandQueue.oldList.Add(currentCom);
 
-                    MainForm.m.WriteToResponses("Received: " + msg, false);
+                    if (currentCom.myReturn != null) {
+                        currentCom.myReturn.UpdateReturnMsg(msg);
+                        currentCom.Finish();
+                        //Response written to command to avoid spam
+                    } else {
+                        MainForm.m.WriteToResponses("Received response but send command is corrupt!", true, true);
+                    }
+
                 } else {
-                    MainForm.m.WriteToResponses("Received corrupted response", true);
+                    MainForm.m.WriteToResponses("Received corrupted response", true, true);
                 }
-
             } catch (Exception e) {
                 MessageBox.Show("Error in message processing\n" + e.ToString());
             };
