@@ -47,6 +47,7 @@
             // 
             // tB_Port
             // 
+            this.tB_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_Port.Location = new System.Drawing.Point(325, 38);
             this.tB_Port.Name = "tB_Port";
             this.tB_Port.Size = new System.Drawing.Size(100, 20);
@@ -54,6 +55,7 @@
             // 
             // tB_IP
             // 
+            this.tB_IP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_IP.Location = new System.Drawing.Point(325, 12);
             this.tB_IP.Name = "tB_IP";
             this.tB_IP.Size = new System.Drawing.Size(100, 20);
@@ -61,6 +63,7 @@
             // 
             // l_IP
             // 
+            this.l_IP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.l_IP.AutoSize = true;
             this.l_IP.Location = new System.Drawing.Point(261, 15);
             this.l_IP.Name = "l_IP";
@@ -70,6 +73,7 @@
             // 
             // l_Port
             // 
+            this.l_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.l_Port.AutoSize = true;
             this.l_Port.Location = new System.Drawing.Point(293, 41);
             this.l_Port.Name = "l_Port";
@@ -167,6 +171,7 @@
             // 
             // b_Connect
             // 
+            this.b_Connect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_Connect.Location = new System.Drawing.Point(264, 70);
             this.b_Connect.Name = "b_Connect";
             this.b_Connect.Size = new System.Drawing.Size(161, 23);
@@ -177,6 +182,8 @@
             // 
             // l_LampType
             // 
+            this.l_LampType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_LampType.AutoSize = true;
             this.l_LampType.Location = new System.Drawing.Point(12, 96);
             this.l_LampType.Name = "l_LampType";
@@ -187,6 +194,8 @@
             // 
             // l_Series
             // 
+            this.l_Series.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_Series.AutoSize = true;
             this.l_Series.Location = new System.Drawing.Point(128, 96);
             this.l_Series.Name = "l_Series";
@@ -210,6 +219,8 @@
             // 
             // l_Status
             // 
+            this.l_Status.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_Status.AutoSize = true;
             this.l_Status.Location = new System.Drawing.Point(205, 96);
             this.l_Status.Name = "l_Status";
@@ -220,6 +231,8 @@
             // 
             // l_Health
             // 
+            this.l_Health.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_Health.AutoSize = true;
             this.l_Health.Location = new System.Drawing.Point(322, 96);
             this.l_Health.Name = "l_Health";

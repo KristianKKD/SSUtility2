@@ -44,6 +44,7 @@ namespace SSUtility2
             // 
             // b_Browse
             // 
+            this.b_Browse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_Browse.BackColor = System.Drawing.SystemColors.Control;
             this.b_Browse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Browse.Location = new System.Drawing.Point(258, 28);
@@ -56,6 +57,7 @@ namespace SSUtility2
             // 
             // b_Default
             // 
+            this.b_Default.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.b_Default.BackColor = System.Drawing.SystemColors.Control;
             this.b_Default.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Default.Location = new System.Drawing.Point(12, 59);
@@ -68,6 +70,7 @@ namespace SSUtility2
             // 
             // b_Done
             // 
+            this.b_Done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_Done.BackColor = System.Drawing.SystemColors.Control;
             this.b_Done.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Done.Location = new System.Drawing.Point(258, 59);
@@ -80,6 +83,9 @@ namespace SSUtility2
             // 
             // tB_Dir
             // 
+            this.tB_Dir.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_Dir.Location = new System.Drawing.Point(12, 30);
             this.tB_Dir.Name = "tB_Dir";
             this.tB_Dir.Size = new System.Drawing.Size(237, 20);

@@ -120,6 +120,7 @@
             // 
             // check_Default
             // 
+            this.check_Default.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.check_Default.AutoSize = true;
             this.check_Default.Location = new System.Drawing.Point(12, 138);
             this.check_Default.Name = "check_Default";
@@ -205,6 +206,7 @@
             // 
             // check_Old
             // 
+            this.check_Old.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.check_Old.AutoSize = true;
             this.check_Old.Location = new System.Drawing.Point(12, 161);
             this.check_Old.Name = "check_Old";

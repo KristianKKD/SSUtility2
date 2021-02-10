@@ -52,6 +52,7 @@
             // 
             // b_PD_Load
             // 
+            this.b_PD_Load.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_Load.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Load.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_Load.Location = new System.Drawing.Point(348, 118);
@@ -64,6 +65,7 @@
             // 
             // b_PD_Save
             // 
+            this.b_PD_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_Save.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_Save.Location = new System.Drawing.Point(348, 76);
@@ -76,6 +78,7 @@
             // 
             // b_PD_Fire
             // 
+            this.b_PD_Fire.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_Fire.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Fire.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_Fire.Location = new System.Drawing.Point(348, 32);
@@ -88,6 +91,9 @@
             // 
             // rtb_PD_Commands
             // 
+            this.rtb_PD_Commands.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_PD_Commands.BackColor = System.Drawing.SystemColors.Control;
             this.rtb_PD_Commands.Location = new System.Drawing.Point(12, 32);
             this.rtb_PD_Commands.Name = "rtb_PD_Commands";
@@ -107,6 +113,7 @@
             // 
             // l_PD_Single
             // 
+            this.l_PD_Single.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.l_PD_Single.AutoSize = true;
             this.l_PD_Single.Location = new System.Drawing.Point(12, 439);
             this.l_PD_Single.Name = "l_PD_Single";
@@ -116,6 +123,7 @@
             // 
             // b_PD_FireSingle
             // 
+            this.b_PD_FireSingle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.b_PD_FireSingle.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_FireSingle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_FireSingle.Location = new System.Drawing.Point(270, 435);
@@ -128,6 +136,7 @@
             // 
             // tB_PD_Single
             // 
+            this.tB_PD_Single.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.tB_PD_Single.Location = new System.Drawing.Point(145, 436);
             this.tB_PD_Single.Name = "tB_PD_Single";
             this.tB_PD_Single.Size = new System.Drawing.Size(119, 20);
@@ -143,6 +152,7 @@
             // 
             // tB_IPCon_Port
             // 
+            this.tB_IPCon_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_IPCon_Port.Location = new System.Drawing.Point(348, 237);
             this.tB_IPCon_Port.Name = "tB_IPCon_Port";
             this.tB_IPCon_Port.Size = new System.Drawing.Size(111, 20);
@@ -151,6 +161,7 @@
             // 
             // tB_IPCon_Adr
             // 
+            this.tB_IPCon_Adr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_IPCon_Adr.Location = new System.Drawing.Point(348, 198);
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(111, 20);
@@ -167,6 +178,7 @@
             // 
             // cB_IPCon_Selected
             // 
+            this.cB_IPCon_Selected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cB_IPCon_Selected.FormattingEnabled = true;
             this.cB_IPCon_Selected.Items.AddRange(new object[] {
             "Daylight",
@@ -179,6 +191,7 @@
             // 
             // l_IPCon_SelectedCam
             // 
+            this.l_IPCon_SelectedCam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.l_IPCon_SelectedCam.AutoSize = true;
             this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(345, 260);
             this.l_IPCon_SelectedCam.Name = "l_IPCon_SelectedCam";
@@ -188,6 +201,7 @@
             // 
             // l_IPCon_Port
             // 
+            this.l_IPCon_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.l_IPCon_Port.AutoSize = true;
             this.l_IPCon_Port.Location = new System.Drawing.Point(344, 221);
             this.l_IPCon_Port.Name = "l_IPCon_Port";
@@ -197,6 +211,7 @@
             // 
             // l_IPCon_Adr
             // 
+            this.l_IPCon_Adr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.l_IPCon_Adr.AutoSize = true;
             this.l_IPCon_Adr.Location = new System.Drawing.Point(345, 182);
             this.l_IPCon_Adr.Name = "l_IPCon_Adr";
@@ -206,6 +221,7 @@
             // 
             // b_PD_Stop
             // 
+            this.b_PD_Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_Stop.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Stop.Enabled = false;
             this.b_PD_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -219,6 +235,7 @@
             // 
             // b_PD_RL
             // 
+            this.b_PD_RL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_RL.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_RL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_RL.Location = new System.Drawing.Point(348, 303);
@@ -232,6 +249,7 @@
             // check_PD_Perfect
             // 
             this.check_PD_Perfect.AccessibleDescription = "E.g. \"0021 0002 0153 0004\"";
+            this.check_PD_Perfect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.check_PD_Perfect.AutoSize = true;
             this.check_PD_Perfect.Location = new System.Drawing.Point(348, 162);
             this.check_PD_Perfect.Name = "check_PD_Perfect";
@@ -243,6 +261,7 @@
             // 
             // b_PD_ComList
             // 
+            this.b_PD_ComList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_ComList.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_ComList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PD_ComList.Location = new System.Drawing.Point(348, 347);

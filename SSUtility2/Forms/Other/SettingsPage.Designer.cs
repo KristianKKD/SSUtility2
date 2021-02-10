@@ -28,6 +28,7 @@ namespace SSUtility2
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsPage));
             this.p_Main = new System.Windows.Forms.Panel();
+            this.b_ChangeDir = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cB_Other_RefreshRate = new System.Windows.Forms.ComboBox();
             this.l_Other = new System.Windows.Forms.Label();
@@ -58,7 +59,6 @@ namespace SSUtility2
             this.l_Rec_FPS = new System.Windows.Forms.Label();
             this.b_Settings_Apply = new System.Windows.Forms.Button();
             this.b_Settings_Default = new System.Windows.Forms.Button();
-            this.b_ChangeDir = new System.Windows.Forms.Button();
             this.p_Main.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gB_Paths.SuspendLayout();
@@ -79,6 +79,19 @@ namespace SSUtility2
             this.p_Main.Name = "p_Main";
             this.p_Main.Size = new System.Drawing.Size(1342, 261);
             this.p_Main.TabIndex = 32;
+            // 
+            // b_ChangeDir
+            // 
+            this.b_ChangeDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.b_ChangeDir.BackColor = System.Drawing.SystemColors.Control;
+            this.b_ChangeDir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_ChangeDir.Location = new System.Drawing.Point(15, 211);
+            this.b_ChangeDir.Name = "b_ChangeDir";
+            this.b_ChangeDir.Size = new System.Drawing.Size(113, 23);
+            this.b_ChangeDir.TabIndex = 30;
+            this.b_ChangeDir.Text = "Change Directory";
+            this.b_ChangeDir.UseVisualStyleBackColor = false;
+            this.b_ChangeDir.Click += new System.EventHandler(this.b_ChangeDir_Click);
             // 
             // groupBox2
             // 
@@ -403,6 +416,7 @@ namespace SSUtility2
             // 
             // b_Settings_Apply
             // 
+            this.b_Settings_Apply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_Settings_Apply.BackColor = System.Drawing.SystemColors.Control;
             this.b_Settings_Apply.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Settings_Apply.Location = new System.Drawing.Point(1235, 211);
@@ -415,6 +429,7 @@ namespace SSUtility2
             // 
             // b_Settings_Default
             // 
+            this.b_Settings_Default.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_Settings_Default.BackColor = System.Drawing.SystemColors.Control;
             this.b_Settings_Default.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Settings_Default.Location = new System.Drawing.Point(1154, 211);
@@ -424,18 +439,6 @@ namespace SSUtility2
             this.b_Settings_Default.Text = "Default All";
             this.b_Settings_Default.UseVisualStyleBackColor = false;
             this.b_Settings_Default.Click += new System.EventHandler(this.b_Settings_Default_Click);
-            // 
-            // b_ChangeDir
-            // 
-            this.b_ChangeDir.BackColor = System.Drawing.SystemColors.Control;
-            this.b_ChangeDir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_ChangeDir.Location = new System.Drawing.Point(15, 211);
-            this.b_ChangeDir.Name = "b_ChangeDir";
-            this.b_ChangeDir.Size = new System.Drawing.Size(113, 23);
-            this.b_ChangeDir.TabIndex = 30;
-            this.b_ChangeDir.Text = "Change Directory";
-            this.b_ChangeDir.UseVisualStyleBackColor = false;
-            this.b_ChangeDir.Click += new System.EventHandler(this.b_ChangeDir_Click);
             // 
             // SettingsPage
             // 

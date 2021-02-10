@@ -32,9 +32,6 @@
             // 
             // l_EntryInfo
             // 
-            this.l_EntryInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_EntryInfo.AutoSize = true;
             this.l_EntryInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.l_EntryInfo.Location = new System.Drawing.Point(12, 9);
@@ -45,19 +42,19 @@
             // 
             // rtb_Entry
             // 
-            this.rtb_Entry.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.rtb_Entry.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_Entry.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtb_Entry.Location = new System.Drawing.Point(15, 28);
+            this.rtb_Entry.Location = new System.Drawing.Point(15, 27);
             this.rtb_Entry.Name = "rtb_Entry";
-            this.rtb_Entry.Size = new System.Drawing.Size(161, 23);
+            this.rtb_Entry.Size = new System.Drawing.Size(188, 23);
             this.rtb_Entry.TabIndex = 2;
             this.rtb_Entry.Text = "";
             // 
             // b_Done
             // 
-            this.b_Done.Location = new System.Drawing.Point(182, 28);
+            this.b_Done.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Done.Location = new System.Drawing.Point(209, 27);
             this.b_Done.Name = "b_Done";
             this.b_Done.Size = new System.Drawing.Size(75, 23);
             this.b_Done.TabIndex = 3;
@@ -70,7 +67,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(269, 63);
+            this.ClientSize = new System.Drawing.Size(297, 71);
             this.Controls.Add(this.b_Done);
             this.Controls.Add(this.rtb_Entry);
             this.Controls.Add(this.l_EntryInfo);

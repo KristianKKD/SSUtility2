@@ -35,6 +35,9 @@
             // 
             // rtb_Log
             // 
+            this.rtb_Log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb_Log.Location = new System.Drawing.Point(12, 32);
             this.rtb_Log.Name = "rtb_Log";
             this.rtb_Log.ReadOnly = true;
@@ -44,6 +47,7 @@
             // 
             // b_RL_Clear
             // 
+            this.b_RL_Clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_RL_Clear.BackColor = System.Drawing.SystemColors.Control;
             this.b_RL_Clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_RL_Clear.Location = new System.Drawing.Point(449, 61);
@@ -56,6 +60,7 @@
             // 
             // b_RL_Save
             // 
+            this.b_RL_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_RL_Save.BackColor = System.Drawing.SystemColors.Control;
             this.b_RL_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_RL_Save.Location = new System.Drawing.Point(449, 32);
@@ -78,6 +83,7 @@
             // 
             // check_RL_All
             // 
+            this.check_RL_All.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.check_RL_All.AutoSize = true;
             this.check_RL_All.Location = new System.Drawing.Point(412, 9);
             this.check_RL_All.Name = "check_RL_All";
@@ -101,6 +107,7 @@
             this.Name = "ResponseLog";
             this.Text = "ResponseLog";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ResponseLog_FormClosing);
+            this.VisibleChanged += new System.EventHandler(this.ResponseLog_VisibleChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
 
