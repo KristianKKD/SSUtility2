@@ -31,7 +31,7 @@ namespace SSUtility2 {
                 }
                 lastIPPort = ip + port;
                 if (!AsyncCameraCommunicate.sock.Connected) { //to move this i need to completely move all startup checks
-                    AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(ip), int.Parse(port)));
+                    AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(ip), int.Parse(port)), true);
                 }
                 bool success = SendToSocket(code).Result;
                 return success;

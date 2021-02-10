@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.13.3";
+        public const string version = "v1.3.13.4";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -127,7 +127,7 @@ namespace SSUtility2 {
                 }
             }
             await Task.Delay(500);
-            AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(ipCon.tB_IPCon_Adr.Text), int.Parse(ipCon.tB_IPCon_Port.Text)));
+            AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(ipCon.tB_IPCon_Adr.Text), int.Parse(ipCon.tB_IPCon_Port.Text)), true);
         }
 
         public static OpenFileDialog OpenFile() {

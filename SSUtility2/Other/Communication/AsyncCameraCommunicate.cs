@@ -48,7 +48,7 @@ namespace SSUtility2 {
             }
         }
 
-        public static void Connect(IPEndPoint ep) {
+        public static void Connect(IPEndPoint ep, bool hideErrors = false) {
             try {
                 if (sock != null) {
                     if (sock.Connected && ep == sock.RemoteEndPoint as IPEndPoint) {
@@ -61,13 +61,15 @@ namespace SSUtility2 {
                 bool parsedIP = IPAddress.TryParse(MainForm.m.ipCon.tB_IPCon_Adr.Text, out IPAddress ip);
                 bool parsedPort = int.TryParse(MainForm.m.ipCon.tB_IPCon_Port.Text, out int port);
                 if (ep == null && (!parsedIP || !parsedPort)) {
-                    MainForm.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
+                    if(!hideErrors)
+                        MainForm.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());
                     return;
                 }
 
                 if (!OtherCameraCommunication.PingAdr(ep.Address).Result) {
-                    MainForm.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
+                    if (!hideErrors)
+                        MainForm.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString() + "\nPing: Failed");
                     return;
                 }

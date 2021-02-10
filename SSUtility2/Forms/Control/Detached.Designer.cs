@@ -60,8 +60,6 @@
             // 
             // tB_PlayerD_SimpleAdr
             // 
-            this.tB_PlayerD_SimpleAdr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_SimpleAdr.Location = new System.Drawing.Point(86, 41);
             this.tB_PlayerD_SimpleAdr.Name = "tB_PlayerD_SimpleAdr";
             this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(214, 20);
@@ -69,8 +67,6 @@
             // 
             // l_PlayerD_SimpleAdr
             // 
-            this.l_PlayerD_SimpleAdr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PlayerD_SimpleAdr.AutoSize = true;
             this.l_PlayerD_SimpleAdr.Location = new System.Drawing.Point(3, 42);
             this.l_PlayerD_SimpleAdr.Name = "l_PlayerD_SimpleAdr";
@@ -80,8 +76,6 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(7, 193);
             this.label1.Name = "label1";
@@ -91,8 +85,6 @@
             // 
             // l_PlayerD_Type
             // 
-            this.l_PlayerD_Type.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PlayerD_Type.AutoSize = true;
             this.l_PlayerD_Type.Location = new System.Drawing.Point(3, 17);
             this.l_PlayerD_Type.Name = "l_PlayerD_Type";
@@ -102,8 +94,6 @@
             // 
             // l_PlayerD_RTSP
             // 
-            this.l_PlayerD_RTSP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PlayerD_RTSP.AutoSize = true;
             this.l_PlayerD_RTSP.Location = new System.Drawing.Point(3, 91);
             this.l_PlayerD_RTSP.Name = "l_PlayerD_RTSP";
@@ -113,8 +103,6 @@
             // 
             // tB_PlayerD_Adr
             // 
-            this.tB_PlayerD_Adr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Adr.Location = new System.Drawing.Point(86, 41);
             this.tB_PlayerD_Adr.Name = "tB_PlayerD_Adr";
             this.tB_PlayerD_Adr.Size = new System.Drawing.Size(214, 20);
@@ -123,8 +111,6 @@
             // 
             // l_PlayerD_Password
             // 
-            this.l_PlayerD_Password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PlayerD_Password.AutoSize = true;
             this.l_PlayerD_Password.Location = new System.Drawing.Point(3, 168);
             this.l_PlayerD_Password.Name = "l_PlayerD_Password";
@@ -134,8 +120,6 @@
             // 
             // tB_PlayerD_Port
             // 
-            this.tB_PlayerD_Port.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Port.Location = new System.Drawing.Point(86, 67);
             this.tB_PlayerD_Port.Name = "tB_PlayerD_Port";
             this.tB_PlayerD_Port.Size = new System.Drawing.Size(214, 20);
@@ -153,8 +137,6 @@
             // 
             // tB_PlayerD_RTSP
             // 
-            this.tB_PlayerD_RTSP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_RTSP.Location = new System.Drawing.Point(86, 92);
             this.tB_PlayerD_RTSP.Name = "tB_PlayerD_RTSP";
             this.tB_PlayerD_RTSP.Size = new System.Drawing.Size(214, 20);
@@ -163,8 +145,6 @@
             // 
             // l_PlayerD_Adr
             // 
-            this.l_PlayerD_Adr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PlayerD_Adr.AutoSize = true;
             this.l_PlayerD_Adr.Location = new System.Drawing.Point(3, 43);
             this.l_PlayerD_Adr.Name = "l_PlayerD_Adr";
@@ -174,8 +154,6 @@
             // 
             // tB_PlayerD_Username
             // 
-            this.tB_PlayerD_Username.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Username.Location = new System.Drawing.Point(86, 144);
             this.tB_PlayerD_Username.Name = "tB_PlayerD_Username";
             this.tB_PlayerD_Username.Size = new System.Drawing.Size(214, 20);
@@ -184,8 +162,6 @@
             // 
             // tB_PlayerD_Buffering
             // 
-            this.tB_PlayerD_Buffering.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Buffering.Location = new System.Drawing.Point(86, 118);
             this.tB_PlayerD_Buffering.Name = "tB_PlayerD_Buffering";
             this.tB_PlayerD_Buffering.Size = new System.Drawing.Size(214, 20);
@@ -194,8 +170,6 @@
             // 
             // l_PlayerD_Username
             // 
-            this.l_PlayerD_Username.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PlayerD_Username.AutoSize = true;
             this.l_PlayerD_Username.Location = new System.Drawing.Point(3, 143);
             this.l_PlayerD_Username.Name = "l_PlayerD_Username";
@@ -205,8 +179,6 @@
             // 
             // l_PlayerD_Buffering
             // 
-            this.l_PlayerD_Buffering.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PlayerD_Buffering.AutoSize = true;
             this.l_PlayerD_Buffering.Location = new System.Drawing.Point(3, 117);
             this.l_PlayerD_Buffering.Name = "l_PlayerD_Buffering";
@@ -216,8 +188,6 @@
             // 
             // tB_PlayerD_Password
             // 
-            this.tB_PlayerD_Password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Password.Location = new System.Drawing.Point(86, 170);
             this.tB_PlayerD_Password.Name = "tB_PlayerD_Password";
             this.tB_PlayerD_Password.Size = new System.Drawing.Size(214, 20);
@@ -226,8 +196,6 @@
             // 
             // cB_PlayerD_Type
             // 
-            this.cB_PlayerD_Type.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cB_PlayerD_Type.FormattingEnabled = true;
             this.cB_PlayerD_Type.Items.AddRange(new object[] {
             "IONodes - Daylight",
@@ -243,7 +211,6 @@
             // 
             // checkB_PlayerD_Manual
             // 
-            this.checkB_PlayerD_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkB_PlayerD_Manual.AutoSize = true;
             this.checkB_PlayerD_Manual.Location = new System.Drawing.Point(320, 559);
             this.checkB_PlayerD_Manual.Name = "checkB_PlayerD_Manual";
@@ -255,7 +222,6 @@
             // 
             // b_PlayerD_StartRec
             // 
-            this.b_PlayerD_StartRec.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PlayerD_StartRec.BackColor = System.Drawing.SystemColors.Control;
             this.b_PlayerD_StartRec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PlayerD_StartRec.Location = new System.Drawing.Point(501, 587);
@@ -268,7 +234,6 @@
             // 
             // b_PlayerD_SaveSnap
             // 
-            this.b_PlayerD_SaveSnap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PlayerD_SaveSnap.BackColor = System.Drawing.SystemColors.Control;
             this.b_PlayerD_SaveSnap.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PlayerD_SaveSnap.Location = new System.Drawing.Point(501, 551);
@@ -281,7 +246,6 @@
             // 
             // b_PlayerD_Play
             // 
-            this.b_PlayerD_Play.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PlayerD_Play.BackColor = System.Drawing.SystemColors.Control;
             this.b_PlayerD_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PlayerD_Play.Location = new System.Drawing.Point(320, 662);
@@ -294,7 +258,6 @@
             // 
             // check_PlayerD_StatsEnabled
             // 
-            this.check_PlayerD_StatsEnabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.check_PlayerD_StatsEnabled.AutoSize = true;
             this.check_PlayerD_StatsEnabled.Location = new System.Drawing.Point(320, 632);
             this.check_PlayerD_StatsEnabled.Name = "check_PlayerD_StatsEnabled";
@@ -307,7 +270,6 @@
             // 
             // b_PlayerD_Stop
             // 
-            this.b_PlayerD_Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PlayerD_Stop.BackColor = System.Drawing.SystemColors.Control;
             this.b_PlayerD_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_PlayerD_Stop.Location = new System.Drawing.Point(501, 624);
@@ -321,9 +283,6 @@
             // 
             // VLCPlayer_D
             // 
-            this.VLCPlayer_D.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.VLCPlayer_D.Enabled = true;
             this.VLCPlayer_D.Location = new System.Drawing.Point(0, 0);
             this.VLCPlayer_D.Name = "VLCPlayer_D";
@@ -333,8 +292,6 @@
             // 
             // p_PlayerD_Extended
             // 
-            this.p_PlayerD_Extended.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.p_PlayerD_Extended.Controls.Add(this.label1);
             this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Type);
             this.p_PlayerD_Extended.Controls.Add(this.cB_PlayerD_Type);
@@ -357,8 +314,6 @@
             // 
             // p_PlayerD_Simple
             // 
-            this.p_PlayerD_Simple.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.p_PlayerD_Simple.Controls.Add(this.tB_PlayerD_SimpleAdr);
             this.p_PlayerD_Simple.Controls.Add(this.l_PlayerD_SimpleAdr);
             this.p_PlayerD_Simple.Location = new System.Drawing.Point(2, 519);
@@ -368,7 +323,6 @@
             // 
             // tB_PlayerD_Name
             // 
-            this.tB_PlayerD_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Name.Location = new System.Drawing.Point(397, 525);
             this.tB_PlayerD_Name.Name = "tB_PlayerD_Name";
             this.tB_PlayerD_Name.Size = new System.Drawing.Size(238, 20);
@@ -376,7 +330,6 @@
             // 
             // l_Name
             // 
-            this.l_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.l_Name.AutoSize = true;
             this.l_Name.Location = new System.Drawing.Point(317, 528);
             this.l_Name.Name = "l_Name";
