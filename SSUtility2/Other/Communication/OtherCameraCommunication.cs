@@ -15,6 +15,7 @@ namespace SSUtility2 {
         static string failedConnectMsg = "Issue connecting to TCP Port\n" +
                    "Would you like to see more information?";
         static string errorCaption = "Error Occured!";
+        public const string defaultResult = "00 00 00 00 00 00 00";
 
         public static bool CheckIsSameSubnet(string newIp) {
             if (!IPAddress.TryParse(newIp, out IPAddress dontuse)) {

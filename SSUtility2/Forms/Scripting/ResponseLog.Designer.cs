@@ -31,6 +31,7 @@
             this.b_RL_Save = new System.Windows.Forms.Button();
             this.l_RL_RL = new System.Windows.Forms.Label();
             this.check_RL_All = new System.Windows.Forms.CheckBox();
+            this.check_Info = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // rtb_Log
@@ -41,7 +42,7 @@
             this.rtb_Log.Location = new System.Drawing.Point(12, 32);
             this.rtb_Log.Name = "rtb_Log";
             this.rtb_Log.ReadOnly = true;
-            this.rtb_Log.Size = new System.Drawing.Size(429, 402);
+            this.rtb_Log.Size = new System.Drawing.Size(426, 402);
             this.rtb_Log.TabIndex = 0;
             this.rtb_Log.Text = "";
             // 
@@ -50,9 +51,9 @@
             this.b_RL_Clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_RL_Clear.BackColor = System.Drawing.SystemColors.Control;
             this.b_RL_Clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_RL_Clear.Location = new System.Drawing.Point(449, 61);
+            this.b_RL_Clear.Location = new System.Drawing.Point(444, 61);
             this.b_RL_Clear.Name = "b_RL_Clear";
-            this.b_RL_Clear.Size = new System.Drawing.Size(75, 23);
+            this.b_RL_Clear.Size = new System.Drawing.Size(87, 23);
             this.b_RL_Clear.TabIndex = 1;
             this.b_RL_Clear.Text = "Clear";
             this.b_RL_Clear.UseVisualStyleBackColor = false;
@@ -63,9 +64,9 @@
             this.b_RL_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_RL_Save.BackColor = System.Drawing.SystemColors.Control;
             this.b_RL_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_RL_Save.Location = new System.Drawing.Point(449, 32);
+            this.b_RL_Save.Location = new System.Drawing.Point(444, 32);
             this.b_RL_Save.Name = "b_RL_Save";
-            this.b_RL_Save.Size = new System.Drawing.Size(75, 23);
+            this.b_RL_Save.Size = new System.Drawing.Size(87, 23);
             this.b_RL_Save.TabIndex = 2;
             this.b_RL_Save.Text = "Save";
             this.b_RL_Save.UseVisualStyleBackColor = false;
@@ -85,19 +86,31 @@
             // 
             this.check_RL_All.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.check_RL_All.AutoSize = true;
-            this.check_RL_All.Location = new System.Drawing.Point(412, 9);
+            this.check_RL_All.Location = new System.Drawing.Point(444, 90);
             this.check_RL_All.Name = "check_RL_All";
-            this.check_RL_All.Size = new System.Drawing.Size(112, 17);
+            this.check_RL_All.Size = new System.Drawing.Size(90, 17);
             this.check_RL_All.TabIndex = 15;
-            this.check_RL_All.Text = "All Communication";
+            this.check_RL_All.Text = "Show Hidden";
             this.check_RL_All.UseVisualStyleBackColor = true;
+            // 
+            // check_Info
+            // 
+            this.check_Info.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.check_Info.AutoSize = true;
+            this.check_Info.Location = new System.Drawing.Point(444, 113);
+            this.check_Info.Name = "check_Info";
+            this.check_Info.Size = new System.Drawing.Size(83, 17);
+            this.check_Info.TabIndex = 16;
+            this.check_Info.Text = "Show Spam";
+            this.check_Info.UseVisualStyleBackColor = true;
             // 
             // ResponseLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(533, 446);
+            this.ClientSize = new System.Drawing.Size(543, 446);
+            this.Controls.Add(this.check_Info);
             this.Controls.Add(this.check_RL_All);
             this.Controls.Add(this.l_RL_RL);
             this.Controls.Add(this.b_RL_Save);
@@ -119,5 +132,6 @@
         public System.Windows.Forms.Button b_RL_Save;
         public System.Windows.Forms.Label l_RL_RL;
         public System.Windows.Forms.CheckBox check_RL_All;
+        public System.Windows.Forms.CheckBox check_Info;
     }
 }

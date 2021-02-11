@@ -79,9 +79,29 @@ namespace SSUtility2 {
             UpdateTimer.Stop();
         }
 
-        public bool CheckCam() { //remove this
-            bool result = CameraCommunicate.CheckPelcoCam(thermalCam).Result;
-            return result;
+        public bool CheckCam() {
+            try {
+                if (!AsyncCameraCommunicate.TryConnect().Result) {
+                    return false;
+                }
+
+                byte[] send = new byte[7];
+                if (thermalCam) {
+                    send = new byte[] { 0xFF, 0x00, 0x00, 0x53, 0x00, 0x00, 0x53 };
+                } else {
+                    send = new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 };
+                }
+
+                string result = AsyncCameraCommunicate.QueryNewCommand(send).Result;
+
+                if (result == OtherCameraCommunication.defaultResult) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch {
+                return false;
+            }
         }
 
         public void HideAll() {

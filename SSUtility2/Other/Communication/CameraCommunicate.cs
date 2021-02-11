@@ -111,30 +111,7 @@ namespace SSUtility2 {
             }
         }
 
-        public static async Task<bool> CheckPelcoCam(bool thermalCam) {
-            try {
-                if (!AsyncCameraCommunicate.sock.Connected) {
-                    return false;
-                }
-
-                byte[] send = new byte[7];
-                if (thermalCam ) {
-                    send = new byte[] { 0xFF, 0x00, 0x00, 0x53, 0x00, 0x00, 0x53 };
-                } else {
-                    send = new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 };
-                }
-
-                string result = AsyncCameraCommunicate.QueryNewCommand(send).Result;
-
-                if (result == defaultResult) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } catch {
-                return false;
-            }
-        }
+        
 
         public static void LabelDisplay(bool connected, Control l) {
             if (l == null)

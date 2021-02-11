@@ -20,7 +20,7 @@ namespace SSUtility2 {
                 if (ep == null)
                     ep = new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text), int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text));
                 Connect(ep);
-                await Task.Delay(200).ConfigureAwait(false);
+                await Task.Delay(500).ConfigureAwait(false);
                 if (!sock.Connected)
                     return false;
             }
