@@ -78,9 +78,9 @@ namespace SSUtility2 {
             if (com.valueAccepting) { //test this
                 if (com.dualValue) {
                     if (value > 255) {
-                        //code[2] = 0xFF;
-                        //code[3] = Convert.ToByte(value - 255);
-                        code[2] = Convert.ToByte(value - 255);
+                        code[2] = 0xFF;
+                        code[3] = Convert.ToByte(value - 255);
+                        //code[2] = Convert.ToByte(value - 255);
                     } else {
                         code[2] = Convert.ToByte(value);
                     }
@@ -128,13 +128,8 @@ namespace SSUtility2 {
         }
 
         public static async Task QuickCommand(string command) {
-            if (!AsyncCameraCommunicate.sock.Connected) {
-                AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text), int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text)));
-
-                await Task.Delay(200);
-                if (!AsyncCameraCommunicate.sock.Connected) {
-                    return;
-                }
+            if (!AsyncCameraCommunicate.TryConnect().Result) {
+                return;
             }
 
             byte[] code = CheckForCommands(command, MainForm.m.MakeAdr(MainForm.m.ipCon.cB_IPCon_Selected)).Result;

@@ -107,7 +107,6 @@
             this.Name = "ResponseLog";
             this.Text = "ResponseLog";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ResponseLog_FormClosing);
-            this.VisibleChanged += new System.EventHandler(this.ResponseLog_VisibleChanged);
             this.ResumeLayout(false);
             this.PerformLayout();
 

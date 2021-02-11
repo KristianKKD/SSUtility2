@@ -84,7 +84,8 @@ namespace SSUtility2 {
                     MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false);
                 }
 
-                queueList.Remove(queueList[0]);
+                if(queueList.Contains(com))
+                    queueList.Remove(com);
                 
                 
                 SendTimer.Start();

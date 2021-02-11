@@ -15,6 +15,18 @@ namespace SSUtility2 {
         public const string defaultResult = "00 00 00 00 00 00 00";
         static byte[] receiveBuffer;
 
+        public static async Task<bool> TryConnect(IPEndPoint ep = null) {
+            if (!sock.Connected) {
+                if (ep == null)
+                    ep = new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text), int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text));
+                Connect(ep);
+                await Task.Delay(200).ConfigureAwait(false);
+                if (!sock.Connected)
+                    return false;
+            }
+            return true;
+        }
+
         public static int SendNewCommand(byte[] code) {
             Command com = new Command(code);
             if (com.invalid) {
@@ -48,20 +60,18 @@ namespace SSUtility2 {
             }
         }
 
-        public static void Connect(IPEndPoint ep, bool hideErrors = false) {
+        public static void Connect(IPEndPoint ep, bool hideErrors = false) { //need to auto connect somehow
             try {
-                if (sock != null) {
-                    if (sock.Connected && ep == sock.RemoteEndPoint as IPEndPoint) {
-                        return;
-                    }
+                if (sock == null || (sock.Connected && ep == sock.RemoteEndPoint as IPEndPoint)) {
+                    return;
                 }
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
                 bool parsedIP = IPAddress.TryParse(MainForm.m.ipCon.tB_IPCon_Adr.Text, out IPAddress ip);
                 bool parsedPort = int.TryParse(MainForm.m.ipCon.tB_IPCon_Port.Text, out int port);
-                if (ep == null && (!parsedIP || !parsedPort)) {
-                    if(!hideErrors)
+                if (!parsedIP || !parsedPort) {
+                    if (!hideErrors)
                         MainForm.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());
                     return;
@@ -73,18 +83,23 @@ namespace SSUtility2 {
                                         "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString() + "\nPing: Failed");
                     return;
                 }
-                
-                ep = new IPEndPoint(ip, port);
 
-                sock.BeginConnect(ep, ConnectCallback, null);
+                IPEndPoint end = new IPEndPoint(ip, port);
 
-                MainForm.m.WriteToResponses("Successfully connected to: " + ep.Address.ToString() + ":" + ep.Port.ToString(), true);
+                if (end == null) {
+                    return;
+                }
+
+                sock.BeginConnect(end, ConnectCallback, null);
+
+                MainForm.m.WriteToResponses("Successfully connected to: " + end.Address.ToString() + ":" + end.Port.ToString(), true);
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MessageBox.Show("CONNECT\n" + e.ToString());
+                if(!hideErrors)
+                    MessageBox.Show("An error occured whilst connecting to camera!\n" + e.ToString());
             }
         }
 

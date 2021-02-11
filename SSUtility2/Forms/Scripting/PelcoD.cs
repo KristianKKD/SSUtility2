@@ -19,7 +19,9 @@ namespace SSUtility2 {
         }
 
         async Task Fire() {
-            //AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text))); //move this
+            if (!AsyncCameraCommunicate.TryConnect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text),int.Parse(tB_IPCon_Port.Text))).Result) {
+                return;
+            }
             try {
                 stop = false;
                 b_PD_Stop.Enabled = true;

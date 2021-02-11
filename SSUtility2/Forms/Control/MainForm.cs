@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.13.4";
+        public const string version = "v1.3.13.5";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -126,8 +126,6 @@ namespace SSUtility2 {
                     }
                 }
             }
-            await Task.Delay(500);
-            AsyncCameraCommunicate.Connect(new IPEndPoint(IPAddress.Parse(ipCon.tB_IPCon_Adr.Text), int.Parse(ipCon.tB_IPCon_Port.Text)), true);
         }
 
         public static OpenFileDialog OpenFile() {
@@ -556,7 +554,7 @@ namespace SSUtility2 {
 
         public void WriteToResponses(string text, bool hide, bool isSpam = false) {
             this.Invoke((MethodInvoker)delegate {
-                if (rl.myText.Length > 2000000000) {
+                if (rl.rtb_Log.Text.Length > 2000000000) {
                     rl.rtb_Log.Clear();
                 }
                 string sender = CameraCommunicate.GetSockEndpoint();
@@ -564,7 +562,7 @@ namespace SSUtility2 {
                     sender = "CLIENT";
                 }
                 if (!hide || rl.check_RL_All.Checked) {
-                    rl.myText += ("[" + sender + " at " + DateTime.Now + "]: " + text + "\n");
+                    rl.rtb_Log.AppendText("[" + sender + " at " + DateTime.Now + "]: " + text + "\n");
                 }
             });
         }

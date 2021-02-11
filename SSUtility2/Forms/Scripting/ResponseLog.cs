@@ -5,8 +5,6 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class ResponseLog : Form {
 
-        public string myText;
-
         public ResponseLog() {
             InitializeComponent();
         }
@@ -26,10 +24,6 @@ namespace SSUtility2 {
                 e.Cancel = true;
                 Hide();
             }
-        }
-
-        private void ResponseLog_VisibleChanged(object sender, EventArgs e) {
-            rtb_Log.Text = myText;
         }
 
     }

@@ -122,8 +122,8 @@
     <Compile Include="Other\Communication\AsyncCameraCommunicate.cs" />
     <Compile Include="Other\Communication\OsirisComs.cs" />
     <Compile Include="Other\Other Scripts\AutoSave.cs" />
-    <Compile Include="Other\Other Scripts\CameraCommunicate.cs" />
-    <Compile Include="Other\Other Scripts\Command.cs" />
+    <Compile Include="Other\Communication\CameraCommunicate.cs" />
+    <Compile Include="Other\Communication\Command.cs" />
     <Compile Include="Other\Other Scripts\ConfigControl.cs" />
     <Compile Include="Forms\Control\ControlPanel.cs">
       <SubType>Form</SubType>
@@ -169,7 +169,7 @@
     <Compile Include="Forms\Other\FirmwareUpgrade.Designer.cs">
       <DependentUpon>FirmwareUpgrade.cs</DependentUpon>
     </Compile>
-    <Compile Include="Other\Other Scripts\OtherCameraCommunication.cs" />
+    <Compile Include="Other\Communication\OtherCameraCommunication.cs" />
     <Compile Include="Other\Other Scripts\Program.cs" />
     <Compile Include="Forms\Other\SettingsPage.cs">
       <SubType>Form</SubType>
