@@ -12,6 +12,13 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     class OtherCameraCommunication {
 
+        public enum CamConfig {
+            SSTraditional,
+            Strict,
+            RevTilt,
+            Legacy
+        }
+
         static string failedConnectMsg = "Issue connecting to TCP Port\n" +
                    "Would you like to see more information?";
         static string errorCaption = "Error Occured!";
@@ -93,5 +100,94 @@ namespace SSUtility2 {
             }
             return false;
         }
+        
+        public static CamConfig CheckConfiguration() {
+            string result = AsyncCameraCommunicate.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).Result;
+            MessageBox.Show("config " + result);
+            string type = result.Substring(12, 1);
+            CamConfig myConfig = CamConfig.Strict;
+
+            switch (type) { //maybe add defaultresult handling? also currently has a different setting than expected?
+                case "0":
+                    myConfig = CamConfig.SSTraditional;
+                    break;
+                case "1":
+                    myConfig = CamConfig.Strict;
+                    break;
+                case "2":
+                    myConfig = CamConfig.RevTilt;
+                    break;
+                case "3":
+                    myConfig = CamConfig.Legacy;
+                    break;
+            }
+
+            return myConfig;
+        }
+
+        public static float CalculateTilt(string code, CamConfig config) { //need to revist this and change value handling
+            float full = ReturnedHexValToFloat(code);
+
+            switch (config) {
+                case CamConfig.SSTraditional:
+                case CamConfig.Legacy:
+                    break;
+                case CamConfig.Strict:
+                    break;
+                case CamConfig.RevTilt:
+                    break;
+
+            }
+            //SSTraditional and Legacy
+            //Tilt 0-90 positive, -0.01 - -90 negative
+            //0-9000 = positive, -1 - -9000 (65535-56536) = negative
+
+            //Strict Only
+            //horizontal (normally 90 degrees clockwise) = 0
+            //vertical = 270, increasing value goes clockwise(through negative)
+            //illegal range 90.01 - 269.99
+            //65535-36001 illegal, 00000-35999 legal
+
+            //RevTilt
+            //Same as Strict, anticlockwise instead of clockwise
+            //0-9000 = from horizontal to vertically up, etc
+            return full;
+        }
+
+        public static float CalculatePan(string code, CamConfig config) {
+            float finalResult = 0;
+            float full = ReturnedHexValToFloat(code);
+
+            switch (config) {
+                case CamConfig.SSTraditional:
+                case CamConfig.Legacy:
+
+                    if (full <= 360.00f) {
+                        finalResult = full;
+                    } else {
+                        finalResult = -(655.36f - full);
+                    }
+
+                    break;
+                case CamConfig.Strict:
+                case CamConfig.RevTilt:
+                    finalResult = ReturnedHexValToFloat(code); //same thing anyway
+                    break;
+            }
+
+            return finalResult;
+        }
+
+        public static float ReturnedHexValToFloat(string code) {
+            string d1 = code.Substring(12, 2);
+            string d2 = code.Substring(15, 2);
+
+            string combined = (d1 + d2);
+
+            string added = int.Parse(combined, System.Globalization.NumberStyles.HexNumber).ToString();
+            float finalResult = float.Parse(added) / 100f;
+            return finalResult;
+        }
+
     }
 }

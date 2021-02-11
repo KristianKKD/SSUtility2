@@ -33,10 +33,10 @@ namespace SSUtility2 {
                         stop = false;
                         break;
                     }
-                    await Task.Delay(800);
+                    await Task.Delay(400).ConfigureAwait(false);
                 }
             }catch(Exception e) {
-                MessageBox.Show(e.ToString());
+                MainForm.ShowPopup("Failed to send commands!\nShow more?", "Command firing failed", e.ToString());
             }
 
             MessageBox.Show("Finished sending commands!");
@@ -55,7 +55,7 @@ namespace SSUtility2 {
                 }
 
                 byte[] send;
-                if (check_PD_Perfect.Checked) { //CANT SEND ANY CUSTOM COMMANDS (00 4b 01 00)
+                if (check_PD_Perfect.Checked) {
                     send = FullCommand(line);
                 } else {
                     send = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
@@ -67,13 +67,15 @@ namespace SSUtility2 {
                     send = MakeCommand(line);
                 }
 
-                int comNum = AsyncCameraCommunicate.SendNewCommand(send);
+                Command sendCommand = AsyncCameraCommunicate.SendNewCommand(send);
+                if (sendCommand.invalid) {
+                    MainForm.m.WriteToResponses("Command: " + line + " could not be sent because it's invalid!", true);
+                }
+                await Task.Delay(400).ConfigureAwait(false);
 
-                //have a way for this to see if it failed
-
-                //if (response == CameraCommunicate.defaultResult) {
-                //    MainForm.m.WriteToResponses("Command: " + line + " could not be sent.", false);
-                //}
+                if (sendCommand.myReturn.msg == CameraCommunicate.defaultResult) {
+                    MainForm.m.WriteToResponses("Command: " + line + " didn't receive a response.", true);
+                }
 
             }
         }

@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.13.6";
+        public const string version = "v1.3.13.7";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -561,7 +561,10 @@ namespace SSUtility2 {
                 if (hide && !isSpam) {
                     sender = "CLIENT";
                 }
-                if (!hide || rl.check_RL_All.Checked || (isSpam && rl.check_Info.Enabled)) {
+                if (isSpam && !rl.check_Info.Enabled) {
+                    return;
+                }
+                if (!hide || rl.check_RL_All.Checked) {
                     rl.rtb_Log.AppendText("[" + sender + " at " + DateTime.Now + "]: " + text + "\n");
                 }
             });

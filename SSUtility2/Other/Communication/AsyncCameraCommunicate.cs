@@ -27,18 +27,18 @@ namespace SSUtility2 {
             return true;
         }
 
-        public static int SendNewCommand(byte[] code) {
+        public static Command SendNewCommand(byte[] code) {
             Command com = new Command(code);
             if (com.invalid) {
                 MainForm.m.WriteToResponses("Failed to send " + MainForm.m.ReadCommand(code), true);
                 //do something
-                return -2;
+                return null;
             }
-            return com.id - 1;
+            return com;
         }
 
         public async static Task<string> QueryNewCommand(byte[] send) {
-            int comNum = SendNewCommand(send);
+            int comNum = SendNewCommand(send).id - 1;
             await Task.Delay(300).ConfigureAwait(false);
             string result = CheckCommandResult(comNum);
             return result;
@@ -114,7 +114,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MessageBox.Show(e.ToString());
+                MainForm.ShowPopup("Connect callback failed!\nShow more?", "Connect Failed!", e.ToString());
             }
         }
         
@@ -144,7 +144,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MessageBox.Show(e.ToString());
+                MainForm.ShowPopup("Failed to send queued command!\nShow more?", "Send Failed!", e.ToString());
             }
         }
 
@@ -157,7 +157,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MessageBox.Show(e.ToString());
+                MainForm.ShowPopup("Send callback failed!\nShow more?", "Send Failed!", e.ToString());
             }
         }
 
@@ -178,7 +178,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MessageBox.Show(e.ToString());
+                MainForm.ShowPopup("Receive callback failed!\nShow more?", "Receive Failed!", e.ToString());
             }
         }
 
@@ -226,14 +226,14 @@ namespace SSUtility2 {
                         currentCom.Finish();
                         //Response written to command to avoid spam
                     } else {
-                        MainForm.m.WriteToResponses("Received response but send command is corrupt!", true, true);
+                        MainForm.m.WriteToResponses("Received response but send command is corrupt!", true, currentCom.repeatable);
                     }
 
                 } else {
-                    MainForm.m.WriteToResponses("Received corrupted response", true, true);
+                    MainForm.m.WriteToResponses("Received corrupted response", true, currentCom.repeatable);
                 }
             } catch (Exception e) {
-                MessageBox.Show("Error in message processing\n" + e.ToString());
+                MainForm.ShowPopup("Message processing failed!\nShow more?", "Receive Failed!", e.ToString());
             };
         }
 
