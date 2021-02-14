@@ -331,7 +331,6 @@ namespace SSUtility2 {
 
         public MainForm() {
             InitializeComponent();
-            this.FormClosing += new FormClosingEventHandler(MainForm_Closing);
             StartupStuff();
 
             ////

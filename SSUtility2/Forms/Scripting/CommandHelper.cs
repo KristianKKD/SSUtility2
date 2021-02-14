@@ -57,8 +57,8 @@ namespace SSUtility2 {
                 return;
             }
 
-            if (MainForm.m.pd.rtb_PD_Commands.Text.Length > 0) {
-                MainForm.m.pd.rtb_PD_Commands.Text += "\n";
+            if (MainForm.m.pd.tB_Commands.Text.Length > 0) {
+                MainForm.m.pd.tB_Commands.Text += "\n";
             }
 
             string val = dgv_Coms.Rows[row].Cells[column].Value.ToString();
@@ -68,7 +68,7 @@ namespace SSUtility2 {
                 }
             }
 
-            MainForm.m.pd.rtb_PD_Commands.Text += val;
+            MainForm.m.pd.tB_Commands.Text += val;
         }
 
     }

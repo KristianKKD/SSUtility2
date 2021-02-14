@@ -19,23 +19,25 @@ namespace SSUtility2 {
         }
 
         async Task Fire() {
-            if (!AsyncCameraCommunicate.TryConnect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text),int.Parse(tB_IPCon_Port.Text))).Result) {
-                return;
-            }
             try {
+                //if (cB_Mode.Text == "IP") {
+                    if (!AsyncCameraCommunicate.TryConnect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text))).Result) {
+                        return;
+                    }
+                //}
                 stop = false;
                 b_PD_Stop.Enabled = true;
-                for (int i = 0; i < rtb_PD_Commands.Lines.Length; i++) {
-                    string l = rtb_PD_Commands.Lines[i];
+                for (int i = 0; i < tB_Commands.Lines.Length; i++) {
+                    string l = tB_Commands.Lines[i];
                     if (!stop) {
-                        CheckLine(l);
+                        await CheckLine(l);
                     } else {
                         stop = false;
                         break;
                     }
-                    await Task.Delay(400).ConfigureAwait(false);
+                    await Task.Delay(300).ConfigureAwait(false);
                 }
-            }catch(Exception e) {
+            } catch(Exception e) {
                 MainForm.ShowPopup("Failed to send commands!\nShow more?", "Command firing failed", e.ToString());
             }
 
@@ -45,7 +47,7 @@ namespace SSUtility2 {
         }
 
         async Task CheckLine(string line) {
-            if (line != "") {
+            if (line != "" && !line.StartsWith("//")) {
 
                 line = line.Replace(",", "");
                 line = line.ToLower().Replace("x", "0");
@@ -59,56 +61,79 @@ namespace SSUtility2 {
                     send = FullCommand(line);
                 } else {
                     send = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
+
+                    if (send == noCommand) {
+                        send = MakeCommand(line);
+                    }
                 }
 
-                if (send == pause) {
+                if (send == null || send == pause) {
+                    if (send == null) {
+                        MainForm.m.WriteToResponses(line + " is invalid!", true);
+                    }
                     return;
-                } else if (send == noCommand) {
-                    send = MakeCommand(line);
                 }
 
-                Command sendCommand = AsyncCameraCommunicate.SendNewCommand(send);
-                if (sendCommand.invalid) {
-                    MainForm.m.WriteToResponses("Command: " + line + " could not be sent because it's invalid!", true);
-                }
-                await Task.Delay(400).ConfigureAwait(false);
-
-                if (sendCommand.myReturn.msg == CameraCommunicate.defaultResult) {
-                    MainForm.m.WriteToResponses("Command: " + line + " didn't receive a response.", true);
-                }
-
+                //if (cB_Mode.Text == "IP") {
+                    await IPSend(send, line);
+                //} else {
+                //    SerialSend(send, line);
+                //}
             }
         }
 
-        byte[] FullCommand(string line) {
-            line = line.Trim();
-            uint send = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
-            uint camAdr = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
-            uint cm1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
-            uint cm2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
-            uint d1 = uint.Parse(line.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
-            uint d2 = uint.Parse(line.Substring(15, 2), System.Globalization.NumberStyles.HexNumber);
-            uint checksum = uint.Parse(line.Substring(18, 2), System.Globalization.NumberStyles.HexNumber);
-            
-            byte[] fullCommand = new byte[7] {(byte)send, (byte)camAdr, (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
-            MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand, true), true);
+        async Task IPSend(byte[] send, string curLine) {
+            Command sendCommand = AsyncCameraCommunicate.SendNewCommand(send);
+            if (sendCommand.invalid) {
+                MainForm.m.WriteToResponses("Command: " + curLine + " could not be sent because it's invalid!", true);
+            }
+            await Task.Delay(400).ConfigureAwait(false);
 
-            return fullCommand;
+            if (sendCommand.myReturn.msg == CameraCommunicate.defaultResult) {
+                MainForm.m.WriteToResponses("Command: " + curLine + " didn't receive a response.", true);
+            }
+        }
+
+        void SerialSend(byte[] send, string curLine) {
+
+        }
+
+        byte[] FullCommand(string line) {
+            try {
+                line = line.Trim();
+                uint send = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+                uint camAdr = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
+                uint cm1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+                uint cm2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
+                uint d1 = uint.Parse(line.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
+                uint d2 = uint.Parse(line.Substring(15, 2), System.Globalization.NumberStyles.HexNumber);
+                uint checksum = uint.Parse(line.Substring(18, 2), System.Globalization.NumberStyles.HexNumber);
+
+                byte[] fullCommand = new byte[7] { (byte)send, (byte)camAdr, (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
+                MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand, true), true);
+
+                return fullCommand;
+            } catch {
+                return null;
+            }
         }
 
         byte[] MakeCommand(string line) {
-            line = line.Trim();
+            try {
+                line = line.Trim();
 
-            uint cm1 = uint.Parse(line.Substring(0,2), System.Globalization.NumberStyles.HexNumber);
-            uint cm2 = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
-            uint d1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
-            uint d2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
-            uint checksum = (cm1 + cm2 + d1 + d2 + MainForm.m.MakeAdr(cB_IPCon_Selected)) % 256;
-            
-            byte[] fullCommand = new byte[7] { 0xFF, (byte)MainForm.m.MakeAdr(cB_IPCon_Selected), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum } ;
-            MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand, true), true);
+                uint cm1 = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+                uint cm2 = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
+                uint d1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+                uint d2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
+                uint checksum = (cm1 + cm2 + d1 + d2 + MainForm.m.MakeAdr(cB_IPCon_Selected)) % 256;
 
-            return fullCommand;
+                byte[] fullCommand = new byte[7] { 0xFF, (byte)MainForm.m.MakeAdr(cB_IPCon_Selected), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
+                MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand, true), true);
+                return fullCommand;
+            } catch {
+                return null;
+            }
         }
 
         public static void SaveScript(string[] lines, string name = null) {
@@ -121,7 +146,7 @@ namespace SSUtility2 {
         }
 
         private void b_PD_Save_Click(object sender, EventArgs e) {
-            SaveScript(rtb_PD_Commands.Lines, "PelcoScript");
+            SaveScript(tB_Commands.Lines, "PelcoScript");
         }
 
         private void b_PD_Fire_Click(object sender, EventArgs e) {
@@ -137,10 +162,10 @@ namespace SSUtility2 {
             DialogResult result = fdg.ShowDialog();
             if (result == DialogResult.OK) {
                 if (fdg.FileName.Contains(".txt")) {
-                    rtb_PD_Commands.Clear();
+                    tB_Commands.Clear();
                     string[] lines = File.ReadAllLines(fdg.FileName);
                     foreach (string line in lines) {
-                        rtb_PD_Commands.Text += line + "\n";
+                        tB_Commands.Text += line + "\n";
                     }
                 } else {
                     MainForm.ShowPopup("Please open a .txt file!\nYou tried to open an unsupported file type! Show more info?", "Invalid File Type!",
@@ -149,11 +174,6 @@ namespace SSUtility2 {
             }
         }
 
-        private void b_PD_FireSingle_Click(object sender, EventArgs e) {
-            CheckLine(tB_PD_Single.Text);
-            MessageBox.Show("Sent!");
-        }
-       
         private void b_PD_Stop_Click(object sender, EventArgs e) { //make it cancel current script
             stop = true;
             b_PD_Stop.Enabled = false;
@@ -189,5 +209,36 @@ namespace SSUtility2 {
             }
         }
 
+        private void tB_Commands_DragDrop(object sender, DragEventArgs e) {
+            string[] fileName = e.Data.GetData(DataFormats.FileDrop) as string[];
+            try {
+                if (fileName != null) {
+                    foreach (string line in fileName)
+                        tB_Commands.AppendText(File.ReadAllText(line) + "\n");
+                }
+            } catch (Exception error) {
+                MainForm.ShowPopup("Failed to open script!\nShow more?", "Script load failed!", error.ToString());
+            }
+        }
+
+        private void cB_Mode_SelectedIndexChanged(object sender, EventArgs e) {
+            if (cB_Mode.Text == "IP") {
+                p_IP.Show();
+                p_Serial.Hide();
+            } else if (cB_Mode.Text == "Serial"){
+                MessageBox.Show("Not implemented yet!");
+                p_IP.Hide();
+                p_Serial.Show();
+            }
+        }
+
+        private void tB_Commands_DragEnter(object sender, DragEventArgs e) {
+            tB_Commands.Enabled = true;
+            tB_Commands.Clear();
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
     }
 }

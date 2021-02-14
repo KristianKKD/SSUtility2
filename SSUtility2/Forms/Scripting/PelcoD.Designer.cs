@@ -30,15 +30,10 @@
             this.b_PD_Load = new System.Windows.Forms.Button();
             this.b_PD_Save = new System.Windows.Forms.Button();
             this.b_PD_Fire = new System.Windows.Forms.Button();
-            this.rtb_PD_Commands = new System.Windows.Forms.RichTextBox();
             this.l_PD_Scripting = new System.Windows.Forms.Label();
-            this.l_PD_Single = new System.Windows.Forms.Label();
-            this.b_PD_FireSingle = new System.Windows.Forms.Button();
-            this.tB_PD_Single = new System.Windows.Forms.TextBox();
             this.l_IPCon_Connected = new System.Windows.Forms.Label();
             this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
             this.tB_IPCon_Adr = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.cB_IPCon_Selected = new System.Windows.Forms.ComboBox();
             this.l_IPCon_SelectedCam = new System.Windows.Forms.Label();
             this.l_IPCon_Port = new System.Windows.Forms.Label();
@@ -48,6 +43,17 @@
             this.check_PD_Perfect = new System.Windows.Forms.CheckBox();
             this.tt_CommandFormat = new System.Windows.Forms.ToolTip(this.components);
             this.b_PD_ComList = new System.Windows.Forms.Button();
+            this.cB_Mode = new System.Windows.Forms.ComboBox();
+            this.l_Mode = new System.Windows.Forms.Label();
+            this.tB_Commands = new System.Windows.Forms.TextBox();
+            this.p_IP = new System.Windows.Forms.Panel();
+            this.p_Serial = new System.Windows.Forms.Panel();
+            this.l_Serial_Baud = new System.Windows.Forms.Label();
+            this.l_Port = new System.Windows.Forms.Label();
+            this.tB_Serial_Baud = new System.Windows.Forms.TextBox();
+            this.tB_Serial_Port = new System.Windows.Forms.TextBox();
+            this.p_IP.SuspendLayout();
+            this.p_Serial.SuspendLayout();
             this.SuspendLayout();
             // 
             // b_PD_Load
@@ -55,7 +61,7 @@
             this.b_PD_Load.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_Load.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Load.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_Load.Location = new System.Drawing.Point(348, 118);
+            this.b_PD_Load.Location = new System.Drawing.Point(349, 118);
             this.b_PD_Load.Name = "b_PD_Load";
             this.b_PD_Load.Size = new System.Drawing.Size(111, 38);
             this.b_PD_Load.TabIndex = 9;
@@ -68,7 +74,7 @@
             this.b_PD_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_Save.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_Save.Location = new System.Drawing.Point(348, 76);
+            this.b_PD_Save.Location = new System.Drawing.Point(349, 76);
             this.b_PD_Save.Name = "b_PD_Save";
             this.b_PD_Save.Size = new System.Drawing.Size(111, 38);
             this.b_PD_Save.TabIndex = 8;
@@ -81,25 +87,13 @@
             this.b_PD_Fire.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_Fire.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Fire.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_Fire.Location = new System.Drawing.Point(348, 32);
+            this.b_PD_Fire.Location = new System.Drawing.Point(349, 32);
             this.b_PD_Fire.Name = "b_PD_Fire";
             this.b_PD_Fire.Size = new System.Drawing.Size(111, 38);
             this.b_PD_Fire.TabIndex = 7;
             this.b_PD_Fire.Text = "Fire Commands";
             this.b_PD_Fire.UseVisualStyleBackColor = false;
             this.b_PD_Fire.Click += new System.EventHandler(this.b_PD_Fire_Click);
-            // 
-            // rtb_PD_Commands
-            // 
-            this.rtb_PD_Commands.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtb_PD_Commands.BackColor = System.Drawing.SystemColors.Control;
-            this.rtb_PD_Commands.Location = new System.Drawing.Point(12, 32);
-            this.rtb_PD_Commands.Name = "rtb_PD_Commands";
-            this.rtb_PD_Commands.Size = new System.Drawing.Size(330, 398);
-            this.rtb_PD_Commands.TabIndex = 6;
-            this.rtb_PD_Commands.Text = "";
             // 
             // l_PD_Scripting
             // 
@@ -110,37 +104,6 @@
             this.l_PD_Scripting.Size = new System.Drawing.Size(142, 20);
             this.l_PD_Scripting.TabIndex = 13;
             this.l_PD_Scripting.Text = "PelcoD Scripting";
-            // 
-            // l_PD_Single
-            // 
-            this.l_PD_Single.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.l_PD_Single.AutoSize = true;
-            this.l_PD_Single.Location = new System.Drawing.Point(12, 439);
-            this.l_PD_Single.Name = "l_PD_Single";
-            this.l_PD_Single.Size = new System.Drawing.Size(127, 13);
-            this.l_PD_Single.TabIndex = 16;
-            this.l_PD_Single.Text = "Single PelcoD Command:";
-            // 
-            // b_PD_FireSingle
-            // 
-            this.b_PD_FireSingle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.b_PD_FireSingle.BackColor = System.Drawing.SystemColors.Control;
-            this.b_PD_FireSingle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_FireSingle.Location = new System.Drawing.Point(270, 435);
-            this.b_PD_FireSingle.Name = "b_PD_FireSingle";
-            this.b_PD_FireSingle.Size = new System.Drawing.Size(75, 21);
-            this.b_PD_FireSingle.TabIndex = 15;
-            this.b_PD_FireSingle.Text = "Fire";
-            this.b_PD_FireSingle.UseVisualStyleBackColor = false;
-            this.b_PD_FireSingle.Click += new System.EventHandler(this.b_PD_FireSingle_Click);
-            // 
-            // tB_PD_Single
-            // 
-            this.tB_PD_Single.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.tB_PD_Single.Location = new System.Drawing.Point(145, 436);
-            this.tB_PD_Single.Name = "tB_PD_Single";
-            this.tB_PD_Single.Size = new System.Drawing.Size(119, 20);
-            this.tB_PD_Single.TabIndex = 14;
             // 
             // l_IPCon_Connected
             // 
@@ -153,7 +116,7 @@
             // tB_IPCon_Port
             // 
             this.tB_IPCon_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_IPCon_Port.Location = new System.Drawing.Point(348, 237);
+            this.tB_IPCon_Port.Location = new System.Drawing.Point(4, 60);
             this.tB_IPCon_Port.Name = "tB_IPCon_Port";
             this.tB_IPCon_Port.Size = new System.Drawing.Size(111, 20);
             this.tB_IPCon_Port.TabIndex = 85;
@@ -162,19 +125,11 @@
             // tB_IPCon_Adr
             // 
             this.tB_IPCon_Adr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_IPCon_Adr.Location = new System.Drawing.Point(348, 198);
+            this.tB_IPCon_Adr.Location = new System.Drawing.Point(4, 21);
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(111, 20);
             this.tB_IPCon_Adr.TabIndex = 84;
             this.tB_IPCon_Adr.Text = "192.168.1.71";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(572, 248);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 13);
-            this.label1.TabIndex = 88;
             // 
             // cB_IPCon_Selected
             // 
@@ -183,7 +138,7 @@
             this.cB_IPCon_Selected.Items.AddRange(new object[] {
             "Daylight",
             "Thermal"});
-            this.cB_IPCon_Selected.Location = new System.Drawing.Point(348, 276);
+            this.cB_IPCon_Selected.Location = new System.Drawing.Point(4, 99);
             this.cB_IPCon_Selected.Name = "cB_IPCon_Selected";
             this.cB_IPCon_Selected.Size = new System.Drawing.Size(111, 21);
             this.cB_IPCon_Selected.TabIndex = 86;
@@ -193,7 +148,7 @@
             // 
             this.l_IPCon_SelectedCam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.l_IPCon_SelectedCam.AutoSize = true;
-            this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(345, 260);
+            this.l_IPCon_SelectedCam.Location = new System.Drawing.Point(1, 83);
             this.l_IPCon_SelectedCam.Name = "l_IPCon_SelectedCam";
             this.l_IPCon_SelectedCam.Size = new System.Drawing.Size(91, 13);
             this.l_IPCon_SelectedCam.TabIndex = 83;
@@ -203,7 +158,7 @@
             // 
             this.l_IPCon_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.l_IPCon_Port.AutoSize = true;
-            this.l_IPCon_Port.Location = new System.Drawing.Point(344, 221);
+            this.l_IPCon_Port.Location = new System.Drawing.Point(0, 44);
             this.l_IPCon_Port.Name = "l_IPCon_Port";
             this.l_IPCon_Port.Size = new System.Drawing.Size(29, 13);
             this.l_IPCon_Port.TabIndex = 82;
@@ -213,7 +168,7 @@
             // 
             this.l_IPCon_Adr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.l_IPCon_Adr.AutoSize = true;
-            this.l_IPCon_Adr.Location = new System.Drawing.Point(345, 182);
+            this.l_IPCon_Adr.Location = new System.Drawing.Point(1, 5);
             this.l_IPCon_Adr.Name = "l_IPCon_Adr";
             this.l_IPCon_Adr.Size = new System.Drawing.Size(61, 13);
             this.l_IPCon_Adr.TabIndex = 80;
@@ -225,7 +180,7 @@
             this.b_PD_Stop.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_Stop.Enabled = false;
             this.b_PD_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_Stop.Location = new System.Drawing.Point(347, 391);
+            this.b_PD_Stop.Location = new System.Drawing.Point(348, 399);
             this.b_PD_Stop.Name = "b_PD_Stop";
             this.b_PD_Stop.Size = new System.Drawing.Size(111, 39);
             this.b_PD_Stop.TabIndex = 89;
@@ -238,7 +193,7 @@
             this.b_PD_RL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_RL.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_RL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_RL.Location = new System.Drawing.Point(348, 303);
+            this.b_PD_RL.Location = new System.Drawing.Point(349, 311);
             this.b_PD_RL.Name = "b_PD_RL";
             this.b_PD_RL.Size = new System.Drawing.Size(111, 38);
             this.b_PD_RL.TabIndex = 90;
@@ -251,7 +206,7 @@
             this.check_PD_Perfect.AccessibleDescription = "E.g. \"0021 0002 0153 0004\"";
             this.check_PD_Perfect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.check_PD_Perfect.AutoSize = true;
-            this.check_PD_Perfect.Location = new System.Drawing.Point(348, 162);
+            this.check_PD_Perfect.Location = new System.Drawing.Point(349, 162);
             this.check_PD_Perfect.Name = "check_PD_Perfect";
             this.check_PD_Perfect.Size = new System.Drawing.Size(95, 17);
             this.check_PD_Perfect.TabIndex = 92;
@@ -264,7 +219,7 @@
             this.b_PD_ComList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PD_ComList.BackColor = System.Drawing.SystemColors.Control;
             this.b_PD_ComList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PD_ComList.Location = new System.Drawing.Point(348, 347);
+            this.b_PD_ComList.Location = new System.Drawing.Point(349, 355);
             this.b_PD_ComList.Name = "b_PD_ComList";
             this.b_PD_ComList.Size = new System.Drawing.Size(111, 38);
             this.b_PD_ComList.TabIndex = 93;
@@ -272,36 +227,137 @@
             this.b_PD_ComList.UseVisualStyleBackColor = false;
             this.b_PD_ComList.Click += new System.EventHandler(this.b_PD_ComList_Click);
             // 
+            // cB_Mode
+            // 
+            this.cB_Mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cB_Mode.FormattingEnabled = true;
+            this.cB_Mode.Items.AddRange(new object[] {
+            "IP",
+            "Serial"});
+            this.cB_Mode.Location = new System.Drawing.Point(349, 6);
+            this.cB_Mode.Name = "cB_Mode";
+            this.cB_Mode.Size = new System.Drawing.Size(111, 21);
+            this.cB_Mode.TabIndex = 95;
+            this.cB_Mode.Text = "IP";
+            this.cB_Mode.SelectedIndexChanged += new System.EventHandler(this.cB_Mode_SelectedIndexChanged);
+            // 
+            // l_Mode
+            // 
+            this.l_Mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.l_Mode.AutoSize = true;
+            this.l_Mode.Location = new System.Drawing.Point(230, 9);
+            this.l_Mode.Name = "l_Mode";
+            this.l_Mode.Size = new System.Drawing.Size(112, 13);
+            this.l_Mode.TabIndex = 94;
+            this.l_Mode.Text = "Communication Mode:";
+            // 
+            // tB_Commands
+            // 
+            this.tB_Commands.AllowDrop = true;
+            this.tB_Commands.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Commands.BackColor = System.Drawing.SystemColors.Control;
+            this.tB_Commands.Location = new System.Drawing.Point(12, 32);
+            this.tB_Commands.Multiline = true;
+            this.tB_Commands.Name = "tB_Commands";
+            this.tB_Commands.Size = new System.Drawing.Size(331, 406);
+            this.tB_Commands.TabIndex = 96;
+            this.tB_Commands.DragDrop += new System.Windows.Forms.DragEventHandler(this.tB_Commands_DragDrop);
+            this.tB_Commands.DragEnter += new System.Windows.Forms.DragEventHandler(this.tB_Commands_DragEnter);
+            // 
+            // p_IP
+            // 
+            this.p_IP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_IP.Controls.Add(this.l_IPCon_Adr);
+            this.p_IP.Controls.Add(this.l_IPCon_Port);
+            this.p_IP.Controls.Add(this.l_IPCon_SelectedCam);
+            this.p_IP.Controls.Add(this.cB_IPCon_Selected);
+            this.p_IP.Controls.Add(this.tB_IPCon_Adr);
+            this.p_IP.Controls.Add(this.tB_IPCon_Port);
+            this.p_IP.Location = new System.Drawing.Point(345, 182);
+            this.p_IP.Name = "p_IP";
+            this.p_IP.Size = new System.Drawing.Size(125, 123);
+            this.p_IP.TabIndex = 97;
+            // 
+            // p_Serial
+            // 
+            this.p_Serial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_Serial.Controls.Add(this.l_Serial_Baud);
+            this.p_Serial.Controls.Add(this.l_Port);
+            this.p_Serial.Controls.Add(this.tB_Serial_Baud);
+            this.p_Serial.Controls.Add(this.tB_Serial_Port);
+            this.p_Serial.Location = new System.Drawing.Point(345, 182);
+            this.p_Serial.Name = "p_Serial";
+            this.p_Serial.Size = new System.Drawing.Size(125, 123);
+            this.p_Serial.TabIndex = 98;
+            this.p_Serial.Visible = false;
+            // 
+            // l_Serial_Baud
+            // 
+            this.l_Serial_Baud.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.l_Serial_Baud.AutoSize = true;
+            this.l_Serial_Baud.Location = new System.Drawing.Point(1, 5);
+            this.l_Serial_Baud.Name = "l_Serial_Baud";
+            this.l_Serial_Baud.Size = new System.Drawing.Size(58, 13);
+            this.l_Serial_Baud.TabIndex = 80;
+            this.l_Serial_Baud.Text = "Baud Rate";
+            // 
+            // l_Port
+            // 
+            this.l_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.l_Port.AutoSize = true;
+            this.l_Port.Location = new System.Drawing.Point(0, 44);
+            this.l_Port.Name = "l_Port";
+            this.l_Port.Size = new System.Drawing.Size(29, 13);
+            this.l_Port.TabIndex = 82;
+            this.l_Port.Text = "Port:";
+            // 
+            // tB_Serial_Baud
+            // 
+            this.tB_Serial_Baud.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Serial_Baud.Location = new System.Drawing.Point(4, 21);
+            this.tB_Serial_Baud.Name = "tB_Serial_Baud";
+            this.tB_Serial_Baud.Size = new System.Drawing.Size(111, 20);
+            this.tB_Serial_Baud.TabIndex = 84;
+            this.tB_Serial_Baud.Text = "9600";
+            // 
+            // tB_Serial_Port
+            // 
+            this.tB_Serial_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Serial_Port.Location = new System.Drawing.Point(4, 60);
+            this.tB_Serial_Port.Name = "tB_Serial_Port";
+            this.tB_Serial_Port.Size = new System.Drawing.Size(111, 20);
+            this.tB_Serial_Port.TabIndex = 85;
+            // 
             // PelcoD
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(470, 471);
-            this.Controls.Add(this.b_PD_ComList);
+            this.ClientSize = new System.Drawing.Size(470, 450);
             this.Controls.Add(this.check_PD_Perfect);
+            this.Controls.Add(this.p_IP);
+            this.Controls.Add(this.tB_Commands);
+            this.Controls.Add(this.cB_Mode);
+            this.Controls.Add(this.l_Mode);
+            this.Controls.Add(this.b_PD_ComList);
             this.Controls.Add(this.b_PD_RL);
             this.Controls.Add(this.b_PD_Stop);
-            this.Controls.Add(this.tB_IPCon_Port);
-            this.Controls.Add(this.tB_IPCon_Adr);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.cB_IPCon_Selected);
-            this.Controls.Add(this.l_IPCon_SelectedCam);
-            this.Controls.Add(this.l_IPCon_Port);
-            this.Controls.Add(this.l_IPCon_Adr);
             this.Controls.Add(this.l_IPCon_Connected);
-            this.Controls.Add(this.l_PD_Single);
-            this.Controls.Add(this.b_PD_FireSingle);
-            this.Controls.Add(this.tB_PD_Single);
             this.Controls.Add(this.l_PD_Scripting);
             this.Controls.Add(this.b_PD_Load);
             this.Controls.Add(this.b_PD_Save);
             this.Controls.Add(this.b_PD_Fire);
-            this.Controls.Add(this.rtb_PD_Commands);
+            this.Controls.Add(this.p_Serial);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PelcoD";
             this.Text = "PelcoD";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PelcoD_FormClosing);
+            this.p_IP.ResumeLayout(false);
+            this.p_IP.PerformLayout();
+            this.p_Serial.ResumeLayout(false);
+            this.p_Serial.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -312,15 +368,10 @@
         private System.Windows.Forms.Button b_PD_Load;
         private System.Windows.Forms.Button b_PD_Save;
         private System.Windows.Forms.Button b_PD_Fire;
-        public System.Windows.Forms.RichTextBox rtb_PD_Commands;
         public System.Windows.Forms.Label l_PD_Scripting;
-        private System.Windows.Forms.Label l_PD_Single;
-        private System.Windows.Forms.Button b_PD_FireSingle;
-        private System.Windows.Forms.TextBox tB_PD_Single;
         public System.Windows.Forms.Label l_IPCon_Connected;
         public System.Windows.Forms.TextBox tB_IPCon_Port;
         public System.Windows.Forms.TextBox tB_IPCon_Adr;
-        public System.Windows.Forms.Label label1;
         public System.Windows.Forms.ComboBox cB_IPCon_Selected;
         public System.Windows.Forms.Label l_IPCon_SelectedCam;
         public System.Windows.Forms.Label l_IPCon_Port;
@@ -330,5 +381,14 @@
         private System.Windows.Forms.CheckBox check_PD_Perfect;
         private System.Windows.Forms.ToolTip tt_CommandFormat;
         private System.Windows.Forms.Button b_PD_ComList;
+        public System.Windows.Forms.ComboBox cB_Mode;
+        public System.Windows.Forms.Label l_Mode;
+        public System.Windows.Forms.TextBox tB_Commands;
+        private System.Windows.Forms.Panel p_IP;
+        private System.Windows.Forms.Panel p_Serial;
+        public System.Windows.Forms.Label l_Serial_Baud;
+        public System.Windows.Forms.Label l_Port;
+        public System.Windows.Forms.TextBox tB_Serial_Baud;
+        public System.Windows.Forms.TextBox tB_Serial_Port;
     }
 }

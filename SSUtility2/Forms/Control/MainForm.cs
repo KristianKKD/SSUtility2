@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.13.7";
+        public const string version = "v1.3.13.8";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -552,16 +552,16 @@ namespace SSUtility2 {
             return msg;
         }
 
-        public void WriteToResponses(string text, bool hide, bool isSpam = false) {
+        public void WriteToResponses(string text, bool hide, bool isInfo = false) {
             this.Invoke((MethodInvoker)delegate {
                 if (rl.rtb_Log.Text.Length > 2000000000) {
                     rl.rtb_Log.Clear();
                 }
                 string sender = AsyncCameraCommunicate.GetSockEndpoint();
-                if (hide && !isSpam) {
+                if (hide && !isInfo) {
                     sender = "CLIENT";
                 }
-                if (isSpam && !rl.check_Info.Enabled) {
+                if (isInfo && !rl.check_Info.Enabled) {
                     return;
                 }
                 if (!hide || rl.check_RL_All.Checked) {
