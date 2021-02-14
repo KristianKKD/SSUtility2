@@ -27,27 +27,32 @@ namespace SSUtility2 {
             return true;
         }
 
-        public static Command SendNewCommand(byte[] code) {
-            Command com = new Command(code);
+        public static Command SendScriptCommand(ScriptCommand com) {
+            Command sendCommand = new Command(com.codeContent, false, false, com.spammable);
+            MainForm.m.WriteToResponses("Sending: " + MainForm.m.ReadCommand(com.codeContent, true) + " (" + com.names[0] + ")", true);
+            return sendCommand;
+        }
+
+        public static Command SendNewCommand(byte[] code, bool spammable = false) {
+            Command com = new Command(code, false, false, spammable);
+
             if (com.invalid) {
                 MainForm.m.WriteToResponses("Failed to send " + MainForm.m.ReadCommand(code), true);
-                //do something
                 return null;
             }
             return com;
         }
 
         public async static Task<string> QueryNewCommand(byte[] send) {
-            int comNum = SendNewCommand(send).id - 1;
-            await Task.Delay(300).ConfigureAwait(false);
+            int comNum = SendNewCommand(send, true).id - 1;
+            await Task.Delay(800).ConfigureAwait(false);
             string result = CheckCommandResult(comNum);
             return result;
         }
-         
+
         public static string CheckCommandResult(int id) {
-            //MessageBox.Show(id.ToString() + " " + CommandQueue.oldList.Count.ToString());
             Command oldCom = CommandQueue.FindResultByID(id);
-            if(oldCom != null && !oldCom.myReturn.invalid) {
+            if (oldCom != null && !oldCom.myReturn.invalid) {
                 return oldCom.myReturn.msg;
             }
             return defaultResult;
@@ -98,7 +103,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                if(!hideErrors)
+                if (!hideErrors)
                     MessageBox.Show("An error occured whilst connecting to camera!\n" + e.ToString());
             }
         }
@@ -108,8 +113,7 @@ namespace SSUtility2 {
                 sock.EndConnect(AR);
                 receiveBuffer = new byte[sock.ReceiveBufferSize];
                 sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
-            }
-            catch (SocketException ex) {
+            } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
@@ -117,7 +121,7 @@ namespace SSUtility2 {
                 MainForm.ShowPopup("Connect callback failed!\nShow more?", "Connect Failed!", e.ToString());
             }
         }
-        
+
         public static void Disconnect() {
             try {
                 sock.Shutdown(SocketShutdown.Both);
@@ -133,7 +137,7 @@ namespace SSUtility2 {
                     Connect(null);
                 }
                 Console.WriteLine("\nSending new command");
-                if(currentCom == null) {
+                if (currentCom == null) {
                     MessageBox.Show("Send command returned null!");
                     return;
                 }
@@ -151,8 +155,7 @@ namespace SSUtility2 {
         private static void SendCallback(IAsyncResult AR) {
             try {
                 sock.EndSend(AR);
-            }
-            catch (SocketException ex) {
+            } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
@@ -162,13 +165,13 @@ namespace SSUtility2 {
         }
 
         private static async void ReceiveCallback(IAsyncResult AR) { //why is this inconsistent?
-            try { 
+            try {
                 if (receiveBuffer.Length < 7) {
                     return;
                 }
-                
+
                 int received = sock.EndReceive(AR);
-                if(received > 0) {
+                if (received > 0) {
                     await SaveResponse();
                 }
 
@@ -207,15 +210,14 @@ namespace SSUtility2 {
                     }
                 }
 
-
                 msg = msg.Trim();
 
-                if (msg.Length > 5 && msg.Contains("F")) {
+                if (msg.Length > 0) {
                     if (currentCom.repeatable) {
                         InfoPanel.ReadResult(msg);
                     }
 
-                    if(currentCom == null) {
+                    if (currentCom == null) {
                         return;
                     }
 

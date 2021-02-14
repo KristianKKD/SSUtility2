@@ -30,7 +30,7 @@ namespace SSUtility2 {
 
         public static void StartTimer() {
             SendTimer = new Timer();
-            SendTimer.Interval = 500;
+            SendTimer.Interval = 400;
             SendTimer.Tick += new EventHandler(SendCurrentCommand);
             SendTimer.Start();
         }
@@ -69,17 +69,22 @@ namespace SSUtility2 {
                     com.myReturn.done = false;
 
                 int i = 0;
-                while (i < 4) {
+                while (i < 5) {
                     AsyncCameraCommunicate.SendCurrent();
-                    await Task.Delay(700);
+                    if (!com.spammable) {
+                        break;
+                    }
+                    await Task.Delay(600);
                     if (com.myReturn.done) {
                         break;
                     }
                     i++;
                 }
+                if(i > 1)
+                    MainForm.m.WriteToResponses("Sent command " + i + " times!", true, false);
 
                 if (!com.myReturn.done) {
-                    MainForm.m.WriteToResponses("Failed to get response", false, true);
+                    MainForm.m.WriteToResponses("No response!", false, true);
                 } else {
                     MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false);
                 }
@@ -144,17 +149,19 @@ namespace SSUtility2 {
         public byte[] content;
         public bool invalid;
         public bool repeatable;
+        public bool spammable;
 
         public bool sent;
 
         public ReturnCommand myReturn;
 
-        public Command(byte[] code, bool repeat = false, bool isCopy = false) {
+        public Command(byte[] code, bool repeat = false, bool isCopy = false, bool spam = false) {
             if (code == null || code.Length == 0) {
                 invalid = true;
             }
             content = code;
             repeatable = repeat;
+            spammable = spam;
 
             id = ++CommandQueue.total;
 

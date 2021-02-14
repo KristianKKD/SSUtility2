@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.13.8";
+        public const string version = "v1.3.14.0";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -554,8 +554,10 @@ namespace SSUtility2 {
 
         public void WriteToResponses(string text, bool hide, bool isInfo = false) {
             this.Invoke((MethodInvoker)delegate {
-                if (rl.rtb_Log.Text.Length > 2000000000) {
-                    rl.rtb_Log.Clear();
+                string finalText = text;
+
+                if (rl.tB_Log.Text.Length > 2000000000) {
+                    rl.tB_Log.Clear();
                 }
                 string sender = AsyncCameraCommunicate.GetSockEndpoint();
                 if (hide && !isInfo) {
@@ -565,7 +567,7 @@ namespace SSUtility2 {
                     return;
                 }
                 if (!hide || rl.check_RL_All.Checked) {
-                    rl.rtb_Log.AppendText("[" + sender + " at " + DateTime.Now + "]: " + text + "\n");
+                    rl.AddText(finalText, sender);
                 }
             });
         }

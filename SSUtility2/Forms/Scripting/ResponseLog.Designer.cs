@@ -26,25 +26,14 @@
         /// </summary>
         public void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResponseLog));
-            this.rtb_Log = new System.Windows.Forms.RichTextBox();
             this.b_RL_Clear = new System.Windows.Forms.Button();
             this.b_RL_Save = new System.Windows.Forms.Button();
             this.l_RL_RL = new System.Windows.Forms.Label();
             this.check_RL_All = new System.Windows.Forms.CheckBox();
             this.check_Info = new System.Windows.Forms.CheckBox();
+            this.tB_Log = new System.Windows.Forms.RichTextBox();
+            this.check_Timestamp = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
-            // 
-            // rtb_Log
-            // 
-            this.rtb_Log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.rtb_Log.Location = new System.Drawing.Point(12, 32);
-            this.rtb_Log.Name = "rtb_Log";
-            this.rtb_Log.ReadOnly = true;
-            this.rtb_Log.Size = new System.Drawing.Size(426, 402);
-            this.rtb_Log.TabIndex = 0;
-            this.rtb_Log.Text = "";
             // 
             // b_RL_Clear
             // 
@@ -104,18 +93,42 @@
             this.check_Info.Text = "Show Spam";
             this.check_Info.UseVisualStyleBackColor = true;
             // 
+            // tB_Log
+            // 
+            this.tB_Log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Log.BackColor = System.Drawing.SystemColors.Control;
+            this.tB_Log.Location = new System.Drawing.Point(16, 32);
+            this.tB_Log.Name = "tB_Log";
+            this.tB_Log.Size = new System.Drawing.Size(422, 402);
+            this.tB_Log.TabIndex = 17;
+            this.tB_Log.Text = "";
+            // 
+            // check_Timestamp
+            // 
+            this.check_Timestamp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.check_Timestamp.AutoSize = true;
+            this.check_Timestamp.Location = new System.Drawing.Point(444, 136);
+            this.check_Timestamp.Name = "check_Timestamp";
+            this.check_Timestamp.Size = new System.Drawing.Size(82, 17);
+            this.check_Timestamp.TabIndex = 18;
+            this.check_Timestamp.Text = "Timestamps";
+            this.check_Timestamp.UseVisualStyleBackColor = true;
+            // 
             // ResponseLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(543, 446);
+            this.Controls.Add(this.check_Timestamp);
+            this.Controls.Add(this.tB_Log);
             this.Controls.Add(this.check_Info);
             this.Controls.Add(this.check_RL_All);
             this.Controls.Add(this.l_RL_RL);
             this.Controls.Add(this.b_RL_Save);
             this.Controls.Add(this.b_RL_Clear);
-            this.Controls.Add(this.rtb_Log);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ResponseLog";
             this.Text = "ResponseLog";
@@ -126,12 +139,12 @@
         }
 
         #endregion
-
-        public System.Windows.Forms.RichTextBox rtb_Log;
         public System.Windows.Forms.Button b_RL_Clear;
         public System.Windows.Forms.Button b_RL_Save;
         public System.Windows.Forms.Label l_RL_RL;
         public System.Windows.Forms.CheckBox check_RL_All;
         public System.Windows.Forms.CheckBox check_Info;
+        public System.Windows.Forms.RichTextBox tB_Log;
+        public System.Windows.Forms.CheckBox check_Timestamp;
     }
 }

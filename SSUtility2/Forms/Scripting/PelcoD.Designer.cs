@@ -99,7 +99,7 @@
             // 
             this.l_PD_Scripting.AutoSize = true;
             this.l_PD_Scripting.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_PD_Scripting.Location = new System.Drawing.Point(12, 9);
+            this.l_PD_Scripting.Location = new System.Drawing.Point(8, 9);
             this.l_PD_Scripting.Name = "l_PD_Scripting";
             this.l_PD_Scripting.Size = new System.Drawing.Size(142, 20);
             this.l_PD_Scripting.TabIndex = 13;

@@ -49,19 +49,21 @@ namespace SSUtility2 {
             StartPlaying(true);
         }
 
-        public void StartPlaying(bool showErrors) {
+        public void StartPlaying(bool manuallyPressed) {
             try {
                 Uri combined = GetCombined();
 
                 if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr,
-                    tB_PlayerD_Buffering.Text, showErrors).Result) {
+                    tB_PlayerD_Buffering.Text, manuallyPressed).Result) {
 
-                    if (myInfoRef != null) {
-                        if (myInfoRef.CheckCam()) {
-                            check_PlayerD_StatsEnabled.Show();
-                            checkB_PlayerD_Manual.Checked = false;
-                        } else {
-                            check_PlayerD_StatsEnabled.Hide();
+                    if (manuallyPressed) {
+                        if (myInfoRef != null) {
+                            if (myInfoRef.CheckCam()) {
+                                check_PlayerD_StatsEnabled.Show();
+                                checkB_PlayerD_Manual.Checked = false;
+                            } else {
+                                check_PlayerD_StatsEnabled.Hide();
+                            }
                         }
                     }
 

@@ -12,11 +12,11 @@ namespace SSUtility2 {
         private void b_RL_Clear_Click(object sender, EventArgs e) {
             bool clear = MainForm.ShowPopup("Are you sure you want to clear the response log?", "Clear Response Log", "", false);
             if(clear)
-                rtb_Log.Clear();
+                tB_Log.Clear();
         }
 
         private void b_RL_Save_Click(object sender, EventArgs e) {
-            PelcoD.SaveScript(rtb_Log.Lines, "ResponseLog");
+            PelcoD.SaveScript(tB_Log.Lines, "ResponseLog");
         }
 
         private void ResponseLog_FormClosing(object sender, FormClosingEventArgs e) {
@@ -24,6 +24,13 @@ namespace SSUtility2 {
                 e.Cancel = true;
                 Hide();
             }
+        }
+
+        public void AddText(string text, string sender) {
+            string finalText = text;
+            if(check_Timestamp.Checked)
+                finalText = "[" + sender + " at " + DateTime.Now + "]: " + text;
+            tB_Log.AppendText(finalText + "\n");
         }
 
     }
