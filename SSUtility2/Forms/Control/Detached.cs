@@ -56,6 +56,8 @@ namespace SSUtility2 {
                 if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr,
                     tB_PlayerD_Buffering.Text, manuallyPressed).Result) {
 
+                    AsyncCameraCommunicate.TryConnect(null, true);
+
                     if (manuallyPressed) {
                         if (myInfoRef != null) {
                             if (myInfoRef.CheckCam()) {

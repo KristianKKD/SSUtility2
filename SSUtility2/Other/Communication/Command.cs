@@ -66,16 +66,16 @@ namespace SSUtility2 {
                 SendTimer.Stop();
 
                 if (com.repeatable)
-                    com.myReturn.done = false;
+                    com.done = false;
 
                 int i = 0;
                 while (i < 5) {
                     AsyncCameraCommunicate.SendCurrent();
-                    if (!com.spammable) {
+                    if (!com.spammable && !com.repeatable) {
                         break;
                     }
                     await Task.Delay(600);
-                    if (com.myReturn.done) {
+                    if (com.done) {
                         break;
                     }
                     i++;
@@ -83,10 +83,15 @@ namespace SSUtility2 {
                 if(i > 1)
                     MainForm.m.WriteToResponses("Sent command " + i + " times!", true, false);
 
-                if (!com.myReturn.done) {
+                if (!com.done) {
                     MainForm.m.WriteToResponses("No response!", false, true);
+                    com.done = true;
                 } else {
-                    MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false);
+                    if (com.repeatable) {
+                        MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false, true);
+                    } else {
+                        MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false);
+                    }
                 }
 
                 if(queueList.Contains(com))
@@ -130,15 +135,22 @@ namespace SSUtility2 {
 
     public class ReturnCommand {
         public string msg;
-        public bool invalid;
-        public bool done;
+
+        public Command myCommand;
 
         public void UpdateReturnMsg(string content) {
-            if (content == CameraCommunicate.defaultResult || content.Length == 0) {
-                invalid = true;
-            }
             msg = content;
-            done = true;
+            myCommand.done = true;
+        }
+
+        public static bool CheckInvalid(string message) {
+            if (message == null) {
+                return true;
+            }
+            if (message == CameraCommunicate.defaultResult || message.Length < 3) {
+                return true;
+            }
+            return false;
         }
 
     }
@@ -152,20 +164,20 @@ namespace SSUtility2 {
         public bool spammable;
 
         public bool sent;
+        public bool done;
 
         public ReturnCommand myReturn;
 
         public Command(byte[] code, bool repeat = false, bool isCopy = false, bool spam = false) {
-            if (code == null || code.Length == 0) {
-                invalid = true;
-            }
             content = code;
             repeatable = repeat;
             spammable = spam;
+            invalid = CheckInvalid();
 
             id = ++CommandQueue.total;
 
             myReturn = new ReturnCommand();
+            myReturn.myCommand = this;
 
             if (repeat && !isCopy) {
                 CommandQueue.savedCommandList.Add(this);
@@ -176,6 +188,13 @@ namespace SSUtility2 {
 
         public void Finish() {
             sent = true;
+        }
+
+        public bool CheckInvalid() {
+            if (content == null || content.Length < 3) {
+                return true;
+            }
+            return false;
         }
 
     }

@@ -79,7 +79,8 @@ namespace SSUtility2 {
                 
                 return true;
             } catch (Exception e){
-                MainForm.ShowPopup(failedConnectMsg, errorCaption, e.ToString(), true);
+                if(!stopError)
+                    MainForm.ShowPopup(failedConnectMsg, errorCaption, e.ToString(), true);
                 return false;
             }
         }

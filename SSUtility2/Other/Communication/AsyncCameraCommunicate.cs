@@ -6,7 +6,9 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
@@ -15,11 +17,15 @@ namespace SSUtility2 {
         public const string defaultResult = "00 00 00 00 00 00 00";
         static byte[] receiveBuffer;
 
-        public static async Task<bool> TryConnect(IPEndPoint ep = null) {
+        public static async Task<bool> TryConnect(IPEndPoint ep = null, bool hideErrors = false) {
             if (!sock.Connected) {
-                if (ep == null)
+                if (ep == null) {
+                    if (MainForm.m.ipCon.tB_IPCon_Adr.Text.Length == 0 || MainForm.m.ipCon.tB_IPCon_Port.Text.Length == 0) {
+                        return false;
+                    }
                     ep = new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text), int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text));
-                Connect(ep);
+                }
+                Connect(ep, hideErrors);
                 await Task.Delay(500).ConfigureAwait(false);
                 if (!sock.Connected)
                     return false;
@@ -44,16 +50,16 @@ namespace SSUtility2 {
         }
 
         public async static Task<string> QueryNewCommand(byte[] send) {
-            int comNum = SendNewCommand(send, true).id - 1;
-            await Task.Delay(800).ConfigureAwait(false);
-            string result = CheckCommandResult(comNum);
+            Command com = SendNewCommand(send, false);
+            string result = CheckCommandResult(com).Result;
             return result;
         }
 
-        public static string CheckCommandResult(int id) {
-            Command oldCom = CommandQueue.FindResultByID(id);
-            if (oldCom != null && !oldCom.myReturn.invalid) {
-                return oldCom.myReturn.msg;
+        public static async Task<string> CheckCommandResult(Command oldCom) {
+            if (oldCom != null) {
+                //if (!ReturnCommand.CheckInvalid(oldCom.myReturn.msg)) { //need to have this wait for the result and make sure it's not invalid
+                    return oldCom.myReturn.msg;
+                //}
             }
             return defaultResult;
         }
@@ -65,10 +71,12 @@ namespace SSUtility2 {
             }
         }
 
-        public static void Connect(IPEndPoint ep, bool hideErrors = false) { //need to auto connect somehow
+        public static void Connect(IPEndPoint ep, bool hideErrors = false) {
             try {
                 if (sock == null || (sock.Connected && ep == sock.RemoteEndPoint as IPEndPoint)) {
                     return;
+                } else {
+                    Disconnect();
                 }
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -111,6 +119,8 @@ namespace SSUtility2 {
         private static void ConnectCallback(IAsyncResult AR) {
             try {
                 sock.EndConnect(AR);
+                if (!sock.Connected)
+                    return;
                 receiveBuffer = new byte[sock.ReceiveBufferSize];
                 sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
             } catch (SocketException ex) {
@@ -118,12 +128,16 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MainForm.ShowPopup("Connect callback failed!\nShow more?", "Connect Failed!", e.ToString());
+                MainForm.ShowPopup("Connect callback failed!\nIP likely does not belong to a camera!\nShow more?", "Connect Failed!", e.ToString());
             }
         }
 
         public static void Disconnect() {
             try {
+                if (sock == null)
+                    return;
+                if (!sock.Connected)
+                    return;
                 sock.Shutdown(SocketShutdown.Both);
                 sock.Close();
             } catch { }

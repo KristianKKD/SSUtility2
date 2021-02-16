@@ -101,11 +101,18 @@ namespace SSUtility2 {
             return false;
         }
         
-        public static CamConfig CheckConfiguration() {
+        public static async Task<CamConfig> CheckConfiguration() {
             string result = AsyncCameraCommunicate.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).Result;
+            CamConfig myConfig = CamConfig.Strict;
+            if (result == null) {
+                return myConfig;
+            }
+            if (result.Length < 2) {
+                return myConfig;
+            }
+
             MessageBox.Show("config " + result);
             string type = result.Substring(12, 1);
-            CamConfig myConfig = CamConfig.Strict;
 
             switch (type) { //maybe add defaultresult handling? also currently has a different setting than expected?
                 case "0":

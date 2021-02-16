@@ -39,19 +39,19 @@ namespace SSUtility2 {
             }
         }
 
-        async void StartTicking() {
+        async Task StartTicking() {
             try {
                 if (!CheckCam()) {
                     HideNotTFOV();
                     l_TFOV.Text = "Camera check failed!";
-                    await Task.Delay(3000);
-                    l_TFOV.Text = "THERMAL FOV: ";
+                    await Task.Delay(3000).ConfigureAwait(false);
                     HideAll();
                     d.check_PlayerD_StatsEnabled.Checked = false;
+                    l_TFOV.Text = "THERMAL FOV: " + tfov;
                     return;
                 }
 
-                myConfig = OtherCameraCommunication.CheckConfiguration();
+                myConfig = OtherCameraCommunication.CheckConfiguration().Result;
                 GenCommands();
 
                 if (ConfigControl.updateMs.intVal > 0) {
@@ -60,7 +60,7 @@ namespace SSUtility2 {
                 }
                 isActive = true;
             } catch(Exception e) {
-                MainForm.ShowPopup("Error in updating info panel!", "Failed to update info panel!", e.ToString());
+                MainForm.ShowPopup("Error in updating info panel!\nShow more?", "Failed to update info panel!", e.ToString());
             }
         }
 
@@ -148,7 +148,6 @@ namespace SSUtility2 {
 
         private void UpdateTimer_Tick(object sender, EventArgs e) { //maybe have command reference this instead
             if (CommandQueue.lowPriority && AsyncCameraCommunicate.sock.Connected) {
-                Console.WriteLine("lowprio");
                 UpdateAll();
             }
         }
