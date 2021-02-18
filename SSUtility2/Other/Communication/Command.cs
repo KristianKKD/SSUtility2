@@ -37,7 +37,7 @@ namespace SSUtility2 {
 
         private static void SendCurrentCommand(object sender, EventArgs e) {  //too many commands overload
             try {
-                Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " LOWPRIORITY: " + lowPriority.ToString());
+                //Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " LOWPRIORITY: " + lowPriority.ToString());
                 if (!AsyncCameraCommunicate.sock.Connected) {
                     return;
                 }
@@ -88,7 +88,7 @@ namespace SSUtility2 {
                     com.done = true;
                 } else {
                     if (com.repeatable) {
-                        MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false, true);
+                        MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, true, true);
                     } else {
                         MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false);
                     }

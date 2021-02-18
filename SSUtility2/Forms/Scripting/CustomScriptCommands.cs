@@ -48,14 +48,16 @@ namespace SSUtility2 {
 
         public static async Task<ScriptCommand> CheckForCommands(string line, uint adr) {
             ScriptCommand presetCom = CheckForPresets(line).Result;
+            
+            if (presetCom == null) {
+                return new ScriptCommand(null, PelcoD.noCommand, null);
+            }
+
             ScriptCommand com = new ScriptCommand(presetCom.names, presetCom.codeContent,
                 presetCom.description, presetCom.spammable, presetCom.dualValue, presetCom.custom); //need to be careful not to overwrite my commands
-
             int value = CheckForVal(line);
 
-            if (com == null) {
-                return new ScriptCommand(null, PelcoD.noCommand, null);
-            } else if (com.codeContent == PelcoD.pause) {
+            if (com.codeContent == PelcoD.pause) {
                 MainForm.m.WriteToResponses("Waiting: " + value.ToString() + "ms", true);
                 await Task.Delay(value).ConfigureAwait(false);
                 return new ScriptCommand(null, PelcoD.pause, null);

@@ -75,6 +75,8 @@
             // 
             this.check_RL_All.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.check_RL_All.AutoSize = true;
+            this.check_RL_All.Checked = true;
+            this.check_RL_All.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_RL_All.Location = new System.Drawing.Point(444, 90);
             this.check_RL_All.Name = "check_RL_All";
             this.check_RL_All.Size = new System.Drawing.Size(90, 17);
@@ -86,6 +88,8 @@
             // 
             this.check_Info.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.check_Info.AutoSize = true;
+            this.check_Info.Checked = true;
+            this.check_Info.CheckState = System.Windows.Forms.CheckState.Checked;
             this.check_Info.Location = new System.Drawing.Point(444, 113);
             this.check_Info.Name = "check_Info";
             this.check_Info.Size = new System.Drawing.Size(83, 17);

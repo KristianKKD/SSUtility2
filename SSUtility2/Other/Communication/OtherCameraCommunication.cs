@@ -102,7 +102,7 @@ namespace SSUtility2 {
         }
         
         public static async Task<CamConfig> CheckConfiguration() {
-            string result = AsyncCameraCommunicate.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).Result;
+            string result = await AsyncCameraCommunicate.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
             CamConfig myConfig = CamConfig.Strict;
             if (result == null) {
                 return myConfig;
@@ -111,7 +111,6 @@ namespace SSUtility2 {
                 return myConfig;
             }
 
-            MessageBox.Show("config " + result);
             string type = result.Substring(12, 1);
 
             switch (type) { //maybe add defaultresult handling? also currently has a different setting than expected?
@@ -128,6 +127,7 @@ namespace SSUtility2 {
                     myConfig = CamConfig.Legacy;
                     break;
             }
+            //MessageBox.Show("config " + result + "\n" + myConfig.ToString());
 
             return myConfig;
         }

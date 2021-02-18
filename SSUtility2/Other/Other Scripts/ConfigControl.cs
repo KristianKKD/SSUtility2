@@ -84,6 +84,7 @@ namespace SSUtility2 {
             }
             if (MainForm.m.playerL.myInfoRef != null) {
                 MainForm.m.playerL.myInfoRef.UpdateTickInterval();
+                MainForm.m.playerR.myInfoRef.UpdateTickInterval();
             }
         }
 

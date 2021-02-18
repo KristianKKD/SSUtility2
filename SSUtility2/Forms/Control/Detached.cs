@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
@@ -49,7 +50,7 @@ namespace SSUtility2 {
             StartPlaying(true);
         }
 
-        public void StartPlaying(bool manuallyPressed) {
+        public async Task StartPlaying(bool manuallyPressed) {
             try {
                 Uri combined = GetCombined();
 
@@ -60,27 +61,34 @@ namespace SSUtility2 {
 
                     if (manuallyPressed) {
                         if (myInfoRef != null) {
-                            if (myInfoRef.CheckCam()) {
-                                check_PlayerD_StatsEnabled.Show();
-                                checkB_PlayerD_Manual.Checked = false;
-                            } else {
-                                check_PlayerD_StatsEnabled.Hide();
+                            if (await myInfoRef.CheckCam().ConfigureAwait(false)) { //
+                                Invoke((MethodInvoker)delegate {
+                                    check_PlayerD_StatsEnabled.Show();
+                                    checkB_PlayerD_Manual.Checked = false;
+                                });
+                        } else {
+                                Invoke((MethodInvoker)delegate {
+                                    check_PlayerD_StatsEnabled.Hide();
+                                });
                             }
                         }
                     }
+                    Invoke((MethodInvoker)delegate {
+                        b_PlayerD_Stop.Show();
 
-                    b_PlayerD_Stop.Show();
-
-                    if (check_PlayerD_StatsEnabled.Checked) {
-                        StartInfo();
-                    }
+                        if (check_PlayerD_StatsEnabled.Checked) {
+                            StartInfo();
+                        }
+                    });
 
                 } else {
                     if (myInfoRef != null) {
                         myInfoRef.HideAll();
                     }
+                    Invoke((MethodInvoker)delegate {
+                        b_PlayerD_Stop.Hide();
+                    });
 
-                    b_PlayerD_Stop.Hide();
                 }
             } catch (Exception e) {
                 MainForm.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());

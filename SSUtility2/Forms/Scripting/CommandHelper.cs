@@ -58,7 +58,7 @@ namespace SSUtility2 {
             }
 
             if (MainForm.m.pd.tB_Commands.Text.Length > 0) {
-                MainForm.m.pd.tB_Commands.Text += "\n";
+                MainForm.m.pd.tB_Commands.Text += Environment.NewLine;
             }
 
             string val = dgv_Coms.Rows[row].Cells[column].Value.ToString();

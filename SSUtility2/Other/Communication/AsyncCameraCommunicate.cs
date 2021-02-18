@@ -51,23 +51,34 @@ namespace SSUtility2 {
 
         public async static Task<string> QueryNewCommand(byte[] send) {
             Command com = SendNewCommand(send, false);
-            string result = CheckCommandResult(com).Result;
+            string result = await CheckCommandResult(com).ConfigureAwait(false);
+            //MessageBox.Show(result);
             return result;
         }
 
         public static async Task<string> CheckCommandResult(Command oldCom) {
+            for (int i = 0; i < 5; i++) {
+                if (oldCom.done)
+                    break;
+                await Task.Delay(600).ConfigureAwait(false);
+            }
+
             if (oldCom != null) {
-                //if (!ReturnCommand.CheckInvalid(oldCom.myReturn.msg)) { //need to have this wait for the result and make sure it's not invalid
+                if (!ReturnCommand.CheckInvalid(oldCom.myReturn.msg)) { //need to have this wait for the result and make sure it's not invalid
                     return oldCom.myReturn.msg;
-                //}
+                }
             }
             return defaultResult;
         }
 
         public static void QueueRepeatingCommand(int id) {
-            Command oldCom = CommandQueue.FindCommandByID(id);
-            if (oldCom != null) {
-                Command com = new Command(oldCom.content, true, true);
+            try {
+                Command oldCom = CommandQueue.FindCommandByID(id);
+                if (oldCom != null) {
+                    Command com = new Command(oldCom.content, true, true);
+                }
+            } catch (Exception e) {
+                MainForm.ShowPopup("Failed to queue a repeating command!\nShow more?", "Command Queuing Failed!", e.ToString());
             }
         }
 
@@ -226,7 +237,7 @@ namespace SSUtility2 {
 
                 msg = msg.Trim();
 
-                if (msg.Length > 0) {
+                if (msg.Length > 0 && msg.StartsWith("F")) {
                     if (currentCom.repeatable) {
                         InfoPanel.ReadResult(msg);
                     }
@@ -246,7 +257,7 @@ namespace SSUtility2 {
                     }
 
                 } else {
-                    MainForm.m.WriteToResponses("Received corrupted response", true, currentCom.repeatable);
+                    MainForm.m.WriteToResponses("Received CORRUPTED response: " + msg, true, currentCom.repeatable);
                 }
             } catch (Exception e) {
                 MainForm.ShowPopup("Message processing failed!\nShow more?", "Receive Failed!", e.ToString());
@@ -254,6 +265,10 @@ namespace SSUtility2 {
         }
 
         public static string GetSockEndpoint() {
+            if (sock == null)
+                return "";
+            if (!sock.Connected)
+                return "";
             return sock.RemoteEndPoint.ToString();
         }
 

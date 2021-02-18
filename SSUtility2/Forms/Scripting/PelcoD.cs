@@ -19,12 +19,15 @@ namespace SSUtility2 {
         }
 
         async Task Fire() {
-            b_PD_Fire.Enabled = false;
+            Invoke((MethodInvoker)delegate {
+                b_PD_Fire.Enabled = false;
+            });
+
             try {
                 //if (cB_Mode.Text == "IP") {
-                    if (!AsyncCameraCommunicate.TryConnect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text))).Result) {
-                        return;
-                    }
+                //if (!AsyncCameraCommunicate.TryConnect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text))).Result) {
+                //    return;
+                //}
                 //}
                 stop = false;
                 b_PD_Stop.Enabled = true;
@@ -38,52 +41,53 @@ namespace SSUtility2 {
                     }
                     await Task.Delay(300).ConfigureAwait(false);
                 }
-            } catch(Exception e) {
+            } catch (Exception e) {
                 MainForm.ShowPopup("Failed to send commands!\nShow more?", "Command firing failed", e.ToString());
+            }
+
+            Invoke((MethodInvoker)delegate {
+                MessageBox.Show("Finished sending commands!");
                 stop = false;
                 b_PD_Stop.Enabled = false;
                 b_PD_Fire.Enabled = true;
-            }
-
-            MessageBox.Show("Finished sending commands!");
-            stop = false;
-            b_PD_Stop.Enabled = false;
-            b_PD_Fire.Enabled = true;
+            });
         }
 
         async Task CheckLine(string line) {
-            if (line != "" && !line.StartsWith("//")) {
+                if (line != "" && !line.StartsWith("//")) {
 
-                line = line.Replace(",", "");
-                line = line.ToLower().Replace("x", "0");
+                    line = line.Replace(",", "");
+                    line = line.ToLower().Replace("x", "0");
 
-                if (tB_IPCon_Adr.Text == "" || tB_IPCon_Port.Text == null) {
-                    MainForm.m.WriteToResponses("No IP/Port found", false);
-                }
-
-                ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, false, false, false, false);
-                if (check_PD_Perfect.Checked) {
-                    sendCom.codeContent = FullCommand(line);
-                } else {
-                    sendCom = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
-                    if (sendCom.codeContent == noCommand) {
-                        sendCom.codeContent = MakeCommand(line);
+                    if (tB_IPCon_Adr.Text == "" || tB_IPCon_Port.Text == null) {
+                        MainForm.m.WriteToResponses("No IP/Port found", false);
                     }
+
+                    ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, false, false, false, false);
+                    if (check_PD_Perfect.Checked) {
+                        sendCom.codeContent = FullCommand(line);
+                    } else {
+                    Invoke((MethodInvoker)delegate {
+                        sendCom = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
+                        if (sendCom.codeContent == noCommand) {
+                            sendCom.codeContent = MakeCommand(line);
+                        }
+                    });
                 }
 
                 if (sendCom.codeContent == null || sendCom.codeContent == pause) {
-                    if (sendCom.codeContent == null) {
-                        MainForm.m.WriteToResponses(line + " is invalid!", true);
+                        if (sendCom.codeContent == null) {
+                            MainForm.m.WriteToResponses(line + " is invalid!", true);
+                        }
+                        return;
                     }
-                    return;
-                }
 
                 //if (cB_Mode.Text == "IP") {
-                    await IPSend(sendCom, line);
+                await IPSend(sendCom, line);
                 //} else {
                 //    SerialSend(send, line);
                 //}
-            }
+                }
         }
 
         async Task IPSend(ScriptCommand send, string curLine) {
@@ -154,10 +158,8 @@ namespace SSUtility2 {
         }
 
         private void b_PD_Fire_Click(object sender, EventArgs e) {
-            if (CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, null, false).Result) {
+            if (AsyncCameraCommunicate.TryConnect().Result) {
                 Fire();
-            } else {
-                MessageBox.Show("Not connected to camera!");
             }
         }
 

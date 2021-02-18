@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v1.3.14.1";
+        public const string version = "v1.3.15.0";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -536,7 +536,7 @@ namespace SSUtility2 {
             }
         }
 
-        public string ReadCommand(byte[] command, bool hide = false) {
+        public string ReadCommand(byte[] command, bool hide = true) {
             string msg = "";
             for (int i = 0; i < command.Length; i++) {
                 string hex = command[i].ToString("X").ToUpper();
@@ -868,6 +868,7 @@ namespace SSUtility2 {
             if (!lite) {
                 AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
             }
+            Application.DoEvents();
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
