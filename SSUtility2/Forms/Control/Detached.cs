@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -54,10 +55,9 @@ namespace SSUtility2 {
             try {
                 Uri combined = GetCombined();
 
-                if (MainForm.m.Play(VLCPlayer_D, combined, tB_PlayerD_SimpleAdr,
-                    tB_PlayerD_Buffering.Text, manuallyPressed).Result) {
+                if (Play(this, manuallyPressed).Result) {
 
-                    AsyncCameraCommunicate.TryConnect(null, true);
+                    AsyncCamCom.TryConnect(false);
 
                     if (manuallyPressed) {
                         if (myInfoRef != null) {
@@ -95,9 +95,56 @@ namespace SSUtility2 {
             }
         }
 
+        public async Task<bool> Play(Detached player, bool showError) {
+            try {
+                Uri combinedUrl = player.GetCombined();
+
+                if (showError) {
+                    bool parsed = IPAddress.TryParse(combinedUrl.Host, out IPAddress parsedIP);
+                    if (combinedUrl.Host == "" || !parsed) {
+                        MessageBox.Show("Address is invalid!");
+                        return false;
+                    }
+                    if (!OtherCamCom.PingAdr(parsedIP).Result) {
+                        MessageBox.Show("Address had no RTSP stream attached!");
+                        return false;
+                    }
+                }
+
+                Invoke((MethodInvoker)delegate {
+                    player.tB_PlayerD_SimpleAdr.Text = combinedUrl.ToString();
+                });
+
+                AxAXVLC.AxVLCPlugin2 vlc = player.VLCPlayer_D;
+                if (vlc.playlist.isPlaying) {
+                    vlc.playlist.stop();
+                    vlc.playlist.items.clear();
+                }
+
+                vlc.playlist.add(combinedUrl.ToString(), null, ":avcodec -hw:network -caching=" + player.tB_PlayerD_Buffering.Text); //might have to look at more options
+                vlc.playlist.next();
+                vlc.playlist.play();
+
+                return true;
+            } catch (Exception e) {
+                MainForm.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
+                return false;
+            }
+        }
+
+        public void ExtendOptions() {
+            if (checkB_PlayerD_Manual.Checked) {
+                p_PlayerD_Simple.Hide();
+                p_PlayerD_Extended.Show();
+            } else {
+                p_PlayerD_Extended.Hide();
+                p_PlayerD_Simple.Show();
+            }
+        }
+
         public void StartInfo() {
             if (ConfigControl.updateMs.intVal != 0 && myInfoRef != null
-                && CameraCommunicate.sock.Connected &&
+                && AsyncCamCom.sock.Connected &&
                 check_PlayerD_StatsEnabled.Checked) {
                 myInfoRef.InitializeTimer();
                 return;
@@ -111,8 +158,8 @@ namespace SSUtility2 {
             MainForm.m.SaveSnap(this);
         }
 
-        private void checkB_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
-            MainForm.m.ExtendOptions(checkB_PlayerD_Manual.Checked, p_PlayerD_Extended, p_PlayerD_Simple);
+        private void checkB_PlayerD_Extended(object sender, EventArgs e) {
+            ExtendOptions();
         }
 
         private void b_PlayerD_StartRec_Click(object sender, EventArgs e) {

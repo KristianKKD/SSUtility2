@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
-    class OtherCameraCommunication {
+    class OtherCamCom {
 
         public enum CamConfig {
             SSTraditional,
@@ -19,9 +19,6 @@ namespace SSUtility2 {
             Legacy
         }
 
-        static string failedConnectMsg = "Issue connecting to TCP Port\n" +
-                   "Would you like to see more information?";
-        static string errorCaption = "Error Occured!";
         public const string defaultResult = "00 00 00 00 00 00 00";
 
         public static bool CheckIsSameSubnet(string newIp) {
@@ -36,10 +33,10 @@ namespace SSUtility2 {
             Int32.TryParse(mySub, out int mine);
             Int32.TryParse(newSub, out int other);
 
-            if (mine != other && !ConfigControl.subnetNotif.boolVal) {
-                MainForm.ShowPopup("Local IP subnet is not the same as the camera subnet!\nShow possible fix?", errorCaption,
-                    "Try changing your IP from: " + rawIp + "\n To: " + rawIp.Replace(mySub, newSub) +
-                    "\nThe new IP will also have to be static!");
+            if (mine != other) {
+                MainForm.ShowPopup("Local IP subnet is not the same as the camera subnet!\nShow possible fix?",
+                    "Subnet Error!", "Try changing your IP from: " + rawIp + "\n To: "
+                    + rawIp.Replace(mySub, newSub) + "\nThe new IP will also have to be static!");
                 return false;
             } else {
                 return true;
@@ -63,17 +60,19 @@ namespace SSUtility2 {
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
-        public static void LabelDisplay(bool connected, Label l) {
-            if (l == null)
-                return;
-            if (connected) {
-                l.Text = "✓";
-                l.ForeColor = Color.Green;
-            } else {
-                l.Text = "❌";
-                l.ForeColor = Color.Red;
-            }
+        public static void LabelDisplay(bool connected) {
+            MainForm.m.Invoke((MethodInvoker)delegate {
+                Label l = MainForm.m.ipCon.l_IPCon_Connected;
+                if (connected) {
+                    l.Text = "✓";
+                    l.ForeColor = Color.Green;
+                } else {
+                    l.Text = "❌";
+                    l.ForeColor = Color.Red;
+                }
+            });
         }
+
 
         public static async Task<bool> PingAdr(IPAddress address) {
             Ping pinger = null;
@@ -84,7 +83,7 @@ namespace SSUtility2 {
 
             try {
                 pinger = new Ping();
-                PingReply reply = pinger.Send(address, 2);
+                PingReply reply = pinger.Send(address, 3);
                 if (reply.Status == IPStatus.Success) {
                     //if (address.Port == 0 || address.ToString().Contains("w")) {
                     //    return true;
@@ -102,7 +101,7 @@ namespace SSUtility2 {
         }
         
         public static async Task<CamConfig> CheckConfiguration() {
-            string result = await AsyncCameraCommunicate.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
+            string result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
             CamConfig myConfig = CamConfig.Strict;
             if (result == null) {
                 return myConfig;

@@ -53,8 +53,7 @@ namespace SSUtility2 {
             if (ApplicationIsActivated()) {
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN) {
                     int vkCode = Marshal.ReadInt32(lParam);
-                    cp.KeyControl(cp.l, (Keys)vkCode, MainForm.m.MakeAdr(cp.cB_IPCon_Selected),
-                        cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
+                    cp.KeyControl((Keys)vkCode);
                 }
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP) {
                     cp.StopCam();

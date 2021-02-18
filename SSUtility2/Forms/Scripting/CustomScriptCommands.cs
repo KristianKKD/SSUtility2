@@ -26,7 +26,7 @@ namespace SSUtility2 {
 
     public class CustomScriptCommands {
 
-        public static ScriptCommand[] cameraCommands = new ScriptCommand[]{
+        public readonly static ScriptCommand[] cameraCommands = new ScriptCommand[]{
             new ScriptCommand(new string[] {"pause", "wait"}, PelcoD.pause, "Pause the script execution for X milliseconds",false , true, false, true),
 
             new ScriptCommand(new string[] {"stop"}, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing"),
@@ -133,13 +133,13 @@ namespace SSUtility2 {
         }
 
         public static async Task QuickCommand(string command) {
-            if (!AsyncCameraCommunicate.TryConnect().Result) {
+            if (!AsyncCamCom.TryConnect().Result) {
                 return;
             }
 
             ScriptCommand send = CheckForCommands(command, MainForm.m.MakeAdr(MainForm.m.ipCon.cB_IPCon_Selected)).Result;
             var t = Task.Factory.StartNew(() => {
-                AsyncCameraCommunicate.SendScriptCommand(send);
+                AsyncCamCom.SendScriptCommand(send);
             });
             Task.WaitAll();
         }

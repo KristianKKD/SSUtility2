@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSUtility2
-{
+namespace SSUtility2 {
 
     public partial class ControlPanel : Form {
     
@@ -13,10 +12,6 @@ namespace SSUtility2
             InitializeComponent();
             l = l_IPCon_Connected;
             Program.cp = this;
-        }
-
-        public void StartConnect() {
-            CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l, true);
         }
 
         private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -33,56 +28,77 @@ namespace SSUtility2
         }
 
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
-            if (tB_Presets_Number.Text.ToString() == "") {
+            if (!PresetsCheck())
                 return;
-            }
-            byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
+            byte presetNumber = Convert.ToByte(tB_Presets_Number.Text);
 
-            CameraCommunicate.sendtoIPAsync(D.protocol.Preset(MainForm.m.MakeAdr(cB_IPCon_Selected), presetnumber, D.PresetAction.Goto), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            AsyncCamCom.SendNewCommand(D.protocol.Preset(MainForm.m.MakeAdr(), presetNumber, D.PresetAction.Goto));
         }
 
         private void b_Presets_Learn_Click(object sender, EventArgs e) { //can combine these 2 easily
-            if (tB_Presets_Number.Text.ToString() == "") {
+            if (!PresetsCheck())
                 return;
-            }
-            byte presetnumber = Convert.ToByte(tB_Presets_Number.Text);
+            byte presetNumber = Convert.ToByte(tB_Presets_Number.Text);
 
-            CameraCommunicate.sendtoIPAsync(D.protocol.Preset(MainForm.m.MakeAdr(cB_IPCon_Selected), presetnumber, D.PresetAction.Set),
-                l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            AsyncCamCom.SendNewCommand(D.protocol.Preset(MainForm.m.MakeAdr(), presetNumber, D.PresetAction.Set));
+        }
+
+        bool PresetsCheck() {
+            if (tB_Presets_Number.Text.ToString() == "") {
+                return false;
+            }
+            if (!MainForm.CheckIfNameValid(tB_Presets_Number.Text, true)) {
+                return false;
+            }
+            return true;
         }
 
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
-            MainForm.m.PTZMove(true, MainForm.m.MakeAdr(cB_IPCon_Selected), Convert.ToUInt32(track_PTZ_PTSpeed.Value),
-                D.Tilt.Up, D.Pan.Left, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l);
+            PTZMove(D.Tilt.Up, D.Pan.Left);
         }
 
         private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
-            MainForm.m.PTZMove(true, MainForm.m.MakeAdr(cB_IPCon_Selected), Convert.ToUInt32(track_PTZ_PTSpeed.Value),
-                D.Tilt.Down, D.Pan.Left, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l);
+            PTZMove(D.Tilt.Down, D.Pan.Left);
         }
 
         private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
-            MainForm.m.PTZMove(false, MainForm.m.MakeAdr(cB_IPCon_Selected), Convert.ToUInt32(track_PTZ_PTSpeed.Value),
-                D.Tilt.Null, D.Pan.Left, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l);
+            PTZMove(D.Tilt.Null, D.Pan.Left);
         }
 
         private void b_PTZ_Right_MouseDown(object sender, MouseEventArgs e) {
-            MainForm.m.PTZMove(false, MainForm.m.MakeAdr(cB_IPCon_Selected), Convert.ToUInt32(track_PTZ_PTSpeed.Value),
-                D.Tilt.Null, D.Pan.Right, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l);
+            PTZMove(D.Tilt.Null, D.Pan.Right);
         }
 
         private void b_PTZ_ZoomPos_MouseDown(object sender, MouseEventArgs e) {
-            MainForm.m.PTZZoom(D.Zoom.Tele, MainForm.m.MakeAdr(cB_IPCon_Selected), tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l);
+            PTZZoom(D.Zoom.Tele);
         }
 
         private void b_PTZ_ZoomNeg_MouseDown(object sender, MouseEventArgs e) {
-            MainForm.m.PTZZoom(D.Zoom.Wide, MainForm.m.MakeAdr(cB_IPCon_Selected), tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l);
+            PTZZoom(D.Zoom.Wide);
         }
         private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
-            CameraCommunicate.sendtoIPAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Far), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            AsyncCamCom.SendNewCommand(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Far));
         }
+
         private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
-            CameraCommunicate.sendtoIPAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Near), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+            AsyncCamCom.SendNewCommand(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Near));
+        }
+
+        void PTZMove(D.Tilt tilt, D.Pan pan) {
+            byte[] code;
+            uint speed = Convert.ToUInt32(MainForm.m.ipCon.track_PTZ_PTSpeed.Value);
+
+            if (tilt != D.Tilt.Null) {
+                code = D.protocol.CameraTilt(MainForm.m.MakeAdr(), tilt, speed);
+            } else {
+                code = D.protocol.CameraPan(MainForm.m.MakeAdr(), pan, speed);
+            }
+
+            AsyncCamCom.SendNewCommand(code, false);
+        }
+
+        public void PTZZoom(D.Zoom dir) {
+            AsyncCamCom.SendNewCommand(D.protocol.CameraZoom(MainForm.m.MakeAdr(), dir), false);
         }
 
         private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {
@@ -90,22 +106,21 @@ namespace SSUtility2
         }
 
         async Task DelayStop() {
-            if (!CameraCommunicate.sock.Connected) {
+            if (!AsyncCamCom.sock.Connected) {
                 return;
             }
-
-            CameraCommunicate.sendtoIPAsync(D.protocol.CameraStop(MainForm.m.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, true);
-            Task.Delay(100);
-            CameraCommunicate.sendtoIPAsync(D.protocol.CameraStop(MainForm.m.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text, true);
+            CustomScriptCommands.QuickCommand("stop");
+            await Task.Delay(100).ConfigureAwait(false);
+            CustomScriptCommands.QuickCommand("stop");
         }
 
         private void tB_IPCon_Adr_Leave(object sender, EventArgs e) {
-            CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l, true);
+            AsyncCamCom.TryConnect(true);
         }
 
-        private void tB_IPCon_Adr_KeyDown(object sender, KeyEventArgs e) {
+        private void tB_IPCon_Adr_KeyDown(object sender, KeyEventArgs e) { //make this better in future
             if (e.KeyCode == Keys.Enter) {
-                CameraCommunicate.Connect(tB_IPCon_Adr.Text, tB_IPCon_Port.Text, l, false);
+                AsyncCamCom.TryConnect(false);
             }
         }
 
@@ -115,14 +130,15 @@ namespace SSUtility2
 
         public void StopCam() {
             if (cB_IPCon_KeyboardCon.Checked == true) {
-                CameraCommunicate.sendtoIPAsync(D.protocol.CameraStop(MainForm.m.MakeAdr(cB_IPCon_Selected)), l, tB_IPCon_Adr.Text, tB_IPCon_Port.Text);
+                CustomScriptCommands.QuickCommand("stop");
             }
         }
 
-        public void KeyControl(Label lab, Keys k, uint address, string ip, string port) { //test this
+        public void KeyControl(Keys k) { //test this
             if (cB_IPCon_KeyboardCon.Checked == true) {
                 uint ptSpeed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
                 byte[] code = null;
+                uint address = MainForm.m.MakeAdr();
 
                 switch (k) { //is there a command that accepts diagonal? // there is but its in byte codes // need to accept multiple keys
                     case Keys.Up:
@@ -145,21 +161,13 @@ namespace SSUtility2
                         break;
                 }
 
-                CameraCommunicate.sendtoIPAsync(code, lab, ip, port);
+                AsyncCamCom.SendNewCommand(code);
             }
         }
 
         private void track_IPCon_Zoom_MouseUp(object sender, MouseEventArgs e) {
             int zoomSpeed = track_IPCon_Zoom.Value;
-            //byte[] code = CustomScriptCommands.CheckForCommands("setzoomspeed " + zoomSpeed.ToString(), MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
-            //CameraCommunicate.sendtoIPAsync(code, null);
-            byte[] code = new byte[] { 0xFF, 0x01, 0x00, 0x19, 0x00, Convert.ToByte(zoomSpeed), 0x00 }; //try 0x19 or 0x25 //try swap back to quick commands
-            uint checksum = CustomScriptCommands.GetCheckSum(code, 1);
-            code[6] = (byte)checksum;
-            string text = AsyncCameraCommunicate.QueryNewCommand(code).Result;
-            //string text = CameraCommunicate.Query(code, new Uri("http://" + tB_IPCon_Adr.Text + ":" + tB_IPCon_Port.Text)).Result;
-            //MainForm.m.ReadCommand(code, false);
-            MessageBox.Show(text);
+            CustomScriptCommands.QuickCommand("setzoomspeed " + zoomSpeed.ToString());
         }
 
     }

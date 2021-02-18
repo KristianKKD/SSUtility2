@@ -91,13 +91,13 @@ namespace SSUtility2 {
         }
 
         async Task IPSend(ScriptCommand send, string curLine) {
-            Command sendCommand = AsyncCameraCommunicate.SendScriptCommand(send);
+            Command sendCommand = AsyncCamCom.SendScriptCommand(send);
             if (sendCommand.invalid) {
                 MainForm.m.WriteToResponses("Command: " + curLine + " could not be sent because it's invalid!", true);
             }
             await Task.Delay(400).ConfigureAwait(false);
 
-            if (sendCommand.myReturn.msg == CameraCommunicate.defaultResult) {
+            if (sendCommand.myReturn.msg == OtherCamCom.defaultResult) {
                 MainForm.m.WriteToResponses("Command: " + curLine + " didn't receive a response.", true);
             }
         }
@@ -158,7 +158,7 @@ namespace SSUtility2 {
         }
 
         private void b_PD_Fire_Click(object sender, EventArgs e) {
-            if (AsyncCameraCommunicate.TryConnect().Result) {
+            if (AsyncCamCom.TryConnect().Result) {
                 Fire();
             }
         }

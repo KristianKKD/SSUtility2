@@ -13,7 +13,6 @@ namespace SSUtility2 {
     public partial class PresetPanel : Form {
 
         public MainForm mainRef;
-        D protocol = new D();
         public ControlPanel cp;
 
         public PresetPanel() {
@@ -21,25 +20,25 @@ namespace SSUtility2 {
         }
 
         private void b_Presets_Admin_MechMen_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 }, cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 }, cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 }, cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 }, cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
+            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 });
         }
 
         private void b_Presets_Admin_SetupMen_Click(object sender, EventArgs e) {
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 }, cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 }, cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 }, cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
-            CameraCommunicate.sendtoIPAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 }, cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
+            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 });
         }
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
-            DoPreset(mainRef.MakeAdr(cp.cB_IPCon_Selected), 196);
+            DoPreset(mainRef.MakeAdr(), 196);
         }
 
         private void b_Presets_Admin_DefaultMen_Click(object sender, EventArgs e) {
-            DoPreset(mainRef.MakeAdr(cp.cB_IPCon_Selected), 2);
+            DoPreset(mainRef.MakeAdr(), 2);
         }
 
         private void b_Presets_Daylight_Wiper_Click(object sender, EventArgs e) {
@@ -175,7 +174,7 @@ namespace SSUtility2 {
         }
 
         void DoPreset(uint adr, byte p) {
-            CameraCommunicate.sendtoIPAsync(protocol.Preset(adr, p, D.PresetAction.Goto), cp.l, cp.tB_IPCon_Adr.Text, cp.tB_IPCon_Port.Text);
+            AsyncCamCom.SendNewCommand(D.protocol.Preset(adr, p, D.PresetAction.Goto));
         }
 
     }

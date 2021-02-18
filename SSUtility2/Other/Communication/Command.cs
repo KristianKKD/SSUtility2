@@ -38,7 +38,7 @@ namespace SSUtility2 {
         private static void SendCurrentCommand(object sender, EventArgs e) {  //too many commands overload
             try {
                 //Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " LOWPRIORITY: " + lowPriority.ToString());
-                if (!AsyncCameraCommunicate.sock.Connected) {
+                if (!AsyncCamCom.sock.Connected) {
                     return;
                 }
 
@@ -48,7 +48,7 @@ namespace SSUtility2 {
                     Command com = queueList[0];
 
                     if (!com.invalid && !com.sent && com != null) {
-                        AsyncCameraCommunicate.currentCom = com;
+                        AsyncCamCom.currentCom = com;
                         WaitForCommandResponse(com).ConfigureAwait(false);
                     } else {
                         queueList.RemoveAt(0);
@@ -65,7 +65,7 @@ namespace SSUtility2 {
             try {
                 SendTimer.Stop();
 
-                if (com.repeatable)
+                if (com.isInfo)
                     com.done = false;
 
                 int i = 0;
@@ -73,10 +73,13 @@ namespace SSUtility2 {
                     bool repeated = false;
                     if (i > 0)
                         repeated = true;
-                    AsyncCameraCommunicate.SendCurrent(repeated);
-                    if (!com.spammable && !com.repeatable) {
+
+                    AsyncCamCom.SendCurrent(repeated);
+
+                    if (!com.spammable && !com.isInfo) {
                         break;
                     }
+
                     await Task.Delay(600);
                     if (com.done) {
                         break;
@@ -90,7 +93,7 @@ namespace SSUtility2 {
                     MainForm.m.WriteToResponses("No response!", false, true);
                     com.done = true;
                 } else {
-                    if (com.repeatable) {
+                    if (com.isInfo) {
                         MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, true, true);
                     } else {
                         MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false);
@@ -150,7 +153,7 @@ namespace SSUtility2 {
             if (message == null) {
                 return true;
             }
-            if (message == CameraCommunicate.defaultResult || message.Length < 3) {
+            if (message == OtherCamCom.defaultResult || message.Length < 3) {
                 return true;
             }
             return false;
@@ -163,7 +166,7 @@ namespace SSUtility2 {
         public int id;
         public byte[] content;
         public bool invalid;
-        public bool repeatable;
+        public bool isInfo;
         public bool spammable;
         public string name;
 
@@ -174,7 +177,7 @@ namespace SSUtility2 {
 
         public Command(byte[] code, bool repeat = false, bool isCopy = false, bool spam = false, string firstName = null) {
             content = code;
-            repeatable = repeat;
+            isInfo = repeat;
             spammable = spam;
             invalid = CheckInvalid();
 

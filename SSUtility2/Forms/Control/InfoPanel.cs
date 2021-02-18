@@ -28,10 +28,10 @@ namespace SSUtility2 {
         int fovID;
         int tFovID;
 
-        static OtherCameraCommunication.CamConfig myConfig;
+        static OtherCamCom.CamConfig myConfig;
 
         public void InitializeTimer() {
-            if (CameraCommunicate.sock.Connected) {
+            if (AsyncCamCom.sock.Connected) {
                 CheckTypeToDisplay();
                 commandPos = 0;
             } else {
@@ -41,24 +41,13 @@ namespace SSUtility2 {
 
         async Task StartTicking() {
             try {
-                //if (!await CheckCam().ConfigureAwait(false)) {
-                //    HideNotTFOV();
-                //    l_TFOV.Text = "Camera check failed!";
-                //    await Task.Delay(3000).ConfigureAwait(false);
-                //    HideAll();
-                //    d.check_PlayerD_StatsEnabled.Checked = false;
-                //    l_TFOV.Text = "THERMAL FOV: " + tfov;
-                //    return;
-                //}
-
-                myConfig = await OtherCameraCommunication.CheckConfiguration();
+                myConfig = await OtherCamCom.CheckConfiguration();
                 GenCommands();
 
                 if (ConfigControl.updateMs.intVal > 0) {
                     UpdateTimer.Interval = ConfigControl.updateMs.intVal;
                     UpdateTimer.Enabled = true;
                     UpdateTimer.Start();
-                    MessageBox.Show("started");
                 }
                 isActive = true;
             } catch(Exception e) {
@@ -78,7 +67,7 @@ namespace SSUtility2 {
 
         public async Task<bool> CheckCam() {
             try {
-                if (!AsyncCameraCommunicate.TryConnect().Result) {
+                if (!AsyncCamCom.TryConnect().Result) {
                     return false;
                 }
 
@@ -89,9 +78,9 @@ namespace SSUtility2 {
                     send = new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 };
                 }
 
-                string result = await AsyncCameraCommunicate.QueryNewCommand(send).ConfigureAwait(false);
+                string result = await AsyncCamCom.QueryNewCommand(send).ConfigureAwait(false);
 
-                if (result == OtherCameraCommunication.defaultResult) {
+                if (result == OtherCamCom.defaultResult) {
                     return false;
                 } else {
                     return true;
@@ -114,24 +103,14 @@ namespace SSUtility2 {
 
         public void ShowAll() {
             try {
-            l_Pan.Show();
-            l_Tilt.Show();
-            l_FOV.Show();
-            l_TFOV.Show();
+                l_Pan.Show();
+                l_Tilt.Show();
+                l_FOV.Show();
+                l_TFOV.Show();
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }
         }
-
-        //public void HideNotTFOV() {
-        //    l_Pan.Hide();
-        //    l_Tilt.Hide();
-        //    l_FOV.Hide();
-        //}
-
-        //public void HideTFOV() {
-        //    l_TFOV.Hide();
-        //}
 
         void CheckTypeToDisplay() {
             try {
@@ -159,8 +138,8 @@ namespace SSUtility2 {
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e) {
-            Console.WriteLine("CONNECTED : " + AsyncCameraCommunicate.sock.Connected.ToString());
-            if (CommandQueue.lowPriority && AsyncCameraCommunicate.sock.Connected) {
+            Console.WriteLine("CONNECTED : " + AsyncCamCom.sock.Connected.ToString());
+            if (CommandQueue.lowPriority && AsyncCamCom.sock.Connected) {
                 UpdateAll();
             }
         }
@@ -173,16 +152,16 @@ namespace SSUtility2 {
 
                 switch (commandPos) {
                     case 0:
-                        AsyncCameraCommunicate.QueueRepeatingCommand(panID);
+                        AsyncCamCom.QueueRepeatingCommand(panID);
                         break;
                     case 1:
-                        AsyncCameraCommunicate.QueueRepeatingCommand(tiltID);
+                        AsyncCamCom.QueueRepeatingCommand(tiltID);
                         break;
                     case 2:
-                        AsyncCameraCommunicate.QueueRepeatingCommand(fovID);
+                        AsyncCamCom.QueueRepeatingCommand(fovID);
                         break;
                     case 3:
-                        AsyncCameraCommunicate.QueueRepeatingCommand(tFovID);
+                        AsyncCamCom.QueueRepeatingCommand(tFovID);
                         break;
                 }
 
@@ -208,16 +187,16 @@ namespace SSUtility2 {
 
                 switch (commandType) {
                     case "59": //pan
-                        pan = OtherCameraCommunication.CalculatePan(result, myConfig);
+                        pan = OtherCamCom.CalculatePan(result, myConfig);
                         break;
                     case "5B": //tilt
-                        tilt = OtherCameraCommunication.CalculateTilt(result, myConfig);
+                        tilt = OtherCamCom.CalculateTilt(result, myConfig);
                         break;
                     case "5D": //fov
                         if (commandPos == 3) {
-                            fov = OtherCameraCommunication.ReturnedHexValToFloat(result);
+                            fov = OtherCamCom.ReturnedHexValToFloat(result);
                         } else {
-                            tfov = OtherCameraCommunication.ReturnedHexValToFloat(result);
+                            tfov = OtherCamCom.ReturnedHexValToFloat(result);
                         }
                         break;
                 }

@@ -9,7 +9,12 @@ namespace SSUtility2 {
             ConfigControl.ResetFile(path);
 
             foreach (Control c in MainForm.saveList) {
-                File.AppendAllText(path, c.Text + "\n");
+                if (c is TrackBar) {
+                    TrackBar t = (TrackBar)c;
+                    File.AppendAllText(path, t.Value.ToString() + "\n");
+                } else {
+                    File.AppendAllText(path, c.Text + "\n");
+                }
             }
 
             if (MainForm.m.finalMode) {
@@ -30,7 +35,12 @@ namespace SSUtility2 {
             string[] lines = File.ReadAllLines(path);
 
             for (int i = 0; i < MainForm.saveList.Length; i++) {
-                MainForm.saveList[i].Text = lines[i];
+                if (MainForm.saveList[i] is TrackBar) {
+                    TrackBar t = (TrackBar)MainForm.saveList[i];
+                    t.Value = int.Parse(lines[i]);
+                } else {
+                    MainForm.saveList[i].Text = lines[i];
+                }
             }
         }
 

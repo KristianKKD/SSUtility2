@@ -12,25 +12,42 @@ using System.Timers;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
-    public class AsyncCameraCommunicate {
+    public class AsyncCamCom {
+
         public static Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         public const string defaultResult = "00 00 00 00 00 00 00";
         static byte[] receiveBuffer;
 
-        public static async Task<bool> TryConnect(IPEndPoint ep = null, bool hideErrors = false) {
-            if (!sock.Connected) {
-                if (ep == null) {
-                    if (MainForm.m.ipCon.tB_IPCon_Adr.Text.Length == 0 || MainForm.m.ipCon.tB_IPCon_Port.Text.Length == 0) {
-                        return false;
+        public static async Task<bool> TryConnect(bool hideErrors = false) {
+            bool result = true;
+            try {
+                if (!sock.Connected) {
+                    if (MainForm.m.ipCon.tB_IPCon_Adr.Text.Length == 0 ||
+                        MainForm.m.ipCon.tB_IPCon_Port.Text.Length == 0) {
+
+                        result = false;
                     }
-                    ep = new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text), int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text));
+
+                    IPEndPoint ep = new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text),
+                        int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text));
+
+                    if (result) {
+                        Connect(ep, hideErrors);
+                        await Task.Delay(500).ConfigureAwait(false);
+                        if (!sock.Connected) {
+                            result = false;
+                        }
+                    }
+
                 }
-                Connect(ep, hideErrors);
-                await Task.Delay(500).ConfigureAwait(false);
-                if (!sock.Connected)
-                    return false;
+            } catch (Exception e){
+                if (!hideErrors)
+                    MainForm.ShowPopup("Failed to begin connection to camera!", "Connection Attempt Failed!"
+                        , e.ToString());
+                result = false;
             }
-            return true;
+            OtherCamCom.LabelDisplay(result);
+            return result;
         }
 
         public static Command SendScriptCommand(ScriptCommand com) {
@@ -101,7 +118,7 @@ namespace SSUtility2 {
                     return;
                 }
 
-                if (!OtherCameraCommunication.PingAdr(ep.Address).Result) {
+                if (!OtherCamCom.PingAdr(ep.Address).Result) {
                     if (!hideErrors)
                         MainForm.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString() + "\nPing: Failed");
@@ -112,6 +129,13 @@ namespace SSUtility2 {
 
                 if (end == null) {
                     return;
+                }
+
+
+                if (!hideErrors && !ConfigControl.subnetNotif.boolVal) {
+                    if (!OtherCamCom.CheckIsSameSubnet(ep.Address.ToString())) {
+                        return;
+                    }
                 }
 
                 sock.BeginConnect(end, ConnectCallback, null);
@@ -143,7 +167,7 @@ namespace SSUtility2 {
             }
         }
 
-        public static void Disconnect() {
+        public static void Disconnect(bool hideErrors = false) {
             try {
                 if (sock == null)
                     return;
@@ -151,7 +175,10 @@ namespace SSUtility2 {
                     return;
                 sock.Shutdown(SocketShutdown.Both);
                 sock.Close();
-            } catch { }
+            } catch (Exception e){
+                if (!hideErrors)
+                    MainForm.ShowPopup("Disconnection error occurred!", "Error Occurred!", e.ToString());
+            }
         }
 
         public static Command currentCom;
@@ -169,7 +196,7 @@ namespace SSUtility2 {
                     if (currentCom.name != null) {
                         commandText = commandText + " (" + currentCom.name + ")";
                     }
-                    MainForm.m.WriteToResponses("Sending: " + commandText, true, currentCom.repeatable);
+                    MainForm.m.WriteToResponses("Sending: " + commandText, true, currentCom.isInfo);
                 }
                 sock.BeginSend(currentCom.content, 0, currentCom.content.Length, SocketFlags.None, SendCallback, null);
             } catch (SocketException ex) {
@@ -242,7 +269,7 @@ namespace SSUtility2 {
                 msg = msg.Trim();
 
                 if (msg.Length > 0 && msg.StartsWith("F")) {
-                    if (currentCom.repeatable) {
+                    if (currentCom.isInfo) {
                         InfoPanel.ReadResult(msg);
                     }
 
@@ -257,11 +284,11 @@ namespace SSUtility2 {
                         currentCom.Finish();
                         //Response written to command to avoid spam
                     } else {
-                        MainForm.m.WriteToResponses("Received response but send command is corrupt!", true, currentCom.repeatable);
+                        MainForm.m.WriteToResponses("Received response but send command is corrupt!", true, currentCom.isInfo);
                     }
 
                 } else {
-                    MainForm.m.WriteToResponses("Received CORRUPTED response: " + msg, true, currentCom.repeatable);
+                    MainForm.m.WriteToResponses("Received CORRUPTED response: " + msg, true, currentCom.isInfo);
                 }
             } catch (Exception e) {
                 MainForm.ShowPopup("Message processing failed!\nShow more?", "Receive Failed!", e.ToString());

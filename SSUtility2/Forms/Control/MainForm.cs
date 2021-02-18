@@ -11,8 +11,8 @@ using System.Windows.Forms;
 
 namespace SSUtility2 {
     public partial class MainForm : Form {
-
-        public const string version = "v1.3.15.1";
+        
+        public const string version = "v1.4.0.0";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -63,6 +63,7 @@ namespace SSUtility2 {
                 ipCon.tB_IPCon_Adr,
                 ipCon.tB_IPCon_Port,
                 ipCon.cB_IPCon_Selected,
+                ipCon.track_PTZ_PTSpeed,
 
                 playerL.cB_PlayerD_Type,
                 playerL.tB_PlayerD_Adr,
@@ -108,23 +109,17 @@ namespace SSUtility2 {
         }
 
         async Task AutoConnect() {
-            bool connected = CameraCommunicate.Connect(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.l_IPCon_Connected, true).Result;
-            await Task.Delay(1000);
-            if (ConfigControl.autoPlay.boolVal) {
-                if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
-                    if (Play(playerL.VLCPlayer_D, playerL.GetCombined(), playerL.tB_PlayerD_SimpleAdr, playerL.tB_PlayerD_Buffering.Text, false).Result
-                        && connected && playerL.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
+            await Task.Delay(500).ConfigureAwait(false);
+            bool connected = await AsyncCamCom.TryConnect(true).ConfigureAwait(false);
+            if (ConfigControl.autoPlay.boolVal && connected) {
 
-                        playerL.StartPlaying(false);
-                    }
+                if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
+                    playerL.StartPlaying(false);
                 }
                 if (playerR.tB_PlayerD_SimpleAdr.Text != "") {
-                    if (Play(playerR.VLCPlayer_D, playerR.GetCombined(), playerR.tB_PlayerD_SimpleAdr, playerR.tB_PlayerD_Buffering.Text, false).Result
-                        && connected && playerR.GetCombined().ToString().Contains(ipCon.tB_IPCon_Adr.Text)) {
-
-                        playerR.StartPlaying(false);
-                    }
+                    playerR.StartPlaying(false);
                 }
+
             }
         }
 
@@ -354,8 +349,6 @@ namespace SSUtility2 {
 
             SetFeatureToAllControls(cp.Controls);
 
-            cp.StartConnect();
-
             pan.Size = new Size(cp.Size.Width, cp.Size.Height - 30);
             pan.Location = new Point(pan.Location.X, pan.Location.Y);
             p.Controls.Add(pan);
@@ -458,60 +451,18 @@ namespace SSUtility2 {
             return false;
         }
 
-        public static bool ShowPopup(string message, string caption, string error, bool showError = true) {
+        public static bool ShowPopup(string message, string caption, string error, bool isErrorType = true) {
             bool res = false;
             DialogResult d = MessageBox.Show(message, caption,
                                 MessageBoxButtons.YesNo,
                                 MessageBoxIcon.Question);
             if (d == DialogResult.Yes) {
                 res = true;
-                if (showError) {
+                if (isErrorType) {
                     MessageBox.Show(error, caption, MessageBoxButtons.OK);
                 }
             }
             return res;
-        }
-
-        public async Task<bool> Play(AxAXVLC.AxVLCPlugin2 player, Uri combinedUrl, TextBox linkedTB, string buffering, bool showError) {
-            try {
-            if (showError) {
-                if (combinedUrl.Host == "") {
-                    MessageBox.Show("Address is invalid!");
-                    return false;
-                }
-                if (!CameraCommunicate.PingAdr(combinedUrl).Result) {
-                    MessageBox.Show("Address had no RTSP stream attached!");
-                    return false;
-                }
-            }
-            linkedTB.Text = combinedUrl.ToString();
-            Replay(player, combinedUrl.ToString(), buffering);
-            return true;
-            } catch (Exception e) {
-                ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
-                return false;
-            }
-        }
-
-        public void Replay(AxAXVLC.AxVLCPlugin2 player, string combinedUrl, string buffering) {
-            if (player.playlist.isPlaying) {
-                player.playlist.stop();
-                player.playlist.items.clear();
-            }
-
-            player.playlist.add(combinedUrl, null, ":avcodec -hw:network -caching=" + buffering); //might have to look at more options
-            player.playlist.next();
-            player.playlist.play();
-        }
-
-        public void ExtendOptions(bool check, Panel gbExt, Panel gbSim) {
-            if (check) {
-                gbSim.Hide();
-                gbExt.Show();
-            } else {
-                gbExt.Hide();
-                gbSim.Show();
-            }
         }
 
         public static void BrowseFolderButton(TextBox tb) {
@@ -553,13 +504,20 @@ namespace SSUtility2 {
         }
 
         public void WriteToResponses(string text, bool hide, bool isInfo = false) {
-            this.Invoke((MethodInvoker)delegate {
+            if (closing) {
+                return;
+            }
+            if (this.InvokeRequired) {
+                this.Invoke((MethodInvoker)delegate {
+                    WriteToResponses(text, hide, isInfo);
+                });
+            } else {
                 string finalText = text;
 
                 if (rl.tB_Log.Text.Length > 2000000000) {
                     rl.tB_Log.Clear();
                 }
-                string sender = AsyncCameraCommunicate.GetSockEndpoint();
+                string sender = AsyncCamCom.GetSockEndpoint();
                 if (hide && !isInfo) {
                     sender = "CLIENT";
                 }
@@ -569,33 +527,7 @@ namespace SSUtility2 {
                 if (!hide || rl.check_RL_All.Checked) {
                     rl.AddText(finalText, sender);
                 }
-            });
-        }
-
-        public void PTZMove(bool IsTilt, uint address, uint speed,
-            D.Tilt tilt = D.Tilt.Up, D.Pan pan = D.Pan.Left,
-            string ip = null, string port = null, Control lcon = null) {
-            byte[] code;
-
-            if (CameraCommunicate.lastIPPort != ip + port) {
-                CameraCommunicate.Connect(ip, port, lcon);
             }
-
-            if (IsTilt) {
-                code = D.protocol.CameraTilt(address, tilt, speed);
-            } else {
-                code = D.protocol.CameraPan(address, pan, speed);
-            }
-
-            CameraCommunicate.sendtoIPAsync(code, ipCon.l_IPCon_Connected, ip, port, true);
-        }
-
-        public void PTZZoom(D.Zoom dir, uint address, string ip, string port, Label lcon) {
-            if (CameraCommunicate.lastIPPort != ip + port) {
-                CameraCommunicate.Connect(ip, port, lcon);
-            }
-
-            CameraCommunicate.sendtoIPAsync(D.protocol.CameraZoom(address, dir), lcon, ip, port, true);
         }
 
         public void SaveSnap(Detached player) {
@@ -862,13 +794,13 @@ namespace SSUtility2 {
             return didntExist;
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-            CameraCommunicate.CloseSock();
-            AsyncCameraCommunicate.Disconnect();
+        bool closing = false;
+        private async void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
+            closing = true;
+            AsyncCamCom.Disconnect(true);
             if (!lite) {
                 AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
             }
-            Application.DoEvents();
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {

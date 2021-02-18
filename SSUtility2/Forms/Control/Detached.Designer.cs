@@ -218,7 +218,7 @@
             this.checkB_PlayerD_Manual.TabIndex = 47;
             this.checkB_PlayerD_Manual.Text = "Extended RTSP Controls";
             this.checkB_PlayerD_Manual.UseVisualStyleBackColor = true;
-            this.checkB_PlayerD_Manual.CheckedChanged += new System.EventHandler(this.checkB_PlayerD_Manual_CheckedChanged);
+            this.checkB_PlayerD_Manual.CheckedChanged += new System.EventHandler(this.checkB_PlayerD_Extended);
             // 
             // b_PlayerD_StartRec
             // 
