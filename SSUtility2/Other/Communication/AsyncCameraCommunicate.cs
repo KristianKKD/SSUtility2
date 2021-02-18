@@ -34,8 +34,8 @@ namespace SSUtility2 {
         }
 
         public static Command SendScriptCommand(ScriptCommand com) {
-            Command sendCommand = new Command(com.codeContent, false, false, com.spammable);
-            MainForm.m.WriteToResponses("Sending: " + MainForm.m.ReadCommand(com.codeContent, true) + " (" + com.names[0] + ")", true);
+            Command sendCommand = new Command(com.codeContent, false, false, com.spammable, com.names[0]);
+            //MainForm.m.WriteToResponses("Sending: " + MainForm.m.ReadCommand(com.codeContent, true) + " (" + com.names[0] + ")", true);
             return sendCommand;
         }
 
@@ -156,17 +156,21 @@ namespace SSUtility2 {
 
         public static Command currentCom;
 
-        public static void SendCurrent() {
+        public static void SendCurrent(bool repeatedCommand) {
             try {
-                if (!sock.Connected) {
-                    Connect(null);
+                if (!repeatedCommand) {
+                    TryConnect();
+                    Console.WriteLine("\nSending new command");
+                    if (currentCom == null) {
+                        MessageBox.Show("Send command returned null!");
+                        return;
+                    }
+                    string commandText = MainForm.m.ReadCommand(currentCom.content);
+                    if (currentCom.name != null) {
+                        commandText = commandText + " (" + currentCom.name + ")";
+                    }
+                    MainForm.m.WriteToResponses("Sending: " + commandText, true, currentCom.repeatable);
                 }
-                Console.WriteLine("\nSending new command");
-                if (currentCom == null) {
-                    MessageBox.Show("Send command returned null!");
-                    return;
-                }
-
                 sock.BeginSend(currentCom.content, 0, currentCom.content.Length, SocketFlags.None, SendCallback, null);
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);

@@ -70,7 +70,10 @@ namespace SSUtility2 {
 
                 int i = 0;
                 while (i < 5) {
-                    AsyncCameraCommunicate.SendCurrent();
+                    bool repeated = false;
+                    if (i > 0)
+                        repeated = true;
+                    AsyncCameraCommunicate.SendCurrent(repeated);
                     if (!com.spammable && !com.repeatable) {
                         break;
                     }
@@ -162,13 +165,14 @@ namespace SSUtility2 {
         public bool invalid;
         public bool repeatable;
         public bool spammable;
+        public string name;
 
         public bool sent;
         public bool done;
 
         public ReturnCommand myReturn;
 
-        public Command(byte[] code, bool repeat = false, bool isCopy = false, bool spam = false) {
+        public Command(byte[] code, bool repeat = false, bool isCopy = false, bool spam = false, string firstName = null) {
             content = code;
             repeatable = repeat;
             spammable = spam;
@@ -178,6 +182,9 @@ namespace SSUtility2 {
 
             myReturn = new ReturnCommand();
             myReturn.myCommand = this;
+            if (firstName != null) {
+                name = firstName;
+            }
 
             if (repeat && !isCopy) {
                 CommandQueue.savedCommandList.Add(this);
