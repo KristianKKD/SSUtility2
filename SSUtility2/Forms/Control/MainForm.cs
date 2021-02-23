@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v1.4.1.0";
+        public const string version = "v1.4.1.1";
 
         private bool lite = false;
         private bool isOriginal = false;

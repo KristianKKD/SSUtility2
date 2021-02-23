@@ -51,9 +51,9 @@ namespace SSUtility2 {
         }
 
         public static void SendNonAsync(byte[] code) {
-            //if (!TryConnect().Result) {
-            //    return;
-            //}
+            if (!TryConnect().Result) {
+                return;
+            }
             sock.SendTo(code, sock.RemoteEndPoint);
         }
 
@@ -250,6 +250,10 @@ namespace SSUtility2 {
 
         static async Task SaveResponse() {
             try {
+                if (currentCom == null) {
+                    return;
+                }
+
                 string msg = "";
                 int comCount = 0;
                 bool startedCom = false;
@@ -276,9 +280,6 @@ namespace SSUtility2 {
                 msg = msg.Trim();
 
                 if (msg.Length > 0 && msg.StartsWith("F")) {
-                    if (currentCom == null) {
-                        return;
-                    }
                     if (currentCom.isInfo) {
                         InfoPanel.ReadResult(msg);
                     }

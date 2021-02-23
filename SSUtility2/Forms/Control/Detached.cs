@@ -61,7 +61,7 @@ namespace SSUtility2 {
 
                     if (manuallyPressed) {
                         if (myInfoRef != null) {
-                            if (await myInfoRef.CheckCam().ConfigureAwait(false)) { //
+                            if (await myInfoRef.CheckCam().ConfigureAwait(false)) {
                                 Invoke((MethodInvoker)delegate {
                                     check_PlayerD_StatsEnabled.Show();
                                     checkB_PlayerD_Manual.Checked = false;
