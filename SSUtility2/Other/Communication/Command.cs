@@ -75,11 +75,10 @@ namespace SSUtility2 {
                         repeated = true;
 
                     AsyncCamCom.SendCurrent(repeated);
-
                     if (!com.spammable && !com.isInfo) {
                         break;
                     }
-
+                    
                     await Task.Delay(600);
                     if (com.done) {
                         break;

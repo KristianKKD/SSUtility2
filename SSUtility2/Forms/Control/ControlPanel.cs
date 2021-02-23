@@ -77,11 +77,11 @@ namespace SSUtility2 {
             PTZZoom(D.Zoom.Wide);
         }
         private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNewCommand(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Far));
+            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Far));
         }
 
         private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNewCommand(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Near));
+            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Near));
         }
 
         void PTZMove(D.Tilt tilt, D.Pan pan) {
@@ -94,11 +94,11 @@ namespace SSUtility2 {
                 code = D.protocol.CameraPan(MainForm.m.MakeAdr(), pan, speed);
             }
 
-            AsyncCamCom.SendNewCommand(code, false);
+            AsyncCamCom.SendNonAsync(code);
         }
 
         public void PTZZoom(D.Zoom dir) {
-            AsyncCamCom.SendNewCommand(D.protocol.CameraZoom(MainForm.m.MakeAdr(), dir), false);
+            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(MainForm.m.MakeAdr(), dir));
         }
 
         private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {
@@ -109,9 +109,9 @@ namespace SSUtility2 {
             if (!AsyncCamCom.sock.Connected) {
                 return;
             }
-            CustomScriptCommands.QuickCommand("stop");
+            AsyncCamCom.SendNonAsync(D.protocol.CameraStop(MainForm.m.MakeAdr()));
             await Task.Delay(100).ConfigureAwait(false);
-            CustomScriptCommands.QuickCommand("stop");
+            AsyncCamCom.SendNonAsync(D.protocol.CameraStop(MainForm.m.MakeAdr()));
         }
 
         private void tB_IPCon_Adr_Leave(object sender, EventArgs e) {

@@ -150,8 +150,10 @@ namespace SSUtility2 {
                 return;
             } else if (ConfigControl.updateMs.intVal == 0) {
                 MessageBox.Show("Info panel refresh rate is set to 0!\nPanel will be hidden!");
+                Invoke((MethodInvoker)delegate {
+                    check_PlayerD_StatsEnabled.Checked = false;
+                });
             }
-            myInfoRef.HideAll();
         }
 
         private void b_PlayerD_SaveSnap_Click(object sender, EventArgs e) {

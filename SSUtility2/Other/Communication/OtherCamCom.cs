@@ -60,6 +60,7 @@ namespace SSUtility2 {
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
+
         public static void LabelDisplay(bool connected) {
             MainForm.m.Invoke((MethodInvoker)delegate {
                 Label l = MainForm.m.ipCon.l_IPCon_Connected;
@@ -101,18 +102,31 @@ namespace SSUtility2 {
         }
         
         public static async Task<CamConfig> CheckConfiguration() {
-            string result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
             CamConfig myConfig = CamConfig.Strict;
-            if (result == null) {
-                return myConfig;
-            }
-            if (result.Length < 2) {
-                return myConfig;
+            string result = defaultResult;
+
+            for (int i = 0; i < 3; i++) { 
+                result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
+
+                bool failed = false;
+                if (result == null) {
+                    failed = true; ;
+                }else if(result.Length < 2) {
+                    failed = true;
+                }else if(result == defaultResult) {
+                    failed = true;
+                }
+
+                if (!failed) {
+                    break;
+                } else if(i >= 2) {
+                    return myConfig;
+                }
             }
 
             string type = result.Substring(12, 1);
 
-            switch (type) { //maybe add defaultresult handling? also currently has a different setting than expected?
+            switch (type) {
                 case "0":
                     myConfig = CamConfig.SSTraditional;
                     break;
@@ -131,57 +145,45 @@ namespace SSUtility2 {
             return myConfig;
         }
 
-        public static float CalculateTilt(string code, CamConfig config) { //need to revist this and change value handling
-            float full = ReturnedHexValToFloat(code);
+        public static float CalculateTilt(string code, CamConfig config) {
+            float finalValue = ReturnedHexValToFloat(code);
 
             switch (config) {
                 case CamConfig.SSTraditional:
                 case CamConfig.Legacy:
+                    if(finalValue > 36001) {
+                        finalValue *= -1;
+                    }
                     break;
                 case CamConfig.Strict:
+                    finalValue = 360 - finalValue;
                     break;
                 case CamConfig.RevTilt:
                     break;
 
             }
-            //SSTraditional and Legacy
-            //Tilt 0-90 positive, -0.01 - -90 negative
-            //0-9000 = positive, -1 - -9000 (65535-56536) = negative
 
-            //Strict Only
-            //horizontal (normally 90 degrees clockwise) = 0
-            //vertical = 270, increasing value goes clockwise(through negative)
-            //illegal range 90.01 - 269.99
-            //65535-36001 illegal, 00000-35999 legal
-
-            //RevTilt
-            //Same as Strict, anticlockwise instead of clockwise
-            //0-9000 = from horizontal to vertically up, etc
-            return full;
+            finalValue = (float)Math.Round(finalValue, 1);
+            return finalValue;
         }
 
         public static float CalculatePan(string code, CamConfig config) {
-            float finalResult = 0;
-            float full = ReturnedHexValToFloat(code);
+            float finalValue = ReturnedHexValToFloat(code);
 
             switch (config) {
                 case CamConfig.SSTraditional:
                 case CamConfig.Legacy:
-
-                    if (full <= 360.00f) {
-                        finalResult = full;
-                    } else {
-                        finalResult = -(655.36f - full);
+                    if (finalValue > 360.00f) {
+                        finalValue = -(655.36f - finalValue);
                     }
-
                     break;
                 case CamConfig.Strict:
                 case CamConfig.RevTilt:
-                    finalResult = ReturnedHexValToFloat(code); //same thing anyway
                     break;
             }
 
-            return finalResult;
+            finalValue = (float)Math.Round(finalValue, 1);
+            return finalValue;
         }
 
         public static float ReturnedHexValToFloat(string code) {
@@ -191,8 +193,9 @@ namespace SSUtility2 {
             string combined = (d1 + d2);
 
             string added = int.Parse(combined, System.Globalization.NumberStyles.HexNumber).ToString();
-            float finalResult = float.Parse(added) / 100f;
-            return finalResult;
+            float finalValue = float.Parse(added) / 100f;
+            finalValue = (float)Math.Round(finalValue, 1);
+            return finalValue;
         }
 
     }

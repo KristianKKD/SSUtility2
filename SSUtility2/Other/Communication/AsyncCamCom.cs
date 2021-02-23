@@ -50,6 +50,13 @@ namespace SSUtility2 {
             return result;
         }
 
+        public static void SendNonAsync(byte[] code) {
+            //if (!TryConnect().Result) {
+            //    return;
+            //}
+            sock.SendTo(code, sock.RemoteEndPoint);
+        }
+
         public static Command SendScriptCommand(ScriptCommand com) {
             Command sendCommand = new Command(com.codeContent, false, false, com.spammable, com.names[0]);
             //MainForm.m.WriteToResponses("Sending: " + MainForm.m.ReadCommand(com.codeContent, true) + " (" + com.names[0] + ")", true);
@@ -57,7 +64,7 @@ namespace SSUtility2 {
         }
 
         public static Command SendNewCommand(byte[] code, bool spammable = false) {
-            Command com = new Command(code, false, false, spammable);
+            Command com = new Command(code, false, false, spammable, null);
 
             if (com.invalid) {
                 MainForm.m.WriteToResponses("Failed to send " + MainForm.m.ReadCommand(code), true);
@@ -67,13 +74,13 @@ namespace SSUtility2 {
         }
 
         public async static Task<string> QueryNewCommand(byte[] send) {
-            Command com = SendNewCommand(send, false);
+            Command com = SendNewCommand(send, true);
             string result = await CheckCommandResult(com).ConfigureAwait(false);
             //MessageBox.Show(result);
             return result;
         }
 
-        public static async Task<string> CheckCommandResult(Command oldCom) {
+        private static async Task<string> CheckCommandResult(Command oldCom) {
             for (int i = 0; i < 5; i++) {
                 if (oldCom.done)
                     break;
@@ -269,12 +276,11 @@ namespace SSUtility2 {
                 msg = msg.Trim();
 
                 if (msg.Length > 0 && msg.StartsWith("F")) {
-                    if (currentCom.isInfo) {
-                        InfoPanel.ReadResult(msg);
-                    }
-
                     if (currentCom == null) {
                         return;
+                    }
+                    if (currentCom.isInfo) {
+                        InfoPanel.ReadResult(msg);
                     }
 
                     CommandQueue.oldList.Add(currentCom);
@@ -288,6 +294,8 @@ namespace SSUtility2 {
                     }
 
                 } else {
+                    if (MainForm.m == null)
+                        return;
                     MainForm.m.WriteToResponses("Received CORRUPTED response: " + msg, true, currentCom.isInfo);
                 }
             } catch (Exception e) {

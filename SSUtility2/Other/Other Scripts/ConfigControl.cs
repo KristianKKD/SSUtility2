@@ -204,6 +204,9 @@ namespace SSUtility2 {
         }
 
         public void UpdateValue(string val) {
+            if(val.Length == 0) {
+                return;
+            }
             switch (myType) {
                 case VarType.boolean:
                     boolVal = ConfigControl.CheckVal(val);
