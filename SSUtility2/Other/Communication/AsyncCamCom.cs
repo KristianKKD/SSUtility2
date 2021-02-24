@@ -291,16 +291,17 @@ namespace SSUtility2 {
                         currentCom.Finish();
                         //Response written to command to avoid spam
                     } else {
-                        MainForm.m.WriteToResponses("Received response but send command is corrupt!", true, currentCom.isInfo);
+                        MainForm.m.WriteToResponses(CommandQueue.GetNameString() + "Received response but send command is corrupt!", true, currentCom.isInfo);
                     }
 
                 } else {
                     if (MainForm.m == null)
                         return;
-                    MainForm.m.WriteToResponses("Received CORRUPTED response: " + msg, true, currentCom.isInfo);
+                    
+                    MainForm.m.WriteToResponses(CommandQueue.GetNameString() + "Received CORRUPTED response: " + msg, true, currentCom.isInfo);
                 }
             } catch (Exception e) {
-                MainForm.ShowPopup("Message processing failed!\nShow more?", "Receive Failed!", e.ToString());
+                MainForm.ShowPopup(CommandQueue.GetNameString() + "Message processing failed!\nShow more?", "Receive Failed!", e.ToString());
             };
         }
 

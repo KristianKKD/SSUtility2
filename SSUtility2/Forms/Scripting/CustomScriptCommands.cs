@@ -26,25 +26,52 @@ namespace SSUtility2 {
 
     public class CustomScriptCommands {
 
-        public readonly static ScriptCommand[] cameraCommands = new ScriptCommand[]{
-            new ScriptCommand(new string[] {"pause", "wait"}, PelcoD.pause, "Pause the script execution for X milliseconds",false , true, false, true),
+        readonly static ScriptCommand pause = new ScriptCommand(new string[] { "pause", "wait" }, PelcoD.pause, "Pause the script execution for X milliseconds", false, true, false, true);
+        readonly static ScriptCommand stop = new ScriptCommand(new string[] { "stop" }, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing");
+        readonly static ScriptCommand mono = new ScriptCommand(new string[] { "mono", "monocolour", "monocolor" }, new byte[] { 0x00, 0x07, 0x00, 0x03 }, "Camera video toggles between color and black/white pallete");
+        readonly static ScriptCommand panzero = new ScriptCommand(new string[] { "panzero", "zeropan", "azimuth" }, new byte[] { 0x00, 0x49, 0x00, 0x00 }, "Sets camera pan to zero");
 
-            new ScriptCommand(new string[] {"stop"}, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing"),
-            new ScriptCommand(new string[] {"mono", "monocolour", "monocolor"}, new byte[] { 0x00, 0x07, 0x00, 0x03 }, "Camera video toggles between color and black/white pallete"),
-            new ScriptCommand(new string[] {"panzero", "zeropan", "azimuth"}, new byte[] { 0x00, 0x49, 0x00, 0x00 }, "Sets camera pan to zero"),
+        readonly static ScriptCommand setzoomspeed = new ScriptCommand(new string[] { "setzoomspeed" }, new byte[] { 0x00, 0x25, 0x00, 0x00 }, "Sets camera zoom speed to X (DATA 2)", true, true);
+        readonly static ScriptCommand setpantiltspeed = new ScriptCommand(new string[] { "setpantiltspeed" }, new byte[] { 0x00, 0x4B, 0x00, 0x00 }, "Sets camera pan and tilt speed to X (DATA 2)", true, true);
+        readonly static ScriptCommand setpanpos = new ScriptCommand(new string[] { "setpanpos", "setpan" }, new byte[] { 0x00, 0x4B, 0x00, 0x00 }, "Sets camera pan position to X (DATA 1 & DATA 2)", true, true, true);
+        readonly static ScriptCommand setiltpos = new ScriptCommand(new string[] { "settiltpos", "settilt" }, new byte[] { 0x00, 0x4D, 0x00, 0x00 }, "Sets camera tilt position to X (DATA 1 & DATA 2)", true, true, true);
 
-            new ScriptCommand(new string[] {"setzoomspeed"}, new byte[] { 0x00, 0x25, 0x00, 0x00 }, "Sets camera zoom speed to X (DATA 2)", true, true),
-            new ScriptCommand(new string[] {"setpantiltspeed"}, new byte[] { 0x00, 0x4B, 0x00, 0x00 }, "Sets camera pan and tilt speed to X (DATA 2)", true, true),
-            new ScriptCommand(new string[] {"setpanpos", "setpan"}, new byte[] { 0x00, 0x4B, 0x00, 0x00 }, "Sets camera pan position to X (DATA 1 & DATA 2)", true, true, true),
-            new ScriptCommand(new string[] {"settiltpos", "settilt"}, new byte[] { 0x00, 0x4D, 0x00, 0x00 }, "Sets camera tilt position to X (DATA 1 & DATA 2)", true, true, true),
+        readonly static ScriptCommand querypan = new ScriptCommand(new string[] { "querypan" }, new byte[] { 0x00, 0x51, 0x00, 0x00 }, "Returns camera pan position", true);
+        readonly static ScriptCommand querytilt = new ScriptCommand(new string[] { "querytilt" }, new byte[] { 0x00, 0x53, 0x00, 0x00 }, "Returns camera tilt position", true);
+        readonly static ScriptCommand queryzoom = new ScriptCommand(new string[] { "queryzoom", "queryfov" }, new byte[] { 0x00, 0x55, 0x00, 0x00 }, "Returns camera FOV", true);
+        readonly static ScriptCommand queryfocus = new ScriptCommand(new string[] { "queryfocus" }, new byte[] { 0x01, 0x55, 0x00, 0x00 }, "Returns camera focus value", true);
+        readonly static ScriptCommand querypost = new ScriptCommand(new string[] { "querypost" }, new byte[] { 0x07, 0x6B, 0x00, 0x00 }, "Returns camera test data", true);
+        readonly static ScriptCommand queryconfig = new ScriptCommand(new string[] { "queryconfig" }, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config, (thermal only)", true);
 
-            new ScriptCommand(new string[] {"querypan"}, new byte[] { 0x00, 0x51, 0x00, 0x00 }, "Returns camera pan position", true),
-            new ScriptCommand(new string[] {"querytilt"}, new byte[] { 0x00, 0x53, 0x00, 0x00 }, "Returns camera tilt position", true),
-            new ScriptCommand(new string[] {"queryzoom", "queryfov"}, new byte[] { 0x00, 0x55, 0x00, 0x00 }, "Returns camera FOV", true),
-            new ScriptCommand(new string[] {"queryfocus"}, new byte[] { 0x01, 0x55, 0x00, 0x00 }, "Returns camera focus value", true),
-            new ScriptCommand(new string[] {"querypost"}, new byte[] { 0x07, 0x6B, 0x00, 0x00 }, "Returns camera test data", true),
-            new ScriptCommand(new string[] {"queryconfig"}, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config, (thermal only)", true),
+        public readonly static ScriptCommand[] queryCommands = new ScriptCommand[] {
+            querypan,
+            querytilt,
+            queryzoom,
+            queryfocus,
+            querypost,
+            queryconfig,
         };
+
+        public readonly static ScriptCommand[] setCommands = new ScriptCommand[] {
+            setzoomspeed,
+            setpantiltspeed,
+            setpanpos,
+            setiltpos,
+        };
+
+        public readonly static ScriptCommand[] otherCommands = new ScriptCommand[] {
+            pause,
+            stop,
+            mono,
+            panzero,
+        };
+
+        public readonly static ScriptCommand[][] cameraArrayCommands = new ScriptCommand[][]{
+            setCommands,
+            otherCommands,
+            queryCommands,
+        };
+
 
         public static async Task<ScriptCommand> CheckForCommands(string line, uint adr) {
             ScriptCommand presetCom = CheckForPresets(line).Result;
@@ -121,11 +148,19 @@ namespace SSUtility2 {
                 start = start.Trim();
             }
 
-            for (int i = 0; i < cameraCommands.Length; i++) {
-                for (int x = 0; x < cameraCommands[i].names.Length; x++) {
-                    if (cameraCommands[i].names[x] == start || line == MainForm.m.ReadCommand(cameraCommands[i].codeContent,true)) {
-                        return cameraCommands[i];
+                foreach (ScriptCommand[] commandArray in cameraArrayCommands) {
+                    foreach (ScriptCommand sc in commandArray) {
+
+                    if(line == MainForm.m.ReadCommand(sc.codeContent, true)){
+                        return sc;
                     }
+
+                    for (int x = 0; x < sc.names.Length; x++) {
+                        if (sc.names[x] == start) {
+                            return sc;
+                        }
+                    }
+
                 }
             }
 

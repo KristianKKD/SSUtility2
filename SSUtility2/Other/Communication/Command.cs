@@ -88,18 +88,20 @@ namespace SSUtility2 {
                 if(i > 1)
                     MainForm.m.WriteToResponses("Sent command " + i + " times!", true, false);
 
+
                 if (!com.done) {
-                    MainForm.m.WriteToResponses("No response!", false, true);
-                    com.done = true;
+                    MainForm.m.WriteToResponses(GetNameString() + "No response!", false, true);
                 } else {
                     if (com.isInfo) {
-                        MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, true, true);
+                        MainForm.m.WriteToResponses(GetNameString() + "Received: " + com.myReturn.msg, true, true);
                     } else {
-                        MainForm.m.WriteToResponses("Received: " + com.myReturn.msg, false);
+                        MainForm.m.WriteToResponses(GetNameString() + "Received: " + com.myReturn.msg, false);
                     }
                 }
 
-                if(queueList.Contains(com))
+                com.done = true;
+
+                if (queueList.Contains(com))
                     queueList.Remove(com);
                 
                 
@@ -109,13 +111,16 @@ namespace SSUtility2 {
             }
         }
 
-        public static Command GetCurCommand() {
-            return queueList[0];
-        }
-
-        public static void QueueCommand(Command com) {
-            if (!com.invalid) {
-                queueList.Add(com);
+        public static string GetNameString() {
+            try {
+                Command com = AsyncCamCom.currentCom;
+                string nameString = "";
+                if (com.name != null) {
+                    nameString = "(" + com.name + ") ";
+                }
+                return nameString;
+            } catch {
+                return "";
             }
         }
 

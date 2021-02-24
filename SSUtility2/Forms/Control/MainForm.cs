@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v1.4.1.1";
+        public const string version = "v1.4.1.2";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -841,10 +841,6 @@ namespace SSUtility2 {
             rl.BringToFront();
         }
 
-        private void Menu_QC_PanZero_Click(object sender, EventArgs e) {
-            CustomScriptCommands.QuickCommand("panzero");
-        }
-
         private void Menu_Window_Osiris_Click(object sender, EventArgs e) {
             OpenOsiris();
         }
@@ -852,6 +848,10 @@ namespace SSUtility2 {
         private void Menu_Window_Settings_Click(object sender, EventArgs e) {
             setPage.Show();
             setPage.BringToFront();
+        }
+
+        private void Menu_QC_PanZero_Click(object sender, EventArgs e) {
+            CustomScriptCommands.QuickCommand("panzero");
         }
 
         private void Menu_QC_Pan_Click(object sender, EventArgs e) {

@@ -57,7 +57,7 @@ namespace SSUtility2 {
 
                 if (Play(this, manuallyPressed).Result) {
 
-                    AsyncCamCom.TryConnect(false);
+                    await AsyncCamCom.TryConnect(true).ConfigureAwait(false);
 
                     if (manuallyPressed) {
                         if (myInfoRef != null) {

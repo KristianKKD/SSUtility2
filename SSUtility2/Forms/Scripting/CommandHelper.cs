@@ -17,36 +17,38 @@ namespace SSUtility2 {
         }
 
         void LoadContents() {
-            ScriptCommand[] coms = CustomScriptCommands.cameraCommands;
+            ScriptCommand[][] coms = CustomScriptCommands.cameraArrayCommands;
 
-            for (int i = 0; i < coms.Length; i++) {
-                DataGridViewRow row = (DataGridViewRow)dgv_Coms.Rows[0].Clone();
-                ScriptCommand curCom = coms[i];
+            foreach (ScriptCommand[] commandArray in coms) {
+                foreach (ScriptCommand sc in commandArray) {
+                    DataGridViewRow row = (DataGridViewRow)dgv_Coms.Rows[0].Clone();
+                    ScriptCommand curCom = sc;
 
-                string names = "";
-                for (int x = 0; x < curCom.names.Length; x++) {
-                    names += curCom.names[x];
-                    if (curCom.valueAccepting) {
-                        names += " 0";
+                    string names = "";
+                    for (int x = 0; x < curCom.names.Length; x++) {
+                        names += curCom.names[x];
+                        if (curCom.valueAccepting) {
+                            names += " 0";
+                        }
+
+                        if (x < curCom.names.Length - 1)
+                            names += ", ";
+                    }
+                    row.Cells[0].Value = names;
+
+                    if (!curCom.custom) {
+                        row.Cells[1].Value = MainForm.m.ReadCommand(curCom.codeContent, true);
+                    } else {
+                        row.Cells[2].Value = "(Custom Command) ";
                     }
 
-                    if (x < curCom.names.Length - 1)
-                        names += ", ";
-                }
-                row.Cells[0].Value = names;
+                    row.Cells[2].Value += curCom.description;
 
-                if (!curCom.custom) {
-                    row.Cells[1].Value = MainForm.m.ReadCommand(curCom.codeContent, true);
-                } else {
-                    row.Cells[2].Value = "(Custom Command) ";
+                    dgv_Coms.Rows.Add(row);
                 }
 
-                row.Cells[2].Value += curCom.description; 
-
-                dgv_Coms.Rows.Add(row);
+                dgv_Coms.AllowUserToAddRows = false;
             }
-
-            dgv_Coms.AllowUserToAddRows = false;
         }
 
         private void dgv_Coms_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
