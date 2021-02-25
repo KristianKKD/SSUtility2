@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v1.4.1.2";
+        public const string version = "v1.4.1.3";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -861,7 +861,6 @@ namespace SSUtility2 {
         private void Menu_QC_Tilt_Click(object sender, EventArgs e) {
             new QuickCommandEntry("settilt", "Enter tilt pos value");
         }
-
 
     } // end of class MainForm
 } // end of namespace SSLUtility2

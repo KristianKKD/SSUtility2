@@ -356,7 +356,6 @@
             this.track_IPCon_Zoom.BackColor = System.Drawing.SystemColors.Window;
             this.track_IPCon_Zoom.Location = new System.Drawing.Point(100, 377);
             this.track_IPCon_Zoom.Maximum = 3;
-            this.track_IPCon_Zoom.Minimum = 1;
             this.track_IPCon_Zoom.Name = "track_IPCon_Zoom";
             this.track_IPCon_Zoom.Size = new System.Drawing.Size(132, 45);
             this.track_IPCon_Zoom.TabIndex = 73;

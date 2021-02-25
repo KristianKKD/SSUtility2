@@ -315,6 +315,7 @@
     <Compile Include="Forms\Scripting\ResponseLog.Designer.cs">
       <DependentUpon>ResponseLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\Communication\SerialWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\Control\ControlPanel.resx">

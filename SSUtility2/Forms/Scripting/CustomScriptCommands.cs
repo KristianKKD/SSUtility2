@@ -151,7 +151,7 @@ namespace SSUtility2 {
                 foreach (ScriptCommand[] commandArray in cameraArrayCommands) {
                     foreach (ScriptCommand sc in commandArray) {
 
-                    if(line == MainForm.m.ReadCommand(sc.codeContent, true)){
+                    if(line.Contains(MainForm.m.ReadCommand(sc.codeContent, true))){
                         return sc;
                     }
 

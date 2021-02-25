@@ -67,7 +67,7 @@ namespace SSUtility2 {
 
         public async Task<bool> CheckCam() {
             try {
-                if (!AsyncCamCom.TryConnect().Result) {
+                if (!await AsyncCamCom.TryConnect(true).ConfigureAwait(false)) {
                     return false;
                 }
 

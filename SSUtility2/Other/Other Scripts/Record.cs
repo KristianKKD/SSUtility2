@@ -49,6 +49,7 @@ namespace SSUtility2 {
             get; set;
         }
 
+
         public AviWriter CreateAviWriter() {
             return new AviWriter(FileName) {
                 FramesPerSecond = FramesPerSecond,
