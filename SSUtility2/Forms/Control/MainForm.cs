@@ -12,7 +12,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v1.4.1.3";
+        public const string version = "v1.4.1.4";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -478,9 +478,9 @@ namespace SSUtility2 {
             if (comboBox == null) {
                 comboBox = ipCon.cB_IPCon_Selected;
             }
-            if (comboBox.Text == "Daylight") {
+            if (comboBox.Text.Contains("Daylight")) {
                 return 1;
-            } else if (comboBox.Text == "Thermal") {
+            } else if (comboBox.Text.Contains("Thermal")) {
                 return 2;
             } else {
                 return uint.Parse(comboBox.Text);

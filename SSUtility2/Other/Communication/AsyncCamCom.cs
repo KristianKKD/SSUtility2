@@ -15,7 +15,6 @@ namespace SSUtility2 {
     public class AsyncCamCom {
 
         public static Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        public const string defaultResult = "00 00 00 00 00 00 00";
         static byte[] receiveBuffer;
 
         public static async Task<bool> TryConnect(bool hideErrors = false) {
@@ -92,7 +91,7 @@ namespace SSUtility2 {
                     return oldCom.myReturn.msg;
                 }
             }
-            return defaultResult;
+            return OtherCamCom.defaultResult;
         }
 
         public static void QueueRepeatingCommand(int id) {

@@ -12,6 +12,13 @@ namespace SSUtility2 {
 
         public static byte[] noCommand = { 2, 3, 4, 5 };
         public static byte[] pause = { 1, 2, 3, 4 };
+        public static byte[] loop = { 3, 4, 5, 6 };
+        public static byte[] loopStop = { 4, 5, 6, 7 };
+
+        int loopPos = -1;
+        int currentLoops = 0;
+        int loopAmount = 0;
+        bool loopNow = false;
 
         public PelcoD() {
             InitializeComponent();
@@ -24,20 +31,33 @@ namespace SSUtility2 {
             });
 
             try {
+                
                 //if (cB_Mode.Text == "IP") {
                 //if (!AsyncCameraCommunicate.TryConnect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text))).Result) {
                 //    return;
                 //}
                 //}
                 stop = false;
+                loopAmount = 0;
+                loopPos = -1;
                 b_PD_Stop.Enabled = true;
                 for (int i = 0; i < tB_Commands.Lines.Length; i++) {
                     string l = tB_Commands.Lines[i];
                     if (!stop) {
-                        await CheckLine(l);
+                        await CheckLine(l, i);
                     } else {
                         stop = false;
                         break;
+                    }
+                    if (loopNow && loopPos != -1) {
+                        MainForm.m.WriteToResponses("Looped " + currentLoops.ToString() + "/" + loopAmount.ToString(), true, false);
+                        if (currentLoops < loopAmount) {
+                            i = loopPos;
+                        } else {
+                            loopPos = -1;
+                            currentLoops = 0;
+                        }
+                        loopNow = false;
                     }
                     await Task.Delay(300).ConfigureAwait(false);
                 }
@@ -53,41 +73,54 @@ namespace SSUtility2 {
             });
         }
 
-        async Task CheckLine(string line) {
-                if (line != "" && !line.StartsWith("//")) {
+        async Task CheckLine(string line, int linePos) {
+            if (line != "" && !line.StartsWith("//")) {
+                line = line.Replace(",", "");
+                line = line.ToLower().Replace("x", "0");
 
-                    line = line.Replace(",", "");
-                    line = line.ToLower().Replace("x", "0");
-
-                    if (tB_IPCon_Adr.Text == "" || tB_IPCon_Port.Text == null) {
-                        MainForm.m.WriteToResponses("No IP/Port found", false);
-                    }
-
-                    ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, false, false, false, false);
-                    if (check_PD_Perfect.Checked) {
-                        sendCom.codeContent = FullCommand(line);
-                    } else {
-                    Invoke((MethodInvoker)delegate {
-                        sendCom = CustomScriptCommands.CheckForCommands(line, MainForm.m.MakeAdr(cB_IPCon_Selected)).Result;
-                        if (sendCom.codeContent == noCommand) {
-                            sendCom.codeContent = MakeCommand(line);
-                        }
-                    });
+                if (tB_IPCon_Adr.Text == "" || tB_IPCon_Port.Text == null) {
+                    MainForm.m.WriteToResponses("No IP/Port found", false);
                 }
 
-                if (sendCom.codeContent == null || sendCom.codeContent == pause) {
-                        if (sendCom.codeContent == null) {
-                            MainForm.m.WriteToResponses(line + " is invalid!", true);
-                        }
-                        return;
+                ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, false, false, false, false);
+                if (check_PD_Perfect.Checked) {
+                    sendCom.codeContent = FullCommand(line);
+                } else {
+                    uint adr = 0;
+                    Invoke((MethodInvoker)delegate {
+                        adr = MainForm.m.MakeAdr(cB_IPCon_Selected);
+                    });
+                    sendCom = await CustomScriptCommands.CheckForCommands(line, adr).ConfigureAwait(false);
+                    if (sendCom.codeContent == noCommand) {
+                        sendCom.codeContent = MakeCommand(line);
                     }
+                }
+
+                if (sendCom.codeContent == null || sendCom.custom) {
+
+                    if (sendCom.codeContent == null) {
+                        MainForm.m.WriteToResponses(line + " is invalid!", true);
+                    } else if (sendCom.codeContent == loop) {
+                        int val = CustomScriptCommands.CheckForVal(line);
+                        if (val > 0) {
+                            loopPos = linePos;
+                            loopAmount = val;
+                        }
+                    } else if (sendCom.codeContent == loopStop) {
+                        if (loopPos != -1) {
+                            currentLoops++;
+                        }
+                        loopNow = true;
+                    }
+                    return;
+                }
 
                 //if (cB_Mode.Text == "IP") {
                 await IPSend(sendCom, line);
                 //} else {
                 //    SerialSend(send, line);
                 //}
-                }
+            }
         }
 
         async Task IPSend(ScriptCommand send, string curLine) {
@@ -159,6 +192,7 @@ namespace SSUtility2 {
 
         private void b_PD_Fire_Click(object sender, EventArgs e) {
             if (AsyncCamCom.TryConnect().Result) {
+                CustomScriptCommands.stopScript = false;
                 Fire();
             }
         }
@@ -181,10 +215,12 @@ namespace SSUtility2 {
         }
 
         private void b_PD_Stop_Click(object sender, EventArgs e) { //make it cancel current script
-            stop = true;
             b_PD_Stop.Enabled = false;
-            CustomScriptCommands.QuickCommand("stop");
             b_PD_Fire.Enabled = true;
+            stop = true;
+            CustomScriptCommands.stopScript = true;
+            if (AsyncCamCom.sock.Connected)
+                CustomScriptCommands.QuickCommand("stop");
         }
 
         private void b_PD_RL_Click(object sender, EventArgs e) {

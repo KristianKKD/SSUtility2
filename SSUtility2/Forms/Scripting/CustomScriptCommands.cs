@@ -27,6 +27,8 @@ namespace SSUtility2 {
     public class CustomScriptCommands {
 
         readonly static ScriptCommand pause = new ScriptCommand(new string[] { "pause", "wait" }, PelcoD.pause, "Pause the script execution for X milliseconds", false, true, false, true);
+        readonly static ScriptCommand loop = new ScriptCommand(new string[] { "loop", "repeat" }, PelcoD.loop, "Loop any following commands X number of times. Looped commands will continue to be sent until the stated quanitity of loops is met or the stop execution button is pressed", false, true, false, true);
+        readonly static ScriptCommand loopStop = new ScriptCommand(new string[] { "loopstop", "stoploop" }, PelcoD.loopStop, "Will start reading scripted lines directly below the previous loop command. *If there is no loop, this command will be ignored.*", false, false, false, true);
         readonly static ScriptCommand stop = new ScriptCommand(new string[] { "stop" }, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing");
         readonly static ScriptCommand mono = new ScriptCommand(new string[] { "mono", "monocolour", "monocolor" }, new byte[] { 0x00, 0x07, 0x00, 0x03 }, "Camera video toggles between color and black/white pallete");
         readonly static ScriptCommand panzero = new ScriptCommand(new string[] { "panzero", "zeropan", "azimuth" }, new byte[] { 0x00, 0x49, 0x00, 0x00 }, "Sets camera pan to zero");
@@ -61,33 +63,46 @@ namespace SSUtility2 {
 
         public readonly static ScriptCommand[] otherCommands = new ScriptCommand[] {
             pause,
+            loop,
+            loopStop,
             stop,
             mono,
             panzero,
         };
 
         public readonly static ScriptCommand[][] cameraArrayCommands = new ScriptCommand[][]{
-            setCommands,
             otherCommands,
+            setCommands,
             queryCommands,
         };
 
+        public static bool stopScript;
 
         public static async Task<ScriptCommand> CheckForCommands(string line, uint adr) {
             ScriptCommand presetCom = CheckForPresets(line).Result;
             
             if (presetCom == null) {
-                return new ScriptCommand(null, PelcoD.noCommand, null);
+                return new ScriptCommand(null, PelcoD.noCommand, null, false, false, false, true);
             }
 
-            ScriptCommand com = new ScriptCommand(presetCom.names, presetCom.codeContent,
-                presetCom.description, presetCom.spammable, presetCom.dualValue, presetCom.custom); //need to be careful not to overwrite my commands
+            ScriptCommand com = new ScriptCommand(presetCom.names, presetCom.codeContent, presetCom.description,
+                 presetCom.spammable, presetCom.valueAccepting, presetCom.dualValue, presetCom.custom); //need to be careful not to overwrite my commands
             int value = CheckForVal(line);
+
 
             if (com.codeContent == PelcoD.pause) {
                 MainForm.m.WriteToResponses("Waiting: " + value.ToString() + "ms", true);
-                await Task.Delay(value).ConfigureAwait(false);
-                return new ScriptCommand(null, PelcoD.pause, null);
+                while (value > 0) {
+                    if (stopScript) {
+                        break;
+                    }
+                    value -= 200;
+                    await Task.Delay(200).ConfigureAwait(false);
+                }
+                stopScript = false;
+                return com;
+            } else if (com.codeContent == PelcoD.loop || com.codeContent == PelcoD.loopStop) {
+                return com;
             }
 
             com = RefineCode(com, adr, value).Result;
@@ -95,7 +110,7 @@ namespace SSUtility2 {
             return com;
         }
 
-        static int CheckForVal(string line) {
+        public static int CheckForVal(string line) {
             int value = 0;
             int marker = line.IndexOf(" ");
 
