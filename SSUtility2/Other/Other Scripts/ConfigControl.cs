@@ -26,7 +26,7 @@ namespace SSUtility2 {
         public static ConfigSetting screencapFileName = new ConfigSetting("Recording", "ScreenRecordingFileName", ConfigSetting.VarType.strings);
         public static ConfigSetting recQual = new ConfigSetting("70", "RecordingQuality", ConfigSetting.VarType.integer);
         public static ConfigSetting recFPS = new ConfigSetting("30", "RecordingFramerate", ConfigSetting.VarType.integer);
-        public static ConfigSetting updateMs = new ConfigSetting("500", "UpdateStatsTimerMs", ConfigSetting.VarType.integer);
+        public static ConfigSetting commandRateMs = new ConfigSetting("500", "UpdateStatsTimerMs", ConfigSetting.VarType.integer);
         public static ConfigSetting subnetNotif = new ConfigSetting("false", "SubnetNotificationHidden", ConfigSetting.VarType.boolean);
         public static ConfigSetting autoPlay = new ConfigSetting("true", "AutoPlayLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting automaticPaths = new ConfigSetting("true", "AutomaticPaths", ConfigSetting.VarType.boolean);
@@ -42,7 +42,7 @@ namespace SSUtility2 {
             scFileName,
             recQual,
             recFPS,
-            updateMs,
+            commandRateMs,
             subnetNotif,
             autoPlay,
             automaticPaths,
@@ -78,13 +78,11 @@ namespace SSUtility2 {
                 ConfigLine(path, setting.settingName, setting.stringVal);
             }
 
+            CommandQueue.UpdateTimerRate();
+
 
             if (MainForm.m.finalMode) {
                 MainForm.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
-            }
-            if (MainForm.m.playerL.myInfoRef != null) {
-                MainForm.m.playerL.myInfoRef.UpdateTickInterval();
-                MainForm.m.playerR.myInfoRef.UpdateTickInterval();
             }
         }
 

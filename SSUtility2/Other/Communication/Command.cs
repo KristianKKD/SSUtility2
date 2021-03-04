@@ -16,7 +16,7 @@ namespace SSUtility2 {
 
         public static int total = 0;
 
-        public static bool lowPriority;
+        public static int commandRetries = 10;
 
         public static void Init() {
             savedCommandList = new List<Command>();
@@ -30,21 +30,23 @@ namespace SSUtility2 {
 
         public static void StartTimer() {
             SendTimer = new Timer();
-            SendTimer.Interval = 400;
+            SendTimer.Interval = ConfigControl.commandRateMs.intVal;
             SendTimer.Tick += new EventHandler(SendCurrentCommand);
             SendTimer.Start();
         }
 
-        private static void SendCurrentCommand(object sender, EventArgs e) {  //too many commands overload
+        public static void UpdateTimerRate() {
+            SendTimer.Interval = ConfigControl.commandRateMs.intVal;
+        }
+
+        private static void SendCurrentCommand(object sender, EventArgs e) {
             try {
                 //Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " LOWPRIORITY: " + lowPriority.ToString());
                 if (!AsyncCamCom.sock.Connected) {
                     return;
                 }
 
-                if (queueList.Count > 0) { //first command broken
-                    lowPriority = false;
-
+                if (queueList.Count > 0) {
                     Command com = queueList[0];
 
                     if (!com.invalid && !com.sent && com != null) {
@@ -54,11 +56,23 @@ namespace SSUtility2 {
                         queueList.RemoveAt(0);
                     }
                 } else {
-                    lowPriority = true;
+                    InfoPanel.i.InfoPanelTick();
                 }
             } catch (Exception err){
                 MessageBox.Show("Error in queuelist.\n" + err.ToString());
             }
+        }
+
+        public static async Task<bool> WaitForCommandDone(Command com) {
+            for (int i = 0; i < commandRetries; i++) {
+                if (!com.done) {
+                    await Task.Delay(ConfigControl.commandRateMs.intVal).ConfigureAwait(false);
+                } else {
+                    return true;
+
+                }
+            }
+            return false;
         }
 
         static async Task WaitForCommandResponse(Command com) {
@@ -69,7 +83,7 @@ namespace SSUtility2 {
                     com.done = false;
 
                 int i = 0;
-                while (i < 5) {
+                while (i < commandRetries) {
                     bool repeated = false;
                     if (i > 0)
                         repeated = true;
@@ -79,9 +93,10 @@ namespace SSUtility2 {
                         break;
                     }
                     
-                    await Task.Delay(600);
                     if (com.done) {
                         break;
+                    } else {
+                        await Task.Delay(ConfigControl.commandRateMs.intVal);
                     }
                     i++;
                 }
@@ -144,6 +159,7 @@ namespace SSUtility2 {
     }
 
     public class ReturnCommand {
+
         public string msg;
 
         public Command myCommand;

@@ -41,7 +41,7 @@ namespace SSUtility2 {
 		private void InitializeComponent()
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.Menu = new System.Windows.Forms.MenuStrip();
+            this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.Menu_Window = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Detached = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_PelcoD = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,36 +49,43 @@ namespace SSUtility2 {
             this.Menu_Window_Response = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Osiris = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Window_ControlPanel = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_StartStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_Record = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_Swap = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_PanZero = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Pan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Tilt = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Main = new System.Windows.Forms.Panel();
             this.p_Control = new System.Windows.Forms.Panel();
             this.l_Version = new System.Windows.Forms.Label();
-            this.Menu.SuspendLayout();
+            this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
             this.p_Control.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Menu
+            // MenuBar
             // 
-            this.Menu.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Menu.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuBar.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.MenuBar.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Window,
+            this.Menu_Video,
             this.Menu_QC,
-            this.Menu_Final,
-            this.Menu_Record});
-            this.Menu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.Menu.Location = new System.Drawing.Point(0, 0);
-            this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(1630, 24);
-            this.Menu.TabIndex = 30;
-            this.Menu.Text = "Menu";
+            this.Menu_Final});
+            this.MenuBar.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.MenuBar.Location = new System.Drawing.Point(0, 0);
+            this.MenuBar.Name = "MenuBar";
+            this.MenuBar.Size = new System.Drawing.Size(1630, 24);
+            this.MenuBar.TabIndex = 30;
+            this.MenuBar.Text = "Menu";
             // 
             // Menu_Window
             // 
@@ -88,7 +95,8 @@ namespace SSUtility2 {
             this.Menu_Window_Lite,
             this.Menu_Window_Response,
             this.Menu_Window_Osiris,
-            this.Menu_Window_Settings});
+            this.Menu_Window_Settings,
+            this.Menu_Window_ControlPanel});
             this.Menu_Window.Name = "Menu_Window";
             this.Menu_Window.Size = new System.Drawing.Size(63, 20);
             this.Menu_Window.Text = "Window";
@@ -96,44 +104,107 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(182, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(182, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Lite
             // 
             this.Menu_Window_Lite.Name = "Menu_Window_Lite";
-            this.Menu_Window_Lite.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Lite.Size = new System.Drawing.Size(182, 22);
             this.Menu_Window_Lite.Text = "Lite Mode";
             this.Menu_Window_Lite.Click += new System.EventHandler(this.Menu_Window_Lite_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(182, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Osiris
             // 
             this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Osiris.Size = new System.Drawing.Size(182, 22);
             this.Menu_Window_Osiris.Text = "Osiris Control";
             this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
             // 
             // Menu_Window_Settings
             // 
             this.Menu_Window_Settings.Name = "Menu_Window_Settings";
-            this.Menu_Window_Settings.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Settings.Size = new System.Drawing.Size(182, 22);
             this.Menu_Window_Settings.Text = "Settings";
             this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
+            // 
+            // Menu_Window_ControlPanel
+            // 
+            this.Menu_Window_ControlPanel.Name = "Menu_Window_ControlPanel";
+            this.Menu_Window_ControlPanel.Size = new System.Drawing.Size(182, 22);
+            this.Menu_Window_ControlPanel.Text = "Show Control Panel";
+            this.Menu_Window_ControlPanel.Click += new System.EventHandler(this.Menu_Window_ControlPanel_Click);
+            // 
+            // Menu_Video
+            // 
+            this.Menu_Video.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Video_Settings,
+            this.Menu_Video_StartStop,
+            this.Menu_Video_Snapshot,
+            this.Menu_Video_Record,
+            this.Menu_Video_Swap,
+            this.Menu_Video_Info});
+            this.Menu_Video.Name = "Menu_Video";
+            this.Menu_Video.Size = new System.Drawing.Size(93, 20);
+            this.Menu_Video.Text = "Video Stream";
+            // 
+            // Menu_Video_Settings
+            // 
+            this.Menu_Video_Settings.Name = "Menu_Video_Settings";
+            this.Menu_Video_Settings.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Settings.Text = "Connection Settings";
+            this.Menu_Video_Settings.Click += new System.EventHandler(this.Menu_Video_Settings_Click);
+            // 
+            // Menu_Video_StartStop
+            // 
+            this.Menu_Video_StartStop.Name = "Menu_Video_StartStop";
+            this.Menu_Video_StartStop.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_StartStop.Text = "Start Video Playback";
+            this.Menu_Video_StartStop.Click += new System.EventHandler(this.Menu_Video_Stop_Click);
+            // 
+            // Menu_Video_Snapshot
+            // 
+            this.Menu_Video_Snapshot.Name = "Menu_Video_Snapshot";
+            this.Menu_Video_Snapshot.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Snapshot.Text = "Save Snapshot";
+            this.Menu_Video_Snapshot.Click += new System.EventHandler(this.Menu_Video_Snapshot_Click);
+            // 
+            // Menu_Video_Record
+            // 
+            this.Menu_Video_Record.Name = "Menu_Video_Record";
+            this.Menu_Video_Record.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Record.Text = "Start Recording";
+            this.Menu_Video_Record.Click += new System.EventHandler(this.Menu_Video_Record_Click);
+            // 
+            // Menu_Video_Swap
+            // 
+            this.Menu_Video_Swap.Enabled = false;
+            this.Menu_Video_Swap.Name = "Menu_Video_Swap";
+            this.Menu_Video_Swap.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Swap.Text = "Swap To Thermal View";
+            // 
+            // Menu_Video_Info
+            // 
+            this.Menu_Video_Info.Enabled = false;
+            this.Menu_Video_Info.Name = "Menu_Video_Info";
+            this.Menu_Video_Info.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Info.Text = "Enable Info Panel";
+            this.Menu_Video_Info.Click += new System.EventHandler(this.Menu_Video_Info_Click);
             // 
             // Menu_QC
             // 
@@ -181,13 +252,6 @@ namespace SSUtility2 {
             this.Menu_Final_Open.Text = "Open...";
             this.Menu_Final_Open.Click += new System.EventHandler(this.Menu_Final_Open_Click);
             // 
-            // Menu_Record
-            // 
-            this.Menu_Record.Name = "Menu_Record";
-            this.Menu_Record.Size = new System.Drawing.Size(114, 20);
-            this.Menu_Record.Text = "Record SSUtility2";
-            this.Menu_Record.Click += new System.EventHandler(this.Menu_Record_Click);
-            // 
             // p_Main
             // 
             this.p_Main.Controls.Add(this.p_Control);
@@ -208,9 +272,9 @@ namespace SSUtility2 {
             // 
             // l_Version
             // 
-            this.l_Version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.l_Version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.l_Version.AutoSize = true;
-            this.l_Version.Location = new System.Drawing.Point(1453, 838);
+            this.l_Version.Location = new System.Drawing.Point(12, 838);
             this.l_Version.Name = "l_Version";
             this.l_Version.Size = new System.Drawing.Size(102, 13);
             this.l_Version.TabIndex = 0;
@@ -223,15 +287,15 @@ namespace SSUtility2 {
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1630, 884);
             this.Controls.Add(this.p_Main);
-            this.Controls.Add(this.Menu);
+            this.Controls.Add(this.MenuBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.Menu;
+            this.MainMenuStrip = this.MenuBar;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SSUtility V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.Menu.ResumeLayout(false);
-            this.Menu.PerformLayout();
+            this.MenuBar.ResumeLayout(false);
+            this.MenuBar.PerformLayout();
             this.p_Main.ResumeLayout(false);
             this.p_Control.ResumeLayout(false);
             this.p_Control.PerformLayout();
@@ -1029,23 +1093,30 @@ namespace SSUtility2 {
         //	}
         //} // end of ErasebuttonClick()
 
-        private MenuStrip Menu;
-        private ToolStripMenuItem Menu_Window;
-        private ToolStripMenuItem Menu_Window_Detached;
-        private ToolStripMenuItem Menu_Window_PelcoD;
-        private ToolStripMenuItem Menu_Window_Lite;
-        private ToolStripMenuItem Menu_Final;
-        private ToolStripMenuItem Menu_Final_Open;
-        private ToolStripMenuItem Menu_Window_Response;
-        private ToolStripMenuItem Menu_QC;
-        private ToolStripMenuItem Menu_QC_PanZero;
-        private ToolStripMenuItem Menu_Window_Settings;
-        private Panel p_Main;
-        private Label l_Version;
-        private Panel p_Control;
-        private ToolStripMenuItem Menu_Record;
-        private ToolStripMenuItem Menu_QC_Pan;
-        private ToolStripMenuItem Menu_QC_Tilt;
-        private ToolStripMenuItem Menu_Window_Osiris;
+        public MenuStrip MenuBar;
+        public ToolStripMenuItem Menu_Window;
+        public ToolStripMenuItem Menu_Window_Detached;
+        public ToolStripMenuItem Menu_Window_PelcoD;
+        public ToolStripMenuItem Menu_Window_Lite;
+        public ToolStripMenuItem Menu_Final;
+        public ToolStripMenuItem Menu_Final_Open;
+        public ToolStripMenuItem Menu_Window_Response;
+        public ToolStripMenuItem Menu_QC;
+        public ToolStripMenuItem Menu_QC_PanZero;
+        public ToolStripMenuItem Menu_Window_Settings;
+        public Panel p_Main;
+        public Label l_Version;
+        public Panel p_Control;
+        public ToolStripMenuItem Menu_QC_Pan;
+        public ToolStripMenuItem Menu_QC_Tilt;
+        public ToolStripMenuItem Menu_Window_Osiris;
+        public ToolStripMenuItem Menu_Video;
+        public ToolStripMenuItem Menu_Video_Settings;
+        public ToolStripMenuItem Menu_Video_Swap;
+        public ToolStripMenuItem Menu_Video_Snapshot;
+        public ToolStripMenuItem Menu_Video_Record;
+        public ToolStripMenuItem Menu_Video_StartStop;
+        public ToolStripMenuItem Menu_Video_Info;
+        public ToolStripMenuItem Menu_Window_ControlPanel;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

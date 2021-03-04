@@ -406,6 +406,7 @@
             this.Controls.Add(this.b_PTZ_Right);
             this.Controls.Add(this.b_PTZ_Left);
             this.Controls.Add(this.track_PTZ_PTSpeed);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ControlPanel";
             this.Text = "ControlPanel";

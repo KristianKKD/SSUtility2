@@ -19,7 +19,7 @@ namespace SSUtility2 {
             cB_Rec_Quality.Text = ConfigControl.recQual.stringVal;
             cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
-            cB_Other_RefreshRate.Text = ConfigControl.updateMs.stringVal;
+            cB_Other_RefreshRate.Text = ConfigControl.commandRateMs.stringVal;
 
             check_Other_Subnet.Checked = ConfigControl.subnetNotif.boolVal;
             check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
@@ -73,7 +73,7 @@ namespace SSUtility2 {
 
         private void cB_Other_RefreshRate_TextChanged(object sender, EventArgs e) {
             if (MainForm.CheckIfNameValid(cB_Other_RefreshRate.Text, true)) {
-                ConfigControl.updateMs.UpdateValue(cB_Other_RefreshRate.Text);
+                ConfigControl.commandRateMs.UpdateValue(cB_Other_RefreshRate.Text);
             }
         }
 
@@ -167,5 +167,6 @@ namespace SSUtility2 {
                 MessageBox.Show("Finished changing directories!");
             }
         }
+
     }
 }

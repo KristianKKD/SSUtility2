@@ -6,11 +6,11 @@ namespace SSUtility2 {
 
     public partial class ControlPanel : Form {
     
-        public Label l;
+        public Panel myPanel;
+
 
         public ControlPanel() {
             InitializeComponent();
-            l = l_IPCon_Connected;
             Program.cp = this;
         }
 

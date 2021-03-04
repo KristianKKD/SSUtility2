@@ -1,7 +1,5 @@
-﻿namespace SSUtility2
-{
-    partial class InfoPanel
-    {
+﻿namespace SSUtility2 {
+    partial class InfoPanel {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -35,7 +33,8 @@
             // 
             this.l_Pan.AutoSize = true;
             this.l_Pan.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.l_Pan.Location = new System.Drawing.Point(12, 9);
+            this.l_Pan.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.l_Pan.Location = new System.Drawing.Point(12, 5);
             this.l_Pan.Name = "l_Pan";
             this.l_Pan.Size = new System.Drawing.Size(40, 17);
             this.l_Pan.TabIndex = 0;
@@ -45,17 +44,19 @@
             // 
             this.l_Tilt.AutoSize = true;
             this.l_Tilt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.l_Tilt.Location = new System.Drawing.Point(287, 9);
+            this.l_Tilt.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.l_Tilt.Location = new System.Drawing.Point(98, 5);
             this.l_Tilt.Name = "l_Tilt";
-            this.l_Tilt.Size = new System.Drawing.Size(41, 17);
+            this.l_Tilt.Size = new System.Drawing.Size(45, 17);
             this.l_Tilt.TabIndex = 1;
-            this.l_Tilt.Text = "TILT:";
+            this.l_Tilt.Text = "TILT: ";
             // 
             // l_FOV
             // 
             this.l_FOV.AutoSize = true;
             this.l_FOV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.l_FOV.Location = new System.Drawing.Point(12, 35);
+            this.l_FOV.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.l_FOV.Location = new System.Drawing.Point(185, 5);
             this.l_FOV.Name = "l_FOV";
             this.l_FOV.Size = new System.Drawing.Size(117, 17);
             this.l_FOV.TabIndex = 2;
@@ -65,25 +66,26 @@
             // 
             this.l_TFOV.AutoSize = true;
             this.l_TFOV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.l_TFOV.Location = new System.Drawing.Point(287, 35);
+            this.l_TFOV.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.l_TFOV.Location = new System.Drawing.Point(348, 5);
             this.l_TFOV.Name = "l_TFOV";
-            this.l_TFOV.Size = new System.Drawing.Size(114, 17);
+            this.l_TFOV.Size = new System.Drawing.Size(110, 17);
             this.l_TFOV.TabIndex = 3;
-            this.l_TFOV.Text = "THERMAL FOV: ";
-            this.l_TFOV.Visible = false;
+            this.l_TFOV.Text = "THERMAL FOV:";
             // 
             // InfoPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(526, 61);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ClientSize = new System.Drawing.Size(511, 24);
             this.Controls.Add(this.l_TFOV);
             this.Controls.Add(this.l_FOV);
             this.Controls.Add(this.l_Tilt);
             this.Controls.Add(this.l_Pan);
             this.Name = "InfoPanel";
             this.Text = "InfoPanel";
+            this.TransparencyKey = System.Drawing.Color.Transparent;
             this.ResumeLayout(false);
             this.PerformLayout();
 

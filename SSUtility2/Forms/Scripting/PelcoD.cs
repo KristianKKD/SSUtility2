@@ -29,15 +29,12 @@ namespace SSUtility2 {
             Invoke((MethodInvoker)delegate {
                 b_PD_Fire.Enabled = false;
             });
-
             try {
-                
-                //if (cB_Mode.Text == "IP") {
-                //if (!AsyncCameraCommunicate.TryConnect(new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text))).Result) {
-                //    return;
-                //}
-                //}
-                stop = false;
+                if (cB_Mode.Text == "IP") {
+                    if (!await AsyncCamCom.TryConnect(false, new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text))).ConfigureAwait(false)) {
+                        return;
+                    }
+                }
                 loopAmount = 0;
                 loopPos = -1;
                 b_PD_Stop.Enabled = true;
@@ -115,11 +112,11 @@ namespace SSUtility2 {
                     return;
                 }
 
-                //if (cB_Mode.Text == "IP") {
-                await IPSend(sendCom, line);
-                //} else {
-                //    SerialSend(send, line);
-                //}
+                if (cB_Mode.Text == "IP") {
+                    await IPSend(sendCom, line);
+                } else {
+                    //SerialSend(send, line);
+                }
             }
         }
 
@@ -128,7 +125,8 @@ namespace SSUtility2 {
             if (sendCommand.invalid) {
                 MainForm.m.WriteToResponses("Command: " + curLine + " could not be sent because it's invalid!", true);
             }
-            await Task.Delay(400).ConfigureAwait(false);
+
+            await CommandQueue.WaitForCommandDone(sendCommand).ConfigureAwait(false);
 
             if (sendCommand.myReturn.msg == OtherCamCom.defaultResult) {
                 MainForm.m.WriteToResponses("Command: " + curLine + " didn't receive a response.", true);
@@ -191,10 +189,9 @@ namespace SSUtility2 {
         }
 
         private void b_PD_Fire_Click(object sender, EventArgs e) {
-            if (AsyncCamCom.TryConnect().Result) {
-                CustomScriptCommands.stopScript = false;
-                Fire();
-            }
+            stop = false;
+            CustomScriptCommands.stopScript = false;
+            Fire();
         }
 
         private void b_PD_Load_Click(object sender, EventArgs e) {

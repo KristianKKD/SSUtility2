@@ -12,8 +12,7 @@ namespace SSUtility2 {
 
     public partial class PresetPanel : Form {
 
-        public MainForm mainRef;
-        public ControlPanel cp;
+        public Panel myPanel;
 
         public PresetPanel() {
             InitializeComponent();
@@ -34,11 +33,11 @@ namespace SSUtility2 {
         }
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
-            DoPreset(mainRef.MakeAdr(), 196);
+            DoPreset(MainForm.m.MakeAdr(), 196);
         }
 
         private void b_Presets_Admin_DefaultMen_Click(object sender, EventArgs e) {
-            DoPreset(mainRef.MakeAdr(), 2);
+            DoPreset(MainForm.m.MakeAdr(), 2);
         }
 
         private void b_Presets_Daylight_Wiper_Click(object sender, EventArgs e) {

@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
@@ -17,7 +10,7 @@ namespace SSUtility2 {
         public static Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         static byte[] receiveBuffer;
 
-        public static async Task<bool> TryConnect(bool hideErrors = false) {
+        public static async Task<bool> TryConnect(bool hideErrors = false, IPEndPoint customep = null) {
             bool result = true;
             try {
                 if (!sock.Connected) {
@@ -27,8 +20,14 @@ namespace SSUtility2 {
                         result = false;
                     }
 
-                    IPEndPoint ep = new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text),
-                        int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text));
+                    IPEndPoint ep;
+                    if (customep == null) {
+                        ep = new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text),
+                            int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text));
+                    } else {
+                        ep = customep;
+                    }
+                     
 
                     if (result) {
                         Connect(ep, hideErrors);
@@ -58,7 +57,6 @@ namespace SSUtility2 {
 
         public static Command SendScriptCommand(ScriptCommand com) {
             Command sendCommand = new Command(com.codeContent, false, false, com.spammable, com.names[0]);
-            //MainForm.m.WriteToResponses("Sending: " + MainForm.m.ReadCommand(com.codeContent, true) + " (" + com.names[0] + ")", true);
             return sendCommand;
         }
 
@@ -75,19 +73,14 @@ namespace SSUtility2 {
         public async static Task<string> QueryNewCommand(byte[] send) {
             Command com = SendNewCommand(send, true);
             string result = await CheckCommandResult(com).ConfigureAwait(false);
-            //MessageBox.Show(result);
             return result;
         }
 
-        private static async Task<string> CheckCommandResult(Command oldCom) {
-            for (int i = 0; i < 5; i++) {
-                if (oldCom.done)
-                    break;
-                await Task.Delay(600).ConfigureAwait(false);
-            }
+        private static async Task<string> CheckCommandResult(Command oldCom) { //have timer check if queued result and if it is send it back
+            await CommandQueue.WaitForCommandDone(oldCom).ConfigureAwait(false);
 
             if (oldCom != null) {
-                if (!ReturnCommand.CheckInvalid(oldCom.myReturn.msg)) { //need to have this wait for the result and make sure it's not invalid
+                if (!ReturnCommand.CheckInvalid(oldCom.myReturn.msg)) {
                     return oldCom.myReturn.msg;
                 }
             }
@@ -249,10 +242,6 @@ namespace SSUtility2 {
 
         static async Task SaveResponse() {
             try {
-                if (currentCom == null) {
-                    return;
-                }
-
                 string msg = "";
                 int comCount = 0;
                 bool startedCom = false;
@@ -279,6 +268,11 @@ namespace SSUtility2 {
                 msg = msg.Trim();
 
                 if (msg.Length > 0 && msg.StartsWith("F")) {
+                    if (currentCom == null) {
+                        MainForm.m.WriteToResponses("(Listening) Received: " + msg, true, false);
+                        return;
+                    }
+
                     if (currentCom.isInfo) {
                         InfoPanel.ReadResult(msg);
                     }

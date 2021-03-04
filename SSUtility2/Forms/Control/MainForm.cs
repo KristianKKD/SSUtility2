@@ -5,18 +5,16 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v1.4.1.4";
+        public const string version = "v2.0.0.0";
 
         private bool lite = false;
         private bool isOriginal = false;
-        private bool movedUp = true;
         public bool finalMode = false;
 
         public static Control[] saveList = new Control[0];
@@ -25,9 +23,9 @@ namespace SSUtility2 {
         public SettingsPage setPage;
         public PelcoD pd;
         public ResponseLog rl;
+        private PresetPanel preset;
 
-        public Detached playerL;
-        public Detached playerR;
+        public Detached mainPlayer;
 
         private Recorder screenRec;
         
@@ -36,7 +34,7 @@ namespace SSUtility2 {
         
         public string finalDest;
 
-        public static MainForm m { get; set; }
+        public static MainForm m;
 
         public async Task StartupStuff() {
             m = this;
@@ -44,7 +42,6 @@ namespace SSUtility2 {
             rl = new ResponseLog();
             pd = new PelcoD();
             D.protocol = new D();
-            CommandQueue.Init();
 
             lite = false;
             l_Version.Text = l_Version.Text + version;
@@ -53,10 +50,10 @@ namespace SSUtility2 {
             p_Main.Select();
 
             AttachControlPanel();
-            playerL = AttachDetached(10);
-            playerR = AttachDetached(690);
+            mainPlayer = AttachPlayer();
+            HideControlPanel();
 
-            CreateInfoPanels(playerL, playerR);
+            AttachInfoPanel();
 
             saveList = new Control[]{
                 ipCon.cB_IPCon_Type,
@@ -65,39 +62,23 @@ namespace SSUtility2 {
                 ipCon.cB_IPCon_Selected,
                 ipCon.track_PTZ_PTSpeed,
 
-                playerL.cB_PlayerD_Type,
-                playerL.tB_PlayerD_Adr,
-                playerL.tB_PlayerD_Port,
-                playerL.tB_PlayerD_RTSP,
-                playerL.tB_PlayerD_Buffering,
-                playerL.tB_PlayerD_Username,
-                playerL.tB_PlayerD_Password,
-                playerL.tB_PlayerD_SimpleAdr,
-                playerL.tB_PlayerD_Name,
-
-                playerR.cB_PlayerD_Type,
-                playerR.tB_PlayerD_Adr,
-                playerR.tB_PlayerD_Port,
-                playerR.tB_PlayerD_RTSP,
-                playerR.tB_PlayerD_Buffering,
-                playerR.tB_PlayerD_Username,
-                playerR.tB_PlayerD_Password,
-                playerR.tB_PlayerD_SimpleAdr,
-                playerR.tB_PlayerD_Name,
+                mainPlayer.settings.cB_PlayerD_Type,
+                mainPlayer.settings.tB_PlayerD_Adr,
+                mainPlayer.settings.tB_PlayerD_Port,
+                mainPlayer.settings.tB_PlayerD_RTSP,
+                mainPlayer.settings.tB_PlayerD_Buffering,
+                mainPlayer.settings.tB_PlayerD_Username,
+                mainPlayer.settings.tB_PlayerD_Password,
+                mainPlayer.settings.tB_PlayerD_SimpleAdr,
+                mainPlayer.settings.tB_PlayerD_Name,
             };
 
             FileStuff(first);
+            CommandQueue.Init();
 
             setPage.PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
             AutoConnect();
-        }
-
-        void CreateInfoPanels(Detached playerL, Detached playerR) {
-            AttachInfoPanel(playerL, 270);
-            AttachInfoPanel(playerR, 950);
-            playerL.myInfoRef.otherD = playerR;
-            playerR.myInfoRef.otherD = playerL;
         }
 
         bool CheckIfFirstTime() {
@@ -111,15 +92,8 @@ namespace SSUtility2 {
         async Task AutoConnect() {
             await Task.Delay(500).ConfigureAwait(false);
             bool connected = await AsyncCamCom.TryConnect(true).ConfigureAwait(false);
-            if (ConfigControl.autoPlay.boolVal && connected) {
-
-                if (playerL.tB_PlayerD_SimpleAdr.Text != "") {
-                    playerL.StartPlaying(false);
-                }
-                if (playerR.tB_PlayerD_SimpleAdr.Text != "") {
-                    playerR.StartPlaying(false);
-                }
-
+            if (ConfigControl.autoPlay.boolVal && connected && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "") {
+                mainPlayer.StartPlaying(false);
             }
         }
 
@@ -219,55 +193,63 @@ namespace SSUtility2 {
             }
         }
 
-        void AttachInfoPanel(Detached d, int xOffset) {
+        void AttachInfoPanel() {
             Panel p = new Panel();
             InfoPanel i = new InfoPanel();
             
-            d.myInfoRef = i;
-            i.d = d;
+            p.Size = new Size(i.Width, i.Height - 35);
+            p.Location = new Point(m.Size.Width - i.Width, 0);
 
-            p.Size = i.Size;
-            p.Location = new Point(d.VLCPlayer_D.Location.X + xOffset, d.VLCPlayer_D.Location.Y);
-
-            var c = GetAll(i);
+            var c = GetAllType(i, typeof(Label));
             p.Controls.AddRange(c.ToArray());
 
+            p.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+
             p_Control.Controls.Add(p);
+
+            p.BringToFront();
+            p.Hide();
         }
 
         void AttachControlPanel() {
             ipCon = SpawnControlPanel(p_Control, false);
+            preset = AttachPresetPanel(p_Control, ipCon);
 
-            PresetPanel pp = AttachPresetPanel(p_Control, ipCon);
-            pp.cp = ipCon;
-
-            isOriginal = true; 
+            isOriginal = true;
         }
 
-        Detached AttachDetached(int xOffset) {
-            Panel pan = new Panel();
+        public void HideControlPanel() {
+            ipCon.myPanel.Hide();
+            preset.myPanel.Hide();
+            l_Version.Visible = false;
+            mainPlayer.myPanel.Location = new Point(0,0);
+            mainPlayer.myPanel.Size = new Size(m.Size.Width - 14, m.Size.Height - 62);
+            mainPlayer.VLCPlayer_D.Refresh();
+        }
+
+        public void ShowControlPanel() {
+            ipCon.myPanel.Show();
+            preset.myPanel.Show();
+            l_Version.Visible = true;
+            mainPlayer.myPanel.Location = new Point(ipCon.Location.X + ipCon.Size.Width - 15, ipCon.Location.Y);
+            mainPlayer.myPanel.Size = new Size(m.Size.Width - ipCon.Size.Width, m.Size.Height - 62);
+        }
+
+        Detached AttachPlayer() {
             Detached d = DetachVid(false);
+            Panel p = new Panel();
+            d.myPanel = p;
 
-            var c = GetAllType(d, typeof(Panel));
-            var c2 = GetAllType(d, typeof(Button));
-            var c3 = GetAllType(d, typeof(Label));
-            var c4 = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
-            var c5 = GetAllType(d, typeof(CheckBox));
-            var c6 = GetAllType(d, typeof(TextBox));
+            var c = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
+            p.Controls.AddRange(c.ToArray());
 
-            pan.Controls.AddRange(c.ToArray());
-            pan.Controls.AddRange(c2.ToArray());
-            pan.Controls.AddRange(c3.ToArray());
-            pan.Controls.AddRange(c4.ToArray());
-            pan.Controls.AddRange(c5.ToArray());
-            pan.Controls.AddRange(c6.ToArray());
+            p.Size = new Size(m.Size.Width - ipCon.Size.Width, m.Size.Height - 62);
+            p.Location = new Point(ipCon.Location.X + ipCon.Size.Width - 15, ipCon.Location.Y);
+            p.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
+            
+            p_Control.Controls.Add(p);
 
-            d.VLCPlayer_D.Location = new Point(d.VLCPlayer_D.Location.X, d.VLCPlayer_D.Location.Y + 5);
-
-            pan.Size = new Size(d.Width - 18, d.Height - 40);
-            pan.Location = new Point(ipCon.Location.X + ipCon.Size.Width + xOffset, ipCon.Location.Y + 45);
-
-            p_Control.Controls.Add(pan);
+            p.BringToFront();
 
             return d;
         }
@@ -290,32 +272,10 @@ namespace SSUtility2 {
             ipCon = cp;
             AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, false);
 
-            pp.cp = cp;
             isOriginal = false;
             Menu_Window_Lite.Text = "Dual Mode";
         }
 
-
-        public void MovePlayers(bool showingStats) {
-            Control parL = playerL.b_PlayerD_Play.Parent;
-            Control parR = playerR.b_PlayerD_Play.Parent;
-
-            if (movedUp) {
-                if (showingStats) {
-                    parR.Location = new Point(parR.Location.X, parR.Location.Y + 20);
-                    parL.Location = new Point(parL.Location.X, parL.Location.Y + 20);
-                    movedUp = false;
-                }
-            } else {
-                if (!showingStats) {
-                    if (!playerL.check_PlayerD_StatsEnabled.Checked && !playerR.check_PlayerD_StatsEnabled.Checked) {
-                        parL.Location = new Point(parL.Location.X, parL.Location.Y - 20);
-                        parR.Location = new Point(parR.Location.X, parR.Location.Y - 20);
-                        movedUp = true;
-                    }
-                }
-            }
-        }
 
         public Detached DetachVid(bool show) {
             Detached dv = new Detached();
@@ -338,6 +298,7 @@ namespace SSUtility2 {
         ControlPanel SpawnControlPanel(Panel p, bool makeLite = true) {
             Panel pan = new Panel();
             ControlPanel cp = new ControlPanel();
+            cp.myPanel = pan;
 
             if (makeLite) {
                 cp.cB_IPCon_Type.Text = ipCon.cB_IPCon_Type.Text;
@@ -354,15 +315,17 @@ namespace SSUtility2 {
             p.Controls.Add(pan);
 
             AddControls(pan, cp);
+
             return cp;
         }
 
         PresetPanel AttachPresetPanel(Panel p, ControlPanel panel) {
             Panel pan = new Panel();
             PresetPanel pp = new PresetPanel();
+
             
             SetFeatureToAllControls(pp.Controls);
-            pp.mainRef = m;
+            pp.myPanel = pan;
             panel.SendToBack();
 
             pan.Location = new Point(0, panel.Size.Height - 40);
@@ -555,7 +518,6 @@ namespace SSUtility2 {
 
         public (bool, Recorder) StopStartRec(bool isPlaying, Detached player, Recorder r) {
             if (isPlaying) {
-                player.b_PlayerD_StartRec.Text = "START Recording";
                 isPlaying = false;
                 
                 r.Dispose();
@@ -576,41 +538,12 @@ namespace SSUtility2 {
             } else {
                 string fullVideoPath = GivePath(ConfigControl.vFolder.stringVal, ConfigControl.vFileName.stringVal, player, "Recordings") + ".avi";
                 inUseVideoPath = fullVideoPath;
-                player.b_PlayerD_StartRec.Text = "STOP Recording";
                 isPlaying = true;
 
                 Recorder rec = Record(fullVideoPath, player.VLCPlayer_D);
 
                 return (isPlaying, rec);
             }
-        }
-
-        private void Menu_Record_Click(object sender, EventArgs e) {
-            if (screenRec != null) {
-                screenRec.Dispose();
-                screenRec = null;
-                Menu_Record.Text = "Record SSUtility2";
-
-                if (finalMode) {
-                    SaveFileDialog fdg = SaveFile(ConfigControl.screencapFileName.stringVal, ".avi", finalDest);
-                    DialogResult result = fdg.ShowDialog();
-                    if (result == DialogResult.OK) {
-                        CopySingleFile(fdg.FileName, screenRecordName);
-                    }
-                    MessageBox.Show("Saved recording to: " + screenRecordName +
-                        "\nFinal saved: " + fdg.FileName);
-                } else {
-                    MessageBox.Show("Saved recording to: " + screenRecordName);
-                }
-
-            } else {
-                CheckCreateFile(null, ConfigControl.vFolder.stringVal + @"\SSUtility2\");
-                string folder = ConfigControl.vFolder.stringVal + @"\SSUtility2\";
-                screenRecordName = folder + ConfigControl.screencapFileName.stringVal + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
-                screenRec = Record(screenRecordName, null);
-                Menu_Record.Text = "Stop Recording";
-            }
-
         }
 
         private Recorder Record(string path, AxAXVLC.AxVLCPlugin2 player) {
@@ -622,7 +555,7 @@ namespace SSUtility2 {
         string GivePath(string orgFolder, string orgName, Detached detachedPlayer, string folderType) {
             string folder = orgFolder;
             string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
-            string adr = GetPlayerAdrOrName(detachedPlayer);
+            string adr = GetPlayerAdrOrName(detachedPlayer.settings);
 
             if (adr != "") {
                 adr += @"\";
@@ -722,10 +655,10 @@ namespace SSUtility2 {
             }
         }
 
-        public static string GetPlayerAdrOrName(Detached player) {
+        public static string GetPlayerAdrOrName(VideoSettings settings) {
             try {
-                string nameText = player.tB_PlayerD_Name.Text;
-                string adrText = player.tB_PlayerD_SimpleAdr.Text;
+                string nameText = settings.tB_PlayerD_Name.Text;
+                string adrText = settings.tB_PlayerD_SimpleAdr.Text;
                 string returnString = "";
 
                 if (adrText != "") {
@@ -747,6 +680,9 @@ namespace SSUtility2 {
 
         public static bool CheckIfNameValid(string name, bool everythingBad = false) {
             char[] nameArray = name.ToCharArray();
+            if (nameArray.Length == 0) {
+                return false;
+            }
             foreach (Char c in nameArray) {
                 foreach (Char symbol in Path.GetInvalidFileNameChars()) {
                     bool isBad = false;
@@ -805,9 +741,6 @@ namespace SSUtility2 {
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
             Detached d = DetachVid(true);
-
-            d.tB_PlayerD_Adr.Text = ipCon.tB_IPCon_Adr.Text;
-            d.checkB_PlayerD_Manual.Checked = true;
         }
 
         private void Menu_Window_PelcoD_Click(object sender, EventArgs e) {
@@ -860,6 +793,67 @@ namespace SSUtility2 {
 
         private void Menu_QC_Tilt_Click(object sender, EventArgs e) {
             new QuickCommandEntry("settilt", "Enter tilt pos value");
+        }
+
+        private void Menu_Video_Settings_Click(object sender, EventArgs e) {
+            mainPlayer.settings.Show();
+        }
+
+        private void b_Show_Click(object sender, EventArgs e) {
+            ShowControlPanel();
+        }
+
+        private void Menu_Window_ControlPanel_Click(object sender, EventArgs e) {
+            if (l_Version.Visible) {
+                HideControlPanel();
+                Menu_Window_ControlPanel.Text = "Show Control Panel";
+            } else {
+                ShowControlPanel();
+                Menu_Window_ControlPanel.Text = "Hide Control Panel";
+            }
+        }
+
+        private void Menu_Video_Stop_Click(object sender, EventArgs e) {
+            if (mainPlayer.VLCPlayer_D.playlist.isPlaying) {
+                mainPlayer.VLCPlayer_D.playlist.stop();
+            } else {
+                mainPlayer.StartPlaying(true);
+            }
+        }
+
+        private void Menu_Video_Snapshot_Click(object sender, EventArgs e) {
+            mainPlayer.SnapShot();
+        }
+
+        private void Menu_Video_Record_Click(object sender, EventArgs e) {
+            if (screenRec != null) {
+                screenRec.Dispose();
+                screenRec = null;
+                Menu_Video_Record.Text = "Start Recording";
+
+                if (finalMode) {
+                    SaveFileDialog fdg = SaveFile(ConfigControl.screencapFileName.stringVal, ".avi", finalDest);
+                    DialogResult result = fdg.ShowDialog();
+                    if (result == DialogResult.OK) {
+                        CopySingleFile(fdg.FileName, screenRecordName);
+                    }
+                    MessageBox.Show("Saved recording to: " + screenRecordName +
+                        "\nFinal saved: " + fdg.FileName);
+                } else {
+                    MessageBox.Show("Saved recording to: " + screenRecordName);
+                }
+
+            } else {
+                CheckCreateFile(null, ConfigControl.vFolder.stringVal + @"\SSUtility2\");
+                string folder = ConfigControl.vFolder.stringVal + @"\SSUtility2\";
+                screenRecordName = folder + ConfigControl.screencapFileName.stringVal + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
+                screenRec = Record(screenRecordName, null);
+                Menu_Video_Record.Text = "Stop Recording";
+            }
+        }
+
+        private void Menu_Video_Info_Click(object sender, EventArgs e) {
+            InfoPanel.i.StartStopTicking();
         }
 
     } // end of class MainForm

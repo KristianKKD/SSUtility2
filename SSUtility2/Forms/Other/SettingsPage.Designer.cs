@@ -29,14 +29,14 @@ namespace SSUtility2
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsPage));
             this.p_Main = new System.Windows.Forms.Panel();
             this.b_ChangeDir = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gB_Other = new System.Windows.Forms.GroupBox();
             this.cB_Other_RefreshRate = new System.Windows.Forms.ComboBox();
             this.l_Other = new System.Windows.Forms.Label();
             this.check_Other_AutoPlay = new System.Windows.Forms.CheckBox();
-            this.l_Other_Rate = new System.Windows.Forms.Label();
+            this.l_Other_CommandRate = new System.Windows.Forms.Label();
             this.check_Other_Subnet = new System.Windows.Forms.CheckBox();
             this.gB_Paths = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.l_Paths_PathLocation = new System.Windows.Forms.Label();
             this.check_Paths_Manual = new System.Windows.Forms.CheckBox();
             this.l_Paths_sCCheck = new System.Windows.Forms.Label();
             this.l_Paths_vCheck = new System.Windows.Forms.Label();
@@ -47,7 +47,7 @@ namespace SSUtility2
             this.b_Paths_sCBrowse = new System.Windows.Forms.Button();
             this.l_Paths = new System.Windows.Forms.Label();
             this.l_Paths_sCFolder = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gB_Recording = new System.Windows.Forms.GroupBox();
             this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
             this.l_Rec_Quality = new System.Windows.Forms.Label();
             this.tB_Rec_scFileN = new System.Windows.Forms.TextBox();
@@ -60,18 +60,18 @@ namespace SSUtility2
             this.b_Settings_Apply = new System.Windows.Forms.Button();
             this.b_Settings_Default = new System.Windows.Forms.Button();
             this.p_Main.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gB_Other.SuspendLayout();
             this.gB_Paths.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.gB_Recording.SuspendLayout();
             this.SuspendLayout();
             // 
             // p_Main
             // 
             this.p_Main.BackColor = System.Drawing.SystemColors.Window;
             this.p_Main.Controls.Add(this.b_ChangeDir);
-            this.p_Main.Controls.Add(this.groupBox2);
+            this.p_Main.Controls.Add(this.gB_Other);
             this.p_Main.Controls.Add(this.gB_Paths);
-            this.p_Main.Controls.Add(this.groupBox1);
+            this.p_Main.Controls.Add(this.gB_Recording);
             this.p_Main.Controls.Add(this.b_Settings_Apply);
             this.p_Main.Controls.Add(this.b_Settings_Default);
             this.p_Main.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -93,18 +93,18 @@ namespace SSUtility2
             this.b_ChangeDir.UseVisualStyleBackColor = false;
             this.b_ChangeDir.Click += new System.EventHandler(this.b_ChangeDir_Click);
             // 
-            // groupBox2
+            // gB_Other
             // 
-            this.groupBox2.Controls.Add(this.cB_Other_RefreshRate);
-            this.groupBox2.Controls.Add(this.l_Other);
-            this.groupBox2.Controls.Add(this.check_Other_AutoPlay);
-            this.groupBox2.Controls.Add(this.l_Other_Rate);
-            this.groupBox2.Controls.Add(this.check_Other_Subnet);
-            this.groupBox2.Location = new System.Drawing.Point(883, 11);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(428, 194);
-            this.groupBox2.TabIndex = 29;
-            this.groupBox2.TabStop = false;
+            this.gB_Other.Controls.Add(this.cB_Other_RefreshRate);
+            this.gB_Other.Controls.Add(this.l_Other);
+            this.gB_Other.Controls.Add(this.check_Other_AutoPlay);
+            this.gB_Other.Controls.Add(this.l_Other_CommandRate);
+            this.gB_Other.Controls.Add(this.check_Other_Subnet);
+            this.gB_Other.Location = new System.Drawing.Point(883, 11);
+            this.gB_Other.Name = "gB_Other";
+            this.gB_Other.Size = new System.Drawing.Size(428, 194);
+            this.gB_Other.TabIndex = 29;
+            this.gB_Other.TabStop = false;
             // 
             // cB_Other_RefreshRate
             // 
@@ -144,14 +144,14 @@ namespace SSUtility2
             this.check_Other_AutoPlay.UseVisualStyleBackColor = true;
             this.check_Other_AutoPlay.CheckedChanged += new System.EventHandler(this.check_Other_AutoPlay_CheckedChanged);
             // 
-            // l_Other_Rate
+            // l_Other_CommandRate
             // 
-            this.l_Other_Rate.AutoSize = true;
-            this.l_Other_Rate.Location = new System.Drawing.Point(7, 97);
-            this.l_Other_Rate.Name = "l_Other_Rate";
-            this.l_Other_Rate.Size = new System.Drawing.Size(113, 13);
-            this.l_Other_Rate.TabIndex = 27;
-            this.l_Other_Rate.Text = "Info Refresh Rate (ms)";
+            this.l_Other_CommandRate.AutoSize = true;
+            this.l_Other_CommandRate.Location = new System.Drawing.Point(7, 97);
+            this.l_Other_CommandRate.Name = "l_Other_CommandRate";
+            this.l_Other_CommandRate.Size = new System.Drawing.Size(130, 13);
+            this.l_Other_CommandRate.TabIndex = 27;
+            this.l_Other_CommandRate.Text = "Command Send Rate (ms)";
             // 
             // check_Other_Subnet
             // 
@@ -167,7 +167,7 @@ namespace SSUtility2
             // 
             // gB_Paths
             // 
-            this.gB_Paths.Controls.Add(this.label1);
+            this.gB_Paths.Controls.Add(this.l_Paths_PathLocation);
             this.gB_Paths.Controls.Add(this.check_Paths_Manual);
             this.gB_Paths.Controls.Add(this.l_Paths_sCCheck);
             this.gB_Paths.Controls.Add(this.l_Paths_vCheck);
@@ -184,14 +184,14 @@ namespace SSUtility2
             this.gB_Paths.TabIndex = 27;
             this.gB_Paths.TabStop = false;
             // 
-            // label1
+            // l_Paths_PathLocation
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(115, 166);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(307, 13);
-            this.label1.TabIndex = 27;
-            this.label1.Text = "Automatic paths are Documents\\SSUtility\\Saved\\[CAMERA IP]";
+            this.l_Paths_PathLocation.AutoSize = true;
+            this.l_Paths_PathLocation.Location = new System.Drawing.Point(115, 166);
+            this.l_Paths_PathLocation.Name = "l_Paths_PathLocation";
+            this.l_Paths_PathLocation.Size = new System.Drawing.Size(307, 13);
+            this.l_Paths_PathLocation.TabIndex = 27;
+            this.l_Paths_PathLocation.Text = "Automatic paths are Documents\\SSUtility\\Saved\\[CAMERA IP]";
             // 
             // check_Paths_Manual
             // 
@@ -297,22 +297,22 @@ namespace SSUtility2
             this.l_Paths_sCFolder.TabIndex = 2;
             this.l_Paths_sCFolder.Text = "Snapshot Folder";
             // 
-            // groupBox1
+            // gB_Recording
             // 
-            this.groupBox1.Controls.Add(this.cB_Rec_Quality);
-            this.groupBox1.Controls.Add(this.l_Rec_Quality);
-            this.groupBox1.Controls.Add(this.tB_Rec_scFileN);
-            this.groupBox1.Controls.Add(this.l_Rec_sCFileN);
-            this.groupBox1.Controls.Add(this.cB_Rec_FPS);
-            this.groupBox1.Controls.Add(this.tB_Rec_vFileN);
-            this.groupBox1.Controls.Add(this.l_Rec_vFileN);
-            this.groupBox1.Controls.Add(this.l_Rec);
-            this.groupBox1.Controls.Add(this.l_Rec_FPS);
-            this.groupBox1.Location = new System.Drawing.Point(449, 11);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(428, 194);
-            this.groupBox1.TabIndex = 28;
-            this.groupBox1.TabStop = false;
+            this.gB_Recording.Controls.Add(this.cB_Rec_Quality);
+            this.gB_Recording.Controls.Add(this.l_Rec_Quality);
+            this.gB_Recording.Controls.Add(this.tB_Rec_scFileN);
+            this.gB_Recording.Controls.Add(this.l_Rec_sCFileN);
+            this.gB_Recording.Controls.Add(this.cB_Rec_FPS);
+            this.gB_Recording.Controls.Add(this.tB_Rec_vFileN);
+            this.gB_Recording.Controls.Add(this.l_Rec_vFileN);
+            this.gB_Recording.Controls.Add(this.l_Rec);
+            this.gB_Recording.Controls.Add(this.l_Rec_FPS);
+            this.gB_Recording.Location = new System.Drawing.Point(449, 11);
+            this.gB_Recording.Name = "gB_Recording";
+            this.gB_Recording.Size = new System.Drawing.Size(428, 194);
+            this.gB_Recording.TabIndex = 28;
+            this.gB_Recording.TabStop = false;
             // 
             // cB_Rec_Quality
             // 
@@ -451,12 +451,12 @@ namespace SSUtility2
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsPage_FormClosing);
             this.p_Main.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.gB_Other.ResumeLayout(false);
+            this.gB_Other.PerformLayout();
             this.gB_Paths.ResumeLayout(false);
             this.gB_Paths.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gB_Recording.ResumeLayout(false);
+            this.gB_Recording.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -464,14 +464,14 @@ namespace SSUtility2
         #endregion
 
         private System.Windows.Forms.Panel p_Main;
-        public System.Windows.Forms.GroupBox groupBox2;
+        public System.Windows.Forms.GroupBox gB_Other;
         public System.Windows.Forms.ComboBox cB_Other_RefreshRate;
         public System.Windows.Forms.Label l_Other;
         private System.Windows.Forms.CheckBox check_Other_AutoPlay;
-        public System.Windows.Forms.Label l_Other_Rate;
+        public System.Windows.Forms.Label l_Other_CommandRate;
         private System.Windows.Forms.CheckBox check_Other_Subnet;
         public System.Windows.Forms.GroupBox gB_Paths;
-        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label l_Paths_PathLocation;
         private System.Windows.Forms.CheckBox check_Paths_Manual;
         public System.Windows.Forms.Label l_Paths_sCCheck;
         public System.Windows.Forms.Label l_Paths_vCheck;
@@ -482,7 +482,7 @@ namespace SSUtility2
         public System.Windows.Forms.Button b_Paths_sCBrowse;
         public System.Windows.Forms.Label l_Paths;
         public System.Windows.Forms.Label l_Paths_sCFolder;
-        public System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.GroupBox gB_Recording;
         public System.Windows.Forms.ComboBox cB_Rec_Quality;
         public System.Windows.Forms.Label l_Rec_Quality;
         public System.Windows.Forms.TextBox tB_Rec_scFileN;
