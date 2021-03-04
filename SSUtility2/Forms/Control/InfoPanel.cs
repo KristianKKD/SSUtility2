@@ -6,13 +6,15 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class InfoPanel : Form {
 
-        public static InfoPanel i;
 
         public InfoPanel() {
             InitializeComponent();
-            HideAll();
             i = this;
         }
+
+        public static InfoPanel i;
+
+        public Panel myPanel;
 
         public bool thermalCam;
 
@@ -34,8 +36,10 @@ namespace SSUtility2 {
 
         public void HideAll() {
             try {
-                Hide();
-                SendToBack();
+                Invoke((MethodInvoker)delegate {
+                    myPanel.Hide();
+                    myPanel.SendToBack();
+                });
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }
@@ -43,8 +47,10 @@ namespace SSUtility2 {
 
         public void ShowAll() {
             try {
-                Show();
-                BringToFront();
+                Invoke((MethodInvoker)delegate {
+                    myPanel.Show();
+                    myPanel.BringToFront();
+                });
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }
@@ -52,15 +58,21 @@ namespace SSUtility2 {
 
         public async Task StartStopTicking() {
             try {
+                if (!this.IsHandleCreated) {
+                    this.CreateHandle();
+                }
+
                 if (isActive) {
                     StopTicking();
                     return;
                 }
-                myConfig = await OtherCamCom.CheckConfiguration();
                 GenCommands();
+                myConfig = await OtherCamCom.CheckConfiguration().ConfigureAwait(false);
 
                 isActive = true;
-            } catch(Exception e) {
+                MainForm.m.Menu_Video_Info.Text = "Disable Info Panel";
+                ShowAll();
+            } catch (Exception e) {
                 MainForm.ShowPopup("Error in updating info panel!\nShow more?", "Failed to update info panel!", e.ToString());
                 isActive = false;
             }
@@ -69,11 +81,47 @@ namespace SSUtility2 {
         public void StopTicking() {
             HideAll();
             isActive = false;
+            MainForm.m.Menu_Video_Info.Text = "Enable Info Panel";
         }
 
-        public void InfoPanelTick() {
-            if (AsyncCamCom.sock.Connected && isActive) {
-                UpdateAll();
+        int timeoutTime = 0;
+        public bool isCamera = false;
+
+        public async Task InfoPanelTick() {
+            try {
+                if (!AsyncCamCom.sock.Connected) {
+                    return;
+                }
+
+                if (isActive && isCamera) {
+                    UpdateAll();
+                } else {
+                    if (!isCamera) {
+                        if (MainForm.m.mainPlayer.isPlaying && timeoutTime < CommandQueue.commandRetries) {
+                            timeoutTime++;
+                        } else {
+                            timeoutTime = 0;
+                            CheckForCamera();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+            }
+}
+
+        public async Task CheckForCamera() {
+            try {
+                if (await CheckCam().ConfigureAwait(false)) {
+                    MainForm.m.Menu_Video_Info.Enabled = true;
+                    isCamera = true;
+                    myConfig = await OtherCamCom.CheckConfiguration().ConfigureAwait(false);
+                } else {
+                    MainForm.m.Menu_Video_Info.Enabled = false;
+                    isCamera = false;
+                }
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
             }
         }
 
@@ -133,7 +181,7 @@ namespace SSUtility2 {
             }
         }
 
-        public async Task<bool> CheckCam() {
+        private async Task<bool> CheckCam() {
             try {
                 if (!await AsyncCamCom.TryConnect(true).ConfigureAwait(false)) {
                     return false;
@@ -159,10 +207,14 @@ namespace SSUtility2 {
         }
 
         void GenCommands() {
-            panID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, true).id;
-            tiltID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, true).id;
-            fovID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 }, true).id;
-            tFovID = new Command(new byte[] { 0xFF, 0x02, 0x00, 0x55, 0x00, 0x00, 0x57 }, true).id;
+            try {
+                panID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, true).id;
+                tiltID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, true).id;
+                fovID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 }, true).id;
+                tFovID = new Command(new byte[] { 0xFF, 0x02, 0x00, 0x55, 0x00, 0x00, 0x57 }, true).id;
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+            }
         }
 
     }

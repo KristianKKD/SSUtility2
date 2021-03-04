@@ -13,6 +13,8 @@ namespace SSUtility2 {
         public bool recording = false;
         Recorder recorderD;
 
+        public bool isPlaying = false;
+
         public Detached() {
             InitializeComponent();
             settings = new VideoSettings();
@@ -49,37 +51,34 @@ namespace SSUtility2 {
             }
         }
 
-        public async Task StartPlaying(bool manuallyPressed) {
+        public void StartStop() {
+            if (isPlaying) {
+                StopPlaying();
+            } else {
+                StartPlaying(true);
+            }
+        }
+
+        public async Task StartPlaying(bool showErrors) {
             try {
                 Uri combined = GetCombined();
 
-                if (Play(this, manuallyPressed).Result) {
-
-                    if (manuallyPressed && this == MainForm.m.mainPlayer) {
-                        if (await InfoPanel.i.CheckCam().ConfigureAwait(false)) { //have this be checked every few seconds
-                            Invoke((MethodInvoker)delegate {
-                                MainForm.m.Menu_Video_Info.Enabled = true;
-                            });
-                        } else {
-                            Invoke((MethodInvoker)delegate {
-                                MainForm.m.Menu_Video_Info.Enabled = false;
-                            });
-                        }
-                    }
-                    Invoke((MethodInvoker)delegate {
-                        MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
-                    });
-
+                if (await Play(this, showErrors).ConfigureAwait(false)) {
+                    MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
+                    isPlaying = true;
                 } else {
-                    InfoPanel.i.HideAll();
-                    Invoke((MethodInvoker)delegate {
-                        MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
-                    });
-
+                    StopPlaying();
                 }
             } catch (Exception e) {
                 MainForm.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
+                StopPlaying();
             }
+        }
+
+        public void StopPlaying() {
+            VLCPlayer_D.playlist.stop();
+            isPlaying = false;
+            MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
         }
 
         public async Task<bool> Play(Detached player, bool showError) {
@@ -128,7 +127,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_StartStop_Click(object sender, EventArgs e) {
-            StartPlaying(true);
+            StartStop();
         }
 
         private void Menu_Snapshot_Click(object sender, EventArgs e) {

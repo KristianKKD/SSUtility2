@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.0.0.0";
+        public const string version = "v2.0.0.1";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -207,7 +207,7 @@ namespace SSUtility2 {
 
             p_Control.Controls.Add(p);
 
-            p.BringToFront();
+            i.myPanel = p;
             p.Hide();
         }
 
@@ -236,7 +236,7 @@ namespace SSUtility2 {
         }
 
         Detached AttachPlayer() {
-            Detached d = DetachVid(false);
+            Detached d = DetachVid(false).Result;
             Panel p = new Panel();
             d.myPanel = p;
 
@@ -277,10 +277,18 @@ namespace SSUtility2 {
         }
 
 
-        public Detached DetachVid(bool show) {
+        public async Task<Detached> DetachVid(bool show) {
             Detached dv = new Detached();
             if (show) {
                 dv.Show();
+                await Task.Delay(100).ConfigureAwait(false);
+                dv.settings.tB_PlayerD_Adr.Text = mainPlayer.settings.tB_PlayerD_Adr.Text;
+                dv.settings.tB_PlayerD_Port.Text = mainPlayer.settings.tB_PlayerD_Port.Text;
+                dv.settings.tB_PlayerD_RTSP.Text = mainPlayer.settings.tB_PlayerD_RTSP.Text;
+                dv.settings.tB_PlayerD_Username.Text = mainPlayer.settings.tB_PlayerD_Username.Text;
+                dv.settings.tB_PlayerD_Password.Text = mainPlayer.settings.tB_PlayerD_Password.Text;
+                dv.settings.tB_PlayerD_Name.Text = mainPlayer.settings.tB_PlayerD_Name.Text;
+                dv.settings.tB_PlayerD_SimpleAdr.Text = mainPlayer.settings.tB_PlayerD_SimpleAdr.Text;
             }
             SetFeatureToAllControls(dv.Controls);
             return dv;
@@ -740,7 +748,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
-            Detached d = DetachVid(true);
+            DetachVid(true);
         }
 
         private void Menu_Window_PelcoD_Click(object sender, EventArgs e) {
@@ -814,11 +822,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_Video_Stop_Click(object sender, EventArgs e) {
-            if (mainPlayer.VLCPlayer_D.playlist.isPlaying) {
-                mainPlayer.VLCPlayer_D.playlist.stop();
-            } else {
-                mainPlayer.StartPlaying(true);
-            }
+            mainPlayer.StartStop();
         }
 
         private void Menu_Video_Snapshot_Click(object sender, EventArgs e) {

@@ -48,6 +48,7 @@ namespace SSUtility2
             this.tB_PlayerD_RTSP = new System.Windows.Forms.TextBox();
             this.l_PlayerD_Adr = new System.Windows.Forms.Label();
             this.checkB_PlayerD_Manual = new System.Windows.Forms.CheckBox();
+            this.b_Play = new System.Windows.Forms.Button();
             this.p_PlayerD_Simple.SuspendLayout();
             this.p_PlayerD_Extended.SuspendLayout();
             this.SuspendLayout();
@@ -81,7 +82,7 @@ namespace SSUtility2
             this.p_PlayerD_Simple.Controls.Add(this.l_PlayerD_SimpleAdr);
             this.p_PlayerD_Simple.Location = new System.Drawing.Point(7, 32);
             this.p_PlayerD_Simple.Name = "p_PlayerD_Simple";
-            this.p_PlayerD_Simple.Size = new System.Drawing.Size(301, 199);
+            this.p_PlayerD_Simple.Size = new System.Drawing.Size(301, 203);
             this.p_PlayerD_Simple.TabIndex = 57;
             // 
             // tB_PlayerD_SimpleAdr
@@ -128,7 +129,7 @@ namespace SSUtility2
             this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Adr);
             this.p_PlayerD_Extended.Location = new System.Drawing.Point(7, 32);
             this.p_PlayerD_Extended.Name = "p_PlayerD_Extended";
-            this.p_PlayerD_Extended.Size = new System.Drawing.Size(301, 199);
+            this.p_PlayerD_Extended.Size = new System.Drawing.Size(301, 203);
             this.p_PlayerD_Extended.TabIndex = 56;
             // 
             // label1
@@ -315,7 +316,7 @@ namespace SSUtility2
             // 
             this.checkB_PlayerD_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkB_PlayerD_Manual.AutoSize = true;
-            this.checkB_PlayerD_Manual.Location = new System.Drawing.Point(7, 237);
+            this.checkB_PlayerD_Manual.Location = new System.Drawing.Point(7, 252);
             this.checkB_PlayerD_Manual.Name = "checkB_PlayerD_Manual";
             this.checkB_PlayerD_Manual.Size = new System.Drawing.Size(144, 17);
             this.checkB_PlayerD_Manual.TabIndex = 55;
@@ -323,12 +324,24 @@ namespace SSUtility2
             this.checkB_PlayerD_Manual.UseVisualStyleBackColor = true;
             this.checkB_PlayerD_Manual.CheckedChanged += new System.EventHandler(this.checkB_PlayerD_Manual_CheckedChanged);
             // 
+            // b_Play
+            // 
+            this.b_Play.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Play.Location = new System.Drawing.Point(218, 241);
+            this.b_Play.Name = "b_Play";
+            this.b_Play.Size = new System.Drawing.Size(90, 28);
+            this.b_Play.TabIndex = 59;
+            this.b_Play.Text = "Play";
+            this.b_Play.UseVisualStyleBackColor = false;
+            // 
             // VideoSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(318, 264);
+            this.ClientSize = new System.Drawing.Size(318, 280);
+            this.Controls.Add(this.b_Play);
             this.Controls.Add(this.l_Name);
             this.Controls.Add(this.tB_PlayerD_Name);
             this.Controls.Add(this.p_PlayerD_Simple);
@@ -372,5 +385,6 @@ namespace SSUtility2
         public System.Windows.Forms.TextBox tB_PlayerD_RTSP;
         public System.Windows.Forms.Label l_PlayerD_Adr;
         public System.Windows.Forms.CheckBox checkB_PlayerD_Manual;
+        private System.Windows.Forms.Button b_Play;
     }
 }

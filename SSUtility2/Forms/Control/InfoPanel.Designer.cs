@@ -56,7 +56,7 @@
             this.l_FOV.AutoSize = true;
             this.l_FOV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.l_FOV.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.l_FOV.Location = new System.Drawing.Point(185, 5);
+            this.l_FOV.Location = new System.Drawing.Point(195, 5);
             this.l_FOV.Name = "l_FOV";
             this.l_FOV.Size = new System.Drawing.Size(117, 17);
             this.l_FOV.TabIndex = 2;
@@ -67,7 +67,7 @@
             this.l_TFOV.AutoSize = true;
             this.l_TFOV.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.l_TFOV.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.l_TFOV.Location = new System.Drawing.Point(348, 5);
+            this.l_TFOV.Location = new System.Drawing.Point(355, 5);
             this.l_TFOV.Name = "l_TFOV";
             this.l_TFOV.Size = new System.Drawing.Size(110, 17);
             this.l_TFOV.TabIndex = 3;
@@ -78,7 +78,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(511, 24);
+            this.ClientSize = new System.Drawing.Size(543, 24);
             this.Controls.Add(this.l_TFOV);
             this.Controls.Add(this.l_FOV);
             this.Controls.Add(this.l_Tilt);
