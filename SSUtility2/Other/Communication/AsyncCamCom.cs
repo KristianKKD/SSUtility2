@@ -14,16 +14,16 @@ namespace SSUtility2 {
             bool result = true;
             try {
                 if (!sock.Connected) {
-                    if (MainForm.m.ipCon.tB_IPCon_Adr.Text.Length == 0 ||
-                        MainForm.m.ipCon.tB_IPCon_Port.Text.Length == 0) {
+                    if (ConfigControl.savedIP.stringVal.Length == 0 ||
+                        ConfigControl.savedPort.stringVal.Length == 0) {
 
                         result = false;
                     }
 
                     IPEndPoint ep;
                     if (customep == null) {
-                        ep = new IPEndPoint(IPAddress.Parse(MainForm.m.ipCon.tB_IPCon_Adr.Text),
-                            int.Parse(MainForm.m.ipCon.tB_IPCon_Port.Text));
+                        ep = new IPEndPoint(IPAddress.Parse(ConfigControl.savedIP.stringVal),
+                            int.Parse(ConfigControl.savedPort.stringVal));
                     } else {
                         ep = customep;
                     }
@@ -40,7 +40,7 @@ namespace SSUtility2 {
                 }
             } catch (Exception e){
                 if (!hideErrors)
-                    MainForm.ShowPopup("Failed to begin connection to camera!", "Connection Attempt Failed!"
+                    MainForm.ShowPopup("Failed to initialize connection to camera!\nShow more?", "Connection Attempt Failed!"
                         , e.ToString());
                 result = false;
             }
@@ -108,19 +108,19 @@ namespace SSUtility2 {
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-                bool parsedIP = IPAddress.TryParse(MainForm.m.ipCon.tB_IPCon_Adr.Text, out IPAddress ip);
-                bool parsedPort = int.TryParse(MainForm.m.ipCon.tB_IPCon_Port.Text, out int port);
+                bool parsedIP = IPAddress.TryParse(ConfigControl.savedIP.stringVal, out IPAddress ip);
+                bool parsedPort = int.TryParse(ConfigControl.savedPort.stringVal, out int port);
                 if (!parsedIP || !parsedPort) {
                     if (!hideErrors)
                         MainForm.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
-                                        "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());
+                                        "IP valid: " + parsedIP.ToString() + "\nPort valid: " + parsedPort.ToString());
                     return;
                 }
 
                 if (!OtherCamCom.PingAdr(ep.Address).Result) {
                     if (!hideErrors)
                         MainForm.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
-                                        "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString() + "\nPing: Failed");
+                                        "IP valid: " + parsedIP.ToString() + "\nPort valid: " + parsedPort.ToString() + "\nPing: Failed");
                     return;
                 }
 

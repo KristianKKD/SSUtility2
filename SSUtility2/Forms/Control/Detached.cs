@@ -15,6 +15,7 @@ namespace SSUtility2 {
 
         public bool isPlaying = false;
 
+        public bool thermalMode = false;
         public Detached() {
             InitializeComponent();
             settings = new VideoSettings();
@@ -141,7 +142,18 @@ namespace SSUtility2 {
         }
 
         private void Menu_SwapView_Click(object sender, EventArgs e) {
-
+            if (thermalMode) {
+                thermalMode = false;
+            } else {
+                thermalMode = true;
+            }
+            
+            if (ConfigControl.savedCamera.stringVal == "Thermal" || ConfigControl.savedCamera.stringVal == "Daylight") {
+                if (thermalMode)
+                    ConfigControl.savedCamera.UpdateValue("Thermal");
+                else
+                    ConfigControl.savedCamera.UpdateValue("Daylight");
+            }
         }
 
     }

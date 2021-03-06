@@ -75,6 +75,11 @@ namespace SSUtility2
             this.b_Presets_CHARM_Aquire = new System.Windows.Forms.Button();
             this.b_Presets_CHARM_Standby = new System.Windows.Forms.Button();
             this.l_Presets_Default = new System.Windows.Forms.Label();
+            this.tB_Presets_Number = new System.Windows.Forms.TextBox();
+            this.l_Presets_Number = new System.Windows.Forms.Label();
+            this.l_Presets = new System.Windows.Forms.Label();
+            this.b_Presets_Learn = new System.Windows.Forms.Button();
+            this.b_Presets_GoTo = new System.Windows.Forms.Button();
             this.tC_Presets_Default.SuspendLayout();
             this.adminPage.SuspendLayout();
             this.daylightPage.SuspendLayout();
@@ -91,7 +96,7 @@ namespace SSUtility2
             this.tC_Presets_Default.Controls.Add(this.slgPage);
             this.tC_Presets_Default.Controls.Add(this.peakbeamPage);
             this.tC_Presets_Default.ItemSize = new System.Drawing.Size(40, 18);
-            this.tC_Presets_Default.Location = new System.Drawing.Point(12, 49);
+            this.tC_Presets_Default.Location = new System.Drawing.Point(12, 140);
             this.tC_Presets_Default.Name = "tC_Presets_Default";
             this.tC_Presets_Default.Padding = new System.Drawing.Point(0, 0);
             this.tC_Presets_Default.SelectedIndex = 0;
@@ -650,18 +655,73 @@ namespace SSUtility2
             // 
             this.l_Presets_Default.AutoSize = true;
             this.l_Presets_Default.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Presets_Default.Location = new System.Drawing.Point(8, 13);
+            this.l_Presets_Default.Location = new System.Drawing.Point(12, 108);
             this.l_Presets_Default.Name = "l_Presets_Default";
             this.l_Presets_Default.Size = new System.Drawing.Size(138, 20);
             this.l_Presets_Default.TabIndex = 76;
             this.l_Presets_Default.Text = "Quick Functions";
+            // 
+            // tB_Presets_Number
+            // 
+            this.tB_Presets_Number.Location = new System.Drawing.Point(110, 35);
+            this.tB_Presets_Number.Name = "tB_Presets_Number";
+            this.tB_Presets_Number.Size = new System.Drawing.Size(123, 20);
+            this.tB_Presets_Number.TabIndex = 82;
+            // 
+            // l_Presets_Number
+            // 
+            this.l_Presets_Number.AutoSize = true;
+            this.l_Presets_Number.Location = new System.Drawing.Point(12, 38);
+            this.l_Presets_Number.Name = "l_Presets_Number";
+            this.l_Presets_Number.Size = new System.Drawing.Size(47, 13);
+            this.l_Presets_Number.TabIndex = 81;
+            this.l_Presets_Number.Text = "Number:";
+            // 
+            // l_Presets
+            // 
+            this.l_Presets.AutoSize = true;
+            this.l_Presets.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Presets.Location = new System.Drawing.Point(12, 9);
+            this.l_Presets.Name = "l_Presets";
+            this.l_Presets.Size = new System.Drawing.Size(70, 20);
+            this.l_Presets.TabIndex = 80;
+            this.l_Presets.Text = "Presets";
+            // 
+            // b_Presets_Learn
+            // 
+            this.b_Presets_Learn.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Learn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Presets_Learn.Location = new System.Drawing.Point(139, 67);
+            this.b_Presets_Learn.Name = "b_Presets_Learn";
+            this.b_Presets_Learn.Size = new System.Drawing.Size(94, 22);
+            this.b_Presets_Learn.TabIndex = 79;
+            this.b_Presets_Learn.Text = "Learn";
+            this.b_Presets_Learn.UseVisualStyleBackColor = false;
+            this.b_Presets_Learn.Click += new System.EventHandler(this.b_Presets_Learn_Click);
+            // 
+            // b_Presets_GoTo
+            // 
+            this.b_Presets_GoTo.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_GoTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Presets_GoTo.Location = new System.Drawing.Point(15, 68);
+            this.b_Presets_GoTo.Name = "b_Presets_GoTo";
+            this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 22);
+            this.b_Presets_GoTo.TabIndex = 78;
+            this.b_Presets_GoTo.Text = "Go To";
+            this.b_Presets_GoTo.UseVisualStyleBackColor = false;
+            this.b_Presets_GoTo.Click += new System.EventHandler(this.b_Presets_GoTo_Click);
             // 
             // PresetPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(254, 313);
+            this.ClientSize = new System.Drawing.Size(254, 405);
+            this.Controls.Add(this.tB_Presets_Number);
+            this.Controls.Add(this.l_Presets_Number);
+            this.Controls.Add(this.l_Presets);
+            this.Controls.Add(this.b_Presets_Learn);
+            this.Controls.Add(this.b_Presets_GoTo);
             this.Controls.Add(this.tC_Presets_Default);
             this.Controls.Add(this.l_Presets_Default);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -739,5 +799,10 @@ namespace SSUtility2
         public System.Windows.Forms.Button b_Presets_Thermal_DigiPos;
         public System.Windows.Forms.Button b_Presets_Thermal_Cycle;
         public System.Windows.Forms.Button b_Presets_Thermal_Stabi;
+        public System.Windows.Forms.TextBox tB_Presets_Number;
+        public System.Windows.Forms.Label l_Presets_Number;
+        public System.Windows.Forms.Label l_Presets;
+        public System.Windows.Forms.Button b_Presets_Learn;
+        public System.Windows.Forms.Button b_Presets_GoTo;
     }
 }

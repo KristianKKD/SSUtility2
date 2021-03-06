@@ -8,49 +8,9 @@ namespace SSUtility2 {
     
         public Panel myPanel;
 
-
         public ControlPanel() {
             InitializeComponent();
             Program.cp = this;
-        }
-
-        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
-            string control = cB_IPCon_Type.Text;
-            string port = "";
-
-            if (control == "Encoder") {
-                port = "6791";
-            } else if (control == "MOXA nPort") {
-                port = "4001";
-            }
-
-            tB_IPCon_Port.Text = port;
-        }
-
-        private void b_Presets_GoTo_Click(object sender, EventArgs e) {
-            if (!PresetsCheck())
-                return;
-            byte presetNumber = Convert.ToByte(tB_Presets_Number.Text);
-
-            AsyncCamCom.SendNewCommand(D.protocol.Preset(MainForm.m.MakeAdr(), presetNumber, D.PresetAction.Goto));
-        }
-
-        private void b_Presets_Learn_Click(object sender, EventArgs e) { //can combine these 2 easily
-            if (!PresetsCheck())
-                return;
-            byte presetNumber = Convert.ToByte(tB_Presets_Number.Text);
-
-            AsyncCamCom.SendNewCommand(D.protocol.Preset(MainForm.m.MakeAdr(), presetNumber, D.PresetAction.Set));
-        }
-
-        bool PresetsCheck() {
-            if (tB_Presets_Number.Text.ToString() == "") {
-                return false;
-            }
-            if (!MainForm.CheckIfNameValid(tB_Presets_Number.Text, true)) {
-                return false;
-            }
-            return true;
         }
 
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
@@ -77,11 +37,11 @@ namespace SSUtility2 {
             PTZZoom(D.Zoom.Wide);
         }
         private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Far));
+            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(), D.Focus.Far));
         }
 
         private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(cB_IPCon_Selected), D.Focus.Near));
+            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(), D.Focus.Near));
         }
 
         void PTZMove(D.Tilt tilt, D.Pan pan) {
@@ -112,16 +72,6 @@ namespace SSUtility2 {
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(MainForm.m.MakeAdr()));
             await Task.Delay(100).ConfigureAwait(false);
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(MainForm.m.MakeAdr()));
-        }
-
-        private void tB_IPCon_Adr_Leave(object sender, EventArgs e) {
-            AsyncCamCom.TryConnect(true);
-        }
-
-        private void tB_IPCon_Adr_KeyDown(object sender, KeyEventArgs e) { //make this better in future
-            if (e.KeyCode == Keys.Enter) {
-                AsyncCamCom.TryConnect(false);
-            }
         }
 
         private void ControlPanel_Load(object sender, EventArgs e) {

@@ -49,6 +49,7 @@ namespace SSUtility2 {
             this.Menu_Window_Response = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Osiris = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Window_Presets = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_ControlPanel = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,10 +66,8 @@ namespace SSUtility2 {
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Main = new System.Windows.Forms.Panel();
             this.p_Control = new System.Windows.Forms.Panel();
-            this.l_Version = new System.Windows.Forms.Label();
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
-            this.p_Control.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -95,6 +94,7 @@ namespace SSUtility2 {
             this.Menu_Window_Lite,
             this.Menu_Window_Response,
             this.Menu_Window_Osiris,
+            this.Menu_Window_Presets,
             this.Menu_Window_Settings,
             this.Menu_Window_ControlPanel});
             this.Menu_Window.Name = "Menu_Window";
@@ -142,6 +142,13 @@ namespace SSUtility2 {
             this.Menu_Window_Settings.Size = new System.Drawing.Size(182, 22);
             this.Menu_Window_Settings.Text = "Settings";
             this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
+            // 
+            // Menu_Window_Presets
+            // 
+            this.Menu_Window_Presets.Name = "Menu_Window_Presets";
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(182, 22);
+            this.Menu_Window_Presets.Text = "Preset Panel";
+            this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
             // Menu_Window_ControlPanel
             // 
@@ -263,22 +270,11 @@ namespace SSUtility2 {
             // 
             // p_Control
             // 
-            this.p_Control.Controls.Add(this.l_Version);
             this.p_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.p_Control.Location = new System.Drawing.Point(0, 0);
             this.p_Control.Name = "p_Control";
             this.p_Control.Size = new System.Drawing.Size(1630, 860);
             this.p_Control.TabIndex = 1;
-            // 
-            // l_Version
-            // 
-            this.l_Version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.l_Version.AutoSize = true;
-            this.l_Version.Location = new System.Drawing.Point(12, 838);
-            this.l_Version.Name = "l_Version";
-            this.l_Version.Size = new System.Drawing.Size(102, 13);
-            this.l_Version.TabIndex = 0;
-            this.l_Version.Text = "SSUtility2.0 Version:";
             // 
             // MainForm
             // 
@@ -297,8 +293,6 @@ namespace SSUtility2 {
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_Main.ResumeLayout(false);
-            this.p_Control.ResumeLayout(false);
-            this.p_Control.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1105,7 +1099,6 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_QC_PanZero;
         public ToolStripMenuItem Menu_Window_Settings;
         public Panel p_Main;
-        public Label l_Version;
         public Panel p_Control;
         public ToolStripMenuItem Menu_QC_Pan;
         public ToolStripMenuItem Menu_QC_Tilt;
@@ -1118,5 +1111,6 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Video_StartStop;
         public ToolStripMenuItem Menu_Video_Info;
         public ToolStripMenuItem Menu_Window_ControlPanel;
+        private ToolStripMenuItem Menu_Window_Presets;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

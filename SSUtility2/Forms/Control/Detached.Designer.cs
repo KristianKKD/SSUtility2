@@ -20,40 +20,29 @@
         /// the contents of this method with the code editor.
         /// </summary>
         public void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Detached));
-            this.VLCPlayer_D = new AxAXVLC.AxVLCPlugin2();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.Menu = new System.Windows.Forms.MenuStrip();
             this.videoStreamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_StartStop = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_SwapView = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.VLCPlayer_D = new AxAXVLC.AxVLCPlugin2();
+            this.sizeablePanel1 = new SizeablePanel.SizeablePanel();
+            this.Menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_D)).BeginInit();
-            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // VLCPlayer_D
+            // Menu
             // 
-            this.VLCPlayer_D.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VLCPlayer_D.Enabled = true;
-            this.VLCPlayer_D.Location = new System.Drawing.Point(0, 24);
-            this.VLCPlayer_D.Name = "VLCPlayer_D";
-            this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
-            this.VLCPlayer_D.Size = new System.Drawing.Size(772, 465);
-            this.VLCPlayer_D.TabIndex = 41;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.videoStreamToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(772, 24);
-            this.menuStrip1.TabIndex = 42;
-            this.menuStrip1.Text = "menuStrip1";
+            this.Menu.Location = new System.Drawing.Point(0, 0);
+            this.Menu.Name = "Menu";
+            this.Menu.Size = new System.Drawing.Size(772, 24);
+            this.Menu.TabIndex = 42;
+            this.Menu.Text = "Menu";
             // 
             // videoStreamToolStripMenuItem
             // 
@@ -102,10 +91,24 @@
             this.Menu_SwapView.Text = "Swap To Thermal View";
             this.Menu_SwapView.Click += new System.EventHandler(this.Menu_SwapView_Click);
             // 
-            // contextMenuStrip1
+            // VLCPlayer_D
             // 
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            this.VLCPlayer_D.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VLCPlayer_D.Enabled = true;
+            this.VLCPlayer_D.Location = new System.Drawing.Point(0, 24);
+            this.VLCPlayer_D.Name = "VLCPlayer_D";
+            this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
+            this.VLCPlayer_D.Size = new System.Drawing.Size(772, 465);
+            this.VLCPlayer_D.TabIndex = 41;
+            // 
+            // sizeablePanel1
+            // 
+            this.sizeablePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.sizeablePanel1.BackColor = System.Drawing.Color.White;
+            this.sizeablePanel1.Location = new System.Drawing.Point(482, 115);
+            this.sizeablePanel1.Name = "sizeablePanel1";
+            this.sizeablePanel1.Size = new System.Drawing.Size(200, 100);
+            this.sizeablePanel1.TabIndex = 43;
             // 
             // Detached
             // 
@@ -113,15 +116,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(772, 489);
+            this.Controls.Add(this.sizeablePanel1);
             this.Controls.Add(this.VLCPlayer_D);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.Menu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.Menu;
             this.Name = "Detached";
             this.Text = "Player";
+            this.Menu.ResumeLayout(false);
+            this.Menu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_D)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,14 +133,14 @@
 
         #endregion
         public AxAXVLC.AxVLCPlugin2 VLCPlayer_D;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip Menu;
         private System.Windows.Forms.ToolStripMenuItem videoStreamToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.ComponentModel.IContainer components;
         private System.Windows.Forms.ToolStripMenuItem Menu_Settings;
         private System.Windows.Forms.ToolStripMenuItem Menu_StartStop;
         private System.Windows.Forms.ToolStripMenuItem Menu_Snapshot;
         private System.Windows.Forms.ToolStripMenuItem Menu_Record;
         private System.Windows.Forms.ToolStripMenuItem Menu_SwapView;
+        private SizeablePanel.SizeablePanel sizeablePanel1;
     }
 }

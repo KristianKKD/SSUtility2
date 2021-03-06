@@ -187,7 +187,7 @@ namespace SSUtility2 {
                 return;
             }
 
-            ScriptCommand send = CheckForCommands(command, MainForm.m.MakeAdr(MainForm.m.ipCon.cB_IPCon_Selected)).Result;
+            ScriptCommand send = CheckForCommands(command, MainForm.m.MakeAdr()).Result;
             var t = Task.Factory.StartNew(() => {
                 AsyncCamCom.SendScriptCommand(send);
             });

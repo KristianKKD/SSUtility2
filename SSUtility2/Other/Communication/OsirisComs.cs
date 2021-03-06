@@ -30,8 +30,8 @@ namespace SSUtility2 {
                     }
                 }
 
-                bool parsedIP = IPAddress.TryParse(MainForm.m.ipCon.tB_IPCon_Adr.Text, out IPAddress ip);
-                bool parsedPort = int.TryParse(MainForm.m.ipCon.tB_IPCon_Port.Text, out int port);
+                bool parsedIP = IPAddress.TryParse(ConfigControl.savedIP.stringVal, out IPAddress ip);
+                bool parsedPort = int.TryParse(ConfigControl.savedPort.stringVal, out int port);
                 if (ep == null && (!parsedIP || !parsedPort)) {
                     MainForm.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());

@@ -12,8 +12,6 @@ namespace SSUtility2 {
 
     public partial class PresetPanel : Form {
 
-        public Panel myPanel;
-
         public PresetPanel() {
             InitializeComponent();
         }
@@ -174,6 +172,29 @@ namespace SSUtility2 {
 
         void DoPreset(uint adr, byte p) {
             AsyncCamCom.SendNewCommand(D.protocol.Preset(adr, p, D.PresetAction.Goto));
+        }
+
+        private void b_Presets_GoTo_Click(object sender, EventArgs e) {
+            PresetLearnGoto(false);
+        }
+
+        private void b_Presets_Learn_Click(object sender, EventArgs e) { //can combine these 2 easily
+            PresetLearnGoto(true);
+        }
+
+        void PresetLearnGoto(bool learn) {
+            if (!MainForm.CheckIfNameValid(tB_Presets_Number.Text, true) || tB_Presets_Number.Text.ToString() == "") {
+                MessageBox.Show("Invalid Preset!");
+                return;
+            }
+
+            byte presetNumber = Convert.ToByte(tB_Presets_Number.Text);
+
+            if (learn) {
+                AsyncCamCom.SendNewCommand(D.protocol.Preset(MainForm.m.MakeAdr(), presetNumber, D.PresetAction.Set));
+            } else {
+                AsyncCamCom.SendNewCommand(D.protocol.Preset(MainForm.m.MakeAdr(), presetNumber, D.PresetAction.Goto));
+            }
         }
 
     }

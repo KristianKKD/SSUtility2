@@ -7,9 +7,14 @@ namespace SSUtility2 {
     public partial class SettingsPage : Form {
         public SettingsPage() {
             InitializeComponent();
+            l_Version.Text = l_Version.Text + MainForm.version;
+            UpdatePresetCB();
         }
 
         public async Task PopulateSettingText() {
+            tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
+            tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
+
             tB_Paths_sCFolder.Text = ConfigControl.scFolder.stringVal;
             tB_Paths_vFolder.Text = ConfigControl.vFolder.stringVal;
 
@@ -29,19 +34,14 @@ namespace SSUtility2 {
             ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
         }
 
-        private void b_Settings_Apply_Click(object sender, EventArgs e) {
-            ApplyAll();
-        }
-
         private async Task ApplyAll() {
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
-            MessageBox.Show("Applied settings to: " + ConfigControl.appFolder + ConfigControl.config);
+            //MessageBox.Show("Applied settings to: " + ConfigControl.appFolder + ConfigControl.config);
         }
 
         private void b_Settings_Default_Click(object sender, EventArgs e) {
-            DialogResult d = MessageBox.Show("Are you sure you want to reset all settings? \n" +
-                    "Settings will not automatically be applied so the user may edit the defaults before applying.",
-                    "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult d = MessageBox.Show("Are you sure you want to reset all settings?",
+                "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (d == DialogResult.Yes) {
                 ConfigControl.SetToDefaults();
                 PopulateSettingText();
@@ -141,6 +141,7 @@ namespace SSUtility2 {
         }
 
         private void SettingsPage_FormClosing(object sender, FormClosingEventArgs e) {
+            ApplyAll();
             if (e.CloseReason == CloseReason.UserClosing) {
                 e.Cancel = true;
                 Hide();
@@ -166,6 +167,58 @@ namespace SSUtility2 {
                 }
                 MessageBox.Show("Finished changing directories!");
             }
+        }
+
+        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
+            string port = "";
+
+            if (cB_IPCon_Type.Text == "Encoder") {
+                port = "6791";
+            } else if (cB_IPCon_Type.Text == "MOXA nPort") {
+                port = "4001";
+            }
+
+            tB_IPCon_Port.Text = port;
+        }
+
+        async Task Connect() {
+            if (await AsyncCamCom.TryConnect(false).ConfigureAwait(false))
+                ConfigControl.savedIP.UpdateValue(cB_ipCon_Selected.Text);
+        }
+
+        async Task PortConnect() {
+            if (await AsyncCamCom.TryConnect(false).ConfigureAwait(false)) {
+                ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
+                UpdatePresetCB();
+            }
+        }
+
+        private void tB_IPCon_Adr_Leave(object sender, EventArgs e) {
+            Connect();
+        }
+
+        private void tB_IPCon_Adr_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                Connect();
+            }
+        }
+
+        void UpdatePresetCB() {
+            if (tB_IPCon_Port.Text == "6791") {
+                cB_IPCon_Type.Text = "Encoder";
+            } else if (tB_IPCon_Port.Text == "4001") {
+                cB_IPCon_Type.Text = "MOXA nPort";
+            } else {
+                cB_IPCon_Type.Text = "Custom";
+            }
+        }
+
+        private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
+            PortConnect();
+        }
+
+        private void cB_ipCon_Selected_TextUpdate(object sender, EventArgs e) {
+            ConfigControl.savedCamera.UpdateValue(cB_ipCon_Selected.Text);
         }
 
     }

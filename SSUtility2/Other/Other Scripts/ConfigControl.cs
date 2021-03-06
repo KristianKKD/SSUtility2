@@ -33,9 +33,12 @@ namespace SSUtility2 {
         public static ConfigSetting portableMode = new ConfigSetting("false", "PortableMode", ConfigSetting.VarType.boolean);
         public static ConfigSetting finalSource = new ConfigSetting(@"\\192.168.1.118\netdrive\ProductionTesting\DEFAULT FILES", "FinalModeSourceFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting finalDestination = new ConfigSetting(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "FinalModeDestinationFolder", ConfigSetting.VarType.strings);
+        public static ConfigSetting savedIP = new ConfigSetting("192.168.1.71", "SavedIP", ConfigSetting.VarType.strings);
+        public static ConfigSetting savedPort = new ConfigSetting("6791", "SavedPort", ConfigSetting.VarType.strings);
+        public static ConfigSetting savedCamera = new ConfigSetting("Daylight", "SavedCamera", ConfigSetting.VarType.strings);
 
 
-        public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved
+        public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
             vFolder,
             vFileName,
@@ -49,6 +52,9 @@ namespace SSUtility2 {
             portableMode,
             finalSource,
             finalDestination,
+            savedIP,
+            savedPort,
+            savedCamera,
         };
 
 

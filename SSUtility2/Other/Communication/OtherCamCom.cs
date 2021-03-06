@@ -63,7 +63,7 @@ namespace SSUtility2 {
 
         public static void LabelDisplay(bool connected) {
             MainForm.m.Invoke((MethodInvoker)delegate {
-                Label l = MainForm.m.ipCon.l_IPCon_Connected;
+                Label l = MainForm.m.setPage.l_IPCon_Connected;
                 if (connected) {
                     l.Text = "✓";
                     l.ForeColor = Color.Green;

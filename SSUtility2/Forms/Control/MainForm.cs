@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.0.0.1";
+        public const string version = "v2.1.0.0";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -23,7 +23,6 @@ namespace SSUtility2 {
         public SettingsPage setPage;
         public PelcoD pd;
         public ResponseLog rl;
-        private PresetPanel preset;
 
         public Detached mainPlayer;
 
@@ -44,7 +43,6 @@ namespace SSUtility2 {
             D.protocol = new D();
 
             lite = false;
-            l_Version.Text = l_Version.Text + version;
             bool first = CheckIfFirstTime();
 
             p_Main.Select();
@@ -56,10 +54,6 @@ namespace SSUtility2 {
             AttachInfoPanel();
 
             saveList = new Control[]{
-                ipCon.cB_IPCon_Type,
-                ipCon.tB_IPCon_Adr,
-                ipCon.tB_IPCon_Port,
-                ipCon.cB_IPCon_Selected,
                 ipCon.track_PTZ_PTSpeed,
 
                 mainPlayer.settings.cB_PlayerD_Type,
@@ -71,6 +65,15 @@ namespace SSUtility2 {
                 mainPlayer.settings.tB_PlayerD_Password,
                 mainPlayer.settings.tB_PlayerD_SimpleAdr,
                 mainPlayer.settings.tB_PlayerD_Name,
+
+                setPage.tB_Presets_1,
+                setPage.tB_Presets_2,
+                setPage.tB_Presets_3,
+                setPage.tB_Presets_4,
+                setPage.tB_Presets_5,
+                setPage.tB_Presets_6,
+                setPage.tB_Presets_7,
+                setPage.tB_Presets_8,
             };
 
             FileStuff(first);
@@ -213,15 +216,14 @@ namespace SSUtility2 {
 
         void AttachControlPanel() {
             ipCon = SpawnControlPanel(p_Control, false);
-            preset = AttachPresetPanel(p_Control, ipCon);
+            //preset = AttachPresetPanel(p_Control, ipCon);
 
             isOriginal = true;
         }
 
         public void HideControlPanel() {
             ipCon.myPanel.Hide();
-            preset.myPanel.Hide();
-            l_Version.Visible = false;
+            ipCon.myPanel.Visible = false;
             mainPlayer.myPanel.Location = new Point(0,0);
             mainPlayer.myPanel.Size = new Size(m.Size.Width - 14, m.Size.Height - 62);
             mainPlayer.VLCPlayer_D.Refresh();
@@ -229,8 +231,7 @@ namespace SSUtility2 {
 
         public void ShowControlPanel() {
             ipCon.myPanel.Show();
-            preset.myPanel.Show();
-            l_Version.Visible = true;
+            ipCon.myPanel.Visible = true;
             mainPlayer.myPanel.Location = new Point(ipCon.Location.X + ipCon.Size.Width - 15, ipCon.Location.Y);
             mainPlayer.myPanel.Size = new Size(m.Size.Width - ipCon.Size.Width, m.Size.Height - 62);
         }
@@ -262,13 +263,7 @@ namespace SSUtility2 {
             p_Control.Dispose();
 
             ControlPanel cp = SpawnControlPanel(p_Main);
-            PresetPanel pp = AttachPresetPanel(p_Main, cp);
-            saveList = new Control[]{
-                cp.cB_IPCon_Type,
-                cp.tB_IPCon_Adr,
-                cp.tB_IPCon_Port,
-                cp.cB_IPCon_Selected,
-            };
+            //PresetPanel pp = AttachPresetPanel(p_Main, cp);
             ipCon = cp;
             AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, false);
 
@@ -294,27 +289,18 @@ namespace SSUtility2 {
             return dv;
         }
 
-        public PelcoD OpenPelco(string ip, string port, string selected) {
-            pd.tB_IPCon_Adr.Text = ip;
-            pd.tB_IPCon_Port.Text = port;
-            pd.cB_IPCon_Selected.Text = selected;
+        public void OpenPelco() {
+            pd.tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
+            pd.tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
+            pd.cB_IPCon_Selected.Text = ConfigControl.savedCamera.stringVal;
             pd.Show();
             pd.BringToFront();
-            return pd;
         }
 
         ControlPanel SpawnControlPanel(Panel p, bool makeLite = true) {
             Panel pan = new Panel();
             ControlPanel cp = new ControlPanel();
             cp.myPanel = pan;
-
-            if (makeLite) {
-                cp.cB_IPCon_Type.Text = ipCon.cB_IPCon_Type.Text;
-                cp.tB_IPCon_Adr.Text = ipCon.tB_IPCon_Adr.Text;
-                cp.tB_IPCon_Port.Text = ipCon.tB_IPCon_Port.Text;
-                cp.cB_IPCon_Selected.Text = ipCon.cB_IPCon_Selected.Text;
-            }
-
 
             SetFeatureToAllControls(cp.Controls);
 
@@ -327,26 +313,25 @@ namespace SSUtility2 {
             return cp;
         }
 
-        PresetPanel AttachPresetPanel(Panel p, ControlPanel panel) {
-            Panel pan = new Panel();
-            PresetPanel pp = new PresetPanel();
+        //PresetPanel AttachPresetPanel(Panel p, ControlPanel panel) {
+        //    Panel pan = new Panel();
+        //    PresetPanel pp = new PresetPanel();
+                        
+        //    SetFeatureToAllControls(pp.Controls);
+        //    pp.myPanel = pan;
+        //    panel.SendToBack();
 
-            
-            SetFeatureToAllControls(pp.Controls);
-            pp.myPanel = pan;
-            panel.SendToBack();
+        //    pan.Location = new Point(0, panel.Size.Height - 40);
+        //    pan.Size = pp.Size;
 
-            pan.Location = new Point(0, panel.Size.Height - 40);
-            pan.Size = pp.Size;
+        //    p.Controls.Add(pan);
 
-            p.Controls.Add(pan);
-
-            var c = GetAllType(pp, typeof(TabControl));
-            var cTwo = GetAllType(pp, typeof(Label));
-            pan.Controls.AddRange(c.ToArray());
-            pan.Controls.AddRange(cTwo.ToArray());
-            return pp;
-        }
+        //    var c = GetAllType(pp, typeof(TabControl));
+        //    var cTwo = GetAllType(pp, typeof(Label));
+        //    pan.Controls.AddRange(c.ToArray());
+        //    pan.Controls.AddRange(cTwo.ToArray());
+        //    return pp;
+        //}
 
         void AddControls(Panel pan, Control panel) {
             var c = GetAll(panel);
@@ -447,7 +432,7 @@ namespace SSUtility2 {
 
         public uint MakeAdr(ComboBox comboBox = null) {
             if (comboBox == null) {
-                comboBox = ipCon.cB_IPCon_Selected;
+                comboBox = MainForm.m.setPage.cB_ipCon_Selected;
             }
             if (comboBox.Text.Contains("Daylight")) {
                 return 1;
@@ -752,7 +737,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_Window_PelcoD_Click(object sender, EventArgs e) {
-            OpenPelco(ipCon.tB_IPCon_Adr.Text, ipCon.tB_IPCon_Port.Text, ipCon.cB_IPCon_Selected.Text);
+            OpenPelco();
         }
 
         private void Menu_Window_Lite_Click(object sender, EventArgs e) {
@@ -812,7 +797,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_Window_ControlPanel_Click(object sender, EventArgs e) {
-            if (l_Version.Visible) {
+            if (ipCon.Visible) {
                 HideControlPanel();
                 Menu_Window_ControlPanel.Text = "Show Control Panel";
             } else {
@@ -858,6 +843,12 @@ namespace SSUtility2 {
 
         private void Menu_Video_Info_Click(object sender, EventArgs e) {
             InfoPanel.i.StartStopTicking();
+        }
+
+        private void Menu_Window_Presets_Click(object sender, EventArgs e) {
+            PresetPanel pp = new PresetPanel();
+            pp.Show();
+            pp.BringToFront();
         }
 
     } // end of class MainForm
