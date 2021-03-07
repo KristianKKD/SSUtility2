@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InfoPanel));
             this.l_Pan = new System.Windows.Forms.Label();
             this.l_Tilt = new System.Windows.Forms.Label();
             this.l_FOV = new System.Windows.Forms.Label();
@@ -83,6 +84,7 @@
             this.Controls.Add(this.l_FOV);
             this.Controls.Add(this.l_Tilt);
             this.Controls.Add(this.l_Pan);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "InfoPanel";
             this.Text = "InfoPanel";
             this.TransparencyKey = System.Drawing.Color.Transparent;

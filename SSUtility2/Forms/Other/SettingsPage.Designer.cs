@@ -60,23 +60,24 @@ namespace SSUtility2
             this.l_IPCon_Adr = new System.Windows.Forms.Label();
             this.tP_Paths = new System.Windows.Forms.TabPage();
             this.tP_Recording = new System.Windows.Forms.TabPage();
-            this.tP_Presets = new System.Windows.Forms.TabPage();
-            this.l_Presets_8 = new System.Windows.Forms.Label();
-            this.tB_Presets_8 = new System.Windows.Forms.TextBox();
-            this.l_Presets_7 = new System.Windows.Forms.Label();
-            this.tB_Presets_7 = new System.Windows.Forms.TextBox();
-            this.l_Presets_6 = new System.Windows.Forms.Label();
-            this.tB_Presets_6 = new System.Windows.Forms.TextBox();
-            this.l_Presets_5 = new System.Windows.Forms.Label();
-            this.tB_Presets_5 = new System.Windows.Forms.TextBox();
-            this.l_Presets_4 = new System.Windows.Forms.Label();
-            this.tB_Presets_4 = new System.Windows.Forms.TextBox();
-            this.l_Presets_3 = new System.Windows.Forms.Label();
-            this.tB_Presets_3 = new System.Windows.Forms.TextBox();
-            this.l_Presets_2 = new System.Windows.Forms.Label();
-            this.tB_Presets_2 = new System.Windows.Forms.TextBox();
-            this.l_Presets_1 = new System.Windows.Forms.Label();
-            this.tB_Presets_1 = new System.Windows.Forms.TextBox();
+            this.tP_Customs = new System.Windows.Forms.TabPage();
+            this.b_Custom_CommandList = new System.Windows.Forms.Button();
+            this.l_Custom_8 = new System.Windows.Forms.Label();
+            this.tB_Custom_8 = new System.Windows.Forms.TextBox();
+            this.l_Custom_7 = new System.Windows.Forms.Label();
+            this.tB_Custom_7 = new System.Windows.Forms.TextBox();
+            this.l_Custom_6 = new System.Windows.Forms.Label();
+            this.tB_Custom_6 = new System.Windows.Forms.TextBox();
+            this.l_Custom_5 = new System.Windows.Forms.Label();
+            this.tB_Custom_5 = new System.Windows.Forms.TextBox();
+            this.l_Custom_4 = new System.Windows.Forms.Label();
+            this.tB_Custom_4 = new System.Windows.Forms.TextBox();
+            this.l_Custom_3 = new System.Windows.Forms.Label();
+            this.tB_Custom_3 = new System.Windows.Forms.TextBox();
+            this.l_Custom_2 = new System.Windows.Forms.Label();
+            this.tB_Custom_2 = new System.Windows.Forms.TextBox();
+            this.l_Custom_1 = new System.Windows.Forms.Label();
+            this.tB_Custom_1 = new System.Windows.Forms.TextBox();
             this.tP_Other = new System.Windows.Forms.TabPage();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
@@ -84,7 +85,7 @@ namespace SSUtility2
             this.tP_Control.SuspendLayout();
             this.tP_Paths.SuspendLayout();
             this.tP_Recording.SuspendLayout();
-            this.tP_Presets.SuspendLayout();
+            this.tP_Customs.SuspendLayout();
             this.tP_Other.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -358,7 +359,7 @@ namespace SSUtility2
             this.tC_Settings.Controls.Add(this.tP_Control);
             this.tC_Settings.Controls.Add(this.tP_Paths);
             this.tC_Settings.Controls.Add(this.tP_Recording);
-            this.tC_Settings.Controls.Add(this.tP_Presets);
+            this.tC_Settings.Controls.Add(this.tP_Customs);
             this.tC_Settings.Controls.Add(this.tP_Other);
             this.tC_Settings.Location = new System.Drawing.Point(12, 12);
             this.tC_Settings.Name = "tC_Settings";
@@ -511,183 +512,194 @@ namespace SSUtility2
             this.tP_Recording.Text = "Recording";
             this.tP_Recording.UseVisualStyleBackColor = true;
             // 
-            // tP_Presets
+            // tP_Customs
             // 
-            this.tP_Presets.Controls.Add(this.l_Presets_8);
-            this.tP_Presets.Controls.Add(this.tB_Presets_8);
-            this.tP_Presets.Controls.Add(this.l_Presets_7);
-            this.tP_Presets.Controls.Add(this.tB_Presets_7);
-            this.tP_Presets.Controls.Add(this.l_Presets_6);
-            this.tP_Presets.Controls.Add(this.tB_Presets_6);
-            this.tP_Presets.Controls.Add(this.l_Presets_5);
-            this.tP_Presets.Controls.Add(this.tB_Presets_5);
-            this.tP_Presets.Controls.Add(this.l_Presets_4);
-            this.tP_Presets.Controls.Add(this.tB_Presets_4);
-            this.tP_Presets.Controls.Add(this.l_Presets_3);
-            this.tP_Presets.Controls.Add(this.tB_Presets_3);
-            this.tP_Presets.Controls.Add(this.l_Presets_2);
-            this.tP_Presets.Controls.Add(this.tB_Presets_2);
-            this.tP_Presets.Controls.Add(this.l_Presets_1);
-            this.tP_Presets.Controls.Add(this.tB_Presets_1);
-            this.tP_Presets.Location = new System.Drawing.Point(4, 22);
-            this.tP_Presets.Name = "tP_Presets";
-            this.tP_Presets.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Presets.Size = new System.Drawing.Size(348, 175);
-            this.tP_Presets.TabIndex = 4;
-            this.tP_Presets.Text = "Presets";
-            this.tP_Presets.UseVisualStyleBackColor = true;
+            this.tP_Customs.Controls.Add(this.b_Custom_CommandList);
+            this.tP_Customs.Controls.Add(this.l_Custom_8);
+            this.tP_Customs.Controls.Add(this.tB_Custom_8);
+            this.tP_Customs.Controls.Add(this.l_Custom_7);
+            this.tP_Customs.Controls.Add(this.tB_Custom_7);
+            this.tP_Customs.Controls.Add(this.l_Custom_6);
+            this.tP_Customs.Controls.Add(this.tB_Custom_6);
+            this.tP_Customs.Controls.Add(this.l_Custom_5);
+            this.tP_Customs.Controls.Add(this.tB_Custom_5);
+            this.tP_Customs.Controls.Add(this.l_Custom_4);
+            this.tP_Customs.Controls.Add(this.tB_Custom_4);
+            this.tP_Customs.Controls.Add(this.l_Custom_3);
+            this.tP_Customs.Controls.Add(this.tB_Custom_3);
+            this.tP_Customs.Controls.Add(this.l_Custom_2);
+            this.tP_Customs.Controls.Add(this.tB_Custom_2);
+            this.tP_Customs.Controls.Add(this.l_Custom_1);
+            this.tP_Customs.Controls.Add(this.tB_Custom_1);
+            this.tP_Customs.Location = new System.Drawing.Point(4, 22);
+            this.tP_Customs.Name = "tP_Customs";
+            this.tP_Customs.Padding = new System.Windows.Forms.Padding(3);
+            this.tP_Customs.Size = new System.Drawing.Size(348, 175);
+            this.tP_Customs.TabIndex = 4;
+            this.tP_Customs.Text = "Custom";
+            this.tP_Customs.UseVisualStyleBackColor = true;
             // 
-            // l_Presets_8
+            // b_Custom_CommandList
             // 
-            this.l_Presets_8.AutoSize = true;
-            this.l_Presets_8.Location = new System.Drawing.Point(167, 92);
-            this.l_Presets_8.Name = "l_Presets_8";
-            this.l_Presets_8.Size = new System.Drawing.Size(47, 13);
-            this.l_Presets_8.TabIndex = 31;
-            this.l_Presets_8.Text = "Button 8";
+            this.b_Custom_CommandList.Location = new System.Drawing.Point(196, 135);
+            this.b_Custom_CommandList.Name = "b_Custom_CommandList";
+            this.b_Custom_CommandList.Size = new System.Drawing.Size(126, 34);
+            this.b_Custom_CommandList.TabIndex = 33;
+            this.b_Custom_CommandList.Text = "Open Command List";
+            this.b_Custom_CommandList.UseVisualStyleBackColor = true;
+            this.b_Custom_CommandList.Click += new System.EventHandler(this.b_Custom_CommandList_Click);
             // 
-            // tB_Presets_8
+            // l_Custom_8
             // 
-            this.tB_Presets_8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.l_Custom_8.AutoSize = true;
+            this.l_Custom_8.Location = new System.Drawing.Point(167, 92);
+            this.l_Custom_8.Name = "l_Custom_8";
+            this.l_Custom_8.Size = new System.Drawing.Size(47, 13);
+            this.l_Custom_8.TabIndex = 31;
+            this.l_Custom_8.Text = "Button 8";
+            // 
+            // tB_Custom_8
+            // 
+            this.tB_Custom_8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Presets_8.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Presets_8.Location = new System.Drawing.Point(220, 89);
-            this.tB_Presets_8.Name = "tB_Presets_8";
-            this.tB_Presets_8.Size = new System.Drawing.Size(102, 20);
-            this.tB_Presets_8.TabIndex = 32;
+            this.tB_Custom_8.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Custom_8.Location = new System.Drawing.Point(220, 89);
+            this.tB_Custom_8.Name = "tB_Custom_8";
+            this.tB_Custom_8.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_8.TabIndex = 32;
             // 
-            // l_Presets_7
+            // l_Custom_7
             // 
-            this.l_Presets_7.AutoSize = true;
-            this.l_Presets_7.Location = new System.Drawing.Point(167, 66);
-            this.l_Presets_7.Name = "l_Presets_7";
-            this.l_Presets_7.Size = new System.Drawing.Size(47, 13);
-            this.l_Presets_7.TabIndex = 29;
-            this.l_Presets_7.Text = "Button 7";
+            this.l_Custom_7.AutoSize = true;
+            this.l_Custom_7.Location = new System.Drawing.Point(167, 66);
+            this.l_Custom_7.Name = "l_Custom_7";
+            this.l_Custom_7.Size = new System.Drawing.Size(47, 13);
+            this.l_Custom_7.TabIndex = 29;
+            this.l_Custom_7.Text = "Button 7";
             // 
-            // tB_Presets_7
+            // tB_Custom_7
             // 
-            this.tB_Presets_7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tB_Custom_7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Presets_7.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Presets_7.Location = new System.Drawing.Point(220, 63);
-            this.tB_Presets_7.Name = "tB_Presets_7";
-            this.tB_Presets_7.Size = new System.Drawing.Size(102, 20);
-            this.tB_Presets_7.TabIndex = 30;
+            this.tB_Custom_7.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Custom_7.Location = new System.Drawing.Point(220, 63);
+            this.tB_Custom_7.Name = "tB_Custom_7";
+            this.tB_Custom_7.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_7.TabIndex = 30;
             // 
-            // l_Presets_6
+            // l_Custom_6
             // 
-            this.l_Presets_6.AutoSize = true;
-            this.l_Presets_6.Location = new System.Drawing.Point(167, 40);
-            this.l_Presets_6.Name = "l_Presets_6";
-            this.l_Presets_6.Size = new System.Drawing.Size(47, 13);
-            this.l_Presets_6.TabIndex = 27;
-            this.l_Presets_6.Text = "Button 6";
+            this.l_Custom_6.AutoSize = true;
+            this.l_Custom_6.Location = new System.Drawing.Point(167, 40);
+            this.l_Custom_6.Name = "l_Custom_6";
+            this.l_Custom_6.Size = new System.Drawing.Size(47, 13);
+            this.l_Custom_6.TabIndex = 27;
+            this.l_Custom_6.Text = "Button 6";
             // 
-            // tB_Presets_6
+            // tB_Custom_6
             // 
-            this.tB_Presets_6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tB_Custom_6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Presets_6.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Presets_6.Location = new System.Drawing.Point(220, 37);
-            this.tB_Presets_6.Name = "tB_Presets_6";
-            this.tB_Presets_6.Size = new System.Drawing.Size(102, 20);
-            this.tB_Presets_6.TabIndex = 28;
+            this.tB_Custom_6.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Custom_6.Location = new System.Drawing.Point(220, 37);
+            this.tB_Custom_6.Name = "tB_Custom_6";
+            this.tB_Custom_6.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_6.TabIndex = 28;
             // 
-            // l_Presets_5
+            // l_Custom_5
             // 
-            this.l_Presets_5.AutoSize = true;
-            this.l_Presets_5.Location = new System.Drawing.Point(167, 14);
-            this.l_Presets_5.Name = "l_Presets_5";
-            this.l_Presets_5.Size = new System.Drawing.Size(47, 13);
-            this.l_Presets_5.TabIndex = 25;
-            this.l_Presets_5.Text = "Button 5";
+            this.l_Custom_5.AutoSize = true;
+            this.l_Custom_5.Location = new System.Drawing.Point(167, 14);
+            this.l_Custom_5.Name = "l_Custom_5";
+            this.l_Custom_5.Size = new System.Drawing.Size(47, 13);
+            this.l_Custom_5.TabIndex = 25;
+            this.l_Custom_5.Text = "Button 5";
             // 
-            // tB_Presets_5
+            // tB_Custom_5
             // 
-            this.tB_Presets_5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tB_Custom_5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Presets_5.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Presets_5.Location = new System.Drawing.Point(220, 11);
-            this.tB_Presets_5.Name = "tB_Presets_5";
-            this.tB_Presets_5.Size = new System.Drawing.Size(102, 20);
-            this.tB_Presets_5.TabIndex = 26;
+            this.tB_Custom_5.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Custom_5.Location = new System.Drawing.Point(220, 11);
+            this.tB_Custom_5.Name = "tB_Custom_5";
+            this.tB_Custom_5.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_5.TabIndex = 26;
             // 
-            // l_Presets_4
+            // l_Custom_4
             // 
-            this.l_Presets_4.AutoSize = true;
-            this.l_Presets_4.Location = new System.Drawing.Point(6, 92);
-            this.l_Presets_4.Name = "l_Presets_4";
-            this.l_Presets_4.Size = new System.Drawing.Size(47, 13);
-            this.l_Presets_4.TabIndex = 23;
-            this.l_Presets_4.Text = "Button 4";
+            this.l_Custom_4.AutoSize = true;
+            this.l_Custom_4.Location = new System.Drawing.Point(6, 92);
+            this.l_Custom_4.Name = "l_Custom_4";
+            this.l_Custom_4.Size = new System.Drawing.Size(47, 13);
+            this.l_Custom_4.TabIndex = 23;
+            this.l_Custom_4.Text = "Button 4";
             // 
-            // tB_Presets_4
+            // tB_Custom_4
             // 
-            this.tB_Presets_4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tB_Custom_4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Presets_4.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Presets_4.Location = new System.Drawing.Point(59, 89);
-            this.tB_Presets_4.Name = "tB_Presets_4";
-            this.tB_Presets_4.Size = new System.Drawing.Size(102, 20);
-            this.tB_Presets_4.TabIndex = 24;
+            this.tB_Custom_4.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Custom_4.Location = new System.Drawing.Point(59, 89);
+            this.tB_Custom_4.Name = "tB_Custom_4";
+            this.tB_Custom_4.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_4.TabIndex = 24;
             // 
-            // l_Presets_3
+            // l_Custom_3
             // 
-            this.l_Presets_3.AutoSize = true;
-            this.l_Presets_3.Location = new System.Drawing.Point(6, 66);
-            this.l_Presets_3.Name = "l_Presets_3";
-            this.l_Presets_3.Size = new System.Drawing.Size(47, 13);
-            this.l_Presets_3.TabIndex = 21;
-            this.l_Presets_3.Text = "Button 3";
+            this.l_Custom_3.AutoSize = true;
+            this.l_Custom_3.Location = new System.Drawing.Point(6, 66);
+            this.l_Custom_3.Name = "l_Custom_3";
+            this.l_Custom_3.Size = new System.Drawing.Size(47, 13);
+            this.l_Custom_3.TabIndex = 21;
+            this.l_Custom_3.Text = "Button 3";
             // 
-            // tB_Presets_3
+            // tB_Custom_3
             // 
-            this.tB_Presets_3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tB_Custom_3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Presets_3.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Presets_3.Location = new System.Drawing.Point(59, 63);
-            this.tB_Presets_3.Name = "tB_Presets_3";
-            this.tB_Presets_3.Size = new System.Drawing.Size(102, 20);
-            this.tB_Presets_3.TabIndex = 22;
+            this.tB_Custom_3.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Custom_3.Location = new System.Drawing.Point(59, 63);
+            this.tB_Custom_3.Name = "tB_Custom_3";
+            this.tB_Custom_3.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_3.TabIndex = 22;
             // 
-            // l_Presets_2
+            // l_Custom_2
             // 
-            this.l_Presets_2.AutoSize = true;
-            this.l_Presets_2.Location = new System.Drawing.Point(6, 40);
-            this.l_Presets_2.Name = "l_Presets_2";
-            this.l_Presets_2.Size = new System.Drawing.Size(47, 13);
-            this.l_Presets_2.TabIndex = 19;
-            this.l_Presets_2.Text = "Button 2";
+            this.l_Custom_2.AutoSize = true;
+            this.l_Custom_2.Location = new System.Drawing.Point(6, 40);
+            this.l_Custom_2.Name = "l_Custom_2";
+            this.l_Custom_2.Size = new System.Drawing.Size(47, 13);
+            this.l_Custom_2.TabIndex = 19;
+            this.l_Custom_2.Text = "Button 2";
             // 
-            // tB_Presets_2
+            // tB_Custom_2
             // 
-            this.tB_Presets_2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tB_Custom_2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Presets_2.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Presets_2.Location = new System.Drawing.Point(59, 37);
-            this.tB_Presets_2.Name = "tB_Presets_2";
-            this.tB_Presets_2.Size = new System.Drawing.Size(102, 20);
-            this.tB_Presets_2.TabIndex = 20;
+            this.tB_Custom_2.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Custom_2.Location = new System.Drawing.Point(59, 37);
+            this.tB_Custom_2.Name = "tB_Custom_2";
+            this.tB_Custom_2.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_2.TabIndex = 20;
             // 
-            // l_Presets_1
+            // l_Custom_1
             // 
-            this.l_Presets_1.AutoSize = true;
-            this.l_Presets_1.Location = new System.Drawing.Point(6, 14);
-            this.l_Presets_1.Name = "l_Presets_1";
-            this.l_Presets_1.Size = new System.Drawing.Size(47, 13);
-            this.l_Presets_1.TabIndex = 17;
-            this.l_Presets_1.Text = "Button 1";
+            this.l_Custom_1.AutoSize = true;
+            this.l_Custom_1.Location = new System.Drawing.Point(6, 14);
+            this.l_Custom_1.Name = "l_Custom_1";
+            this.l_Custom_1.Size = new System.Drawing.Size(47, 13);
+            this.l_Custom_1.TabIndex = 17;
+            this.l_Custom_1.Text = "Button 1";
             // 
-            // tB_Presets_1
+            // tB_Custom_1
             // 
-            this.tB_Presets_1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tB_Custom_1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Presets_1.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Presets_1.Location = new System.Drawing.Point(59, 11);
-            this.tB_Presets_1.Name = "tB_Presets_1";
-            this.tB_Presets_1.Size = new System.Drawing.Size(102, 20);
-            this.tB_Presets_1.TabIndex = 18;
+            this.tB_Custom_1.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Custom_1.Location = new System.Drawing.Point(59, 11);
+            this.tB_Custom_1.Name = "tB_Custom_1";
+            this.tB_Custom_1.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_1.TabIndex = 18;
             // 
             // tP_Other
             // 
@@ -723,6 +735,8 @@ namespace SSUtility2
             this.Controls.Add(this.tC_Settings);
             this.Controls.Add(this.b_Settings_Default);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(389, 287);
+            this.MinimumSize = new System.Drawing.Size(389, 287);
             this.Name = "SettingsPage";
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsPage_FormClosing);
@@ -733,8 +747,8 @@ namespace SSUtility2
             this.tP_Paths.PerformLayout();
             this.tP_Recording.ResumeLayout(false);
             this.tP_Recording.PerformLayout();
-            this.tP_Presets.ResumeLayout(false);
-            this.tP_Presets.PerformLayout();
+            this.tP_Customs.ResumeLayout(false);
+            this.tP_Customs.PerformLayout();
             this.tP_Other.ResumeLayout(false);
             this.tP_Other.PerformLayout();
             this.ResumeLayout(false);
@@ -780,26 +794,27 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_IPCon_Port;
         public System.Windows.Forms.Label l_IPCon_ConType;
         public System.Windows.Forms.Label l_IPCon_Adr;
-        public System.Windows.Forms.TabPage tP_Presets;
-        public System.Windows.Forms.Label l_Presets_6;
-        public System.Windows.Forms.TextBox tB_Presets_6;
-        public System.Windows.Forms.Label l_Presets_5;
-        public System.Windows.Forms.TextBox tB_Presets_5;
-        public System.Windows.Forms.Label l_Presets_4;
-        public System.Windows.Forms.TextBox tB_Presets_4;
-        public System.Windows.Forms.Label l_Presets_3;
-        public System.Windows.Forms.TextBox tB_Presets_3;
-        public System.Windows.Forms.Label l_Presets_2;
-        public System.Windows.Forms.TextBox tB_Presets_2;
-        public System.Windows.Forms.Label l_Presets_1;
-        public System.Windows.Forms.TextBox tB_Presets_1;
-        public System.Windows.Forms.Label l_Presets_8;
-        public System.Windows.Forms.TextBox tB_Presets_8;
-        public System.Windows.Forms.Label l_Presets_7;
-        public System.Windows.Forms.TextBox tB_Presets_7;
+        public System.Windows.Forms.TabPage tP_Customs;
+        public System.Windows.Forms.Label l_Custom_6;
+        public System.Windows.Forms.TextBox tB_Custom_6;
+        public System.Windows.Forms.Label l_Custom_5;
+        public System.Windows.Forms.TextBox tB_Custom_5;
+        public System.Windows.Forms.Label l_Custom_4;
+        public System.Windows.Forms.TextBox tB_Custom_4;
+        public System.Windows.Forms.Label l_Custom_3;
+        public System.Windows.Forms.TextBox tB_Custom_3;
+        public System.Windows.Forms.Label l_Custom_2;
+        public System.Windows.Forms.TextBox tB_Custom_2;
+        public System.Windows.Forms.Label l_Custom_1;
+        public System.Windows.Forms.TextBox tB_Custom_1;
+        public System.Windows.Forms.Label l_Custom_8;
+        public System.Windows.Forms.TextBox tB_Custom_8;
+        public System.Windows.Forms.Label l_Custom_7;
+        public System.Windows.Forms.TextBox tB_Custom_7;
         private System.ComponentModel.IContainer components;
         public System.Windows.Forms.ComboBox cB_ipCon_Selected;
         public System.Windows.Forms.Label l_ipCon_Selected;
         public System.Windows.Forms.Label l_Version;
+        private System.Windows.Forms.Button b_Custom_CommandList;
     }
 }

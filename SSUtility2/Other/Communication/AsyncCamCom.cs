@@ -30,11 +30,7 @@ namespace SSUtility2 {
                      
 
                     if (result) {
-                        Connect(ep, hideErrors);
-                        await Task.Delay(500).ConfigureAwait(false);
-                        if (!sock.Connected) {
-                            result = false;
-                        }
+                        result = Connect(ep, hideErrors);
                     }
 
                 }
@@ -98,13 +94,15 @@ namespace SSUtility2 {
             }
         }
 
-        public static void Connect(IPEndPoint ep, bool hideErrors = false) {
+        public static bool Connect(IPEndPoint ep, bool hideErrors = false) {
             try {
-                if (sock == null || (sock.Connected && ep == sock.RemoteEndPoint as IPEndPoint)) {
-                    return;
-                } else {
+                if (sock == null)
+                    return false;
+                else if (sock.Connected && ep == sock.RemoteEndPoint as IPEndPoint)
+                    return true;
+                else
                     Disconnect();
-                }
+                
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -114,32 +112,33 @@ namespace SSUtility2 {
                     if (!hideErrors)
                         MainForm.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "IP valid: " + parsedIP.ToString() + "\nPort valid: " + parsedPort.ToString());
-                    return;
+                    return false;
                 }
 
                 if (!OtherCamCom.PingAdr(ep.Address).Result) {
                     if (!hideErrors)
                         MainForm.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "IP valid: " + parsedIP.ToString() + "\nPort valid: " + parsedPort.ToString() + "\nPing: Failed");
-                    return;
+                    return false;
                 }
 
                 IPEndPoint end = new IPEndPoint(ip, port);
 
                 if (end == null) {
-                    return;
+                    return false;
                 }
 
 
                 if (!hideErrors && !ConfigControl.subnetNotif.boolVal) {
                     if (!OtherCamCom.CheckIsSameSubnet(ep.Address.ToString())) {
-                        return;
+                        return false;
                     }
                 }
 
                 sock.BeginConnect(end, ConnectCallback, null);
 
                 MainForm.m.WriteToResponses("Successfully connected to: " + end.Address.ToString() + ":" + end.Port.ToString(), true);
+                return true;
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
@@ -148,6 +147,7 @@ namespace SSUtility2 {
                 if (!hideErrors)
                     MessageBox.Show("An error occured whilst connecting to camera!\n" + e.ToString());
             }
+            return false;
         }
 
         private static void ConnectCallback(IAsyncResult AR) {
@@ -170,6 +170,8 @@ namespace SSUtility2 {
             try {
                 if (sock == null)
                     return;
+
+                InfoPanel.i.isCamera = false;
                 if (!sock.Connected)
                     return;
                 sock.Shutdown(SocketShutdown.Both);

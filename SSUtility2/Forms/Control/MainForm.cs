@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.1.0.0";
+        public const string version = "v2.2.0.0";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -19,7 +19,8 @@ namespace SSUtility2 {
 
         public static Control[] saveList = new Control[0];
 
-        public ControlPanel ipCon;
+        public ControlPanel mainCp;
+        public CustomPanel custom;
         public SettingsPage setPage;
         public PelcoD pd;
         public ResponseLog rl;
@@ -52,9 +53,10 @@ namespace SSUtility2 {
             HideControlPanel();
 
             AttachInfoPanel();
+            AttachCustomPanel();
 
             saveList = new Control[]{
-                ipCon.track_PTZ_PTSpeed,
+                mainCp.track_PTZ_PTSpeed,
 
                 mainPlayer.settings.cB_PlayerD_Type,
                 mainPlayer.settings.tB_PlayerD_Adr,
@@ -66,14 +68,14 @@ namespace SSUtility2 {
                 mainPlayer.settings.tB_PlayerD_SimpleAdr,
                 mainPlayer.settings.tB_PlayerD_Name,
 
-                setPage.tB_Presets_1,
-                setPage.tB_Presets_2,
-                setPage.tB_Presets_3,
-                setPage.tB_Presets_4,
-                setPage.tB_Presets_5,
-                setPage.tB_Presets_6,
-                setPage.tB_Presets_7,
-                setPage.tB_Presets_8,
+                setPage.tB_Custom_1,
+                setPage.tB_Custom_2,
+                setPage.tB_Custom_3,
+                setPage.tB_Custom_4,
+                setPage.tB_Custom_5,
+                setPage.tB_Custom_6,
+                setPage.tB_Custom_7,
+                setPage.tB_Custom_8,
             };
 
             FileStuff(first);
@@ -81,6 +83,7 @@ namespace SSUtility2 {
 
             setPage.PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
+            b_Open.BringToFront();
             AutoConnect();
         }
 
@@ -215,42 +218,63 @@ namespace SSUtility2 {
         }
 
         void AttachControlPanel() {
-            ipCon = SpawnControlPanel(p_Control, false);
-            //preset = AttachPresetPanel(p_Control, ipCon);
-
+            mainCp = SpawnControlPanel(p_Control, false);
             isOriginal = true;
         }
 
+        void AttachCustomPanel() {
+            Panel p = new Panel();
+            custom = new CustomPanel();
+
+            p.Size = new Size(80, 160);
+            p.Location = new Point(m.p_Control.Width - p.Width, m.p_Control.Height - p.Height);
+
+            var c = GetAllType(custom, typeof(Button));
+            p.Controls.AddRange(c.ToArray());
+
+            p.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+            p_Control.Controls.Add(p);
+
+            custom.myPanel = p;
+            p.Visible = false;
+            p.BringToFront();
+        }
+
         public void HideControlPanel() {
-            ipCon.myPanel.Hide();
-            ipCon.myPanel.Visible = false;
+            mainCp.myPanel.Hide();
+            mainCp.myPanel.Visible = false;
             mainPlayer.myPanel.Location = new Point(0,0);
             mainPlayer.myPanel.Size = new Size(m.Size.Width - 14, m.Size.Height - 62);
             mainPlayer.VLCPlayer_D.Refresh();
         }
 
         public void ShowControlPanel() {
-            ipCon.myPanel.Show();
-            ipCon.myPanel.Visible = true;
-            mainPlayer.myPanel.Location = new Point(ipCon.Location.X + ipCon.Size.Width - 15, ipCon.Location.Y);
-            mainPlayer.myPanel.Size = new Size(m.Size.Width - ipCon.Size.Width, m.Size.Height - 62);
+            mainCp.myPanel.Show();
+            mainCp.myPanel.Visible = true;
+            mainPlayer.myPanel.Location = new Point(mainCp.Location.X + mainCp.Size.Width - 15, mainCp.Location.Y);
+            mainPlayer.myPanel.Size = new Size(m.Size.Width - mainCp.Size.Width, m.Size.Height - 62);
         }
 
         Detached AttachPlayer() {
-            Detached d = DetachVid(false).Result;
+            Detached d = DetachVid(false, new VideoSettings()).Result;
             Panel p = new Panel();
             d.myPanel = p;
 
-            var c = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
+            var c = GetAllType(d, typeof(SizeablePanel.SizeablePanel));
             p.Controls.AddRange(c.ToArray());
+            var c2 = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
+            p.Controls.AddRange(c2.ToArray());
+            
 
-            p.Size = new Size(m.Size.Width - ipCon.Size.Width, m.Size.Height - 62);
-            p.Location = new Point(ipCon.Location.X + ipCon.Size.Width - 15, ipCon.Location.Y);
+            p.Size = new Size(m.Size.Width - mainCp.Size.Width, m.Size.Height - 62);
+            p.Location = new Point(mainCp.Location.X + mainCp.Size.Width - 15, mainCp.Location.Y);
             p.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
             
             p_Control.Controls.Add(p);
 
             p.BringToFront();
+            d.sP_Player.Location = new Point(p_Control.Width - d.sP_Player.Width - 400, d.sP_Player.Height - 100);
+            d.sP_Player.BringToFront();
 
             return d;
         }
@@ -263,8 +287,7 @@ namespace SSUtility2 {
             p_Control.Dispose();
 
             ControlPanel cp = SpawnControlPanel(p_Main);
-            //PresetPanel pp = AttachPresetPanel(p_Main, cp);
-            ipCon = cp;
+            mainCp = cp;
             AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, false);
 
             isOriginal = false;
@@ -272,18 +295,18 @@ namespace SSUtility2 {
         }
 
 
-        public async Task<Detached> DetachVid(bool show) {
+        public async Task<Detached> DetachVid(bool show, VideoSettings set) {
             Detached dv = new Detached();
             if (show) {
                 dv.Show();
                 await Task.Delay(100).ConfigureAwait(false);
-                dv.settings.tB_PlayerD_Adr.Text = mainPlayer.settings.tB_PlayerD_Adr.Text;
-                dv.settings.tB_PlayerD_Port.Text = mainPlayer.settings.tB_PlayerD_Port.Text;
-                dv.settings.tB_PlayerD_RTSP.Text = mainPlayer.settings.tB_PlayerD_RTSP.Text;
-                dv.settings.tB_PlayerD_Username.Text = mainPlayer.settings.tB_PlayerD_Username.Text;
-                dv.settings.tB_PlayerD_Password.Text = mainPlayer.settings.tB_PlayerD_Password.Text;
-                dv.settings.tB_PlayerD_Name.Text = mainPlayer.settings.tB_PlayerD_Name.Text;
-                dv.settings.tB_PlayerD_SimpleAdr.Text = mainPlayer.settings.tB_PlayerD_SimpleAdr.Text;
+                dv.settings.tB_PlayerD_Adr.Text = set.tB_PlayerD_Adr.Text;
+                dv.settings.tB_PlayerD_Port.Text = set.tB_PlayerD_Port.Text;
+                dv.settings.tB_PlayerD_RTSP.Text = set.tB_PlayerD_RTSP.Text;
+                dv.settings.tB_PlayerD_Username.Text = set.tB_PlayerD_Username.Text;
+                dv.settings.tB_PlayerD_Password.Text = set.tB_PlayerD_Password.Text;
+                dv.settings.tB_PlayerD_Name.Text = set.tB_PlayerD_Name.Text;
+                dv.settings.tB_PlayerD_SimpleAdr.Text = set.tB_PlayerD_SimpleAdr.Text;
             }
             SetFeatureToAllControls(dv.Controls);
             return dv;
@@ -312,26 +335,6 @@ namespace SSUtility2 {
 
             return cp;
         }
-
-        //PresetPanel AttachPresetPanel(Panel p, ControlPanel panel) {
-        //    Panel pan = new Panel();
-        //    PresetPanel pp = new PresetPanel();
-                        
-        //    SetFeatureToAllControls(pp.Controls);
-        //    pp.myPanel = pan;
-        //    panel.SendToBack();
-
-        //    pan.Location = new Point(0, panel.Size.Height - 40);
-        //    pan.Size = pp.Size;
-
-        //    p.Controls.Add(pan);
-
-        //    var c = GetAllType(pp, typeof(TabControl));
-        //    var cTwo = GetAllType(pp, typeof(Label));
-        //    pan.Controls.AddRange(c.ToArray());
-        //    pan.Controls.AddRange(cTwo.ToArray());
-        //    return pp;
-        //}
 
         void AddControls(Panel pan, Control panel) {
             var c = GetAll(panel);
@@ -733,7 +736,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
-            DetachVid(true);
+            DetachVid(true, mainPlayer.settings);
         }
 
         private void Menu_Window_PelcoD_Click(object sender, EventArgs e) {
@@ -792,20 +795,6 @@ namespace SSUtility2 {
             mainPlayer.settings.Show();
         }
 
-        private void b_Show_Click(object sender, EventArgs e) {
-            ShowControlPanel();
-        }
-
-        private void Menu_Window_ControlPanel_Click(object sender, EventArgs e) {
-            if (ipCon.Visible) {
-                HideControlPanel();
-                Menu_Window_ControlPanel.Text = "Show Control Panel";
-            } else {
-                ShowControlPanel();
-                Menu_Window_ControlPanel.Text = "Hide Control Panel";
-            }
-        }
-
         private void Menu_Video_Stop_Click(object sender, EventArgs e) {
             mainPlayer.StartStop();
         }
@@ -849,6 +838,44 @@ namespace SSUtility2 {
             PresetPanel pp = new PresetPanel();
             pp.Show();
             pp.BringToFront();
+        }
+
+        private void Menu_Window_Custom_Click(object sender, EventArgs e) {
+            if (custom.myPanel.Visible) {
+                custom.myPanel.Visible = false;
+                Menu_Window_Custom.Text = "Show Custom Panel";
+            } else {
+                custom.myPanel.Visible = true;
+                custom.myPanel.BringToFront();
+                Menu_Window_Custom.Text = "Hide Custom Panel";
+            }
+        }
+
+        private void b_Open_Click(object sender, EventArgs e) {
+            if (!mainCp.myPanel.Visible) {
+                ShowControlPanel();
+                b_Open.Text = "<<";
+                b_Open.Location = new Point(mainCp.Width - 15, 0);
+            } else {
+                HideControlPanel();
+                b_Open.Text = ">>";
+                b_Open.Location = new Point(0, 0);
+            }
+        }
+
+        private void Menu_Video_Swap_Click(object sender, EventArgs e) { //ADD SWAP FUNCTIONALITY
+            if (mainPlayer.thermalMode) {
+                mainPlayer.thermalMode = false;
+            } else {
+                mainPlayer.thermalMode = true;
+            }
+
+            if (ConfigControl.savedCamera.stringVal == "Thermal" || ConfigControl.savedCamera.stringVal == "Daylight") {
+                if (mainPlayer.thermalMode)
+                    ConfigControl.savedCamera.UpdateValue("Thermal");
+                else
+                    ConfigControl.savedCamera.UpdateValue("Daylight");
+            }
         }
 
     } // end of class MainForm

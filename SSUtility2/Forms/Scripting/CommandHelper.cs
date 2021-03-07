@@ -11,9 +11,13 @@ using System.Windows.Forms;
 
 namespace SSUtility2 {
     public partial class CommandListWindow : Form {
-        public CommandListWindow() {
+
+        bool pelcoWindow;
+
+        public CommandListWindow(bool pelcod) {
             InitializeComponent();
             LoadContents();
+            pelcoWindow = pelcod;
         }
 
         void LoadContents() {
@@ -52,6 +56,9 @@ namespace SSUtility2 {
         }
 
         private void dgv_Coms_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
+            if (!pelcoWindow) {
+                return;
+            }
             int row = e.RowIndex;
             int column = e.ColumnIndex;
 

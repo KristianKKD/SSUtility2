@@ -46,7 +46,7 @@ namespace SSUtility2 {
 
         void PTZMove(D.Tilt tilt, D.Pan pan) {
             byte[] code;
-            uint speed = Convert.ToUInt32(MainForm.m.ipCon.track_PTZ_PTSpeed.Value);
+            uint speed = Convert.ToUInt32(MainForm.m.mainCp.track_PTZ_PTSpeed.Value);
 
             if (tilt != D.Tilt.Null) {
                 code = D.protocol.CameraTilt(MainForm.m.MakeAdr(), tilt, speed);

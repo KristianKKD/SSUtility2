@@ -6,7 +6,6 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class InfoPanel : Form {
 
-
         public InfoPanel() {
             InitializeComponent();
             i = this;
@@ -20,12 +19,15 @@ namespace SSUtility2 {
 
         public bool isActive;
 
+        public bool isCamera = false;
+
         int panID;
         int tiltID;
         int fovID;
         int tFovID;
 
         static int commandPos = 0;
+        int timeoutTime = 0;
 
         static float pan;
         static float tilt;
@@ -84,9 +86,6 @@ namespace SSUtility2 {
             MainForm.m.Menu_Video_Info.Text = "Enable Info Panel";
         }
 
-        int timeoutTime = 0;
-        public bool isCamera = false;
-
         public async Task InfoPanelTick() {
             try {
                 if (!AsyncCamCom.sock.Connected) {
@@ -113,11 +112,12 @@ namespace SSUtility2 {
         public async Task CheckForCamera() {
             try {
                 if (await CheckCam().ConfigureAwait(false)) {
-                    MainForm.m.Menu_Video_Info.Enabled = true;
                     isCamera = true;
                     myConfig = await OtherCamCom.CheckConfiguration().ConfigureAwait(false);
+                    MainForm.m.mainPlayer.EnableSecond();
                 } else {
                     MainForm.m.Menu_Video_Info.Enabled = false;
+                    MainForm.m.Menu_Video_Swap.Enabled = false;
                     isCamera = false;
                 }
             } catch (Exception e) {

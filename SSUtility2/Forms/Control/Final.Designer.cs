@@ -26,6 +26,7 @@
         /// </summary>
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Final));
             this.b_Final_Next = new System.Windows.Forms.Button();
             this.l_Destination = new System.Windows.Forms.Label();
             this.l_Source = new System.Windows.Forms.Label();
@@ -234,6 +235,7 @@
             this.Controls.Add(this.l_Destination);
             this.Controls.Add(this.tB_Destination);
             this.Controls.Add(this.b_Final_Next);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Final";
             this.Text = "Final Test Mode";
             this.ResumeLayout(false);

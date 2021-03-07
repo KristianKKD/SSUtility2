@@ -17,7 +17,6 @@ namespace SSUtility2 {
     /// </summary>
     internal sealed class Program {
 
-
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;

@@ -137,7 +137,7 @@ namespace SSUtility2 {
 
         }
 
-        byte[] FullCommand(string line) {
+        public static byte[] FullCommand(string line) {
             try {
                 line = line.Trim();
                 uint send = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
@@ -228,7 +228,7 @@ namespace SSUtility2 {
         CommandListWindow clw = null;
         private void b_PD_ComList_Click(object sender, EventArgs e) {
             if (clw == null) {
-                clw = new CommandListWindow();
+                clw = new CommandListWindow(true);
             }
             clw.Show();
             clw.BringToFront();

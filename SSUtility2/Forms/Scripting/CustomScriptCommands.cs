@@ -183,11 +183,24 @@ namespace SSUtility2 {
         }
 
         public static async Task QuickCommand(string command) {
-            if (!AsyncCamCom.TryConnect().Result) {
+            if (!await AsyncCamCom.TryConnect().ConfigureAwait(false)) {
                 return;
             }
 
             ScriptCommand send = CheckForCommands(command, MainForm.m.MakeAdr()).Result;
+            if (send.codeContent == PelcoD.noCommand) {
+                if (command.Length == 0) {
+                    MessageBox.Show("Command length is 0!\nMake sure to check the command in the settings!");
+                    return;
+                } else {
+                    byte[] code = PelcoD.FullCommand(command);
+                    if (code == null) {
+                        MessageBox.Show("Command invalid!\nMake sure to enter command in perfect format!\n(FF 0x xx xx xx xx yy)");
+                        return;
+                    }
+                    send = new ScriptCommand(new string[] { "custom" }, code, "");
+                }
+            }
             var t = Task.Factory.StartNew(() => {
                 AsyncCamCom.SendScriptCommand(send);
             });

@@ -334,6 +334,7 @@ namespace SSUtility2
             this.b_Play.TabIndex = 59;
             this.b_Play.Text = "Play";
             this.b_Play.UseVisualStyleBackColor = false;
+            this.b_Play.Click += new System.EventHandler(this.b_Play_Click);
             // 
             // VideoSettings
             // 

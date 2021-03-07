@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -9,16 +11,51 @@ namespace SSUtility2 {
 
         public Panel myPanel;
         public VideoSettings settings;
-
-        public bool recording = false;
+        public Detached secondView;
         Recorder recorderD;
 
+        public bool recording = false;
         public bool isPlaying = false;
-
         public bool thermalMode = false;
-        public Detached() {
+
+        public Detached(bool second = false) {
             InitializeComponent();
             settings = new VideoSettings();
+            if (second)
+                return;
+            settings.myDetached = this;
+            InitSecond();
+        }
+
+        async Task InitSecond() {
+            try {
+                settings.myDetached = this;
+                sP_Player.Hide();
+                await Task.Delay(300).ConfigureAwait(false);
+
+                Invoke((MethodInvoker)delegate {
+                    secondView = new Detached(true);
+                    secondView.settings.myDetached = this;
+                    secondView.settings.Copy(true);
+
+                    Detached tempDetached = new Detached(true);
+                    var c = MainForm.m.GetAllType(tempDetached, typeof(AxAXVLC.AxVLCPlugin2));
+                    sP_Player.Controls.Add(c.ElementAt(0));
+                    tempDetached.Dispose();
+
+                    var controls = MainForm.m.GetAllType(sP_Player, typeof(AxAXVLC.AxVLCPlugin2));
+                    AxAXVLC.AxVLCPlugin2 player = (AxAXVLC.AxVLCPlugin2)controls.ElementAt(0);
+
+                    player.Dock = DockStyle.None;
+                    player.Location = new System.Drawing.Point(3,3);
+                    player.Size = new System.Drawing.Size(sP_Player.Width - 7, sP_Player.Height - 7);
+                    player.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left);
+                });
+
+
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+            }
         }
 
         public Uri GetCombined() {
@@ -64,7 +101,7 @@ namespace SSUtility2 {
             try {
                 Uri combined = GetCombined();
 
-                if (await Play(this, showErrors).ConfigureAwait(false)) {
+                if (await Play(showErrors).ConfigureAwait(false)) {
                     MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
                     isPlaying = true;
                 } else {
@@ -82,9 +119,9 @@ namespace SSUtility2 {
             MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
         }
 
-        public async Task<bool> Play(Detached player, bool showError) {
+        public async Task<bool> Play(bool showError) {
             try {
-                Uri combinedUrl = player.GetCombined();
+                Uri combinedUrl = GetCombined();
 
                 if (showError) {
                     bool parsed = IPAddress.TryParse(combinedUrl.Host, out IPAddress parsedIP);
@@ -102,7 +139,7 @@ namespace SSUtility2 {
                     settings.tB_PlayerD_SimpleAdr.Text = combinedUrl.ToString();
                 });
 
-                AxAXVLC.AxVLCPlugin2 vlc = player.VLCPlayer_D;
+                AxAXVLC.AxVLCPlugin2 vlc = VLCPlayer_D;
                 if (vlc.playlist.isPlaying) {
                     vlc.playlist.stop();
                     vlc.playlist.items.clear();
@@ -117,6 +154,17 @@ namespace SSUtility2 {
                 MainForm.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
                 return false;
             }
+        }
+
+        public async Task EnableSecond() {
+            MainForm.m.Menu_Video_Info.Enabled = true;
+            MainForm.m.Menu_Video_Swap.Enabled = true;
+
+            sP_Player.Show();
+            secondView.settings.Copy(false);
+            await Task.Delay(300).ConfigureAwait(false);
+            if (!secondView.isPlaying)
+                sP_Player.Hide();
         }
 
         public void SnapShot() {
@@ -141,19 +189,13 @@ namespace SSUtility2 {
             recorderD = vals.Item2;
         }
 
-        private void Menu_SwapView_Click(object sender, EventArgs e) {
-            if (thermalMode) {
-                thermalMode = false;
-            } else {
-                thermalMode = true;
-            }
-            
-            if (ConfigControl.savedCamera.stringVal == "Thermal" || ConfigControl.savedCamera.stringVal == "Daylight") {
-                if (thermalMode)
-                    ConfigControl.savedCamera.UpdateValue("Thermal");
-                else
-                    ConfigControl.savedCamera.UpdateValue("Daylight");
-            }
+        private void VLCPlayer_D_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
+            if (MainForm.m.mainPlayer != this || MainForm.m.mainCp.myPanel.Visible)
+                return;
+            if (e.x < 75 && e.y < 75)
+                MainForm.m.b_Open.Visible = true;
+            else
+                MainForm.m.b_Open.Visible = false;
         }
 
     }

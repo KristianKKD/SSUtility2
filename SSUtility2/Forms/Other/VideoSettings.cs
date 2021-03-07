@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
     public partial class VideoSettings : Form {
+
+        public Detached myDetached;
 
         public VideoSettings() {
             InitializeComponent();
@@ -31,6 +26,22 @@ namespace SSUtility2 {
                 p_PlayerD_Simple.Show();
             }
         }
+
+        public void Copy(bool full) {
+            tB_PlayerD_Adr.Text = myDetached.settings.tB_PlayerD_Adr.Text;
+            tB_PlayerD_Port.Text = myDetached.settings.tB_PlayerD_Port.Text;
+            tB_PlayerD_Username.Text = myDetached.settings.tB_PlayerD_Username.Text;
+            tB_PlayerD_Password.Text = myDetached.settings.tB_PlayerD_Password.Text;
+            tB_PlayerD_Name.Text = myDetached.settings.tB_PlayerD_Name.Text + " 2";
+            tB_PlayerD_SimpleAdr.Text = myDetached.settings.tB_PlayerD_SimpleAdr.Text;
+            if (full) {
+                if (myDetached.settings.cB_PlayerD_Type.Text.Contains("Daylight"))
+                    myDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
+                else
+                    myDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
+            }
+        }
+
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string enc = cB_PlayerD_Type.Text;
             string username = "";
@@ -46,10 +57,14 @@ namespace SSUtility2 {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_1:0/h264_1/onvif.stm";
+                if (myDetached.secondView != null)
+                    myDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
             } else if (enc == "IONodes - Thermal") {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_2:0/h264_1/onvif.stm";
+                if (myDetached.secondView != null)
+                    myDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
             } else if (enc == "VIVOTEK") {
                 username = "root";
                 password = "root1234";
@@ -66,5 +81,8 @@ namespace SSUtility2 {
             tB_PlayerD_Password.Text = password;
         }
 
+        private void b_Play_Click(object sender, EventArgs e) {
+            myDetached.Play(true);
+        }
     }
 }

@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace SSUtility2 {
     public partial class SettingsPage : Form {
+
+        CommandListWindow clw = null;
+
         public SettingsPage() {
             InitializeComponent();
             l_Version.Text = l_Version.Text + MainForm.version;
@@ -221,5 +224,12 @@ namespace SSUtility2 {
             ConfigControl.savedCamera.UpdateValue(cB_ipCon_Selected.Text);
         }
 
+        private void b_Custom_CommandList_Click(object sender, EventArgs e) {
+            if (clw == null) {
+                clw = new CommandListWindow(false);
+            }
+            clw.Show();
+            clw.BringToFront();
+        }
     }
 }

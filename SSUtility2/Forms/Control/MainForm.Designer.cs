@@ -48,9 +48,9 @@ namespace SSUtility2 {
             this.Menu_Window_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Response = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Osiris = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Presets = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Window_ControlPanel = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Window_Custom = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_StartStop = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,8 +66,10 @@ namespace SSUtility2 {
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Main = new System.Windows.Forms.Panel();
             this.p_Control = new System.Windows.Forms.Panel();
+            this.b_Open = new System.Windows.Forms.Button();
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
+            this.p_Control.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -96,7 +98,7 @@ namespace SSUtility2 {
             this.Menu_Window_Osiris,
             this.Menu_Window_Presets,
             this.Menu_Window_Settings,
-            this.Menu_Window_ControlPanel});
+            this.Menu_Window_Custom});
             this.Menu_Window.Name = "Menu_Window";
             this.Menu_Window.Size = new System.Drawing.Size(63, 20);
             this.Menu_Window.Text = "Window";
@@ -104,58 +106,58 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(182, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(185, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(182, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(185, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Lite
             // 
             this.Menu_Window_Lite.Name = "Menu_Window_Lite";
-            this.Menu_Window_Lite.Size = new System.Drawing.Size(182, 22);
+            this.Menu_Window_Lite.Size = new System.Drawing.Size(185, 22);
             this.Menu_Window_Lite.Text = "Lite Mode";
             this.Menu_Window_Lite.Click += new System.EventHandler(this.Menu_Window_Lite_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(182, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(185, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Osiris
             // 
             this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(182, 22);
+            this.Menu_Window_Osiris.Size = new System.Drawing.Size(185, 22);
             this.Menu_Window_Osiris.Text = "Osiris Control";
             this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
-            // 
-            // Menu_Window_Settings
-            // 
-            this.Menu_Window_Settings.Name = "Menu_Window_Settings";
-            this.Menu_Window_Settings.Size = new System.Drawing.Size(182, 22);
-            this.Menu_Window_Settings.Text = "Settings";
-            this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(182, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(185, 22);
             this.Menu_Window_Presets.Text = "Preset Panel";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
-            // Menu_Window_ControlPanel
+            // Menu_Window_Settings
             // 
-            this.Menu_Window_ControlPanel.Name = "Menu_Window_ControlPanel";
-            this.Menu_Window_ControlPanel.Size = new System.Drawing.Size(182, 22);
-            this.Menu_Window_ControlPanel.Text = "Show Control Panel";
-            this.Menu_Window_ControlPanel.Click += new System.EventHandler(this.Menu_Window_ControlPanel_Click);
+            this.Menu_Window_Settings.Name = "Menu_Window_Settings";
+            this.Menu_Window_Settings.Size = new System.Drawing.Size(185, 22);
+            this.Menu_Window_Settings.Text = "Settings";
+            this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
+            // 
+            // Menu_Window_Custom
+            // 
+            this.Menu_Window_Custom.Name = "Menu_Window_Custom";
+            this.Menu_Window_Custom.Size = new System.Drawing.Size(185, 22);
+            this.Menu_Window_Custom.Text = "Show Custom Panel";
+            this.Menu_Window_Custom.Click += new System.EventHandler(this.Menu_Window_Custom_Click);
             // 
             // Menu_Video
             // 
@@ -204,6 +206,7 @@ namespace SSUtility2 {
             this.Menu_Video_Swap.Name = "Menu_Video_Swap";
             this.Menu_Video_Swap.Size = new System.Drawing.Size(200, 22);
             this.Menu_Video_Swap.Text = "Swap To Thermal View";
+            this.Menu_Video_Swap.Click += new System.EventHandler(this.Menu_Video_Swap_Click);
             // 
             // Menu_Video_Info
             // 
@@ -270,11 +273,26 @@ namespace SSUtility2 {
             // 
             // p_Control
             // 
+            this.p_Control.Controls.Add(this.b_Open);
             this.p_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.p_Control.Location = new System.Drawing.Point(0, 0);
             this.p_Control.Name = "p_Control";
             this.p_Control.Size = new System.Drawing.Size(1630, 860);
             this.p_Control.TabIndex = 1;
+            // 
+            // b_Open
+            // 
+            this.b_Open.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.b_Open.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Open.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.b_Open.ForeColor = System.Drawing.SystemColors.Control;
+            this.b_Open.Location = new System.Drawing.Point(0, 0);
+            this.b_Open.Name = "b_Open";
+            this.b_Open.Size = new System.Drawing.Size(50, 50);
+            this.b_Open.TabIndex = 1;
+            this.b_Open.Text = ">>";
+            this.b_Open.UseVisualStyleBackColor = false;
+            this.b_Open.Click += new System.EventHandler(this.b_Open_Click);
             // 
             // MainForm
             // 
@@ -293,6 +311,7 @@ namespace SSUtility2 {
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_Main.ResumeLayout(false);
+            this.p_Control.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1110,7 +1129,8 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Video_Record;
         public ToolStripMenuItem Menu_Video_StartStop;
         public ToolStripMenuItem Menu_Video_Info;
-        public ToolStripMenuItem Menu_Window_ControlPanel;
-        private ToolStripMenuItem Menu_Window_Presets;
+        public ToolStripMenuItem Menu_Window_Presets;
+        public ToolStripMenuItem Menu_Window_Custom;
+        public Button b_Open;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
