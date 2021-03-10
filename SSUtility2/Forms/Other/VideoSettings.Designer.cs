@@ -49,6 +49,7 @@ namespace SSUtility2
             this.l_PlayerD_Adr = new System.Windows.Forms.Label();
             this.checkB_PlayerD_Manual = new System.Windows.Forms.CheckBox();
             this.b_Play = new System.Windows.Forms.Button();
+            this.b_Hide = new System.Windows.Forms.Button();
             this.p_PlayerD_Simple.SuspendLayout();
             this.p_PlayerD_Extended.SuspendLayout();
             this.SuspendLayout();
@@ -328,13 +329,26 @@ namespace SSUtility2
             // 
             this.b_Play.BackColor = System.Drawing.SystemColors.Control;
             this.b_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Play.Location = new System.Drawing.Point(218, 241);
+            this.b_Play.Location = new System.Drawing.Point(245, 241);
             this.b_Play.Name = "b_Play";
-            this.b_Play.Size = new System.Drawing.Size(90, 28);
+            this.b_Play.Size = new System.Drawing.Size(63, 28);
             this.b_Play.TabIndex = 59;
             this.b_Play.Text = "Play";
             this.b_Play.UseVisualStyleBackColor = false;
             this.b_Play.Click += new System.EventHandler(this.b_Play_Click);
+            // 
+            // b_Hide
+            // 
+            this.b_Hide.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Hide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Hide.Location = new System.Drawing.Point(157, 241);
+            this.b_Hide.Name = "b_Hide";
+            this.b_Hide.Size = new System.Drawing.Size(82, 28);
+            this.b_Hide.TabIndex = 60;
+            this.b_Hide.Text = "Hide Player";
+            this.b_Hide.UseVisualStyleBackColor = false;
+            this.b_Hide.Visible = false;
+            this.b_Hide.Click += new System.EventHandler(this.b_Hide_Click);
             // 
             // VideoSettings
             // 
@@ -342,6 +356,7 @@ namespace SSUtility2
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(318, 280);
+            this.Controls.Add(this.b_Hide);
             this.Controls.Add(this.b_Play);
             this.Controls.Add(this.l_Name);
             this.Controls.Add(this.tB_PlayerD_Name);
@@ -353,6 +368,7 @@ namespace SSUtility2
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VideoSettings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VideoSettings_FormClosing);
+            this.VisibleChanged += new System.EventHandler(this.VideoSettings_VisibleChanged);
             this.p_PlayerD_Simple.ResumeLayout(false);
             this.p_PlayerD_Simple.PerformLayout();
             this.p_PlayerD_Extended.ResumeLayout(false);
@@ -387,5 +403,6 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_PlayerD_Adr;
         public System.Windows.Forms.CheckBox checkB_PlayerD_Manual;
         private System.Windows.Forms.Button b_Play;
+        private System.Windows.Forms.Button b_Hide;
     }
 }

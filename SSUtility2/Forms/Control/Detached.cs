@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -18,38 +19,42 @@ namespace SSUtility2 {
         public bool isPlaying = false;
         public bool thermalMode = false;
 
+        public AxAXVLC.AxVLCPlugin2 secondaryPlayer;
+
         public Detached(bool second = false) {
             InitializeComponent();
             settings = new VideoSettings();
             if (second)
                 return;
-            settings.myDetached = this;
+            settings.originalDetached = this;
             InitSecond();
         }
 
         async Task InitSecond() {
             try {
-                settings.myDetached = this;
+                settings.originalDetached = this;
                 sP_Player.Hide();
                 await Task.Delay(300).ConfigureAwait(false);
 
                 Invoke((MethodInvoker)delegate {
                     secondView = new Detached(true);
-                    secondView.settings.myDetached = this;
-                    secondView.settings.Copy(true);
+                    secondView.settings.originalDetached = this;
+                    secondView.settings.Copy(settings);
+                    secondView.settings.Text = "Secondary Video Settings";
+                    secondView.settings.isSecondary = true;
 
-                    Detached tempDetached = new Detached(true);
-                    var c = MainForm.m.GetAllType(tempDetached, typeof(AxAXVLC.AxVLCPlugin2));
+                    var c = MainForm.m.GetAllType(secondView, typeof(AxAXVLC.AxVLCPlugin2));
                     sP_Player.Controls.Add(c.ElementAt(0));
-                    tempDetached.Dispose();
 
-                    var controls = MainForm.m.GetAllType(sP_Player, typeof(AxAXVLC.AxVLCPlugin2));
-                    AxAXVLC.AxVLCPlugin2 player = (AxAXVLC.AxVLCPlugin2)controls.ElementAt(0);
+                    var secondPlayer = MainForm.m.GetAllType(sP_Player, typeof(AxAXVLC.AxVLCPlugin2));
+                    AxAXVLC.AxVLCPlugin2 p = (AxAXVLC.AxVLCPlugin2)secondPlayer.ElementAt(0);
+                    secondView.secondaryPlayer = p;
 
-                    player.Dock = DockStyle.None;
-                    player.Location = new System.Drawing.Point(3,3);
-                    player.Size = new System.Drawing.Size(sP_Player.Width - 7, sP_Player.Height - 7);
-                    player.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left);
+                    sP_Player.Location = new Point(MainForm.m.Width - sP_Player.Width - 80, 30);
+                    p.Dock = DockStyle.None;
+                    p.Location = new Point(7, 5);
+                    p.Size = new Size(sP_Player.Width - 15, sP_Player.Height - 10);
+                    p.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left);
                 });
 
 
@@ -63,7 +68,7 @@ namespace SSUtility2 {
             try {
                 Uri combinedUrl;
 
-                if (settings.checkB_PlayerD_Manual.Checked) {
+                if (settings.checkB_PlayerD_Manual.Checked || settings.isSecondary) {
                     string ipaddress = settings.tB_PlayerD_Adr.Text;
                     string port = settings.tB_PlayerD_Port.Text;
                     string url = settings.tB_PlayerD_RTSP.Text;
@@ -99,11 +104,14 @@ namespace SSUtility2 {
 
         public async Task StartPlaying(bool showErrors) {
             try {
-                Uri combined = GetCombined();
-
-                if (await Play(showErrors).ConfigureAwait(false)) {
-                    MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
+                if (await Play(showErrors, this).ConfigureAwait(false)) {
                     isPlaying = true;
+                    MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
+                    if (ConfigControl.autoReconnect.boolVal) {
+                        MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;
+                        ConfigControl.savedIP.UpdateValue(MainForm.m.setPage.tB_IPCon_Adr.Text);
+                        AsyncCamCom.TryConnect(showErrors);
+                    }
                 } else {
                     StopPlaying();
                 }
@@ -119,11 +127,11 @@ namespace SSUtility2 {
             MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
         }
 
-        public async Task<bool> Play(bool showError) {
+        public async Task<bool> Play(bool showError, Detached player) {
             try {
-                Uri combinedUrl = GetCombined();
+                Uri combinedUrl = player.GetCombined();
 
-                if (showError) {
+                if (showError && !player.settings.isSecondary) {
                     bool parsed = IPAddress.TryParse(combinedUrl.Host, out IPAddress parsedIP);
                     if (combinedUrl.Host == "" || !parsed) {
                         MessageBox.Show("Address is invalid!");
@@ -136,16 +144,22 @@ namespace SSUtility2 {
                 }
 
                 Invoke((MethodInvoker)delegate {
-                    settings.tB_PlayerD_SimpleAdr.Text = combinedUrl.ToString();
+                    player.settings.tB_PlayerD_SimpleAdr.Text = combinedUrl.ToString();
                 });
 
-                AxAXVLC.AxVLCPlugin2 vlc = VLCPlayer_D;
+                AxAXVLC.AxVLCPlugin2 vlc;
+                if (player.settings.isSecondary)
+                    vlc = player.secondaryPlayer;
+                else
+                    vlc = VLCPlayer_D;
+
                 if (vlc.playlist.isPlaying) {
                     vlc.playlist.stop();
                     vlc.playlist.items.clear();
                 }
 
-                vlc.playlist.add(combinedUrl.ToString(), null, ":avcodec -hw:network -caching=" + settings.tB_PlayerD_Buffering.Text); //might have to look at more options
+                vlc.playlist.add(combinedUrl.ToString(), null, ":avcodec -hw:network -caching="
+                    + player.settings.tB_PlayerD_Buffering.Text); //might have to look at more options
                 vlc.playlist.next();
                 vlc.playlist.play();
 
@@ -161,10 +175,9 @@ namespace SSUtility2 {
             MainForm.m.Menu_Video_Swap.Enabled = true;
 
             sP_Player.Show();
-            secondView.settings.Copy(false);
-            await Task.Delay(300).ConfigureAwait(false);
-            if (!secondView.isPlaying)
-                sP_Player.Hide();
+            sP_Player.BringToFront();
+            secondView.settings.Copy(settings);
+            secondView.Play(true, secondView);
         }
 
         public void SnapShot() {
@@ -192,11 +205,46 @@ namespace SSUtility2 {
         private void VLCPlayer_D_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
             if (MainForm.m.mainPlayer != this || MainForm.m.mainCp.myPanel.Visible)
                 return;
-            if (e.x < 75 && e.y < 75)
+            if (PointToClient(Cursor.Position).X < 270) {
                 MainForm.m.b_Open.Visible = true;
-            else
+                MainForm.m.b_Open.BringToFront();
+            } else
                 MainForm.m.b_Open.Visible = false;
         }
 
+        public void Swap() {
+            try {
+                VideoSettings tempSets = new VideoSettings();
+                tempSets.Copy(secondView.settings, false);
+
+                secondView.settings.Copy(settings, false);
+                settings.Copy(tempSets, false);
+
+                secondView.settings.checkB_PlayerD_Manual.Checked = true;
+                settings.checkB_PlayerD_Manual.Checked = true;
+
+                secondView.Play(false, secondView);
+                Play(false, this);
+
+                tempSets.Dispose();
+            } catch { };
+        }
+
+        public void UpdateMode() {
+            if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
+                thermalMode = true;
+                MainForm.m.Menu_Video_Swap.Text = "Swap to Daylight";
+                settings.cB_PlayerD_Type.Text = "Thermal";
+            } else if (ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
+                thermalMode = false;
+                MainForm.m.Menu_Video_Swap.Text = "Swap to Thermal";
+                settings.cB_PlayerD_Type.Text = "Daylight";
+            }
+        }
+        
+        private void sP_Player_DoubleClick(object sender, EventArgs e) {
+            secondView.settings.Show();
+            secondView.settings.BringToFront();
+        }
     }
 }

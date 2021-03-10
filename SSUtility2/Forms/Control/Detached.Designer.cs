@@ -98,10 +98,11 @@
             this.sP_Player.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sP_Player.BackColor = System.Drawing.Color.Black;
             this.sP_Player.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.sP_Player.Location = new System.Drawing.Point(495, 57);
+            this.sP_Player.Location = new System.Drawing.Point(452, 27);
             this.sP_Player.Name = "sP_Player";
-            this.sP_Player.Size = new System.Drawing.Size(229, 169);
+            this.sP_Player.Size = new System.Drawing.Size(320, 190);
             this.sP_Player.TabIndex = 43;
+            this.sP_Player.DoubleClick += new System.EventHandler(this.sP_Player_DoubleClick);
             // 
             // Detached
             // 

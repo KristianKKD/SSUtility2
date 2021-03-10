@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.2.0.0";
+        public const string version = "v2.2.1.0";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -307,6 +307,8 @@ namespace SSUtility2 {
                 dv.settings.tB_PlayerD_Password.Text = set.tB_PlayerD_Password.Text;
                 dv.settings.tB_PlayerD_Name.Text = set.tB_PlayerD_Name.Text;
                 dv.settings.tB_PlayerD_SimpleAdr.Text = set.tB_PlayerD_SimpleAdr.Text;
+                if(mainPlayer.isPlaying)
+                    dv.StartPlaying(false);
             }
             SetFeatureToAllControls(dv.Controls);
             return dv;
@@ -866,16 +868,26 @@ namespace SSUtility2 {
         private void Menu_Video_Swap_Click(object sender, EventArgs e) { //ADD SWAP FUNCTIONALITY
             if (mainPlayer.thermalMode) {
                 mainPlayer.thermalMode = false;
+                ConfigControl.savedCamera.UpdateValue("Daylight");
             } else {
                 mainPlayer.thermalMode = true;
+                ConfigControl.savedCamera.UpdateValue("Thermal");
             }
 
-            if (ConfigControl.savedCamera.stringVal == "Thermal" || ConfigControl.savedCamera.stringVal == "Daylight") {
-                if (mainPlayer.thermalMode)
-                    ConfigControl.savedCamera.UpdateValue("Thermal");
-                else
-                    ConfigControl.savedCamera.UpdateValue("Daylight");
-            }
+            mainPlayer.UpdateMode();
+            setPage.cB_ipCon_Selected.Text = ConfigControl.savedCamera.stringVal;
+            mainPlayer.settings.cB_PlayerD_Type.Text = ConfigControl.savedCamera.stringVal;
+
+            mainPlayer.Swap();
+        }
+
+        private void Menu_Video_EnableSecondary_Click(object sender, EventArgs e) {
+            Menu_Video_EnableSecondary.Visible = false;
+            mainPlayer.EnableSecond();
+        }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e) {
+            mainPlayer.VLCPlayer_D.Refresh();
         }
 
     } // end of class MainForm

@@ -17,6 +17,8 @@ namespace SSUtility2 {
         public async Task PopulateSettingText() {
             tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
             tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
+            cB_ipCon_Selected.Text = ConfigControl.savedCamera.stringVal;
+            MainForm.m.mainPlayer.UpdateMode();
 
             tB_Paths_sCFolder.Text = ConfigControl.scFolder.stringVal;
             tB_Paths_vFolder.Text = ConfigControl.vFolder.stringVal;
@@ -31,6 +33,7 @@ namespace SSUtility2 {
 
             check_Other_Subnet.Checked = ConfigControl.subnetNotif.boolVal;
             check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
+            check_Other_AutoReconnect.Checked = ConfigControl.autoReconnect.boolVal;
             check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
 
             ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
@@ -184,25 +187,15 @@ namespace SSUtility2 {
             tB_IPCon_Port.Text = port;
         }
 
-        async Task Connect() {
-            if (await AsyncCamCom.TryConnect(false).ConfigureAwait(false))
-                ConfigControl.savedIP.UpdateValue(cB_ipCon_Selected.Text);
-        }
-
-        async Task PortConnect() {
-            if (await AsyncCamCom.TryConnect(false).ConfigureAwait(false)) {
-                ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
-                UpdatePresetCB();
-            }
-        }
-
         private void tB_IPCon_Adr_Leave(object sender, EventArgs e) {
-            Connect();
+            AsyncCamCom.TryConnect(false);
+            ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
         }
 
         private void tB_IPCon_Adr_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                Connect();
+                AsyncCamCom.TryConnect(false);
+                ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
             }
         }
 
@@ -217,7 +210,9 @@ namespace SSUtility2 {
         }
 
         private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
-            PortConnect();
+            AsyncCamCom.TryConnect(false);
+            ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
+            UpdatePresetCB();
         }
 
         private void cB_ipCon_Selected_TextUpdate(object sender, EventArgs e) {
@@ -231,5 +226,10 @@ namespace SSUtility2 {
             clw.Show();
             clw.BringToFront();
         }
+
+        private void check_Other_AutoReconnect_CheckedChanged(object sender, EventArgs e) {
+            ConfigControl.autoReconnect.UpdateValue(check_Other_AutoReconnect.Checked.ToString());
+        }
+
     }
 }

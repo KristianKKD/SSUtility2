@@ -79,6 +79,7 @@ namespace SSUtility2
             this.l_Custom_1 = new System.Windows.Forms.Label();
             this.tB_Custom_1 = new System.Windows.Forms.TextBox();
             this.tP_Other = new System.Windows.Forms.TabPage();
+            this.check_Other_AutoReconnect = new System.Windows.Forms.CheckBox();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
             this.tC_Settings.SuspendLayout();
@@ -302,7 +303,7 @@ namespace SSUtility2
             "2000",
             "5000",
             "10000"});
-            this.cB_Other_RefreshRate.Location = new System.Drawing.Point(166, 65);
+            this.cB_Other_RefreshRate.Location = new System.Drawing.Point(165, 88);
             this.cB_Other_RefreshRate.Name = "cB_Other_RefreshRate";
             this.cB_Other_RefreshRate.Size = new System.Drawing.Size(114, 21);
             this.cB_Other_RefreshRate.TabIndex = 28;
@@ -323,7 +324,7 @@ namespace SSUtility2
             // l_Other_CommandRate
             // 
             this.l_Other_CommandRate.AutoSize = true;
-            this.l_Other_CommandRate.Location = new System.Drawing.Point(7, 68);
+            this.l_Other_CommandRate.Location = new System.Drawing.Point(6, 91);
             this.l_Other_CommandRate.Name = "l_Other_CommandRate";
             this.l_Other_CommandRate.Size = new System.Drawing.Size(130, 13);
             this.l_Other_CommandRate.TabIndex = 27;
@@ -397,7 +398,6 @@ namespace SSUtility2
             this.cB_ipCon_Selected.Size = new System.Drawing.Size(123, 21);
             this.cB_ipCon_Selected.TabIndex = 83;
             this.cB_ipCon_Selected.Text = "Daylight";
-            this.cB_ipCon_Selected.TextUpdate += new System.EventHandler(this.cB_ipCon_Selected_TextUpdate);
             // 
             // l_ipCon_Selected
             // 
@@ -703,6 +703,7 @@ namespace SSUtility2
             // 
             // tP_Other
             // 
+            this.tP_Other.Controls.Add(this.check_Other_AutoReconnect);
             this.tP_Other.Controls.Add(this.cB_Other_RefreshRate);
             this.tP_Other.Controls.Add(this.check_Other_Subnet);
             this.tP_Other.Controls.Add(this.check_Other_AutoPlay);
@@ -714,6 +715,18 @@ namespace SSUtility2
             this.tP_Other.TabIndex = 2;
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
+            // 
+            // check_Other_AutoReconnect
+            // 
+            this.check_Other_AutoReconnect.Location = new System.Drawing.Point(6, 62);
+            this.check_Other_AutoReconnect.Name = "check_Other_AutoReconnect";
+            this.check_Other_AutoReconnect.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_AutoReconnect.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_AutoReconnect.TabIndex = 31;
+            this.check_Other_AutoReconnect.Text = "Auto Reconnect On New IP";
+            this.check_Other_AutoReconnect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.check_Other_AutoReconnect.UseVisualStyleBackColor = true;
+            this.check_Other_AutoReconnect.CheckedChanged += new System.EventHandler(this.check_Other_AutoReconnect_CheckedChanged);
             // 
             // l_Version
             // 
@@ -816,5 +829,6 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_ipCon_Selected;
         public System.Windows.Forms.Label l_Version;
         private System.Windows.Forms.Button b_Custom_CommandList;
+        public System.Windows.Forms.CheckBox check_Other_AutoReconnect;
     }
 }

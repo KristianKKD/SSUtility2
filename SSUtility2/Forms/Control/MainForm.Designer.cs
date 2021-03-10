@@ -58,6 +58,7 @@ namespace SSUtility2 {
             this.Menu_Video_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Swap = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Info = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_EnableSecondary = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_PanZero = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Pan = new System.Windows.Forms.ToolStripMenuItem();
@@ -167,7 +168,8 @@ namespace SSUtility2 {
             this.Menu_Video_Snapshot,
             this.Menu_Video_Record,
             this.Menu_Video_Swap,
-            this.Menu_Video_Info});
+            this.Menu_Video_Info,
+            this.Menu_Video_EnableSecondary});
             this.Menu_Video.Name = "Menu_Video";
             this.Menu_Video.Size = new System.Drawing.Size(93, 20);
             this.Menu_Video.Text = "Video Stream";
@@ -175,28 +177,28 @@ namespace SSUtility2 {
             // Menu_Video_Settings
             // 
             this.Menu_Video_Settings.Name = "Menu_Video_Settings";
-            this.Menu_Video_Settings.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Settings.Size = new System.Drawing.Size(211, 22);
             this.Menu_Video_Settings.Text = "Connection Settings";
             this.Menu_Video_Settings.Click += new System.EventHandler(this.Menu_Video_Settings_Click);
             // 
             // Menu_Video_StartStop
             // 
             this.Menu_Video_StartStop.Name = "Menu_Video_StartStop";
-            this.Menu_Video_StartStop.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_StartStop.Size = new System.Drawing.Size(211, 22);
             this.Menu_Video_StartStop.Text = "Start Video Playback";
             this.Menu_Video_StartStop.Click += new System.EventHandler(this.Menu_Video_Stop_Click);
             // 
             // Menu_Video_Snapshot
             // 
             this.Menu_Video_Snapshot.Name = "Menu_Video_Snapshot";
-            this.Menu_Video_Snapshot.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Snapshot.Size = new System.Drawing.Size(211, 22);
             this.Menu_Video_Snapshot.Text = "Save Snapshot";
             this.Menu_Video_Snapshot.Click += new System.EventHandler(this.Menu_Video_Snapshot_Click);
             // 
             // Menu_Video_Record
             // 
             this.Menu_Video_Record.Name = "Menu_Video_Record";
-            this.Menu_Video_Record.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Record.Size = new System.Drawing.Size(211, 22);
             this.Menu_Video_Record.Text = "Start Recording";
             this.Menu_Video_Record.Click += new System.EventHandler(this.Menu_Video_Record_Click);
             // 
@@ -204,7 +206,7 @@ namespace SSUtility2 {
             // 
             this.Menu_Video_Swap.Enabled = false;
             this.Menu_Video_Swap.Name = "Menu_Video_Swap";
-            this.Menu_Video_Swap.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Swap.Size = new System.Drawing.Size(211, 22);
             this.Menu_Video_Swap.Text = "Swap To Thermal View";
             this.Menu_Video_Swap.Click += new System.EventHandler(this.Menu_Video_Swap_Click);
             // 
@@ -212,9 +214,17 @@ namespace SSUtility2 {
             // 
             this.Menu_Video_Info.Enabled = false;
             this.Menu_Video_Info.Name = "Menu_Video_Info";
-            this.Menu_Video_Info.Size = new System.Drawing.Size(200, 22);
+            this.Menu_Video_Info.Size = new System.Drawing.Size(211, 22);
             this.Menu_Video_Info.Text = "Enable Info Panel";
             this.Menu_Video_Info.Click += new System.EventHandler(this.Menu_Video_Info_Click);
+            // 
+            // Menu_Video_EnableSecondary
+            // 
+            this.Menu_Video_EnableSecondary.Name = "Menu_Video_EnableSecondary";
+            this.Menu_Video_EnableSecondary.Size = new System.Drawing.Size(211, 22);
+            this.Menu_Video_EnableSecondary.Text = "Enable Secondary Player";
+            this.Menu_Video_EnableSecondary.Visible = false;
+            this.Menu_Video_EnableSecondary.Click += new System.EventHandler(this.Menu_Video_EnableSecondary_Click);
             // 
             // Menu_QC
             // 
@@ -292,6 +302,7 @@ namespace SSUtility2 {
             this.b_Open.TabIndex = 1;
             this.b_Open.Text = ">>";
             this.b_Open.UseVisualStyleBackColor = false;
+            this.b_Open.Visible = false;
             this.b_Open.Click += new System.EventHandler(this.b_Open_Click);
             // 
             // MainForm
@@ -308,6 +319,7 @@ namespace SSUtility2 {
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SSUtility V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_Main.ResumeLayout(false);
@@ -1132,5 +1144,6 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Window_Presets;
         public ToolStripMenuItem Menu_Window_Custom;
         public Button b_Open;
+        public ToolStripMenuItem Menu_Video_EnableSecondary;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

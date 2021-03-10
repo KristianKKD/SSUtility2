@@ -4,7 +4,8 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class VideoSettings : Form {
 
-        public Detached myDetached;
+        public Detached originalDetached;
+        public bool isSecondary = false;
 
         public VideoSettings() {
             InitializeComponent();
@@ -27,19 +28,26 @@ namespace SSUtility2 {
             }
         }
 
-        public void Copy(bool full) {
-            tB_PlayerD_Adr.Text = myDetached.settings.tB_PlayerD_Adr.Text;
-            tB_PlayerD_Port.Text = myDetached.settings.tB_PlayerD_Port.Text;
-            tB_PlayerD_Username.Text = myDetached.settings.tB_PlayerD_Username.Text;
-            tB_PlayerD_Password.Text = myDetached.settings.tB_PlayerD_Password.Text;
-            tB_PlayerD_Name.Text = myDetached.settings.tB_PlayerD_Name.Text + " 2";
-            tB_PlayerD_SimpleAdr.Text = myDetached.settings.tB_PlayerD_SimpleAdr.Text;
-            if (full) {
-                if (myDetached.settings.cB_PlayerD_Type.Text.Contains("Daylight"))
-                    myDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
+        public void Copy(VideoSettings sets, bool originalCopy = true) {
+            tB_PlayerD_Adr.Text = sets.tB_PlayerD_Adr.Text;
+            tB_PlayerD_Port.Text = sets.tB_PlayerD_Port.Text;
+            tB_PlayerD_Username.Text = sets.tB_PlayerD_Username.Text;
+            tB_PlayerD_Password.Text = sets.tB_PlayerD_Password.Text;
+            cB_PlayerD_Type.Text = sets.cB_PlayerD_Type.Text;
+
+            if (originalCopy) {
+                tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text + " 2";
+
+                if (sets.cB_PlayerD_Type.Text.Contains("Daylight"))
+                    tB_PlayerD_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
                 else
-                    myDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
+                    tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
+
+                tB_PlayerD_SimpleAdr.Text = originalDetached.secondView.GetCombined().ToString();
+            } else {
+                    tB_PlayerD_RTSP.Text = sets.tB_PlayerD_RTSP.Text;
             }
+
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -57,14 +65,14 @@ namespace SSUtility2 {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_1:0/h264_1/onvif.stm";
-                if (myDetached.secondView != null)
-                    myDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
+                if (originalDetached.secondView != null)
+                    originalDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
             } else if (enc == "IONodes - Thermal") {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_2:0/h264_1/onvif.stm";
-                if (myDetached.secondView != null)
-                    myDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
+                if (originalDetached.secondView != null)
+                    originalDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
             } else if (enc == "VIVOTEK") {
                 username = "root";
                 password = "root1234";
@@ -82,7 +90,23 @@ namespace SSUtility2 {
         }
 
         private void b_Play_Click(object sender, EventArgs e) {
-            myDetached.Play(true);
+            if(isSecondary)
+                originalDetached.Play(true, originalDetached.secondView);
+            else
+                originalDetached.StartPlaying(true);
+        }
+
+        private void VideoSettings_VisibleChanged(object sender, EventArgs e) {
+            if (isSecondary)
+                b_Hide.Show();
+        }
+
+        private void b_Hide_Click(object sender, EventArgs e) {
+            MainForm.m.mainPlayer.secondView.VLCPlayer_D.playlist.stop();
+            MainForm.m.mainPlayer.sP_Player.Hide();
+            Hide();
+            MainForm.m.Menu_Video_EnableSecondary.Visible = true;
+
         }
     }
 }

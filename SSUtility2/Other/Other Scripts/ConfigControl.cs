@@ -36,6 +36,7 @@ namespace SSUtility2 {
         public static ConfigSetting savedIP = new ConfigSetting("192.168.1.71", "SavedIP", ConfigSetting.VarType.strings);
         public static ConfigSetting savedPort = new ConfigSetting("6791", "SavedPort", ConfigSetting.VarType.strings);
         public static ConfigSetting savedCamera = new ConfigSetting("Daylight", "SavedCamera", ConfigSetting.VarType.strings);
+        public static ConfigSetting autoReconnect = new ConfigSetting("true", "AutoReconnect", ConfigSetting.VarType.boolean);
 
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
@@ -55,6 +56,7 @@ namespace SSUtility2 {
             savedIP,
             savedPort,
             savedCamera,
+            autoReconnect
         };
 
 
