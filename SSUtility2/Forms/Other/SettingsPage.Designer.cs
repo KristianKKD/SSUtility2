@@ -398,6 +398,7 @@ namespace SSUtility2
             this.cB_ipCon_Selected.Size = new System.Drawing.Size(123, 21);
             this.cB_ipCon_Selected.TabIndex = 83;
             this.cB_ipCon_Selected.Text = "Daylight";
+            this.cB_ipCon_Selected.TextChanged += new System.EventHandler(this.cB_ipCon_Selected_TextChanged);
             // 
             // l_ipCon_Selected
             // 

@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.2.1.2";
+        public const string version = "v2.2.1.3";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -58,7 +58,6 @@ namespace SSUtility2 {
             saveList = new Control[]{
                 mainCp.track_PTZ_PTSpeed,
 
-                mainPlayer.settings.cB_PlayerD_Type,
                 mainPlayer.settings.tB_PlayerD_Adr,
                 mainPlayer.settings.tB_PlayerD_Port,
                 mainPlayer.settings.tB_PlayerD_RTSP,
@@ -308,16 +307,13 @@ namespace SSUtility2 {
                 dv.settings.tB_PlayerD_Name.Text = set.tB_PlayerD_Name.Text;
                 dv.settings.tB_PlayerD_SimpleAdr.Text = set.tB_PlayerD_SimpleAdr.Text;
                 if(mainPlayer.isPlaying)
-                    dv.StartPlaying(false);
+                    dv.Play(false, dv);
             }
             SetFeatureToAllControls(dv.Controls);
             return dv;
         }
 
         public void OpenPelco() {
-            pd.tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
-            pd.tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
-            pd.cB_IPCon_Selected.Text = ConfigControl.savedCamera.stringVal;
             pd.Show();
             pd.BringToFront();
         }
@@ -866,19 +862,15 @@ namespace SSUtility2 {
         }
 
         private void Menu_Video_Swap_Click(object sender, EventArgs e) { //ADD SWAP FUNCTIONALITY
+            string value;
             if (mainPlayer.thermalMode) {
-                mainPlayer.thermalMode = false;
-                ConfigControl.savedCamera.UpdateValue("Daylight");
+                value = "Daylight";
             } else {
-                mainPlayer.thermalMode = true;
-                ConfigControl.savedCamera.UpdateValue("Thermal");
+                value = "Thermal";
             }
 
-            mainPlayer.UpdateMode();
-            setPage.cB_ipCon_Selected.Text = ConfigControl.savedCamera.stringVal;
-            mainPlayer.settings.cB_PlayerD_Type.Text = ConfigControl.savedCamera.stringVal;
-
-            mainPlayer.Swap();
+            setPage.cB_ipCon_Selected.Text = value;
+            setPage.UpdateSelectedCam(true);
         }
 
         private void Menu_Video_EnableSecondary_Click(object sender, EventArgs e) {

@@ -48,7 +48,8 @@ namespace SSUtility2 {
 
                 tB_PlayerD_SimpleAdr.Text = originalDetached.secondView.GetCombined().ToString();
             } else {
-                    tB_PlayerD_RTSP.Text = sets.tB_PlayerD_RTSP.Text;
+                tB_PlayerD_RTSP.Text = sets.tB_PlayerD_RTSP.Text;
+                tB_PlayerD_SimpleAdr.Text = originalDetached.GetCombined().ToString();
             }
 
         }
@@ -59,28 +60,23 @@ namespace SSUtility2 {
             string password = "";
             string rtsp = "";
 
-            if (enc == "Daylight") {
-                cB_PlayerD_Type.Text = "IONodes - Daylight";
-                enc = cB_PlayerD_Type.Text;
-            }
-
-            if (enc == "IONodes - Daylight") {
+            if (enc.Contains("Daylight")) {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_1:0/h264_1/onvif.stm";
                 if (originalDetached.secondView != null)
                     originalDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
-            } else if (enc == "IONodes - Thermal") {
+            } else if (enc.Contains("Thermal")) {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_2:0/h264_1/onvif.stm";
                 if (originalDetached.secondView != null)
                     originalDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
-            } else if (enc == "VIVOTEK") {
+            } else if (enc.Contains("VIVOTEK")) {
                 username = "root";
                 password = "root1234";
                 rtsp = "live.sdp";
-            } else if (enc == "BOSCH") {
+            } else if (enc.Contains("BOSCH")) {
                 username = "service";
                 password = "Service123!";
                 rtsp = "";
@@ -93,10 +89,13 @@ namespace SSUtility2 {
         }
 
         private void b_Play_Click(object sender, EventArgs e) {
-            if(isSecondary)
+            if (isSecondary)
                 originalDetached.Play(true, originalDetached.secondView);
-            else
+            else {
                 originalDetached.StartPlaying(true);
+                if (originalDetached.secondView == MainForm.m.mainPlayer && MainForm.m.Menu_Video_Swap.Enabled)
+                    originalDetached.Play(true, originalDetached.secondView);
+            }
         }
 
         private void VideoSettings_VisibleChanged(object sender, EventArgs e) {

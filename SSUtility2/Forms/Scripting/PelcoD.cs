@@ -31,7 +31,7 @@ namespace SSUtility2 {
             });
             try {
                 if (cB_Mode.Text == "IP") {
-                    if (!await AsyncCamCom.TryConnect(false, new IPEndPoint(IPAddress.Parse(tB_IPCon_Adr.Text), int.Parse(tB_IPCon_Port.Text))).ConfigureAwait(false)) {
+                    if (!await AsyncCamCom.TryConnect(false).ConfigureAwait(false)) {
                         return;
                     }
                 }
@@ -75,17 +75,13 @@ namespace SSUtility2 {
                 line = line.Replace(",", "");
                 line = line.ToLower().Replace("x", "0");
 
-                if (tB_IPCon_Adr.Text == "" || tB_IPCon_Port.Text == null) {
-                    MainForm.m.WriteToResponses("No IP/Port found", false);
-                }
-
                 ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, false, false, false, false);
                 if (check_PD_Perfect.Checked) {
                     sendCom.codeContent = FullCommand(line);
                 } else {
                     uint adr = 0;
                     Invoke((MethodInvoker)delegate {
-                        adr = MainForm.m.MakeAdr(cB_IPCon_Selected);
+                        adr = MainForm.m.MakeAdr();
                     });
                     sendCom = await CustomScriptCommands.CheckForCommands(line, adr).ConfigureAwait(false);
                     if (sendCom.codeContent == noCommand) {
@@ -165,9 +161,9 @@ namespace SSUtility2 {
                 uint cm2 = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
                 uint d1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
                 uint d2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
-                uint checksum = (cm1 + cm2 + d1 + d2 + MainForm.m.MakeAdr(cB_IPCon_Selected)) % 256;
+                uint checksum = (cm1 + cm2 + d1 + d2 + MainForm.m.MakeAdr()) % 256;
 
-                byte[] fullCommand = new byte[7] { 0xFF, (byte)MainForm.m.MakeAdr(cB_IPCon_Selected), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
+                byte[] fullCommand = new byte[7] { 0xFF, (byte)MainForm.m.MakeAdr(), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
                 MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand, true), true);
                 return fullCommand;
             } catch {
@@ -263,11 +259,9 @@ namespace SSUtility2 {
 
         private void cB_Mode_SelectedIndexChanged(object sender, EventArgs e) {
             if (cB_Mode.Text == "IP") {
-                p_IP.Show();
                 p_Serial.Hide();
             } else if (cB_Mode.Text == "Serial"){
                 MessageBox.Show("Not implemented yet!");
-                p_IP.Hide();
                 p_Serial.Show();
             }
         }

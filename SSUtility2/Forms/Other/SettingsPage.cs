@@ -18,7 +18,6 @@ namespace SSUtility2 {
             tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
             tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
             cB_ipCon_Selected.Text = ConfigControl.savedCamera.stringVal;
-            MainForm.m.mainPlayer.UpdateMode();
 
             tB_Paths_sCFolder.Text = ConfigControl.scFolder.stringVal;
             tB_Paths_vFolder.Text = ConfigControl.vFolder.stringVal;
@@ -38,6 +37,7 @@ namespace SSUtility2 {
 
             ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
             ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
+            UpdateSelectedCam(false);
         }
 
         private async Task ApplyAll() {
@@ -229,6 +229,26 @@ namespace SSUtility2 {
 
         private void check_Other_AutoReconnect_CheckedChanged(object sender, EventArgs e) {
             ConfigControl.autoReconnect.UpdateValue(check_Other_AutoReconnect.Checked.ToString());
+        }
+
+        private void cB_ipCon_Selected_TextChanged(object sender, EventArgs e) {
+            UpdateSelectedCam(true);
+        }
+
+        public async Task UpdateSelectedCam(bool play) {
+            if (!cB_ipCon_Selected.Text.Contains("Thermal") && !cB_ipCon_Selected.Text.Contains("Daylight")) {
+                MainForm.m.mainPlayer.customMode = true;
+                MainForm.m.Menu_Video_Swap.Text = "Swap Players";
+            } else {
+                MainForm.m.mainPlayer.customMode = false;
+                if (MainForm.m.mainPlayer.thermalMode)
+                    MainForm.m.Menu_Video_Swap.Text = "Swap to Daylight";
+                else
+                    MainForm.m.Menu_Video_Swap.Text = "Swap to Thermal";
+            }
+
+            ConfigControl.savedCamera.UpdateValue(cB_ipCon_Selected.Text);
+            MainForm.m.mainPlayer.UpdateMode(play);
         }
 
     }

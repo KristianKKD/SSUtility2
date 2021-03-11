@@ -21,6 +21,8 @@ namespace SSUtility2 {
 
         public AxAXVLC.AxVLCPlugin2 secondaryPlayer;
 
+        public bool customMode = false;
+
         public Detached(bool second = false) {
             InitializeComponent();
             settings = new VideoSettings();
@@ -170,14 +172,22 @@ namespace SSUtility2 {
             }
         }
 
-        public async Task EnableSecond() {
+        public async Task EnableSecond(bool show = true) {
             MainForm.m.Menu_Video_Info.Enabled = true;
             MainForm.m.Menu_Video_Swap.Enabled = true;
 
             sP_Player.Show();
             sP_Player.BringToFront();
             secondView.settings.Copy(settings);
-            secondView.Play(true, secondView);
+            if(isPlaying && show)
+                secondView.Play(true, secondView);
+        }
+
+        public async Task DisableSecond() {
+            MainForm.m.Menu_Video_Info.Enabled = false;
+            MainForm.m.Menu_Video_Swap.Enabled = false;
+
+            sP_Player.Hide();
         }
 
         public void SnapShot() {
@@ -213,18 +223,20 @@ namespace SSUtility2 {
                 MainForm.m.b_Open.Visible = false;
         }
 
-        public void Swap() {
+        public void Swap(bool play) {
             try {
-                if ((ConfigControl.savedCamera.stringVal.Contains("Thermal") || ConfigControl.savedCamera.stringVal.Contains("Daylight"))) {
+                if (!customMode) {
                     
                     secondView.settings.Copy(settings);
                     
                     if (thermalMode) {
                         settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
-                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
+                        if(secondView.isPlaying)
+                            secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
                     } else {
                         settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
-                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
+                        if (secondView.isPlaying)
+                            secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
                     }
 
                 } else {
@@ -237,15 +249,21 @@ namespace SSUtility2 {
                     secondView.settings.checkB_PlayerD_Manual.Checked = true;
                     settings.checkB_PlayerD_Manual.Checked = true;
 
-                    secondView.Play(false, secondView);
-                    Play(false, this);
-
                     tempSets.Dispose();
                 }
+
+                if (play) {
+                    Play(false, this);
+                    secondView.Play(false, secondView);
+                }
+
             } catch { };
         }
 
-        public void UpdateMode() {
+        public void UpdateMode(bool play) {
+            if (!customMode)
+                settings.cB_PlayerD_Type.Text = ConfigControl.savedCamera.stringVal;
+
             if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
                 thermalMode = true;
                 MainForm.m.Menu_Video_Swap.Text = "Swap to Daylight";
@@ -255,6 +273,8 @@ namespace SSUtility2 {
                 MainForm.m.Menu_Video_Swap.Text = "Swap to Thermal";
                 settings.cB_PlayerD_Type.Text = "Daylight";
             }
+
+            Swap(play);
         }
         
         private void sP_Player_DoubleClick(object sender, EventArgs e) {

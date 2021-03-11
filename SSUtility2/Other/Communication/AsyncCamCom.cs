@@ -102,7 +102,9 @@ namespace SSUtility2 {
                     return true;
                 else
                     Disconnect();
-                
+
+                MainForm.m.mainPlayer.DisableSecond();
+                InfoPanel.i.isCamera = false;
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
