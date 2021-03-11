@@ -213,7 +213,6 @@ namespace SSUtility2 {
         }
 
         private void VLCPlayer_D_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
-            Console.WriteLine((Cursor.Position.X - MainForm.m.Location.X).ToString());
             if (MainForm.m.mainPlayer != this || MainForm.m.mainCp.myPanel.Visible)
                 return;
             if (Cursor.Position.X - MainForm.m.Location.X < 70) {

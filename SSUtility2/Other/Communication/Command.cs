@@ -17,6 +17,8 @@ namespace SSUtility2 {
         public static int total = 0;
 
         public static int commandRetries = 10;
+        
+        static Timer SendTimer;
 
         public static void Init() {
             savedCommandList = new List<Command>();
@@ -25,8 +27,6 @@ namespace SSUtility2 {
 
             StartTimer();
         }
-
-        static Timer SendTimer;
 
         public static void StartTimer() {
             SendTimer = new Timer();
@@ -41,6 +41,7 @@ namespace SSUtility2 {
 
         private static void SendCurrentCommand(object sender, EventArgs e) {
             try {
+                MainForm.m.mainCp.Tick();
                 //Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " LOWPRIORITY: " + lowPriority.ToString());
                 if (!AsyncCamCom.sock.Connected) {
                     return;

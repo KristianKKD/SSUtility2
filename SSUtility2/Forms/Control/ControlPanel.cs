@@ -120,5 +120,10 @@ namespace SSUtility2 {
             CustomScriptCommands.QuickCommand("setzoomspeed " + zoomSpeed.ToString());
         }
 
+        public void Tick() {
+            l_Dist.Text = "DIST: " + centreStick1.distance;
+            l_Angle.Text = "ANGLE: " + centreStick1.angle;
+        }
+
     }
 }

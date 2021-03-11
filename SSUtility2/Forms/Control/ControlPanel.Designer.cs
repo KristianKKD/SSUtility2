@@ -40,12 +40,14 @@
             this.b_PTZ_Left = new System.Windows.Forms.Button();
             this.track_IPCon_Zoom = new System.Windows.Forms.TrackBar();
             this.l_IPCon_Zoom = new System.Windows.Forms.Label();
-            this.centreStick1 = new Joystick.CentreStick();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.l_Dist = new System.Windows.Forms.Label();
+            this.l_Angle = new System.Windows.Forms.Label();
+            this.centreStick1 = new Joystick.CentreStick();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_IPCon_Zoom)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.centreStick1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.centreStick1)).BeginInit();
             this.SuspendLayout();
             // 
             // track_PTZ_PTSpeed
@@ -213,23 +215,41 @@
             this.l_IPCon_Zoom.TabIndex = 72;
             this.l_IPCon_Zoom.Text = "Zoom Speed";
             // 
-            // centreStick1
-            // 
-            this.centreStick1.BackColor = System.Drawing.Color.Black;
-            this.centreStick1.Location = new System.Drawing.Point(84, 416);
-            this.centreStick1.Name = "centreStick1";
-            this.centreStick1.Size = new System.Drawing.Size(50, 50);
-            this.centreStick1.TabIndex = 74;
-            this.centreStick1.TabStop = false;
-            // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pictureBox1.Location = new System.Drawing.Point(34, 366);
+            this.pictureBox1.Location = new System.Drawing.Point(44, 291);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(150, 150);
             this.pictureBox1.TabIndex = 75;
             this.pictureBox1.TabStop = false;
+            // 
+            // l_Dist
+            // 
+            this.l_Dist.AutoSize = true;
+            this.l_Dist.Location = new System.Drawing.Point(13, 467);
+            this.l_Dist.Name = "l_Dist";
+            this.l_Dist.Size = new System.Drawing.Size(32, 13);
+            this.l_Dist.TabIndex = 76;
+            this.l_Dist.Text = "DIST";
+            // 
+            // l_Angle
+            // 
+            this.l_Angle.AutoSize = true;
+            this.l_Angle.Location = new System.Drawing.Point(13, 493);
+            this.l_Angle.Name = "l_Angle";
+            this.l_Angle.Size = new System.Drawing.Size(43, 13);
+            this.l_Angle.TabIndex = 77;
+            this.l_Angle.Text = "ANGLE";
+            // 
+            // centreStick1
+            // 
+            this.centreStick1.BackColor = System.Drawing.Color.Black;
+            this.centreStick1.Location = new System.Drawing.Point(94, 341);
+            this.centreStick1.Name = "centreStick1";
+            this.centreStick1.Size = new System.Drawing.Size(50, 50);
+            this.centreStick1.TabIndex = 74;
+            this.centreStick1.TabStop = false;
             // 
             // ControlPanel
             // 
@@ -237,6 +257,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(254, 561);
+            this.Controls.Add(this.l_Angle);
+            this.Controls.Add(this.l_Dist);
             this.Controls.Add(this.centreStick1);
             this.Controls.Add(this.track_IPCon_Zoom);
             this.Controls.Add(this.l_IPCon_Zoom);
@@ -260,8 +282,8 @@
             this.Load += new System.EventHandler(this.ControlPanel_Load);
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_IPCon_Zoom)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.centreStick1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.centreStick1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -284,5 +306,7 @@
         public System.Windows.Forms.Label l_IPCon_Zoom;
         private Joystick.CentreStick centreStick1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label l_Dist;
+        private System.Windows.Forms.Label l_Angle;
     }
 }

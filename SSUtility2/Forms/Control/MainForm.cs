@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.2.1.4";
+        public const string version = "v2.2.1.5";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -78,11 +78,12 @@ namespace SSUtility2 {
             };
 
             FileStuff(first);
-            CommandQueue.Init();
 
             setPage.PopulateSettingText();
             SetFeatureToAllControls(m.Controls);
             b_Open.BringToFront();
+
+            CommandQueue.Init();
             AutoConnect();
         }
 

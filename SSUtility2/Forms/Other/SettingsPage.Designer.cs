@@ -298,11 +298,9 @@ namespace SSUtility2
             this.cB_Other_RefreshRate.BackColor = System.Drawing.SystemColors.Window;
             this.cB_Other_RefreshRate.FormattingEnabled = true;
             this.cB_Other_RefreshRate.Items.AddRange(new object[] {
-            "500",
-            "1000",
-            "2000",
-            "5000",
-            "10000"});
+            "100",
+            "200",
+            "500"});
             this.cB_Other_RefreshRate.Location = new System.Drawing.Point(165, 88);
             this.cB_Other_RefreshRate.Name = "cB_Other_RefreshRate";
             this.cB_Other_RefreshRate.Size = new System.Drawing.Size(114, 21);
