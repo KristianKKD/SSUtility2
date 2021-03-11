@@ -214,19 +214,33 @@ namespace SSUtility2 {
 
         public void Swap() {
             try {
-                VideoSettings tempSets = new VideoSettings();
-                tempSets.Copy(secondView.settings, false);
+                if ((ConfigControl.savedCamera.stringVal.Contains("Thermal") || ConfigControl.savedCamera.stringVal.Contains("Daylight"))) {
+                    
+                    secondView.settings.Copy(settings);
+                    
+                    if (thermalMode) {
+                        settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
+                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
+                    } else {
+                        settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
+                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
+                    }
 
-                secondView.settings.Copy(settings, false);
-                settings.Copy(tempSets, false);
+                } else {
+                    VideoSettings tempSets = new VideoSettings();
+                    tempSets.Copy(secondView.settings, false);
 
-                secondView.settings.checkB_PlayerD_Manual.Checked = true;
-                settings.checkB_PlayerD_Manual.Checked = true;
+                    secondView.settings.Copy(settings, false);
+                    settings.Copy(tempSets, false);
 
-                secondView.Play(false, secondView);
-                Play(false, this);
+                    secondView.settings.checkB_PlayerD_Manual.Checked = true;
+                    settings.checkB_PlayerD_Manual.Checked = true;
 
-                tempSets.Dispose();
+                    secondView.Play(false, secondView);
+                    Play(false, this);
+
+                    tempSets.Dispose();
+                }
             } catch { };
         }
 

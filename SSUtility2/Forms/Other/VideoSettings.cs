@@ -7,6 +7,9 @@ namespace SSUtility2 {
         public Detached originalDetached;
         public bool isSecondary = false;
 
+        public const string dayRTSP = "videoinput_1:0/h264_1/onvif.stm";
+        public const string thermalRTSP = "videoinput_2:0/h264_1/onvif.stm";
+
         public VideoSettings() {
             InitializeComponent();
         }
@@ -39,9 +42,9 @@ namespace SSUtility2 {
                 tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text + " 2";
 
                 if (sets.cB_PlayerD_Type.Text.Contains("Daylight"))
-                    tB_PlayerD_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
+                    tB_PlayerD_RTSP.Text = thermalRTSP;
                 else
-                    tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
+                    tB_PlayerD_RTSP.Text = dayRTSP;
 
                 tB_PlayerD_SimpleAdr.Text = originalDetached.secondView.GetCombined().ToString();
             } else {
