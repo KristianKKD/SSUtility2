@@ -105,6 +105,7 @@
             this.sP_Player.Name = "sP_Player";
             this.sP_Player.Size = new System.Drawing.Size(320, 190);
             this.sP_Player.TabIndex = 43;
+            this.sP_Player.Visible = false;
             this.sP_Player.DoubleClick += new System.EventHandler(this.sP_Player_DoubleClick);
             // 
             // Detached

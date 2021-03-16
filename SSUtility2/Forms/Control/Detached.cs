@@ -35,7 +35,7 @@ namespace SSUtility2 {
         async Task InitSecond() {
             try {
                 settings.originalDetached = this;
-                //sP_Player.Hide();
+                sP_Player.Hide();
                 await Task.Delay(300).ConfigureAwait(false);
 
                 Invoke((MethodInvoker)delegate {
