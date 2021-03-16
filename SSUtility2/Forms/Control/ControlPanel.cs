@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,11 +15,11 @@ namespace SSUtility2 {
         }
 
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(D.Tilt.Up, D.Pan.Left);
+            PTZMove(D.Tilt.Up);
         }
 
         private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(D.Tilt.Down, D.Pan.Left);
+            PTZMove(D.Tilt.Down);
         }
 
         private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
@@ -44,7 +45,7 @@ namespace SSUtility2 {
             AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(), D.Focus.Near));
         }
 
-        void PTZMove(D.Tilt tilt, D.Pan pan) {
+        void PTZMove(D.Tilt tilt = D.Tilt.Null, D.Pan pan = D.Pan.Null) {
             byte[] code;
             uint speed = Convert.ToUInt32(MainForm.m.mainCp.track_PTZ_PTSpeed.Value);
 
@@ -70,7 +71,7 @@ namespace SSUtility2 {
                 return;
             }
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(MainForm.m.MakeAdr()));
-            await Task.Delay(100).ConfigureAwait(false);
+            await Task.Delay(ConfigControl.commandRateMs.intVal).ConfigureAwait(false);
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(MainForm.m.MakeAdr()));
         }
 
@@ -79,18 +80,18 @@ namespace SSUtility2 {
         }
 
         public void StopCam() {
-            if (cB_IPCon_KeyboardCon.Checked == true) {
-                CustomScriptCommands.QuickCommand("stop");
+            if (check_IPCon_KeyboardCon.Checked == true) {
+                CustomScriptCommands.QuickCommand("stop", false);
             }
         }
 
-        public void KeyControl(Keys k) { //test this
-            if (cB_IPCon_KeyboardCon.Checked == true) {
+        public void KeyControl(Keys k) {
+            if (check_IPCon_KeyboardCon.Checked == true) {
                 uint ptSpeed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
                 byte[] code = null;
                 uint address = MainForm.m.MakeAdr();
 
-                switch (k) { //is there a command that accepts diagonal? // there is but its in byte codes // need to accept multiple keys
+                switch (k) { //maybe add diagonal support later
                     case Keys.Up:
                         code = D.protocol.CameraTilt(address, D.Tilt.Up, ptSpeed);
                         break;
@@ -121,8 +122,65 @@ namespace SSUtility2 {
         }
 
         public void Tick() {
-            l_Dist.Text = "DIST: " + centreStick1.distance;
-            l_Angle.Text = "ANGLE: " + centreStick1.angle;
+            try {
+                Point coords = Joystick.coords;
+
+                if (Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
+                    byte[] code = null;
+
+                    uint adr = MainForm.m.MakeAdr();
+                    int x = coords.X;
+                    int y = coords.Y;
+
+                    uint xSpeed = Convert.ToUInt32(Math.Abs(x));
+                    uint ySpeed = Convert.ToUInt32(Math.Abs(y));
+
+                    //diagonals
+                    D.Pan p = D.Pan.Null;
+                    D.Tilt t = D.Tilt.Null;
+
+                    if (x < 0 && y < 0) {
+                        p = D.Pan.Left;
+                        t = D.Tilt.Down;
+                    } else if (x > 0 && y < 0) {
+                        p = D.Pan.Right;
+                        t = D.Tilt.Down;
+                    } else if (x < 0 && y > 0) {
+                        p = D.Pan.Left;
+                        t = D.Tilt.Up;
+                    } else if (x > 0 && y > 0) {
+                        p = D.Pan.Right;
+                        t = D.Tilt.Up;
+                    }
+                    //
+
+                    if (p != D.Pan.Null && t != D.Tilt.Null) {
+                        code = D.protocol.CameraPanTilt(adr, p, xSpeed, t, ySpeed);
+                    } else {
+                        //horizontal/vertical only
+                        if (x > 0 && y == 0) {
+                            code = D.protocol.CameraPan(adr, D.Pan.Right, xSpeed);
+                        } else if (x < 0 && y == 0) {
+                            code = D.protocol.CameraPan(adr, D.Pan.Left, xSpeed);
+                        } else if (y > 0 && x == 0) {
+                            code = D.protocol.CameraTilt(adr, D.Tilt.Up, ySpeed);
+                        } else if (y < 0 && x == 0) {
+                            code = D.protocol.CameraTilt(adr, D.Tilt.Down, ySpeed);
+                        }
+                        //
+                    }
+
+                    if (code != null)
+                        AsyncCamCom.SendNonAsync(code);
+                }
+
+                l_Coords.Text = "COORDS: " + coords.X + ", " + coords.Y;
+            } catch { }
+        }
+
+        private void Joystick_MouseUp(object sender, MouseEventArgs e) {
+            if(AsyncCamCom.sock.Connected)
+                CustomScriptCommands.QuickCommand("stop", false);
         }
 
     }

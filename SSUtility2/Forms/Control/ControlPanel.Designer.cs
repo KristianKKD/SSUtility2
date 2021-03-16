@@ -27,7 +27,7 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ControlPanel));
             this.track_PTZ_PTSpeed = new System.Windows.Forms.TrackBar();
-            this.cB_IPCon_KeyboardCon = new System.Windows.Forms.CheckBox();
+            this.check_IPCon_KeyboardCon = new System.Windows.Forms.CheckBox();
             this.l_IPCon_PTSpeed = new System.Windows.Forms.Label();
             this.l_PTZCon = new System.Windows.Forms.Label();
             this.b_PTZ_Down = new System.Windows.Forms.Button();
@@ -41,13 +41,12 @@
             this.track_IPCon_Zoom = new System.Windows.Forms.TrackBar();
             this.l_IPCon_Zoom = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.l_Dist = new System.Windows.Forms.Label();
-            this.l_Angle = new System.Windows.Forms.Label();
-            this.centreStick1 = new Joystick.CentreStick();
+            this.l_Coords = new System.Windows.Forms.Label();
+            this.Joystick = new Joystick.CentreStick();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_IPCon_Zoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.centreStick1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Joystick)).BeginInit();
             this.SuspendLayout();
             // 
             // track_PTZ_PTSpeed
@@ -60,17 +59,17 @@
             this.track_PTZ_PTSpeed.TabIndex = 70;
             this.track_PTZ_PTSpeed.Value = 63;
             // 
-            // cB_IPCon_KeyboardCon
+            // check_IPCon_KeyboardCon
             // 
-            this.cB_IPCon_KeyboardCon.AutoSize = true;
-            this.cB_IPCon_KeyboardCon.Location = new System.Drawing.Point(12, 175);
-            this.cB_IPCon_KeyboardCon.Name = "cB_IPCon_KeyboardCon";
-            this.cB_IPCon_KeyboardCon.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.cB_IPCon_KeyboardCon.Size = new System.Drawing.Size(110, 17);
-            this.cB_IPCon_KeyboardCon.TabIndex = 67;
-            this.cB_IPCon_KeyboardCon.Text = " Keyboard Control";
-            this.cB_IPCon_KeyboardCon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.cB_IPCon_KeyboardCon.UseVisualStyleBackColor = true;
+            this.check_IPCon_KeyboardCon.AutoSize = true;
+            this.check_IPCon_KeyboardCon.Location = new System.Drawing.Point(12, 175);
+            this.check_IPCon_KeyboardCon.Name = "check_IPCon_KeyboardCon";
+            this.check_IPCon_KeyboardCon.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_IPCon_KeyboardCon.Size = new System.Drawing.Size(110, 17);
+            this.check_IPCon_KeyboardCon.TabIndex = 67;
+            this.check_IPCon_KeyboardCon.Text = " Keyboard Control";
+            this.check_IPCon_KeyboardCon.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.check_IPCon_KeyboardCon.UseVisualStyleBackColor = true;
             // 
             // l_IPCon_PTSpeed
             // 
@@ -224,32 +223,24 @@
             this.pictureBox1.TabIndex = 75;
             this.pictureBox1.TabStop = false;
             // 
-            // l_Dist
+            // l_Coords
             // 
-            this.l_Dist.AutoSize = true;
-            this.l_Dist.Location = new System.Drawing.Point(13, 467);
-            this.l_Dist.Name = "l_Dist";
-            this.l_Dist.Size = new System.Drawing.Size(32, 13);
-            this.l_Dist.TabIndex = 76;
-            this.l_Dist.Text = "DIST";
+            this.l_Coords.AutoSize = true;
+            this.l_Coords.Location = new System.Drawing.Point(9, 459);
+            this.l_Coords.Name = "l_Coords";
+            this.l_Coords.Size = new System.Drawing.Size(53, 13);
+            this.l_Coords.TabIndex = 78;
+            this.l_Coords.Text = "COORDS";
             // 
-            // l_Angle
+            // Joystick
             // 
-            this.l_Angle.AutoSize = true;
-            this.l_Angle.Location = new System.Drawing.Point(13, 493);
-            this.l_Angle.Name = "l_Angle";
-            this.l_Angle.Size = new System.Drawing.Size(43, 13);
-            this.l_Angle.TabIndex = 77;
-            this.l_Angle.Text = "ANGLE";
-            // 
-            // centreStick1
-            // 
-            this.centreStick1.BackColor = System.Drawing.Color.Black;
-            this.centreStick1.Location = new System.Drawing.Point(94, 341);
-            this.centreStick1.Name = "centreStick1";
-            this.centreStick1.Size = new System.Drawing.Size(50, 50);
-            this.centreStick1.TabIndex = 74;
-            this.centreStick1.TabStop = false;
+            this.Joystick.BackColor = System.Drawing.Color.Black;
+            this.Joystick.Location = new System.Drawing.Point(94, 341);
+            this.Joystick.Name = "Joystick";
+            this.Joystick.Size = new System.Drawing.Size(50, 50);
+            this.Joystick.TabIndex = 74;
+            this.Joystick.TabStop = false;
+            this.Joystick.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Joystick_MouseUp);
             // 
             // ControlPanel
             // 
@@ -257,12 +248,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(254, 561);
-            this.Controls.Add(this.l_Angle);
-            this.Controls.Add(this.l_Dist);
-            this.Controls.Add(this.centreStick1);
+            this.Controls.Add(this.l_Coords);
+            this.Controls.Add(this.Joystick);
             this.Controls.Add(this.track_IPCon_Zoom);
             this.Controls.Add(this.l_IPCon_Zoom);
-            this.Controls.Add(this.cB_IPCon_KeyboardCon);
+            this.Controls.Add(this.check_IPCon_KeyboardCon);
             this.Controls.Add(this.l_IPCon_PTSpeed);
             this.Controls.Add(this.l_PTZCon);
             this.Controls.Add(this.b_PTZ_Down);
@@ -283,7 +273,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_IPCon_Zoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.centreStick1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Joystick)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,7 +281,7 @@
 
         #endregion
         public System.Windows.Forms.TrackBar track_PTZ_PTSpeed;
-        public System.Windows.Forms.CheckBox cB_IPCon_KeyboardCon;
+        public System.Windows.Forms.CheckBox check_IPCon_KeyboardCon;
         public System.Windows.Forms.Label l_IPCon_PTSpeed;
         public System.Windows.Forms.Label l_PTZCon;
         public System.Windows.Forms.Button b_PTZ_Down;
@@ -304,9 +294,8 @@
         public System.Windows.Forms.Button b_PTZ_Left;
         public System.Windows.Forms.TrackBar track_IPCon_Zoom;
         public System.Windows.Forms.Label l_IPCon_Zoom;
-        private Joystick.CentreStick centreStick1;
+        private Joystick.CentreStick Joystick;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label l_Dist;
-        private System.Windows.Forms.Label l_Angle;
+        private System.Windows.Forms.Label l_Coords;
     }
 }

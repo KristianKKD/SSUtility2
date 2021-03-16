@@ -294,8 +294,12 @@ namespace SSUtility2 {
                 } else {
                     if (MainForm.m == null)
                         return;
-                    
-                    MainForm.m.WriteToResponses(CommandQueue.GetNameString() + "Received CORRUPTED response: " + msg, true, currentCom.isInfo);
+
+                    if (currentCom == null) {
+                        MainForm.m.WriteToResponses("(Listening) Received CORRUPTED message: " + msg, true, currentCom.isInfo);
+                    } else {
+                        MainForm.m.WriteToResponses(CommandQueue.GetNameString() + "Received CORRUPTED response: " + msg, true, currentCom.isInfo);
+                    }
                 }
             } catch (Exception e) {
                 MainForm.ShowPopup(CommandQueue.GetNameString() + "Message processing failed!\nShow more?", "Receive Failed!", e.ToString());

@@ -110,7 +110,7 @@ namespace SSUtility2
         }
         public enum Pan
         {
-            Left = PanLeft, Right = PanRight
+            Left = PanLeft, Right = PanRight, Null
         }
         public enum Scan
         {

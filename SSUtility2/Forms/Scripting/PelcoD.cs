@@ -136,16 +136,21 @@ namespace SSUtility2 {
         public static byte[] FullCommand(string line) {
             try {
                 line = line.Trim();
+                if (line.Length != 20) {
+                    MainForm.m.WriteToResponses(line + " was not in the correct perfect format, ignored.", true, false);
+                    return null;
+                }
                 uint send = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
                 uint camAdr = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
+
                 uint cm1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
                 uint cm2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
                 uint d1 = uint.Parse(line.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
                 uint d2 = uint.Parse(line.Substring(15, 2), System.Globalization.NumberStyles.HexNumber);
+
                 uint checksum = uint.Parse(line.Substring(18, 2), System.Globalization.NumberStyles.HexNumber);
 
                 byte[] fullCommand = new byte[7] { (byte)send, (byte)camAdr, (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
-                MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand, true), true);
 
                 return fullCommand;
             } catch {
@@ -156,15 +161,23 @@ namespace SSUtility2 {
         byte[] MakeCommand(string line) {
             try {
                 line = line.Trim();
-
+                if (line.Length != 11) {
+                    MainForm.m.WriteToResponses(line + " was not in the correct format, ignored.", true, false);
+                    return null;
+                }
                 uint cm1 = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
                 uint cm2 = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
                 uint d1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
                 uint d2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
-                uint checksum = (cm1 + cm2 + d1 + d2 + MainForm.m.MakeAdr()) % 256;
 
-                byte[] fullCommand = new byte[7] { 0xFF, (byte)MainForm.m.MakeAdr(), (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
-                MainForm.m.WriteToResponses("Sending " + MainForm.m.ReadCommand(fullCommand, true), true);
+                uint adr = 0;
+                Invoke((MethodInvoker)delegate {
+                    adr = MainForm.m.MakeAdr();
+                });
+
+                uint checksum = (cm1 + cm2 + d1 + d2 + adr) % 256;
+
+                byte[] fullCommand = new byte[7] { 0xFF, (byte)adr, (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
                 return fullCommand;
             } catch {
                 return null;

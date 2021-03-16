@@ -91,7 +91,10 @@
             this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
             this.VLCPlayer_D.Size = new System.Drawing.Size(772, 465);
             this.VLCPlayer_D.TabIndex = 41;
+            this.VLCPlayer_D.MouseDownEvent += new AxAXVLC.DVLCEvents_MouseDownEventHandler(this.VLCPlayer_D_MouseDownEvent);
             this.VLCPlayer_D.MouseMoveEvent += new AxAXVLC.DVLCEvents_MouseMoveEventHandler(this.VLCPlayer_D_MouseMoveEvent);
+            this.VLCPlayer_D.MouseUpEvent += new AxAXVLC.DVLCEvents_MouseUpEventHandler(this.VLCPlayer_D_MouseUpEvent);
+            this.VLCPlayer_D.Leave += new System.EventHandler(this.VLCPlayer_D_Leave);
             // 
             // sP_Player
             // 

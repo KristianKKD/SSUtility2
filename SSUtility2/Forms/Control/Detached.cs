@@ -35,7 +35,7 @@ namespace SSUtility2 {
         async Task InitSecond() {
             try {
                 settings.originalDetached = this;
-                sP_Player.Hide();
+                //sP_Player.Hide();
                 await Task.Delay(300).ConfigureAwait(false);
 
                 Invoke((MethodInvoker)delegate {
@@ -212,8 +212,32 @@ namespace SSUtility2 {
             recorderD = vals.Item2;
         }
 
+        bool dragging = false;
+        Point eOriginalPos;
+
+        private void VLCPlayer_D_MouseDownEvent(object sender, AxAXVLC.DVLCEvents_MouseDownEvent e) {
+            dragging = true;
+            eOriginalPos = new Point(e.x, e.y);
+        }
+
+        private void VLCPlayer_D_MouseUpEvent(object sender, AxAXVLC.DVLCEvents_MouseUpEvent e) {
+            dragging = false;
+            Cursor = Cursors.Default;
+        }
+
+        private void VLCPlayer_D_Leave(object sender, EventArgs e) {
+            dragging = false;
+            Cursor = Cursors.Default;
+        }
+
         private void VLCPlayer_D_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
-            if (MainForm.m.mainPlayer != this || MainForm.m.mainCp.myPanel.Visible)
+            if (MainForm.m.mainPlayer != this && dragging && settings.isSecondary) {
+                Cursor = Cursors.SizeAll;
+                var location = settings.originalDetached.sP_Player.Location;
+                location.Offset(e.x - eOriginalPos.X, e.y - eOriginalPos.Y);
+                settings.originalDetached.sP_Player.Location = location;
+            }
+            if (MainForm.m.mainCp.myPanel.Visible)
                 return;
             if (Cursor.Position.X - MainForm.m.Location.X < 70) {
                 MainForm.m.b_Open.Visible = true;
@@ -280,5 +304,6 @@ namespace SSUtility2 {
             secondView.settings.Show();
             secondView.settings.BringToFront();
         }
+
     }
 }

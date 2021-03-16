@@ -182,7 +182,7 @@ namespace SSUtility2 {
             return null;
         }
 
-        public static async Task QuickCommand(string command) {
+        public static async Task QuickCommand(string command, bool sendAsync = true) {
             if (!await AsyncCamCom.TryConnect().ConfigureAwait(false)) {
                 return;
             }
@@ -201,10 +201,16 @@ namespace SSUtility2 {
                     send = new ScriptCommand(new string[] { "custom" }, code, "");
                 }
             }
-            var t = Task.Factory.StartNew(() => {
-                AsyncCamCom.SendScriptCommand(send);
-            });
-            Task.WaitAll();
+
+            if (!sendAsync) {
+                AsyncCamCom.SendNonAsync(send.codeContent);
+            } else {
+                var t = Task.Factory.StartNew(() => {
+                    AsyncCamCom.SendScriptCommand(send);
+                });
+                Task.WaitAll();
+            }
+           
         }
 
 
