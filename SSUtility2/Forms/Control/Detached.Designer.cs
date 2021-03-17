@@ -94,7 +94,6 @@
             this.VLCPlayer_D.MouseDownEvent += new AxAXVLC.DVLCEvents_MouseDownEventHandler(this.VLCPlayer_D_MouseDownEvent);
             this.VLCPlayer_D.MouseMoveEvent += new AxAXVLC.DVLCEvents_MouseMoveEventHandler(this.VLCPlayer_D_MouseMoveEvent);
             this.VLCPlayer_D.MouseUpEvent += new AxAXVLC.DVLCEvents_MouseUpEventHandler(this.VLCPlayer_D_MouseUpEvent);
-            this.VLCPlayer_D.Leave += new System.EventHandler(this.VLCPlayer_D_Leave);
             // 
             // sP_Player
             // 

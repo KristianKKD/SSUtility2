@@ -35,7 +35,8 @@ namespace SSUtility2 {
         async Task InitSecond() {
             try {
                 settings.originalDetached = this;
-                sP_Player.Hide();
+                sP_Player.Show();
+                //sP_Player.Hide(); //and below too
                 await Task.Delay(300).ConfigureAwait(false);
 
                 Invoke((MethodInvoker)delegate {
@@ -51,6 +52,12 @@ namespace SSUtility2 {
                     var secondPlayer = MainForm.m.GetAllType(sP_Player, typeof(AxAXVLC.AxVLCPlugin2));
                     AxAXVLC.AxVLCPlugin2 p = (AxAXVLC.AxVLCPlugin2)secondPlayer.ElementAt(0);
                     secondView.secondaryPlayer = p;
+                    p.MouseDownEvent += (s,e) => {
+                            if (e.button == 2) {
+                                secondView.settings.Show();
+                                secondView.settings.BringToFront();
+                            }
+                        };
 
                     sP_Player.Location = new Point(MainForm.m.Width - sP_Player.Width - 80, 30);
                     p.Dock = DockStyle.None;
@@ -107,8 +114,14 @@ namespace SSUtility2 {
         public async Task StartPlaying(bool showErrors) {
             try {
                 if (await Play(showErrors, this).ConfigureAwait(false)) {
-                    isPlaying = true;
                     MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
+                    if (this == MainForm.m.mainPlayer && showErrors) {
+                        if (!secondView.isPlaying) {
+                            secondView.settings.Copy(settings);
+                            secondView.Play(false, secondView);
+                        }
+                    }
+
                     if (ConfigControl.autoReconnect.boolVal) {
                         MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;
                         ConfigControl.savedIP.UpdateValue(MainForm.m.setPage.tB_IPCon_Adr.Text);
@@ -132,6 +145,7 @@ namespace SSUtility2 {
         public async Task<bool> Play(bool showError, Detached player) {
             try {
                 Uri combinedUrl = player.GetCombined();
+                combinedUrl = new Uri(@"rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov"); //
 
                 if (showError && !player.settings.isSecondary) {
                     bool parsed = IPAddress.TryParse(combinedUrl.Host, out IPAddress parsedIP);
@@ -164,6 +178,7 @@ namespace SSUtility2 {
                     + player.settings.tB_PlayerD_Buffering.Text); //might have to look at more options
                 vlc.playlist.next();
                 vlc.playlist.play();
+                isPlaying = true;
 
                 return true;
             } catch (Exception e) {
@@ -179,15 +194,15 @@ namespace SSUtility2 {
             sP_Player.Show();
             sP_Player.BringToFront();
             secondView.settings.Copy(settings);
-            if(isPlaying && show)
-                secondView.Play(true, secondView);
+            if (isPlaying && show)
+                secondView.Play(false, secondView);
         }
 
         public async Task DisableSecond() {
             MainForm.m.Menu_Video_Info.Enabled = false;
             MainForm.m.Menu_Video_Swap.Enabled = false;
 
-            sP_Player.Hide();
+            //sP_Player.Hide();
         }
 
         public void SnapShot() {
@@ -213,29 +228,49 @@ namespace SSUtility2 {
         }
 
         bool dragging = false;
-        Point eOriginalPos;
+        public Point eOriginalPos;
 
         private void VLCPlayer_D_MouseDownEvent(object sender, AxAXVLC.DVLCEvents_MouseDownEvent e) {
-            dragging = true;
-            eOriginalPos = new Point(e.x, e.y);
+            if (e.button == 1 && settings.isSecondary) {
+                eOriginalPos = new Point(e.x, e.y);
+                dragging = true;
+            }
         }
 
         private void VLCPlayer_D_MouseUpEvent(object sender, AxAXVLC.DVLCEvents_MouseUpEvent e) {
             dragging = false;
-            Cursor = Cursors.Default;
+            eOriginalPos = new Point(0, 0);
+
         }
 
-        private void VLCPlayer_D_Leave(object sender, EventArgs e) {
-            dragging = false;
-            Cursor = Cursors.Default;
+        public void Tick() {
+            
         }
 
         private void VLCPlayer_D_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
             if (MainForm.m.mainPlayer != this && dragging && settings.isSecondary) {
-                Cursor = Cursors.SizeAll;
-                var location = settings.originalDetached.sP_Player.Location;
-                location.Offset(e.x - eOriginalPos.X, e.y - eOriginalPos.Y);
-                settings.originalDetached.sP_Player.Location = location;
+
+                if (MainForm.m.mainPlayer.secondView.isPlaying)
+                    return;
+
+                int yDragDist = e.y - eOriginalPos.Y;
+                int yLocationDragDist = settings.originalDetached.sP_Player.Location.Y + (yDragDist * 2);
+                int h = MainForm.m.Height + sP_Player.Height - 440;
+
+                int xDragDist = e.x - eOriginalPos.X;
+                int xLocationDragDist = settings.originalDetached.sP_Player.Location.X + (xDragDist * 2);
+                int w = MainForm.m.Width + sP_Player.Width - 650;
+                if (MainForm.m.mainCp.myPanel.Visible)
+                    w -= 250;
+
+                if (xLocationDragDist < w && xLocationDragDist > 0)
+                    settings.originalDetached.sP_Player.Left += xDragDist;
+
+                if (yLocationDragDist < h && yLocationDragDist > 0)
+                    settings.originalDetached.sP_Player.Top += yDragDist;
+
+
+                return;
             }
             if (MainForm.m.mainCp.myPanel.Visible)
                 return;
@@ -244,6 +279,7 @@ namespace SSUtility2 {
                 MainForm.m.b_Open.BringToFront();
             } else
                 MainForm.m.b_Open.Visible = false;
+
         }
 
         public void Swap(bool play) {

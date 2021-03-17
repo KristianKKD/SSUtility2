@@ -75,6 +75,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="SharpAvi, Version=2.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpAvi.2.1.2\lib\net45\SharpAvi.dll</HintPath>
     </Reference>

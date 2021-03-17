@@ -43,6 +43,9 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.l_Coords = new System.Windows.Forms.Label();
             this.Joystick = new Joystick.CentreStick();
+            this.l_Debug1 = new System.Windows.Forms.Label();
+            this.l_Debug2 = new System.Windows.Forms.Label();
+            this.l_Debug3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.track_PTZ_PTSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.track_IPCon_Zoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -226,7 +229,7 @@
             // l_Coords
             // 
             this.l_Coords.AutoSize = true;
-            this.l_Coords.Location = new System.Drawing.Point(9, 459);
+            this.l_Coords.Location = new System.Drawing.Point(9, 444);
             this.l_Coords.Name = "l_Coords";
             this.l_Coords.Size = new System.Drawing.Size(53, 13);
             this.l_Coords.TabIndex = 78;
@@ -242,12 +245,42 @@
             this.Joystick.TabStop = false;
             this.Joystick.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Joystick_MouseUp);
             // 
+            // l_Debug1
+            // 
+            this.l_Debug1.AutoSize = true;
+            this.l_Debug1.Location = new System.Drawing.Point(9, 472);
+            this.l_Debug1.Name = "l_Debug1";
+            this.l_Debug1.Size = new System.Drawing.Size(45, 13);
+            this.l_Debug1.TabIndex = 79;
+            this.l_Debug1.Text = "DEBUG";
+            // 
+            // l_Debug2
+            // 
+            this.l_Debug2.AutoSize = true;
+            this.l_Debug2.Location = new System.Drawing.Point(9, 505);
+            this.l_Debug2.Name = "l_Debug2";
+            this.l_Debug2.Size = new System.Drawing.Size(45, 13);
+            this.l_Debug2.TabIndex = 80;
+            this.l_Debug2.Text = "DEBUG";
+            // 
+            // l_Debug3
+            // 
+            this.l_Debug3.AutoSize = true;
+            this.l_Debug3.Location = new System.Drawing.Point(11, 539);
+            this.l_Debug3.Name = "l_Debug3";
+            this.l_Debug3.Size = new System.Drawing.Size(45, 13);
+            this.l_Debug3.TabIndex = 81;
+            this.l_Debug3.Text = "DEBUG";
+            // 
             // ControlPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(254, 561);
+            this.Controls.Add(this.l_Debug3);
+            this.Controls.Add(this.l_Debug2);
+            this.Controls.Add(this.l_Debug1);
             this.Controls.Add(this.l_Coords);
             this.Controls.Add(this.Joystick);
             this.Controls.Add(this.track_IPCon_Zoom);
@@ -294,8 +327,11 @@
         public System.Windows.Forms.Button b_PTZ_Left;
         public System.Windows.Forms.TrackBar track_IPCon_Zoom;
         public System.Windows.Forms.Label l_IPCon_Zoom;
-        private Joystick.CentreStick Joystick;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label l_Coords;
+        public Joystick.CentreStick Joystick;
+        public System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.Label l_Coords;
+        public System.Windows.Forms.Label l_Debug1;
+        public System.Windows.Forms.Label l_Debug2;
+        public System.Windows.Forms.Label l_Debug3;
     }
 }
