@@ -28,7 +28,6 @@
             this.Menu_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.VLCPlayer_D = new AxAXVLC.AxVLCPlugin2();
-            this.sP_Player = new SizeablePanel.SizeablePanel();
             this.Menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_D)).BeginInit();
             this.SuspendLayout();
@@ -91,21 +90,7 @@
             this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
             this.VLCPlayer_D.Size = new System.Drawing.Size(772, 465);
             this.VLCPlayer_D.TabIndex = 41;
-            this.VLCPlayer_D.MouseDownEvent += new AxAXVLC.DVLCEvents_MouseDownEventHandler(this.VLCPlayer_D_MouseDownEvent);
             this.VLCPlayer_D.MouseMoveEvent += new AxAXVLC.DVLCEvents_MouseMoveEventHandler(this.VLCPlayer_D_MouseMoveEvent);
-            this.VLCPlayer_D.MouseUpEvent += new AxAXVLC.DVLCEvents_MouseUpEventHandler(this.VLCPlayer_D_MouseUpEvent);
-            // 
-            // sP_Player
-            // 
-            this.sP_Player.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sP_Player.BackColor = System.Drawing.Color.Black;
-            this.sP_Player.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.sP_Player.Location = new System.Drawing.Point(452, 27);
-            this.sP_Player.Name = "sP_Player";
-            this.sP_Player.Size = new System.Drawing.Size(320, 190);
-            this.sP_Player.TabIndex = 43;
-            this.sP_Player.Visible = false;
-            this.sP_Player.DoubleClick += new System.EventHandler(this.sP_Player_DoubleClick);
             // 
             // Detached
             // 
@@ -113,7 +98,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(772, 489);
-            this.Controls.Add(this.sP_Player);
             this.Controls.Add(this.VLCPlayer_D);
             this.Controls.Add(this.Menu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -138,6 +122,5 @@
         public System.Windows.Forms.ToolStripMenuItem Menu_StartStop;
         public System.Windows.Forms.ToolStripMenuItem Menu_Snapshot;
         public System.Windows.Forms.ToolStripMenuItem Menu_Record;
-        public SizeablePanel.SizeablePanel sP_Player;
     }
 }

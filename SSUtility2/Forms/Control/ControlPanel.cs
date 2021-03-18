@@ -14,22 +14,6 @@ namespace SSUtility2 {
             Program.cp = this;
         }
 
-        private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(D.Tilt.Up);
-        }
-
-        private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(D.Tilt.Down);
-        }
-
-        private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(D.Tilt.Null, D.Pan.Left);
-        }
-
-        private void b_PTZ_Right_MouseDown(object sender, MouseEventArgs e) {
-            PTZMove(D.Tilt.Null, D.Pan.Right);
-        }
-
         private void b_PTZ_ZoomPos_MouseDown(object sender, MouseEventArgs e) {
             PTZZoom(D.Zoom.Tele);
         }
@@ -43,19 +27,6 @@ namespace SSUtility2 {
 
         private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
             AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(), D.Focus.Near));
-        }
-
-        void PTZMove(D.Tilt tilt = D.Tilt.Null, D.Pan pan = D.Pan.Null) {
-            byte[] code;
-            uint speed = Convert.ToUInt32(MainForm.m.mainCp.track_PTZ_PTSpeed.Value);
-
-            if (tilt != D.Tilt.Null) {
-                code = D.protocol.CameraTilt(MainForm.m.MakeAdr(), tilt, speed);
-            } else {
-                code = D.protocol.CameraPan(MainForm.m.MakeAdr(), pan, speed);
-            }
-
-            AsyncCamCom.SendNonAsync(code);
         }
 
         public void PTZZoom(D.Zoom dir) {
@@ -87,7 +58,7 @@ namespace SSUtility2 {
 
         public void KeyControl(Keys k) {
             if (check_IPCon_KeyboardCon.Checked == true) {
-                uint ptSpeed = Convert.ToUInt32(track_PTZ_PTSpeed.Value);
+                uint ptSpeed = Convert.ToUInt32(63);
                 byte[] code = null;
                 uint address = MainForm.m.MakeAdr();
 
@@ -114,11 +85,6 @@ namespace SSUtility2 {
 
                 AsyncCamCom.SendNewCommand(code);
             }
-        }
-
-        private void track_IPCon_Zoom_MouseUp(object sender, MouseEventArgs e) {
-            int zoomSpeed = track_IPCon_Zoom.Value;
-            CustomScriptCommands.QuickCommand("setzoomspeed " + zoomSpeed.ToString());
         }
 
         public void Tick() {
@@ -174,7 +140,6 @@ namespace SSUtility2 {
                         AsyncCamCom.SendNonAsync(code);
                 }
 
-                l_Coords.Text = "COORDS: " + coords.X + ", " + coords.Y;
             } catch { }
         }
 

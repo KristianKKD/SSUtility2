@@ -238,17 +238,10 @@ namespace SSUtility2 {
         public async Task UpdateSelectedCam(bool play) {
             ConfigControl.savedCamera.UpdateValue(cB_ipCon_Selected.Text);
 
-            if (!cB_ipCon_Selected.Text.Contains("Thermal") && !cB_ipCon_Selected.Text.Contains("Daylight")) {
-                MainForm.m.mainPlayer.customMode = true;
-                MainForm.m.Menu_Video_Swap.Text = "Swap Players";
-            } else {
-                MainForm.m.mainPlayer.customMode = false;
-
-                if (MainForm.m.mainPlayer.thermalMode)
-                    MainForm.m.Menu_Video_Swap.Text = "Swap to Daylight";
-                else
-                    MainForm.m.Menu_Video_Swap.Text = "Swap to Thermal";
-            }
+            if (cB_ipCon_Selected.Text.Contains("Thermal"))
+                MainForm.m.Menu_Video_Swap.Text = "Swap to Daylight";
+            else
+                MainForm.m.Menu_Video_Swap.Text = "Swap to Thermal";
 
             MainForm.m.mainPlayer.UpdateMode(play);
         }

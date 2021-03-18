@@ -13,65 +13,72 @@ namespace SSUtility2 {
         public Panel myPanel;
         public VideoSettings settings;
         public Detached secondView;
+
+        public SPanel.SizeablePanel sP_Player;
+        public AxAXVLC.AxVLCPlugin2 myPlayer;
+
         Recorder recorderD;
 
         public bool recording = false;
-        public bool isPlaying = false;
-        public bool thermalMode = false;
 
-        public AxAXVLC.AxVLCPlugin2 secondaryPlayer;
+        bool dragging = false;
+        Point eOriginalPos;
 
-        public bool customMode = false;
-
-        public Detached(bool second = false) {
+        public Detached(bool attachSecond) {
             InitializeComponent();
             settings = new VideoSettings();
-            if (second)
-                return;
             settings.originalDetached = this;
-            InitSecond();
+            myPlayer = VLCPlayer_D;
+            if (attachSecond)
+                InitSecond();
         }
 
         async Task InitSecond() {
             try {
-                settings.originalDetached = this;
-                sP_Player.Show();
-                //sP_Player.Hide(); //and below too
-                await Task.Delay(300).ConfigureAwait(false);
+                sP_Player = new SPanel.SizeablePanel();
+
+                await Task.Delay(100).ConfigureAwait(false);
 
                 Invoke((MethodInvoker)delegate {
-                    secondView = new Detached(true);
+                    myPanel.Controls.Add(sP_Player);
+
+                    sP_Player.BackColor = Color.Black;
+                    sP_Player.BorderStyle = BorderStyle.FixedSingle;
+                    sP_Player.Size = new Size(400, 250);
+
+                    sP_Player.BringToFront();
+
+                    secondView = new Detached(false);
                     secondView.settings.originalDetached = this;
                     secondView.settings.Copy(settings);
                     secondView.settings.Text = "Secondary Video Settings";
                     secondView.settings.isSecondary = true;
 
-                    var c = MainForm.m.GetAllType(secondView, typeof(AxAXVLC.AxVLCPlugin2));
-                    sP_Player.Controls.Add(c.ElementAt(0));
+                    AxAXVLC.AxVLCPlugin2 player = new AxAXVLC.AxVLCPlugin2();
 
-                    var secondPlayer = MainForm.m.GetAllType(sP_Player, typeof(AxAXVLC.AxVLCPlugin2));
-                    AxAXVLC.AxVLCPlugin2 p = (AxAXVLC.AxVLCPlugin2)secondPlayer.ElementAt(0);
-                    secondView.secondaryPlayer = p;
-                    p.MouseDownEvent += (s,e) => {
-                            if (e.button == 2) {
-                                secondView.settings.Show();
-                                secondView.settings.BringToFront();
-                            }
-                        };
+                    sP_Player.Controls.Add(player);
+                    player.Toolbar = false;
+                    player.Branding = false;
+                    player.volume = 0;
+
+                    sP_Player.Hide(); //and below too
+
+                    secondView.myPlayer = player;
+                    secondView.VLCPlayer_D.Dispose();
+
+                    AttachSecondaryFunctions();
 
                     sP_Player.Location = new Point(MainForm.m.Width - sP_Player.Width - 80, 30);
-                    p.Dock = DockStyle.None;
-                    p.Location = new Point(7, 5);
-                    p.Size = new Size(sP_Player.Width - 15, sP_Player.Height - 10);
-                    p.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left);
+                    player.Location = new Point(7, 5);
+                    player.Size = new Size(sP_Player.Width - 15, sP_Player.Height - 10);
+                    player.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left);
                 });
 
-
             } catch (Exception e) {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("INITSECOND\n" + e.ToString());
             }
         }
-
+     
         public Uri GetCombined() {
             Uri defaultAdr = new Uri("http://0.0.0.0:1234");
             try {
@@ -104,11 +111,17 @@ namespace SSUtility2 {
         }
 
         public void StartStop() {
-            if (isPlaying) {
+            if (settings.isPlaying) {
                 StopPlaying();
             } else {
                 StartPlaying(true);
             }
+        }
+
+        public void StopPlaying() {
+            myPlayer.playlist.stop();
+            settings.isPlaying = false;
+            MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
         }
 
         public async Task StartPlaying(bool showErrors) {
@@ -116,7 +129,7 @@ namespace SSUtility2 {
                 if (await Play(showErrors, this).ConfigureAwait(false)) {
                     MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
                     if (this == MainForm.m.mainPlayer && showErrors) {
-                        if (!secondView.isPlaying) {
+                        if (!secondView.settings.isPlaying) {
                             secondView.settings.Copy(settings);
                             secondView.Play(false, secondView);
                         }
@@ -136,16 +149,10 @@ namespace SSUtility2 {
             }
         }
 
-        public void StopPlaying() {
-            VLCPlayer_D.playlist.stop();
-            isPlaying = false;
-            MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
-        }
-
         public async Task<bool> Play(bool showError, Detached player) {
             try {
                 Uri combinedUrl = player.GetCombined();
-                combinedUrl = new Uri(@"rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov"); //
+                //combinedUrl = new Uri(@"rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov"); //
 
                 if (showError && !player.settings.isSecondary) {
                     bool parsed = IPAddress.TryParse(combinedUrl.Host, out IPAddress parsedIP);
@@ -163,11 +170,7 @@ namespace SSUtility2 {
                     player.settings.tB_PlayerD_SimpleAdr.Text = combinedUrl.ToString();
                 });
 
-                AxAXVLC.AxVLCPlugin2 vlc;
-                if (player.settings.isSecondary)
-                    vlc = player.secondaryPlayer;
-                else
-                    vlc = VLCPlayer_D;
+                AxAXVLC.AxVLCPlugin2 vlc = player.myPlayer;
 
                 if (vlc.playlist.isPlaying) {
                     vlc.playlist.stop();
@@ -177,8 +180,7 @@ namespace SSUtility2 {
                 vlc.playlist.add(combinedUrl.ToString(), null, ":avcodec -hw:network -caching="
                     + player.settings.tB_PlayerD_Buffering.Text); //might have to look at more options
                 vlc.playlist.next();
-                vlc.playlist.play();
-                isPlaying = true;
+                settings.isPlaying = true;
 
                 return true;
             } catch (Exception e) {
@@ -194,7 +196,7 @@ namespace SSUtility2 {
             sP_Player.Show();
             sP_Player.BringToFront();
             secondView.settings.Copy(settings);
-            if (isPlaying && show)
+            if (settings.isPlaying && show)
                 secondView.Play(false, secondView);
         }
 
@@ -202,7 +204,7 @@ namespace SSUtility2 {
             MainForm.m.Menu_Video_Info.Enabled = false;
             MainForm.m.Menu_Video_Swap.Enabled = false;
 
-            //sP_Player.Hide();
+            sP_Player.Hide(); //here
         }
 
         public void SnapShot() {
@@ -227,51 +229,7 @@ namespace SSUtility2 {
             recorderD = vals.Item2;
         }
 
-        bool dragging = false;
-        public Point eOriginalPos;
-
-        private void VLCPlayer_D_MouseDownEvent(object sender, AxAXVLC.DVLCEvents_MouseDownEvent e) {
-            if (e.button == 1 && settings.isSecondary) {
-                eOriginalPos = new Point(e.x, e.y);
-                dragging = true;
-            }
-        }
-
-        private void VLCPlayer_D_MouseUpEvent(object sender, AxAXVLC.DVLCEvents_MouseUpEvent e) {
-            dragging = false;
-            eOriginalPos = new Point(0, 0);
-
-        }
-
-        public void Tick() {
-            
-        }
-
         private void VLCPlayer_D_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
-            if (MainForm.m.mainPlayer != this && dragging && settings.isSecondary) {
-
-                if (MainForm.m.mainPlayer.secondView.isPlaying)
-                    return;
-
-                int yDragDist = e.y - eOriginalPos.Y;
-                int yLocationDragDist = settings.originalDetached.sP_Player.Location.Y + (yDragDist * 2);
-                int h = MainForm.m.Height + sP_Player.Height - 440;
-
-                int xDragDist = e.x - eOriginalPos.X;
-                int xLocationDragDist = settings.originalDetached.sP_Player.Location.X + (xDragDist * 2);
-                int w = MainForm.m.Width + sP_Player.Width - 650;
-                if (MainForm.m.mainCp.myPanel.Visible)
-                    w -= 250;
-
-                if (xLocationDragDist < w && xLocationDragDist > 0)
-                    settings.originalDetached.sP_Player.Left += xDragDist;
-
-                if (yLocationDragDist < h && yLocationDragDist > 0)
-                    settings.originalDetached.sP_Player.Top += yDragDist;
-
-
-                return;
-            }
             if (MainForm.m.mainCp.myPanel.Visible)
                 return;
             if (Cursor.Position.X - MainForm.m.Location.X < 70) {
@@ -282,63 +240,78 @@ namespace SSUtility2 {
 
         }
 
-        public void Swap(bool play) {
-            try {
-                if (!customMode) {
-                    
-                    secondView.settings.Copy(settings);
-                    
-                    if (thermalMode) {
-                        settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
-                        if(secondView.isPlaying)
-                            secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
-                    } else {
-                        settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
-                        if (secondView.isPlaying)
-                            secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
-                    }
-
-                } else {
-                    VideoSettings tempSets = new VideoSettings();
-                    tempSets.Copy(secondView.settings, false);
-
-                    secondView.settings.Copy(settings, false);
-                    settings.Copy(tempSets, false);
-
-                    secondView.settings.checkB_PlayerD_Manual.Checked = true;
-                    settings.checkB_PlayerD_Manual.Checked = true;
-
-                    tempSets.Dispose();
-                }
-
-                if (play) {
-                    Play(false, this);
-                    secondView.Play(false, secondView);
-                }
-
-            } catch { };
-        }
-
         public void UpdateMode(bool play) {
-            if (!customMode)
-                settings.cB_PlayerD_Type.Text = ConfigControl.savedCamera.stringVal;
+            settings.cB_PlayerD_Type.Text = ConfigControl.savedCamera.stringVal;
+            settings.checkB_PlayerD_Manual.Checked = true;
+            secondView.settings.checkB_PlayerD_Manual.Checked = true;
 
             if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
-                thermalMode = true;
                 MainForm.m.Menu_Video_Swap.Text = "Swap to Daylight";
                 settings.cB_PlayerD_Type.Text = "Thermal";
+                ConfigControl.savedCamera.UpdateValue("Thermal");
+
+                secondView.settings.Copy(settings);
+
+                settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
+                if (secondView.settings.isPlaying)
+                    secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
+
             } else if (ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
-                thermalMode = false;
                 MainForm.m.Menu_Video_Swap.Text = "Swap to Thermal";
                 settings.cB_PlayerD_Type.Text = "Daylight";
+                ConfigControl.savedCamera.UpdateValue("Daylight");
+
+                secondView.settings.Copy(settings);
+
+                settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
+                if (secondView.settings.isPlaying)
+                    secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
             }
 
-            Swap(play);
+            if (play) {
+                Play(false, this);
+                secondView.Play(false, secondView);
+            }
         }
-        
-        private void sP_Player_DoubleClick(object sender, EventArgs e) {
-            secondView.settings.Show();
-            secondView.settings.BringToFront();
+
+        void AttachSecondaryFunctions() {
+            secondView.myPlayer.MouseDownEvent += (s, e) => {
+                if (e.button == 2) {
+                    secondView.settings.Show();
+                    secondView.settings.BringToFront();
+                } else if (e.button == 1) {
+                    eOriginalPos = new Point(e.x, e.y);
+                    dragging = true;
+                }
+            };
+
+            secondView.myPlayer.MouseMoveEvent += (s, e) => {
+
+                if (dragging) {
+                    int xDragDist = e.x - eOriginalPos.X;
+                    int xLocationDragDist = sP_Player.Location.X + (xDragDist * 2);
+                    int w = MainForm.m.Width - sP_Player.Width;
+                    if (MainForm.m.mainCp.myPanel.Visible)
+                        w -= MainForm.m.mainCp.Width;
+
+                    int yDragDist = e.y - eOriginalPos.Y;
+                    int yLocationDragDist = sP_Player.Location.Y + (yDragDist * 2);
+                    int h = MainForm.m.Height - sP_Player.Height;
+
+                    if (xLocationDragDist < w && xLocationDragDist > -2)
+                        sP_Player.Left += xDragDist;
+
+                    if (yLocationDragDist < h && yLocationDragDist > -1)
+                        sP_Player.Top += yDragDist;
+
+                }
+            };
+
+            secondView.myPlayer.MouseUpEvent += (s, e) => {
+                dragging = false;
+                eOriginalPos = new Point(0, 0);
+            };
+
         }
 
     }

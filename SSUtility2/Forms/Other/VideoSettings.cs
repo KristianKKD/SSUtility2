@@ -6,6 +6,7 @@ namespace SSUtility2 {
 
         public Detached originalDetached;
         public bool isSecondary = false;
+        public bool isPlaying = false;
 
         public const string dayRTSP = "videoinput_1:0/h264_1/onvif.stm";
         public const string thermalRTSP = "videoinput_2:0/h264_1/onvif.stm";
@@ -104,11 +105,17 @@ namespace SSUtility2 {
         }
 
         private void b_Hide_Click(object sender, EventArgs e) {
-            MainForm.m.mainPlayer.secondView.VLCPlayer_D.playlist.stop();
+            MainForm.m.mainPlayer.secondView.myPlayer.playlist.stop();
             MainForm.m.mainPlayer.sP_Player.Hide();
             Hide();
             MainForm.m.Menu_Video_EnableSecondary.Visible = true;
+        }
 
+        private void b_Stop_Click(object sender, EventArgs e) {
+            if (!isSecondary)
+                originalDetached.StopPlaying();
+            else
+                originalDetached.secondView.StopPlaying();
         }
     }
 }

@@ -50,6 +50,7 @@ namespace SSUtility2
             this.checkB_PlayerD_Manual = new System.Windows.Forms.CheckBox();
             this.b_Play = new System.Windows.Forms.Button();
             this.b_Hide = new System.Windows.Forms.Button();
+            this.b_Stop = new System.Windows.Forms.Button();
             this.p_PlayerD_Simple.SuspendLayout();
             this.p_PlayerD_Extended.SuspendLayout();
             this.SuspendLayout();
@@ -71,7 +72,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Name.Location = new System.Drawing.Point(92, 6);
             this.tB_PlayerD_Name.Name = "tB_PlayerD_Name";
-            this.tB_PlayerD_Name.Size = new System.Drawing.Size(213, 20);
+            this.tB_PlayerD_Name.Size = new System.Drawing.Size(256, 20);
             this.tB_PlayerD_Name.TabIndex = 54;
             // 
             // p_PlayerD_Simple
@@ -83,7 +84,7 @@ namespace SSUtility2
             this.p_PlayerD_Simple.Controls.Add(this.l_PlayerD_SimpleAdr);
             this.p_PlayerD_Simple.Location = new System.Drawing.Point(7, 32);
             this.p_PlayerD_Simple.Name = "p_PlayerD_Simple";
-            this.p_PlayerD_Simple.Size = new System.Drawing.Size(301, 203);
+            this.p_PlayerD_Simple.Size = new System.Drawing.Size(344, 203);
             this.p_PlayerD_Simple.TabIndex = 57;
             // 
             // tB_PlayerD_SimpleAdr
@@ -93,7 +94,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_SimpleAdr.Location = new System.Drawing.Point(85, 5);
             this.tB_PlayerD_SimpleAdr.Name = "tB_PlayerD_SimpleAdr";
-            this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(213, 20);
+            this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(256, 20);
             this.tB_PlayerD_SimpleAdr.TabIndex = 28;
             // 
             // l_PlayerD_SimpleAdr
@@ -130,7 +131,7 @@ namespace SSUtility2
             this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Adr);
             this.p_PlayerD_Extended.Location = new System.Drawing.Point(7, 32);
             this.p_PlayerD_Extended.Name = "p_PlayerD_Extended";
-            this.p_PlayerD_Extended.Size = new System.Drawing.Size(301, 203);
+            this.p_PlayerD_Extended.Size = new System.Drawing.Size(344, 203);
             this.p_PlayerD_Extended.TabIndex = 56;
             // 
             // label1
@@ -170,7 +171,7 @@ namespace SSUtility2
             "BOSCH"});
             this.cB_PlayerD_Type.Location = new System.Drawing.Point(88, 5);
             this.cB_PlayerD_Type.Name = "cB_PlayerD_Type";
-            this.cB_PlayerD_Type.Size = new System.Drawing.Size(210, 21);
+            this.cB_PlayerD_Type.Size = new System.Drawing.Size(253, 21);
             this.cB_PlayerD_Type.TabIndex = 5;
             this.cB_PlayerD_Type.Text = "Daylight";
             this.cB_PlayerD_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_Type_SelectedIndexChanged);
@@ -194,7 +195,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Password.Location = new System.Drawing.Point(88, 161);
             this.tB_PlayerD_Password.Name = "tB_PlayerD_Password";
-            this.tB_PlayerD_Password.Size = new System.Drawing.Size(210, 20);
+            this.tB_PlayerD_Password.Size = new System.Drawing.Size(253, 20);
             this.tB_PlayerD_Password.TabIndex = 4;
             this.tB_PlayerD_Password.Text = "admin";
             // 
@@ -205,7 +206,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Adr.Location = new System.Drawing.Point(88, 32);
             this.tB_PlayerD_Adr.Name = "tB_PlayerD_Adr";
-            this.tB_PlayerD_Adr.Size = new System.Drawing.Size(211, 20);
+            this.tB_PlayerD_Adr.Size = new System.Drawing.Size(254, 20);
             this.tB_PlayerD_Adr.TabIndex = 4;
             this.tB_PlayerD_Adr.Text = "192.168.1.71";
             // 
@@ -252,7 +253,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Port.Location = new System.Drawing.Point(88, 58);
             this.tB_PlayerD_Port.Name = "tB_PlayerD_Port";
-            this.tB_PlayerD_Port.Size = new System.Drawing.Size(210, 20);
+            this.tB_PlayerD_Port.Size = new System.Drawing.Size(253, 20);
             this.tB_PlayerD_Port.TabIndex = 4;
             this.tB_PlayerD_Port.Text = "554";
             // 
@@ -263,7 +264,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Buffering.Location = new System.Drawing.Point(88, 109);
             this.tB_PlayerD_Buffering.Name = "tB_PlayerD_Buffering";
-            this.tB_PlayerD_Buffering.Size = new System.Drawing.Size(210, 20);
+            this.tB_PlayerD_Buffering.Size = new System.Drawing.Size(253, 20);
             this.tB_PlayerD_Buffering.TabIndex = 4;
             this.tB_PlayerD_Buffering.Text = "200";
             // 
@@ -286,7 +287,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_Username.Location = new System.Drawing.Point(88, 135);
             this.tB_PlayerD_Username.Name = "tB_PlayerD_Username";
-            this.tB_PlayerD_Username.Size = new System.Drawing.Size(210, 20);
+            this.tB_PlayerD_Username.Size = new System.Drawing.Size(253, 20);
             this.tB_PlayerD_Username.TabIndex = 4;
             this.tB_PlayerD_Username.Text = "admin";
             // 
@@ -297,7 +298,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_PlayerD_RTSP.Location = new System.Drawing.Point(88, 83);
             this.tB_PlayerD_RTSP.Name = "tB_PlayerD_RTSP";
-            this.tB_PlayerD_RTSP.Size = new System.Drawing.Size(210, 20);
+            this.tB_PlayerD_RTSP.Size = new System.Drawing.Size(253, 20);
             this.tB_PlayerD_RTSP.TabIndex = 4;
             this.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
             // 
@@ -317,7 +318,7 @@ namespace SSUtility2
             // 
             this.checkB_PlayerD_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkB_PlayerD_Manual.AutoSize = true;
-            this.checkB_PlayerD_Manual.Location = new System.Drawing.Point(7, 252);
+            this.checkB_PlayerD_Manual.Location = new System.Drawing.Point(7, 247);
             this.checkB_PlayerD_Manual.Name = "checkB_PlayerD_Manual";
             this.checkB_PlayerD_Manual.Size = new System.Drawing.Size(144, 17);
             this.checkB_PlayerD_Manual.TabIndex = 55;
@@ -327,11 +328,12 @@ namespace SSUtility2
             // 
             // b_Play
             // 
+            this.b_Play.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_Play.BackColor = System.Drawing.SystemColors.Control;
             this.b_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Play.Location = new System.Drawing.Point(245, 241);
+            this.b_Play.Location = new System.Drawing.Point(295, 240);
             this.b_Play.Name = "b_Play";
-            this.b_Play.Size = new System.Drawing.Size(63, 28);
+            this.b_Play.Size = new System.Drawing.Size(54, 28);
             this.b_Play.TabIndex = 59;
             this.b_Play.Text = "Play";
             this.b_Play.UseVisualStyleBackColor = false;
@@ -341,21 +343,35 @@ namespace SSUtility2
             // 
             this.b_Hide.BackColor = System.Drawing.SystemColors.Control;
             this.b_Hide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Hide.Location = new System.Drawing.Point(157, 241);
+            this.b_Hide.Location = new System.Drawing.Point(157, 240);
             this.b_Hide.Name = "b_Hide";
-            this.b_Hide.Size = new System.Drawing.Size(82, 28);
+            this.b_Hide.Size = new System.Drawing.Size(73, 28);
             this.b_Hide.TabIndex = 60;
             this.b_Hide.Text = "Hide Player";
             this.b_Hide.UseVisualStyleBackColor = false;
             this.b_Hide.Visible = false;
             this.b_Hide.Click += new System.EventHandler(this.b_Hide_Click);
             // 
+            // b_Stop
+            // 
+            this.b_Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Stop.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Stop.Location = new System.Drawing.Point(235, 240);
+            this.b_Stop.Name = "b_Stop";
+            this.b_Stop.Size = new System.Drawing.Size(54, 28);
+            this.b_Stop.TabIndex = 61;
+            this.b_Stop.Text = "Stop";
+            this.b_Stop.UseVisualStyleBackColor = false;
+            this.b_Stop.Click += new System.EventHandler(this.b_Stop_Click);
+            // 
             // VideoSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(318, 280);
+            this.ClientSize = new System.Drawing.Size(361, 280);
+            this.Controls.Add(this.b_Stop);
             this.Controls.Add(this.b_Hide);
             this.Controls.Add(this.b_Play);
             this.Controls.Add(this.l_Name);
@@ -404,5 +420,6 @@ namespace SSUtility2
         public System.Windows.Forms.CheckBox checkB_PlayerD_Manual;
         private System.Windows.Forms.Button b_Play;
         private System.Windows.Forms.Button b_Hide;
+        private System.Windows.Forms.Button b_Stop;
     }
 }

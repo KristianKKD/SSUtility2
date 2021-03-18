@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.2.1.9";
+        public const string version = "v2.2.1.10";
 
         private bool lite = false;
         private bool isOriginal = false;
@@ -37,26 +37,26 @@ namespace SSUtility2 {
         public static MainForm m;
 
         public async Task StartupStuff() {
-            m = this;
-            setPage = new SettingsPage();
-            rl = new ResponseLog();
-            pd = new PelcoD();
-            D.protocol = new D();
+            try {
+                m = this;
+                setPage = new SettingsPage();
+                rl = new ResponseLog();
+                pd = new PelcoD();
+                D.protocol = new D();
 
-            lite = false;
-            bool first = CheckIfFirstTime();
+                lite = false;
+                bool first = CheckIfFirstTime();
 
-            p_Main.Select();
+                p_Main.Select();
 
-            AttachControlPanel();
-            mainPlayer = AttachPlayer();
-            HideControlPanel();
+                AttachControlPanel();
+                mainPlayer = AttachPlayer();
+                HideControlPanel();
 
-            AttachInfoPanel();
-            AttachCustomPanel();
+                AttachInfoPanel();
+                AttachCustomPanel();
 
-            saveList = new Control[]{
-                mainCp.track_PTZ_PTSpeed,
+                saveList = new Control[]{
 
                 mainPlayer.settings.tB_PlayerD_Adr,
                 mainPlayer.settings.tB_PlayerD_Port,
@@ -77,14 +77,17 @@ namespace SSUtility2 {
                 setPage.tB_Custom_8,
             };
 
-            FileStuff(first);
+                FileStuff(first);
 
-            setPage.PopulateSettingText();
-            SetFeatureToAllControls(m.Controls);
-            b_Open.BringToFront();
+                setPage.PopulateSettingText();
+                SetFeatureToAllControls(m.Controls);
+                b_Open.BringToFront();
+                CommandQueue.Init();
+                AutoConnect();
 
-            CommandQueue.Init();
-            AutoConnect();
+            } catch (Exception e) {
+                ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
+            }
         }
 
         bool CheckIfFirstTime() {
@@ -246,6 +249,7 @@ namespace SSUtility2 {
             mainPlayer.myPanel.Location = new Point(0,0);
             mainPlayer.myPanel.Size = new Size(m.Size.Width - 14, m.Size.Height - 62);
             mainPlayer.VLCPlayer_D.Refresh();
+            mainPlayer.sP_Player.Left += mainCp.Width;
         }
 
         public void ShowControlPanel() {
@@ -253,18 +257,16 @@ namespace SSUtility2 {
             mainCp.myPanel.Visible = true;
             mainPlayer.myPanel.Location = new Point(mainCp.Location.X + mainCp.Size.Width - 15, mainCp.Location.Y);
             mainPlayer.myPanel.Size = new Size(m.Size.Width - mainCp.Size.Width, m.Size.Height - 62);
+            mainPlayer.sP_Player.Left -= mainCp.Width;
         }
 
         Detached AttachPlayer() {
-            Detached d = DetachVid(false, new VideoSettings()).Result;
+            Detached d = DetachVid(false, new VideoSettings(), true).Result;
             Panel p = new Panel();
             d.myPanel = p;
 
-            var c = GetAllType(d, typeof(SizeablePanel.SizeablePanel));
+            var c = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
             p.Controls.AddRange(c.ToArray());
-            var c2 = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
-            p.Controls.AddRange(c2.ToArray());
-            
 
             p.Size = new Size(m.Size.Width - mainCp.Size.Width, m.Size.Height - 62);
             p.Location = new Point(mainCp.Location.X + mainCp.Size.Width - 15, mainCp.Location.Y);
@@ -273,9 +275,6 @@ namespace SSUtility2 {
             p_Control.Controls.Add(p);
 
             p.BringToFront();
-            d.sP_Player.Location = new Point(p_Control.Width - d.sP_Player.Width - 400, d.sP_Player.Height - 100);
-            d.sP_Player.BringToFront();
-
             return d;
         }
        
@@ -295,8 +294,8 @@ namespace SSUtility2 {
         }
 
 
-        public async Task<Detached> DetachVid(bool show, VideoSettings set) {
-            Detached dv = new Detached();
+        public async Task<Detached> DetachVid(bool show, VideoSettings set, bool attachSecond) {
+            Detached dv = new Detached(attachSecond);
             if (show) {
                 dv.Show();
                 await Task.Delay(100).ConfigureAwait(false);
@@ -307,7 +306,7 @@ namespace SSUtility2 {
                 dv.settings.tB_PlayerD_Password.Text = set.tB_PlayerD_Password.Text;
                 dv.settings.tB_PlayerD_Name.Text = set.tB_PlayerD_Name.Text;
                 dv.settings.tB_PlayerD_SimpleAdr.Text = set.tB_PlayerD_SimpleAdr.Text;
-                if(mainPlayer.isPlaying)
+                if(mainPlayer.settings.isPlaying)
                     dv.Play(false, dv);
             }
             SetFeatureToAllControls(dv.Controls);
@@ -735,7 +734,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
-            DetachVid(true, mainPlayer.settings);
+            DetachVid(true, mainPlayer.settings, false);
         }
 
         private void Menu_Window_PelcoD_Click(object sender, EventArgs e) {
@@ -864,7 +863,7 @@ namespace SSUtility2 {
 
         private void Menu_Video_Swap_Click(object sender, EventArgs e) { //ADD SWAP FUNCTIONALITY
             string value;
-            if (mainPlayer.thermalMode) {
+            if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
                 value = "Daylight";
             } else {
                 value = "Thermal";
