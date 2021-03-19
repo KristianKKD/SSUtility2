@@ -37,21 +37,34 @@ namespace SSUtility2 {
             DelayStop();
         }
 
-        //private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
-        //    PTZMove(D.Tilt.Up);
-        //}
+        private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
+            PTZMove(D.Tilt.Up);
+        }
 
-        //private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
-        //    PTZMove(D.Tilt.Down);
-        //}
+        private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
+            PTZMove(D.Tilt.Down);
+        }
 
-        //private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
-        //    PTZMove(D.Tilt.Null, D.Pan.Left);
-        //}
+        private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
+            PTZMove(D.Tilt.Null, D.Pan.Left);
+        }
 
-        //private void b_PTZ_Right_MouseDown(object sender, MouseEventArgs e) {
-        //    PTZMove(D.Tilt.Null, D.Pan.Right);
-        //}
+        private void b_PTZ_Right_MouseDown(object sender, MouseEventArgs e) {
+            PTZMove(D.Tilt.Null, D.Pan.Right);
+        }
+
+        void PTZMove(D.Tilt tilt = D.Tilt.Null, D.Pan pan = D.Pan.Null) {
+            byte[] code;
+            uint speed = Convert.ToUInt32(63);
+
+            if (tilt != D.Tilt.Null) {
+                code = D.protocol.CameraTilt(MainForm.m.MakeAdr(), tilt, speed);
+            } else {
+                code = D.protocol.CameraPan(MainForm.m.MakeAdr(), pan, speed);
+            }
+
+            AsyncCamCom.SendNonAsync(code);
+        }
 
         async Task DelayStop() {
             if (!AsyncCamCom.sock.Connected) {
@@ -162,6 +175,10 @@ namespace SSUtility2 {
         private void Joystick_MouseUp(object sender, MouseEventArgs e) {
             if(AsyncCamCom.sock.Connected)
                 CustomScriptCommands.QuickCommand("stop", false);
+        }
+
+        private void cB_ipCon_Selected_SelectedIndexChanged(object sender, EventArgs e) {
+            MainForm.m.setPage.cB_ipCon_Selected.Text = cB_ipCon_Selected.Text;
         }
 
     }

@@ -237,13 +237,13 @@ namespace SSUtility2 {
 
         public async Task UpdateSelectedCam(bool play) {
             ConfigControl.savedCamera.UpdateValue(cB_ipCon_Selected.Text);
-
+            
             if (ConfigControl.savedCamera.stringVal.Contains("Daylight"))
                 MainForm.m.Menu_Video_Swap.Text = "Swap to Daylight";
             else
                 MainForm.m.Menu_Video_Swap.Text = "Swap to Thermal";
 
-            if(play)
+            if (play && AsyncCamCom.sock.Connected)
                 MainForm.m.mainPlayer.UpdateMode();
         }
 

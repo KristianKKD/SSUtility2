@@ -151,7 +151,7 @@ namespace SSUtility2 {
         }
 
         private void b_Presets_Daylight_Extender_Click(object sender, EventArgs e) {
-            DoPreset(2, 205);
+            DoPreset(1, 205);
         }
 
         private void b_Presets_Thermal_Stabi_Click(object sender, EventArgs e) {
