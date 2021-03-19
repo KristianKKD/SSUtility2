@@ -37,6 +37,22 @@ namespace SSUtility2 {
             DelayStop();
         }
 
+        //private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
+        //    PTZMove(D.Tilt.Up);
+        //}
+
+        //private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
+        //    PTZMove(D.Tilt.Down);
+        //}
+
+        //private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
+        //    PTZMove(D.Tilt.Null, D.Pan.Left);
+        //}
+
+        //private void b_PTZ_Right_MouseDown(object sender, MouseEventArgs e) {
+        //    PTZMove(D.Tilt.Null, D.Pan.Right);
+        //}
+
         async Task DelayStop() {
             if (!AsyncCamCom.sock.Connected) {
                 return;

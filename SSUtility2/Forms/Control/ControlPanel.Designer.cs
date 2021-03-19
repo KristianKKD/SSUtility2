@@ -34,9 +34,10 @@
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Joystick = new Joystick.CentreStick();
-            this.l_Debug1 = new System.Windows.Forms.Label();
-            this.l_Debug2 = new System.Windows.Forms.Label();
-            this.l_Debug3 = new System.Windows.Forms.Label();
+            this.b_PTZ_Up = new System.Windows.Forms.Button();
+            this.b_PTZ_Down = new System.Windows.Forms.Button();
+            this.b_PTZ_Right = new System.Windows.Forms.Button();
+            this.b_PTZ_Left = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Joystick)).BeginInit();
             this.SuspendLayout();
@@ -44,7 +45,7 @@
             // check_IPCon_KeyboardCon
             // 
             this.check_IPCon_KeyboardCon.AutoSize = true;
-            this.check_IPCon_KeyboardCon.Location = new System.Drawing.Point(14, 113);
+            this.check_IPCon_KeyboardCon.Location = new System.Drawing.Point(2, 289);
             this.check_IPCon_KeyboardCon.Name = "check_IPCon_KeyboardCon";
             this.check_IPCon_KeyboardCon.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_IPCon_KeyboardCon.Size = new System.Drawing.Size(110, 17);
@@ -67,7 +68,7 @@
             // 
             this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.YellowGreen;
             this.b_PTZ_FocusNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(14, 72);
+            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(-8, 239);
             this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
             this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusNeg.TabIndex = 47;
@@ -80,7 +81,7 @@
             // 
             this.b_PTZ_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.b_PTZ_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(85, 72);
+            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(213, 238);
             this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
             this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(59, 35);
             this.b_PTZ_ZoomNeg.TabIndex = 46;
@@ -93,7 +94,7 @@
             // 
             this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
             this.b_PTZ_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(14, 32);
+            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(-8, 41);
             this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
             this.b_PTZ_FocusPos.Size = new System.Drawing.Size(59, 34);
             this.b_PTZ_FocusPos.TabIndex = 45;
@@ -106,7 +107,7 @@
             // 
             this.b_PTZ_ZoomPos.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.b_PTZ_ZoomPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(85, 32);
+            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(213, 39);
             this.b_PTZ_ZoomPos.Name = "b_PTZ_ZoomPos";
             this.b_PTZ_ZoomPos.Size = new System.Drawing.Size(59, 36);
             this.b_PTZ_ZoomPos.TabIndex = 44;
@@ -118,7 +119,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pictureBox1.Location = new System.Drawing.Point(35, 150);
+            this.pictureBox1.Location = new System.Drawing.Point(57, 81);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(150, 150);
             this.pictureBox1.TabIndex = 75;
@@ -127,39 +128,56 @@
             // Joystick
             // 
             this.Joystick.BackColor = System.Drawing.Color.Black;
-            this.Joystick.Location = new System.Drawing.Point(85, 200);
+            this.Joystick.Location = new System.Drawing.Point(107, 131);
             this.Joystick.Name = "Joystick";
             this.Joystick.Size = new System.Drawing.Size(50, 50);
             this.Joystick.TabIndex = 74;
             this.Joystick.TabStop = false;
             this.Joystick.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Joystick_MouseUp);
             // 
-            // l_Debug1
+            // b_PTZ_Up
             // 
-            this.l_Debug1.AutoSize = true;
-            this.l_Debug1.Location = new System.Drawing.Point(12, 323);
-            this.l_Debug1.Name = "l_Debug1";
-            this.l_Debug1.Size = new System.Drawing.Size(45, 13);
-            this.l_Debug1.TabIndex = 79;
-            this.l_Debug1.Text = "DEBUG";
+            this.b_PTZ_Up.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_PTZ_Up.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Up.Location = new System.Drawing.Point(107, 39);
+            this.b_PTZ_Up.Name = "b_PTZ_Up";
+            this.b_PTZ_Up.Size = new System.Drawing.Size(59, 36);
+            this.b_PTZ_Up.TabIndex = 82;
+            this.b_PTZ_Up.Text = "Up";
+            this.b_PTZ_Up.UseVisualStyleBackColor = false;
             // 
-            // l_Debug2
+            // b_PTZ_Down
             // 
-            this.l_Debug2.AutoSize = true;
-            this.l_Debug2.Location = new System.Drawing.Point(12, 356);
-            this.l_Debug2.Name = "l_Debug2";
-            this.l_Debug2.Size = new System.Drawing.Size(45, 13);
-            this.l_Debug2.TabIndex = 80;
-            this.l_Debug2.Text = "DEBUG";
+            this.b_PTZ_Down.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_PTZ_Down.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Down.Location = new System.Drawing.Point(107, 237);
+            this.b_PTZ_Down.Name = "b_PTZ_Down";
+            this.b_PTZ_Down.Size = new System.Drawing.Size(59, 36);
+            this.b_PTZ_Down.TabIndex = 83;
+            this.b_PTZ_Down.Text = "Down";
+            this.b_PTZ_Down.UseVisualStyleBackColor = false;
             // 
-            // l_Debug3
+            // b_PTZ_Right
             // 
-            this.l_Debug3.AutoSize = true;
-            this.l_Debug3.Location = new System.Drawing.Point(14, 390);
-            this.l_Debug3.Name = "l_Debug3";
-            this.l_Debug3.Size = new System.Drawing.Size(45, 13);
-            this.l_Debug3.TabIndex = 81;
-            this.l_Debug3.Text = "DEBUG";
+            this.b_PTZ_Right.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_PTZ_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Right.Location = new System.Drawing.Point(213, 131);
+            this.b_PTZ_Right.Name = "b_PTZ_Right";
+            this.b_PTZ_Right.Size = new System.Drawing.Size(59, 36);
+            this.b_PTZ_Right.TabIndex = 84;
+            this.b_PTZ_Right.Text = "Right";
+            this.b_PTZ_Right.UseVisualStyleBackColor = false;
+            // 
+            // b_PTZ_Left
+            // 
+            this.b_PTZ_Left.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_PTZ_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Left.Location = new System.Drawing.Point(-8, 131);
+            this.b_PTZ_Left.Name = "b_PTZ_Left";
+            this.b_PTZ_Left.Size = new System.Drawing.Size(59, 36);
+            this.b_PTZ_Left.TabIndex = 85;
+            this.b_PTZ_Left.Text = "Left";
+            this.b_PTZ_Left.UseVisualStyleBackColor = false;
             // 
             // ControlPanel
             // 
@@ -167,9 +185,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(254, 431);
-            this.Controls.Add(this.l_Debug3);
-            this.Controls.Add(this.l_Debug2);
-            this.Controls.Add(this.l_Debug1);
+            this.Controls.Add(this.b_PTZ_Left);
+            this.Controls.Add(this.b_PTZ_Right);
+            this.Controls.Add(this.b_PTZ_Down);
+            this.Controls.Add(this.b_PTZ_Up);
             this.Controls.Add(this.Joystick);
             this.Controls.Add(this.check_IPCon_KeyboardCon);
             this.Controls.Add(this.l_PTZCon);
@@ -199,8 +218,9 @@
         public System.Windows.Forms.Button b_PTZ_ZoomPos;
         public Joystick.CentreStick Joystick;
         public System.Windows.Forms.PictureBox pictureBox1;
-        public System.Windows.Forms.Label l_Debug1;
-        public System.Windows.Forms.Label l_Debug2;
-        public System.Windows.Forms.Label l_Debug3;
+        public System.Windows.Forms.Button b_PTZ_Up;
+        public System.Windows.Forms.Button b_PTZ_Down;
+        public System.Windows.Forms.Button b_PTZ_Right;
+        public System.Windows.Forms.Button b_PTZ_Left;
     }
 }
