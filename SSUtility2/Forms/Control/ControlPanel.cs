@@ -120,15 +120,16 @@ namespace SSUtility2 {
             try {
                 Point coords = Joystick.coords;
 
-                if (Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
+                if (Joystick.distance != 0) {
+                    //&& AsyncCamCom.sock.Connected) {
                     byte[] code = null;
 
                     uint adr = MainForm.m.MakeAdr();
                     int x = coords.X;
                     int y = coords.Y;
 
-                    uint xSpeed = Convert.ToUInt32(Math.Abs(x));
-                    uint ySpeed = Convert.ToUInt32(Math.Abs(y));
+                    uint xSpeed = Convert.ToUInt32(((0.25f * Math.Pow(Math.Abs(x), 2)) / 992) * 63);
+                    uint ySpeed = Convert.ToUInt32(((0.25f * Math.Pow(Math.Abs(y), 2)) / 992) * 63);
 
                     //diagonals
                     D.Pan p = D.Pan.Null;
@@ -169,7 +170,9 @@ namespace SSUtility2 {
                         AsyncCamCom.SendNonAsync(code);
                 }
 
-            } catch { }
+            } catch (Exception e) {
+                MainForm.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", e.ToString());
+            }
         }
 
         private void Joystick_MouseUp(object sender, MouseEventArgs e) {
