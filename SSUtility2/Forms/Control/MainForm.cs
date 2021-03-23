@@ -11,10 +11,12 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.2.1.14";
+        public const string version = "v2.3.0.0";
 
         private bool lite = false;
         private bool isOriginal = false;
+        private bool closing = false;
+
         public bool finalMode = false;
 
         public static Control[] saveList = new Control[0];
@@ -26,9 +28,9 @@ namespace SSUtility2 {
         public ResponseLog rl;
 
         public Detached mainPlayer;
-
-        private Recorder screenRec;
         
+        private Recorder screenRec;
+
         private string inUseVideoPath;
         private string screenRecordName;
         
@@ -80,13 +82,13 @@ namespace SSUtility2 {
                 FileStuff(first);
 
                 setPage.PopulateSettingText();
-                SetFeatureToAllControls(m.Controls);
+                Tools.SetFeatureToAllControls(m.Controls);
                 b_Open.BringToFront();
                 CommandQueue.Init();
                 AutoConnect();
 
             } catch (Exception e) {
-                ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
+                Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
             }
         }
 
@@ -118,18 +120,6 @@ namespace SSUtility2 {
             return fileDlg;
         }
 
-        public static SaveFileDialog SaveFile(string name, string extension, string startDir) {
-            SaveFileDialog fileDlg = new SaveFileDialog();
-            fileDlg.InitialDirectory = startDir;
-            fileDlg.DefaultExt = extension;
-            fileDlg.Filter = "All files (*.*)|*.*";
-            fileDlg.FilterIndex = 1;
-            fileDlg.RestoreDirectory = true;
-            fileDlg.Title = "Select File";
-            fileDlg.FileName = name;
-            return fileDlg;
-        }
-
         async Task FileStuff(bool first) {
             CheckPortableMode();
             CheckForNewDir();
@@ -148,9 +138,39 @@ namespace SSUtility2 {
         }
 
         public static void CreateConfigFiles() {
-            CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
-            CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
-            CheckCreateFile(null, ConfigControl.savedFolder);
+            Tools.CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
+            Tools.CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
+            Tools.CheckCreateFile(null, ConfigControl.savedFolder);
+        }
+
+        public (bool, Recorder) StopStartRec(bool isPlaying, Detached player, Recorder r) {
+            if (isPlaying) {
+                isPlaying = false;
+
+                r.Dispose();
+
+                if (MainForm.m.finalMode) {
+                    SaveFileDialog fdg = Tools.SaveFile(ConfigControl.vFileName.stringVal, ".avi", MainForm.m.finalDest);
+                    DialogResult result = fdg.ShowDialog();
+                    if (result == DialogResult.OK) {
+                        Tools.CopySingleFile(fdg.FileName, inUseVideoPath);
+                    }
+                    MessageBox.Show("Saved recording to: " + inUseVideoPath +
+                        "\nFinal saved: " + fdg.FileName);
+                } else {
+                    MessageBox.Show("Saved recording to: " + inUseVideoPath);
+                }
+
+                return (isPlaying, null);
+            } else {
+                string fullVideoPath = Tools.GivePath(ConfigControl.vFolder.stringVal, ConfigControl.vFileName.stringVal, player, "Recordings") + ".avi";
+                inUseVideoPath = fullVideoPath;
+                isPlaying = true;
+
+                Recorder rec = Tools.Record(fullVideoPath, player.stream_Player);
+
+                return (isPlaying, rec);
+            }
         }
 
         string CheckFileForDir() {
@@ -160,8 +180,8 @@ namespace SSUtility2 {
                 foreach (string line in lines) {
                     string currentLine = line.Trim();
                     if (currentLine.Contains(@":\")) {
-                        if (CheckIfNameValid(currentLine)) {
-                            CheckCreateFile(null, currentLine);
+                        if (Tools.CheckIfNameValid(currentLine)) {
+                            Tools.CheckCreateFile(null, currentLine);
                         }
                         return currentLine;
                     }
@@ -171,7 +191,7 @@ namespace SSUtility2 {
         }
 
         void CheckForNewDir() {
-            bool noFile = CheckCreateFile(null, ConfigControl.dirCheck).Result;
+            bool noFile = Tools.CheckCreateFile(null, ConfigControl.dirCheck).Result;
 
             if (noFile) {
                 ChooseNewDirectory();
@@ -187,7 +207,7 @@ namespace SSUtility2 {
         }
 
         public static void ChooseNewDirectory() {
-            bool choose = ShowPopup("Would you like to change your default directory?\nCurrent app folder: " + ConfigControl.appFolder, "Choose your directory", null, false);
+            bool choose = Tools.ShowPopup("Would you like to change your default directory?\nCurrent app folder: " + ConfigControl.appFolder, "Choose your directory", null, false);
             if (choose) {
                 DirectoryChooser dc = new DirectoryChooser();
                 dc.ShowDialog();
@@ -199,6 +219,7 @@ namespace SSUtility2 {
         void CheckPortableMode() {
             if (File.Exists(Directory.GetCurrentDirectory() + @"\" + ConfigControl.config)) {
                 ConfigControl.appFolder = (Directory.GetCurrentDirectory() + @"\");
+                ConfigControl.portableMode.UpdateValue("true");
             }
         }
 
@@ -209,7 +230,7 @@ namespace SSUtility2 {
             p.Size = new Size(i.Width, i.Height - 35);
             p.Location = new Point(m.Size.Width - i.Width, 0);
 
-            var c = GetAllType(i, typeof(Label));
+            var c = Tools.GetAllType(i, typeof(Label));
             p.Controls.AddRange(c.ToArray());
 
             p.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
@@ -232,7 +253,7 @@ namespace SSUtility2 {
             p.Size = new Size(80, 160);
             p.Location = new Point(m.p_Control.Width - p.Width, m.p_Control.Height - p.Height);
 
-            var c = GetAllType(custom, typeof(Button));
+            var c = Tools.GetAllType(custom, typeof(Button));
             p.Controls.AddRange(c.ToArray());
 
             p.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
@@ -246,38 +267,22 @@ namespace SSUtility2 {
         public void HideControlPanel() {
             mainCp.myPanel.Hide();
             mainCp.myPanel.Visible = false;
-            mainPlayer.myPanel.Location = new Point(0,0);
-            mainPlayer.myPanel.Size = new Size(m.Size.Width - 14, m.Size.Height - 62);
-            mainPlayer.VLCPlayer_D.Refresh();
-            mainPlayer.sP_Player.Left += mainCp.Width;
         }
 
         public void ShowControlPanel() {
             mainCp.myPanel.Show();
             mainCp.myPanel.Visible = true;
-            mainPlayer.myPanel.Location = new Point(mainCp.Location.X + mainCp.Size.Width - 15, mainCp.Location.Y);
-            mainPlayer.myPanel.Size = new Size(m.Size.Width - mainCp.Size.Width, m.Size.Height - 62);
-            mainPlayer.sP_Player.Left -= mainCp.Width;
         }
 
         Detached AttachPlayer() {
             Detached d = DetachVid(false, new VideoSettings(), true).Result;
-            Panel p = new Panel();
-            d.myPanel = p;
 
-            var c = GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
-            p.Controls.AddRange(c.ToArray());
+            var c = Tools.GetAllType(d, typeof(WebEye.StreamControl.WinForms.StreamControl));
+            p_Control.Controls.AddRange(c.ToArray());
 
-            p.Size = new Size(m.Size.Width - mainCp.Size.Width, m.Size.Height - 62);
-            p.Location = new Point(mainCp.Location.X + mainCp.Size.Width - 15, mainCp.Location.Y);
-            p.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
-            
-            p_Control.Controls.Add(p);
-
-            p.BringToFront();
             return d;
         }
-       
+
         public void InitLiteMode() {
             m.Size = new Size(300, Height);
             AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
@@ -309,7 +314,7 @@ namespace SSUtility2 {
                 if(mainPlayer.settings.isPlaying)
                     dv.Play(false, dv);
             }
-            SetFeatureToAllControls(dv.Controls);
+            Tools.SetFeatureToAllControls(dv.Controls);
             return dv;
         }
 
@@ -323,7 +328,7 @@ namespace SSUtility2 {
             ControlPanel cp = new ControlPanel();
             cp.myPanel = pan;
 
-            SetFeatureToAllControls(cp.Controls);
+            Tools.SetFeatureToAllControls(cp.Controls);
 
             pan.Size = new Size(cp.Size.Width, cp.Size.Height - 30);
             pan.Location = new Point(pan.Location.X, pan.Location.Y);
@@ -335,7 +340,7 @@ namespace SSUtility2 {
         }
 
         void AddControls(Panel pan, Control panel) {
-            var c = GetAll(panel);
+            var c = Tools.GetAll(panel);
             pan.Controls.AddRange(c.ToArray());
         }
 
@@ -363,40 +368,6 @@ namespace SSUtility2 {
             finalDest = destination;
         }
 
-        public IEnumerable<Control> GetAll(Control control) {
-            var controls = control.Controls.Cast<Control>();
-
-            return controls.SelectMany(ctrl => GetAll(ctrl))
-                                      .Concat(controls);
-        }
-
-        public IEnumerable<Control> GetAllType(Control control, Type type) {
-            var controls = control.Controls.Cast<Control>();
-
-            return controls.SelectMany(ctrl => GetAllType(ctrl, type))
-                                      .Concat(controls)
-                                      .Where(c => c.GetType() == type);
-        }
-
-        public void SetFeatureToAllControls(Control.ControlCollection cc) {
-            if (cc != null) {
-                foreach (Control control in cc) {
-                    if (control != p_Control) {
-                        control.PreviewKeyDown += new PreviewKeyDownEventHandler(control_PreviewKeyDown);
-                    }
-                    SetFeatureToAllControls(control.Controls);
-                }
-            }
-        }
-
-        public void control_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e) {
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.Down ||
-                e.KeyCode == Keys.Left || e.KeyCode == Keys.Right ||
-                e.KeyCode == Keys.Escape || e.KeyCode == Keys.Enter) {
-                e.IsInputKey = true;
-            }
-        }
-
         public async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
             if (tb.Text.Length < 1) {
                 tb.Text = ConfigControl.appFolder;
@@ -408,60 +379,8 @@ namespace SSUtility2 {
             return false;
         }
 
-        public static bool ShowPopup(string message, string caption, string error, bool isErrorType = true) {
-            bool res = false;
-            DialogResult d = MessageBox.Show(message, caption,
-                                MessageBoxButtons.YesNo,
-                                MessageBoxIcon.Question);
-            if (d == DialogResult.Yes) {
-                res = true;
-                if (isErrorType) {
-                    MessageBox.Show(error, caption, MessageBoxButtons.OK);
-                }
-            }
-            return res;
-        }
-
-        public static void BrowseFolderButton(TextBox tb) {
-            FolderBrowserDialog folderDlg = new FolderBrowserDialog();
-            folderDlg.ShowNewFolderButton = true;
-            DialogResult result = folderDlg.ShowDialog();
-            if (result == DialogResult.OK) {
-                tb.Text = folderDlg.SelectedPath;
-            }
-        }
-
-        public uint MakeAdr(ComboBox comboBox = null) {
-            if (comboBox == null) {
-                comboBox = MainForm.m.setPage.cB_ipCon_Selected;
-            }
-            if (comboBox.Text.Contains("Daylight")) {
-                return 1;
-            } else if (comboBox.Text.Contains("Thermal")) {
-                return 2;
-            } else {
-                return uint.Parse(comboBox.Text);
-            }
-        }
-
-        public string ReadCommand(byte[] command, bool hide = true) {
-            string msg = "";
-            for (int i = 0; i < command.Length; i++) {
-                string hex = command[i].ToString("X").ToUpper();
-                if (hex.Length == 1) {
-                    hex = "0" + hex;
-                }
-                msg += hex + " ";
-            }
-            msg = msg.Trim();
-            if (!hide) {
-                MessageBox.Show(msg);
-            }
-            return msg;
-        }
-
         public void WriteToResponses(string text, bool hide, bool isInfo = false) {
-            if (closing) {
+            if (MainForm.m.closing) {
                 return;
             }
             if (this.InvokeRequired) {
@@ -487,244 +406,6 @@ namespace SSUtility2 {
             }
         }
 
-        public void SaveSnap(Detached player) {
-            string fullImagePath = GivePath(ConfigControl.scFolder.stringVal, ConfigControl.scFileName.stringVal, player, "Snapshots") + ".jpg";
-
-            Image bmp = new Bitmap(player.VLCPlayer_D.Width, player.VLCPlayer_D.Height);
-            Graphics gfx = Graphics.FromImage(bmp);
-            Rectangle rec = player.VLCPlayer_D.RectangleToScreen(player.VLCPlayer_D.ClientRectangle);
-            gfx.CopyFromScreen(rec.Location, Point.Empty, player.VLCPlayer_D.Size);
-
-            bmp.Save(fullImagePath, ImageFormat.Jpeg);
-
-            if (finalMode) {
-                SaveFileDialog fdg = SaveFile(ConfigControl.scFileName.stringVal, ".jpg", finalDest);
-                DialogResult result = fdg.ShowDialog();
-                if (result == DialogResult.OK) {
-                    CopySingleFile(fdg.FileName, fullImagePath);
-                }
-                MessageBox.Show("Image saved : " + fullImagePath +
-                        "\nFinal saved: " + fdg.FileName);
-            } else {
-                MessageBox.Show("Image saved : " + fullImagePath);
-            }
-        }
-
-        public (bool, Recorder) StopStartRec(bool isPlaying, Detached player, Recorder r) {
-            if (isPlaying) {
-                isPlaying = false;
-                
-                r.Dispose();
-
-                if (finalMode) {
-                    SaveFileDialog fdg = SaveFile(ConfigControl.vFileName.stringVal, ".avi", finalDest);
-                    DialogResult result = fdg.ShowDialog();
-                    if (result == DialogResult.OK) {
-                        CopySingleFile(fdg.FileName, inUseVideoPath);
-                    }
-                    MessageBox.Show("Saved recording to: " + inUseVideoPath +
-                        "\nFinal saved: " + fdg.FileName);
-                } else {
-                    MessageBox.Show("Saved recording to: " + inUseVideoPath);
-                }
-
-                return (isPlaying, null);
-            } else {
-                string fullVideoPath = GivePath(ConfigControl.vFolder.stringVal, ConfigControl.vFileName.stringVal, player, "Recordings") + ".avi";
-                inUseVideoPath = fullVideoPath;
-                isPlaying = true;
-
-                Recorder rec = Record(fullVideoPath, player.VLCPlayer_D);
-
-                return (isPlaying, rec);
-            }
-        }
-
-        private Recorder Record(string path, AxAXVLC.AxVLCPlugin2 player) {
-            Recorder rec = new Recorder(new Record(path, ConfigControl.recFPS.intVal,
-                    SharpAvi.KnownFourCCs.Codecs.MotionJpeg, ConfigControl.recQual.intVal, player));
-            return rec;
-        }
-
-        string GivePath(string orgFolder, string orgName, Detached detachedPlayer, string folderType) {
-            string folder = orgFolder;
-            string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
-            string adr = GetPlayerAdrOrName(detachedPlayer.settings);
-
-            if (adr != "") {
-                adr += @"\";
-            } else {
-                folderType = "";
-            }
-
-            if (ConfigControl.automaticPaths.boolVal) {
-                folder = ConfigControl.savedFolder + adr + folderType;
-                string timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
-                fileName = orgName + " " + timeText;
-            }
-
-            CheckCreateFile(null, folder);
-
-            string full = folder + @"\" + fileName;
-            return full;
-        }
-
-        public static void CopySingleFile(string destination, string sourceFile, bool copyingDirectory = false) {
-            string curFile = string.Empty;
-            string newLocation = string.Empty;
-            try {
-                string name = sourceFile.Substring(sourceFile.LastIndexOf("\\") + 1);
-                curFile = sourceFile;
-                newLocation = destination + name;
-
-                if (copyingDirectory) {
-                    destination += @"\";
-                    string tempFile = destination + @"CopiedFile";
-
-                    if (!File.Exists(newLocation)) {
-                        if (name == ConfigControl.config) {
-                            ConfigControl.portableMode.UpdateValue("true");
-                            ConfigControl.CreateConfig(destination + @"\" + ConfigControl.config);
-                            ConfigControl.portableMode.UpdateValue("false");
-                        } else {
-                            File.Copy(sourceFile, tempFile, true);
-                            File.Move(tempFile, destination + @"\" + name); //renames file
-                        }
-                    }
-
-                } else {
-                    File.Copy(sourceFile, destination, true);
-                }
-            } catch (Exception e) {
-                MainForm.ShowPopup("Couldn't copy individual file to new directory!\nShow more info?", 
-                    "Copy failed!", "File: " + curFile + "\nfailed to copy to:\n" + newLocation + 
-                    "\n\nError: " + e.ToString());
-            }
-        }
-
-        public static void CopyFiles(string destination, string[] sourceDir) {
-            foreach (string file in sourceDir) {
-                CopySingleFile(destination, file, true);
-            }
-        }
-
-        public static void DeleteDirectory(string oldFolderPath) {
-            string[] files = Directory.GetFiles(oldFolderPath);
-            string[] dirs = Directory.GetDirectories(oldFolderPath);
-
-            foreach (string file in files) {
-                File.SetAttributes(file, FileAttributes.Normal);
-                File.Delete(file);
-            }
-
-            foreach (string dir in dirs) {
-                DeleteDirectory(dir);
-            }
-
-            Directory.Delete(oldFolderPath, false);
-        }
-
-        public static void CopyDirs(string pathTo, string[] copyDir) {
-            string curDir = string.Empty;
-            string newLocation = string.Empty;
-            try {
-                foreach (string subDir in copyDir) {
-                    string name = subDir.Substring(subDir.LastIndexOf("\\"));
-                    curDir = subDir;
-                    newLocation = pathTo + name;
-
-                    DirectoryInfo newDir = Directory.CreateDirectory(pathTo + name);
-
-                    if (Directory.GetFiles(subDir).Length > 0) {
-                        CopyFiles(newDir.FullName, Directory.GetFiles(subDir));
-                    }
-                    if (Directory.GetDirectories(subDir).Length > 0) {
-                        CopyDirs(newDir.FullName, Directory.GetDirectories(subDir));
-                    }
-                }
-            } catch (Exception e) {
-                MainForm.ShowPopup("Couldn't copy directory to new location!\nShow more info?", 
-                    "Copy failed!", "Directory: " + curDir + "\nfailed to copy to:\n" + newLocation + 
-                    "\n\nError: " + e.ToString());
-            }
-        }
-
-        public static string GetPlayerAdrOrName(VideoSettings settings) {
-            try {
-                string nameText = settings.tB_PlayerD_Name.Text;
-                string adrText = settings.tB_PlayerD_SimpleAdr.Text;
-                string returnString = "";
-
-                if (adrText != "") {
-                    Uri uriAddress = new Uri(adrText);
-                    returnString = uriAddress.Host;
-                }
-                if (nameText != "") {
-                    returnString = nameText;
-                }
-                if (!CheckIfNameValid(returnString, false)) {
-                    return "";
-                }
-
-                return returnString;
-            } catch {
-                return "";
-            } 
-        }
-
-        public static bool CheckIfNameValid(string name, bool everythingBad = false) {
-            char[] nameArray = name.ToCharArray();
-            if (nameArray.Length == 0) {
-                return false;
-            }
-            foreach (Char c in nameArray) {
-                foreach (Char symbol in Path.GetInvalidFileNameChars()) {
-                    bool isBad = false;
-                    if (c == symbol) {
-                        if (everythingBad) {
-                            isBad = true;
-                        } else {
-                            if (c.ToString() != ":" && c.ToString() != "\\") {
-                                isBad = false;
-                            }
-                        }
-
-                    }
-
-                    if (isBad) {
-                        ShowPopup("Invalid character detected, Show more?", "Cannot create file",
-                            "Do not use invalid symbols in file names.\nInvalid character found: " + c);
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public static async Task<bool> CheckCreateFile(string fileName, string folderName = null) {
-            bool didntExist = false;
-
-            if (folderName != null) {
-                if (!Directory.Exists(folderName)) {
-                    Directory.CreateDirectory(folderName);
-                    didntExist = true;
-                }
-            }
-            if (fileName != null) {
-                if (!File.Exists(ConfigControl.appFolder + fileName)) {
-                    if (ConfigControl.appFolder + fileName == ConfigControl.appFolder + ConfigControl.config) {
-                        ConfigControl.CreateConfig(ConfigControl.appFolder + fileName);
-                    } else {
-                        var newFile = File.Create(ConfigControl.appFolder + fileName);
-                        newFile.Close();
-                    }
-                    didntExist = true;
-                }
-            }
-            return didntExist;
-        }
-
-        bool closing = false;
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             closing = true;
             AsyncCamCom.Disconnect(true);
@@ -808,10 +489,10 @@ namespace SSUtility2 {
                 Menu_Video_Record.Text = "Start Recording";
 
                 if (finalMode) {
-                    SaveFileDialog fdg = SaveFile(ConfigControl.screencapFileName.stringVal, ".avi", finalDest);
+                    SaveFileDialog fdg = Tools.SaveFile(ConfigControl.screencapFileName.stringVal, ".avi", finalDest);
                     DialogResult result = fdg.ShowDialog();
                     if (result == DialogResult.OK) {
-                        CopySingleFile(fdg.FileName, screenRecordName);
+                        Tools.CopySingleFile(fdg.FileName, screenRecordName);
                     }
                     MessageBox.Show("Saved recording to: " + screenRecordName +
                         "\nFinal saved: " + fdg.FileName);
@@ -820,10 +501,10 @@ namespace SSUtility2 {
                 }
 
             } else {
-                CheckCreateFile(null, ConfigControl.vFolder.stringVal + @"\SSUtility2\");
+                Tools.CheckCreateFile(null, ConfigControl.vFolder.stringVal + @"\SSUtility2\");
                 string folder = ConfigControl.vFolder.stringVal + @"\SSUtility2\";
                 screenRecordName = folder + ConfigControl.screencapFileName.stringVal + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
-                screenRec = Record(screenRecordName, null);
+                screenRec = Tools.Record(screenRecordName, null);
                 Menu_Video_Record.Text = "Stop Recording";
             }
         }
@@ -878,8 +559,35 @@ namespace SSUtility2 {
             mainPlayer.EnableSecond();
         }
 
-        private void MainForm_SizeChanged(object sender, EventArgs e) {
-            mainPlayer.VLCPlayer_D.Refresh();
+        bool dragging = false;
+        Point eOriginalPos;
+        private void stream_SecondPlayer_MouseMove(object sender, MouseEventArgs e) {
+            Cursor = Cursors.Default;
+            if (dragging) {
+                int xDragDist = e.X - eOriginalPos.X;
+                int yDragDist = e.Y - eOriginalPos.Y;
+
+                if (sP_Player.Location.X + xDragDist > 0 && sP_Player.Location.X + xDragDist < Width - sP_Player.Width)
+                    sP_Player.Left += xDragDist;
+
+                if(sP_Player.Location.Y + yDragDist > 0 && sP_Player.Location.Y + yDragDist < Height - sP_Player.Height)
+                    sP_Player.Top += yDragDist;
+            }
+        }
+
+        private void stream_SecondPlayer_MouseDown(object sender, MouseEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
+                mainPlayer.secondView.settings.Show();
+                mainPlayer.secondView.settings.BringToFront();
+            } else if (e.Button == MouseButtons.Left) {
+                eOriginalPos = new Point(e.X, e.Y);
+                dragging = true;
+            }
+        }
+
+        private void stream_SecondPlayer_MouseUp(object sender, MouseEventArgs e) {
+            dragging = false;
+            eOriginalPos = new Point(0, 0);
         }
 
     } // end of class MainForm

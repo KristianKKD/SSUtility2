@@ -31,11 +31,11 @@ namespace SSUtility2 {
         }
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
-            DoPreset(MainForm.m.MakeAdr(), 196);
+            DoPreset(Tools.MakeAdr(), 196);
         }
 
         private void b_Presets_Admin_DefaultMen_Click(object sender, EventArgs e) {
-            DoPreset(MainForm.m.MakeAdr(), 2);
+            DoPreset(Tools.MakeAdr(), 2);
         }
 
         private void b_Presets_Daylight_Wiper_Click(object sender, EventArgs e) {
@@ -183,7 +183,7 @@ namespace SSUtility2 {
         }
 
         void PresetLearnGoto(bool learn) {
-            if (!MainForm.CheckIfNameValid(tB_Presets_Number.Text, true) || tB_Presets_Number.Text.ToString() == "") {
+            if (!Tools.CheckIfNameValid(tB_Presets_Number.Text, true) || tB_Presets_Number.Text.ToString() == "") {
                 MessageBox.Show("Invalid Preset!");
                 return;
             }
@@ -191,9 +191,9 @@ namespace SSUtility2 {
             byte presetNumber = Convert.ToByte(tB_Presets_Number.Text);
 
             if (learn) {
-                AsyncCamCom.SendNewCommand(D.protocol.Preset(MainForm.m.MakeAdr(), presetNumber, D.PresetAction.Set));
+                AsyncCamCom.SendNewCommand(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Set));
             } else {
-                AsyncCamCom.SendNewCommand(D.protocol.Preset(MainForm.m.MakeAdr(), presetNumber, D.PresetAction.Goto));
+                AsyncCamCom.SendNewCommand(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Goto));
             }
         }
 

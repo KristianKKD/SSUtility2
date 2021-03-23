@@ -125,7 +125,7 @@ namespace SSUtility2 {
                 
                 SendTimer.Start();
             } catch (Exception e) {
-                MainForm.ShowPopup("Failed to process message return!\nShow more?", "Response Failed!", e.ToString());
+                Tools.ShowPopup("Failed to process message return!\nShow more?", "Response Failed!", e.ToString());
             }
         }
 

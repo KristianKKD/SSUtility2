@@ -36,7 +36,7 @@ namespace SSUtility2 {
                 }
             } catch (Exception e){
                 if (!hideErrors)
-                    MainForm.ShowPopup("Failed to initialize connection to camera!\nShow more?", "Connection Attempt Failed!"
+                    Tools.ShowPopup("Failed to initialize connection to camera!\nShow more?", "Connection Attempt Failed!"
                         , e.ToString());
                 result = false;
             }
@@ -60,7 +60,7 @@ namespace SSUtility2 {
             Command com = new Command(code, false, false, spammable, null);
 
             if (com.invalid) {
-                MainForm.m.WriteToResponses("Failed to send " + MainForm.m.ReadCommand(code), true);
+                MainForm.m.WriteToResponses("Failed to send " + Tools.ReadCommand(code), true);
                 return null;
             }
             return com;
@@ -90,7 +90,7 @@ namespace SSUtility2 {
                     Command com = new Command(oldCom.content, true, true);
                 }
             } catch (Exception e) {
-                MainForm.ShowPopup("Failed to queue a repeating command!\nShow more?", "Command Queuing Failed!", e.ToString());
+                Tools.ShowPopup("Failed to queue a repeating command!\nShow more?", "Command Queuing Failed!", e.ToString());
             }
         }
 
@@ -112,14 +112,14 @@ namespace SSUtility2 {
                 bool parsedPort = int.TryParse(ConfigControl.savedPort.stringVal, out int port);
                 if (!parsedIP || !parsedPort) {
                     if (!hideErrors)
-                        MainForm.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
+                        Tools.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "IP valid: " + parsedIP.ToString() + "\nPort valid: " + parsedPort.ToString());
                     return false;
                 }
 
                 if (!OtherCamCom.PingAdr(ep.Address).Result) {
                     if (!hideErrors)
-                        MainForm.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
+                        Tools.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "IP valid: " + parsedIP.ToString() + "\nPort valid: " + parsedPort.ToString() + "\nPing: Failed");
                     return false;
                 }
@@ -164,7 +164,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MainForm.ShowPopup("Connect callback failed!\nIP likely does not belong to a camera!\nShow more?", "Connect Failed!", e.ToString());
+                Tools.ShowPopup("Connect callback failed!\nIP likely does not belong to a camera!\nShow more?", "Connect Failed!", e.ToString());
             }
         }
 
@@ -180,7 +180,7 @@ namespace SSUtility2 {
                 sock.Close();
             } catch (Exception e){
                 if (!hideErrors)
-                    MainForm.ShowPopup("Disconnection error occurred!", "Error Occurred!", e.ToString());
+                    Tools.ShowPopup("Disconnection error occurred!", "Error Occurred!", e.ToString());
             }
         }
 
@@ -195,7 +195,7 @@ namespace SSUtility2 {
                         MessageBox.Show("Send command returned null!");
                         return;
                     }
-                    string commandText = MainForm.m.ReadCommand(currentCom.content);
+                    string commandText = Tools.ReadCommand(currentCom.content);
                     if (currentCom.name != null) {
                         commandText = commandText + " (" + currentCom.name + ")";
                     }
@@ -207,7 +207,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MainForm.ShowPopup("Failed to send queued command!\nShow more?", "Send Failed!", e.ToString());
+                Tools.ShowPopup("Failed to send queued command!\nShow more?", "Send Failed!", e.ToString());
             }
         }
 
@@ -219,7 +219,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MainForm.ShowPopup("Send callback failed!\nShow more?", "Send Failed!", e.ToString());
+                Tools.ShowPopup("Send callback failed!\nShow more?", "Send Failed!", e.ToString());
             }
         }
 
@@ -240,7 +240,7 @@ namespace SSUtility2 {
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                MainForm.ShowPopup("Receive callback failed!\nShow more?", "Receive Failed!", e.ToString());
+                Tools.ShowPopup("Receive callback failed!\nShow more?", "Receive Failed!", e.ToString());
             }
         }
 
@@ -302,7 +302,7 @@ namespace SSUtility2 {
                     }
                 }
             } catch (Exception e) {
-                MainForm.ShowPopup(CommandQueue.GetNameString() + "Message processing failed!\nShow more?", "Receive Failed!", e.ToString());
+                Tools.ShowPopup(CommandQueue.GetNameString() + "Message processing failed!\nShow more?", "Receive Failed!", e.ToString());
             };
         }
 

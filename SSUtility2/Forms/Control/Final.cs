@@ -17,7 +17,7 @@ namespace SSUtility2.Forms.FinalTest {
         private void b_Final_Next_Click(object sender, EventArgs e) {
             try {
                 bool notCompleted = false;
-                var textboxList = MainForm.m.GetAllType(this, typeof(TextBox));
+                var textboxList = Tools.GetAllType(this, typeof(TextBox));
 
                 foreach (TextBox tb in textboxList) {
                     if (tb.Text.Length < 1) {
@@ -39,7 +39,7 @@ namespace SSUtility2.Forms.FinalTest {
                 string ip = HasIP(tB_Source.Text);
                 if (ip != "") {
                     if (!OtherCamCom.PingAdr(IPAddress.Parse(ip)).Result) {
-                        MainForm.ShowPopup("Couldn't ping address given within Source Folder input!\nShow more?",
+                        Tools.ShowPopup("Couldn't ping address given within Source Folder input!\nShow more?",
                             "Final Mode Failed!", "Tried to ping: " + ip);
                         return;
                     }
@@ -61,8 +61,8 @@ namespace SSUtility2.Forms.FinalTest {
                 string self = Process.GetCurrentProcess().MainModule.FileName;
                 File.Copy(self, appFolder + System.Diagnostics.Process.GetCurrentProcess().MainModule.ModuleName);
 
-                if (MainForm.CheckIfNameValid(dest, false) &&
-                    MainForm.CheckIfNameValid(tB_Source.Text, false)) {
+                if (Tools.CheckIfNameValid(dest, false) &&
+                    Tools.CheckIfNameValid(tB_Source.Text, false)) {
 
                     if (check_Default.Checked) {
                         ConfigControl.finalSource.UpdateValue(tB_Source.Text);
@@ -71,15 +71,15 @@ namespace SSUtility2.Forms.FinalTest {
                     }
 
                     if (check_Old.Checked) {
-                        MainForm.CopyFiles(appFolder, Directory.GetFiles(tB_Source.Text));
-                        MainForm.CopyDirs(appFolder, Directory.GetDirectories(tB_Source.Text));
+                        Tools.CopyFiles(appFolder, Directory.GetFiles(tB_Source.Text));
+                        Tools.CopyDirs(appFolder, Directory.GetDirectories(tB_Source.Text));
                     }
                 }
 
                 MainForm.m.Text = "FINAL TEST MODE - " + customer.Replace("_", " ");
                 MainForm.m.ToggleFinalMode(dest);
             } catch (Exception error){
-                MainForm.ShowPopup("Failed to start Final Test Mode!\nShow more?", "Final Test Mode Failed!", error.ToString());
+                Tools.ShowPopup("Failed to start Final Test Mode!\nShow more?", "Final Test Mode Failed!", error.ToString());
             }
         }
 
@@ -94,11 +94,11 @@ namespace SSUtility2.Forms.FinalTest {
         }
 
         private void b_BrowseSource_Click(object sender, EventArgs e) {
-            MainForm.BrowseFolderButton(tB_Source);
+            Tools.BrowseFolderButton(tB_Source);
         }
 
         private void b_BrowseDest_Click(object sender, EventArgs e) {
-            MainForm.BrowseFolderButton(tB_Destination);
+            Tools.BrowseFolderButton(tB_Destination);
         }
 
     }

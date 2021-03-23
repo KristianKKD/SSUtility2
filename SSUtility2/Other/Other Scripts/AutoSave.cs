@@ -18,7 +18,7 @@ namespace SSUtility2 {
             }
 
             if (MainForm.m.finalMode) {
-                MainForm.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + ConfigControl.autoSave, path);
+                Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + ConfigControl.autoSave, path);
             }
         }
 

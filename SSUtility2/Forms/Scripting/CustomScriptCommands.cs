@@ -166,7 +166,7 @@ namespace SSUtility2 {
                 foreach (ScriptCommand[] commandArray in cameraArrayCommands) {
                     foreach (ScriptCommand sc in commandArray) {
 
-                    if(line.Contains(MainForm.m.ReadCommand(sc.codeContent, true))){
+                    if(line.Contains(Tools.ReadCommand(sc.codeContent, true))){
                         return sc;
                     }
 
@@ -187,7 +187,7 @@ namespace SSUtility2 {
                 return;
             }
 
-            ScriptCommand send = CheckForCommands(command, MainForm.m.MakeAdr()).Result;
+            ScriptCommand send = CheckForCommands(command, Tools.MakeAdr()).Result;
             if (send.codeContent == PelcoD.noCommand) {
                 if (command.Length == 0) {
                     MessageBox.Show("Command length is 0!\nMake sure to check the command in the settings!");

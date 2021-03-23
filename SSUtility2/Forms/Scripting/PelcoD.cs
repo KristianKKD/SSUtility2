@@ -59,7 +59,7 @@ namespace SSUtility2 {
                     await Task.Delay(300).ConfigureAwait(false);
                 }
             } catch (Exception e) {
-                MainForm.ShowPopup("Failed to send commands!\nShow more?", "Command firing failed", e.ToString());
+                Tools.ShowPopup("Failed to send commands!\nShow more?", "Command firing failed", e.ToString());
             }
 
             Invoke((MethodInvoker)delegate {
@@ -81,7 +81,7 @@ namespace SSUtility2 {
                 } else {
                     uint adr = 0;
                     Invoke((MethodInvoker)delegate {
-                        adr = MainForm.m.MakeAdr();
+                        adr = Tools.MakeAdr();
                     });
                     sendCom = await CustomScriptCommands.CheckForCommands(line, adr).ConfigureAwait(false);
                     if (sendCom.codeContent == noCommand) {
@@ -172,7 +172,7 @@ namespace SSUtility2 {
 
                 uint adr = 0;
                 Invoke((MethodInvoker)delegate {
-                    adr = MainForm.m.MakeAdr();
+                    adr = Tools.MakeAdr();
                 });
 
                 uint checksum = (cm1 + cm2 + d1 + d2 + adr) % 256;
@@ -185,7 +185,7 @@ namespace SSUtility2 {
         }
 
         public static void SaveScript(string[] lines, string name = null) {
-            SaveFileDialog fdg = MainForm.SaveFile(name, ".txt", ConfigControl.savedFolder);
+            SaveFileDialog fdg = Tools.SaveFile(name, ".txt", ConfigControl.savedFolder);
             DialogResult result = fdg.ShowDialog();
             if (result == DialogResult.OK) {
                 ConfigControl.ResetFile(fdg.FileName);
@@ -214,7 +214,7 @@ namespace SSUtility2 {
                         tB_Commands.Text += line + "\n";
                     }
                 } else {
-                    MainForm.ShowPopup("Please open a .txt file!\nYou tried to open an unsupported file type! Show more info?", "Invalid File Type!",
+                    Tools.ShowPopup("Please open a .txt file!\nYou tried to open an unsupported file type! Show more info?", "Invalid File Type!",
                         "You tried opening: " + fdg.FileName + "\nTry opening a .txt file instead.");
                 }
             }
@@ -266,7 +266,7 @@ namespace SSUtility2 {
                         tB_Commands.AppendText(File.ReadAllText(line) + "\n");
                 }
             } catch (Exception error) {
-                MainForm.ShowPopup("Failed to open script!\nShow more?", "Script load failed!", error.ToString());
+                Tools.ShowPopup("Failed to open script!\nShow more?", "Script load failed!", error.ToString());
             }
         }
 

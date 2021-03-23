@@ -5,48 +5,37 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebEye;
 
 namespace SSUtility2 {
 
     public partial class Detached : Form {
 
-        public Panel myPanel;
         public VideoSettings settings;
         public Detached secondView;
-
-        public SPanel.SizeablePanel sP_Player;
-        public AxAXVLC.AxVLCPlugin2 myPlayer;
 
         Recorder recorderD;
 
         public bool recording = false;
 
-        bool dragging = false;
-        Point eOriginalPos;
+        Stream vid;
 
         public Detached(bool attachSecond) {
             InitializeComponent();
             settings = new VideoSettings();
             settings.originalDetached = this;
-            myPlayer = VLCPlayer_D;
             if (attachSecond)
                 InitSecond();
         }
 
-        async Task InitSecond() {
+        void InitSecond() {
             try {
-                sP_Player = new SPanel.SizeablePanel();
+                if (MainForm.m.p_Control.InvokeRequired) {
+                    MainForm.m.p_Control.Invoke(new MethodInvoker(this.InitSecond));
+                } else {
+                    MainForm.m.p_Control.Controls.Add(MainForm.m.sP_Player);
 
-                await Task.Delay(100).ConfigureAwait(false);
-
-                Invoke((MethodInvoker)delegate {
-                    myPanel.Controls.Add(sP_Player);
-
-                    sP_Player.BackColor = Color.Black;
-                    sP_Player.BorderStyle = BorderStyle.FixedSingle;
-                    sP_Player.Size = new Size(400, 250);
-
-                    sP_Player.BringToFront();
+                    MainForm.m.sP_Player.BringToFront();
 
                     secondView = new Detached(false);
                     secondView.settings.originalDetached = this;
@@ -54,25 +43,10 @@ namespace SSUtility2 {
                     secondView.settings.Text = "Secondary Video Settings";
                     secondView.settings.isSecondary = true;
 
-                    AxAXVLC.AxVLCPlugin2 player = new AxAXVLC.AxVLCPlugin2();
+                    //MainForm.m.sP_Player.Hide(); //and below too
 
-                    sP_Player.Controls.Add(player);
-                    player.Toolbar = false;
-                    player.Branding = false;
-                    player.volume = 0;
-
-                    sP_Player.Hide(); //and below too
-
-                    secondView.myPlayer = player;
-                    secondView.VLCPlayer_D.Dispose();
-
-                    AttachSecondaryFunctions();
-
-                    sP_Player.Location = new Point(MainForm.m.Width - sP_Player.Width - 80, 30);
-                    player.Location = new Point(7, 5);
-                    player.Size = new Size(sP_Player.Width - 15, sP_Player.Height - 10);
-                    player.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right | AnchorStyles.Left);
-                });
+                    secondView.stream_Player = MainForm.m.stream_SecondPlayer;
+                }
 
             } catch (Exception e) {
                 MessageBox.Show("INITSECOND\n" + e.ToString());
@@ -119,7 +93,7 @@ namespace SSUtility2 {
         }
 
         public void StopPlaying() {
-            myPlayer.playlist.stop();
+            vid.Stop();
             settings.isPlaying = false;
             MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
         }
@@ -144,15 +118,24 @@ namespace SSUtility2 {
                     StopPlaying();
                 }
             } catch (Exception e) {
-                MainForm.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
+                Tools.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
                 StopPlaying();
             }
         }
 
         public async Task<bool> Play(bool showError, Detached player) {
             try {
-                Uri combinedUrl = player.GetCombined();
-                //combinedUrl = new Uri(@"rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov"); //
+                if (!this.IsHandleCreated)
+                    this.CreateHandle();
+
+                Uri combinedUrl;
+                if (player.settings.checkB_PlayerD_Manual.Checked) {
+                    combinedUrl = player.GetCombined();
+                    player.settings.tB_PlayerD_SimpleAdr.Text = combinedUrl.ToString();
+                } else
+                    combinedUrl = new Uri(player.settings.tB_PlayerD_SimpleAdr.Text);
+
+                //rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
 
                 if (showError && !player.settings.isSecondary) {
                     bool parsed = IPAddress.TryParse(combinedUrl.Host, out IPAddress parsedIP);
@@ -167,24 +150,18 @@ namespace SSUtility2 {
                 }
 
                 Invoke((MethodInvoker)delegate {
-                    player.settings.tB_PlayerD_SimpleAdr.Text = combinedUrl.ToString();
+                    if (player.settings.isPlaying)
+                        player.StopPlaying();
+                    vid = Stream.FromUri(combinedUrl);
+                    player.stream_Player.AttachStream(vid);
+                    vid.Start();
                 });
 
-                AxAXVLC.AxVLCPlugin2 vlc = player.myPlayer;
-
-                if (vlc.playlist.isPlaying) {
-                    vlc.playlist.stop();
-                    vlc.playlist.items.clear();
-                }
-
-                vlc.playlist.add(combinedUrl.ToString(), null, ":avcodec -hw:network -caching="
-                    + player.settings.tB_PlayerD_Buffering.Text); //might have to look at more options
-                vlc.playlist.next();
                 settings.isPlaying = true;
 
                 return true;
             } catch (Exception e) {
-                MainForm.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
+                Tools.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
                 return false;
             }
         }
@@ -193,8 +170,8 @@ namespace SSUtility2 {
             MainForm.m.Menu_Video_Info.Enabled = true;
             MainForm.m.Menu_Video_Swap.Enabled = true;
 
-            sP_Player.Show();
-            sP_Player.BringToFront();
+            MainForm.m.sP_Player.Show();
+            MainForm.m.sP_Player.BringToFront();
             secondView.settings.Copy(settings);
             if (settings.isPlaying)
                 secondView.Play(false, secondView);
@@ -204,11 +181,11 @@ namespace SSUtility2 {
             MainForm.m.Menu_Video_Info.Enabled = false;
             MainForm.m.Menu_Video_Swap.Enabled = false;
 
-            sP_Player.Hide(); //here
+            //MainForm.m.sP_Player.Hide(); //here
         }
 
         public void SnapShot() {
-            MainForm.m.SaveSnap(this);
+            Tools.SaveSnap(this);
         }
 
         private void Menu_Settings_Click(object sender, EventArgs e) {
@@ -220,24 +197,13 @@ namespace SSUtility2 {
         }
 
         private void Menu_Snapshot_Click(object sender, EventArgs e) {
-            MainForm.m.SaveSnap(this);
+            Tools.SaveSnap(this);
         }
 
         private void Menu_Record_Click(object sender, EventArgs e) {
             (bool, Recorder) vals = MainForm.m.StopStartRec(recording, this, recorderD);
             recording = vals.Item1;
             recorderD = vals.Item2;
-        }
-
-        private void VLCPlayer_D_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
-            if (MainForm.m.mainCp.myPanel.Visible)
-                return;
-            if (Cursor.Position.X - MainForm.m.Location.X < 70) {
-                MainForm.m.b_Open.Visible = true;
-                MainForm.m.b_Open.BringToFront();
-            } else
-                MainForm.m.b_Open.Visible = false;
-
         }
 
         public void UpdateMode() {
@@ -278,45 +244,14 @@ namespace SSUtility2 {
             }
         }
 
-        void AttachSecondaryFunctions() {
-            secondView.myPlayer.MouseDownEvent += (s, e) => {
-                if (e.button == 2) {
-                    secondView.settings.Show();
-                    secondView.settings.BringToFront();
-                } else if (e.button == 1) {
-                    eOriginalPos = new Point(e.x, e.y);
-                    dragging = true;
-                }
-            };
-
-            secondView.myPlayer.MouseMoveEvent += (s, e) => {
-
-                if (dragging) {
-                    int xDragDist = e.x - eOriginalPos.X;
-                    int xLocationDragDist = sP_Player.Location.X + (xDragDist * 2);
-                    int w = MainForm.m.Width - sP_Player.Width;
-                    if (MainForm.m.mainCp.myPanel.Visible)
-                        w -= MainForm.m.mainCp.Width;
-
-                    int yDragDist = e.y - eOriginalPos.Y;
-                    int yLocationDragDist = sP_Player.Location.Y + (yDragDist * 2);
-                    int h = MainForm.m.Height - sP_Player.Height;
-
-                    if (xLocationDragDist < w && xLocationDragDist > -2)
-                        sP_Player.Left += xDragDist;
-
-                    if (yLocationDragDist < h && yLocationDragDist > -1)
-                        sP_Player.Top += yDragDist;
-
-                }
-            };
-
-            secondView.myPlayer.MouseUpEvent += (s, e) => {
-                dragging = false;
-                eOriginalPos = new Point(0, 0);
-            };
-
+        private void stream_Player_MouseMove(object sender, MouseEventArgs e) {
+            if (MainForm.m.mainCp.myPanel.Visible)
+                return;
+            if (Cursor.Position.X - MainForm.m.Location.X < 70) {
+                MainForm.m.b_Open.Visible = true;
+                MainForm.m.b_Open.BringToFront();
+            } else
+                MainForm.m.b_Open.Visible = false;
         }
-
     }
 }

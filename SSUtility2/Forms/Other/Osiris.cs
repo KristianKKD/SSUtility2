@@ -23,7 +23,7 @@ namespace SSUtility2 {
             string port = tB_Port.Text;
 
             if (ip.Length == 0 || port.Length == 0) {
-                MainForm.ShowPopup("Connection fields are empty!\nShow more?", "Can't Connect!",
+                Tools.ShowPopup("Connection fields are empty!\nShow more?", "Can't Connect!",
                     "Full address: " + ip + ":" + port);
                 return;
             }
@@ -53,8 +53,8 @@ namespace SSUtility2 {
             }
 
             if (!checkPassed) {
-                MainForm.ShowPopup("Failed to send message!\nShow more?", "Send Failed!",
-                    "Failed to send:\n" + MainForm.m.ReadCommand(command, true));
+                Tools.ShowPopup("Failed to send message!\nShow more?", "Send Failed!",
+                    "Failed to send:\n" + Tools.ReadCommand(command, true));
                 return "";
             }
 
@@ -295,7 +295,7 @@ namespace SSUtility2 {
         private void b_Connect_Click(object sender, EventArgs e) {
             //Connect();
             byte[] b = new byte[] { (byte)GetCRC(uint.Parse(tB_IP.Text)) };
-            Console.WriteLine(MainForm.m.ReadCommand(b, false));
+            Console.WriteLine(Tools.ReadCommand(b, false));
         }
 
     }

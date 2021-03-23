@@ -75,7 +75,7 @@ namespace SSUtility2 {
                 MainForm.m.Menu_Video_Info.Text = "Disable Info Panel";
                 ShowAll();
             } catch (Exception e) {
-                MainForm.ShowPopup("Error in updating info panel!\nShow more?", "Failed to update info panel!", e.ToString());
+                Tools.ShowPopup("Error in updating info panel!\nShow more?", "Failed to update info panel!", e.ToString());
                 isActive = false;
             }
         }

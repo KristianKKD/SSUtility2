@@ -10,7 +10,7 @@ namespace SSUtility2 {
         }
 
         private void b_RL_Clear_Click(object sender, EventArgs e) {
-            bool clear = MainForm.ShowPopup("Are you sure you want to clear the response log?", "Clear Response Log", "", false);
+            bool clear = Tools.ShowPopup("Are you sure you want to clear the response log?", "Clear Response Log", "", false);
             if(clear)
                 tB_Log.Clear();
         }

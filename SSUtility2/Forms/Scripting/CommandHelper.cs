@@ -41,7 +41,7 @@ namespace SSUtility2 {
                     row.Cells[0].Value = names;
 
                     if (!curCom.custom) {
-                        row.Cells[1].Value = MainForm.m.ReadCommand(curCom.codeContent, true);
+                        row.Cells[1].Value = Tools.ReadCommand(curCom.codeContent, true);
                     } else {
                         row.Cells[2].Value = "(Custom Command) ";
                     }

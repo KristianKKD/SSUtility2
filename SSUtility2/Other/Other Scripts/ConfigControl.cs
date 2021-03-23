@@ -90,7 +90,7 @@ namespace SSUtility2 {
 
 
             if (MainForm.m.finalMode) {
-                MainForm.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
+                Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
             }
         }
 

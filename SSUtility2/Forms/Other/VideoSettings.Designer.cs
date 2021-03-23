@@ -26,6 +26,7 @@ namespace SSUtility2
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VideoSettings));
             this.l_Name = new System.Windows.Forms.Label();
             this.tB_PlayerD_Name = new System.Windows.Forms.TextBox();
             this.p_PlayerD_Simple = new System.Windows.Forms.Panel();
@@ -379,6 +380,7 @@ namespace SSUtility2
             this.Controls.Add(this.p_PlayerD_Simple);
             this.Controls.Add(this.p_PlayerD_Extended);
             this.Controls.Add(this.checkB_PlayerD_Manual);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(334, 303);
             this.Name = "VideoSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -67,10 +67,13 @@ namespace SSUtility2 {
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Main = new System.Windows.Forms.Panel();
             this.p_Control = new System.Windows.Forms.Panel();
+            this.sP_Player = new SPanel.SizeablePanel();
+            this.stream_SecondPlayer = new WebEye.StreamControl.WinForms.StreamControl();
             this.b_Open = new System.Windows.Forms.Button();
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
             this.p_Control.SuspendLayout();
+            this.sP_Player.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -284,11 +287,38 @@ namespace SSUtility2 {
             // p_Control
             // 
             this.p_Control.Controls.Add(this.b_Open);
+            this.p_Control.Controls.Add(this.sP_Player);
             this.p_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.p_Control.Location = new System.Drawing.Point(0, 0);
             this.p_Control.Name = "p_Control";
             this.p_Control.Size = new System.Drawing.Size(1630, 860);
             this.p_Control.TabIndex = 1;
+            // 
+            // sP_Player
+            // 
+            this.sP_Player.BackColor = System.Drawing.Color.Black;
+            this.sP_Player.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.sP_Player.Controls.Add(this.stream_SecondPlayer);
+            this.sP_Player.Location = new System.Drawing.Point(985, 76);
+            this.sP_Player.Name = "sP_Player";
+            this.sP_Player.Size = new System.Drawing.Size(400, 250);
+            this.sP_Player.TabIndex = 2;
+            // 
+            // stream_SecondPlayer
+            // 
+            this.stream_SecondPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.stream_SecondPlayer.BackColor = System.Drawing.Color.Black;
+            this.stream_SecondPlayer.Location = new System.Drawing.Point(5, 5);
+            this.stream_SecondPlayer.Margin = new System.Windows.Forms.Padding(1);
+            this.stream_SecondPlayer.Name = "stream_SecondPlayer";
+            this.stream_SecondPlayer.PreserveStreamAspectRatio = false;
+            this.stream_SecondPlayer.Size = new System.Drawing.Size(388, 238);
+            this.stream_SecondPlayer.TabIndex = 44;
+            this.stream_SecondPlayer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.stream_SecondPlayer_MouseDown);
+            this.stream_SecondPlayer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.stream_SecondPlayer_MouseMove);
+            this.stream_SecondPlayer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.stream_SecondPlayer_MouseUp);
             // 
             // b_Open
             // 
@@ -319,11 +349,11 @@ namespace SSUtility2 {
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SSUtility V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
-            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_Main.ResumeLayout(false);
             this.p_Control.ResumeLayout(false);
+            this.sP_Player.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1145,5 +1175,7 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Window_Custom;
         public Button b_Open;
         public ToolStripMenuItem Menu_Video_EnableSecondary;
+        public SPanel.SizeablePanel sP_Player;
+        public WebEye.StreamControl.WinForms.StreamControl stream_SecondPlayer;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

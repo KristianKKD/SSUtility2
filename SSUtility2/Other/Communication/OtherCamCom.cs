@@ -34,7 +34,7 @@ namespace SSUtility2 {
             Int32.TryParse(newSub, out int other);
 
             if (mine != other) {
-                MainForm.ShowPopup("Local IP subnet is not the same as the camera subnet!\nShow possible fix?",
+                Tools.ShowPopup("Local IP subnet is not the same as the camera subnet!\nShow possible fix?",
                     "Subnet Error!", "Try changing your IP from: " + rawIp + "\n To: "
                     + rawIp.Replace(mySub, newSub) + "\nThe new IP will also have to be static!");
                 return false;

@@ -33,13 +33,13 @@
             this.b_PTZ_FocusPos = new System.Windows.Forms.Button();
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.Joystick = new Joystick.CentreStick();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_Right = new System.Windows.Forms.Button();
             this.b_PTZ_Left = new System.Windows.Forms.Button();
             this.cB_ipCon_Selected = new System.Windows.Forms.ComboBox();
             this.l_ipCon_Selected = new System.Windows.Forms.Label();
+            this.Joystick = new Joystick.CentreStick();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Joystick)).BeginInit();
             this.SuspendLayout();
@@ -127,16 +127,6 @@
             this.pictureBox1.TabIndex = 75;
             this.pictureBox1.TabStop = false;
             // 
-            // Joystick
-            // 
-            this.Joystick.BackColor = System.Drawing.Color.Black;
-            this.Joystick.Location = new System.Drawing.Point(112, 133);
-            this.Joystick.Name = "Joystick";
-            this.Joystick.Size = new System.Drawing.Size(50, 50);
-            this.Joystick.TabIndex = 74;
-            this.Joystick.TabStop = false;
-            this.Joystick.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Joystick_MouseUp);
-            // 
             // b_PTZ_Up
             // 
             this.b_PTZ_Up.BackColor = System.Drawing.Color.LightSkyBlue;
@@ -210,6 +200,16 @@
             this.l_ipCon_Selected.Size = new System.Drawing.Size(88, 13);
             this.l_ipCon_Selected.TabIndex = 86;
             this.l_ipCon_Selected.Text = "Selected Camera";
+            // 
+            // Joystick
+            // 
+            this.Joystick.BackColor = System.Drawing.Color.Black;
+            this.Joystick.Location = new System.Drawing.Point(112, 133);
+            this.Joystick.Name = "Joystick";
+            this.Joystick.Size = new System.Drawing.Size(50, 50);
+            this.Joystick.TabIndex = 74;
+            this.Joystick.TabStop = false;
+            this.Joystick.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Joystick_MouseUp);
             // 
             // ControlPanel
             // 

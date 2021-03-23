@@ -22,15 +22,15 @@ namespace SSUtility2 {
             PTZZoom(D.Zoom.Wide);
         }
         private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(), D.Focus.Far));
+            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(Tools.MakeAdr(), D.Focus.Far));
         }
 
         private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(MainForm.m.MakeAdr(), D.Focus.Near));
+            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(Tools.MakeAdr(), D.Focus.Near));
         }
 
         public void PTZZoom(D.Zoom dir) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(MainForm.m.MakeAdr(), dir));
+            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), dir));
         }
 
         private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {
@@ -58,9 +58,9 @@ namespace SSUtility2 {
             uint speed = Convert.ToUInt32(63);
 
             if (tilt != D.Tilt.Null) {
-                code = D.protocol.CameraTilt(MainForm.m.MakeAdr(), tilt, speed);
+                code = D.protocol.CameraTilt(Tools.MakeAdr(), tilt, speed);
             } else {
-                code = D.protocol.CameraPan(MainForm.m.MakeAdr(), pan, speed);
+                code = D.protocol.CameraPan(Tools.MakeAdr(), pan, speed);
             }
 
             AsyncCamCom.SendNonAsync(code);
@@ -70,9 +70,9 @@ namespace SSUtility2 {
             if (!AsyncCamCom.sock.Connected) {
                 return;
             }
-            AsyncCamCom.SendNonAsync(D.protocol.CameraStop(MainForm.m.MakeAdr()));
+            AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
             await Task.Delay(ConfigControl.commandRateMs.intVal).ConfigureAwait(false);
-            AsyncCamCom.SendNonAsync(D.protocol.CameraStop(MainForm.m.MakeAdr()));
+            AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
         }
 
         private void ControlPanel_Load(object sender, EventArgs e) {
@@ -89,7 +89,7 @@ namespace SSUtility2 {
             if (check_IPCon_KeyboardCon.Checked == true) {
                 uint ptSpeed = Convert.ToUInt32(63);
                 byte[] code = null;
-                uint address = MainForm.m.MakeAdr();
+                uint address = Tools.MakeAdr();
 
                 switch (k) { //maybe add diagonal support later
                     case Keys.Up:
@@ -120,11 +120,10 @@ namespace SSUtility2 {
             try {
                 Point coords = Joystick.coords;
 
-                if (Joystick.distance != 0) {
-                    //&& AsyncCamCom.sock.Connected) {
+                if (Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
                     byte[] code = null;
 
-                    uint adr = MainForm.m.MakeAdr();
+                    uint adr = Tools.MakeAdr();
                     int x = coords.X;
                     int y = coords.Y;
 
@@ -171,7 +170,7 @@ namespace SSUtility2 {
                 }
 
             } catch (Exception e) {
-                MainForm.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", e.ToString());
+                Tools.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", e.ToString());
             }
         }
 

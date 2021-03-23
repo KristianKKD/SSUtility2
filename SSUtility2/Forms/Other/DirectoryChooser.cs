@@ -16,7 +16,7 @@ namespace SSUtility2 {
         }
 
         private void b_Done_Click(object sender, EventArgs e) {
-            if (MainForm.CheckIfNameValid(tB_Dir.Text) && ConfigControl.CheckIfExists(tB_Dir, null)) {
+            if (Tools.CheckIfNameValid(tB_Dir.Text) && ConfigControl.CheckIfExists(tB_Dir, null)) {
                 string dirLocation = tB_Dir.Text;
                 if (!dirLocation.EndsWith(@"\")){
                     dirLocation += @"\";
@@ -27,13 +27,13 @@ namespace SSUtility2 {
                 ConfigControl.appFolder = dirLocation;
                 Dispose();
             } else {
-                MainForm.ShowPopup("Invalid directory name!\nShow more?", "Directory path invalid",
+                Tools.ShowPopup("Invalid directory name!\nShow more?", "Directory path invalid",
                     "You entered: " + tB_Dir.Text + "\nUse format similar to: " + ConfigControl.appFolder);
             }
         }
 
         private void b_Browse_Click(object sender, EventArgs e) {
-            MainForm.BrowseFolderButton(tB_Dir);
+            Tools.BrowseFolderButton(tB_Dir);
         }
 
         private void b_Default_Click(object sender, EventArgs e) {

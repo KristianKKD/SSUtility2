@@ -105,8 +105,8 @@ namespace SSUtility2 {
         }
 
         private void b_Hide_Click(object sender, EventArgs e) {
-            MainForm.m.mainPlayer.secondView.myPlayer.playlist.stop();
-            MainForm.m.mainPlayer.sP_Player.Hide();
+            //MainForm.m.mainPlayer.secondView.myPlayer.playlist.stop();
+            MainForm.m.sP_Player.Hide();
             Hide();
             MainForm.m.Menu_Video_EnableSecondary.Visible = true;
         }

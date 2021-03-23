@@ -27,9 +27,8 @@
             this.Menu_StartStop = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
-            this.VLCPlayer_D = new AxAXVLC.AxVLCPlugin2();
+            this.stream_Player = new WebEye.StreamControl.WinForms.StreamControl();
             this.Menu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_D)).BeginInit();
             this.SuspendLayout();
             // 
             // Menu
@@ -81,16 +80,17 @@
             this.Menu_Record.Text = "Start Recording";
             this.Menu_Record.Click += new System.EventHandler(this.Menu_Record_Click);
             // 
-            // VLCPlayer_D
+            // stream_Player
             // 
-            this.VLCPlayer_D.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VLCPlayer_D.Enabled = true;
-            this.VLCPlayer_D.Location = new System.Drawing.Point(0, 24);
-            this.VLCPlayer_D.Name = "VLCPlayer_D";
-            this.VLCPlayer_D.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("VLCPlayer_D.OcxState")));
-            this.VLCPlayer_D.Size = new System.Drawing.Size(772, 465);
-            this.VLCPlayer_D.TabIndex = 41;
-            this.VLCPlayer_D.MouseMoveEvent += new AxAXVLC.DVLCEvents_MouseMoveEventHandler(this.VLCPlayer_D_MouseMoveEvent);
+            this.stream_Player.BackColor = System.Drawing.Color.Black;
+            this.stream_Player.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stream_Player.Location = new System.Drawing.Point(0, 24);
+            this.stream_Player.Margin = new System.Windows.Forms.Padding(1);
+            this.stream_Player.Name = "stream_Player";
+            this.stream_Player.PreserveStreamAspectRatio = false;
+            this.stream_Player.Size = new System.Drawing.Size(772, 465);
+            this.stream_Player.TabIndex = 43;
+            this.stream_Player.MouseMove += new System.Windows.Forms.MouseEventHandler(this.stream_Player_MouseMove);
             // 
             // Detached
             // 
@@ -98,7 +98,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(772, 489);
-            this.Controls.Add(this.VLCPlayer_D);
+            this.Controls.Add(this.stream_Player);
             this.Controls.Add(this.Menu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Menu;
@@ -107,14 +107,12 @@
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
             this.Menu.ResumeLayout(false);
             this.Menu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.VLCPlayer_D)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        public AxAXVLC.AxVLCPlugin2 VLCPlayer_D;
         public System.Windows.Forms.MenuStrip Menu;
         public System.Windows.Forms.ToolStripMenuItem videoStreamToolStripMenuItem;
         public System.ComponentModel.IContainer components;
@@ -122,5 +120,6 @@
         public System.Windows.Forms.ToolStripMenuItem Menu_StartStop;
         public System.Windows.Forms.ToolStripMenuItem Menu_Snapshot;
         public System.Windows.Forms.ToolStripMenuItem Menu_Record;
+        public WebEye.StreamControl.WinForms.StreamControl stream_Player;
     }
 }

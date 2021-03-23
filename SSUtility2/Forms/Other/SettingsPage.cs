@@ -78,18 +78,18 @@ namespace SSUtility2 {
         }
 
         private void cB_Other_RefreshRate_TextChanged(object sender, EventArgs e) {
-            if (MainForm.CheckIfNameValid(cB_Other_RefreshRate.Text, true)) {
+            if (Tools.CheckIfNameValid(cB_Other_RefreshRate.Text, true)) {
                 ConfigControl.commandRateMs.UpdateValue(cB_Other_RefreshRate.Text);
             }
         }
 
         private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
-            MainForm.BrowseFolderButton(tB_Paths_sCFolder);
+            Tools.BrowseFolderButton(tB_Paths_sCFolder);
 
         }
 
         private void b_Paths_vBrowse_Click(object sender, EventArgs e) {
-            MainForm.BrowseFolderButton(tB_Paths_vFolder);
+            Tools.BrowseFolderButton(tB_Paths_vFolder);
         }
 
         private void tB_Paths_sCFolder_TextChanged(object sender, EventArgs e) {
@@ -131,7 +131,7 @@ namespace SSUtility2 {
         }
 
         private void tB_Rec_vFileN_TextChanged(object sender, EventArgs e) {
-            if (MainForm.CheckIfNameValid(tB_Rec_vFileN.Text)) {
+            if (Tools.CheckIfNameValid(tB_Rec_vFileN.Text)) {
                 ConfigControl.vFileName.UpdateValue(tB_Rec_vFileN.Text);
             } else {
                 tB_Rec_vFileN.Text = ConfigControl.vFileName.stringVal;
@@ -139,7 +139,7 @@ namespace SSUtility2 {
         }
 
         private void tB_Rec_scFileN_TextChanged(object sender, EventArgs e) {
-            if (MainForm.CheckIfNameValid(tB_Rec_scFileN.Text)) {
+            if (Tools.CheckIfNameValid(tB_Rec_scFileN.Text)) {
                 ConfigControl.scFileName.UpdateValue(tB_Rec_scFileN.Text);
             } else {
                 tB_Rec_vFileN.Text = ConfigControl.scFileName.stringVal;
@@ -155,9 +155,9 @@ namespace SSUtility2 {
         }
 
         private void b_ChangeDir_Click(object sender, EventArgs e) {
-            bool confirm = MainForm.ShowPopup("Moving the directory will reset app configuration AND WILL ALSO DELETE ALL FILES WITHIN THE OLD APP FOLDER!\nYou will have the option to save these files.\nAre you sure you want to continue?", "Warning", null, false);
+            bool confirm = Tools.ShowPopup("Moving the directory will reset app configuration AND WILL ALSO DELETE ALL FILES WITHIN THE OLD APP FOLDER!\nYou will have the option to save these files.\nAre you sure you want to continue?", "Warning", null, false);
             if (confirm) {
-                bool moveFiles = MainForm.ShowPopup("Would you like to move all current directory files to the new directory too?", "Move files?", null, false);
+                bool moveFiles = Tools.ShowPopup("Would you like to move all current directory files to the new directory too?", "Move files?", null, false);
                 string oldAppFolder = ConfigControl.appFolder;
 
                 MainForm.ChooseNewDirectory();
@@ -166,10 +166,10 @@ namespace SSUtility2 {
 
                 if (oldAppFolder != ConfigControl.appFolder && oldAppFolder != ConfigControl.appFolder + @"SSUtility\") {
                     if (moveFiles) {
-                        MainForm.CopyFiles(ConfigControl.appFolder, Directory.GetFiles(oldAppFolder));
+                        Tools.CopyFiles(ConfigControl.appFolder, Directory.GetFiles(oldAppFolder));
                     }
 
-                    MainForm.DeleteDirectory(oldAppFolder);
+                    Tools.DeleteDirectory(oldAppFolder);
                 }
                 MessageBox.Show("Finished changing directories!");
             }
