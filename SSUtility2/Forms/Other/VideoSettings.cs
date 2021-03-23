@@ -94,7 +94,7 @@ namespace SSUtility2 {
                 originalDetached.Play(true, originalDetached.secondView);
             else {
                 originalDetached.StartPlaying(true);
-                if (originalDetached.secondView == MainForm.m.mainPlayer && MainForm.m.Menu_Video_Swap.Enabled)
+                if (originalDetached.secondView == MainForm.m.mainPlayer && InfoPanel.i.isCamera)
                     originalDetached.Play(true, originalDetached.secondView);
             }
         }

@@ -119,8 +119,16 @@ namespace SSUtility2 {
             }
         }
 
-
-        
+        public static async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
+            if (tb.Text.Length < 1) {
+                tb.Text = ConfigControl.appFolder;
+                return false;
+            }
+            if (ConfigControl.CheckIfExists(tb, linkLabel)) {
+                return true;
+            }
+            return false;
+        }
 
         public static Recorder Record(string path, WebEye.StreamControl.WinForms.StreamControl player) {
             Recorder rec = new Recorder(new Record(path, ConfigControl.recFPS.intVal,

@@ -1,8 +1,6 @@
 ﻿using SSUtility2.Forms.FinalTest;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,17 +9,16 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.0.0";
+        public const string version = "v2.3.1.0";
 
-        private bool lite = false;
-        private bool isOriginal = false;
         private bool closing = false;
+        private bool keyboardControl = false;
 
         public bool finalMode = false;
 
-        public static Control[] saveList = new Control[0];
+        public static Control[] saveList;
+        private static Control[] controlPanel;
 
-        public ControlPanel mainCp;
         public CustomPanel custom;
         public SettingsPage setPage;
         public PelcoD pd;
@@ -38,6 +35,7 @@ namespace SSUtility2 {
 
         public static MainForm m;
 
+
         public async Task StartupStuff() {
             try {
                 m = this;
@@ -46,14 +44,9 @@ namespace SSUtility2 {
                 pd = new PelcoD();
                 D.protocol = new D();
 
-                lite = false;
                 bool first = CheckIfFirstTime();
 
-                p_Main.Select();
-
-                AttachControlPanel();
                 mainPlayer = AttachPlayer();
-                HideControlPanel();
 
                 AttachInfoPanel();
                 AttachCustomPanel();
@@ -77,13 +70,28 @@ namespace SSUtility2 {
                 setPage.tB_Custom_6,
                 setPage.tB_Custom_7,
                 setPage.tB_Custom_8,
-            };
+                };
+                controlPanel = new Control[] {
+                    b_PTZ_Up,
+                    b_PTZ_Down,
+                    b_PTZ_Left,
+                    b_PTZ_Right,
+                    b_PTZ_ZoomPos,
+                    b_PTZ_ZoomNeg,
+                    b_PTZ_FocusPos,
+                    b_PTZ_FocusNeg,
+                    pB_Background,
+                    Joystick,
+                };
 
                 FileStuff(first);
 
                 setPage.PopulateSettingText();
+                
                 Tools.SetFeatureToAllControls(m.Controls);
+                HideControlPanel();
                 b_Open.BringToFront();
+                
                 CommandQueue.Init();
                 AutoConnect();
 
@@ -242,8 +250,6 @@ namespace SSUtility2 {
         }
 
         void AttachControlPanel() {
-            mainCp = SpawnControlPanel(p_Control, false);
-            isOriginal = true;
         }
 
         void AttachCustomPanel() {
@@ -264,14 +270,21 @@ namespace SSUtility2 {
             p.BringToFront();
         }
 
-        public void HideControlPanel() {
-            mainCp.myPanel.Hide();
-            mainCp.myPanel.Visible = false;
+        public void ShowControlPanel() {
+            foreach (Control c in controlPanel) {
+                c.Show();
+                c.BringToFront();
+            }
+            Menu_Settings_CP.Text = "Hide Control Panel";
+            b_Open.Text = "<<";
         }
 
-        public void ShowControlPanel() {
-            mainCp.myPanel.Show();
-            mainCp.myPanel.Visible = true;
+        public void HideControlPanel() {
+            foreach (Control c in controlPanel) {
+                c.Hide();
+            }
+            Menu_Settings_CP.Text = "Show Control Panel";
+            b_Open.Text = ">>";
         }
 
         Detached AttachPlayer() {
@@ -282,22 +295,6 @@ namespace SSUtility2 {
 
             return d;
         }
-
-        public void InitLiteMode() {
-            m.Size = new Size(300, Height);
-            AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
-            lite = true;
-            
-            p_Control.Dispose();
-
-            ControlPanel cp = SpawnControlPanel(p_Main);
-            mainCp = cp;
-            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, false);
-
-            isOriginal = false;
-            Menu_Window_Lite.Text = "Dual Mode";
-        }
-
 
         public async Task<Detached> DetachVid(bool show, VideoSettings set, bool attachSecond) {
             Detached dv = new Detached(attachSecond);
@@ -321,27 +318,6 @@ namespace SSUtility2 {
         public void OpenPelco() {
             pd.Show();
             pd.BringToFront();
-        }
-
-        ControlPanel SpawnControlPanel(Panel p, bool makeLite = true) {
-            Panel pan = new Panel();
-            ControlPanel cp = new ControlPanel();
-            cp.myPanel = pan;
-
-            Tools.SetFeatureToAllControls(cp.Controls);
-
-            pan.Size = new Size(cp.Size.Width, cp.Size.Height - 30);
-            pan.Location = new Point(pan.Location.X, pan.Location.Y);
-            p.Controls.Add(pan);
-
-            AddControls(pan, cp);
-
-            return cp;
-        }
-
-        void AddControls(Panel pan, Control panel) {
-            var c = Tools.GetAll(panel);
-            pan.Controls.AddRange(c.ToArray());
         }
 
         void OpenFinal() {
@@ -368,19 +344,16 @@ namespace SSUtility2 {
             finalDest = destination;
         }
 
-        public async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
-            if (tb.Text.Length < 1) {
-                tb.Text = ConfigControl.appFolder;
-                return false;
+        void OpenCloseCP() {
+            if (!Joystick.Visible) {
+                ShowControlPanel();
+            } else {
+                HideControlPanel();
             }
-            if (ConfigControl.CheckIfExists(tb, linkLabel)) {
-                return true;
-            }
-            return false;
         }
 
         public void WriteToResponses(string text, bool hide, bool isInfo = false) {
-            if (MainForm.m.closing) {
+            if (closing) {
                 return;
             }
             if (this.InvokeRequired) {
@@ -409,9 +382,7 @@ namespace SSUtility2 {
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             closing = true;
             AsyncCamCom.Disconnect(true);
-            if (!lite) {
-                AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
-            }
+            AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
@@ -420,16 +391,6 @@ namespace SSUtility2 {
 
         private void Menu_Window_PelcoD_Click(object sender, EventArgs e) {
             OpenPelco();
-        }
-
-        private void Menu_Window_Lite_Click(object sender, EventArgs e) {
-            if (!isOriginal) {
-                Application.Restart();
-                Application.ExitThread();
-                this.Close();
-            } else {
-                InitLiteMode();
-            }
         }
 
         private void Menu_Final_Open_Click(object sender, EventArgs e) {
@@ -451,11 +412,6 @@ namespace SSUtility2 {
 
         private void Menu_Window_Osiris_Click(object sender, EventArgs e) {
             OpenOsiris();
-        }
-
-        private void Menu_Window_Settings_Click(object sender, EventArgs e) {
-            setPage.Show();
-            setPage.BringToFront();
         }
 
         private void Menu_QC_PanZero_Click(object sender, EventArgs e) {
@@ -509,10 +465,6 @@ namespace SSUtility2 {
             }
         }
 
-        private void Menu_Video_Info_Click(object sender, EventArgs e) {
-            InfoPanel.i.StartStopTicking();
-        }
-
         private void Menu_Window_Presets_Click(object sender, EventArgs e) {
             PresetPanel pp = new PresetPanel();
             pp.Show();
@@ -531,27 +483,7 @@ namespace SSUtility2 {
         }
 
         private void b_Open_Click(object sender, EventArgs e) {
-            if (!mainCp.myPanel.Visible) {
-                ShowControlPanel();
-                b_Open.Text = "<<";
-                b_Open.Location = new Point(mainCp.Width - 15, 0);
-            } else {
-                HideControlPanel();
-                b_Open.Text = ">>";
-                b_Open.Location = new Point(0, 0);
-            }
-        }
-
-        private void Menu_Video_Swap_Click(object sender, EventArgs e) { //ADD SWAP FUNCTIONALITY
-            string value;
-            if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
-                value = "Daylight";
-            } else {
-                value = "Thermal";
-            }
-
-            setPage.cB_ipCon_Selected.Text = value;
-            setPage.UpdateSelectedCam(true);
+            OpenCloseCP();
         }
 
         private void Menu_Video_EnableSecondary_Click(object sender, EventArgs e) {
@@ -590,5 +522,205 @@ namespace SSUtility2 {
             eOriginalPos = new Point(0, 0);
         }
 
+        private void Menu_Settings_Open_Click(object sender, EventArgs e) {
+            setPage.Show();
+            setPage.BringToFront();
+        }
+
+        private void Menu_Settings_Info_Click(object sender, EventArgs e) {
+            InfoPanel.i.StartStopTicking();
+        }
+
+        private void Menu_Settings_Swap_Click(object sender, EventArgs e) {
+            string value;
+            if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
+                value = "Daylight";
+            } else {
+                value = "Thermal";
+            }
+
+            setPage.cB_ipCon_Selected.Text = value;
+            setPage.UpdateSelectedCam(true);
+        }
+
+
+        public void StopCam() {
+            if (keyboardControl) {
+                CustomScriptCommands.QuickCommand("stop", false);
+            }
+        }
+
+        public void KeyControl(Keys k) {
+            if (keyboardControl) {
+                uint ptSpeed = Convert.ToUInt32(63);
+                byte[] code = null;
+                uint address = Tools.MakeAdr();
+
+                switch (k) { //maybe add diagonal support later
+                    case Keys.Up:
+                        code = D.protocol.CameraTilt(address, D.Tilt.Up, ptSpeed);
+                        break;
+                    case Keys.Down:
+                        code = D.protocol.CameraTilt(address, D.Tilt.Down, ptSpeed);
+                        break;
+                    case Keys.Left:
+                        code = D.protocol.CameraPan(address, D.Pan.Left, ptSpeed);
+                        break;
+                    case Keys.Right:
+                        code = D.protocol.CameraPan(address, D.Pan.Right, ptSpeed);
+                        break;
+                    case Keys.Enter:
+                        code = D.protocol.CameraZoom(address, D.Zoom.Tele);
+                        break;
+                    case Keys.Escape:
+                        code = D.protocol.CameraZoom(address, D.Zoom.Wide);
+                        break;
+                }
+
+                AsyncCamCom.SendNewCommand(code);
+            }
+        }
+
+        private void Menu_Settings_Keyboard_Click(object sender, EventArgs e) {
+            if (keyboardControl) {
+                keyboardControl = false;
+                Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
+            } else {
+                keyboardControl = true;
+                Menu_Settings_Keyboard.Text = "Disable PTZ Keyboard";
+            }
+        }
+
+        private void b_PTZ_ZoomPos_MouseDown(object sender, MouseEventArgs e) {
+            PTZZoom(D.Zoom.Tele);
+        }
+
+        private void b_PTZ_ZoomNeg_MouseDown(object sender, MouseEventArgs e) {
+            PTZZoom(D.Zoom.Wide);
+        }
+        private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
+            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(Tools.MakeAdr(), D.Focus.Far));
+        }
+
+        private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
+            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(Tools.MakeAdr(), D.Focus.Near));
+        }
+
+        private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
+            PTZMove(D.Tilt.Up);
+        }
+
+        private void b_PTZ_Down_MouseDown(object sender, MouseEventArgs e) {
+            PTZMove(D.Tilt.Down);
+        }
+
+        private void b_PTZ_Left_MouseDown(object sender, MouseEventArgs e) {
+            PTZMove(D.Tilt.Null, D.Pan.Left);
+        }
+
+        private void b_PTZ_Right_MouseDown(object sender, MouseEventArgs e) {
+            PTZMove(D.Tilt.Null, D.Pan.Right);
+        }
+
+        private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {
+            DelayStop();
+        }
+
+        public void PTZZoom(D.Zoom dir) {
+            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), dir));
+        }
+
+        void PTZMove(D.Tilt tilt = D.Tilt.Null, D.Pan pan = D.Pan.Null) {
+            byte[] code;
+            uint speed = Convert.ToUInt32(63);
+
+            if (tilt != D.Tilt.Null) {
+                code = D.protocol.CameraTilt(Tools.MakeAdr(), tilt, speed);
+            } else {
+                code = D.protocol.CameraPan(Tools.MakeAdr(), pan, speed);
+            }
+
+            AsyncCamCom.SendNonAsync(code);
+        }
+
+        async Task DelayStop() {
+            if (!AsyncCamCom.sock.Connected) {
+                return;
+            }
+            AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
+            await Task.Delay(ConfigControl.commandRateMs.intVal).ConfigureAwait(false);
+            AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
+        }
+
+        private void Joystick_MouseUp(object sender, MouseEventArgs e) {
+            if (AsyncCamCom.sock.Connected)
+                CustomScriptCommands.QuickCommand("stop", false);
+        }
+        public void Tick() {
+            try {
+                Point coords = Joystick.coords;
+
+                if (Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
+                    byte[] code = null;
+
+                    uint adr = Tools.MakeAdr();
+                    int x = coords.X;
+                    int y = coords.Y;
+
+                    uint xSpeed = Convert.ToUInt32(((0.25f * Math.Pow(Math.Abs(x), 2)) / 992) * 63);
+                    uint ySpeed = Convert.ToUInt32(((0.25f * Math.Pow(Math.Abs(y), 2)) / 992) * 63);
+
+                    //diagonals
+                    D.Pan p = D.Pan.Null;
+                    D.Tilt t = D.Tilt.Null;
+
+                    if (x < 0 && y < 0) {
+                        p = D.Pan.Left;
+                        t = D.Tilt.Down;
+                    } else if (x > 0 && y < 0) {
+                        p = D.Pan.Right;
+                        t = D.Tilt.Down;
+                    } else if (x < 0 && y > 0) {
+                        p = D.Pan.Left;
+                        t = D.Tilt.Up;
+                    } else if (x > 0 && y > 0) {
+                        p = D.Pan.Right;
+                        t = D.Tilt.Up;
+                    }
+                    //
+
+                    if (p != D.Pan.Null && t != D.Tilt.Null) {
+                        code = D.protocol.CameraPanTilt(adr, p, xSpeed, t, ySpeed);
+                    } else {
+                        //horizontal/vertical only
+                        if (x > 0 && y == 0) {
+                            code = D.protocol.CameraPan(adr, D.Pan.Right, xSpeed);
+                        } else if (x < 0 && y == 0) {
+                            code = D.protocol.CameraPan(adr, D.Pan.Left, xSpeed);
+                        } else if (y > 0 && x == 0) {
+                            code = D.protocol.CameraTilt(adr, D.Tilt.Up, ySpeed);
+                        } else if (y < 0 && x == 0) {
+                            code = D.protocol.CameraTilt(adr, D.Tilt.Down, ySpeed);
+                        }
+                        //
+                    }
+
+                    if (code != null)
+                        AsyncCamCom.SendNonAsync(code);
+                }
+
+            } catch (Exception e) {
+                Tools.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", e.ToString());
+            }
+        }
+
+        private void Menu_Settings_CP_Click(object sender, EventArgs e) {
+            OpenCloseCP();
+        }
+        
+        private void Menu_Window_Settings_Click(object sender, EventArgs e) {
+            setPage.Show();
+            setPage.BringToFront();
+        }
     } // end of class MainForm
 } // end of namespace SSLUtility2

@@ -93,13 +93,13 @@ namespace SSUtility2 {
         }
 
         private void tB_Paths_sCFolder_TextChanged(object sender, EventArgs e) {
-            if (MainForm.m.CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
+            if (Tools.CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
                 ConfigControl.scFolder.UpdateValue(tB_Paths_sCFolder.Text);
             }
         }
 
         private void tB_Paths_vFolder_TextChanged(object sender, EventArgs e) {
-            if (MainForm.m.CheckFinishedTypingPath(tB_Paths_vFolder, l_Paths_vCheck).Result) {
+            if (Tools.CheckFinishedTypingPath(tB_Paths_vFolder, l_Paths_vCheck).Result) {
                 ConfigControl.vFolder.UpdateValue(tB_Paths_vFolder.Text);
             }
         }
@@ -237,11 +237,15 @@ namespace SSUtility2 {
 
         public async Task UpdateSelectedCam(bool play) {
             ConfigControl.savedCamera.UpdateValue(cB_ipCon_Selected.Text);
-            
+
+            MainForm.m.Menu_Settings_Swap.Enabled = true;
+
             if (ConfigControl.savedCamera.stringVal.Contains("Daylight"))
-                MainForm.m.Menu_Video_Swap.Text = "Swap to Daylight";
+                MainForm.m.Menu_Settings_Swap.Text = "Swap to Daylight";
+            else if (ConfigControl.savedCamera.stringVal.Contains("Thermal"))
+                MainForm.m.Menu_Settings_Swap.Text = "Swap to Thermal";
             else
-                MainForm.m.Menu_Video_Swap.Text = "Swap to Thermal";
+                MainForm.m.Menu_Settings_Swap.Enabled = false;
 
             if (play && AsyncCamCom.sock.Connected)
                 MainForm.m.mainPlayer.UpdateMode();

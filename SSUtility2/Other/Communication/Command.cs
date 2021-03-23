@@ -41,9 +41,7 @@ namespace SSUtility2 {
 
         private static void SendCurrentCommand(object sender, EventArgs e) {
             try {
-                if (MainForm.m.mainCp != null) {
-                    MainForm.m.mainCp.Tick();
-                }
+                MainForm.m.Tick();
                 //Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " LOWPRIORITY: " + lowPriority.ToString());
                 if (!AsyncCamCom.sock.Connected) {
                     return;

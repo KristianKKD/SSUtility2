@@ -23,8 +23,6 @@ namespace SSUtility2 {
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 
-        public static ControlPanel cp;
-
         /// <summary>
         /// Program entry point.
         /// </summary>
@@ -52,10 +50,10 @@ namespace SSUtility2 {
             if (ApplicationIsActivated()) {
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN) {
                     int vkCode = Marshal.ReadInt32(lParam);
-                    cp.KeyControl((Keys)vkCode);
+                    MainForm.m.KeyControl((Keys)vkCode);
                 }
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP) {
-                    cp.StopCam();
+                    MainForm.m.StopCam();
                 }
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);

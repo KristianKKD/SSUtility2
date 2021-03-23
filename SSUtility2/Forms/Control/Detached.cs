@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Drawing;
-using System.Linq;
 using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebEye;
@@ -43,7 +40,7 @@ namespace SSUtility2 {
                     secondView.settings.Text = "Secondary Video Settings";
                     secondView.settings.isSecondary = true;
 
-                    //MainForm.m.sP_Player.Hide(); //and below too
+                    MainForm.m.sP_Player.Hide(); //and below too
 
                     secondView.stream_Player = MainForm.m.stream_SecondPlayer;
                 }
@@ -167,8 +164,7 @@ namespace SSUtility2 {
         }
 
         public async Task EnableSecond() {
-            MainForm.m.Menu_Video_Info.Enabled = true;
-            MainForm.m.Menu_Video_Swap.Enabled = true;
+            MainForm.m.Menu_Settings_Info.Visible = true;
 
             MainForm.m.sP_Player.Show();
             MainForm.m.sP_Player.BringToFront();
@@ -178,10 +174,9 @@ namespace SSUtility2 {
         }
 
         public async Task DisableSecond() {
-            MainForm.m.Menu_Video_Info.Enabled = false;
-            MainForm.m.Menu_Video_Swap.Enabled = false;
+            MainForm.m.Menu_Settings_Info.Visible = false;
 
-            //MainForm.m.sP_Player.Hide(); //here
+            MainForm.m.sP_Player.Hide(); //here
         }
 
         public void SnapShot() {
@@ -208,44 +203,52 @@ namespace SSUtility2 {
 
         public void UpdateMode() {
             try {
+                bool isCam = InfoPanel.i.isCamera;
+
                 settings.cB_PlayerD_Type.Text = ConfigControl.savedCamera.stringVal;
                 settings.checkB_PlayerD_Manual.Checked = true;
-                secondView.settings.checkB_PlayerD_Manual.Checked = true;
 
-                secondView.settings.Copy(settings);
+                if (isCam) {
+                    secondView.settings.checkB_PlayerD_Manual.Checked = true;
+                    secondView.settings.Copy(settings);
+                }
 
                 if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
-                    MainForm.m.Menu_Video_Swap.Text = "Swap to Daylight";
                     settings.cB_PlayerD_Type.Text = "Thermal";
-                    secondView.settings.cB_PlayerD_Type.Text = "Daylight";
                     ConfigControl.savedCamera.UpdateValue("Thermal");
-
                     settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
-                    if (secondView.settings.isPlaying) {
-                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
+
+                    if (isCam) {
+                        secondView.settings.cB_PlayerD_Type.Text = "Daylight";
+
+                        if (secondView.settings.isPlaying) {
+                            secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
+                        }
                     }
-
                 } else if (ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
-                    MainForm.m.Menu_Video_Swap.Text = "Swap to Thermal";
                     settings.cB_PlayerD_Type.Text = "Daylight";
-                    secondView.settings.cB_PlayerD_Type.Text = "Thermal";
                     ConfigControl.savedCamera.UpdateValue("Daylight");
-
                     settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
-                    if (secondView.settings.isPlaying) {
-                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
+
+                    if (isCam) {
+                        secondView.settings.cB_PlayerD_Type.Text = "Thermal";
+
+                        if (secondView.settings.isPlaying) {
+                            secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
+                        }
                     }
                 }
 
                 Play(true, this);
-                secondView.Play(true, secondView);
+                if (isCam)
+                    secondView.Play(true, secondView);
             } catch (Exception e) {
                 MessageBox.Show("UPDATEMODE\n" + e.ToString());
             }
         }
 
         private void stream_Player_MouseMove(object sender, MouseEventArgs e) {
-            if (MainForm.m.mainCp.myPanel.Visible)
+            if (!AsyncCamCom.sock.Connected)
                 return;
             if (Cursor.Position.X - MainForm.m.Location.X < 70) {
                 MainForm.m.b_Open.Visible = true;

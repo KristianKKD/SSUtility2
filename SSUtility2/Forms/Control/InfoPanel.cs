@@ -72,7 +72,7 @@ namespace SSUtility2 {
                 myConfig = await OtherCamCom.CheckConfiguration().ConfigureAwait(false);
 
                 isActive = true;
-                MainForm.m.Menu_Video_Info.Text = "Disable Info Panel";
+                MainForm.m.Menu_Settings_Info.Text = "Disable Info Panel";
                 ShowAll();
             } catch (Exception e) {
                 Tools.ShowPopup("Error in updating info panel!\nShow more?", "Failed to update info panel!", e.ToString());
@@ -83,7 +83,7 @@ namespace SSUtility2 {
         public void StopTicking() {
             HideAll();
             isActive = false;
-            MainForm.m.Menu_Video_Info.Text = "Enable Info Panel";
+            MainForm.m.Menu_Settings_Info.Text = "Enable Info Panel";
         }
 
         public async Task InfoPanelTick() {
@@ -116,8 +116,6 @@ namespace SSUtility2 {
                     myConfig = await OtherCamCom.CheckConfiguration().ConfigureAwait(false);
                     MainForm.m.mainPlayer.EnableSecond();
                 } else {
-                    MainForm.m.Menu_Video_Info.Enabled = false;
-                    MainForm.m.Menu_Video_Swap.Enabled = false;
                     isCamera = false;
                 }
             } catch (Exception e) {
