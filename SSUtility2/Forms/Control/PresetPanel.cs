@@ -197,5 +197,11 @@ namespace SSUtility2 {
             }
         }
 
+        private void PresetPanel_FormClosing(object sender, FormClosingEventArgs e) {
+            if (e.CloseReason == CloseReason.UserClosing) {
+                e.Cancel = true;
+                Hide();
+            }
+        }
     }
 }

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.2.0";
+        public const string version = "v2.3.2.1";
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -23,6 +23,7 @@ namespace SSUtility2 {
         public SettingsPage setPage;
         public PelcoD pd;
         public ResponseLog rl;
+        public PresetPanel pp;
 
         public Detached mainPlayer;
         
@@ -41,6 +42,7 @@ namespace SSUtility2 {
                 setPage = new SettingsPage();
                 rl = new ResponseLog();
                 pd = new PelcoD();
+                pp = new PresetPanel();
                 D.protocol = new D();
 
                 bool first = CheckIfFirstTime();
@@ -400,6 +402,7 @@ namespace SSUtility2 {
         public void OpenResponseLog() {
             rl.Show();
             rl.BringToFront();
+            rl.Location = Location;
         }
 
         private void Menu_Window_Osiris_Click(object sender, EventArgs e) {
@@ -458,9 +461,9 @@ namespace SSUtility2 {
         }
 
         private void Menu_Window_Presets_Click(object sender, EventArgs e) {
-            PresetPanel pp = new PresetPanel();
             pp.Show();
             pp.BringToFront();
+            pp.Location = Location;
         }
 
         private void Menu_Window_Custom_Click(object sender, EventArgs e) {
