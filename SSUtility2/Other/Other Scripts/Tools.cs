@@ -204,6 +204,17 @@ namespace SSUtility2 {
             }
         }
 
+        public static OpenFileDialog OpenFile() {
+            OpenFileDialog fileDlg = new OpenFileDialog();
+            fileDlg.InitialDirectory = ConfigControl.savedFolder;
+            fileDlg.Multiselect = false;
+            fileDlg.DefaultExt = ".txt";
+            fileDlg.Filter = "Text File (*.txt)|*.txt|All files (*.*)|*.*";
+            fileDlg.FilterIndex = 1;
+            fileDlg.RestoreDirectory = true;
+            fileDlg.Title = "Select Text File";
+            return fileDlg;
+        }
 
         public static void CopyFiles(string destination, string[] sourceDir) {
             foreach (string file in sourceDir) {

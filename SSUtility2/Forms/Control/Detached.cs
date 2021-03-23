@@ -40,7 +40,7 @@ namespace SSUtility2 {
                     secondView.settings.Text = "Secondary Video Settings";
                     secondView.settings.isSecondary = true;
 
-                    MainForm.m.sP_Player.Hide(); //and below too
+                    //MainForm.m.sP_Player.Hide(); //and below too
 
                     secondView.stream_Player = MainForm.m.stream_SecondPlayer;
                 }

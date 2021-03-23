@@ -204,7 +204,7 @@ namespace SSUtility2 {
         }
 
         private void b_PD_Load_Click(object sender, EventArgs e) {
-            OpenFileDialog fdg = MainForm.OpenFile();
+            OpenFileDialog fdg = Tools.OpenFile();
             DialogResult result = fdg.ShowDialog();
             if (result == DialogResult.OK) {
                 if (fdg.FileName.Contains(".txt")) {

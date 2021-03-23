@@ -24,7 +24,7 @@ namespace SSUtility2 {
         public static ConfigSetting vFileName = new ConfigSetting("Video", "VideoFileName", ConfigSetting.VarType.strings);
         public static ConfigSetting scFileName = new ConfigSetting("Snapshot", "SnapshotFileName", ConfigSetting.VarType.strings);
         public static ConfigSetting screencapFileName = new ConfigSetting("Recording", "ScreenRecordingFileName", ConfigSetting.VarType.strings);
-        public static ConfigSetting recQual = new ConfigSetting("70", "RecordingQuality", ConfigSetting.VarType.integer);
+        public static ConfigSetting recQual = new ConfigSetting("100", "RecordingQuality", ConfigSetting.VarType.integer);
         public static ConfigSetting recFPS = new ConfigSetting("30", "RecordingFramerate", ConfigSetting.VarType.integer);
         public static ConfigSetting commandRateMs = new ConfigSetting("100", "UpdateStatsTimerMs", ConfigSetting.VarType.integer);
         public static ConfigSetting subnetNotif = new ConfigSetting("false", "SubnetNotificationHidden", ConfigSetting.VarType.boolean);
@@ -37,6 +37,8 @@ namespace SSUtility2 {
         public static ConfigSetting savedPort = new ConfigSetting("6791", "SavedPort", ConfigSetting.VarType.strings);
         public static ConfigSetting savedCamera = new ConfigSetting("Daylight", "SavedCamera", ConfigSetting.VarType.strings);
         public static ConfigSetting autoReconnect = new ConfigSetting("true", "AutoReconnect", ConfigSetting.VarType.boolean);
+        public static ConfigSetting startupWidth = new ConfigSetting("1280", "StartupWidth", ConfigSetting.VarType.integer);
+        public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
 
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
@@ -56,7 +58,9 @@ namespace SSUtility2 {
             savedIP,
             savedPort,
             savedCamera,
-            autoReconnect
+            autoReconnect,
+            startupWidth,
+            startupHeight,
         };
 
 

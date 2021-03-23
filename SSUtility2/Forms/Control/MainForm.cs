@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.1.0";
+        public const string version = "v2.3.2.0";
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -34,7 +34,6 @@ namespace SSUtility2 {
         public string finalDest;
 
         public static MainForm m;
-
 
         public async Task StartupStuff() {
             try {
@@ -114,18 +113,6 @@ namespace SSUtility2 {
             if (ConfigControl.autoPlay.boolVal && connected && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "") {
                 mainPlayer.StartPlaying(false);
             }
-        }
-
-        public static OpenFileDialog OpenFile() {
-            OpenFileDialog fileDlg = new OpenFileDialog();
-            fileDlg.InitialDirectory = ConfigControl.savedFolder;
-            fileDlg.Multiselect = false;
-            fileDlg.DefaultExt = ".txt";
-            fileDlg.Filter = "Text File (*.txt)|*.txt|All files (*.*)|*.*";
-            fileDlg.FilterIndex = 1;
-            fileDlg.RestoreDirectory = true;
-            fileDlg.Title = "Select Text File";
-            return fileDlg;
         }
 
         async Task FileStuff(bool first) {
@@ -249,9 +236,6 @@ namespace SSUtility2 {
             p.Hide();
         }
 
-        void AttachControlPanel() {
-        }
-
         void AttachCustomPanel() {
             Panel p = new Panel();
             custom = new CustomPanel();
@@ -318,18 +302,34 @@ namespace SSUtility2 {
         public void OpenPelco() {
             pd.Show();
             pd.BringToFront();
+            pd.Location = Location;
         }
 
         void OpenFinal() {
             Final fin = new Final();
             fin.Show();
             fin.BringToFront();
+            fin.Location = Location;
         }
 
-        public static void OpenOsiris() {
+        public void OpenOsiris() {
             Osiris o = new Osiris();
             o.Show();
             o.BringToFront();
+            o.Location = Location;
+        }
+        void OpenCloseCP() {
+            if (!Joystick.Visible) {
+                ShowControlPanel();
+            } else {
+                HideControlPanel();
+            }
+        }
+
+        void OpenSettings() {
+            setPage.Show();
+            setPage.BringToFront();
+            setPage.Location = Location;
         }
 
         public void ToggleFinalMode(string destination) {
@@ -342,14 +342,6 @@ namespace SSUtility2 {
                 Menu_Final_Open.Text = "Stop File Recording";
             }
             finalDest = destination;
-        }
-
-        void OpenCloseCP() {
-            if (!Joystick.Visible) {
-                ShowControlPanel();
-            } else {
-                HideControlPanel();
-            }
         }
 
         public void WriteToResponses(string text, bool hide, bool isInfo = false) {
@@ -523,8 +515,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_Settings_Open_Click(object sender, EventArgs e) {
-            setPage.Show();
-            setPage.BringToFront();
+            OpenSettings();
         }
 
         private void Menu_Settings_Info_Click(object sender, EventArgs e) {
@@ -719,8 +710,11 @@ namespace SSUtility2 {
         }
         
         private void Menu_Window_Settings_Click(object sender, EventArgs e) {
-            setPage.Show();
-            setPage.BringToFront();
+            OpenSettings();
+        }
+
+        private void MainForm_ResizeEnd(object sender, EventArgs e) {
+            setPage.l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
         }
     } // end of class MainForm
 } // end of namespace SSLUtility2

@@ -25,8 +25,6 @@ namespace SSUtility2
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsPage));
             this.b_Settings_Default = new System.Windows.Forms.Button();
-            this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
-            this.l_Rec_Quality = new System.Windows.Forms.Label();
             this.tB_Rec_scFileN = new System.Windows.Forms.TextBox();
             this.l_Rec_sCFileN = new System.Windows.Forms.Label();
             this.cB_Rec_FPS = new System.Windows.Forms.ComboBox();
@@ -79,9 +77,16 @@ namespace SSUtility2
             this.l_Custom_1 = new System.Windows.Forms.Label();
             this.tB_Custom_1 = new System.Windows.Forms.TextBox();
             this.tP_Other = new System.Windows.Forms.TabPage();
+            this.l_Other_CurrentResolution = new System.Windows.Forms.Label();
+            this.tB_Other_ResolutionHeight = new System.Windows.Forms.TextBox();
+            this.l_Other_ResolutionHeight = new System.Windows.Forms.Label();
+            this.tB_Other_ResolutionWidth = new System.Windows.Forms.TextBox();
+            this.l_Other_ResolutionWidth = new System.Windows.Forms.Label();
             this.check_Other_AutoReconnect = new System.Windows.Forms.CheckBox();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
+            this.l_Rec_Quality = new System.Windows.Forms.Label();
+            this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             this.tP_Paths.SuspendLayout();
@@ -94,37 +99,13 @@ namespace SSUtility2
             // 
             this.b_Settings_Default.BackColor = System.Drawing.SystemColors.Control;
             this.b_Settings_Default.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Settings_Default.Location = new System.Drawing.Point(12, 215);
+            this.b_Settings_Default.Location = new System.Drawing.Point(12, 228);
             this.b_Settings_Default.Name = "b_Settings_Default";
             this.b_Settings_Default.Size = new System.Drawing.Size(75, 23);
             this.b_Settings_Default.TabIndex = 14;
             this.b_Settings_Default.Text = "Default All";
             this.b_Settings_Default.UseVisualStyleBackColor = false;
             this.b_Settings_Default.Click += new System.EventHandler(this.b_Settings_Default_Click);
-            // 
-            // cB_Rec_Quality
-            // 
-            this.cB_Rec_Quality.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_Rec_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.cB_Rec_Quality.FormattingEnabled = true;
-            this.cB_Rec_Quality.Items.AddRange(new object[] {
-            "50",
-            "70",
-            "100"});
-            this.cB_Rec_Quality.Location = new System.Drawing.Point(132, 41);
-            this.cB_Rec_Quality.Name = "cB_Rec_Quality";
-            this.cB_Rec_Quality.Size = new System.Drawing.Size(114, 21);
-            this.cB_Rec_Quality.TabIndex = 26;
-            this.cB_Rec_Quality.TextChanged += new System.EventHandler(this.cB_Rec_Quality_TextChanged);
-            // 
-            // l_Rec_Quality
-            // 
-            this.l_Rec_Quality.AutoSize = true;
-            this.l_Rec_Quality.Location = new System.Drawing.Point(6, 44);
-            this.l_Rec_Quality.Name = "l_Rec_Quality";
-            this.l_Rec_Quality.Size = new System.Drawing.Size(75, 13);
-            this.l_Rec_Quality.TabIndex = 25;
-            this.l_Rec_Quality.Text = "Quality (1-100)";
             // 
             // tB_Rec_scFileN
             // 
@@ -161,6 +142,8 @@ namespace SSUtility2
             this.cB_Rec_FPS.Name = "cB_Rec_FPS";
             this.cB_Rec_FPS.Size = new System.Drawing.Size(114, 21);
             this.cB_Rec_FPS.TabIndex = 16;
+            this.toolTips.SetToolTip(this.cB_Rec_FPS, "Video capture framerate, lower to reduce latency, increase to improve smoothness " +
+        "of output video.");
             this.cB_Rec_FPS.TextChanged += new System.EventHandler(this.cB_Rec_FPS_TextChanged);
             // 
             // tB_Rec_vFileN
@@ -188,9 +171,11 @@ namespace SSUtility2
             this.l_Rec_FPS.AutoSize = true;
             this.l_Rec_FPS.Location = new System.Drawing.Point(6, 14);
             this.l_Rec_FPS.Name = "l_Rec_FPS";
-            this.l_Rec_FPS.Size = new System.Drawing.Size(57, 13);
+            this.l_Rec_FPS.Size = new System.Drawing.Size(87, 13);
             this.l_Rec_FPS.TabIndex = 2;
-            this.l_Rec_FPS.Text = "Frame rate";
+            this.l_Rec_FPS.Text = "Video Frame rate";
+            this.toolTips.SetToolTip(this.l_Rec_FPS, "Video capture framerate, lower to reduce latency, increase to improve smoothness " +
+        "of output video.");
             // 
             // l_Paths_sCFolder
             // 
@@ -207,7 +192,7 @@ namespace SSUtility2
             this.b_Paths_sCBrowse.BackColor = System.Drawing.SystemColors.Control;
             this.b_Paths_sCBrowse.Enabled = false;
             this.b_Paths_sCBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Paths_sCBrowse.Location = new System.Drawing.Point(315, 39);
+            this.b_Paths_sCBrowse.Location = new System.Drawing.Point(319, 39);
             this.b_Paths_sCBrowse.Name = "b_Paths_sCBrowse";
             this.b_Paths_sCBrowse.Size = new System.Drawing.Size(27, 22);
             this.b_Paths_sCBrowse.TabIndex = 13;
@@ -223,7 +208,7 @@ namespace SSUtility2
             this.tB_Paths_sCFolder.Enabled = false;
             this.tB_Paths_sCFolder.Location = new System.Drawing.Point(112, 41);
             this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
-            this.tB_Paths_sCFolder.Size = new System.Drawing.Size(197, 20);
+            this.tB_Paths_sCFolder.Size = new System.Drawing.Size(201, 20);
             this.tB_Paths_sCFolder.TabIndex = 16;
             this.tB_Paths_sCFolder.TextChanged += new System.EventHandler(this.tB_Paths_sCFolder_TextChanged);
             // 
@@ -244,7 +229,7 @@ namespace SSUtility2
             this.tB_Paths_vFolder.Enabled = false;
             this.tB_Paths_vFolder.Location = new System.Drawing.Point(112, 74);
             this.tB_Paths_vFolder.Name = "tB_Paths_vFolder";
-            this.tB_Paths_vFolder.Size = new System.Drawing.Size(197, 20);
+            this.tB_Paths_vFolder.Size = new System.Drawing.Size(201, 20);
             this.tB_Paths_vFolder.TabIndex = 18;
             this.tB_Paths_vFolder.TextChanged += new System.EventHandler(this.tB_Paths_vFolder_TextChanged);
             // 
@@ -254,7 +239,7 @@ namespace SSUtility2
             this.b_Paths_vBrowse.BackColor = System.Drawing.SystemColors.Control;
             this.b_Paths_vBrowse.Enabled = false;
             this.b_Paths_vBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Paths_vBrowse.Location = new System.Drawing.Point(315, 72);
+            this.b_Paths_vBrowse.Location = new System.Drawing.Point(319, 72);
             this.b_Paths_vBrowse.Name = "b_Paths_vBrowse";
             this.b_Paths_vBrowse.Size = new System.Drawing.Size(26, 22);
             this.b_Paths_vBrowse.TabIndex = 19;
@@ -305,6 +290,8 @@ namespace SSUtility2
             this.cB_Other_RefreshRate.Name = "cB_Other_RefreshRate";
             this.cB_Other_RefreshRate.Size = new System.Drawing.Size(114, 21);
             this.cB_Other_RefreshRate.TabIndex = 28;
+            this.toolTips.SetToolTip(this.cB_Other_RefreshRate, "General speed of the program, lower to decrease connection latency, increase to i" +
+        "mprove performance.");
             this.cB_Other_RefreshRate.TextChanged += new System.EventHandler(this.cB_Other_RefreshRate_TextChanged);
             // 
             // check_Other_AutoPlay
@@ -316,6 +303,7 @@ namespace SSUtility2
             this.check_Other_AutoPlay.TabIndex = 30;
             this.check_Other_AutoPlay.Text = "Autoplay Videos on Launch";
             this.check_Other_AutoPlay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Other_AutoPlay, "Play videos upon launch of the program if any have been entered previously.");
             this.check_Other_AutoPlay.UseVisualStyleBackColor = true;
             this.check_Other_AutoPlay.CheckedChanged += new System.EventHandler(this.check_Other_AutoPlay_CheckedChanged);
             // 
@@ -327,6 +315,8 @@ namespace SSUtility2
             this.l_Other_CommandRate.Size = new System.Drawing.Size(130, 13);
             this.l_Other_CommandRate.TabIndex = 27;
             this.l_Other_CommandRate.Text = "Command Send Rate (ms)";
+            this.toolTips.SetToolTip(this.l_Other_CommandRate, "General speed of the program, lower to decrease connection latency, increase to i" +
+        "mprove performance.");
             // 
             // check_Other_Subnet
             // 
@@ -337,6 +327,8 @@ namespace SSUtility2
             this.check_Other_Subnet.TabIndex = 0;
             this.check_Other_Subnet.Text = "Hide Subnet Notification";
             this.check_Other_Subnet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Other_Subnet, "Enable/Disable the error message that appears upon trying to connect to an IP add" +
+        "ress not within the currently connected to subnet.");
             this.check_Other_Subnet.UseVisualStyleBackColor = true;
             this.check_Other_Subnet.CheckedChanged += new System.EventHandler(this.check_Other_Subnet_CheckedChanged);
             // 
@@ -345,7 +337,7 @@ namespace SSUtility2
             this.b_ChangeDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.b_ChangeDir.BackColor = System.Drawing.SystemColors.Control;
             this.b_ChangeDir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_ChangeDir.Location = new System.Drawing.Point(8, 146);
+            this.b_ChangeDir.Location = new System.Drawing.Point(8, 155);
             this.b_ChangeDir.Name = "b_ChangeDir";
             this.b_ChangeDir.Size = new System.Drawing.Size(113, 23);
             this.b_ChangeDir.TabIndex = 30;
@@ -363,7 +355,7 @@ namespace SSUtility2
             this.tC_Settings.Location = new System.Drawing.Point(12, 12);
             this.tC_Settings.Name = "tC_Settings";
             this.tC_Settings.SelectedIndex = 0;
-            this.tC_Settings.Size = new System.Drawing.Size(356, 201);
+            this.tC_Settings.Size = new System.Drawing.Size(360, 210);
             this.tC_Settings.TabIndex = 31;
             // 
             // tP_Control
@@ -380,7 +372,7 @@ namespace SSUtility2
             this.tP_Control.Location = new System.Drawing.Point(4, 22);
             this.tP_Control.Name = "tP_Control";
             this.tP_Control.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Control.Size = new System.Drawing.Size(348, 175);
+            this.tP_Control.Size = new System.Drawing.Size(352, 184);
             this.tP_Control.TabIndex = 3;
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
@@ -488,7 +480,7 @@ namespace SSUtility2
             this.tP_Paths.Location = new System.Drawing.Point(4, 22);
             this.tP_Paths.Name = "tP_Paths";
             this.tP_Paths.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Paths.Size = new System.Drawing.Size(348, 175);
+            this.tP_Paths.Size = new System.Drawing.Size(352, 184);
             this.tP_Paths.TabIndex = 0;
             this.tP_Paths.Text = "Paths";
             this.tP_Paths.UseVisualStyleBackColor = true;
@@ -506,7 +498,7 @@ namespace SSUtility2
             this.tP_Recording.Location = new System.Drawing.Point(4, 22);
             this.tP_Recording.Name = "tP_Recording";
             this.tP_Recording.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Recording.Size = new System.Drawing.Size(348, 175);
+            this.tP_Recording.Size = new System.Drawing.Size(352, 184);
             this.tP_Recording.TabIndex = 1;
             this.tP_Recording.Text = "Recording";
             this.tP_Recording.UseVisualStyleBackColor = true;
@@ -533,7 +525,7 @@ namespace SSUtility2
             this.tP_Customs.Location = new System.Drawing.Point(4, 22);
             this.tP_Customs.Name = "tP_Customs";
             this.tP_Customs.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Customs.Size = new System.Drawing.Size(348, 175);
+            this.tP_Customs.Size = new System.Drawing.Size(352, 184);
             this.tP_Customs.TabIndex = 4;
             this.tP_Customs.Text = "Custom";
             this.tP_Customs.UseVisualStyleBackColor = true;
@@ -564,7 +556,7 @@ namespace SSUtility2
             this.tB_Custom_8.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Custom_8.Location = new System.Drawing.Point(220, 89);
             this.tB_Custom_8.Name = "tB_Custom_8";
-            this.tB_Custom_8.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_8.Size = new System.Drawing.Size(106, 20);
             this.tB_Custom_8.TabIndex = 32;
             // 
             // l_Custom_7
@@ -583,7 +575,7 @@ namespace SSUtility2
             this.tB_Custom_7.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Custom_7.Location = new System.Drawing.Point(220, 63);
             this.tB_Custom_7.Name = "tB_Custom_7";
-            this.tB_Custom_7.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_7.Size = new System.Drawing.Size(106, 20);
             this.tB_Custom_7.TabIndex = 30;
             // 
             // l_Custom_6
@@ -602,7 +594,7 @@ namespace SSUtility2
             this.tB_Custom_6.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Custom_6.Location = new System.Drawing.Point(220, 37);
             this.tB_Custom_6.Name = "tB_Custom_6";
-            this.tB_Custom_6.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_6.Size = new System.Drawing.Size(106, 20);
             this.tB_Custom_6.TabIndex = 28;
             // 
             // l_Custom_5
@@ -621,7 +613,7 @@ namespace SSUtility2
             this.tB_Custom_5.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Custom_5.Location = new System.Drawing.Point(220, 11);
             this.tB_Custom_5.Name = "tB_Custom_5";
-            this.tB_Custom_5.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_5.Size = new System.Drawing.Size(106, 20);
             this.tB_Custom_5.TabIndex = 26;
             // 
             // l_Custom_4
@@ -640,7 +632,7 @@ namespace SSUtility2
             this.tB_Custom_4.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Custom_4.Location = new System.Drawing.Point(59, 89);
             this.tB_Custom_4.Name = "tB_Custom_4";
-            this.tB_Custom_4.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_4.Size = new System.Drawing.Size(106, 20);
             this.tB_Custom_4.TabIndex = 24;
             // 
             // l_Custom_3
@@ -659,7 +651,7 @@ namespace SSUtility2
             this.tB_Custom_3.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Custom_3.Location = new System.Drawing.Point(59, 63);
             this.tB_Custom_3.Name = "tB_Custom_3";
-            this.tB_Custom_3.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_3.Size = new System.Drawing.Size(106, 20);
             this.tB_Custom_3.TabIndex = 22;
             // 
             // l_Custom_2
@@ -678,7 +670,7 @@ namespace SSUtility2
             this.tB_Custom_2.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Custom_2.Location = new System.Drawing.Point(59, 37);
             this.tB_Custom_2.Name = "tB_Custom_2";
-            this.tB_Custom_2.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_2.Size = new System.Drawing.Size(106, 20);
             this.tB_Custom_2.TabIndex = 20;
             // 
             // l_Custom_1
@@ -697,11 +689,16 @@ namespace SSUtility2
             this.tB_Custom_1.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Custom_1.Location = new System.Drawing.Point(59, 11);
             this.tB_Custom_1.Name = "tB_Custom_1";
-            this.tB_Custom_1.Size = new System.Drawing.Size(102, 20);
+            this.tB_Custom_1.Size = new System.Drawing.Size(106, 20);
             this.tB_Custom_1.TabIndex = 18;
             // 
             // tP_Other
             // 
+            this.tP_Other.Controls.Add(this.l_Other_CurrentResolution);
+            this.tP_Other.Controls.Add(this.tB_Other_ResolutionHeight);
+            this.tP_Other.Controls.Add(this.l_Other_ResolutionHeight);
+            this.tP_Other.Controls.Add(this.tB_Other_ResolutionWidth);
+            this.tP_Other.Controls.Add(this.l_Other_ResolutionWidth);
             this.tP_Other.Controls.Add(this.check_Other_AutoReconnect);
             this.tP_Other.Controls.Add(this.cB_Other_RefreshRate);
             this.tP_Other.Controls.Add(this.check_Other_Subnet);
@@ -710,10 +707,62 @@ namespace SSUtility2
             this.tP_Other.Location = new System.Drawing.Point(4, 22);
             this.tP_Other.Name = "tP_Other";
             this.tP_Other.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Other.Size = new System.Drawing.Size(348, 175);
+            this.tP_Other.Size = new System.Drawing.Size(352, 184);
             this.tP_Other.TabIndex = 2;
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
+            // 
+            // l_Other_CurrentResolution
+            // 
+            this.l_Other_CurrentResolution.AutoSize = true;
+            this.l_Other_CurrentResolution.Location = new System.Drawing.Point(6, 168);
+            this.l_Other_CurrentResolution.Name = "l_Other_CurrentResolution";
+            this.l_Other_CurrentResolution.Size = new System.Drawing.Size(116, 13);
+            this.l_Other_CurrentResolution.TabIndex = 36;
+            this.l_Other_CurrentResolution.Text = "Current MainForm Size:";
+            this.toolTips.SetToolTip(this.l_Other_CurrentResolution, "Launches the program with this width (does not change current resolution)");
+            // 
+            // tB_Other_ResolutionHeight
+            // 
+            this.tB_Other_ResolutionHeight.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Other_ResolutionHeight.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Other_ResolutionHeight.Location = new System.Drawing.Point(165, 141);
+            this.tB_Other_ResolutionHeight.Name = "tB_Other_ResolutionHeight";
+            this.tB_Other_ResolutionHeight.Size = new System.Drawing.Size(114, 20);
+            this.tB_Other_ResolutionHeight.TabIndex = 35;
+            this.toolTips.SetToolTip(this.tB_Other_ResolutionHeight, "Launches the program with this height (does not change current resolution).");
+            this.tB_Other_ResolutionHeight.TextChanged += new System.EventHandler(this.tB_Other_ResolutionHeight_TextChanged);
+            // 
+            // l_Other_ResolutionHeight
+            // 
+            this.l_Other_ResolutionHeight.AutoSize = true;
+            this.l_Other_ResolutionHeight.Location = new System.Drawing.Point(6, 145);
+            this.l_Other_ResolutionHeight.Name = "l_Other_ResolutionHeight";
+            this.l_Other_ResolutionHeight.Size = new System.Drawing.Size(124, 13);
+            this.l_Other_ResolutionHeight.TabIndex = 34;
+            this.l_Other_ResolutionHeight.Text = "Startup MainForm Height";
+            this.toolTips.SetToolTip(this.l_Other_ResolutionHeight, "Launches the program with this height (does not change current resolution).");
+            // 
+            // tB_Other_ResolutionWidth
+            // 
+            this.tB_Other_ResolutionWidth.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Other_ResolutionWidth.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Other_ResolutionWidth.Location = new System.Drawing.Point(165, 116);
+            this.tB_Other_ResolutionWidth.Name = "tB_Other_ResolutionWidth";
+            this.tB_Other_ResolutionWidth.Size = new System.Drawing.Size(114, 20);
+            this.tB_Other_ResolutionWidth.TabIndex = 33;
+            this.toolTips.SetToolTip(this.tB_Other_ResolutionWidth, "Launches the program with this width (does not change current resolution).");
+            this.tB_Other_ResolutionWidth.TextChanged += new System.EventHandler(this.tB_Other_ResolutionWidth_TextChanged);
+            // 
+            // l_Other_ResolutionWidth
+            // 
+            this.l_Other_ResolutionWidth.AutoSize = true;
+            this.l_Other_ResolutionWidth.Location = new System.Drawing.Point(6, 119);
+            this.l_Other_ResolutionWidth.Name = "l_Other_ResolutionWidth";
+            this.l_Other_ResolutionWidth.Size = new System.Drawing.Size(121, 13);
+            this.l_Other_ResolutionWidth.TabIndex = 32;
+            this.l_Other_ResolutionWidth.Text = "Startup MainForm Width";
+            this.toolTips.SetToolTip(this.l_Other_ResolutionWidth, "Launches the program with this width (does not change current resolution).");
             // 
             // check_Other_AutoReconnect
             // 
@@ -724,6 +773,7 @@ namespace SSUtility2
             this.check_Other_AutoReconnect.TabIndex = 31;
             this.check_Other_AutoReconnect.Text = "Auto Reconnect On New IP";
             this.check_Other_AutoReconnect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Other_AutoReconnect, "Reconnect upon entering a new IP in the IP Control section.");
             this.check_Other_AutoReconnect.UseVisualStyleBackColor = true;
             this.check_Other_AutoReconnect.CheckedChanged += new System.EventHandler(this.check_Other_AutoReconnect_CheckedChanged);
             // 
@@ -731,24 +781,52 @@ namespace SSUtility2
             // 
             this.l_Version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.l_Version.AutoSize = true;
-            this.l_Version.Location = new System.Drawing.Point(189, 220);
+            this.l_Version.Location = new System.Drawing.Point(178, 238);
             this.l_Version.Name = "l_Version";
             this.l_Version.Size = new System.Drawing.Size(102, 13);
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
+            // 
+            // l_Rec_Quality
+            // 
+            this.l_Rec_Quality.AutoSize = true;
+            this.l_Rec_Quality.Location = new System.Drawing.Point(6, 44);
+            this.l_Rec_Quality.Name = "l_Rec_Quality";
+            this.l_Rec_Quality.Size = new System.Drawing.Size(105, 13);
+            this.l_Rec_Quality.TabIndex = 25;
+            this.l_Rec_Quality.Text = "Video Quality (1-100)";
+            this.toolTips.SetToolTip(this.l_Rec_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
+        "formance during capture, increase to improve output file quality.");
+            // 
+            // cB_Rec_Quality
+            // 
+            this.cB_Rec_Quality.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_Rec_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.cB_Rec_Quality.FormattingEnabled = true;
+            this.cB_Rec_Quality.Items.AddRange(new object[] {
+            "50",
+            "70",
+            "100"});
+            this.cB_Rec_Quality.Location = new System.Drawing.Point(132, 41);
+            this.cB_Rec_Quality.Name = "cB_Rec_Quality";
+            this.cB_Rec_Quality.Size = new System.Drawing.Size(114, 21);
+            this.cB_Rec_Quality.TabIndex = 26;
+            this.toolTips.SetToolTip(this.cB_Rec_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
+        "formance during capture, increase to improve output file quality.");
+            this.cB_Rec_Quality.TextChanged += new System.EventHandler(this.cB_Rec_Quality_TextChanged);
             // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(373, 248);
+            this.ClientSize = new System.Drawing.Size(384, 261);
             this.Controls.Add(this.l_Version);
             this.Controls.Add(this.tC_Settings);
             this.Controls.Add(this.b_Settings_Default);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(389, 287);
-            this.MinimumSize = new System.Drawing.Size(389, 287);
+            this.MaximumSize = new System.Drawing.Size(400, 300);
+            this.MinimumSize = new System.Drawing.Size(400, 300);
             this.Name = "SettingsPage";
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsPage_FormClosing);
@@ -771,8 +849,6 @@ namespace SSUtility2
         #endregion
 
         public System.Windows.Forms.Button b_Settings_Default;
-        public System.Windows.Forms.ComboBox cB_Rec_Quality;
-        public System.Windows.Forms.Label l_Rec_Quality;
         public System.Windows.Forms.TextBox tB_Rec_scFileN;
         public System.Windows.Forms.Label l_Rec_sCFileN;
         public System.Windows.Forms.ComboBox cB_Rec_FPS;
@@ -829,5 +905,12 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_Version;
         private System.Windows.Forms.Button b_Custom_CommandList;
         public System.Windows.Forms.CheckBox check_Other_AutoReconnect;
+        public System.Windows.Forms.Label l_Other_CurrentResolution;
+        public System.Windows.Forms.TextBox tB_Other_ResolutionHeight;
+        public System.Windows.Forms.Label l_Other_ResolutionHeight;
+        public System.Windows.Forms.TextBox tB_Other_ResolutionWidth;
+        public System.Windows.Forms.Label l_Other_ResolutionWidth;
+        public System.Windows.Forms.ComboBox cB_Rec_Quality;
+        public System.Windows.Forms.Label l_Rec_Quality;
     }
 }

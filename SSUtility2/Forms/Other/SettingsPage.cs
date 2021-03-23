@@ -25,6 +25,9 @@ namespace SSUtility2 {
             tB_Rec_vFileN.Text = ConfigControl.vFileName.stringVal;
             tB_Rec_scFileN.Text = ConfigControl.scFileName.stringVal;
 
+            tB_Other_ResolutionWidth.Text = ConfigControl.startupWidth.stringVal;
+            tB_Other_ResolutionHeight.Text = ConfigControl.startupHeight.stringVal;
+
             cB_Rec_Quality.Text = ConfigControl.recQual.stringVal;
             cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
@@ -38,6 +41,11 @@ namespace SSUtility2 {
             ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
             ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
             UpdateSelectedCam(false);
+
+            MainForm.m.Width = ConfigControl.startupWidth.intVal;
+            MainForm.m.Height = ConfigControl.startupHeight.intVal;
+            l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
+            MainForm.m.sP_Player.Location = new System.Drawing.Point(MainForm.m.Width - MainForm.m.sP_Player.Width - 30, 15);
         }
 
         private async Task ApplyAll() {
@@ -105,7 +113,7 @@ namespace SSUtility2 {
         }
 
         private void cB_Rec_FPS_TextChanged(object sender, EventArgs e) {
-            if (!int.TryParse(cB_Rec_Quality.Text, out int fps)) {
+            if (!int.TryParse(cB_Rec_FPS.Text, out int fps)) {
                 cB_Rec_FPS.Text = fps.ToString();
                 return;
             }
@@ -249,6 +257,30 @@ namespace SSUtility2 {
 
             if (play && AsyncCamCom.sock.Connected)
                 MainForm.m.mainPlayer.UpdateMode();
+        }
+
+        private void tB_Other_ResolutionWidth_TextChanged(object sender, EventArgs e) {
+            if (!int.TryParse(tB_Other_ResolutionWidth.Text, out int w)) {
+                tB_Other_ResolutionWidth.Text = ConfigControl.startupWidth.stringVal;
+                return;
+            }
+            if (w > Screen.PrimaryScreen.Bounds.Width || w < 800) {
+                tB_Other_ResolutionWidth.Text = w.ToString();
+            } else {
+                ConfigControl.startupWidth.UpdateValue(tB_Other_ResolutionWidth.Text);
+            }
+        }
+
+        private void tB_Other_ResolutionHeight_TextChanged(object sender, EventArgs e) {
+            if (!int.TryParse(tB_Other_ResolutionHeight.Text, out int h)) {
+                tB_Other_ResolutionHeight.Text = ConfigControl.startupHeight.stringVal;
+                return;
+            }
+            if (h > Screen.PrimaryScreen.Bounds.Height || h < 600) {
+                tB_Other_ResolutionHeight.Text = h.ToString();
+            } else {
+                ConfigControl.startupHeight.UpdateValue(tB_Other_ResolutionHeight.Text);
+            }
         }
 
     }

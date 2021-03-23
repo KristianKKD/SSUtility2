@@ -104,7 +104,7 @@ namespace SSUtility2 {
             this.MenuBar.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
-            this.MenuBar.Size = new System.Drawing.Size(1630, 24);
+            this.MenuBar.Size = new System.Drawing.Size(1264, 24);
             this.MenuBar.TabIndex = 30;
             this.MenuBar.Text = "Menu";
             // 
@@ -312,7 +312,7 @@ namespace SSUtility2 {
             this.p_Main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.p_Main.Location = new System.Drawing.Point(0, 24);
             this.p_Main.Name = "p_Main";
-            this.p_Main.Size = new System.Drawing.Size(1630, 860);
+            this.p_Main.Size = new System.Drawing.Size(1264, 657);
             this.p_Main.TabIndex = 31;
             // 
             // p_Control
@@ -332,13 +332,13 @@ namespace SSUtility2 {
             this.p_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.p_Control.Location = new System.Drawing.Point(0, 0);
             this.p_Control.Name = "p_Control";
-            this.p_Control.Size = new System.Drawing.Size(1630, 860);
+            this.p_Control.Size = new System.Drawing.Size(1264, 657);
             this.p_Control.TabIndex = 1;
             // 
             // Joystick
             // 
             this.Joystick.BackColor = System.Drawing.Color.Black;
-            this.Joystick.Location = new System.Drawing.Point(118, 181);
+            this.Joystick.Location = new System.Drawing.Point(118, 142);
             this.Joystick.Name = "Joystick";
             this.Joystick.Size = new System.Drawing.Size(50, 50);
             this.Joystick.TabIndex = 90;
@@ -349,7 +349,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_Left.BackColor = System.Drawing.Color.LightSkyBlue;
             this.b_PTZ_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Left.Location = new System.Drawing.Point(12, 190);
+            this.b_PTZ_Left.Location = new System.Drawing.Point(12, 151);
             this.b_PTZ_Left.Name = "b_PTZ_Left";
             this.b_PTZ_Left.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_Left.TabIndex = 95;
@@ -362,7 +362,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_Right.BackColor = System.Drawing.Color.LightSkyBlue;
             this.b_PTZ_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Right.Location = new System.Drawing.Point(224, 190);
+            this.b_PTZ_Right.Location = new System.Drawing.Point(224, 151);
             this.b_PTZ_Right.Name = "b_PTZ_Right";
             this.b_PTZ_Right.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_Right.TabIndex = 94;
@@ -375,7 +375,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_Down.BackColor = System.Drawing.Color.LightSkyBlue;
             this.b_PTZ_Down.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Down.Location = new System.Drawing.Point(118, 287);
+            this.b_PTZ_Down.Location = new System.Drawing.Point(118, 248);
             this.b_PTZ_Down.Name = "b_PTZ_Down";
             this.b_PTZ_Down.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_Down.TabIndex = 93;
@@ -388,7 +388,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_Up.BackColor = System.Drawing.Color.LightSkyBlue;
             this.b_PTZ_Up.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Up.Location = new System.Drawing.Point(118, 95);
+            this.b_PTZ_Up.Location = new System.Drawing.Point(118, 56);
             this.b_PTZ_Up.Name = "b_PTZ_Up";
             this.b_PTZ_Up.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_Up.TabIndex = 92;
@@ -401,7 +401,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.YellowGreen;
             this.b_PTZ_FocusNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(12, 287);
+            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(12, 248);
             this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
             this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_FocusNeg.TabIndex = 89;
@@ -414,7 +414,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.b_PTZ_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(224, 287);
+            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(224, 248);
             this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
             this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_ZoomNeg.TabIndex = 88;
@@ -427,7 +427,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
             this.b_PTZ_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(12, 95);
+            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(12, 56);
             this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
             this.b_PTZ_FocusPos.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_FocusPos.TabIndex = 87;
@@ -440,7 +440,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_ZoomPos.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.b_PTZ_ZoomPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(224, 95);
+            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(224, 56);
             this.b_PTZ_ZoomPos.Name = "b_PTZ_ZoomPos";
             this.b_PTZ_ZoomPos.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_ZoomPos.TabIndex = 86;
@@ -452,7 +452,7 @@ namespace SSUtility2 {
             // pB_Background
             // 
             this.pB_Background.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pB_Background.Location = new System.Drawing.Point(68, 131);
+            this.pB_Background.Location = new System.Drawing.Point(68, 92);
             this.pB_Background.Name = "pB_Background";
             this.pB_Background.Size = new System.Drawing.Size(150, 150);
             this.pB_Background.TabIndex = 91;
@@ -475,10 +475,11 @@ namespace SSUtility2 {
             // 
             // sP_Player
             // 
+            this.sP_Player.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sP_Player.BackColor = System.Drawing.Color.Black;
             this.sP_Player.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.sP_Player.Controls.Add(this.stream_SecondPlayer);
-            this.sP_Player.Location = new System.Drawing.Point(1092, 70);
+            this.sP_Player.Location = new System.Drawing.Point(850, 15);
             this.sP_Player.Name = "sP_Player";
             this.sP_Player.Size = new System.Drawing.Size(400, 250);
             this.sP_Player.TabIndex = 2;
@@ -511,15 +512,17 @@ namespace SSUtility2 {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1630, 884);
+            this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.p_Main);
             this.Controls.Add(this.MenuBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MenuBar;
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SSUtility V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_Main.ResumeLayout(false);
