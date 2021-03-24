@@ -94,7 +94,7 @@ namespace SSUtility2 {
             }
         }
 
-        public static bool Connect(IPEndPoint ep, bool hideErrors = false) {
+        private static bool Connect(IPEndPoint ep, bool hideErrors = false) {
             try {
                 if (sock == null)
                     return false;

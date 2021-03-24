@@ -37,15 +37,17 @@ namespace SSUtility2 {
             tB_PlayerD_Port.Text = sets.tB_PlayerD_Port.Text;
             tB_PlayerD_Username.Text = sets.tB_PlayerD_Username.Text;
             tB_PlayerD_Password.Text = sets.tB_PlayerD_Password.Text;
-            cB_PlayerD_Type.Text = sets.cB_PlayerD_Type.Text;
+            cB_PlayerD_CamType.Text = sets.cB_PlayerD_CamType.Text;
 
             if (originalCopy) {
                 tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text + " 2";
 
-                if (sets.cB_PlayerD_Type.Text.Contains("Daylight"))
+                if (ConfigControl.savedCamera.stringVal.Contains("Daylight"))
                     tB_PlayerD_RTSP.Text = thermalRTSP;
-                else
+                else if (ConfigControl.savedCamera.stringVal.Contains("Thermal"))
                     tB_PlayerD_RTSP.Text = dayRTSP;
+                else
+                    HideSecond();
 
                 tB_PlayerD_SimpleAdr.Text = originalDetached.secondView.GetCombined().ToString();
             } else {
@@ -56,7 +58,7 @@ namespace SSUtility2 {
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
-            string enc = cB_PlayerD_Type.Text;
+            string enc = cB_PlayerD_CamType.Text;
             string username = "";
             string password = "";
             string rtsp = "";
@@ -105,7 +107,10 @@ namespace SSUtility2 {
         }
 
         private void b_Hide_Click(object sender, EventArgs e) {
-            //MainForm.m.mainPlayer.secondView.myPlayer.playlist.stop();
+            HideSecond();
+        }
+
+        public void HideSecond() {
             MainForm.m.sP_Player.Hide();
             Hide();
             MainForm.m.Menu_Video_EnableSecondary.Visible = true;

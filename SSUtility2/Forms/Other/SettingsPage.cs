@@ -17,7 +17,7 @@ namespace SSUtility2 {
         public async Task PopulateSettingText() {
             tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
             tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
-            cB_ipCon_Selected.Text = ConfigControl.savedCamera.stringVal;
+            cB_ipCon_CamType.Text = ConfigControl.savedCamera.stringVal;
 
             tB_Paths_sCFolder.Text = ConfigControl.scFolder.stringVal;
             tB_Paths_vFolder.Text = ConfigControl.vFolder.stringVal;
@@ -40,12 +40,13 @@ namespace SSUtility2 {
 
             ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
             ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
-            UpdateSelectedCam(false);
 
             MainForm.m.Width = ConfigControl.startupWidth.intVal;
             MainForm.m.Height = ConfigControl.startupHeight.intVal;
             l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
             MainForm.m.sP_Player.Location = new System.Drawing.Point(MainForm.m.Width - MainForm.m.sP_Player.Width - 30, 15);
+
+            UpdateSelectedCam(false);
         }
 
         private async Task ApplyAll() {
@@ -186,9 +187,9 @@ namespace SSUtility2 {
         private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string port = "";
 
-            if (cB_IPCon_Type.Text == "Encoder") {
+            if (cB_IPCon_PresetType.Text == "Encoder") {
                 port = "6791";
-            } else if (cB_IPCon_Type.Text == "MOXA nPort") {
+            } else if (cB_IPCon_PresetType.Text == "MOXA nPort") {
                 port = "4001";
             }
 
@@ -209,22 +210,18 @@ namespace SSUtility2 {
 
         void UpdatePresetCB() {
             if (tB_IPCon_Port.Text == "6791") {
-                cB_IPCon_Type.Text = "Encoder";
+                cB_IPCon_PresetType.Text = "Encoder";
             } else if (tB_IPCon_Port.Text == "4001") {
-                cB_IPCon_Type.Text = "MOXA nPort";
+                cB_IPCon_PresetType.Text = "MOXA nPort";
             } else {
-                cB_IPCon_Type.Text = "Custom";
+                cB_IPCon_PresetType.Text = "Custom";
             }
         }
 
         private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
-            AsyncCamCom.TryConnect(false);
+            AsyncCamCom.TryConnect(true);
             ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
             UpdatePresetCB();
-        }
-
-        private void cB_ipCon_Selected_TextUpdate(object sender, EventArgs e) {
-            ConfigControl.savedCamera.UpdateValue(cB_ipCon_Selected.Text);
         }
 
         private void b_Custom_CommandList_Click(object sender, EventArgs e) {
@@ -244,14 +241,14 @@ namespace SSUtility2 {
         }
 
         public async Task UpdateSelectedCam(bool play) {
-            ConfigControl.savedCamera.UpdateValue(cB_ipCon_Selected.Text);
+            ConfigControl.savedCamera.UpdateValue(cB_ipCon_CamType.Text);
 
-            MainForm.m.Menu_Settings_Swap.Enabled = true;
+            MainForm.m.Menu_Settings_Swap.Enabled = true; // to disable in case it's not swappable (in else condition)
 
             if (ConfigControl.savedCamera.stringVal.Contains("Daylight"))
-                MainForm.m.Menu_Settings_Swap.Text = "Swap to Daylight";
-            else if (ConfigControl.savedCamera.stringVal.Contains("Thermal"))
                 MainForm.m.Menu_Settings_Swap.Text = "Swap to Thermal";
+            else if (ConfigControl.savedCamera.stringVal.Contains("Thermal"))
+                MainForm.m.Menu_Settings_Swap.Text = "Swap to Daylight";
             else
                 MainForm.m.Menu_Settings_Swap.Enabled = false;
 

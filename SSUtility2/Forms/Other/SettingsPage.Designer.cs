@@ -47,17 +47,19 @@ namespace SSUtility2
             this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
-            this.cB_ipCon_Selected = new System.Windows.Forms.ComboBox();
+            this.cB_ipCon_CamType = new System.Windows.Forms.ComboBox();
             this.l_ipCon_Selected = new System.Windows.Forms.Label();
             this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
             this.tB_IPCon_Adr = new System.Windows.Forms.TextBox();
             this.l_IPCon_Connected = new System.Windows.Forms.Label();
-            this.cB_IPCon_Type = new System.Windows.Forms.ComboBox();
+            this.cB_IPCon_PresetType = new System.Windows.Forms.ComboBox();
             this.l_IPCon_Port = new System.Windows.Forms.Label();
             this.l_IPCon_ConType = new System.Windows.Forms.Label();
             this.l_IPCon_Adr = new System.Windows.Forms.Label();
             this.tP_Paths = new System.Windows.Forms.TabPage();
             this.tP_Recording = new System.Windows.Forms.TabPage();
+            this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
+            this.l_Rec_Quality = new System.Windows.Forms.Label();
             this.tP_Customs = new System.Windows.Forms.TabPage();
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.l_Custom_8 = new System.Windows.Forms.Label();
@@ -85,8 +87,6 @@ namespace SSUtility2
             this.check_Other_AutoReconnect = new System.Windows.Forms.CheckBox();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.l_Rec_Quality = new System.Windows.Forms.Label();
-            this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             this.tP_Paths.SuspendLayout();
@@ -360,12 +360,12 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
-            this.tP_Control.Controls.Add(this.cB_ipCon_Selected);
+            this.tP_Control.Controls.Add(this.cB_ipCon_CamType);
             this.tP_Control.Controls.Add(this.l_ipCon_Selected);
             this.tP_Control.Controls.Add(this.tB_IPCon_Port);
             this.tP_Control.Controls.Add(this.tB_IPCon_Adr);
             this.tP_Control.Controls.Add(this.l_IPCon_Connected);
-            this.tP_Control.Controls.Add(this.cB_IPCon_Type);
+            this.tP_Control.Controls.Add(this.cB_IPCon_PresetType);
             this.tP_Control.Controls.Add(this.l_IPCon_Port);
             this.tP_Control.Controls.Add(this.l_IPCon_ConType);
             this.tP_Control.Controls.Add(this.l_IPCon_Adr);
@@ -377,18 +377,17 @@ namespace SSUtility2
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
             // 
-            // cB_ipCon_Selected
+            // cB_ipCon_CamType
             // 
-            this.cB_ipCon_Selected.FormattingEnabled = true;
-            this.cB_ipCon_Selected.Items.AddRange(new object[] {
+            this.cB_ipCon_CamType.FormattingEnabled = true;
+            this.cB_ipCon_CamType.Items.AddRange(new object[] {
             "Daylight",
             "Thermal"});
-            this.cB_ipCon_Selected.Location = new System.Drawing.Point(115, 92);
-            this.cB_ipCon_Selected.Name = "cB_ipCon_Selected";
-            this.cB_ipCon_Selected.Size = new System.Drawing.Size(123, 21);
-            this.cB_ipCon_Selected.TabIndex = 83;
-            this.cB_ipCon_Selected.Text = "Daylight";
-            this.cB_ipCon_Selected.TextChanged += new System.EventHandler(this.cB_ipCon_Selected_TextChanged);
+            this.cB_ipCon_CamType.Location = new System.Drawing.Point(115, 92);
+            this.cB_ipCon_CamType.Name = "cB_ipCon_CamType";
+            this.cB_ipCon_CamType.Size = new System.Drawing.Size(123, 21);
+            this.cB_ipCon_CamType.TabIndex = 83;
+            this.cB_ipCon_CamType.TextChanged += new System.EventHandler(this.cB_ipCon_Selected_TextChanged);
             // 
             // l_ipCon_Selected
             // 
@@ -405,7 +404,6 @@ namespace SSUtility2
             this.tB_IPCon_Port.Name = "tB_IPCon_Port";
             this.tB_IPCon_Port.Size = new System.Drawing.Size(123, 20);
             this.tB_IPCon_Port.TabIndex = 78;
-            this.tB_IPCon_Port.Text = "6791";
             this.tB_IPCon_Port.TextChanged += new System.EventHandler(this.tB_IPCon_Port_TextChanged);
             // 
             // tB_IPCon_Adr
@@ -414,7 +412,6 @@ namespace SSUtility2
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
             this.tB_IPCon_Adr.TabIndex = 77;
-            this.tB_IPCon_Adr.Text = "192.168.1.71";
             this.tB_IPCon_Adr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyDown);
             this.tB_IPCon_Adr.Leave += new System.EventHandler(this.tB_IPCon_Adr_Leave);
             // 
@@ -426,17 +423,17 @@ namespace SSUtility2
             this.l_IPCon_Connected.Size = new System.Drawing.Size(0, 13);
             this.l_IPCon_Connected.TabIndex = 81;
             // 
-            // cB_IPCon_Type
+            // cB_IPCon_PresetType
             // 
-            this.cB_IPCon_Type.FormattingEnabled = true;
-            this.cB_IPCon_Type.Items.AddRange(new object[] {
+            this.cB_IPCon_PresetType.FormattingEnabled = true;
+            this.cB_IPCon_PresetType.Items.AddRange(new object[] {
             "Encoder",
             "MOXA nPort"});
-            this.cB_IPCon_Type.Location = new System.Drawing.Point(115, 13);
-            this.cB_IPCon_Type.Name = "cB_IPCon_Type";
-            this.cB_IPCon_Type.Size = new System.Drawing.Size(123, 21);
-            this.cB_IPCon_Type.TabIndex = 80;
-            this.cB_IPCon_Type.SelectedIndexChanged += new System.EventHandler(this.cB_IPCon_Type_SelectedIndexChanged);
+            this.cB_IPCon_PresetType.Location = new System.Drawing.Point(115, 13);
+            this.cB_IPCon_PresetType.Name = "cB_IPCon_PresetType";
+            this.cB_IPCon_PresetType.Size = new System.Drawing.Size(123, 21);
+            this.cB_IPCon_PresetType.TabIndex = 80;
+            this.cB_IPCon_PresetType.SelectedIndexChanged += new System.EventHandler(this.cB_IPCon_Type_SelectedIndexChanged);
             // 
             // l_IPCon_Port
             // 
@@ -502,6 +499,34 @@ namespace SSUtility2
             this.tP_Recording.TabIndex = 1;
             this.tP_Recording.Text = "Recording";
             this.tP_Recording.UseVisualStyleBackColor = true;
+            // 
+            // cB_Rec_Quality
+            // 
+            this.cB_Rec_Quality.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_Rec_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.cB_Rec_Quality.FormattingEnabled = true;
+            this.cB_Rec_Quality.Items.AddRange(new object[] {
+            "50",
+            "70",
+            "100"});
+            this.cB_Rec_Quality.Location = new System.Drawing.Point(132, 41);
+            this.cB_Rec_Quality.Name = "cB_Rec_Quality";
+            this.cB_Rec_Quality.Size = new System.Drawing.Size(114, 21);
+            this.cB_Rec_Quality.TabIndex = 26;
+            this.toolTips.SetToolTip(this.cB_Rec_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
+        "formance during capture, increase to improve output file quality.");
+            this.cB_Rec_Quality.TextChanged += new System.EventHandler(this.cB_Rec_Quality_TextChanged);
+            // 
+            // l_Rec_Quality
+            // 
+            this.l_Rec_Quality.AutoSize = true;
+            this.l_Rec_Quality.Location = new System.Drawing.Point(6, 44);
+            this.l_Rec_Quality.Name = "l_Rec_Quality";
+            this.l_Rec_Quality.Size = new System.Drawing.Size(105, 13);
+            this.l_Rec_Quality.TabIndex = 25;
+            this.l_Rec_Quality.Text = "Video Quality (1-100)";
+            this.toolTips.SetToolTip(this.l_Rec_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
+        "formance during capture, increase to improve output file quality.");
             // 
             // tP_Customs
             // 
@@ -787,34 +812,6 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
-            // l_Rec_Quality
-            // 
-            this.l_Rec_Quality.AutoSize = true;
-            this.l_Rec_Quality.Location = new System.Drawing.Point(6, 44);
-            this.l_Rec_Quality.Name = "l_Rec_Quality";
-            this.l_Rec_Quality.Size = new System.Drawing.Size(105, 13);
-            this.l_Rec_Quality.TabIndex = 25;
-            this.l_Rec_Quality.Text = "Video Quality (1-100)";
-            this.toolTips.SetToolTip(this.l_Rec_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
-        "formance during capture, increase to improve output file quality.");
-            // 
-            // cB_Rec_Quality
-            // 
-            this.cB_Rec_Quality.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_Rec_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.cB_Rec_Quality.FormattingEnabled = true;
-            this.cB_Rec_Quality.Items.AddRange(new object[] {
-            "50",
-            "70",
-            "100"});
-            this.cB_Rec_Quality.Location = new System.Drawing.Point(132, 41);
-            this.cB_Rec_Quality.Name = "cB_Rec_Quality";
-            this.cB_Rec_Quality.Size = new System.Drawing.Size(114, 21);
-            this.cB_Rec_Quality.TabIndex = 26;
-            this.toolTips.SetToolTip(this.cB_Rec_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
-        "formance during capture, increase to improve output file quality.");
-            this.cB_Rec_Quality.TextChanged += new System.EventHandler(this.cB_Rec_Quality_TextChanged);
-            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -878,7 +875,7 @@ namespace SSUtility2
         public System.Windows.Forms.TextBox tB_IPCon_Port;
         public System.Windows.Forms.TextBox tB_IPCon_Adr;
         public System.Windows.Forms.Label l_IPCon_Connected;
-        public System.Windows.Forms.ComboBox cB_IPCon_Type;
+        public System.Windows.Forms.ComboBox cB_IPCon_PresetType;
         public System.Windows.Forms.Label l_IPCon_Port;
         public System.Windows.Forms.Label l_IPCon_ConType;
         public System.Windows.Forms.Label l_IPCon_Adr;
@@ -900,7 +897,7 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_Custom_7;
         public System.Windows.Forms.TextBox tB_Custom_7;
         private System.ComponentModel.IContainer components;
-        public System.Windows.Forms.ComboBox cB_ipCon_Selected;
+        public System.Windows.Forms.ComboBox cB_ipCon_CamType;
         public System.Windows.Forms.Label l_ipCon_Selected;
         public System.Windows.Forms.Label l_Version;
         private System.Windows.Forms.Button b_Custom_CommandList;

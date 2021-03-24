@@ -67,16 +67,15 @@ namespace SSUtility2 {
             }
         }
 
-        public static uint MakeAdr(ComboBox comboBox = null) {
-            if (comboBox == null) {
-                comboBox = MainForm.m.setPage.cB_ipCon_Selected;
-            }
-            if (comboBox.Text.Contains("Daylight")) {
+        public static uint MakeAdr() {
+            if (ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
                 return 1;
-            } else if (comboBox.Text.Contains("Thermal")) {
+            } else if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
                 return 2;
+            } else if (int.TryParse(ConfigControl.savedCamera.stringVal, out int dontUse)) {
+                return uint.Parse(ConfigControl.savedCamera.stringVal);
             } else {
-                return uint.Parse(comboBox.Text);
+                return 0;
             }
         }
 

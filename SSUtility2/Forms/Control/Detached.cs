@@ -40,7 +40,7 @@ namespace SSUtility2 {
                     secondView.settings.Text = "Secondary Video Settings";
                     secondView.settings.isSecondary = true;
 
-                    //MainForm.m.sP_Player.Hide(); //and below too
+                    MainForm.m.sP_Player.Hide(); //and below too
 
                     secondView.stream_Player = MainForm.m.stream_SecondPlayer;
                 }
@@ -146,13 +146,11 @@ namespace SSUtility2 {
                     }
                 }
 
-                Invoke((MethodInvoker)delegate {
-                    if (player.settings.isPlaying)
-                        player.StopPlaying();
-                    vid = Stream.FromUri(combinedUrl);
-                    player.stream_Player.AttachStream(vid);
-                    vid.Start();
-                });
+                if (player.settings.isPlaying)
+                    player.StopPlaying();
+                vid = Stream.FromUri(combinedUrl);
+                player.stream_Player.AttachStream(vid);
+                vid.Start();
 
                 settings.isPlaying = true;
 
@@ -163,12 +161,13 @@ namespace SSUtility2 {
             }
         }
 
-        public async Task EnableSecond() {
+        public async Task EnableSecond(bool copySettings) {
             MainForm.m.Menu_Settings_Info.Visible = true;
 
             MainForm.m.sP_Player.Show();
             MainForm.m.sP_Player.BringToFront();
-            secondView.settings.Copy(settings);
+            if(copySettings)
+                secondView.settings.Copy(settings);
             if (settings.isPlaying)
                 secondView.Play(false, secondView);
         }
@@ -205,43 +204,34 @@ namespace SSUtility2 {
             try {
                 bool isCam = InfoPanel.i.isCamera;
 
-                settings.cB_PlayerD_Type.Text = ConfigControl.savedCamera.stringVal;
+                settings.cB_PlayerD_CamType.Text = ConfigControl.savedCamera.stringVal;
                 settings.checkB_PlayerD_Manual.Checked = true;
 
                 if (isCam) {
-                    secondView.settings.checkB_PlayerD_Manual.Checked = true;
                     secondView.settings.Copy(settings);
                 }
 
                 if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
-                    settings.cB_PlayerD_Type.Text = "Thermal";
-                    ConfigControl.savedCamera.UpdateValue("Thermal");
                     settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
 
                     if (isCam) {
-                        secondView.settings.cB_PlayerD_Type.Text = "Daylight";
-
-                        if (secondView.settings.isPlaying) {
-                            secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
-                        }
+                        secondView.settings.cB_PlayerD_CamType.Text = "Daylight";
+                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
                     }
                 } else if (ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
-                    settings.cB_PlayerD_Type.Text = "Daylight";
-                    ConfigControl.savedCamera.UpdateValue("Daylight");
                     settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
 
                     if (isCam) {
-                        secondView.settings.cB_PlayerD_Type.Text = "Thermal";
-
-                        if (secondView.settings.isPlaying) {
-                            secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
-                        }
+                        secondView.settings.cB_PlayerD_CamType.Text = "Thermal";
+                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
                     }
                 }
 
                 Play(true, this);
-                if (isCam)
+                if (isCam && secondView.settings.isPlaying) {
+                    secondView.settings.checkB_PlayerD_Manual.Checked = true;
                     secondView.Play(true, secondView);
+                }
             } catch (Exception e) {
                 MessageBox.Show("UPDATEMODE\n" + e.ToString());
             }

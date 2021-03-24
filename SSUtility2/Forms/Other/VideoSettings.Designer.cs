@@ -35,7 +35,7 @@ namespace SSUtility2
             this.p_PlayerD_Extended = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.l_PlayerD_Type = new System.Windows.Forms.Label();
-            this.cB_PlayerD_Type = new System.Windows.Forms.ComboBox();
+            this.cB_PlayerD_CamType = new System.Windows.Forms.ComboBox();
             this.l_PlayerD_RTSP = new System.Windows.Forms.Label();
             this.tB_PlayerD_Password = new System.Windows.Forms.TextBox();
             this.tB_PlayerD_Adr = new System.Windows.Forms.TextBox();
@@ -117,7 +117,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.p_PlayerD_Extended.Controls.Add(this.label1);
             this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_Type);
-            this.p_PlayerD_Extended.Controls.Add(this.cB_PlayerD_Type);
+            this.p_PlayerD_Extended.Controls.Add(this.cB_PlayerD_CamType);
             this.p_PlayerD_Extended.Controls.Add(this.l_PlayerD_RTSP);
             this.p_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Password);
             this.p_PlayerD_Extended.Controls.Add(this.tB_PlayerD_Adr);
@@ -161,21 +161,21 @@ namespace SSUtility2
             // 
             // cB_PlayerD_Type
             // 
-            this.cB_PlayerD_Type.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.cB_PlayerD_CamType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cB_PlayerD_Type.FormattingEnabled = true;
-            this.cB_PlayerD_Type.Items.AddRange(new object[] {
+            this.cB_PlayerD_CamType.FormattingEnabled = true;
+            this.cB_PlayerD_CamType.Items.AddRange(new object[] {
             "IONodes - Daylight",
             "IONodes - Thermal",
             "VIVOTEK",
             "BOSCH"});
-            this.cB_PlayerD_Type.Location = new System.Drawing.Point(88, 5);
-            this.cB_PlayerD_Type.Name = "cB_PlayerD_Type";
-            this.cB_PlayerD_Type.Size = new System.Drawing.Size(253, 21);
-            this.cB_PlayerD_Type.TabIndex = 5;
-            this.cB_PlayerD_Type.Text = "Daylight";
-            this.cB_PlayerD_Type.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_Type_SelectedIndexChanged);
+            this.cB_PlayerD_CamType.Location = new System.Drawing.Point(88, 5);
+            this.cB_PlayerD_CamType.Name = "cB_PlayerD_Type";
+            this.cB_PlayerD_CamType.Size = new System.Drawing.Size(253, 21);
+            this.cB_PlayerD_CamType.TabIndex = 5;
+            this.cB_PlayerD_CamType.Text = "Daylight";
+            this.cB_PlayerD_CamType.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_Type_SelectedIndexChanged);
             // 
             // l_PlayerD_RTSP
             // 
@@ -406,7 +406,7 @@ namespace SSUtility2
         private System.Windows.Forms.Panel p_PlayerD_Extended;
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.Label l_PlayerD_Type;
-        public System.Windows.Forms.ComboBox cB_PlayerD_Type;
+        public System.Windows.Forms.ComboBox cB_PlayerD_CamType;
         public System.Windows.Forms.Label l_PlayerD_RTSP;
         public System.Windows.Forms.TextBox tB_PlayerD_Password;
         public System.Windows.Forms.TextBox tB_PlayerD_Adr;

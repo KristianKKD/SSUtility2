@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.2.2";
+        public const string version = "v2.3.2.3";
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -423,6 +423,8 @@ namespace SSUtility2 {
 
         private void Menu_Video_Settings_Click(object sender, EventArgs e) {
             mainPlayer.settings.Show();
+            mainPlayer.settings.BringToFront();
+            mainPlayer.settings.Location = Location;
         }
 
         private void Menu_Video_Stop_Click(object sender, EventArgs e) {
@@ -483,7 +485,13 @@ namespace SSUtility2 {
 
         private void Menu_Video_EnableSecondary_Click(object sender, EventArgs e) {
             Menu_Video_EnableSecondary.Visible = false;
-            mainPlayer.EnableSecond();
+
+            if (!ConfigControl.savedCamera.stringVal.Contains("Thermal") &&
+                !ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
+                mainPlayer.EnableSecond(false);
+            }
+
+            mainPlayer.EnableSecond(true);
         }
 
         bool dragging = false;
@@ -533,10 +541,9 @@ namespace SSUtility2 {
                 value = "Thermal";
             }
 
-            setPage.cB_ipCon_Selected.Text = value;
+            setPage.cB_ipCon_CamType.Text = value;
             setPage.UpdateSelectedCam(true);
         }
-
 
         public void StopCam() {
             if (keyboardControl) {
