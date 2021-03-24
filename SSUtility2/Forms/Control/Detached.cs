@@ -39,6 +39,7 @@ namespace SSUtility2 {
                     secondView.settings.Copy(settings);
                     secondView.settings.Text = "Secondary Video Settings";
                     secondView.settings.isSecondary = true;
+                    //secondView.settings.tP_Main.Dispose();
 
                     MainForm.m.sP_Player.Hide(); //and below too
 

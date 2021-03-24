@@ -67,9 +67,10 @@ namespace SSUtility2 {
                     StopTicking();
                     return;
                 }
+
+                return;
+
                 GenCommands();
-                if (await OtherCamCom.CheckConfiguration().ConfigureAwait(false) == OtherCamCom.CamConfig.Null)
-                    return;
 
                 isActive = true;
                 MainForm.m.Menu_Settings_Info.Text = "Disable Info Panel";
@@ -111,7 +112,7 @@ namespace SSUtility2 {
 
         public async Task CheckForCamera() {
             try {
-                if (await OtherCamCom.CheckConfiguration().ConfigureAwait(false) != OtherCamCom.CamConfig.Null) {
+                if (await OtherCamCom.CheckConfiguration() != OtherCamCom.CamConfig.Null) {
                     isCamera = true;
                     MainForm.m.mainPlayer.EnableSecond(true);
                 } else {

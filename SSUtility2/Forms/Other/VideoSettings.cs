@@ -122,5 +122,6 @@ namespace SSUtility2 {
             else
                 originalDetached.secondView.StopPlaying();
         }
+
     }
 }

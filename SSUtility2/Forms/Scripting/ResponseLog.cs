@@ -27,13 +27,17 @@ namespace SSUtility2 {
         }
 
         public void AddText(string text, string sender) {
-            string finalText = text;
-            if(check_Timestamp.Checked)
-                finalText = "[" + sender + " at " + DateTime.Now + "]: " + text;
-            tB_Log.AppendText(finalText + "\n");
-            if (check_AutoScroll.Checked) {
-                tB_Log.SelectionStart = tB_Log.TextLength;
-                tB_Log.ScrollToCaret();
+            try {
+                string finalText = text;
+                if (check_Timestamp.Checked)
+                    finalText = "[" + sender + " at " + DateTime.Now + "]: " + text;
+                tB_Log.AppendText(finalText + "\n");
+                if (check_AutoScroll.Checked) {
+                    tB_Log.SelectionStart = tB_Log.TextLength;
+                    tB_Log.ScrollToCaret();
+                }
+            } catch (Exception e) {
+                MessageBox.Show("RESPONSE LOG\n" + e.ToString());
             }
         }
 

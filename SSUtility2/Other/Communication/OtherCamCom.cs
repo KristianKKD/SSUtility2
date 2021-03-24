@@ -105,54 +105,60 @@ namespace SSUtility2 {
         }
         
         public static async Task<CamConfig> CheckConfiguration() {
-            CamConfig newConfig;
-            string result = defaultResult;
+            try {
+                CamConfig newConfig;
+                string result = defaultResult;
 
-            for (int i = 0; i < 3; i++) { 
-                result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
+                for (int i = 0; i < 3; i++) {
+                    result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
 
-                bool failed = false;
-                if (result == null) {
-                    failed = true; ;
-                }else if(result.Length < 12) {
-                    failed = true;
-                }else if(result == defaultResult) {
-                    failed = true;
+                    bool failed = false;
+                    if (result == null) {
+                        failed = true;
+                        ;
+                    } else if (result.Length < 12) {
+                        failed = true;
+                    } else if (result == defaultResult) {
+                        failed = true;
+                    }
+
+                    if (!failed) {
+                        break;
+                    } else if (i >= 2) {
+                        return CamConfig.Null;
+                    }
                 }
 
-                if (!failed) {
-                    break;
-                } else if(i >= 2) {
-                    return CamConfig.Null;
+                string type = result.Substring(13, 1);
+                MainForm.m.WriteToResponses("Cam config received response: " + result + "(" + type + ")", true);
+
+                switch (type) {
+                    case "0":
+                        newConfig = CamConfig.SSTraditional;
+                        break;
+                    case "1":
+                        newConfig = CamConfig.Strict;
+                        break;
+                    case "2":
+                        newConfig = CamConfig.RevTilt;
+                        break;
+                    case "3":
+                        newConfig = CamConfig.Legacy;
+                        break;
+                    default:
+                        newConfig = CamConfig.Null;
+                        break;
                 }
+
+
+                MainForm.m.WriteToResponses("Cam config type: " + newConfig.ToString(), true);
+
+                currentConfig = newConfig;
+                return newConfig;
+            } catch (Exception e) {
+                MessageBox.Show("CHECK CAM CONFIG\n" + e.ToString());
+                return CamConfig.Null;
             }
-
-            string type = result.Substring(13, 1);
-            MainForm.m.WriteToResponses("Cam config received response: " + result + "(" + type + ")", true);
-
-            switch (type) {
-                case "0":
-                    newConfig = CamConfig.SSTraditional;
-                    break;
-                case "1":
-                    newConfig = CamConfig.Strict;
-                    break;
-                case "2":
-                    newConfig = CamConfig.RevTilt;
-                    break;
-                case "3":
-                    newConfig = CamConfig.Legacy;
-                    break;
-                default:
-                    newConfig = CamConfig.Null;
-                    break;
-            }
-
-
-            MainForm.m.WriteToResponses("Cam config type: " + newConfig.ToString(), true);
-            
-            currentConfig = newConfig;
-            return newConfig;
         }
 
         public static float CalculateTilt(string code) {
