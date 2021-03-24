@@ -33,6 +33,7 @@
             this.check_Info = new System.Windows.Forms.CheckBox();
             this.tB_Log = new System.Windows.Forms.RichTextBox();
             this.check_Timestamp = new System.Windows.Forms.CheckBox();
+            this.check_AutoScroll = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // b_RL_Clear
@@ -120,12 +121,24 @@
             this.check_Timestamp.Text = "Timestamps";
             this.check_Timestamp.UseVisualStyleBackColor = true;
             // 
+            // check_AutoScroll
+            // 
+            this.check_AutoScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.check_AutoScroll.AutoSize = true;
+            this.check_AutoScroll.Location = new System.Drawing.Point(449, 417);
+            this.check_AutoScroll.Name = "check_AutoScroll";
+            this.check_AutoScroll.Size = new System.Drawing.Size(77, 17);
+            this.check_AutoScroll.TabIndex = 19;
+            this.check_AutoScroll.Text = "Auto Scroll";
+            this.check_AutoScroll.UseVisualStyleBackColor = true;
+            // 
             // ResponseLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(543, 446);
+            this.Controls.Add(this.check_AutoScroll);
             this.Controls.Add(this.check_Timestamp);
             this.Controls.Add(this.tB_Log);
             this.Controls.Add(this.check_Info);
@@ -150,5 +163,6 @@
         public System.Windows.Forms.CheckBox check_Info;
         public System.Windows.Forms.RichTextBox tB_Log;
         public System.Windows.Forms.CheckBox check_Timestamp;
+        public System.Windows.Forms.CheckBox check_AutoScroll;
     }
 }

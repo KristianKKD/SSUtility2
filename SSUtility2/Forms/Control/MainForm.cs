@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.2.1";
+        public const string version = "v2.3.2.2";
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -642,7 +642,7 @@ namespace SSUtility2 {
                 return;
             }
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
-            await Task.Delay(ConfigControl.commandRateMs.intVal).ConfigureAwait(false);
+            await Task.Delay(100).ConfigureAwait(false);
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
         }
 

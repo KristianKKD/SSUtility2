@@ -34,7 +34,6 @@ namespace SSUtility2 {
         static float fov;
         static float tfov;
 
-        static OtherCamCom.CamConfig myConfig;
 
         public void HideAll() {
             try {
@@ -69,7 +68,8 @@ namespace SSUtility2 {
                     return;
                 }
                 GenCommands();
-                myConfig = await OtherCamCom.CheckConfiguration().ConfigureAwait(false);
+                if (await OtherCamCom.CheckConfiguration().ConfigureAwait(false) == OtherCamCom.CamConfig.Null)
+                    return;
 
                 isActive = true;
                 MainForm.m.Menu_Settings_Info.Text = "Disable Info Panel";
@@ -111,9 +111,8 @@ namespace SSUtility2 {
 
         public async Task CheckForCamera() {
             try {
-                if (await CheckCam().ConfigureAwait(false)) {
+                if (await OtherCamCom.CheckConfiguration().ConfigureAwait(false) != OtherCamCom.CamConfig.Null) {
                     isCamera = true;
-                    myConfig = await OtherCamCom.CheckConfiguration().ConfigureAwait(false);
                     MainForm.m.mainPlayer.EnableSecond();
                 } else {
                     isCamera = false;
@@ -161,10 +160,10 @@ namespace SSUtility2 {
 
                 switch (commandType) {
                     case "59": //pan
-                        pan = OtherCamCom.CalculatePan(result, myConfig);
+                        pan = OtherCamCom.CalculatePan(result);
                         break;
                     case "5B": //tilt
-                        tilt = OtherCamCom.CalculateTilt(result, myConfig);
+                        tilt = OtherCamCom.CalculateTilt(result);
                         break;
                     case "5D": //fov
                         if (commandPos == 3) {
@@ -179,37 +178,12 @@ namespace SSUtility2 {
             }
         }
 
-        private async Task<bool> CheckCam() {
-            try {
-                if (!await AsyncCamCom.TryConnect(true).ConfigureAwait(false)) {
-                    return false;
-                }
-
-                byte[] send = new byte[7];
-                if (thermalCam) {
-                    send = new byte[] { 0xFF, 0x00, 0x00, 0x53, 0x00, 0x00, 0x53 };
-                } else {
-                    send = new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 };
-                }
-
-                string result = await AsyncCamCom.QueryNewCommand(send).ConfigureAwait(false);
-
-                if (result == OtherCamCom.defaultResult) {
-                    return false;
-                } else {
-                    return true;
-                }
-            } catch {
-                return false;
-            }
-        }
-
         void GenCommands() {
             try {
-                panID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, true).id;
-                tiltID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, true).id;
-                fovID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 }, true).id;
-                tFovID = new Command(new byte[] { 0xFF, 0x02, 0x00, 0x55, 0x00, 0x00, 0x57 }, true).id;
+                panID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x51, 0x00, 0x00, 0x52 }, true, false, true, "querypan").id;
+                tiltID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x53, 0x00, 0x00, 0x54 }, true, false, true, "querytilt").id;
+                fovID = new Command(new byte[] { 0xFF, 0x01, 0x00, 0x55, 0x00, 0x00, 0x56 }, true, false, true, "queryfov").id;
+                tFovID = new Command(new byte[] { 0xFF, 0x02, 0x00, 0x55, 0x00, 0x00, 0x57 }, true, false, true, "querytfov").id;
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }

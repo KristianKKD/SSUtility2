@@ -102,17 +102,12 @@ namespace SSUtility2 {
                     i++;
                 }
                 if(i > 1)
-                    MainForm.m.WriteToResponses("Sent command " + i + " times!", true, false);
-
+                    MainForm.m.WriteToResponses("Sent command " + i + " times!", true, com.isInfo);
 
                 if (!com.done) {
-                    MainForm.m.WriteToResponses(GetNameString() + "No response!", false, true);
+                    MainForm.m.WriteToResponses(GetNameString() + "No response!", false, com.isInfo);
                 } else {
-                    if (com.isInfo) {
-                        MainForm.m.WriteToResponses(GetNameString() + "Received: " + com.myReturn.msg, true, true);
-                    } else {
-                        MainForm.m.WriteToResponses(GetNameString() + "Received: " + com.myReturn.msg, false);
-                    }
+                    MainForm.m.WriteToResponses(GetNameString() + "Received: " + com.myReturn.msg, false, com.isInfo);
                 }
 
                 com.done = true;

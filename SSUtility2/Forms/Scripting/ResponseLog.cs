@@ -31,6 +31,10 @@ namespace SSUtility2 {
             if(check_Timestamp.Checked)
                 finalText = "[" + sender + " at " + DateTime.Now + "]: " + text;
             tB_Log.AppendText(finalText + "\n");
+            if (check_AutoScroll.Checked) {
+                tB_Log.SelectionStart = tB_Log.TextLength;
+                tB_Log.ScrollToCaret();
+            }
         }
 
     }

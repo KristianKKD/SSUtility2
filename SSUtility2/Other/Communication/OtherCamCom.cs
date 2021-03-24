@@ -16,8 +16,11 @@ namespace SSUtility2 {
             SSTraditional,
             Strict,
             RevTilt,
-            Legacy
+            Legacy,
+            Null,
         }
+
+        public static CamConfig currentConfig = CamConfig.Null;
 
         public const string defaultResult = "00 00 00 00 00 00 00";
 
@@ -102,7 +105,7 @@ namespace SSUtility2 {
         }
         
         public static async Task<CamConfig> CheckConfiguration() {
-            CamConfig myConfig = CamConfig.Strict;
+            CamConfig newConfig;
             string result = defaultResult;
 
             for (int i = 0; i < 3; i++) { 
@@ -111,7 +114,7 @@ namespace SSUtility2 {
                 bool failed = false;
                 if (result == null) {
                     failed = true; ;
-                }else if(result.Length < 2) {
+                }else if(result.Length < 12) {
                     failed = true;
                 }else if(result == defaultResult) {
                     failed = true;
@@ -120,38 +123,46 @@ namespace SSUtility2 {
                 if (!failed) {
                     break;
                 } else if(i >= 2) {
-                    return myConfig;
+                    return CamConfig.Null;
                 }
             }
 
-            string type = result.Substring(12, 1);
+            string type = result.Substring(13, 1);
+            MainForm.m.WriteToResponses("Cam config received response: " + result + "(" + type + ")", true);
 
             switch (type) {
                 case "0":
-                    myConfig = CamConfig.SSTraditional;
+                    newConfig = CamConfig.SSTraditional;
                     break;
                 case "1":
-                    myConfig = CamConfig.Strict;
+                    newConfig = CamConfig.Strict;
                     break;
                 case "2":
-                    myConfig = CamConfig.RevTilt;
+                    newConfig = CamConfig.RevTilt;
                     break;
                 case "3":
-                    myConfig = CamConfig.Legacy;
+                    newConfig = CamConfig.Legacy;
+                    break;
+                default:
+                    newConfig = CamConfig.Null;
                     break;
             }
-            //MessageBox.Show("config " + result + "\n" + myConfig.ToString());
 
-            return myConfig;
+
+            MainForm.m.WriteToResponses("Cam config type: " + newConfig.ToString(), true);
+            
+            currentConfig = newConfig;
+            return newConfig;
         }
 
-        public static float CalculateTilt(string code, CamConfig config) {
+        public static float CalculateTilt(string code) {
             float finalValue = ReturnedHexValToFloat(code);
 
-            switch (config) {
+            switch (currentConfig) {
                 case CamConfig.SSTraditional:
                 case CamConfig.Legacy:
-                    if(finalValue > 36001) {
+                    if (finalValue > 360) {
+                        finalValue -= 360;
                         finalValue *= -1;
                     }
                     break;
@@ -167,10 +178,10 @@ namespace SSUtility2 {
             return finalValue;
         }
 
-        public static float CalculatePan(string code, CamConfig config) {
+        public static float CalculatePan(string code) {
             float finalValue = ReturnedHexValToFloat(code);
 
-            switch (config) {
+            switch (currentConfig) {
                 case CamConfig.SSTraditional:
                 case CamConfig.Legacy:
                     if (finalValue > 360.00f) {

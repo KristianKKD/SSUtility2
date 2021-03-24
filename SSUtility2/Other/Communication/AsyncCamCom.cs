@@ -87,7 +87,7 @@ namespace SSUtility2 {
             try {
                 Command oldCom = CommandQueue.FindCommandByID(id);
                 if (oldCom != null) {
-                    Command com = new Command(oldCom.content, true, true);
+                    Command com = new Command(oldCom.content, true, true, true, oldCom.name);
                 }
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to queue a repeating command!\nShow more?", "Command Queuing Failed!", e.ToString());
