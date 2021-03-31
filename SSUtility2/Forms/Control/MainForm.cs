@@ -9,12 +9,13 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.4.0";
+        public const string version = "v2.3.5.0";
 
         private bool closing = false;
         private bool keyboardControl = false;
 
         public bool finalMode = false;
+        public bool lite = false;
 
         public static Control[] saveList;
         private static Control[] controlPanel;
@@ -271,6 +272,42 @@ namespace SSUtility2 {
             }
             Menu_Settings_CP.Text = "Show Control Panel";
             b_Open.Text = ">>";
+        }
+
+        void LiteToggle() {
+            try {
+                if (!lite) {
+                    AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
+
+                    lite = true;
+                    ShowControlPanel();
+                    m.MinimumSize = new Size(0, 0);
+                    m.Size = new Size(310, 300);
+                    m.MinimumSize = Size;
+                    m.MaximumSize = Size;
+
+                    foreach (Control c in controlPanel) {
+                        c.Top -= 50;
+                    }
+
+                    Menu_Settings_Info.Dispose();
+                    Menu_Settings_CP.Dispose();
+                    Menu_Video.Dispose();
+                    b_Open.Dispose();
+
+                    sP_Player.Hide();
+                    mainPlayer.stream_Player.Hide();
+                    mainPlayer.settings.isPlaying = true;
+
+                    Menu_Settings_Lite.Text = "Dual Mode";
+                } else {
+                    Application.Restart();
+                    Application.ExitThread();
+                    this.Close();
+                }
+            } catch (Exception er) {
+                Tools.ShowPopup("Failed to init Lite Mode!\nShow more?", "Error Occured!", er.ToString());
+            }
         }
 
         Detached AttachPlayer() {
@@ -724,7 +761,14 @@ namespace SSUtility2 {
         }
 
         private void MainForm_ResizeEnd(object sender, EventArgs e) {
-            setPage.l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
+            try {
+                setPage.l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
+            } catch{ }
+            }
+
+        private void Menu_Settings_Lite_Click(object sender, EventArgs e) {
+            LiteToggle();
         }
+        
     } // end of class MainForm
 } // end of namespace SSLUtility2

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -98,7 +99,12 @@ namespace SSUtility2 {
 
         public async Task StartPlaying(bool showErrors) {
             try {
-                if (await Play(showErrors, this).ConfigureAwait(false)) {
+                if (MainForm.m.lite) {
+                    settings.isPlaying = true;
+                    return;
+                }
+
+                    if (await Play(showErrors, this).ConfigureAwait(false)) {
                     MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
                     if (this == MainForm.m.mainPlayer && showErrors) {
                         if (!secondView.settings.isPlaying) {
@@ -123,6 +129,11 @@ namespace SSUtility2 {
 
         public async Task<bool> Play(bool showError, Detached player) {
             try {
+                if (MainForm.m.lite) {
+                    settings.isPlaying = true;
+                    return true;
+                }
+
                 if (!this.IsHandleCreated)
                     this.CreateHandle();
 
@@ -149,6 +160,7 @@ namespace SSUtility2 {
 
                 if (player.settings.isPlaying)
                     player.StopPlaying();
+
                 vid = Stream.FromUri(combinedUrl);
                 player.stream_Player.AttachStream(vid);
                 vid.Start();

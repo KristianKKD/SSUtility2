@@ -97,7 +97,7 @@ namespace SSUtility2 {
                     UpdateAll();
                 } else {
                     if (!isCamera) {
-                        if (MainForm.m.mainPlayer.settings.isPlaying && timeoutTime < CommandQueue.commandRetries) {
+                        if ((MainForm.m.mainPlayer.settings.isPlaying || MainForm.m.lite) && timeoutTime < CommandQueue.commandRetries) {
                             timeoutTime++;
                         } else {
                             timeoutTime = 0;

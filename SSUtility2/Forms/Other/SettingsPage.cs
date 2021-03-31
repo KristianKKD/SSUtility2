@@ -252,7 +252,7 @@ namespace SSUtility2 {
             else
                 MainForm.m.Menu_Settings_Swap.Enabled = false;
 
-            if (play && AsyncCamCom.sock.Connected)
+            if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite)
                 MainForm.m.mainPlayer.UpdateMode();
         }
 
