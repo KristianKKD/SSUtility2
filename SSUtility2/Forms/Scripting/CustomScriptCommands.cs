@@ -44,6 +44,10 @@ namespace SSUtility2 {
         readonly static ScriptCommand queryfocus = new ScriptCommand(new string[] { "queryfocus" }, new byte[] { 0x01, 0x55, 0x00, 0x00 }, "Returns camera focus value", true);
         readonly static ScriptCommand querypost = new ScriptCommand(new string[] { "querypost" }, new byte[] { 0x07, 0x6B, 0x00, 0x00 }, "Returns camera test data", true);
         readonly static ScriptCommand queryconfig = new ScriptCommand(new string[] { "queryconfig" }, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config, (thermal only)", true);
+        
+        readonly static ScriptCommand learnPreset = new ScriptCommand(new string[] { "learnpreset", "setpreset" }, new byte[] { 0x00, 0x03, 0x00, 0x00 }, "", false, true, false, false);
+        readonly static ScriptCommand clearPreset = new ScriptCommand(new string[] { "clearpreset" }, new byte[] { 0x00, 0x05, 0x00, 0x00 }, "", false, true, false, false);
+        readonly static ScriptCommand gotoPreset = new ScriptCommand(new string[] { "gotopreset" }, new byte[] { 0x00, 0x07, 0x00, 0x00 }, "", false, true, false, false);
 
         public readonly static ScriptCommand[] queryCommands = new ScriptCommand[] {
             querypan,
@@ -70,10 +74,17 @@ namespace SSUtility2 {
             panzero,
         };
 
-        public readonly static ScriptCommand[][] cameraArrayCommands = new ScriptCommand[][]{
+        public readonly static ScriptCommand[] presetCommands = new ScriptCommand[] {
+            learnPreset,
+            clearPreset,
+            gotoPreset,
+        };
+
+        public readonly static ScriptCommand[][] cameraArrayCommands = new ScriptCommand[][]{ //megalist
             otherCommands,
             setCommands,
             queryCommands,
+            presetCommands,
         };
 
         public static bool stopScript;

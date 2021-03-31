@@ -80,5 +80,11 @@ namespace SSUtility2 {
             MainForm.m.pd.tB_Commands.Text += val;
         }
 
+        private void CommandListWindow_FormClosing(object sender, FormClosingEventArgs e) {
+            if (e.CloseReason == CloseReason.UserClosing) {
+                e.Cancel = true;
+                Hide();
+            }
+        }
     }
 }

@@ -48,6 +48,7 @@ namespace SSUtility2 {
             if (!TryConnect().Result) {
                 return;
             }
+            MainForm.m.WriteToResponses(Tools.ReadCommand(code), true, false);
             sock.SendTo(code, sock.RemoteEndPoint);
         }
 

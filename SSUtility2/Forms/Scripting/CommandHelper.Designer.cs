@@ -96,6 +96,7 @@ namespace SSUtility2
             this.Controls.Add(this.dgv_Coms);
             this.Name = "CommandListWindow";
             this.Text = "Command List Window";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandListWindow_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Coms)).EndInit();
             this.ResumeLayout(false);
 

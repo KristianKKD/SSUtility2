@@ -104,8 +104,10 @@ namespace SSUtility2 {
                     return;
                 }
 
-                    if (await Play(showErrors, this).ConfigureAwait(false)) {
-                    MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
+                if (await Play(showErrors, this).ConfigureAwait(false)) {
+                    Invoke((MethodInvoker)delegate {
+                        MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
+                    });
                     if (this == MainForm.m.mainPlayer && showErrors) {
                         if (!secondView.settings.isPlaying) {
                             secondView.settings.Copy(settings);
@@ -122,7 +124,7 @@ namespace SSUtility2 {
                     StopPlaying();
                 }
             } catch (Exception e) {
-                Tools.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
+                Tools.ShowPopup("Failed to init stream!\nShow more?", "Stream Failed!", e.ToString());
                 StopPlaying();
             }
         }
@@ -161,7 +163,7 @@ namespace SSUtility2 {
                 if (player.settings.isPlaying)
                     player.StopPlaying();
 
-                vid = Stream.FromUri(combinedUrl);
+                vid = Stream.FromUri(combinedUrl, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), RtspTransport.Tcp, RtspFlags.None);
                 player.stream_Player.AttachStream(vid);
                 vid.Start();
 
