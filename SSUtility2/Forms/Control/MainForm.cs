@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.5.1";
+        public const string version = "v2.3.5.2";
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -95,9 +95,9 @@ namespace SSUtility2 {
                 b_Open.BringToFront();
                 
                 CommandQueue.Init();
-                AutoConnect();
+                //LiteToggle();
 
-                LiteToggle();
+                AutoConnect();
 
             } catch (Exception e) {
                 Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
@@ -301,6 +301,7 @@ namespace SSUtility2 {
                     mainPlayer.stream_Player.Hide();
                     mainPlayer.settings.isPlaying = true;
 
+                    //Menu_Settings_Lite.Dispose();
                     Menu_Settings_Lite.Text = "Dual Mode";
                     Text = "SSUtility V2.0 Lite";
                 } else {
