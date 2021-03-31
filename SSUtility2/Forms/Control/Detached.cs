@@ -175,6 +175,9 @@ namespace SSUtility2 {
         }
 
         public async Task EnableSecond(bool copySettings) {
+            if (MainForm.m.lite)
+                return;
+
             MainForm.m.Menu_Settings_Info.Visible = true;
 
             MainForm.m.sP_Player.Show();
