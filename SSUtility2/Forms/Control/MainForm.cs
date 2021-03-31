@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.5.2";
+        public const string version = "v2.3.5.3";
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -300,6 +300,7 @@ namespace SSUtility2 {
                     sP_Player.Hide();
                     mainPlayer.stream_Player.Hide();
                     mainPlayer.settings.isPlaying = true;
+                    Joystick.UpdateJoystickCentre();
 
                     //Menu_Settings_Lite.Dispose();
                     Menu_Settings_Lite.Text = "Dual Mode";

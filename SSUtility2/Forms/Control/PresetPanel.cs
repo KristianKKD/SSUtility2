@@ -17,17 +17,17 @@ namespace SSUtility2 {
         }
 
         private void b_Presets_Admin_MechMen_Click(object sender, EventArgs e) {
-            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
-            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
-            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
-            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 });
         }
 
         private void b_Presets_Admin_SetupMen_Click(object sender, EventArgs e) {
-            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
-            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
-            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
-            AsyncCamCom.SendNewCommand(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 });
         }
 
         private void b_Presets_Admin_DebugToggle_Click(object sender, EventArgs e) {
@@ -171,7 +171,7 @@ namespace SSUtility2 {
         }
 
         void DoPreset(uint adr, byte p) {
-            AsyncCamCom.SendNewCommand(D.protocol.Preset(adr, p, D.PresetAction.Goto));
+            AsyncCamCom.SendNonAsync(D.protocol.Preset(adr, p, D.PresetAction.Goto));
         }
 
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
@@ -191,9 +191,9 @@ namespace SSUtility2 {
             byte presetNumber = Convert.ToByte(tB_Presets_Number.Text);
 
             if (learn) {
-                AsyncCamCom.SendNewCommand(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Set));
+                AsyncCamCom.SendNonAsync(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Set));
             } else {
-                AsyncCamCom.SendNewCommand(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Goto));
+                AsyncCamCom.SendNonAsync(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Goto));
             }
         }
 
