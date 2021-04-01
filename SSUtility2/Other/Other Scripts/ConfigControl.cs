@@ -27,6 +27,7 @@ namespace SSUtility2 {
         public static ConfigSetting recQual = new ConfigSetting("100", "RecordingQuality", ConfigSetting.VarType.integer);
         public static ConfigSetting recFPS = new ConfigSetting("30", "RecordingFramerate", ConfigSetting.VarType.integer);
         public static ConfigSetting commandRateMs = new ConfigSetting("100", "UpdateStatsTimerMs", ConfigSetting.VarType.integer);
+        public static ConfigSetting videoReplayRateMs = new ConfigSetting("7500", "ReplayVideoTimerMs", ConfigSetting.VarType.integer);
         public static ConfigSetting subnetNotif = new ConfigSetting("false", "SubnetNotificationHidden", ConfigSetting.VarType.boolean);
         public static ConfigSetting autoPlay = new ConfigSetting("true", "AutoPlayLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting automaticPaths = new ConfigSetting("true", "AutomaticPaths", ConfigSetting.VarType.boolean);
@@ -49,6 +50,7 @@ namespace SSUtility2 {
             recQual,
             recFPS,
             commandRateMs,
+            videoReplayRateMs,
             subnetNotif,
             autoPlay,
             automaticPaths,

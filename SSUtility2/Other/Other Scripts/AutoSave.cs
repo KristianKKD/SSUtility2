@@ -8,7 +8,7 @@ namespace SSUtility2 {
         public static async Task SaveAuto(string path) {
             ConfigControl.ResetFile(path);
 
-            foreach (Control c in MainForm.saveList) {
+            foreach (Control c in MainForm.autosaveControls) {
                 if (c is TrackBar) {
                     TrackBar t = (TrackBar)c;
                     File.AppendAllText(path, t.Value.ToString() + "\n");
@@ -34,12 +34,12 @@ namespace SSUtility2 {
 
             string[] lines = File.ReadAllLines(path);
 
-            for (int i = 0; i < MainForm.saveList.Length; i++) {
-                if (MainForm.saveList[i] is TrackBar) {
-                    TrackBar t = (TrackBar)MainForm.saveList[i];
+            for (int i = 0; i < MainForm.autosaveControls.Length; i++) {
+                if (MainForm.autosaveControls[i] is TrackBar) {
+                    TrackBar t = (TrackBar)MainForm.autosaveControls[i];
                     t.Value = int.Parse(lines[i]);
                 } else {
-                    MainForm.saveList[i].Text = lines[i];
+                    MainForm.autosaveControls[i].Text = lines[i];
                 }
             }
         }

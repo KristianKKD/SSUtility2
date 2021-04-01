@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.5.5";
+        public const string version = "v2.3.5.6";
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -17,7 +17,7 @@ namespace SSUtility2 {
         public bool finalMode = false;
         public bool lite = false;
 
-        public static Control[] saveList;
+        public static Control[] autosaveControls;
         private static Control[] controlPanel;
 
         public CustomPanel custom;
@@ -53,25 +53,24 @@ namespace SSUtility2 {
                 AttachInfoPanel();
                 AttachCustomPanel();
 
-                saveList = new Control[]{
+                autosaveControls = new Control[]{
+                    mainPlayer.settings.tB_PlayerD_Adr,
+                    mainPlayer.settings.tB_PlayerD_Port,
+                    mainPlayer.settings.tB_PlayerD_RTSP,
+                    mainPlayer.settings.tB_PlayerD_Buffering,
+                    mainPlayer.settings.tB_PlayerD_Username,
+                    mainPlayer.settings.tB_PlayerD_Password,
+                    mainPlayer.settings.tB_PlayerD_SimpleAdr,
+                    mainPlayer.settings.tB_PlayerD_Name,
 
-                mainPlayer.settings.tB_PlayerD_Adr,
-                mainPlayer.settings.tB_PlayerD_Port,
-                mainPlayer.settings.tB_PlayerD_RTSP,
-                mainPlayer.settings.tB_PlayerD_Buffering,
-                mainPlayer.settings.tB_PlayerD_Username,
-                mainPlayer.settings.tB_PlayerD_Password,
-                mainPlayer.settings.tB_PlayerD_SimpleAdr,
-                mainPlayer.settings.tB_PlayerD_Name,
-
-                setPage.tB_Custom_1,
-                setPage.tB_Custom_2,
-                setPage.tB_Custom_3,
-                setPage.tB_Custom_4,
-                setPage.tB_Custom_5,
-                setPage.tB_Custom_6,
-                setPage.tB_Custom_7,
-                setPage.tB_Custom_8,
+                    setPage.tB_Custom_1,
+                    setPage.tB_Custom_2,
+                    setPage.tB_Custom_3,
+                    setPage.tB_Custom_4,
+                    setPage.tB_Custom_5,
+                    setPage.tB_Custom_6,
+                    setPage.tB_Custom_7,
+                    setPage.tB_Custom_8,
                 };
                 controlPanel = new Control[] {
                     b_PTZ_Up,

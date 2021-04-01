@@ -31,7 +31,8 @@ namespace SSUtility2 {
             cB_Rec_Quality.Text = ConfigControl.recQual.stringVal;
             cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
-            cB_Other_RefreshRate.Text = ConfigControl.commandRateMs.stringVal;
+            cB_IPCon_RefreshRate.Text = ConfigControl.commandRateMs.stringVal;
+            cB_IPCon_Replay.Text = ConfigControl.videoReplayRateMs.stringVal;
 
             check_Other_Subnet.Checked = ConfigControl.subnetNotif.boolVal;
             check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
@@ -86,15 +87,14 @@ namespace SSUtility2 {
             b_Paths_vBrowse.Enabled = auto;
         }
 
-        private void cB_Other_RefreshRate_TextChanged(object sender, EventArgs e) {
-            if (Tools.CheckIfNameValid(cB_Other_RefreshRate.Text, true)) {
-                ConfigControl.commandRateMs.UpdateValue(cB_Other_RefreshRate.Text);
+        private void cB_IPCon_RefreshRate_TextChanged(object sender, EventArgs e) {
+            if (Tools.CheckIfNameValid(cB_IPCon_RefreshRate.Text, true)) {
+                ConfigControl.commandRateMs.UpdateValue(cB_IPCon_RefreshRate.Text);
             }
         }
 
         private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
             Tools.BrowseFolderButton(tB_Paths_sCFolder);
-
         }
 
         private void b_Paths_vBrowse_Click(object sender, EventArgs e) {
@@ -120,6 +120,8 @@ namespace SSUtility2 {
             }
             if (fps < 1) {
                 cB_Rec_FPS.Text = "1";
+            } else if (fps > 200) {
+                cB_Rec_FPS.Text = "200";
             }
 
             ConfigControl.recFPS.UpdateValue(cB_Rec_FPS.Text);
@@ -280,5 +282,16 @@ namespace SSUtility2 {
             }
         }
 
+        private void cB_IPCon_Replay_TextChanged(object sender, EventArgs e) {
+            if (!int.TryParse(cB_IPCon_Replay.Text, out int value)) {
+                cB_IPCon_Replay.Text = value.ToString();
+                return;
+            }
+            if (value < 1000) {
+                cB_IPCon_Replay.Text = "1000";
+            }
+
+            ConfigControl.videoReplayRateMs.UpdateValue(cB_IPCon_Replay.Text);
+        }
     }
 }

@@ -40,13 +40,15 @@ namespace SSUtility2
             this.l_Paths_vCheck = new System.Windows.Forms.Label();
             this.l_Paths_sCCheck = new System.Windows.Forms.Label();
             this.check_Paths_Manual = new System.Windows.Forms.CheckBox();
-            this.cB_Other_RefreshRate = new System.Windows.Forms.ComboBox();
             this.check_Other_AutoPlay = new System.Windows.Forms.CheckBox();
-            this.l_Other_CommandRate = new System.Windows.Forms.Label();
             this.check_Other_Subnet = new System.Windows.Forms.CheckBox();
             this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
+            this.cB_IPCon_Replay = new System.Windows.Forms.ComboBox();
+            this.l_IPCon_VideoReplay = new System.Windows.Forms.Label();
+            this.cB_IPCon_RefreshRate = new System.Windows.Forms.ComboBox();
+            this.l_IPCon_CommandRate = new System.Windows.Forms.Label();
             this.cB_ipCon_CamType = new System.Windows.Forms.ComboBox();
             this.l_ipCon_Selected = new System.Windows.Forms.Label();
             this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
@@ -278,22 +280,6 @@ namespace SSUtility2
             this.check_Paths_Manual.UseVisualStyleBackColor = true;
             this.check_Paths_Manual.CheckedChanged += new System.EventHandler(this.check_Paths_Manual_CheckedChanged);
             // 
-            // cB_Other_RefreshRate
-            // 
-            this.cB_Other_RefreshRate.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_Other_RefreshRate.FormattingEnabled = true;
-            this.cB_Other_RefreshRate.Items.AddRange(new object[] {
-            "100",
-            "200",
-            "500"});
-            this.cB_Other_RefreshRate.Location = new System.Drawing.Point(165, 88);
-            this.cB_Other_RefreshRate.Name = "cB_Other_RefreshRate";
-            this.cB_Other_RefreshRate.Size = new System.Drawing.Size(114, 21);
-            this.cB_Other_RefreshRate.TabIndex = 28;
-            this.toolTips.SetToolTip(this.cB_Other_RefreshRate, "General speed of the program, lower to decrease connection latency, increase to i" +
-        "mprove performance.");
-            this.cB_Other_RefreshRate.TextChanged += new System.EventHandler(this.cB_Other_RefreshRate_TextChanged);
-            // 
             // check_Other_AutoPlay
             // 
             this.check_Other_AutoPlay.Location = new System.Drawing.Point(6, 16);
@@ -306,17 +292,6 @@ namespace SSUtility2
             this.toolTips.SetToolTip(this.check_Other_AutoPlay, "Play videos upon launch of the program if any have been entered previously.");
             this.check_Other_AutoPlay.UseVisualStyleBackColor = true;
             this.check_Other_AutoPlay.CheckedChanged += new System.EventHandler(this.check_Other_AutoPlay_CheckedChanged);
-            // 
-            // l_Other_CommandRate
-            // 
-            this.l_Other_CommandRate.AutoSize = true;
-            this.l_Other_CommandRate.Location = new System.Drawing.Point(6, 91);
-            this.l_Other_CommandRate.Name = "l_Other_CommandRate";
-            this.l_Other_CommandRate.Size = new System.Drawing.Size(130, 13);
-            this.l_Other_CommandRate.TabIndex = 27;
-            this.l_Other_CommandRate.Text = "Command Send Rate (ms)";
-            this.toolTips.SetToolTip(this.l_Other_CommandRate, "General speed of the program, lower to decrease connection latency, increase to i" +
-        "mprove performance.");
             // 
             // check_Other_Subnet
             // 
@@ -360,6 +335,10 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
+            this.tP_Control.Controls.Add(this.cB_IPCon_Replay);
+            this.tP_Control.Controls.Add(this.l_IPCon_VideoReplay);
+            this.tP_Control.Controls.Add(this.cB_IPCon_RefreshRate);
+            this.tP_Control.Controls.Add(this.l_IPCon_CommandRate);
             this.tP_Control.Controls.Add(this.cB_ipCon_CamType);
             this.tP_Control.Controls.Add(this.l_ipCon_Selected);
             this.tP_Control.Controls.Add(this.tB_IPCon_Port);
@@ -376,6 +355,61 @@ namespace SSUtility2
             this.tP_Control.TabIndex = 3;
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
+            // 
+            // cB_Replay
+            // 
+            this.cB_IPCon_Replay.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_IPCon_Replay.FormattingEnabled = true;
+            this.cB_IPCon_Replay.Items.AddRange(new object[] {
+            "5000",
+            "7500",
+            "1000",
+            "1500"});
+            this.cB_IPCon_Replay.Location = new System.Drawing.Point(115, 152);
+            this.cB_IPCon_Replay.Name = "cB_Replay";
+            this.cB_IPCon_Replay.Size = new System.Drawing.Size(123, 21);
+            this.cB_IPCon_Replay.TabIndex = 87;
+            this.toolTips.SetToolTip(this.cB_IPCon_Replay, "General speed of the program, lower to decrease connection latency, increase to i" +
+        "mprove performance.");
+            this.cB_IPCon_Replay.TextChanged += new System.EventHandler(this.cB_IPCon_Replay_TextChanged);
+            // 
+            // l_IPCon_VideoReplay
+            // 
+            this.l_IPCon_VideoReplay.AutoSize = true;
+            this.l_IPCon_VideoReplay.Location = new System.Drawing.Point(6, 155);
+            this.l_IPCon_VideoReplay.Name = "l_IPCon_VideoReplay";
+            this.l_IPCon_VideoReplay.Size = new System.Drawing.Size(103, 13);
+            this.l_IPCon_VideoReplay.TabIndex = 86;
+            this.l_IPCon_VideoReplay.Text = "Replay Interval (ms):";
+            this.toolTips.SetToolTip(this.l_IPCon_VideoReplay, "General speed of the program, lower to decrease connection latency, increase to i" +
+        "mprove performance.");
+            // 
+            // cB_IPCon_RefreshRate
+            // 
+            this.cB_IPCon_RefreshRate.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_IPCon_RefreshRate.FormattingEnabled = true;
+            this.cB_IPCon_RefreshRate.Items.AddRange(new object[] {
+            "100",
+            "200",
+            "500"});
+            this.cB_IPCon_RefreshRate.Location = new System.Drawing.Point(115, 125);
+            this.cB_IPCon_RefreshRate.Name = "cB_IPCon_RefreshRate";
+            this.cB_IPCon_RefreshRate.Size = new System.Drawing.Size(123, 21);
+            this.cB_IPCon_RefreshRate.TabIndex = 85;
+            this.toolTips.SetToolTip(this.cB_IPCon_RefreshRate, "General speed of the program, lower to decrease connection latency, increase to i" +
+        "mprove performance.");
+            this.cB_IPCon_RefreshRate.TextChanged += new System.EventHandler(this.cB_IPCon_RefreshRate_TextChanged);
+            // 
+            // l_IPCon_CommandRate
+            // 
+            this.l_IPCon_CommandRate.AutoSize = true;
+            this.l_IPCon_CommandRate.Location = new System.Drawing.Point(6, 128);
+            this.l_IPCon_CommandRate.Name = "l_IPCon_CommandRate";
+            this.l_IPCon_CommandRate.Size = new System.Drawing.Size(83, 13);
+            this.l_IPCon_CommandRate.TabIndex = 84;
+            this.l_IPCon_CommandRate.Text = "Send Rate (ms):";
+            this.toolTips.SetToolTip(this.l_IPCon_CommandRate, "General speed of the program, lower to decrease connection latency, increase to i" +
+        "mprove performance.");
             // 
             // cB_ipCon_CamType
             // 
@@ -394,9 +428,9 @@ namespace SSUtility2
             this.l_ipCon_Selected.AutoSize = true;
             this.l_ipCon_Selected.Location = new System.Drawing.Point(6, 95);
             this.l_ipCon_Selected.Name = "l_ipCon_Selected";
-            this.l_ipCon_Selected.Size = new System.Drawing.Size(88, 13);
+            this.l_ipCon_Selected.Size = new System.Drawing.Size(91, 13);
             this.l_ipCon_Selected.TabIndex = 82;
-            this.l_ipCon_Selected.Text = "Selected Camera";
+            this.l_ipCon_Selected.Text = "Selected Camera:";
             // 
             // tB_IPCon_Port
             // 
@@ -725,10 +759,8 @@ namespace SSUtility2
             this.tP_Other.Controls.Add(this.tB_Other_ResolutionWidth);
             this.tP_Other.Controls.Add(this.l_Other_ResolutionWidth);
             this.tP_Other.Controls.Add(this.check_Other_AutoReconnect);
-            this.tP_Other.Controls.Add(this.cB_Other_RefreshRate);
             this.tP_Other.Controls.Add(this.check_Other_Subnet);
             this.tP_Other.Controls.Add(this.check_Other_AutoPlay);
-            this.tP_Other.Controls.Add(this.l_Other_CommandRate);
             this.tP_Other.Location = new System.Drawing.Point(4, 22);
             this.tP_Other.Name = "tP_Other";
             this.tP_Other.Padding = new System.Windows.Forms.Padding(3);
@@ -861,9 +893,7 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_Paths_vCheck;
         public System.Windows.Forms.Label l_Paths_sCCheck;
         public System.Windows.Forms.CheckBox check_Paths_Manual;
-        public System.Windows.Forms.ComboBox cB_Other_RefreshRate;
         public System.Windows.Forms.CheckBox check_Other_AutoPlay;
-        public System.Windows.Forms.Label l_Other_CommandRate;
         public System.Windows.Forms.CheckBox check_Other_Subnet;
         public System.Windows.Forms.Button b_ChangeDir;
         public System.Windows.Forms.TabControl tC_Settings;
@@ -909,5 +939,9 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_Other_ResolutionWidth;
         public System.Windows.Forms.ComboBox cB_Rec_Quality;
         public System.Windows.Forms.Label l_Rec_Quality;
+        public System.Windows.Forms.ComboBox cB_IPCon_Replay;
+        public System.Windows.Forms.Label l_IPCon_VideoReplay;
+        public System.Windows.Forms.ComboBox cB_IPCon_RefreshRate;
+        public System.Windows.Forms.Label l_IPCon_CommandRate;
     }
 }

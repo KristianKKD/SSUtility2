@@ -134,7 +134,6 @@ namespace SSUtility2 {
 
         public async Task<bool> Play(bool showError, Detached player) {
             try {
-                MainForm.m.WriteToResponses("a", false);
                 if (MainForm.m.lite) {
                     settings.isPlaying = true;
                     return true;
@@ -178,6 +177,25 @@ namespace SSUtility2 {
                 Tools.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
                 return false;
             }
+        }
+
+        float timeoutTime = 0;
+
+        public void PlayMe() {
+            if (settings.isPlaying) {
+                if (timeoutTime < 7500f/ConfigControl.commandRateMs.intVal) {
+                    timeoutTime++;
+                } else {
+                    timeoutTime = 0;
+                    Restart();
+                    MainForm.m.WriteToResponses("replay", false);
+                }
+            }
+        }
+
+        void Restart() {
+            vid.Stop();
+            vid.Start();
         }
 
         public async Task EnableSecond(bool copySettings) {
