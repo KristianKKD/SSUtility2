@@ -96,8 +96,8 @@ namespace SSUtility2 {
                 originalDetached.Play(true, originalDetached.secondView);
             else {
                 originalDetached.StartPlaying(true);
-                if (originalDetached.secondView == MainForm.m.mainPlayer && InfoPanel.i.isCamera)
-                    originalDetached.Play(true, originalDetached.secondView);
+                if (originalDetached == MainForm.m.mainPlayer && InfoPanel.i.isCamera)
+                    originalDetached.Play(true, MainForm.m.mainPlayer);
             }
         }
 
@@ -114,6 +114,7 @@ namespace SSUtility2 {
             MainForm.m.sP_Player.Hide();
             Hide();
             MainForm.m.Menu_Video_EnableSecondary.Visible = true;
+            MainForm.m.mainPlayer.secondView.StopPlaying();
         }
 
         private void b_Stop_Click(object sender, EventArgs e) {

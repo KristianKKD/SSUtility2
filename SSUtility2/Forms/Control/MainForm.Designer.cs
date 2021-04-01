@@ -71,6 +71,7 @@ namespace SSUtility2 {
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Main = new System.Windows.Forms.Panel();
             this.p_Control = new System.Windows.Forms.Panel();
+            this.b_Open = new System.Windows.Forms.Button();
             this.Joystick = new Joystick.CentreStick();
             this.b_PTZ_Left = new System.Windows.Forms.Button();
             this.b_PTZ_Right = new System.Windows.Forms.Button();
@@ -81,7 +82,6 @@ namespace SSUtility2 {
             this.b_PTZ_FocusPos = new System.Windows.Forms.Button();
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.pB_Background = new System.Windows.Forms.PictureBox();
-            this.b_Open = new System.Windows.Forms.Button();
             this.sP_Player = new SPanel.SizeablePanel();
             this.stream_SecondPlayer = new WebEye.StreamControl.WinForms.StreamControl();
             this.MenuBar.SuspendLayout();
@@ -176,11 +176,11 @@ namespace SSUtility2 {
             // 
             this.Menu_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Settings_Open,
+            this.Menu_Settings_Lite,
             this.Menu_Settings_CP,
             this.Menu_Settings_Info,
             this.Menu_Settings_Swap,
-            this.Menu_Settings_Keyboard,
-            this.Menu_Settings_Lite});
+            this.Menu_Settings_Keyboard});
             this.Menu_Settings.Name = "Menu_Settings";
             this.Menu_Settings.Size = new System.Drawing.Size(63, 20);
             this.Menu_Settings.Text = "Settings";
@@ -225,7 +225,7 @@ namespace SSUtility2 {
             // 
             this.Menu_Settings_Lite.Name = "Menu_Settings_Lite";
             this.Menu_Settings_Lite.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_Lite.Text = "Enable Lite Mode";
+            this.Menu_Settings_Lite.Text = "Lite Mode";
             this.Menu_Settings_Lite.Click += new System.EventHandler(this.Menu_Settings_Lite_Click);
             // 
             // Menu_Video
@@ -333,6 +333,7 @@ namespace SSUtility2 {
             // 
             // p_Control
             // 
+            this.p_Control.Controls.Add(this.b_Open);
             this.p_Control.Controls.Add(this.Joystick);
             this.p_Control.Controls.Add(this.b_PTZ_Left);
             this.p_Control.Controls.Add(this.b_PTZ_Right);
@@ -343,13 +344,27 @@ namespace SSUtility2 {
             this.p_Control.Controls.Add(this.b_PTZ_FocusPos);
             this.p_Control.Controls.Add(this.b_PTZ_ZoomPos);
             this.p_Control.Controls.Add(this.pB_Background);
-            this.p_Control.Controls.Add(this.b_Open);
             this.p_Control.Controls.Add(this.sP_Player);
             this.p_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.p_Control.Location = new System.Drawing.Point(0, 0);
             this.p_Control.Name = "p_Control";
             this.p_Control.Size = new System.Drawing.Size(1264, 657);
             this.p_Control.TabIndex = 1;
+            // 
+            // b_Open
+            // 
+            this.b_Open.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.b_Open.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Open.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.b_Open.ForeColor = System.Drawing.SystemColors.Control;
+            this.b_Open.Location = new System.Drawing.Point(0, 0);
+            this.b_Open.Name = "b_Open";
+            this.b_Open.Size = new System.Drawing.Size(50, 50);
+            this.b_Open.TabIndex = 1;
+            this.b_Open.Text = ">>";
+            this.b_Open.UseVisualStyleBackColor = false;
+            this.b_Open.Visible = false;
+            this.b_Open.Click += new System.EventHandler(this.b_Open_Click);
             // 
             // Joystick
             // 
@@ -473,21 +488,6 @@ namespace SSUtility2 {
             this.pB_Background.Size = new System.Drawing.Size(150, 150);
             this.pB_Background.TabIndex = 91;
             this.pB_Background.TabStop = false;
-            // 
-            // b_Open
-            // 
-            this.b_Open.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.b_Open.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Open.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.b_Open.ForeColor = System.Drawing.SystemColors.Control;
-            this.b_Open.Location = new System.Drawing.Point(0, 0);
-            this.b_Open.Name = "b_Open";
-            this.b_Open.Size = new System.Drawing.Size(50, 50);
-            this.b_Open.TabIndex = 1;
-            this.b_Open.Text = ">>";
-            this.b_Open.UseVisualStyleBackColor = false;
-            this.b_Open.Visible = false;
-            this.b_Open.Click += new System.EventHandler(this.b_Open_Click);
             // 
             // sP_Player
             // 

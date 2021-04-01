@@ -92,9 +92,12 @@ namespace SSUtility2 {
         }
 
         public void StopPlaying() {
+            if (!settings.isPlaying)
+                return;
             vid.Stop();
             settings.isPlaying = false;
-            MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
+            if(!settings.isSecondary)
+                MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
         }
 
         public async Task StartPlaying(bool showErrors) {
@@ -131,6 +134,7 @@ namespace SSUtility2 {
 
         public async Task<bool> Play(bool showError, Detached player) {
             try {
+                MainForm.m.WriteToResponses("a", false);
                 if (MainForm.m.lite) {
                     settings.isPlaying = true;
                     return true;
@@ -163,7 +167,7 @@ namespace SSUtility2 {
                 if (player.settings.isPlaying)
                     player.StopPlaying();
 
-                vid = Stream.FromUri(combinedUrl, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), RtspTransport.Tcp, RtspFlags.None);
+                vid = Stream.FromUri(combinedUrl, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), RtspTransport.Undefined, RtspFlags.PreferTcp);
                 player.stream_Player.AttachStream(vid);
                 vid.Start();
 
@@ -192,8 +196,9 @@ namespace SSUtility2 {
 
         public async Task DisableSecond() {
             MainForm.m.Menu_Settings_Info.Visible = false;
-
-            MainForm.m.sP_Player.Hide(); //here
+            MainForm.m.sP_Player.Hide();
+            if (secondView.settings.isPlaying)
+                secondView.StopPlaying();
         }
 
         public void SnapShot() {
@@ -245,10 +250,10 @@ namespace SSUtility2 {
                     }
                 }
 
-                Play(true, this);
+                Play(false, this);
                 if (isCam && secondView.settings.isPlaying) {
                     secondView.settings.checkB_PlayerD_Manual.Checked = true;
-                    secondView.Play(true, secondView);
+                    secondView.Play(false, secondView);
                 }
             } catch (Exception e) {
                 MessageBox.Show("UPDATEMODE\n" + e.ToString());

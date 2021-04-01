@@ -54,6 +54,10 @@ namespace SSUtility2
             this.tC_PlayerSettings = new System.Windows.Forms.TabControl();
             this.tP_Main = new System.Windows.Forms.TabPage();
             this.tP_Secondary = new System.Windows.Forms.TabPage();
+            this.b_Secondary_Play = new System.Windows.Forms.Button();
+            this.b_Secondary_Stop = new System.Windows.Forms.Button();
+            this.b_Hide = new System.Windows.Forms.Button();
+            this.check_Secondary_Manual = new System.Windows.Forms.CheckBox();
             this.p_Secondary_Extended = new System.Windows.Forms.Panel();
             this.l_Secondary_Tip = new System.Windows.Forms.Label();
             this.l_Secondary_CamType = new System.Windows.Forms.Label();
@@ -75,10 +79,6 @@ namespace SSUtility2
             this.l_Secondary_SimpleAdr = new System.Windows.Forms.Label();
             this.l_Secondary_Name = new System.Windows.Forms.Label();
             this.tB_Secondary_Name = new System.Windows.Forms.TextBox();
-            this.b_Secondary_Play = new System.Windows.Forms.Button();
-            this.b_Secondary_Stop = new System.Windows.Forms.Button();
-            this.b_Hide = new System.Windows.Forms.Button();
-            this.check_Secondary_Manual = new System.Windows.Forms.CheckBox();
             this.p_PlayerD_Simple.SuspendLayout();
             this.p_PlayerD_Extended.SuspendLayout();
             this.tC_PlayerSettings.SuspendLayout();
@@ -125,9 +125,9 @@ namespace SSUtility2
             this.tB_PlayerD_SimpleAdr.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_PlayerD_SimpleAdr.Location = new System.Drawing.Point(85, 3);
+            this.tB_PlayerD_SimpleAdr.Location = new System.Drawing.Point(88, 3);
             this.tB_PlayerD_SimpleAdr.Name = "tB_PlayerD_SimpleAdr";
-            this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(191, 20);
+            this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(188, 20);
             this.tB_PlayerD_SimpleAdr.TabIndex = 28;
             // 
             // l_PlayerD_SimpleAdr
@@ -166,6 +166,7 @@ namespace SSUtility2
             this.p_PlayerD_Extended.Name = "p_PlayerD_Extended";
             this.p_PlayerD_Extended.Size = new System.Drawing.Size(391, 213);
             this.p_PlayerD_Extended.TabIndex = 56;
+            this.p_PlayerD_Extended.Visible = false;
             // 
             // l_PlayerD_Tip
             // 
@@ -433,6 +434,55 @@ namespace SSUtility2
             this.tP_Secondary.Text = "Secondary Player";
             this.tP_Secondary.UseVisualStyleBackColor = true;
             // 
+            // b_Secondary_Play
+            // 
+            this.b_Secondary_Play.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Secondary_Play.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Secondary_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Secondary_Play.Location = new System.Drawing.Point(343, 251);
+            this.b_Secondary_Play.Name = "b_Secondary_Play";
+            this.b_Secondary_Play.Size = new System.Drawing.Size(54, 28);
+            this.b_Secondary_Play.TabIndex = 64;
+            this.b_Secondary_Play.Text = "Play";
+            this.b_Secondary_Play.UseVisualStyleBackColor = false;
+            // 
+            // b_Secondary_Stop
+            // 
+            this.b_Secondary_Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Secondary_Stop.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Secondary_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Secondary_Stop.Location = new System.Drawing.Point(283, 251);
+            this.b_Secondary_Stop.Name = "b_Secondary_Stop";
+            this.b_Secondary_Stop.Size = new System.Drawing.Size(54, 28);
+            this.b_Secondary_Stop.TabIndex = 66;
+            this.b_Secondary_Stop.Text = "Stop";
+            this.b_Secondary_Stop.UseVisualStyleBackColor = false;
+            // 
+            // b_Hide
+            // 
+            this.b_Hide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Hide.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Hide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Hide.Location = new System.Drawing.Point(204, 251);
+            this.b_Hide.Name = "b_Hide";
+            this.b_Hide.Size = new System.Drawing.Size(73, 28);
+            this.b_Hide.TabIndex = 65;
+            this.b_Hide.Text = "Hide Player";
+            this.b_Hide.UseVisualStyleBackColor = false;
+            this.b_Hide.Visible = false;
+            this.b_Hide.Click += new System.EventHandler(this.b_Hide_Click);
+            // 
+            // check_Secondary_Manual
+            // 
+            this.check_Secondary_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.check_Secondary_Manual.AutoSize = true;
+            this.check_Secondary_Manual.Location = new System.Drawing.Point(6, 258);
+            this.check_Secondary_Manual.Name = "check_Secondary_Manual";
+            this.check_Secondary_Manual.Size = new System.Drawing.Size(144, 17);
+            this.check_Secondary_Manual.TabIndex = 63;
+            this.check_Secondary_Manual.Text = "Extended RTSP Controls";
+            this.check_Secondary_Manual.UseVisualStyleBackColor = true;
+            // 
             // p_Secondary_Extended
             // 
             this.p_Secondary_Extended.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -457,6 +507,7 @@ namespace SSUtility2
             this.p_Secondary_Extended.Name = "p_Secondary_Extended";
             this.p_Secondary_Extended.Size = new System.Drawing.Size(391, 213);
             this.p_Secondary_Extended.TabIndex = 60;
+            this.p_Secondary_Extended.Visible = false;
             // 
             // l_Secondary_Tip
             // 
@@ -654,9 +705,9 @@ namespace SSUtility2
             this.tB_Secondary_SimpleAdr.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Secondary_SimpleAdr.Location = new System.Drawing.Point(85, 3);
+            this.tB_Secondary_SimpleAdr.Location = new System.Drawing.Point(88, 3);
             this.tB_Secondary_SimpleAdr.Name = "tB_Secondary_SimpleAdr";
-            this.tB_Secondary_SimpleAdr.Size = new System.Drawing.Size(303, 20);
+            this.tB_Secondary_SimpleAdr.Size = new System.Drawing.Size(300, 20);
             this.tB_Secondary_SimpleAdr.TabIndex = 28;
             // 
             // l_Secondary_SimpleAdr
@@ -690,55 +741,6 @@ namespace SSUtility2
             this.tB_Secondary_Name.Name = "tB_Secondary_Name";
             this.tB_Secondary_Name.Size = new System.Drawing.Size(300, 20);
             this.tB_Secondary_Name.TabIndex = 59;
-            // 
-            // b_Secondary_Play
-            // 
-            this.b_Secondary_Play.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Secondary_Play.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Secondary_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Secondary_Play.Location = new System.Drawing.Point(343, 251);
-            this.b_Secondary_Play.Name = "b_Secondary_Play";
-            this.b_Secondary_Play.Size = new System.Drawing.Size(54, 28);
-            this.b_Secondary_Play.TabIndex = 64;
-            this.b_Secondary_Play.Text = "Play";
-            this.b_Secondary_Play.UseVisualStyleBackColor = false;
-            // 
-            // b_Secondary_Stop
-            // 
-            this.b_Secondary_Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Secondary_Stop.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Secondary_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Secondary_Stop.Location = new System.Drawing.Point(283, 251);
-            this.b_Secondary_Stop.Name = "b_Secondary_Stop";
-            this.b_Secondary_Stop.Size = new System.Drawing.Size(54, 28);
-            this.b_Secondary_Stop.TabIndex = 66;
-            this.b_Secondary_Stop.Text = "Stop";
-            this.b_Secondary_Stop.UseVisualStyleBackColor = false;
-            // 
-            // b_Hide
-            // 
-            this.b_Hide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Hide.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Hide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Hide.Location = new System.Drawing.Point(204, 251);
-            this.b_Hide.Name = "b_Hide";
-            this.b_Hide.Size = new System.Drawing.Size(73, 28);
-            this.b_Hide.TabIndex = 65;
-            this.b_Hide.Text = "Hide Player";
-            this.b_Hide.UseVisualStyleBackColor = false;
-            this.b_Hide.Visible = false;
-            this.b_Hide.Click += new System.EventHandler(this.b_Hide_Click);
-            // 
-            // check_Secondary_Manual
-            // 
-            this.check_Secondary_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.check_Secondary_Manual.AutoSize = true;
-            this.check_Secondary_Manual.Location = new System.Drawing.Point(6, 258);
-            this.check_Secondary_Manual.Name = "check_Secondary_Manual";
-            this.check_Secondary_Manual.Size = new System.Drawing.Size(144, 17);
-            this.check_Secondary_Manual.TabIndex = 63;
-            this.check_Secondary_Manual.Text = "Extended RTSP Controls";
-            this.check_Secondary_Manual.UseVisualStyleBackColor = true;
             // 
             // VideoSettings
             // 
