@@ -42,7 +42,11 @@ namespace SSUtility2 {
         private static void SendCurrentCommand(object sender, EventArgs e) {
             try {
                 MainForm.m.Tick();
-                MainForm.m.mainPlayer.PlayMe();
+
+                if (!MainForm.m.startLiteVersion) {
+                    if (MainForm.m.mainPlayer.settings.isPlaying)
+                        MainForm.m.mainPlayer.PlayMe();
+                }
                 //Console.WriteLine("QUEUE: " + queueList.Count.ToString() + " LOWPRIORITY: " + lowPriority.ToString());
                 if (!AsyncCamCom.sock.Connected) {
                     return;

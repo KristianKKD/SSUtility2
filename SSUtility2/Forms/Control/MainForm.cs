@@ -9,13 +9,15 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.5.6";
+        public const string version = "v2.3.5.7";
+        public bool startLiteVersion = true;
 
         private bool closing = false;
         private bool keyboardControl = false;
 
         public bool finalMode = false;
         public bool lite = false;
+
 
         public static Control[] autosaveControls;
         private static Control[] controlPanel;
@@ -94,7 +96,8 @@ namespace SSUtility2 {
                 b_Open.BringToFront();
                 
                 CommandQueue.Init();
-                //LiteToggle();
+                if(startLiteVersion)
+                    LiteToggle();
 
                 AutoConnect();
 
@@ -301,8 +304,10 @@ namespace SSUtility2 {
                     mainPlayer.settings.isPlaying = true;
                     Joystick.UpdateJoystickCentre();
 
-                    //Menu_Settings_Lite.Dispose();
-                    Menu_Settings_Lite.Text = "Dual Mode";
+                    if(startLiteVersion)
+                        Menu_Settings_Lite.Dispose();
+                    else
+                        Menu_Settings_Lite.Text = "Dual Mode";
                     Text = "SSUtility V2.0 Lite";
                 } else {
                     Application.Restart();
