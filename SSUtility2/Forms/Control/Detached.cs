@@ -31,8 +31,6 @@ namespace SSUtility2 {
                 if (MainForm.m.p_Control.InvokeRequired) {
                     MainForm.m.p_Control.Invoke(new MethodInvoker(this.InitSecond));
                 } else {
-                    //MainForm.m.p_Control.Controls.Add(MainForm.m.sP_Player); //
-
                     MainForm.m.sP_Player.BringToFront();
 
                     secondView = new Detached(false);
@@ -172,7 +170,7 @@ namespace SSUtility2 {
                     player.StopPlaying();
 
                 player.vlcPlayer.playlist.add(combinedUrl.ToString(), null, ":avcodec -hw:network -caching="
-                    + player.settings.tB_PlayerD_Buffering.Text); //might have to look at more options
+                    + player.settings.tB_PlayerD_Buffering.Text);
                 player.vlcPlayer.playlist.next();
 
                 settings.isPlaying = true;
@@ -200,7 +198,7 @@ namespace SSUtility2 {
 
         public async Task DisableSecond() {
             MainForm.m.Menu_Settings_Info.Visible = false;
-            MainForm.m.sP_Player.Hide();
+            MainForm.m.sP_Player.Hide(); //here
             if (secondView.settings.isPlaying)
                 secondView.StopPlaying();
         }

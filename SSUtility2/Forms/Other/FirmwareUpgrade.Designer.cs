@@ -26,6 +26,7 @@ namespace SSUtility2.Other.Other_Scripts
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FirmwareUpgrade));
             this.Versionlabel = new System.Windows.Forms.Label();
             this.ResetMemorybutton = new System.Windows.Forms.Button();
             this.GetSNbutton = new System.Windows.Forms.Button();
@@ -314,6 +315,7 @@ namespace SSUtility2.Other.Other_Scripts
             this.Controls.Add(this.PortcomboBox);
             this.Controls.Add(this.LoadSpeedcomboBox);
             this.Controls.Add(this.Portlabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FirmwareUpgrade";
             this.Text = "FirmwareUpgrade";
             ((System.ComponentModel.ISupportInitialize)(this.CamNoUpDown)).EndInit();

@@ -25,6 +25,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QuickCommandEntry));
             this.l_EntryInfo = new System.Windows.Forms.Label();
             this.rtb_Entry = new System.Windows.Forms.RichTextBox();
             this.b_Done = new System.Windows.Forms.Button();
@@ -71,6 +72,7 @@
             this.Controls.Add(this.b_Done);
             this.Controls.Add(this.rtb_Entry);
             this.Controls.Add(this.l_EntryInfo);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "QuickCommandEntry";
             this.Text = "QuickCommandEntry";
             this.ResumeLayout(false);

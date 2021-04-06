@@ -27,6 +27,7 @@ namespace SSUtility2
         /// </summary>
         private void InitializeComponent() {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandListWindow));
             this.dgv_Coms = new System.Windows.Forms.DataGridView();
             this.Commands = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -94,6 +95,7 @@ namespace SSUtility2
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(683, 450);
             this.Controls.Add(this.dgv_Coms);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CommandListWindow";
             this.Text = "Command List Window";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandListWindow_FormClosing);

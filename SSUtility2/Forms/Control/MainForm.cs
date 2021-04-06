@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.6.0";
+        public const string version = "v2.3.7.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -755,39 +755,34 @@ namespace SSUtility2 {
         bool dragging = false;
         Point eOriginalPos;
 
-        private void Second_VLCPLayer_MouseDownEvent(object sender, AxAXVLC.DVLCEvents_MouseDownEvent e) {
-            if (e.button == 2) {
+        private void tP_Cover_MouseDown(object sender, MouseEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
                 mainPlayer.secondView.settings.Show();
                 mainPlayer.secondView.settings.BringToFront();
-            } else if (e.button == 1) {
-                eOriginalPos = new Point(e.x, e.y);
+            } else if (e.Button == MouseButtons.Left) {
+                eOriginalPos = new Point(e.X, e.Y);
                 dragging = true;
             }
         }
 
-        private void Second_VLCPLayer_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
+        private void tP_Cover_MouseMove(object sender, MouseEventArgs e) {
             Cursor = Cursors.Default;
             if (dragging) {
-                int xDragDist = e.x - eOriginalPos.X;
-                int xLocationDragDist = sP_Player.Location.X + (xDragDist * 2);
-                int w = MainForm.m.Width - sP_Player.Width;
+                int xDragDist = e.X - eOriginalPos.X;
+                int yDragDist = e.Y - eOriginalPos.Y;
 
-                int yDragDist = e.y - eOriginalPos.Y;
-                int yLocationDragDist = sP_Player.Location.Y + (yDragDist * 2);
-                int h = MainForm.m.Height - sP_Player.Height;
-
-                if (xLocationDragDist < w && xLocationDragDist > -2)
+                if (sP_Player.Location.X + xDragDist > 0 && sP_Player.Location.X + xDragDist < Width - sP_Player.Width)
                     sP_Player.Left += xDragDist;
 
-                if (yLocationDragDist < h && yLocationDragDist > -1)
+                if (sP_Player.Location.Y + yDragDist > 0 && sP_Player.Location.Y + yDragDist < Height - sP_Player.Height)
                     sP_Player.Top += yDragDist;
-
             }
         }
 
-        private void Second_VLCPLayer_MouseUpEvent(object sender, AxAXVLC.DVLCEvents_MouseUpEvent e) {
+        private void tP_Cover_MouseUp(object sender, MouseEventArgs e) {
             dragging = false;
             eOriginalPos = new Point(0, 0);
         }
+
     } // end of class MainForm
 } // end of namespace SSLUtility2

@@ -40,6 +40,7 @@ namespace SSUtility2 {
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.Menu_Window = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,6 +84,7 @@ namespace SSUtility2 {
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.pB_Background = new System.Windows.Forms.PictureBox();
             this.sP_Player = new SPanel.SizeablePanel();
+            this.tP_Cover = new SizeablePanel.TransparentPanel(this.components);
             this.Second_VLCPLayer = new AxAXVLC.AxVLCPlugin2();
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
@@ -495,11 +497,25 @@ namespace SSUtility2 {
             this.sP_Player.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sP_Player.BackColor = System.Drawing.Color.Black;
             this.sP_Player.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.sP_Player.Controls.Add(this.tP_Cover);
             this.sP_Player.Controls.Add(this.Second_VLCPLayer);
             this.sP_Player.Location = new System.Drawing.Point(850, 15);
             this.sP_Player.Name = "sP_Player";
             this.sP_Player.Size = new System.Drawing.Size(400, 250);
             this.sP_Player.TabIndex = 2;
+            // 
+            // tP_Cover
+            // 
+            this.tP_Cover.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tP_Cover.Location = new System.Drawing.Point(3, 3);
+            this.tP_Cover.Name = "tP_Cover";
+            this.tP_Cover.Size = new System.Drawing.Size(392, 242);
+            this.tP_Cover.TabIndex = 1;
+            this.tP_Cover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tP_Cover_MouseDown);
+            this.tP_Cover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tP_Cover_MouseMove);
+            this.tP_Cover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tP_Cover_MouseUp);
             // 
             // Second_VLCPLayer
             // 
@@ -512,9 +528,6 @@ namespace SSUtility2 {
             this.Second_VLCPLayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Second_VLCPLayer.OcxState")));
             this.Second_VLCPLayer.Size = new System.Drawing.Size(392, 242);
             this.Second_VLCPLayer.TabIndex = 0;
-            this.Second_VLCPLayer.MouseDownEvent += new AxAXVLC.DVLCEvents_MouseDownEventHandler(this.Second_VLCPLayer_MouseDownEvent);
-            this.Second_VLCPLayer.MouseMoveEvent += new AxAXVLC.DVLCEvents_MouseMoveEventHandler(this.Second_VLCPLayer_MouseMoveEvent);
-            this.Second_VLCPLayer.MouseUpEvent += new AxAXVLC.DVLCEvents_MouseUpEventHandler(this.Second_VLCPLayer_MouseUpEvent);
             // 
             // MainForm
             // 
@@ -1377,5 +1390,6 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Window_Settings;
         public ToolStripMenuItem Menu_Settings_Lite;
         public AxAXVLC.AxVLCPlugin2 Second_VLCPLayer;
+        private SizeablePanel.TransparentPanel tP_Cover;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

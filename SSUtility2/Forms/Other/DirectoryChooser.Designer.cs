@@ -26,6 +26,7 @@ namespace SSUtility2
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DirectoryChooser));
             this.l_Description = new System.Windows.Forms.Label();
             this.b_Browse = new System.Windows.Forms.Button();
             this.b_Default = new System.Windows.Forms.Button();
@@ -102,6 +103,7 @@ namespace SSUtility2
             this.Controls.Add(this.b_Default);
             this.Controls.Add(this.b_Browse);
             this.Controls.Add(this.l_Description);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DirectoryChooser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DirectoryChooser";

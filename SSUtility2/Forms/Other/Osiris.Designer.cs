@@ -25,6 +25,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Osiris));
             this.tB_Port = new System.Windows.Forms.TextBox();
             this.tB_IP = new System.Windows.Forms.TextBox();
             this.l_IP = new System.Windows.Forms.Label();
@@ -265,6 +266,7 @@
             this.Controls.Add(this.tB_Port);
             this.Controls.Add(this.tB_IP);
             this.Controls.Add(this.cB_Actuator);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Osiris";
             this.Text = "Osiris";
             this.ResumeLayout(false);
