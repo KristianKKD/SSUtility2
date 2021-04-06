@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.7.0";
+        public const string version = "v2.3.9.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -782,6 +782,10 @@ namespace SSUtility2 {
         private void tP_Cover_MouseUp(object sender, MouseEventArgs e) {
             dragging = false;
             eOriginalPos = new Point(0, 0);
+        }
+
+        private void Menu_QC_Custom_Click(object sender, EventArgs e) {
+            new QuickCommandEntry("", "Enter custom command", true);
         }
 
     } // end of class MainForm

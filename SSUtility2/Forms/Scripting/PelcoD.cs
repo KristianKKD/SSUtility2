@@ -83,7 +83,7 @@ namespace SSUtility2 {
                     Invoke((MethodInvoker)delegate {
                         adr = Tools.MakeAdr();
                     });
-                    sendCom = await CustomScriptCommands.CheckForCommands(line, adr).ConfigureAwait(false);
+                    sendCom = await CustomScriptCommands.CheckForCommands(line, adr, true).ConfigureAwait(false);
                     if (sendCom.codeContent == noCommand) {
                         sendCom.codeContent = MakeCommand(line);
                     }

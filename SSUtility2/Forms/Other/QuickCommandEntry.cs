@@ -12,10 +12,12 @@ namespace SSUtility2 {
     public partial class QuickCommandEntry : Form {
 
         string command;
+        bool customCommand;
 
-        public QuickCommandEntry(string com, string labelText) {
+        public QuickCommandEntry(string com, string labelText, bool custom = false) {
             InitializeComponent();
             command = com;
+            customCommand = custom;
             l_EntryInfo.Text = labelText;
             Show();
             BringToFront();
@@ -26,9 +28,14 @@ namespace SSUtility2 {
                 return;
             }
 
-            if (int.TryParse(rtb_Entry.Text, out int output)) {
-                CustomScriptCommands.QuickCommand(command + " " + output.ToString());
+            if (customCommand) {
+                CustomScriptCommands.QuickCommand(rtb_Entry.Text, false);
                 this.Close();
+            } else {
+                if (int.TryParse(rtb_Entry.Text, out int output)) {
+                    CustomScriptCommands.QuickCommand(command + " " + output.ToString(), false);
+                    this.Close();
+                }
             }
 
         }

@@ -89,17 +89,17 @@ namespace SSUtility2 {
 
         public static bool stopScript;
 
-        public static async Task<ScriptCommand> CheckForCommands(string line, uint adr) {
+        public static async Task<ScriptCommand> CheckForCommands(string line, uint adr, bool allowCustom) {
             ScriptCommand presetCom = CheckForPresets(line).Result;
+            ScriptCommand fail = new ScriptCommand(null, PelcoD.noCommand, null, false, false, false, true);
             
-            if (presetCom == null) {
-                return new ScriptCommand(null, PelcoD.noCommand, null, false, false, false, true);
+            if (presetCom == null || (!allowCustom && presetCom.custom)) {
+                return fail;
             }
 
             ScriptCommand com = new ScriptCommand(presetCom.names, presetCom.codeContent, presetCom.description,
                  presetCom.spammable, presetCom.valueAccepting, presetCom.dualValue, presetCom.custom); //need to be careful not to overwrite my commands
             int value = CheckForVal(line);
-
 
             if (com.codeContent == PelcoD.pause) {
                 MainForm.m.WriteToResponses("Waiting: " + value.ToString() + "ms", true);
@@ -198,7 +198,7 @@ namespace SSUtility2 {
                 return;
             }
 
-            ScriptCommand send = CheckForCommands(command, Tools.MakeAdr()).Result;
+            ScriptCommand send = CheckForCommands(command, Tools.MakeAdr(), false).Result;
             if (send.codeContent == PelcoD.noCommand) {
                 if (command.Length == 0) {
                     MessageBox.Show("Command length is 0!\nMake sure to check the command in the settings!");

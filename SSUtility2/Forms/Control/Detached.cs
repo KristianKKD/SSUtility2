@@ -49,38 +49,7 @@ namespace SSUtility2 {
             } catch (Exception e) {
                 MessageBox.Show("INITSECOND\n" + e.ToString());
             }
-        }
-     
-        public Uri GetCombined() {
-            Uri defaultAdr = new Uri("http://0.0.0.0:1234");
-            try {
-                Uri combinedUrl;
-
-                if (settings.checkB_PlayerD_Manual.Checked || settings.isSecondary) {
-                    string ipaddress = settings.tB_PlayerD_Adr.Text;
-                    string port = settings.tB_PlayerD_Port.Text;
-                    string url = settings.tB_PlayerD_RTSP.Text;
-                    string username = settings.tB_PlayerD_Username.Text;
-                    string password = settings.tB_PlayerD_Password.Text;
-
-                    combinedUrl = new Uri("rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url);
-                } else {
-                    if (settings.tB_PlayerD_SimpleAdr.Text != "") {
-                        combinedUrl = new Uri(settings.tB_PlayerD_SimpleAdr.Text);
-                    } else {
-                        combinedUrl = defaultAdr;
-                    }
-                }
-
-                if (combinedUrl != defaultAdr) {
-                    settings.tB_PlayerD_Name.Text = combinedUrl.Host;
-                }
-
-                return combinedUrl;
-            } catch {
-                return defaultAdr;
-            }
-        }
+        }     
 
         public void StartStop() {
             if (settings.isPlaying) {
@@ -142,12 +111,7 @@ namespace SSUtility2 {
                 if (!this.IsHandleCreated)
                     this.CreateHandle();
 
-                Uri combinedUrl;
-                if (player.settings.checkB_PlayerD_Manual.Checked) {
-                    combinedUrl = player.GetCombined();
-                    player.settings.tB_PlayerD_SimpleAdr.Text = combinedUrl.ToString();
-                } else
-                    combinedUrl = new Uri(player.settings.tB_PlayerD_SimpleAdr.Text);
+                Uri combinedUrl = new Uri(VideoSettings.GetCombined(player.settings));
 
                 //rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
 

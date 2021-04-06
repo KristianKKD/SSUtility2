@@ -86,6 +86,7 @@ namespace SSUtility2 {
             this.sP_Player = new SPanel.SizeablePanel();
             this.tP_Cover = new SizeablePanel.TransparentPanel(this.components);
             this.Second_VLCPLayer = new AxAXVLC.AxVLCPlugin2();
+            this.Menu_QC_Custom = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
             this.p_Control.SuspendLayout();
@@ -282,6 +283,7 @@ namespace SSUtility2 {
             // Menu_QC
             // 
             this.Menu_QC.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_QC_Custom,
             this.Menu_QC_PanZero,
             this.Menu_QC_Pan,
             this.Menu_QC_Tilt});
@@ -292,21 +294,21 @@ namespace SSUtility2 {
             // Menu_QC_PanZero
             // 
             this.Menu_QC_PanZero.Name = "Menu_QC_PanZero";
-            this.Menu_QC_PanZero.Size = new System.Drawing.Size(137, 22);
+            this.Menu_QC_PanZero.Size = new System.Drawing.Size(209, 22);
             this.Menu_QC_PanZero.Text = "Set Pan = 0";
             this.Menu_QC_PanZero.Click += new System.EventHandler(this.Menu_QC_PanZero_Click);
             // 
             // Menu_QC_Pan
             // 
             this.Menu_QC_Pan.Name = "Menu_QC_Pan";
-            this.Menu_QC_Pan.Size = new System.Drawing.Size(137, 22);
+            this.Menu_QC_Pan.Size = new System.Drawing.Size(209, 22);
             this.Menu_QC_Pan.Text = "Quick Pan";
             this.Menu_QC_Pan.Click += new System.EventHandler(this.Menu_QC_Pan_Click);
             // 
             // Menu_QC_Tilt
             // 
             this.Menu_QC_Tilt.Name = "Menu_QC_Tilt";
-            this.Menu_QC_Tilt.Size = new System.Drawing.Size(137, 22);
+            this.Menu_QC_Tilt.Size = new System.Drawing.Size(209, 22);
             this.Menu_QC_Tilt.Text = "Quick TIlt";
             this.Menu_QC_Tilt.Click += new System.EventHandler(this.Menu_QC_Tilt_Click);
             // 
@@ -528,6 +530,13 @@ namespace SSUtility2 {
             this.Second_VLCPLayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Second_VLCPLayer.OcxState")));
             this.Second_VLCPLayer.Size = new System.Drawing.Size(392, 242);
             this.Second_VLCPLayer.TabIndex = 0;
+            // 
+            // Menu_QC_Custom
+            // 
+            this.Menu_QC_Custom.Name = "Menu_QC_Custom";
+            this.Menu_QC_Custom.Size = new System.Drawing.Size(209, 22);
+            this.Menu_QC_Custom.Text = "Enter Custom Command";
+            this.Menu_QC_Custom.Click += new System.EventHandler(this.Menu_QC_Custom_Click);
             // 
             // MainForm
             // 
@@ -1391,5 +1400,6 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Settings_Lite;
         public AxAXVLC.AxVLCPlugin2 Second_VLCPLayer;
         private SizeablePanel.TransparentPanel tP_Cover;
+        private ToolStripMenuItem Menu_QC_Custom;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
