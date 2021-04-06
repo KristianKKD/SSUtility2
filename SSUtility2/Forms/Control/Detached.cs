@@ -26,10 +26,15 @@ namespace SSUtility2 {
                 InitSecond();
         }
 
-        void InitSecond() {
+        async Task InitSecond() {
+            await Task.Delay(100).ConfigureAwait(false); //small delay to prevent crash
+            AttachSecond();
+        }
+
+        void AttachSecond() {
             try {
                 if (MainForm.m.p_Control.InvokeRequired) {
-                    MainForm.m.p_Control.Invoke(new MethodInvoker(this.InitSecond));
+                    MainForm.m.p_Control.Invoke(new MethodInvoker(this.AttachSecond));
                 } else {
                     MainForm.m.sP_Player.BringToFront();
 
@@ -38,18 +43,18 @@ namespace SSUtility2 {
                     secondView.settings.Copy(settings);
                     secondView.settings.Text = "Secondary Video Settings";
                     secondView.settings.isSecondary = true;
-                    //secondView.settings.tP_Main.Dispose();
+                    secondView.settings.tP_Secondary.Dispose();
+                    secondView.settings.tP_Main.Text = "Secondary Player";
 
                     MainForm.m.sP_Player.Hide(); //and below too
 
                     secondView.PlayerD_VLCPlayer.Dispose();
                     secondView.vlcPlayer = MainForm.m.Second_VLCPLayer;
                 }
-
             } catch (Exception e) {
-                MessageBox.Show("INITSECOND\n" + e.ToString());
+                MessageBox.Show("ATTACHSECOND\n" + e.ToString());
             }
-        }     
+        }
 
         public void StartStop() {
             if (settings.isPlaying) {
@@ -151,6 +156,8 @@ namespace SSUtility2 {
                 return;
 
             MainForm.m.Menu_Settings_Info.Visible = true;
+            settings.tC_PlayerSettings.TabPages.Add(settings.secondaryPage);
+
 
             MainForm.m.sP_Player.Show();
             MainForm.m.sP_Player.BringToFront();
@@ -162,7 +169,10 @@ namespace SSUtility2 {
 
         public async Task DisableSecond() {
             MainForm.m.Menu_Settings_Info.Visible = false;
+            settings.tC_PlayerSettings.TabPages.Remove(settings.tP_Secondary);
+
             MainForm.m.sP_Player.Hide(); //here
+
             if (secondView.settings.isPlaying)
                 secondView.StopPlaying();
         }
@@ -194,7 +204,7 @@ namespace SSUtility2 {
                 bool isCam = InfoPanel.i.isCamera;
 
                 settings.cB_PlayerD_CamType.Text = ConfigControl.savedCamera.stringVal;
-                settings.checkB_PlayerD_Manual.Checked = true;
+                settings.check_PlayerD_Manual.Checked = true;
 
                 if (isCam) {
                     secondView.settings.Copy(settings);
@@ -218,7 +228,7 @@ namespace SSUtility2 {
 
                 Play(false, this);
                 if (isCam && secondView.settings.isPlaying) {
-                    secondView.settings.checkB_PlayerD_Manual.Checked = true;
+                    secondView.settings.check_PlayerD_Manual.Checked = true;
                     secondView.Play(false, secondView);
                 }
             } catch (Exception e) {

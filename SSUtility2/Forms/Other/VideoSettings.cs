@@ -17,11 +17,19 @@ namespace SSUtility2
         public const string thermalRTSP = "videoinput_2:0/h264_1/onvif.stm";
 
         Control[] extendedControls;
+        Control[] extendedSecondaryControls;
         const int minExtendedHeight = 375;
         const int minSimpleHeight = 275;
 
+        public TabPage secondaryPage;
+
         public VideoSettings() {
             InitializeComponent();
+            secondaryPage = tP_Secondary;
+
+            tC_PlayerSettings.TabPages.Remove(tP_Secondary);
+            tC_PlayerSettings.TabPages.Add(secondaryPage);
+
             Size = new Size(500, minSimpleHeight);
             MinimumSize = new Size(500, minSimpleHeight);
             MaximumSize = new Size(9999, MinimumSize.Height);
@@ -37,22 +45,28 @@ namespace SSUtility2
                 l_PlayerD_Username,
                 l_PlayerD_Password,
             };
+            extendedSecondaryControls = new Control[] {
+                tB_Secondary_RTSP,
+                tB_Secondary_Buffering,
+                tB_Secondary_Username,
+                tB_Secondary_Password,
+
+                l_Secondary_RTSP,
+                l_Secondary_Buffering,
+                l_Secondary_Username,
+                l_Secondary_Password,
+            };
         }
 
-        private void VideoSettings_FormClosing(object sender, FormClosingEventArgs e) {
-            if (e.CloseReason == CloseReason.UserClosing) {
-                e.Cancel = true;
-                Hide();
-            }
-        }
+        void ExtendPanel(Control[] controls, bool check) {
+            check_PlayerD_Manual.Checked = check;
+            check_Secondary_Manual.Checked = check;
 
-        private void checkB_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
-            bool enable = checkB_PlayerD_Manual.Checked;
-            foreach (Control c in extendedControls) {
-                c.Visible = enable;
+            foreach (Control c in controls) {
+                c.Visible = check;
             }
 
-            if (enable) {
+            if (check) {
                 if (Size.Height < minExtendedHeight) {
                     Height = minExtendedHeight;
                 }
@@ -82,6 +96,21 @@ namespace SSUtility2
                 HideSecond();
 
             tB_PlayerD_SimpleAdr.Text = GetCombined(this);
+        }
+
+        public void UpdateSecondaryValues() {
+            VideoSettings first = MainForm.m.mainPlayer.settings;
+            VideoSettings second = MainForm.m.mainPlayer.secondView.settings;
+
+            first.tB_Secondary_Name.Text = second.tB_PlayerD_Name.Text;
+            first.tB_Secondary_SimpleAdr.Text = second.tB_PlayerD_SimpleAdr.Text;
+            first.tB_Secondary_Adr.Text = second.tB_PlayerD_Adr.Text;
+            first.tB_Secondary_Port.Text = second.tB_PlayerD_Port.Text;
+            first.tB_Secondary_RTSP.Text = second.tB_PlayerD_RTSP.Text;
+            first.cB_Secondary_CamType.Text = second.cB_PlayerD_CamType.Text;
+            first.tB_Secondary_Buffering.Text = second.tB_PlayerD_Buffering.Text;
+            first.tB_Secondary_Username.Text = second.tB_PlayerD_Username.Text;
+            first.tB_Secondary_Password.Text = second.tB_PlayerD_Password.Text;
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -148,6 +177,7 @@ namespace SSUtility2
 
         private void tB_TextChanged(object sender, EventArgs e) {
             tB_PlayerD_SimpleAdr.Text = GetCombined(this);
+            UpdateSecondaryValues();
         }
 
         public static string GetCombined(VideoSettings sets) {
@@ -194,7 +224,22 @@ namespace SSUtility2
                 customFull = false;
         }
 
+        void ApplySecondaryChanges() {
+            VideoSettings sets = MainForm.m.mainPlayer.secondView.settings;
+
+            sets.tB_PlayerD_Name.Text = this.tB_Secondary_Name.Text;
+            sets.tB_PlayerD_SimpleAdr.Text = this.tB_Secondary_SimpleAdr.Text;
+            sets.tB_PlayerD_Adr.Text = this.tB_Secondary_Adr.Text;
+            sets.tB_PlayerD_Port.Text = this.tB_Secondary_Port.Text;
+            sets.tB_PlayerD_RTSP.Text = this.tB_Secondary_RTSP.Text;
+            sets.cB_PlayerD_CamType.Text = this.cB_Secondary_CamType.Text;
+            sets.tB_PlayerD_Buffering.Text = this.tB_Secondary_Buffering.Text;
+            sets.tB_PlayerD_Username.Text = this.tB_Secondary_Username.Text;
+            sets.tB_PlayerD_Password.Text = this.tB_Secondary_Password.Text;
+        }
+
         private void b_Secondary_Play_Click(object sender, EventArgs e) {
+            ApplySecondaryChanges();
             MainForm.m.mainPlayer.Play(true, MainForm.m.mainPlayer.secondView);
         }
 
@@ -206,5 +251,63 @@ namespace SSUtility2
             HideSecond();
         }
 
+        private void check_Secondary_Manual_CheckedChanged(object sender, EventArgs e) {
+            ExtendPanel(extendedSecondaryControls, check_Secondary_Manual.Checked);
+        }
+        
+        private void check_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
+            ExtendPanel(extendedControls, check_PlayerD_Manual.Checked);
+        }
+
+        private void VideoSettings_FormClosing(object sender, FormClosingEventArgs e) {
+            if (e.CloseReason == CloseReason.UserClosing) {
+                e.Cancel = true;
+                Hide();
+            }
+        }
+
+        private void tB_PlayerD_SimpleAdr_TextChanged(object sender, EventArgs e) {
+            if (isSecondary && MainForm.m.finishedLoading)
+                UpdateSecondaryValues();
+        }
+
+        private void tC_PlayerSettings_SelectedIndexChanged(object sender, EventArgs e) {
+            if (MainForm.m.finishedLoading)
+                UpdateSecondaryValues();
+        }
+
+        private void tB_Secondary_TextChanged(object sender, EventArgs e) {
+            if (MainForm.m.finishedLoading)
+                ApplySecondaryChanges();
+        }
+
+        private void cB_Secondary_CamType_SelectedIndexChanged(object sender, EventArgs e) {
+            string enc = cB_Secondary_CamType.Text;
+            string username = "";
+            string password = "";
+            string rtsp = "";
+
+            if (enc.Contains("Daylight")) {
+                username = "admin";
+                password = "admin";
+                rtsp = "videoinput_1:0/h264_1/onvif.stm";
+            } else if (enc.Contains("Thermal")) {
+                username = "admin";
+                password = "admin";
+                rtsp = "videoinput_2:0/h264_1/onvif.stm";
+            } else if (enc.Contains("VIVOTEK")) {
+                username = "root";
+                password = "root1234";
+                rtsp = "live.sdp";
+            } else if (enc.Contains("BOSCH")) {
+                username = "service";
+                password = "Service123!";
+                rtsp = "";
+            }
+
+            tB_Secondary_RTSP.Text = rtsp;
+            tB_Secondary_Username.Text = username;
+            tB_Secondary_Password.Text = password;
+        }
     }
 }

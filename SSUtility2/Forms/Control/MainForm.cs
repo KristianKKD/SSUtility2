@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.9.0";
+        public const string version = "v2.4.0.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -17,6 +17,7 @@ namespace SSUtility2 {
 
         public bool finalMode = false;
         public bool lite = false;
+        public bool finishedLoading = false;
 
         public static Control[] autosaveControls;
         private static Control[] controlPanel;
@@ -100,6 +101,8 @@ namespace SSUtility2 {
 
                 AutoConnect();
 
+                await Task.Delay(1000).ConfigureAwait(false);
+                finishedLoading = true;
             } catch (Exception e) {
                 Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
             }
@@ -116,6 +119,7 @@ namespace SSUtility2 {
         async Task AutoConnect() {
             await Task.Delay(500).ConfigureAwait(false);
             bool connected = await AsyncCamCom.TryConnect(true).ConfigureAwait(false);
+            await Task.Delay(500).ConfigureAwait(false);
             if (ConfigControl.autoPlay.boolVal && connected && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "") {
                 mainPlayer.StartPlaying(false);
             }
