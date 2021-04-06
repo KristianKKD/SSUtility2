@@ -9,15 +9,14 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.3.5.7";
-        public bool startLiteVersion = true;
+        public const string version = "v2.3.6.0";
+        private bool startLiteVersion = false;
 
         private bool closing = false;
         private bool keyboardControl = false;
 
         public bool finalMode = false;
         public bool lite = false;
-
 
         public static Control[] autosaveControls;
         private static Control[] controlPanel;
@@ -169,7 +168,7 @@ namespace SSUtility2 {
                 inUseVideoPath = fullVideoPath;
                 isPlaying = true;
 
-                Recorder rec = Tools.Record(fullVideoPath, player.stream_Player);
+                Recorder rec = Tools.Record(fullVideoPath, player.vlcPlayer);
 
                 return (isPlaying, rec);
             }
@@ -300,7 +299,7 @@ namespace SSUtility2 {
                     b_Open.Dispose();
 
                     sP_Player.Hide();
-                    mainPlayer.stream_Player.Hide();
+                    mainPlayer.vlcPlayer.Hide();
                     mainPlayer.settings.isPlaying = true;
                     Joystick.UpdateJoystickCentre();
 
@@ -322,8 +321,10 @@ namespace SSUtility2 {
         Detached AttachPlayer() {
             Detached d = DetachVid(false, new VideoSettings(), true).Result;
 
-            var c = Tools.GetAllType(d, typeof(WebEye.StreamControl.WinForms.StreamControl));
-            p_Control.Controls.AddRange(c.ToArray());
+            if (!startLiteVersion) {
+                var c = Tools.GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
+                p_Control.Controls.AddRange(c.ToArray());
+            }
 
             return d;
         }
@@ -540,37 +541,6 @@ namespace SSUtility2 {
             mainPlayer.EnableSecond(true);
         }
 
-        bool dragging = false;
-        Point eOriginalPos;
-        private void stream_SecondPlayer_MouseMove(object sender, MouseEventArgs e) {
-            Cursor = Cursors.Default;
-            if (dragging) {
-                int xDragDist = e.X - eOriginalPos.X;
-                int yDragDist = e.Y - eOriginalPos.Y;
-
-                if (sP_Player.Location.X + xDragDist > 0 && sP_Player.Location.X + xDragDist < Width - sP_Player.Width)
-                    sP_Player.Left += xDragDist;
-
-                if(sP_Player.Location.Y + yDragDist > 0 && sP_Player.Location.Y + yDragDist < Height - sP_Player.Height)
-                    sP_Player.Top += yDragDist;
-            }
-        }
-
-        private void stream_SecondPlayer_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Button == MouseButtons.Right) {
-                mainPlayer.secondView.settings.Show();
-                mainPlayer.secondView.settings.BringToFront();
-            } else if (e.Button == MouseButtons.Left) {
-                eOriginalPos = new Point(e.X, e.Y);
-                dragging = true;
-            }
-        }
-
-        private void stream_SecondPlayer_MouseUp(object sender, MouseEventArgs e) {
-            dragging = false;
-            eOriginalPos = new Point(0, 0);
-        }
-
         private void Menu_Settings_Open_Click(object sender, EventArgs e) {
             OpenSettings();
         }
@@ -702,7 +672,10 @@ namespace SSUtility2 {
         private void Joystick_MouseUp(object sender, MouseEventArgs e) {
             if (AsyncCamCom.sock.Connected)
                 CustomScriptCommands.QuickCommand("stop", false);
+            else
+                MessageBox.Show("Not connected to camera!\nNo commands were sent!");
         }
+
         public void Tick() {
             try {
                 Point coords = Joystick.coords;
@@ -778,6 +751,43 @@ namespace SSUtility2 {
         private void Menu_Settings_Lite_Click(object sender, EventArgs e) {
             LiteToggle();
         }
-        
+
+        bool dragging = false;
+        Point eOriginalPos;
+
+        private void Second_VLCPLayer_MouseDownEvent(object sender, AxAXVLC.DVLCEvents_MouseDownEvent e) {
+            if (e.button == 2) {
+                mainPlayer.secondView.settings.Show();
+                mainPlayer.secondView.settings.BringToFront();
+            } else if (e.button == 1) {
+                eOriginalPos = new Point(e.x, e.y);
+                dragging = true;
+            }
+        }
+
+        private void Second_VLCPLayer_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
+            Cursor = Cursors.Default;
+            if (dragging) {
+                int xDragDist = e.x - eOriginalPos.X;
+                int xLocationDragDist = sP_Player.Location.X + (xDragDist * 2);
+                int w = MainForm.m.Width - sP_Player.Width;
+
+                int yDragDist = e.y - eOriginalPos.Y;
+                int yLocationDragDist = sP_Player.Location.Y + (yDragDist * 2);
+                int h = MainForm.m.Height - sP_Player.Height;
+
+                if (xLocationDragDist < w && xLocationDragDist > -2)
+                    sP_Player.Left += xDragDist;
+
+                if (yLocationDragDist < h && yLocationDragDist > -1)
+                    sP_Player.Top += yDragDist;
+
+            }
+        }
+
+        private void Second_VLCPLayer_MouseUpEvent(object sender, AxAXVLC.DVLCEvents_MouseUpEvent e) {
+            dragging = false;
+            eOriginalPos = new Point(0, 0);
+        }
     } // end of class MainForm
 } // end of namespace SSLUtility2

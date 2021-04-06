@@ -63,12 +63,13 @@ namespace SSUtility2 {
                     this.CreateHandle();
                 }
 
+                if (MainForm.m.lite)
+                    return;
+
                 if (isActive) {
                     StopTicking();
                     return;
                 }
-
-                return;
 
                 GenCommands();
 

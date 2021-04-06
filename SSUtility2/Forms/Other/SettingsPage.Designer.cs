@@ -45,8 +45,6 @@ namespace SSUtility2
             this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
-            this.cB_IPCon_Replay = new System.Windows.Forms.ComboBox();
-            this.l_IPCon_VideoReplay = new System.Windows.Forms.Label();
             this.cB_IPCon_RefreshRate = new System.Windows.Forms.ComboBox();
             this.l_IPCon_CommandRate = new System.Windows.Forms.Label();
             this.cB_ipCon_CamType = new System.Windows.Forms.ComboBox();
@@ -89,6 +87,7 @@ namespace SSUtility2
             this.check_Other_AutoReconnect = new System.Windows.Forms.CheckBox();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
+            this.check_AddressInvalid = new System.Windows.Forms.CheckBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             this.tP_Paths.SuspendLayout();
@@ -335,8 +334,6 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
-            this.tP_Control.Controls.Add(this.cB_IPCon_Replay);
-            this.tP_Control.Controls.Add(this.l_IPCon_VideoReplay);
             this.tP_Control.Controls.Add(this.cB_IPCon_RefreshRate);
             this.tP_Control.Controls.Add(this.l_IPCon_CommandRate);
             this.tP_Control.Controls.Add(this.cB_ipCon_CamType);
@@ -355,34 +352,6 @@ namespace SSUtility2
             this.tP_Control.TabIndex = 3;
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
-            // 
-            // cB_Replay
-            // 
-            this.cB_IPCon_Replay.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_IPCon_Replay.FormattingEnabled = true;
-            this.cB_IPCon_Replay.Items.AddRange(new object[] {
-            "5000",
-            "7500",
-            "1000",
-            "1500"});
-            this.cB_IPCon_Replay.Location = new System.Drawing.Point(115, 152);
-            this.cB_IPCon_Replay.Name = "cB_Replay";
-            this.cB_IPCon_Replay.Size = new System.Drawing.Size(123, 21);
-            this.cB_IPCon_Replay.TabIndex = 87;
-            this.toolTips.SetToolTip(this.cB_IPCon_Replay, "General speed of the program, lower to decrease connection latency, increase to i" +
-        "mprove performance.");
-            this.cB_IPCon_Replay.TextChanged += new System.EventHandler(this.cB_IPCon_Replay_TextChanged);
-            // 
-            // l_IPCon_VideoReplay
-            // 
-            this.l_IPCon_VideoReplay.AutoSize = true;
-            this.l_IPCon_VideoReplay.Location = new System.Drawing.Point(6, 155);
-            this.l_IPCon_VideoReplay.Name = "l_IPCon_VideoReplay";
-            this.l_IPCon_VideoReplay.Size = new System.Drawing.Size(103, 13);
-            this.l_IPCon_VideoReplay.TabIndex = 86;
-            this.l_IPCon_VideoReplay.Text = "Replay Interval (ms):";
-            this.toolTips.SetToolTip(this.l_IPCon_VideoReplay, "General speed of the program, lower to decrease connection latency, increase to i" +
-        "mprove performance.");
             // 
             // cB_IPCon_RefreshRate
             // 
@@ -753,6 +722,7 @@ namespace SSUtility2
             // 
             // tP_Other
             // 
+            this.tP_Other.Controls.Add(this.check_AddressInvalid);
             this.tP_Other.Controls.Add(this.l_Other_CurrentResolution);
             this.tP_Other.Controls.Add(this.tB_Other_ResolutionHeight);
             this.tP_Other.Controls.Add(this.l_Other_ResolutionHeight);
@@ -843,6 +813,19 @@ namespace SSUtility2
             this.l_Version.Size = new System.Drawing.Size(102, 13);
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
+            // 
+            // check_AddressInvalid
+            // 
+            this.check_AddressInvalid.Location = new System.Drawing.Point(6, 85);
+            this.check_AddressInvalid.Name = "check_AddressInvalid";
+            this.check_AddressInvalid.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_AddressInvalid.Size = new System.Drawing.Size(174, 17);
+            this.check_AddressInvalid.TabIndex = 37;
+            this.check_AddressInvalid.Text = "Hide Address Invalid Error";
+            this.check_AddressInvalid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_AddressInvalid, "Reconnect upon entering a new IP in the IP Control section.");
+            this.check_AddressInvalid.UseVisualStyleBackColor = true;
+            this.check_AddressInvalid.CheckedChanged += new System.EventHandler(this.check_AddressInvalid_CheckedChanged);
             // 
             // SettingsPage
             // 
@@ -939,9 +922,8 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_Other_ResolutionWidth;
         public System.Windows.Forms.ComboBox cB_Rec_Quality;
         public System.Windows.Forms.Label l_Rec_Quality;
-        public System.Windows.Forms.ComboBox cB_IPCon_Replay;
-        public System.Windows.Forms.Label l_IPCon_VideoReplay;
         public System.Windows.Forms.ComboBox cB_IPCon_RefreshRate;
         public System.Windows.Forms.Label l_IPCon_CommandRate;
+        public System.Windows.Forms.CheckBox check_AddressInvalid;
     }
 }

@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WebEye;
 
 namespace SSUtility2 {
 
@@ -16,12 +15,13 @@ namespace SSUtility2 {
 
         public bool recording = false;
 
-        Stream vid;
+        public AxAXVLC.AxVLCPlugin2 vlcPlayer;
 
         public Detached(bool attachSecond) {
             InitializeComponent();
             settings = new VideoSettings();
             settings.originalDetached = this;
+            vlcPlayer = PlayerD_VLCPlayer;
             if (attachSecond)
                 InitSecond();
         }
@@ -31,7 +31,7 @@ namespace SSUtility2 {
                 if (MainForm.m.p_Control.InvokeRequired) {
                     MainForm.m.p_Control.Invoke(new MethodInvoker(this.InitSecond));
                 } else {
-                    MainForm.m.p_Control.Controls.Add(MainForm.m.sP_Player);
+                    //MainForm.m.p_Control.Controls.Add(MainForm.m.sP_Player); //
 
                     MainForm.m.sP_Player.BringToFront();
 
@@ -44,7 +44,8 @@ namespace SSUtility2 {
 
                     MainForm.m.sP_Player.Hide(); //and below too
 
-                    secondView.stream_Player = MainForm.m.stream_SecondPlayer;
+                    secondView.PlayerD_VLCPlayer.Dispose();
+                    secondView.vlcPlayer = MainForm.m.Second_VLCPLayer;
                 }
 
             } catch (Exception e) {
@@ -94,7 +95,8 @@ namespace SSUtility2 {
         public void StopPlaying() {
             if (!settings.isPlaying)
                 return;
-            vid.Stop();
+            vlcPlayer.playlist.stop();
+            vlcPlayer.playlist.items.clear();
             settings.isPlaying = false;
             if(!settings.isSecondary)
                 MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
@@ -151,24 +153,27 @@ namespace SSUtility2 {
 
                 //rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
 
-                if (showError && !player.settings.isSecondary) {
-                    bool parsed = IPAddress.TryParse(combinedUrl.Host, out IPAddress parsedIP);
-                    if (combinedUrl.Host == "" || !parsed) {
-                        MessageBox.Show("Address is invalid!");
-                        return false;
-                    }
-                    if (!OtherCamCom.PingAdr(parsedIP).Result) {
-                        MessageBox.Show("Address had no RTSP stream attached!");
-                        return false;
+                bool parsed = IPAddress.TryParse(combinedUrl.Host, out IPAddress parsedIP);
+
+                if (!ConfigControl.ignoreAddress.boolVal) {
+                    if (showError && !player.settings.isSecondary) {
+                        if (combinedUrl.Host == "" || !parsed) {
+                            MessageBox.Show("Address is invalid!");
+                            return false;
+                        }
+                        if (!OtherCamCom.PingAdr(parsedIP).Result) {
+                            MessageBox.Show("Address had no RTSP stream attached!");
+                            return false;
+                        }
                     }
                 }
 
                 if (player.settings.isPlaying)
                     player.StopPlaying();
 
-                vid = Stream.FromUri(combinedUrl, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), RtspTransport.Undefined, RtspFlags.PreferTcp);
-                player.stream_Player.AttachStream(vid);
-                vid.Start();
+                player.vlcPlayer.playlist.add(combinedUrl.ToString(), null, ":avcodec -hw:network -caching="
+                    + player.settings.tB_PlayerD_Buffering.Text); //might have to look at more options
+                player.vlcPlayer.playlist.next();
 
                 settings.isPlaying = true;
 
@@ -177,25 +182,6 @@ namespace SSUtility2 {
                 Tools.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
                 return false;
             }
-        }
-
-        float timeoutTime = 0;
-
-        public void PlayMe() {
-            if (settings.isPlaying) {
-                if (timeoutTime < 7500f/ConfigControl.commandRateMs.intVal) {
-                    timeoutTime++;
-                } else {
-                    timeoutTime = 0;
-                    Restart();
-                    MainForm.m.WriteToResponses("replay", false);
-                }
-            }
-        }
-
-        void Restart() {
-            vid.Stop();
-            vid.Start();
         }
 
         public async Task EnableSecond(bool copySettings) {
@@ -278,7 +264,7 @@ namespace SSUtility2 {
             }
         }
 
-        private void stream_Player_MouseMove(object sender, MouseEventArgs e) {
+        private void PlayerD_VLCPlayer_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
             if (!AsyncCamCom.sock.Connected)
                 return;
             if (Cursor.Position.X - MainForm.m.Location.X < 70) {

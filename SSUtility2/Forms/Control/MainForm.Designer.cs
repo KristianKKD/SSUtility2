@@ -52,11 +52,11 @@ namespace SSUtility2 {
             this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Open = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_CP = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Info = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Swap = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Keyboard = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_StartStop = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,13 +83,14 @@ namespace SSUtility2 {
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.pB_Background = new System.Windows.Forms.PictureBox();
             this.sP_Player = new SPanel.SizeablePanel();
-            this.stream_SecondPlayer = new WebEye.StreamControl.WinForms.StreamControl();
+            this.Second_VLCPLayer = new AxAXVLC.AxVLCPlugin2();
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
             this.p_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Joystick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Background)).BeginInit();
             this.sP_Player.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Second_VLCPLayer)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -192,6 +193,13 @@ namespace SSUtility2 {
             this.Menu_Settings_Open.Text = "Open Settings";
             this.Menu_Settings_Open.Click += new System.EventHandler(this.Menu_Settings_Open_Click);
             // 
+            // Menu_Settings_Lite
+            // 
+            this.Menu_Settings_Lite.Name = "Menu_Settings_Lite";
+            this.Menu_Settings_Lite.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_Lite.Text = "Lite Mode";
+            this.Menu_Settings_Lite.Click += new System.EventHandler(this.Menu_Settings_Lite_Click);
+            // 
             // Menu_Settings_CP
             // 
             this.Menu_Settings_CP.Name = "Menu_Settings_CP";
@@ -220,13 +228,6 @@ namespace SSUtility2 {
             this.Menu_Settings_Keyboard.Size = new System.Drawing.Size(207, 22);
             this.Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
             this.Menu_Settings_Keyboard.Click += new System.EventHandler(this.Menu_Settings_Keyboard_Click);
-            // 
-            // Menu_Settings_Lite
-            // 
-            this.Menu_Settings_Lite.Name = "Menu_Settings_Lite";
-            this.Menu_Settings_Lite.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_Lite.Text = "Lite Mode";
-            this.Menu_Settings_Lite.Click += new System.EventHandler(this.Menu_Settings_Lite_Click);
             // 
             // Menu_Video
             // 
@@ -494,27 +495,26 @@ namespace SSUtility2 {
             this.sP_Player.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sP_Player.BackColor = System.Drawing.Color.Black;
             this.sP_Player.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.sP_Player.Controls.Add(this.stream_SecondPlayer);
+            this.sP_Player.Controls.Add(this.Second_VLCPLayer);
             this.sP_Player.Location = new System.Drawing.Point(850, 15);
             this.sP_Player.Name = "sP_Player";
             this.sP_Player.Size = new System.Drawing.Size(400, 250);
             this.sP_Player.TabIndex = 2;
             // 
-            // stream_SecondPlayer
+            // Second_VLCPLayer
             // 
-            this.stream_SecondPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Second_VLCPLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.stream_SecondPlayer.BackColor = System.Drawing.Color.Black;
-            this.stream_SecondPlayer.Location = new System.Drawing.Point(5, 5);
-            this.stream_SecondPlayer.Margin = new System.Windows.Forms.Padding(1);
-            this.stream_SecondPlayer.Name = "stream_SecondPlayer";
-            this.stream_SecondPlayer.PreserveStreamAspectRatio = false;
-            this.stream_SecondPlayer.Size = new System.Drawing.Size(388, 238);
-            this.stream_SecondPlayer.TabIndex = 44;
-            this.stream_SecondPlayer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.stream_SecondPlayer_MouseDown);
-            this.stream_SecondPlayer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.stream_SecondPlayer_MouseMove);
-            this.stream_SecondPlayer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.stream_SecondPlayer_MouseUp);
+            this.Second_VLCPLayer.Enabled = true;
+            this.Second_VLCPLayer.Location = new System.Drawing.Point(3, 3);
+            this.Second_VLCPLayer.Name = "Second_VLCPLayer";
+            this.Second_VLCPLayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Second_VLCPLayer.OcxState")));
+            this.Second_VLCPLayer.Size = new System.Drawing.Size(392, 242);
+            this.Second_VLCPLayer.TabIndex = 0;
+            this.Second_VLCPLayer.MouseDownEvent += new AxAXVLC.DVLCEvents_MouseDownEventHandler(this.Second_VLCPLayer_MouseDownEvent);
+            this.Second_VLCPLayer.MouseMoveEvent += new AxAXVLC.DVLCEvents_MouseMoveEventHandler(this.Second_VLCPLayer_MouseMoveEvent);
+            this.Second_VLCPLayer.MouseUpEvent += new AxAXVLC.DVLCEvents_MouseUpEventHandler(this.Second_VLCPLayer_MouseUpEvent);
             // 
             // MainForm
             // 
@@ -539,6 +539,7 @@ namespace SSUtility2 {
             ((System.ComponentModel.ISupportInitialize)(this.Joystick)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Background)).EndInit();
             this.sP_Player.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Second_VLCPLayer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1357,7 +1358,6 @@ namespace SSUtility2 {
         public Button b_Open;
         public ToolStripMenuItem Menu_Video_EnableSecondary;
         public SPanel.SizeablePanel sP_Player;
-        public WebEye.StreamControl.WinForms.StreamControl stream_SecondPlayer;
         public ToolStripMenuItem Menu_Settings;
         public ToolStripMenuItem Menu_Settings_Open;
         public ToolStripMenuItem Menu_Settings_Info;
@@ -1375,6 +1375,7 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Settings_Keyboard;
         public ToolStripMenuItem Menu_Settings_CP;
         public ToolStripMenuItem Menu_Window_Settings;
-        private ToolStripMenuItem Menu_Settings_Lite;
+        public ToolStripMenuItem Menu_Settings_Lite;
+        public AxAXVLC.AxVLCPlugin2 Second_VLCPLayer;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

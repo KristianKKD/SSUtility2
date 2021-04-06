@@ -98,10 +98,10 @@ namespace SSUtility2 {
         public static void SaveSnap(Detached player) {
             string fullImagePath = GivePath(ConfigControl.scFolder.stringVal, ConfigControl.scFileName.stringVal, player, "Snapshots") + ".jpg";
 
-            Image bmp = new Bitmap(player.stream_Player.Width, player.stream_Player.Height);
+            Image bmp = new Bitmap(player.vlcPlayer.Width, player.vlcPlayer.Height);
             Graphics gfx = Graphics.FromImage(bmp);
-            Rectangle rec = player.stream_Player.RectangleToScreen(player.stream_Player.ClientRectangle);
-            gfx.CopyFromScreen(rec.Location, Point.Empty, player.stream_Player.Size);
+            Rectangle rec = player.vlcPlayer.RectangleToScreen(player.vlcPlayer.ClientRectangle);
+            gfx.CopyFromScreen(rec.Location, Point.Empty, player.vlcPlayer.Size);
 
             bmp.Save(fullImagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
 
@@ -129,7 +129,7 @@ namespace SSUtility2 {
             return false;
         }
 
-        public static Recorder Record(string path, WebEye.StreamControl.WinForms.StreamControl player) {
+        public static Recorder Record(string path, AxAXVLC.AxVLCPlugin2 player) {
             Recorder rec = new Recorder(new Record(path, ConfigControl.recFPS.intVal,
                     SharpAvi.KnownFourCCs.Codecs.MotionJpeg, ConfigControl.recQual.intVal, player));
             return rec;

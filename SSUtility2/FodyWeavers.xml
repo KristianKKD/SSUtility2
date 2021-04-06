@@ -10,8 +10,8 @@ IgnoreSatelliteAssemblies='false'
 SharpAvi
 Joystick
 SizeablePanel
-WebEye.Stream
-WebEye.StreamControl.WinForms
+AxInterop.AXVLC
+Interop.AXVLC
 </IncludeAssemblies>
 </Costura>
 </Weavers>

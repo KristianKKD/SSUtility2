@@ -32,11 +32,11 @@ namespace SSUtility2 {
             cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
             cB_IPCon_RefreshRate.Text = ConfigControl.commandRateMs.stringVal;
-            cB_IPCon_Replay.Text = ConfigControl.videoReplayRateMs.stringVal;
 
             check_Other_Subnet.Checked = ConfigControl.subnetNotif.boolVal;
             check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
             check_Other_AutoReconnect.Checked = ConfigControl.autoReconnect.boolVal;
+            check_AddressInvalid.Checked = ConfigControl.ignoreAddress.boolVal;
             check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
 
             ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
@@ -282,16 +282,8 @@ namespace SSUtility2 {
             }
         }
 
-        private void cB_IPCon_Replay_TextChanged(object sender, EventArgs e) {
-            if (!int.TryParse(cB_IPCon_Replay.Text, out int value)) {
-                cB_IPCon_Replay.Text = value.ToString();
-                return;
-            }
-            if (value < 1000) {
-                cB_IPCon_Replay.Text = "1000";
-            }
-
-            ConfigControl.videoReplayRateMs.UpdateValue(cB_IPCon_Replay.Text);
+        private void check_AddressInvalid_CheckedChanged(object sender, EventArgs e) {
+            ConfigControl.ignoreAddress.UpdateValue(check_AddressInvalid.Checked.ToString());
         }
     }
 }

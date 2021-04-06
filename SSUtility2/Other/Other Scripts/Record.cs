@@ -15,7 +15,7 @@ namespace SSUtility2 {
 
     public class Record {
 
-        public Record(string filename, int FrameRate, FourCC Encoder, int Quality, WebEye.StreamControl.WinForms.StreamControl player) {
+        public Record(string filename, int FrameRate, FourCC Encoder, int Quality, AxAXVLC.AxVLCPlugin2 player) {
             FileName = filename;
             FramesPerSecond = FrameRate;
             Codec = Encoder;
