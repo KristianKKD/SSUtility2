@@ -79,6 +79,7 @@ namespace SSUtility2
             this.l_Custom_1 = new System.Windows.Forms.Label();
             this.tB_Custom_1 = new System.Windows.Forms.TextBox();
             this.tP_Other = new System.Windows.Forms.TabPage();
+            this.check_AddressInvalid = new System.Windows.Forms.CheckBox();
             this.l_Other_CurrentResolution = new System.Windows.Forms.Label();
             this.tB_Other_ResolutionHeight = new System.Windows.Forms.TextBox();
             this.l_Other_ResolutionHeight = new System.Windows.Forms.Label();
@@ -87,7 +88,6 @@ namespace SSUtility2
             this.check_Other_AutoReconnect = new System.Windows.Forms.CheckBox();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.check_AddressInvalid = new System.Windows.Forms.CheckBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             this.tP_Paths.SuspendLayout();
@@ -739,6 +739,19 @@ namespace SSUtility2
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
             // 
+            // check_AddressInvalid
+            // 
+            this.check_AddressInvalid.Location = new System.Drawing.Point(6, 85);
+            this.check_AddressInvalid.Name = "check_AddressInvalid";
+            this.check_AddressInvalid.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_AddressInvalid.Size = new System.Drawing.Size(174, 17);
+            this.check_AddressInvalid.TabIndex = 37;
+            this.check_AddressInvalid.Text = "Hide Address Invalid Error";
+            this.check_AddressInvalid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_AddressInvalid, "Reconnect upon entering a new IP in the IP Control section.");
+            this.check_AddressInvalid.UseVisualStyleBackColor = true;
+            this.check_AddressInvalid.CheckedChanged += new System.EventHandler(this.check_AddressInvalid_CheckedChanged);
+            // 
             // l_Other_CurrentResolution
             // 
             this.l_Other_CurrentResolution.AutoSize = true;
@@ -808,24 +821,11 @@ namespace SSUtility2
             // 
             this.l_Version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.l_Version.AutoSize = true;
-            this.l_Version.Location = new System.Drawing.Point(178, 238);
+            this.l_Version.Location = new System.Drawing.Point(206, 233);
             this.l_Version.Name = "l_Version";
             this.l_Version.Size = new System.Drawing.Size(102, 13);
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
-            // 
-            // check_AddressInvalid
-            // 
-            this.check_AddressInvalid.Location = new System.Drawing.Point(6, 85);
-            this.check_AddressInvalid.Name = "check_AddressInvalid";
-            this.check_AddressInvalid.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_AddressInvalid.Size = new System.Drawing.Size(174, 17);
-            this.check_AddressInvalid.TabIndex = 37;
-            this.check_AddressInvalid.Text = "Hide Address Invalid Error";
-            this.check_AddressInvalid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_AddressInvalid, "Reconnect upon entering a new IP in the IP Control section.");
-            this.check_AddressInvalid.UseVisualStyleBackColor = true;
-            this.check_AddressInvalid.CheckedChanged += new System.EventHandler(this.check_AddressInvalid_CheckedChanged);
             // 
             // SettingsPage
             // 

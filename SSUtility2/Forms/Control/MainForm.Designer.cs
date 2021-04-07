@@ -49,15 +49,16 @@ namespace SSUtility2 {
             this.Menu_Window_Response = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Osiris = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Presets = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Window_Custom = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Open = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_CP = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Presets = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Info = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_Swap = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Custom = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_CP = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Keyboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Swap = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_StartStop = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +66,7 @@ namespace SSUtility2 {
             this.Menu_Video_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_EnableSecondary = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_QC_Custom = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_PanZero = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Pan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Tilt = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,7 +88,6 @@ namespace SSUtility2 {
             this.sP_Player = new SPanel.SizeablePanel();
             this.tP_Cover = new SizeablePanel.TransparentPanel(this.components);
             this.Second_VLCPLayer = new AxAXVLC.AxVLCPlugin2();
-            this.Menu_QC_Custom = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
             this.p_Control.SuspendLayout();
@@ -121,7 +122,6 @@ namespace SSUtility2 {
             this.Menu_Window_Response,
             this.Menu_Window_Osiris,
             this.Menu_Window_Presets,
-            this.Menu_Window_Custom,
             this.Menu_Window_Settings});
             this.Menu_Window.Name = "Menu_Window";
             this.Menu_Window.Size = new System.Drawing.Size(63, 20);
@@ -130,49 +130,42 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(185, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(185, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(185, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Osiris
             // 
             this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(185, 22);
+            this.Menu_Window_Osiris.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Osiris.Text = "Osiris Control";
             this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(185, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Presets.Text = "Preset Panel";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
-            // 
-            // Menu_Window_Custom
-            // 
-            this.Menu_Window_Custom.Name = "Menu_Window_Custom";
-            this.Menu_Window_Custom.Size = new System.Drawing.Size(185, 22);
-            this.Menu_Window_Custom.Text = "Show Custom Panel";
-            this.Menu_Window_Custom.Click += new System.EventHandler(this.Menu_Window_Custom_Click);
             // 
             // Menu_Window_Settings
             // 
             this.Menu_Window_Settings.Name = "Menu_Window_Settings";
-            this.Menu_Window_Settings.Size = new System.Drawing.Size(185, 22);
+            this.Menu_Window_Settings.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Settings.Text = "Open Settings";
             this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
             // 
@@ -180,11 +173,13 @@ namespace SSUtility2 {
             // 
             this.Menu_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Settings_Open,
-            this.Menu_Settings_Lite,
-            this.Menu_Settings_CP,
+            this.Menu_Settings_Presets,
             this.Menu_Settings_Info,
-            this.Menu_Settings_Swap,
-            this.Menu_Settings_Keyboard});
+            this.Menu_Settings_Custom,
+            this.Menu_Settings_CP,
+            this.Menu_Settings_Lite,
+            this.Menu_Settings_Keyboard,
+            this.Menu_Settings_Swap});
             this.Menu_Settings.Name = "Menu_Settings";
             this.Menu_Settings.Size = new System.Drawing.Size(63, 20);
             this.Menu_Settings.Text = "Settings";
@@ -196,19 +191,12 @@ namespace SSUtility2 {
             this.Menu_Settings_Open.Text = "Open Settings";
             this.Menu_Settings_Open.Click += new System.EventHandler(this.Menu_Settings_Open_Click);
             // 
-            // Menu_Settings_Lite
+            // Menu_Settings_Presets
             // 
-            this.Menu_Settings_Lite.Name = "Menu_Settings_Lite";
-            this.Menu_Settings_Lite.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_Lite.Text = "Lite Mode";
-            this.Menu_Settings_Lite.Click += new System.EventHandler(this.Menu_Settings_Lite_Click);
-            // 
-            // Menu_Settings_CP
-            // 
-            this.Menu_Settings_CP.Name = "Menu_Settings_CP";
-            this.Menu_Settings_CP.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_CP.Text = "Show PTZ Control Panel";
-            this.Menu_Settings_CP.Click += new System.EventHandler(this.Menu_Settings_CP_Click);
+            this.Menu_Settings_Presets.Name = "Menu_Settings_Presets";
+            this.Menu_Settings_Presets.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_Presets.Text = "Enable Preset Panel";
+            this.Menu_Settings_Presets.Click += new System.EventHandler(this.Menu_Settings_Presets_Click);
             // 
             // Menu_Settings_Info
             // 
@@ -218,12 +206,26 @@ namespace SSUtility2 {
             this.Menu_Settings_Info.Visible = false;
             this.Menu_Settings_Info.Click += new System.EventHandler(this.Menu_Settings_Info_Click);
             // 
-            // Menu_Settings_Swap
+            // Menu_Settings_Custom
             // 
-            this.Menu_Settings_Swap.Name = "Menu_Settings_Swap";
-            this.Menu_Settings_Swap.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_Swap.Text = "Swap To Thermal";
-            this.Menu_Settings_Swap.Click += new System.EventHandler(this.Menu_Settings_Swap_Click);
+            this.Menu_Settings_Custom.Name = "Menu_Settings_Custom";
+            this.Menu_Settings_Custom.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_Custom.Text = "Enable Custom Panel";
+            this.Menu_Settings_Custom.Click += new System.EventHandler(this.Menu_Settings_Custom_Click);
+            // 
+            // Menu_Settings_CP
+            // 
+            this.Menu_Settings_CP.Name = "Menu_Settings_CP";
+            this.Menu_Settings_CP.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_CP.Text = "Show PTZ Control Panel";
+            this.Menu_Settings_CP.Click += new System.EventHandler(this.Menu_Settings_CP_Click);
+            // 
+            // Menu_Settings_Lite
+            // 
+            this.Menu_Settings_Lite.Name = "Menu_Settings_Lite";
+            this.Menu_Settings_Lite.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_Lite.Text = "Lite Mode";
+            this.Menu_Settings_Lite.Click += new System.EventHandler(this.Menu_Settings_Lite_Click);
             // 
             // Menu_Settings_Keyboard
             // 
@@ -231,6 +233,13 @@ namespace SSUtility2 {
             this.Menu_Settings_Keyboard.Size = new System.Drawing.Size(207, 22);
             this.Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
             this.Menu_Settings_Keyboard.Click += new System.EventHandler(this.Menu_Settings_Keyboard_Click);
+            // 
+            // Menu_Settings_Swap
+            // 
+            this.Menu_Settings_Swap.Name = "Menu_Settings_Swap";
+            this.Menu_Settings_Swap.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_Swap.Text = "Swap To Thermal";
+            this.Menu_Settings_Swap.Click += new System.EventHandler(this.Menu_Settings_Swap_Click);
             // 
             // Menu_Video
             // 
@@ -290,6 +299,13 @@ namespace SSUtility2 {
             this.Menu_QC.Name = "Menu_QC";
             this.Menu_QC.Size = new System.Drawing.Size(117, 20);
             this.Menu_QC.Text = "Quick Commands";
+            // 
+            // Menu_QC_Custom
+            // 
+            this.Menu_QC_Custom.Name = "Menu_QC_Custom";
+            this.Menu_QC_Custom.Size = new System.Drawing.Size(209, 22);
+            this.Menu_QC_Custom.Text = "Enter Custom Command";
+            this.Menu_QC_Custom.Click += new System.EventHandler(this.Menu_QC_Custom_Click);
             // 
             // Menu_QC_PanZero
             // 
@@ -530,13 +546,6 @@ namespace SSUtility2 {
             this.Second_VLCPLayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Second_VLCPLayer.OcxState")));
             this.Second_VLCPLayer.Size = new System.Drawing.Size(392, 242);
             this.Second_VLCPLayer.TabIndex = 0;
-            // 
-            // Menu_QC_Custom
-            // 
-            this.Menu_QC_Custom.Name = "Menu_QC_Custom";
-            this.Menu_QC_Custom.Size = new System.Drawing.Size(209, 22);
-            this.Menu_QC_Custom.Text = "Enter Custom Command";
-            this.Menu_QC_Custom.Click += new System.EventHandler(this.Menu_QC_Custom_Click);
             // 
             // MainForm
             // 
@@ -1376,7 +1385,6 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Video_Record;
         public ToolStripMenuItem Menu_Video_StartStop;
         public ToolStripMenuItem Menu_Window_Presets;
-        public ToolStripMenuItem Menu_Window_Custom;
         public Button b_Open;
         public ToolStripMenuItem Menu_Video_EnableSecondary;
         public SPanel.SizeablePanel sP_Player;
@@ -1401,5 +1409,7 @@ namespace SSUtility2 {
         public AxAXVLC.AxVLCPlugin2 Second_VLCPLayer;
         private SizeablePanel.TransparentPanel tP_Cover;
         private ToolStripMenuItem Menu_QC_Custom;
+        private ToolStripMenuItem Menu_Settings_Presets;
+        private ToolStripMenuItem Menu_Settings_Custom;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

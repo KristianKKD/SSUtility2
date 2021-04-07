@@ -3,13 +3,14 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.0.0";
+        public const string version = "v2.4.1.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -27,6 +28,7 @@ namespace SSUtility2 {
         public PelcoD pd;
         public ResponseLog rl;
         public PresetPanel pp;
+        public TabControl attachedpp;
 
         public Detached mainPlayer;
         
@@ -54,6 +56,7 @@ namespace SSUtility2 {
 
                 AttachInfoPanel();
                 AttachCustomPanel();
+                AttachPresetPanel();
 
                 autosaveControls = new Control[]{
                     mainPlayer.settings.tB_PlayerD_Adr,
@@ -262,6 +265,21 @@ namespace SSUtility2 {
             custom.myPanel = p;
             p.Visible = false;
             p.BringToFront();
+        }
+
+        void AttachPresetPanel() {
+            try {
+                PresetPanel hiddenpanel = new PresetPanel();
+                attachedpp = hiddenpanel.tC_Presets_Default;
+
+                p_Control.Controls.Add(attachedpp);
+
+                attachedpp.Location = new Point(0, Height - attachedpp.Height - 65);
+                attachedpp.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
+                attachedpp.Hide();
+            } catch (Exception e) {
+                MessageBox.Show("TC\n" + e.ToString());
+            }
         }
 
         public void ShowControlPanel() {
@@ -517,17 +535,6 @@ namespace SSUtility2 {
             pp.Show();
             pp.BringToFront();
             pp.Location = Location;
-        }
-
-        private void Menu_Window_Custom_Click(object sender, EventArgs e) {
-            if (custom.myPanel.Visible) {
-                custom.myPanel.Visible = false;
-                Menu_Window_Custom.Text = "Show Custom Panel";
-            } else {
-                custom.myPanel.Visible = true;
-                custom.myPanel.BringToFront();
-                Menu_Window_Custom.Text = "Hide Custom Panel";
-            }
         }
 
         private void b_Open_Click(object sender, EventArgs e) {
@@ -792,5 +799,26 @@ namespace SSUtility2 {
             new QuickCommandEntry("", "Enter custom command", true);
         }
 
+        private void Menu_Settings_Presets_Click(object sender, EventArgs e) {
+            if (attachedpp.Visible) {
+                attachedpp.Hide();
+                Menu_Settings_Presets.Text = "Enable Preset Panel";
+            } else {
+                attachedpp.Show();
+                attachedpp.BringToFront();
+                Menu_Settings_Presets.Text = "Disable Preset Panel";
+            }
+        }
+
+        private void Menu_Settings_Custom_Click(object sender, EventArgs e) {
+            if (custom.myPanel.Visible) {
+                custom.myPanel.Visible = false;
+                Menu_Settings_Custom.Text = "Enable Custom Panel";
+            } else {
+                custom.myPanel.Visible = true;
+                custom.myPanel.BringToFront();
+                Menu_Settings_Custom.Text = "Disable Custom Panel";
+            }
+        }
     } // end of class MainForm
 } // end of namespace SSLUtility2
