@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -230,15 +232,6 @@ namespace SSUtility2 {
                 MessageBox.Show("UPDATEMODE\n" + e.ToString());
             }
         }
-
-        private void PlayerD_VLCPlayer_MouseMoveEvent(object sender, AxAXVLC.DVLCEvents_MouseMoveEvent e) {
-            if (!AsyncCamCom.sock.Connected)
-                return;
-            if (Cursor.Position.X - MainForm.m.Location.X < 70) {
-                MainForm.m.b_Open.Visible = true;
-                MainForm.m.b_Open.BringToFront();
-            } else
-                MainForm.m.b_Open.Visible = false;
-        }
+      
     }
 }

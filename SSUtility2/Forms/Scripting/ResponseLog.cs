@@ -16,7 +16,7 @@ namespace SSUtility2 {
         }
 
         private void b_RL_Save_Click(object sender, EventArgs e) {
-            PelcoD.SaveScript(tB_Log.Lines, "ResponseLog");
+            Tools.SaveTextFile(tB_Log.Lines, "ResponseLog");
         }
 
         private void ResponseLog_FormClosing(object sender, FormClosingEventArgs e) {

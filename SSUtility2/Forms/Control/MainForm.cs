@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.2.1";
+        public const string version = "v2.4.3.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -52,8 +52,7 @@ namespace SSUtility2 {
 
                 bool first = CheckIfFirstTime();
 
-                mainPlayer = AttachPlayer();
-
+                AttachPlayer();
                 AttachInfoPanel();
                 AttachCustomPanel();
                 AttachPresetPanel();
@@ -211,7 +210,7 @@ namespace SSUtility2 {
                 DirectoryChooser dc = new DirectoryChooser();
                 dc.ShowDialog();
             }
-            ConfigControl.ResetFile(ConfigControl.dirLocationFile);
+            Tools.ResetFile(ConfigControl.dirLocationFile);
             File.AppendAllText(ConfigControl.dirLocationFile, ConfigControl.appFolder);
         }
 
@@ -220,6 +219,51 @@ namespace SSUtility2 {
                 ConfigControl.appFolder = (Directory.GetCurrentDirectory() + @"\");
                 ConfigControl.portableMode.UpdateValue("true");
             }
+        }
+
+        void AttachPlayer() {
+            Detached d = DetachVid(false, new VideoSettings(), true).Result;
+
+            if (!startLiteVersion) {
+                var c = Tools.GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
+                p_Control.Controls.AddRange(c.ToArray());
+            }
+
+            SizeablePanel.TransparentPanel tP = new SizeablePanel.TransparentPanel();
+            Controls.Add(tP);
+            tP.Dock = DockStyle.Fill;
+            tP.BringToFront();
+            tP.AllowDrop = true;
+
+            tP.DragOver += (s, e) => {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                    e.Effect = DragDropEffects.Copy;
+                else
+                    e.Effect = DragDropEffects.None;
+            };
+            tP.DragDrop += (s, e) => {
+                try {
+                    string[] fileName = e.Data.GetData(DataFormats.FileDrop) as string[];
+                    if (fileName != null && fileName[0].Contains("txt")) {
+                        Tools.CopyConfig(fileName[0]);
+                    } else {
+                        MessageBox.Show("SSUtility2 only supports dragging/dropping .txt config files!");
+                    }
+                } catch (Exception error) {
+                    Tools.ShowPopup("Failed to open script!\nShow more?", "Script load failed!", error.ToString());
+                }
+            };
+            tP.MouseMove += (s, e) => {
+                if (!AsyncCamCom.sock.Connected)
+                    return;
+                if (Cursor.Position.X - Location.X < 70) {
+                    b_Open.Visible = true;
+                    b_Open.BringToFront();
+                } else
+                    b_Open.Visible = false;
+            };
+
+            mainPlayer = d;
         }
 
         void AttachInfoPanel() {
@@ -329,17 +373,6 @@ namespace SSUtility2 {
             } catch (Exception er) {
                 Tools.ShowPopup("Failed to init Lite Mode!\nShow more?", "Error Occured!", er.ToString());
             }
-        }
-
-        Detached AttachPlayer() {
-            Detached d = DetachVid(false, new VideoSettings(), true).Result;
-
-            if (!startLiteVersion) {
-                var c = Tools.GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
-                p_Control.Controls.AddRange(c.ToArray());
-            }
-
-            return d;
         }
 
         public async Task<Detached> DetachVid(bool show, VideoSettings set, bool attachSecond) {
@@ -808,5 +841,24 @@ namespace SSUtility2 {
                 Menu_Settings_Custom.Text = "Disable Custom Panel";
             }
         }
+
+        private void Menu_Settings_ImportConfig_Click(object sender, EventArgs e) {
+            OpenFileDialog fdg = Tools.OpenFile();
+            DialogResult result = fdg.ShowDialog();
+            if (result == DialogResult.OK) {
+                if (fdg.FileName.Contains(".txt")) {
+                    Tools.CopyConfig(fdg.FileName);
+                } else {
+                    Tools.ShowPopup("Please open a .txt file!\nUser tried to open an unsupported file type! Show more info?", "Invalid File Type!",
+                        "User tried opening: " + fdg.FileName + "\nTry opening a .txt file instead.");
+                }
+            }
+        }
+
+        private void Menu_Settings_ExportConfig_Click(object sender, EventArgs e) {
+            string[] lines = File.ReadAllLines(ConfigControl.appFolder + ConfigControl.config);
+            Tools.SaveTextFile(lines, "configCopy");
+        }
+
     } // end of class MainForm
 } // end of namespace SSLUtility2

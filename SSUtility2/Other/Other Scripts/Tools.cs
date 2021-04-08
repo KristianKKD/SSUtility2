@@ -221,6 +221,40 @@ namespace SSUtility2 {
             }
         }
 
+        public static void SaveTextFile(string[] lines, string name = null) {
+            SaveFileDialog fdg = SaveFile(name, ".txt", ConfigControl.savedFolder);
+            DialogResult result = fdg.ShowDialog();
+            if (result == DialogResult.OK) {
+                ResetFile(fdg.FileName);
+                File.AppendAllLines(fdg.FileName, lines);
+            }
+        }
+
+        public static void CopyConfig(string name) {
+            string configFile = ConfigControl.appFolder + ConfigControl.config;
+            if (name != configFile) {
+                ResetFile(configFile);
+
+                string[] lines = File.ReadAllLines(name);
+                foreach (string line in lines) {
+                    File.AppendAllText(configFile, line + "\n");
+                }
+
+                MessageBox.Show("Updated config file!\n(" + configFile + ")");
+            } else {
+                if (name == configFile)
+                    MessageBox.Show("Please don't try to replace the config file with itself!\nIgnored request!");
+            }
+        }
+
+        public static void ResetFile(string path) {
+            if (File.Exists(path)) {
+                File.Delete(path);
+            }
+            var newFile = File.Create(path);
+            newFile.Close();
+        }
+
         public static void DeleteDirectory(string oldFolderPath) {
             string[] files = Directory.GetFiles(oldFolderPath);
             string[] dirs = Directory.GetDirectories(oldFolderPath);

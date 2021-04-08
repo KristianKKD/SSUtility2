@@ -90,7 +90,6 @@
             this.PlayerD_VLCPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("PlayerD_VLCPlayer.OcxState")));
             this.PlayerD_VLCPlayer.Size = new System.Drawing.Size(772, 465);
             this.PlayerD_VLCPlayer.TabIndex = 43;
-            this.PlayerD_VLCPlayer.MouseMoveEvent += new AxAXVLC.DVLCEvents_MouseMoveEventHandler(this.PlayerD_VLCPlayer_MouseMoveEvent);
             // 
             // Detached
             // 

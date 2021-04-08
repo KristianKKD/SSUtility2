@@ -6,7 +6,7 @@ namespace SSUtility2 {
     class AutoSave {
 
         public static async Task SaveAuto(string path) {
-            ConfigControl.ResetFile(path);
+            Tools.ResetFile(path);
 
             foreach (Control c in MainForm.autosaveControls) {
                 if (c is TrackBar) {
@@ -28,7 +28,7 @@ namespace SSUtility2 {
             }
 
             if (!File.Exists(path)) {
-                ConfigControl.ResetFile(path);
+                Tools.ResetFile(path);
                 return;
             }
 

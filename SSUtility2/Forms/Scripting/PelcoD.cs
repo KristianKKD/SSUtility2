@@ -184,17 +184,8 @@ namespace SSUtility2 {
             }
         }
 
-        public static void SaveScript(string[] lines, string name = null) {
-            SaveFileDialog fdg = Tools.SaveFile(name, ".txt", ConfigControl.savedFolder);
-            DialogResult result = fdg.ShowDialog();
-            if (result == DialogResult.OK) {
-                ConfigControl.ResetFile(fdg.FileName);
-                File.AppendAllLines(fdg.FileName, lines);
-            }
-        }
-
         private void b_PD_Save_Click(object sender, EventArgs e) {
-            SaveScript(tB_Commands.Lines, "PelcoScript");
+            Tools.SaveTextFile(tB_Commands.Lines, "PelcoScript");
         }
 
         private void b_PD_Fire_Click(object sender, EventArgs e) {
@@ -214,8 +205,8 @@ namespace SSUtility2 {
                         tB_Commands.Text += line + "\n";
                     }
                 } else {
-                    Tools.ShowPopup("Please open a .txt file!\nYou tried to open an unsupported file type! Show more info?", "Invalid File Type!",
-                        "You tried opening: " + fdg.FileName + "\nTry opening a .txt file instead.");
+                    Tools.ShowPopup("Please open a .txt file!\nUser tried to open an unsupported file type! Show more info?", "Invalid File Type!",
+                        "User tried opening: " + fdg.FileName + "\nTry opening a .txt file instead.");
                 }
             }
         }
@@ -270,15 +261,6 @@ namespace SSUtility2 {
             }
         }
 
-        private void cB_Mode_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cB_Mode.Text == "IP") {
-                p_Serial.Hide();
-            } else if (cB_Mode.Text == "Serial"){
-                MessageBox.Show("Not implemented yet!");
-                p_Serial.Show();
-            }
-        }
-
         private void tB_Commands_DragEnter(object sender, DragEventArgs e) {
             tB_Commands.Enabled = true;
             tB_Commands.Clear();
@@ -286,6 +268,15 @@ namespace SSUtility2 {
                 e.Effect = DragDropEffects.Copy;
             else
                 e.Effect = DragDropEffects.None;
+        }
+
+        private void cB_Mode_SelectedIndexChanged(object sender, EventArgs e) {
+            if (cB_Mode.Text == "IP") {
+                p_Serial.Hide();
+            } else if (cB_Mode.Text == "Serial") {
+                MessageBox.Show("Not implemented yet!");
+                p_Serial.Show();
+            }
         }
     }
 }

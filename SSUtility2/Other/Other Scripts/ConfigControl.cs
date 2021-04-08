@@ -140,7 +140,7 @@ namespace SSUtility2 {
         }
 
         public static void CreateConfig(string path) {
-            ResetFile(path);
+            Tools.ResetFile(path);
 
             foreach (ConfigSetting setting in configArray) {
                 if (!portableMode.boolVal && (setting.settingName == finalSource.settingName || setting.settingName == finalDestination.settingName)) {
@@ -180,13 +180,6 @@ namespace SSUtility2 {
             }
         }
 
-        public static void ResetFile(string path) {
-            if (File.Exists(path)) {
-                File.Delete(path);
-            }
-            var newFile = File.Create(path);
-            newFile.Close();
-        }
 
         public static bool CheckIfExists(TextBox tb, Label linkedLabel) {
             bool exists;
