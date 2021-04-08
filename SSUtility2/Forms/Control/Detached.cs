@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,13 +23,11 @@ namespace SSUtility2 {
             settings = new VideoSettings();
             settings.originalDetached = this;
             vlcPlayer = PlayerD_VLCPlayer;
-            if (attachSecond)
-                InitSecond();
-        }
-
-        async Task InitSecond() {
-            await Task.Delay(100).ConfigureAwait(false); //small delay to prevent crash
-            AttachSecond();
+            if (attachSecond) {
+                var t = new Thread(AttachSecond);
+                t.SetApartmentState(ApartmentState.STA);
+                t.Start();
+            }
         }
 
         void AttachSecond() {
@@ -36,8 +35,6 @@ namespace SSUtility2 {
                 if (MainForm.m.p_Control.InvokeRequired) {
                     MainForm.m.p_Control.Invoke(new MethodInvoker(this.AttachSecond));
                 } else {
-                    MainForm.m.sP_Player.BringToFront();
-
                     secondView = new Detached(false);
                     secondView.settings.originalDetached = this;
                     secondView.settings.Copy(settings);
@@ -45,8 +42,6 @@ namespace SSUtility2 {
                     secondView.settings.isSecondary = true;
                     secondView.settings.tP_Secondary.Dispose();
                     secondView.settings.tP_Main.Text = "Secondary Player";
-
-                    MainForm.m.sP_Player.Hide(); //and below too
 
                     secondView.PlayerD_VLCPlayer.Dispose();
                     secondView.vlcPlayer = MainForm.m.Second_VLCPLayer;

@@ -521,6 +521,7 @@ namespace SSUtility2 {
             this.sP_Player.Name = "sP_Player";
             this.sP_Player.Size = new System.Drawing.Size(400, 250);
             this.sP_Player.TabIndex = 2;
+            this.sP_Player.Visible = false;
             // 
             // tP_Cover
             // 
