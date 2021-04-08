@@ -130,42 +130,42 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Osiris
             // 
             this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Osiris.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Osiris.Text = "Osiris Control";
             this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Presets.Text = "Preset Panel";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
             // Menu_Window_Settings
             // 
             this.Menu_Window_Settings.Name = "Menu_Window_Settings";
-            this.Menu_Window_Settings.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Settings.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Settings.Text = "Open Settings";
             this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
             // 

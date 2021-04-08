@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.1.0";
+        public const string version = "v2.4.2.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -67,15 +67,6 @@ namespace SSUtility2 {
                     mainPlayer.settings.tB_PlayerD_Password,
                     mainPlayer.settings.tB_PlayerD_SimpleAdr,
                     mainPlayer.settings.tB_PlayerD_Name,
-
-                    setPage.tB_Custom_1,
-                    setPage.tB_Custom_2,
-                    setPage.tB_Custom_3,
-                    setPage.tB_Custom_4,
-                    setPage.tB_Custom_5,
-                    setPage.tB_Custom_6,
-                    setPage.tB_Custom_7,
-                    setPage.tB_Custom_8,
                 };
                 controlPanel = new Control[] {
                     b_PTZ_Up,
@@ -253,7 +244,7 @@ namespace SSUtility2 {
             Panel p = new Panel();
             custom = new CustomPanel();
 
-            p.Size = new Size(80, 160);
+            p.Size = new Size(140, 160);
             p.Location = new Point(m.p_Control.Width - p.Width, m.p_Control.Height - p.Height);
 
             var c = Tools.GetAllType(custom, typeof(Button));
@@ -620,12 +611,13 @@ namespace SSUtility2 {
         }
 
         private void b_PTZ_ZoomPos_MouseDown(object sender, MouseEventArgs e) {
-            PTZZoom(D.Zoom.Tele);
+            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), D.Zoom.Tele));
+        }
+         
+        private void b_PTZ_ZoomNeg_MouseDown(object sender, MouseEventArgs e) {
+            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), D.Zoom.Wide));
         }
 
-        private void b_PTZ_ZoomNeg_MouseDown(object sender, MouseEventArgs e) {
-            PTZZoom(D.Zoom.Wide);
-        }
         private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
             AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(Tools.MakeAdr(), D.Focus.Far));
         }
@@ -652,10 +644,6 @@ namespace SSUtility2 {
 
         private void b_PTZ_Any_MouseUp(object sender, MouseEventArgs e) {
             DelayStop();
-        }
-
-        public void PTZZoom(D.Zoom dir) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), dir));
         }
 
         void PTZMove(D.Tilt tilt = D.Tilt.Null, D.Pan pan = D.Pan.Null) {

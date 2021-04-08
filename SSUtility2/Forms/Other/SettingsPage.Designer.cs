@@ -61,23 +61,9 @@ namespace SSUtility2
             this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
             this.l_Rec_Quality = new System.Windows.Forms.Label();
             this.tP_Customs = new System.Windows.Forms.TabPage();
-            this.b_Custom_CommandList = new System.Windows.Forms.Button();
-            this.l_Custom_8 = new System.Windows.Forms.Label();
-            this.tB_Custom_8 = new System.Windows.Forms.TextBox();
-            this.l_Custom_7 = new System.Windows.Forms.Label();
-            this.tB_Custom_7 = new System.Windows.Forms.TextBox();
-            this.l_Custom_6 = new System.Windows.Forms.Label();
-            this.tB_Custom_6 = new System.Windows.Forms.TextBox();
-            this.l_Custom_5 = new System.Windows.Forms.Label();
-            this.tB_Custom_5 = new System.Windows.Forms.TextBox();
-            this.l_Custom_4 = new System.Windows.Forms.Label();
-            this.tB_Custom_4 = new System.Windows.Forms.TextBox();
-            this.l_Custom_3 = new System.Windows.Forms.Label();
-            this.tB_Custom_3 = new System.Windows.Forms.TextBox();
-            this.l_Custom_2 = new System.Windows.Forms.Label();
-            this.tB_Custom_2 = new System.Windows.Forms.TextBox();
-            this.l_Custom_1 = new System.Windows.Forms.Label();
-            this.tB_Custom_1 = new System.Windows.Forms.TextBox();
+            this.dgv_Custom_Buttons = new System.Windows.Forms.DataGridView();
+            this.ButtonName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ButtonsCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tP_Other = new System.Windows.Forms.TabPage();
             this.check_AddressInvalid = new System.Windows.Forms.CheckBox();
             this.l_Other_CurrentResolution = new System.Windows.Forms.Label();
@@ -86,6 +72,7 @@ namespace SSUtility2
             this.tB_Other_ResolutionWidth = new System.Windows.Forms.TextBox();
             this.l_Other_ResolutionWidth = new System.Windows.Forms.Label();
             this.check_Other_AutoReconnect = new System.Windows.Forms.CheckBox();
+            this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
             this.tC_Settings.SuspendLayout();
@@ -93,6 +80,7 @@ namespace SSUtility2
             this.tP_Paths.SuspendLayout();
             this.tP_Recording.SuspendLayout();
             this.tP_Customs.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Custom_Buttons)).BeginInit();
             this.tP_Other.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,7 +88,7 @@ namespace SSUtility2
             // 
             this.b_Settings_Default.BackColor = System.Drawing.SystemColors.Control;
             this.b_Settings_Default.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Settings_Default.Location = new System.Drawing.Point(12, 228);
+            this.b_Settings_Default.Location = new System.Drawing.Point(12, 253);
             this.b_Settings_Default.Name = "b_Settings_Default";
             this.b_Settings_Default.Size = new System.Drawing.Size(75, 23);
             this.b_Settings_Default.TabIndex = 14;
@@ -193,7 +181,7 @@ namespace SSUtility2
             this.b_Paths_sCBrowse.BackColor = System.Drawing.SystemColors.Control;
             this.b_Paths_sCBrowse.Enabled = false;
             this.b_Paths_sCBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Paths_sCBrowse.Location = new System.Drawing.Point(319, 39);
+            this.b_Paths_sCBrowse.Location = new System.Drawing.Point(337, 39);
             this.b_Paths_sCBrowse.Name = "b_Paths_sCBrowse";
             this.b_Paths_sCBrowse.Size = new System.Drawing.Size(27, 22);
             this.b_Paths_sCBrowse.TabIndex = 13;
@@ -209,7 +197,7 @@ namespace SSUtility2
             this.tB_Paths_sCFolder.Enabled = false;
             this.tB_Paths_sCFolder.Location = new System.Drawing.Point(112, 41);
             this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
-            this.tB_Paths_sCFolder.Size = new System.Drawing.Size(201, 20);
+            this.tB_Paths_sCFolder.Size = new System.Drawing.Size(219, 20);
             this.tB_Paths_sCFolder.TabIndex = 16;
             this.tB_Paths_sCFolder.TextChanged += new System.EventHandler(this.tB_Paths_sCFolder_TextChanged);
             // 
@@ -230,7 +218,7 @@ namespace SSUtility2
             this.tB_Paths_vFolder.Enabled = false;
             this.tB_Paths_vFolder.Location = new System.Drawing.Point(112, 74);
             this.tB_Paths_vFolder.Name = "tB_Paths_vFolder";
-            this.tB_Paths_vFolder.Size = new System.Drawing.Size(201, 20);
+            this.tB_Paths_vFolder.Size = new System.Drawing.Size(219, 20);
             this.tB_Paths_vFolder.TabIndex = 18;
             this.tB_Paths_vFolder.TextChanged += new System.EventHandler(this.tB_Paths_vFolder_TextChanged);
             // 
@@ -240,7 +228,7 @@ namespace SSUtility2
             this.b_Paths_vBrowse.BackColor = System.Drawing.SystemColors.Control;
             this.b_Paths_vBrowse.Enabled = false;
             this.b_Paths_vBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Paths_vBrowse.Location = new System.Drawing.Point(319, 72);
+            this.b_Paths_vBrowse.Location = new System.Drawing.Point(337, 72);
             this.b_Paths_vBrowse.Name = "b_Paths_vBrowse";
             this.b_Paths_vBrowse.Size = new System.Drawing.Size(26, 22);
             this.b_Paths_vBrowse.TabIndex = 19;
@@ -311,7 +299,7 @@ namespace SSUtility2
             this.b_ChangeDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.b_ChangeDir.BackColor = System.Drawing.SystemColors.Control;
             this.b_ChangeDir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_ChangeDir.Location = new System.Drawing.Point(8, 155);
+            this.b_ChangeDir.Location = new System.Drawing.Point(8, 190);
             this.b_ChangeDir.Name = "b_ChangeDir";
             this.b_ChangeDir.Size = new System.Drawing.Size(113, 23);
             this.b_ChangeDir.TabIndex = 30;
@@ -326,11 +314,12 @@ namespace SSUtility2
             this.tC_Settings.Controls.Add(this.tP_Recording);
             this.tC_Settings.Controls.Add(this.tP_Customs);
             this.tC_Settings.Controls.Add(this.tP_Other);
-            this.tC_Settings.Location = new System.Drawing.Point(12, 12);
+            this.tC_Settings.Location = new System.Drawing.Point(3, 2);
             this.tC_Settings.Name = "tC_Settings";
             this.tC_Settings.SelectedIndex = 0;
-            this.tC_Settings.Size = new System.Drawing.Size(360, 210);
+            this.tC_Settings.Size = new System.Drawing.Size(378, 245);
             this.tC_Settings.TabIndex = 31;
+            this.tC_Settings.SelectedIndexChanged += new System.EventHandler(this.tC_Settings_SelectedIndexChanged);
             // 
             // tP_Control
             // 
@@ -348,7 +337,7 @@ namespace SSUtility2
             this.tP_Control.Location = new System.Drawing.Point(4, 22);
             this.tP_Control.Name = "tP_Control";
             this.tP_Control.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Control.Size = new System.Drawing.Size(352, 184);
+            this.tP_Control.Size = new System.Drawing.Size(370, 219);
             this.tP_Control.TabIndex = 3;
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
@@ -480,7 +469,7 @@ namespace SSUtility2
             this.tP_Paths.Location = new System.Drawing.Point(4, 22);
             this.tP_Paths.Name = "tP_Paths";
             this.tP_Paths.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Paths.Size = new System.Drawing.Size(352, 184);
+            this.tP_Paths.Size = new System.Drawing.Size(370, 219);
             this.tP_Paths.TabIndex = 0;
             this.tP_Paths.Text = "Paths";
             this.tP_Paths.UseVisualStyleBackColor = true;
@@ -498,7 +487,7 @@ namespace SSUtility2
             this.tP_Recording.Location = new System.Drawing.Point(4, 22);
             this.tP_Recording.Name = "tP_Recording";
             this.tP_Recording.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Recording.Size = new System.Drawing.Size(352, 184);
+            this.tP_Recording.Size = new System.Drawing.Size(370, 219);
             this.tP_Recording.TabIndex = 1;
             this.tP_Recording.Text = "Recording";
             this.tP_Recording.UseVisualStyleBackColor = true;
@@ -533,192 +522,50 @@ namespace SSUtility2
             // 
             // tP_Customs
             // 
-            this.tP_Customs.Controls.Add(this.b_Custom_CommandList);
-            this.tP_Customs.Controls.Add(this.l_Custom_8);
-            this.tP_Customs.Controls.Add(this.tB_Custom_8);
-            this.tP_Customs.Controls.Add(this.l_Custom_7);
-            this.tP_Customs.Controls.Add(this.tB_Custom_7);
-            this.tP_Customs.Controls.Add(this.l_Custom_6);
-            this.tP_Customs.Controls.Add(this.tB_Custom_6);
-            this.tP_Customs.Controls.Add(this.l_Custom_5);
-            this.tP_Customs.Controls.Add(this.tB_Custom_5);
-            this.tP_Customs.Controls.Add(this.l_Custom_4);
-            this.tP_Customs.Controls.Add(this.tB_Custom_4);
-            this.tP_Customs.Controls.Add(this.l_Custom_3);
-            this.tP_Customs.Controls.Add(this.tB_Custom_3);
-            this.tP_Customs.Controls.Add(this.l_Custom_2);
-            this.tP_Customs.Controls.Add(this.tB_Custom_2);
-            this.tP_Customs.Controls.Add(this.l_Custom_1);
-            this.tP_Customs.Controls.Add(this.tB_Custom_1);
+            this.tP_Customs.Controls.Add(this.dgv_Custom_Buttons);
             this.tP_Customs.Location = new System.Drawing.Point(4, 22);
             this.tP_Customs.Name = "tP_Customs";
             this.tP_Customs.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Customs.Size = new System.Drawing.Size(352, 184);
+            this.tP_Customs.Size = new System.Drawing.Size(370, 219);
             this.tP_Customs.TabIndex = 4;
             this.tP_Customs.Text = "Custom";
             this.tP_Customs.UseVisualStyleBackColor = true;
             // 
-            // b_Custom_CommandList
+            // dgv_Custom_Buttons
             // 
-            this.b_Custom_CommandList.Location = new System.Drawing.Point(196, 135);
-            this.b_Custom_CommandList.Name = "b_Custom_CommandList";
-            this.b_Custom_CommandList.Size = new System.Drawing.Size(126, 34);
-            this.b_Custom_CommandList.TabIndex = 33;
-            this.b_Custom_CommandList.Text = "Open Command List";
-            this.b_Custom_CommandList.UseVisualStyleBackColor = true;
-            this.b_Custom_CommandList.Click += new System.EventHandler(this.b_Custom_CommandList_Click);
+            this.dgv_Custom_Buttons.AllowUserToAddRows = false;
+            this.dgv_Custom_Buttons.AllowUserToDeleteRows = false;
+            this.dgv_Custom_Buttons.AllowUserToResizeColumns = false;
+            this.dgv_Custom_Buttons.AllowUserToResizeRows = false;
+            this.dgv_Custom_Buttons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Custom_Buttons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ButtonName,
+            this.ButtonsCommand});
+            this.dgv_Custom_Buttons.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_Custom_Buttons.Location = new System.Drawing.Point(3, 3);
+            this.dgv_Custom_Buttons.Name = "dgv_Custom_Buttons";
+            this.dgv_Custom_Buttons.RowHeadersVisible = false;
+            this.dgv_Custom_Buttons.Size = new System.Drawing.Size(364, 213);
+            this.dgv_Custom_Buttons.TabIndex = 0;
+            this.dgv_Custom_Buttons.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgv_Custom_Buttons_CellValidating);
+            this.dgv_Custom_Buttons.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgv_Custom_Buttons_EditingControlShowing);
             // 
-            // l_Custom_8
+            // ButtonName
             // 
-            this.l_Custom_8.AutoSize = true;
-            this.l_Custom_8.Location = new System.Drawing.Point(167, 92);
-            this.l_Custom_8.Name = "l_Custom_8";
-            this.l_Custom_8.Size = new System.Drawing.Size(47, 13);
-            this.l_Custom_8.TabIndex = 31;
-            this.l_Custom_8.Text = "Button 8";
+            this.ButtonName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ButtonName.FillWeight = 180F;
+            this.ButtonName.HeaderText = "Button Text";
+            this.ButtonName.Name = "ButtonName";
+            this.ButtonName.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // tB_Custom_8
+            // ButtonsCommand
             // 
-            this.tB_Custom_8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Custom_8.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Custom_8.Location = new System.Drawing.Point(220, 89);
-            this.tB_Custom_8.Name = "tB_Custom_8";
-            this.tB_Custom_8.Size = new System.Drawing.Size(106, 20);
-            this.tB_Custom_8.TabIndex = 32;
-            // 
-            // l_Custom_7
-            // 
-            this.l_Custom_7.AutoSize = true;
-            this.l_Custom_7.Location = new System.Drawing.Point(167, 66);
-            this.l_Custom_7.Name = "l_Custom_7";
-            this.l_Custom_7.Size = new System.Drawing.Size(47, 13);
-            this.l_Custom_7.TabIndex = 29;
-            this.l_Custom_7.Text = "Button 7";
-            // 
-            // tB_Custom_7
-            // 
-            this.tB_Custom_7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Custom_7.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Custom_7.Location = new System.Drawing.Point(220, 63);
-            this.tB_Custom_7.Name = "tB_Custom_7";
-            this.tB_Custom_7.Size = new System.Drawing.Size(106, 20);
-            this.tB_Custom_7.TabIndex = 30;
-            // 
-            // l_Custom_6
-            // 
-            this.l_Custom_6.AutoSize = true;
-            this.l_Custom_6.Location = new System.Drawing.Point(167, 40);
-            this.l_Custom_6.Name = "l_Custom_6";
-            this.l_Custom_6.Size = new System.Drawing.Size(47, 13);
-            this.l_Custom_6.TabIndex = 27;
-            this.l_Custom_6.Text = "Button 6";
-            // 
-            // tB_Custom_6
-            // 
-            this.tB_Custom_6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Custom_6.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Custom_6.Location = new System.Drawing.Point(220, 37);
-            this.tB_Custom_6.Name = "tB_Custom_6";
-            this.tB_Custom_6.Size = new System.Drawing.Size(106, 20);
-            this.tB_Custom_6.TabIndex = 28;
-            // 
-            // l_Custom_5
-            // 
-            this.l_Custom_5.AutoSize = true;
-            this.l_Custom_5.Location = new System.Drawing.Point(167, 14);
-            this.l_Custom_5.Name = "l_Custom_5";
-            this.l_Custom_5.Size = new System.Drawing.Size(47, 13);
-            this.l_Custom_5.TabIndex = 25;
-            this.l_Custom_5.Text = "Button 5";
-            // 
-            // tB_Custom_5
-            // 
-            this.tB_Custom_5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Custom_5.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Custom_5.Location = new System.Drawing.Point(220, 11);
-            this.tB_Custom_5.Name = "tB_Custom_5";
-            this.tB_Custom_5.Size = new System.Drawing.Size(106, 20);
-            this.tB_Custom_5.TabIndex = 26;
-            // 
-            // l_Custom_4
-            // 
-            this.l_Custom_4.AutoSize = true;
-            this.l_Custom_4.Location = new System.Drawing.Point(6, 92);
-            this.l_Custom_4.Name = "l_Custom_4";
-            this.l_Custom_4.Size = new System.Drawing.Size(47, 13);
-            this.l_Custom_4.TabIndex = 23;
-            this.l_Custom_4.Text = "Button 4";
-            // 
-            // tB_Custom_4
-            // 
-            this.tB_Custom_4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Custom_4.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Custom_4.Location = new System.Drawing.Point(59, 89);
-            this.tB_Custom_4.Name = "tB_Custom_4";
-            this.tB_Custom_4.Size = new System.Drawing.Size(106, 20);
-            this.tB_Custom_4.TabIndex = 24;
-            // 
-            // l_Custom_3
-            // 
-            this.l_Custom_3.AutoSize = true;
-            this.l_Custom_3.Location = new System.Drawing.Point(6, 66);
-            this.l_Custom_3.Name = "l_Custom_3";
-            this.l_Custom_3.Size = new System.Drawing.Size(47, 13);
-            this.l_Custom_3.TabIndex = 21;
-            this.l_Custom_3.Text = "Button 3";
-            // 
-            // tB_Custom_3
-            // 
-            this.tB_Custom_3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Custom_3.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Custom_3.Location = new System.Drawing.Point(59, 63);
-            this.tB_Custom_3.Name = "tB_Custom_3";
-            this.tB_Custom_3.Size = new System.Drawing.Size(106, 20);
-            this.tB_Custom_3.TabIndex = 22;
-            // 
-            // l_Custom_2
-            // 
-            this.l_Custom_2.AutoSize = true;
-            this.l_Custom_2.Location = new System.Drawing.Point(6, 40);
-            this.l_Custom_2.Name = "l_Custom_2";
-            this.l_Custom_2.Size = new System.Drawing.Size(47, 13);
-            this.l_Custom_2.TabIndex = 19;
-            this.l_Custom_2.Text = "Button 2";
-            // 
-            // tB_Custom_2
-            // 
-            this.tB_Custom_2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Custom_2.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Custom_2.Location = new System.Drawing.Point(59, 37);
-            this.tB_Custom_2.Name = "tB_Custom_2";
-            this.tB_Custom_2.Size = new System.Drawing.Size(106, 20);
-            this.tB_Custom_2.TabIndex = 20;
-            // 
-            // l_Custom_1
-            // 
-            this.l_Custom_1.AutoSize = true;
-            this.l_Custom_1.Location = new System.Drawing.Point(6, 14);
-            this.l_Custom_1.Name = "l_Custom_1";
-            this.l_Custom_1.Size = new System.Drawing.Size(47, 13);
-            this.l_Custom_1.TabIndex = 17;
-            this.l_Custom_1.Text = "Button 1";
-            // 
-            // tB_Custom_1
-            // 
-            this.tB_Custom_1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Custom_1.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Custom_1.Location = new System.Drawing.Point(59, 11);
-            this.tB_Custom_1.Name = "tB_Custom_1";
-            this.tB_Custom_1.Size = new System.Drawing.Size(106, 20);
-            this.tB_Custom_1.TabIndex = 18;
+            this.ButtonsCommand.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.ButtonsCommand.FillWeight = 180F;
+            this.ButtonsCommand.HeaderText = "Command";
+            this.ButtonsCommand.Name = "ButtonsCommand";
+            this.ButtonsCommand.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ButtonsCommand.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // tP_Other
             // 
@@ -734,7 +581,7 @@ namespace SSUtility2
             this.tP_Other.Location = new System.Drawing.Point(4, 22);
             this.tP_Other.Name = "tP_Other";
             this.tP_Other.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Other.Size = new System.Drawing.Size(352, 184);
+            this.tP_Other.Size = new System.Drawing.Size(370, 219);
             this.tP_Other.TabIndex = 2;
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
@@ -817,11 +664,24 @@ namespace SSUtility2
             this.check_Other_AutoReconnect.UseVisualStyleBackColor = true;
             this.check_Other_AutoReconnect.CheckedChanged += new System.EventHandler(this.check_Other_AutoReconnect_CheckedChanged);
             // 
+            // b_Custom_CommandList
+            // 
+            this.b_Custom_CommandList.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Custom_CommandList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Custom_CommandList.Location = new System.Drawing.Point(103, 253);
+            this.b_Custom_CommandList.Name = "b_Custom_CommandList";
+            this.b_Custom_CommandList.Size = new System.Drawing.Size(118, 23);
+            this.b_Custom_CommandList.TabIndex = 33;
+            this.b_Custom_CommandList.Text = "Open Command List";
+            this.b_Custom_CommandList.UseVisualStyleBackColor = false;
+            this.b_Custom_CommandList.Visible = false;
+            this.b_Custom_CommandList.Click += new System.EventHandler(this.b_Custom_CommandList_Click);
+            // 
             // l_Version
             // 
             this.l_Version.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.l_Version.AutoSize = true;
-            this.l_Version.Location = new System.Drawing.Point(206, 233);
+            this.l_Version.Location = new System.Drawing.Point(227, 258);
             this.l_Version.Name = "l_Version";
             this.l_Version.Size = new System.Drawing.Size(102, 13);
             this.l_Version.TabIndex = 32;
@@ -832,13 +692,14 @@ namespace SSUtility2
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(384, 261);
+            this.ClientSize = new System.Drawing.Size(384, 286);
+            this.Controls.Add(this.b_Custom_CommandList);
             this.Controls.Add(this.l_Version);
             this.Controls.Add(this.tC_Settings);
             this.Controls.Add(this.b_Settings_Default);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(400, 300);
-            this.MinimumSize = new System.Drawing.Size(400, 300);
+            this.MaximumSize = new System.Drawing.Size(400, 325);
+            this.MinimumSize = new System.Drawing.Size(400, 325);
             this.Name = "SettingsPage";
             this.Text = "Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingsPage_FormClosing);
@@ -850,7 +711,7 @@ namespace SSUtility2
             this.tP_Recording.ResumeLayout(false);
             this.tP_Recording.PerformLayout();
             this.tP_Customs.ResumeLayout(false);
-            this.tP_Customs.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Custom_Buttons)).EndInit();
             this.tP_Other.ResumeLayout(false);
             this.tP_Other.PerformLayout();
             this.ResumeLayout(false);
@@ -893,22 +754,6 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_IPCon_ConType;
         public System.Windows.Forms.Label l_IPCon_Adr;
         public System.Windows.Forms.TabPage tP_Customs;
-        public System.Windows.Forms.Label l_Custom_6;
-        public System.Windows.Forms.TextBox tB_Custom_6;
-        public System.Windows.Forms.Label l_Custom_5;
-        public System.Windows.Forms.TextBox tB_Custom_5;
-        public System.Windows.Forms.Label l_Custom_4;
-        public System.Windows.Forms.TextBox tB_Custom_4;
-        public System.Windows.Forms.Label l_Custom_3;
-        public System.Windows.Forms.TextBox tB_Custom_3;
-        public System.Windows.Forms.Label l_Custom_2;
-        public System.Windows.Forms.TextBox tB_Custom_2;
-        public System.Windows.Forms.Label l_Custom_1;
-        public System.Windows.Forms.TextBox tB_Custom_1;
-        public System.Windows.Forms.Label l_Custom_8;
-        public System.Windows.Forms.TextBox tB_Custom_8;
-        public System.Windows.Forms.Label l_Custom_7;
-        public System.Windows.Forms.TextBox tB_Custom_7;
         private System.ComponentModel.IContainer components;
         public System.Windows.Forms.ComboBox cB_ipCon_CamType;
         public System.Windows.Forms.Label l_ipCon_Selected;
@@ -925,5 +770,8 @@ namespace SSUtility2
         public System.Windows.Forms.ComboBox cB_IPCon_RefreshRate;
         public System.Windows.Forms.Label l_IPCon_CommandRate;
         public System.Windows.Forms.CheckBox check_AddressInvalid;
+        public System.Windows.Forms.DataGridView dgv_Custom_Buttons;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ButtonName;
+        private System.Windows.Forms.DataGridViewComboBoxColumn ButtonsCommand;
     }
 }

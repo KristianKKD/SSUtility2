@@ -41,6 +41,46 @@ namespace SSUtility2 {
         public static ConfigSetting startupWidth = new ConfigSetting("1280", "StartupWidth", ConfigSetting.VarType.integer);
         public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
 
+        public static ConfigSetting customButtonName1 = new ConfigSetting("1", "CustomButtonName1", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonName2 = new ConfigSetting("2", "CustomButtonName2", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonName3 = new ConfigSetting("3", "CustomButtonName3", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonName4 = new ConfigSetting("4", "CustomButtonName4", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonName5 = new ConfigSetting("5", "CustomButtonName5", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonName6 = new ConfigSetting("6", "CustomButtonName6", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonName7 = new ConfigSetting("7", "CustomButtonName7", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonName8 = new ConfigSetting("8", "CustomButtonName8", ConfigSetting.VarType.strings);
+
+
+        public static ConfigSetting customButtonCommand1 = new ConfigSetting("Preset 1", "CustomButtonCommand1", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonCommand2 = new ConfigSetting("Preset 2", "CustomButtonCommand2", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonCommand3 = new ConfigSetting("Preset 3", "CustomButtonCommand3", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonCommand4 = new ConfigSetting("Preset 4", "CustomButtonCommand4", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonCommand5 = new ConfigSetting("Preset 5", "CustomButtonCommand5", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonCommand6 = new ConfigSetting("Preset 6", "CustomButtonCommand6", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonCommand7 = new ConfigSetting("Preset 7", "CustomButtonCommand7", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonCommand8 = new ConfigSetting("Preset 8", "CustomButtonCommand8", ConfigSetting.VarType.strings);
+
+        public static ConfigSetting[] customButtonNamesArray = new ConfigSetting[] {
+            customButtonName1,
+            customButtonName2,
+            customButtonName3,
+            customButtonName4,
+            customButtonName5,
+            customButtonName6,
+            customButtonName7,
+            customButtonName8,
+        };
+
+        public static ConfigSetting[] customButtonCommandsArray = new ConfigSetting[] {
+            customButtonCommand1,
+            customButtonCommand2,
+            customButtonCommand3,
+            customButtonCommand4,
+            customButtonCommand5,
+            customButtonCommand6,
+            customButtonCommand7,
+            customButtonCommand8,
+        };
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -63,6 +103,24 @@ namespace SSUtility2 {
             autoReconnect,
             startupWidth,
             startupHeight,
+
+            customButtonName1,
+            customButtonName2,
+            customButtonName3,
+            customButtonName4,
+            customButtonName5,
+            customButtonName6,
+            customButtonName7,
+            customButtonName8,
+
+            customButtonCommand1,
+            customButtonCommand2,
+            customButtonCommand3,
+            customButtonCommand4,
+            customButtonCommand5,
+            customButtonCommand6,
+            customButtonCommand7,
+            customButtonCommand8,
         };
 
 
