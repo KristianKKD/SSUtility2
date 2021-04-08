@@ -59,6 +59,8 @@ namespace SSUtility2 {
             this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Keyboard = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Swap = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_ImportConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_ExportConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_StartStop = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,8 +90,7 @@ namespace SSUtility2 {
             this.sP_Player = new SPanel.SizeablePanel();
             this.tP_Cover = new SizeablePanel.TransparentPanel(this.components);
             this.Second_VLCPLayer = new AxAXVLC.AxVLCPlugin2();
-            this.Menu_Settings_ImportConfig = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_ExportConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.tP_MainCover = new SizeablePanel.TransparentPanel(this.components);
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
             this.p_Control.SuspendLayout();
@@ -132,42 +133,42 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Osiris
             // 
             this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Osiris.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Osiris.Text = "Osiris Control";
             this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Presets.Text = "Preset Panel";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
             // Menu_Window_Settings
             // 
             this.Menu_Window_Settings.Name = "Menu_Window_Settings";
-            this.Menu_Window_Settings.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Settings.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Settings.Text = "Open Settings";
             this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
             // 
@@ -244,6 +245,20 @@ namespace SSUtility2 {
             this.Menu_Settings_Swap.Size = new System.Drawing.Size(207, 22);
             this.Menu_Settings_Swap.Text = "Swap To Thermal";
             this.Menu_Settings_Swap.Click += new System.EventHandler(this.Menu_Settings_Swap_Click);
+            // 
+            // Menu_Settings_ImportConfig
+            // 
+            this.Menu_Settings_ImportConfig.Name = "Menu_Settings_ImportConfig";
+            this.Menu_Settings_ImportConfig.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_ImportConfig.Text = "Import Config File";
+            this.Menu_Settings_ImportConfig.Click += new System.EventHandler(this.Menu_Settings_ImportConfig_Click);
+            // 
+            // Menu_Settings_ExportConfig
+            // 
+            this.Menu_Settings_ExportConfig.Name = "Menu_Settings_ExportConfig";
+            this.Menu_Settings_ExportConfig.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_ExportConfig.Text = "Export Config File";
+            this.Menu_Settings_ExportConfig.Click += new System.EventHandler(this.Menu_Settings_ExportConfig_Click);
             // 
             // Menu_Video
             // 
@@ -370,6 +385,7 @@ namespace SSUtility2 {
             this.p_Control.Controls.Add(this.b_PTZ_ZoomPos);
             this.p_Control.Controls.Add(this.pB_Background);
             this.p_Control.Controls.Add(this.sP_Player);
+            this.p_Control.Controls.Add(this.tP_MainCover);
             this.p_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.p_Control.Location = new System.Drawing.Point(0, 0);
             this.p_Control.Name = "p_Control";
@@ -552,19 +568,15 @@ namespace SSUtility2 {
             this.Second_VLCPLayer.Size = new System.Drawing.Size(392, 242);
             this.Second_VLCPLayer.TabIndex = 0;
             // 
-            // Menu_Settings_ImportConfig
+            // tP_MainCover
             // 
-            this.Menu_Settings_ImportConfig.Name = "Menu_Settings_ImportConfig";
-            this.Menu_Settings_ImportConfig.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_ImportConfig.Text = "Import Config File";
-            this.Menu_Settings_ImportConfig.Click += new System.EventHandler(this.Menu_Settings_ImportConfig_Click);
-            // 
-            // Menu_Settings_ExportConfig
-            // 
-            this.Menu_Settings_ExportConfig.Name = "Menu_Settings_ExportConfig";
-            this.Menu_Settings_ExportConfig.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_ExportConfig.Text = "Export Config File";
-            this.Menu_Settings_ExportConfig.Click += new System.EventHandler(this.Menu_Settings_ExportConfig_Click);
+            this.tP_MainCover.AllowDrop = true;
+            this.tP_MainCover.BackColor = System.Drawing.Color.Black;
+            this.tP_MainCover.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tP_MainCover.Location = new System.Drawing.Point(0, 0);
+            this.tP_MainCover.Name = "tP_MainCover";
+            this.tP_MainCover.Size = new System.Drawing.Size(1264, 657);
+            this.tP_MainCover.TabIndex = 96;
             // 
             // MainForm
             // 
@@ -1432,5 +1444,6 @@ namespace SSUtility2 {
         private ToolStripMenuItem Menu_Settings_Custom;
         private ToolStripMenuItem Menu_Settings_ImportConfig;
         private ToolStripMenuItem Menu_Settings_ExportConfig;
+        private SizeablePanel.TransparentPanel tP_MainCover;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

@@ -232,6 +232,6 @@ namespace SSUtility2 {
                 MessageBox.Show("UPDATEMODE\n" + e.ToString());
             }
         }
-      
+
     }
 }

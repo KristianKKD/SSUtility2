@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.3.0";
+        public const string version = "v2.4.3.2";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -229,11 +229,7 @@ namespace SSUtility2 {
                 p_Control.Controls.AddRange(c.ToArray());
             }
 
-            SizeablePanel.TransparentPanel tP = new SizeablePanel.TransparentPanel();
-            Controls.Add(tP);
-            tP.Dock = DockStyle.Fill;
-            tP.BringToFront();
-            tP.AllowDrop = true;
+            SizeablePanel.TransparentPanel tP = tP_MainCover;
 
             tP.DragOver += (s, e) => {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -253,17 +249,18 @@ namespace SSUtility2 {
                     Tools.ShowPopup("Failed to open script!\nShow more?", "Script load failed!", error.ToString());
                 }
             };
-            tP.MouseMove += (s, e) => {
-                if (!AsyncCamCom.sock.Connected)
-                    return;
-                if (Cursor.Position.X - Location.X < 70) {
-                    b_Open.Visible = true;
-                    b_Open.BringToFront();
-                } else
-                    b_Open.Visible = false;
-            };
-
-            mainPlayer = d;
+            if (!startLiteVersion) {
+                tP.MouseMove += (s, e) => {
+                    if (!AsyncCamCom.sock.Connected)
+                        return;
+                    if (Cursor.Position.X - Location.X < 70) {
+                        b_Open.Visible = true;
+                        b_Open.BringToFront();
+                    } else
+                        b_Open.Visible = false;
+                };
+            }
+             mainPlayer = d;
         }
 
         void AttachInfoPanel() {
@@ -360,7 +357,7 @@ namespace SSUtility2 {
                     mainPlayer.settings.isPlaying = true;
                     Joystick.UpdateJoystickCentre();
 
-                    if(startLiteVersion)
+                    if (startLiteVersion)
                         Menu_Settings_Lite.Dispose();
                     else
                         Menu_Settings_Lite.Text = "Dual Mode";
