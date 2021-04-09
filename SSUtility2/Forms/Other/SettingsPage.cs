@@ -38,6 +38,9 @@ namespace SSUtility2 {
             check_Other_AutoReconnect.Checked = ConfigControl.autoReconnect.boolVal;
             check_AddressInvalid.Checked = ConfigControl.ignoreAddress.boolVal;
             check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
+            cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
+            check_IPCon_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
+            cB_IPCon_ForceMode.Text = ConfigControl.forceCameraType.stringVal;
 
             ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
             ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
@@ -46,10 +49,13 @@ namespace SSUtility2 {
             MainForm.m.Height = ConfigControl.startupHeight.intVal;
             l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
             MainForm.m.sP_Player.Location = new System.Drawing.Point(MainForm.m.Width - MainForm.m.sP_Player.Width - 30, 15);
+            l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
+
 
             UpdateSelectedCam(false);
             LoadCustoms();
             MainForm.m.custom.UpdateButtonNames();
+            UpdateCamType();
         }
 
         private async Task ApplyAll() {
@@ -169,6 +175,7 @@ namespace SSUtility2 {
 
         private void b_ChangeDir_Click(object sender, EventArgs e) {
             bool confirm = Tools.ShowPopup("Moving the directory will reset app configuration AND WILL ALSO DELETE ALL FILES WITHIN THE OLD APP FOLDER!\nYou will have the option to save these files.\nAre you sure you want to continue?", "Warning", null, false);
+            
             if (confirm) {
                 bool moveFiles = Tools.ShowPopup("Would you like to move all current directory files to the new directory too?", "Move files?", null, false);
                 string oldAppFolder = ConfigControl.appFolder;
@@ -186,6 +193,8 @@ namespace SSUtility2 {
                 }
                 MessageBox.Show("Finished changing directories!");
             }
+
+            l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
         }
 
         private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -344,5 +353,40 @@ namespace SSUtility2 {
             }
         }
 
+        private void check_IPCon_ForceCam_CheckedChanged(object sender, EventArgs e) {
+            ConfigControl.forceCamera.UpdateValue(check_IPCon_ForceCam.Checked.ToString());
+            cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
+            MainForm.m.mainPlayer.EnableSecond(true);
+        }
+
+        private void cB_IPCon_ForceMode_SelectedIndexChanged(object sender, EventArgs e) {
+            ConfigControl.forceCameraType.UpdateValue(cB_IPCon_ForceMode.Text);
+            UpdateCamType();
+        }
+
+        public static void UpdateCamType() {
+            if (ConfigControl.forceCameraType.boolVal) {
+                OtherCamCom.CamConfig config = OtherCamCom.CamConfig.Strict;
+
+                switch (ConfigControl.forceCameraType.stringVal) {
+                    case "SSTraditional":
+                        config = OtherCamCom.CamConfig.SSTraditional;
+                        break;
+                    case "Strict":
+                        config = OtherCamCom.CamConfig.Strict;
+                        break;
+                    case "RevTilt":
+                        config = OtherCamCom.CamConfig.RevTilt;
+                        break;
+                    case "Legacy":
+                        config = OtherCamCom.CamConfig.Legacy;
+                        break;
+                }
+
+                OtherCamCom.currentConfig = config;
+            }
+            InfoPanel.i.isCamera = ConfigControl.forceCameraType.boolVal;
+
+        }
     }
 }

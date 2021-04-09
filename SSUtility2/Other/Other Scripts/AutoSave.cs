@@ -35,12 +35,7 @@ namespace SSUtility2 {
             string[] lines = File.ReadAllLines(path);
 
             for (int i = 0; i < MainForm.autosaveControls.Length; i++) {
-                if (MainForm.autosaveControls[i] is TrackBar) {
-                    TrackBar t = (TrackBar)MainForm.autosaveControls[i];
-                    t.Value = int.Parse(lines[i]);
-                } else {
-                    MainForm.autosaveControls[i].Text = lines[i];
-                }
+                MainForm.autosaveControls[i].Text = lines[i];
             }
         }
 

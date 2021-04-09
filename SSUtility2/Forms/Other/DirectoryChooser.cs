@@ -21,7 +21,7 @@ namespace SSUtility2 {
                 if (!dirLocation.EndsWith(@"\")){
                     dirLocation += @"\";
                 }
-                if (Directory.GetFiles(dirLocation).Length > 0) {
+                if (Directory.GetFiles(dirLocation).Length > 0 || Directory.GetDirectoryRoot(dirLocation) == dirLocation) {
                     dirLocation += @"SSUtility\";
                 }
                 ConfigControl.appFolder = dirLocation;

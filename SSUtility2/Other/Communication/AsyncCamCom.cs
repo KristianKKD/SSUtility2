@@ -106,7 +106,8 @@ namespace SSUtility2 {
 
                 if(!MainForm.m.lite)
                     MainForm.m.mainPlayer.DisableSecond();
-                InfoPanel.i.isCamera = false;
+                if(!ConfigControl.forceCamera.boolVal)
+                    InfoPanel.i.isCamera = false;
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -132,14 +133,13 @@ namespace SSUtility2 {
                     return false;
                 }
 
-
                 if (!hideErrors && !ConfigControl.subnetNotif.boolVal) {
                     if (!OtherCamCom.CheckIsSameSubnet(ep.Address.ToString())) {
                         return false;
                     }
                 }
 
-                sock.BeginConnect(end, ConnectCallback, null);
+                connecting = sock.BeginConnect(end, ConnectCallback, null);
 
                 MainForm.m.WriteToResponses("Successfully connected to: " + end.Address.ToString() + ":" + end.Port.ToString(), true);
                 return true;
@@ -154,9 +154,12 @@ namespace SSUtility2 {
             return false;
         }
 
+        static IAsyncResult connecting = null;
+
         private static void ConnectCallback(IAsyncResult AR) {
             try {
-                sock.EndConnect(AR);
+                if (AR == connecting)
+                    sock.EndConnect(AR);
                 if (!sock.Connected)
                     return;
                 receiveBuffer = new byte[sock.ReceiveBufferSize];

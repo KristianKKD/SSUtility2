@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.3.2";
+        public const string version = "v2.4.4.1";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -50,8 +50,6 @@ namespace SSUtility2 {
                 pp = new PresetPanel();
                 D.protocol = new D();
 
-                bool first = CheckIfFirstTime();
-
                 AttachPlayer();
                 AttachInfoPanel();
                 AttachCustomPanel();
@@ -80,7 +78,7 @@ namespace SSUtility2 {
                     Joystick,
                 };
 
-                FileStuff(first);
+                FileStuff();
 
                 setPage.PopulateSettingText();
                 
@@ -102,10 +100,10 @@ namespace SSUtility2 {
         }
 
         bool CheckIfFirstTime() {
-            if (!File.Exists(ConfigControl.appFolder + ConfigControl.config)) {
-                return true;
-            } else {
+            if (File.Exists(ConfigControl.dirCheck + "location.txt")) {
                 return false;
+            } else {
+                return true;
             }
         }
 
@@ -118,17 +116,16 @@ namespace SSUtility2 {
             }
         }
 
-        async Task FileStuff(bool first) {
+        async Task FileStuff() {
             CheckPortableMode();
             CheckForNewDir();
-
             ConfigControl.SetToDefaults();
             
             CreateConfigFiles();
 
             await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
             ConfigControl.FindVars();
-            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, first);
+            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, CheckIfFirstTime());
 
             if (ConfigControl.portableMode.boolVal) {
                 Menu_Final.Dispose();
@@ -582,6 +579,10 @@ namespace SSUtility2 {
         }
 
         private void Menu_Settings_Swap_Click(object sender, EventArgs e) {
+            SwapPlayers();
+        }
+
+        void SwapPlayers() {
             string value;
             if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
                 value = "Daylight";
@@ -857,5 +858,8 @@ namespace SSUtility2 {
             Tools.SaveTextFile(lines, "configCopy");
         }
 
+        private void tP_Cover_DoubleClick(object sender, EventArgs e) {
+            SwapPlayers();
+        }
     } // end of class MainForm
 } // end of namespace SSLUtility2

@@ -75,6 +75,10 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
+            this.cB_IPCon_ForceMode = new System.Windows.Forms.ComboBox();
+            this.check_IPCon_ForceCam = new System.Windows.Forms.CheckBox();
+            this.l_IPCon_ForceMode = new System.Windows.Forms.Label();
+            this.l_Paths_Dir = new System.Windows.Forms.Label();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             this.tP_Paths.SuspendLayout();
@@ -323,6 +327,9 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
+            this.tP_Control.Controls.Add(this.l_IPCon_ForceMode);
+            this.tP_Control.Controls.Add(this.cB_IPCon_ForceMode);
+            this.tP_Control.Controls.Add(this.check_IPCon_ForceCam);
             this.tP_Control.Controls.Add(this.cB_IPCon_RefreshRate);
             this.tP_Control.Controls.Add(this.l_IPCon_CommandRate);
             this.tP_Control.Controls.Add(this.cB_ipCon_CamType);
@@ -350,7 +357,7 @@ namespace SSUtility2
             "100",
             "200",
             "500"});
-            this.cB_IPCon_RefreshRate.Location = new System.Drawing.Point(115, 125);
+            this.cB_IPCon_RefreshRate.Location = new System.Drawing.Point(115, 119);
             this.cB_IPCon_RefreshRate.Name = "cB_IPCon_RefreshRate";
             this.cB_IPCon_RefreshRate.Size = new System.Drawing.Size(123, 21);
             this.cB_IPCon_RefreshRate.TabIndex = 85;
@@ -361,7 +368,7 @@ namespace SSUtility2
             // l_IPCon_CommandRate
             // 
             this.l_IPCon_CommandRate.AutoSize = true;
-            this.l_IPCon_CommandRate.Location = new System.Drawing.Point(6, 128);
+            this.l_IPCon_CommandRate.Location = new System.Drawing.Point(6, 122);
             this.l_IPCon_CommandRate.Name = "l_IPCon_CommandRate";
             this.l_IPCon_CommandRate.Size = new System.Drawing.Size(83, 13);
             this.l_IPCon_CommandRate.TabIndex = 84;
@@ -456,6 +463,7 @@ namespace SSUtility2
             // 
             // tP_Paths
             // 
+            this.tP_Paths.Controls.Add(this.l_Paths_Dir);
             this.tP_Paths.Controls.Add(this.b_ChangeDir);
             this.tP_Paths.Controls.Add(this.check_Paths_Manual);
             this.tP_Paths.Controls.Add(this.l_Paths_sCFolder);
@@ -602,7 +610,7 @@ namespace SSUtility2
             // l_Other_CurrentResolution
             // 
             this.l_Other_CurrentResolution.AutoSize = true;
-            this.l_Other_CurrentResolution.Location = new System.Drawing.Point(6, 168);
+            this.l_Other_CurrentResolution.Location = new System.Drawing.Point(6, 188);
             this.l_Other_CurrentResolution.Name = "l_Other_CurrentResolution";
             this.l_Other_CurrentResolution.Size = new System.Drawing.Size(116, 13);
             this.l_Other_CurrentResolution.TabIndex = 36;
@@ -613,7 +621,7 @@ namespace SSUtility2
             // 
             this.tB_Other_ResolutionHeight.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Other_ResolutionHeight.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Other_ResolutionHeight.Location = new System.Drawing.Point(165, 141);
+            this.tB_Other_ResolutionHeight.Location = new System.Drawing.Point(165, 161);
             this.tB_Other_ResolutionHeight.Name = "tB_Other_ResolutionHeight";
             this.tB_Other_ResolutionHeight.Size = new System.Drawing.Size(114, 20);
             this.tB_Other_ResolutionHeight.TabIndex = 35;
@@ -623,7 +631,7 @@ namespace SSUtility2
             // l_Other_ResolutionHeight
             // 
             this.l_Other_ResolutionHeight.AutoSize = true;
-            this.l_Other_ResolutionHeight.Location = new System.Drawing.Point(6, 145);
+            this.l_Other_ResolutionHeight.Location = new System.Drawing.Point(6, 165);
             this.l_Other_ResolutionHeight.Name = "l_Other_ResolutionHeight";
             this.l_Other_ResolutionHeight.Size = new System.Drawing.Size(124, 13);
             this.l_Other_ResolutionHeight.TabIndex = 34;
@@ -634,7 +642,7 @@ namespace SSUtility2
             // 
             this.tB_Other_ResolutionWidth.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Other_ResolutionWidth.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Other_ResolutionWidth.Location = new System.Drawing.Point(165, 116);
+            this.tB_Other_ResolutionWidth.Location = new System.Drawing.Point(165, 136);
             this.tB_Other_ResolutionWidth.Name = "tB_Other_ResolutionWidth";
             this.tB_Other_ResolutionWidth.Size = new System.Drawing.Size(114, 20);
             this.tB_Other_ResolutionWidth.TabIndex = 33;
@@ -644,7 +652,7 @@ namespace SSUtility2
             // l_Other_ResolutionWidth
             // 
             this.l_Other_ResolutionWidth.AutoSize = true;
-            this.l_Other_ResolutionWidth.Location = new System.Drawing.Point(6, 119);
+            this.l_Other_ResolutionWidth.Location = new System.Drawing.Point(6, 139);
             this.l_Other_ResolutionWidth.Name = "l_Other_ResolutionWidth";
             this.l_Other_ResolutionWidth.Size = new System.Drawing.Size(121, 13);
             this.l_Other_ResolutionWidth.TabIndex = 32;
@@ -686,6 +694,55 @@ namespace SSUtility2
             this.l_Version.Size = new System.Drawing.Size(102, 13);
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
+            // 
+            // cB_IPCon_ForceMode
+            // 
+            this.cB_IPCon_ForceMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_IPCon_ForceMode.FormattingEnabled = true;
+            this.cB_IPCon_ForceMode.Items.AddRange(new object[] {
+            "SSTraditional",
+            "Strict",
+            "RevTilt",
+            "Legacy"});
+            this.cB_IPCon_ForceMode.Location = new System.Drawing.Point(115, 189);
+            this.cB_IPCon_ForceMode.Name = "cB_IPCon_ForceMode";
+            this.cB_IPCon_ForceMode.Size = new System.Drawing.Size(123, 21);
+            this.cB_IPCon_ForceMode.TabIndex = 87;
+            this.cB_IPCon_ForceMode.SelectedIndexChanged += new System.EventHandler(this.cB_IPCon_ForceMode_SelectedIndexChanged);
+            // 
+            // check_IPCon_ForceCam
+            // 
+            this.check_IPCon_ForceCam.Location = new System.Drawing.Point(5, 162);
+            this.check_IPCon_ForceCam.Name = "check_IPCon_ForceCam";
+            this.check_IPCon_ForceCam.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_IPCon_ForceCam.Size = new System.Drawing.Size(125, 24);
+            this.check_IPCon_ForceCam.TabIndex = 86;
+            this.check_IPCon_ForceCam.Text = ":Force Camera Mode";
+            this.check_IPCon_ForceCam.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_IPCon_ForceCam, "Reconnect upon entering a new IP in the IP Control section.");
+            this.check_IPCon_ForceCam.UseVisualStyleBackColor = true;
+            this.check_IPCon_ForceCam.CheckedChanged += new System.EventHandler(this.check_IPCon_ForceCam_CheckedChanged);
+            // 
+            // l_IPCon_ForceMode
+            // 
+            this.l_IPCon_ForceMode.AutoSize = true;
+            this.l_IPCon_ForceMode.Location = new System.Drawing.Point(6, 192);
+            this.l_IPCon_ForceMode.Name = "l_IPCon_ForceMode";
+            this.l_IPCon_ForceMode.Size = new System.Drawing.Size(76, 13);
+            this.l_IPCon_ForceMode.TabIndex = 88;
+            this.l_IPCon_ForceMode.Text = "Camera Mode:";
+            this.toolTips.SetToolTip(this.l_IPCon_ForceMode, "General speed of the program, lower to decrease connection latency, increase to i" +
+        "mprove performance.");
+            // 
+            // l_Paths_Dir
+            // 
+            this.l_Paths_Dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.l_Paths_Dir.AutoSize = true;
+            this.l_Paths_Dir.Location = new System.Drawing.Point(6, 165);
+            this.l_Paths_Dir.Name = "l_Paths_Dir";
+            this.l_Paths_Dir.Size = new System.Drawing.Size(89, 13);
+            this.l_Paths_Dir.TabIndex = 34;
+            this.l_Paths_Dir.Text = "Current Directory:";
             // 
             // SettingsPage
             // 
@@ -773,5 +830,9 @@ namespace SSUtility2
         public System.Windows.Forms.DataGridView dgv_Custom_Buttons;
         private System.Windows.Forms.DataGridViewTextBoxColumn ButtonName;
         private System.Windows.Forms.DataGridViewComboBoxColumn ButtonsCommand;
+        public System.Windows.Forms.Label l_IPCon_ForceMode;
+        private System.Windows.Forms.ComboBox cB_IPCon_ForceMode;
+        public System.Windows.Forms.CheckBox check_IPCon_ForceCam;
+        public System.Windows.Forms.Label l_Paths_Dir;
     }
 }

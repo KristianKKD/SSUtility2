@@ -177,6 +177,7 @@ namespace SSUtility2
 
         private void tB_TextChanged(object sender, EventArgs e) {
             tB_PlayerD_SimpleAdr.Text = GetCombined(this);
+            customFull = false;
             UpdateSecondaryValues();
         }
 

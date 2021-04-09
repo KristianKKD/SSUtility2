@@ -30,6 +30,7 @@ namespace SSUtility2 {
         public static ConfigSetting subnetNotif = new ConfigSetting("false", "SubnetNotificationHidden", ConfigSetting.VarType.boolean);
         public static ConfigSetting autoPlay = new ConfigSetting("true", "AutoPlayLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting ignoreAddress = new ConfigSetting("false", "AddressInvalidHidden", ConfigSetting.VarType.boolean);
+        public static ConfigSetting forceCamera = new ConfigSetting("false", "ForceCameraModeEnabled", ConfigSetting.VarType.boolean);
         public static ConfigSetting automaticPaths = new ConfigSetting("true", "AutomaticPaths", ConfigSetting.VarType.boolean);
         public static ConfigSetting portableMode = new ConfigSetting("false", "PortableMode", ConfigSetting.VarType.boolean);
         public static ConfigSetting finalSource = new ConfigSetting(@"\\192.168.1.118\netdrive\ProductionTesting\DEFAULT FILES", "FinalModeSourceFolder", ConfigSetting.VarType.strings);
@@ -37,6 +38,7 @@ namespace SSUtility2 {
         public static ConfigSetting savedIP = new ConfigSetting("192.168.1.71", "SavedIP", ConfigSetting.VarType.strings);
         public static ConfigSetting savedPort = new ConfigSetting("6791", "SavedPort", ConfigSetting.VarType.strings);
         public static ConfigSetting savedCamera = new ConfigSetting("Daylight", "SavedCamera", ConfigSetting.VarType.strings);
+        public static ConfigSetting forceCameraType = new ConfigSetting("Strict", "ForcedCameraType", ConfigSetting.VarType.strings);
         public static ConfigSetting autoReconnect = new ConfigSetting("true", "AutoReconnect", ConfigSetting.VarType.boolean);
         public static ConfigSetting startupWidth = new ConfigSetting("1280", "StartupWidth", ConfigSetting.VarType.integer);
         public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
@@ -93,6 +95,7 @@ namespace SSUtility2 {
             subnetNotif,
             autoPlay,
             ignoreAddress,
+            forceCamera,
             automaticPaths,
             portableMode,
             finalSource,
@@ -100,6 +103,7 @@ namespace SSUtility2 {
             savedIP,
             savedPort,
             savedCamera,
+            forceCameraType,
             autoReconnect,
             startupWidth,
             startupHeight,

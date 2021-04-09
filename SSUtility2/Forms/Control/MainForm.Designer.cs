@@ -552,6 +552,7 @@ namespace SSUtility2 {
             this.tP_Cover.Name = "tP_Cover";
             this.tP_Cover.Size = new System.Drawing.Size(392, 242);
             this.tP_Cover.TabIndex = 1;
+            this.tP_Cover.DoubleClick += new System.EventHandler(this.tP_Cover_DoubleClick);
             this.tP_Cover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tP_Cover_MouseDown);
             this.tP_Cover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tP_Cover_MouseMove);
             this.tP_Cover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tP_Cover_MouseUp);

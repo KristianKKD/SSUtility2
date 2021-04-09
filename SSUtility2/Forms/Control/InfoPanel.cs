@@ -113,7 +113,9 @@ namespace SSUtility2 {
 
         public async Task CheckForCamera() {
             try {
-                if (await OtherCamCom.CheckConfiguration() != OtherCamCom.CamConfig.Null) {
+                if (ConfigControl.forceCamera.boolVal) {
+                    SettingsPage.UpdateCamType();
+                } else if (await OtherCamCom.CheckConfiguration() != OtherCamCom.CamConfig.Null) {
                     isCamera = true;
                     MainForm.m.mainPlayer.EnableSecond(true);
                 } else {
