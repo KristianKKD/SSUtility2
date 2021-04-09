@@ -207,6 +207,9 @@ namespace SSUtility2 {
                 Play(true, this);
                 Play(true, secondView);
 
+                MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;
+                AsyncCamCom.TryConnect();
+
                 tempSettings.Dispose();
             } catch (Exception e) {
                 MessageBox.Show("Swap Fail\n" + e.ToString());

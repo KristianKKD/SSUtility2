@@ -78,18 +78,19 @@ namespace SSUtility2
         public void CopyPlayerD(VideoSettings sets, bool tempCopy = false) {
             tB_PlayerD_Adr.Text = sets.tB_PlayerD_Adr.Text;
             tB_PlayerD_Port.Text = sets.tB_PlayerD_Port.Text;
-            cB_PlayerD_CamType.Text = sets.cB_PlayerD_CamType.Text;
             tB_PlayerD_Buffering.Text = sets.tB_PlayerD_Buffering.Text;
             tB_PlayerD_Username.Text = sets.tB_PlayerD_Username.Text;
             tB_PlayerD_Password.Text = sets.tB_PlayerD_Password.Text;
             if (!tempCopy) {
                 tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text + " 2";
 
-                if (ConfigControl.savedCamera.stringVal.Contains("Daylight"))
+                if (ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
                     tB_PlayerD_RTSP.Text = thermalRTSP;
-                else if (ConfigControl.savedCamera.stringVal.Contains("Thermal"))
+                    cB_PlayerD_CamType.Text = "Thermal";
+                } else if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
                     tB_PlayerD_RTSP.Text = dayRTSP;
-                else
+                    cB_PlayerD_CamType.Text = "Daylight";
+                } else
                     HideSecond();
 
                 tB_PlayerD_SimpleAdr.Text = GetCombined(this);
@@ -98,6 +99,7 @@ namespace SSUtility2
 
                 tB_PlayerD_RTSP.Text = sets.tB_PlayerD_RTSP.Text;
                 tB_PlayerD_SimpleAdr.Text = sets.tB_PlayerD_SimpleAdr.Text;
+                cB_PlayerD_CamType.Text = sets.cB_PlayerD_CamType.Text;
             }
         }
 
