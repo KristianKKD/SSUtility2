@@ -27,9 +27,6 @@ namespace SSUtility2
             InitializeComponent();
             secondaryPage = tP_Secondary;
 
-            tC_PlayerSettings.TabPages.Remove(tP_Secondary);
-            tC_PlayerSettings.TabPages.Add(secondaryPage);
-
             Size = new Size(500, minSimpleHeight);
             MinimumSize = new Size(500, minSimpleHeight);
             MaximumSize = new Size(9999, MinimumSize.Height);
@@ -78,39 +75,64 @@ namespace SSUtility2
             MaximumSize = new Size(9999, MinimumSize.Height);
         }
 
-        public void Copy(VideoSettings sets) {
-            tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text + " 2";
-
+        public void CopyPlayerD(VideoSettings sets, bool tempCopy = false) {
             tB_PlayerD_Adr.Text = sets.tB_PlayerD_Adr.Text;
             tB_PlayerD_Port.Text = sets.tB_PlayerD_Port.Text;
             cB_PlayerD_CamType.Text = sets.cB_PlayerD_CamType.Text;
             tB_PlayerD_Buffering.Text = sets.tB_PlayerD_Buffering.Text;
             tB_PlayerD_Username.Text = sets.tB_PlayerD_Username.Text;
             tB_PlayerD_Password.Text = sets.tB_PlayerD_Password.Text;
+            if (!tempCopy) {
+                tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text + " 2";
 
-            if (ConfigControl.savedCamera.stringVal.Contains("Daylight"))
-                tB_PlayerD_RTSP.Text = thermalRTSP;
-            else if (ConfigControl.savedCamera.stringVal.Contains("Thermal"))
-                tB_PlayerD_RTSP.Text = dayRTSP;
-            else
-                HideSecond();
+                if (ConfigControl.savedCamera.stringVal.Contains("Daylight"))
+                    tB_PlayerD_RTSP.Text = thermalRTSP;
+                else if (ConfigControl.savedCamera.stringVal.Contains("Thermal"))
+                    tB_PlayerD_RTSP.Text = dayRTSP;
+                else
+                    HideSecond();
 
-            tB_PlayerD_SimpleAdr.Text = GetCombined(this);
+                tB_PlayerD_SimpleAdr.Text = GetCombined(this);
+            } else {
+                tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text;
+
+                tB_PlayerD_RTSP.Text = sets.tB_PlayerD_RTSP.Text;
+                tB_PlayerD_SimpleAdr.Text = sets.tB_PlayerD_SimpleAdr.Text;
+            }
+        }
+
+        public static void CopySecondarySettingsMoveToMain(VideoSettings source, VideoSettings target) {
+            //copy secondary settings into the primary settings
+            target.tB_PlayerD_Name.Text = source.tB_Secondary_Name.Text;
+            target.tB_PlayerD_SimpleAdr.Text = source.tB_Secondary_SimpleAdr.Text;
+            target.tB_PlayerD_Adr.Text = source.tB_Secondary_Adr.Text;
+            target.tB_PlayerD_Port.Text = source.tB_Secondary_Port.Text;
+            target.tB_PlayerD_RTSP.Text = source.tB_Secondary_RTSP.Text;
+            target.cB_PlayerD_CamType.Text = source.cB_Secondary_CamType.Text;
+            target.tB_PlayerD_Buffering.Text = source.tB_Secondary_Buffering.Text;
+            target.tB_PlayerD_Username.Text = source.tB_Secondary_Username.Text;
+            target.tB_PlayerD_Password.Text = source.tB_Secondary_Password.Text;
+        }
+
+        public static void CopyPrimarySettingsMoveToSecondary(VideoSettings source, VideoSettings target) {
+            //copy primary settings into the secondary settings
+            target.tB_Secondary_Name.Text = source.tB_PlayerD_Name.Text;
+            target.tB_Secondary_SimpleAdr.Text = source.tB_PlayerD_SimpleAdr.Text;
+            target.tB_Secondary_Adr.Text = source.tB_PlayerD_Adr.Text;
+            target.tB_Secondary_Port.Text = source.tB_PlayerD_Port.Text;
+            target.tB_Secondary_RTSP.Text = source.tB_PlayerD_RTSP.Text;
+            target.cB_Secondary_CamType.Text = source.cB_PlayerD_CamType.Text;
+            target.tB_Secondary_Buffering.Text = source.tB_PlayerD_Buffering.Text;
+            target.tB_Secondary_Username.Text = source.tB_PlayerD_Username.Text;
+            target.tB_Secondary_Password.Text = source.tB_PlayerD_Password.Text;
         }
 
         public void UpdateSecondaryValues() {
-            VideoSettings first = MainForm.m.mainPlayer.settings;
-            VideoSettings second = MainForm.m.mainPlayer.secondView.settings;
+            CopyPrimarySettingsMoveToSecondary(MainForm.m.mainPlayer.secondView.settings, MainForm.m.mainPlayer.settings);
+        }
 
-            first.tB_Secondary_Name.Text = second.tB_PlayerD_Name.Text;
-            first.tB_Secondary_SimpleAdr.Text = second.tB_PlayerD_SimpleAdr.Text;
-            first.tB_Secondary_Adr.Text = second.tB_PlayerD_Adr.Text;
-            first.tB_Secondary_Port.Text = second.tB_PlayerD_Port.Text;
-            first.tB_Secondary_RTSP.Text = second.tB_PlayerD_RTSP.Text;
-            first.cB_Secondary_CamType.Text = second.cB_PlayerD_CamType.Text;
-            first.tB_Secondary_Buffering.Text = second.tB_PlayerD_Buffering.Text;
-            first.tB_Secondary_Username.Text = second.tB_PlayerD_Username.Text;
-            first.tB_Secondary_Password.Text = second.tB_PlayerD_Password.Text;
+        void ApplySecondaryChanges() {
+            CopySecondarySettingsMoveToMain(this, MainForm.m.mainPlayer.secondView.settings);
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -148,11 +170,11 @@ namespace SSUtility2
 
         private void b_Play_Click(object sender, EventArgs e) {
             if (isSecondary)
-                originalDetached.Play(true, originalDetached.secondView);
+                Detached.Play(true, originalDetached.secondView);
             else {
                 originalDetached.StartPlaying(true);
                 if (originalDetached == MainForm.m.mainPlayer && InfoPanel.i.isCamera)
-                    originalDetached.Play(true, MainForm.m.mainPlayer);
+                    Detached.Play(true, MainForm.m.mainPlayer);
             }
         }
 
@@ -225,23 +247,9 @@ namespace SSUtility2
                 customFull = false;
         }
 
-        void ApplySecondaryChanges() {
-            VideoSettings sets = MainForm.m.mainPlayer.secondView.settings;
-
-            sets.tB_PlayerD_Name.Text = this.tB_Secondary_Name.Text;
-            sets.tB_PlayerD_SimpleAdr.Text = this.tB_Secondary_SimpleAdr.Text;
-            sets.tB_PlayerD_Adr.Text = this.tB_Secondary_Adr.Text;
-            sets.tB_PlayerD_Port.Text = this.tB_Secondary_Port.Text;
-            sets.tB_PlayerD_RTSP.Text = this.tB_Secondary_RTSP.Text;
-            sets.cB_PlayerD_CamType.Text = this.cB_Secondary_CamType.Text;
-            sets.tB_PlayerD_Buffering.Text = this.tB_Secondary_Buffering.Text;
-            sets.tB_PlayerD_Username.Text = this.tB_Secondary_Username.Text;
-            sets.tB_PlayerD_Password.Text = this.tB_Secondary_Password.Text;
-        }
-
         private void b_Secondary_Play_Click(object sender, EventArgs e) {
             ApplySecondaryChanges();
-            MainForm.m.mainPlayer.Play(true, MainForm.m.mainPlayer.secondView);
+            Detached.Play(true, MainForm.m.mainPlayer.secondView);
         }
 
         private void b_Secondary_Stop_Click(object sender, EventArgs e) {

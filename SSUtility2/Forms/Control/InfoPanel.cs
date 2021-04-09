@@ -117,7 +117,7 @@ namespace SSUtility2 {
                     SettingsPage.UpdateCamType();
                 } else if (await OtherCamCom.CheckConfiguration() != OtherCamCom.CamConfig.Null) {
                     isCamera = true;
-                    MainForm.m.mainPlayer.EnableSecond(true);
+                    Detached.EnableSecond(true);
                 } else {
                     isCamera = false;
                 }

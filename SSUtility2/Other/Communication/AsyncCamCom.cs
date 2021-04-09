@@ -104,8 +104,8 @@ namespace SSUtility2 {
                 else
                     Disconnect();
 
-                if(!MainForm.m.lite)
-                    MainForm.m.mainPlayer.DisableSecond();
+                if(!MainForm.m.lite && !ConfigControl.forceCamera.boolVal)
+                    Detached.DisableSecond();
                 if(!ConfigControl.forceCamera.boolVal)
                     InfoPanel.i.isCamera = false;
 

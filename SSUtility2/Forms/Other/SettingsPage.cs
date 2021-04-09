@@ -356,7 +356,10 @@ namespace SSUtility2 {
         private void check_IPCon_ForceCam_CheckedChanged(object sender, EventArgs e) {
             ConfigControl.forceCamera.UpdateValue(check_IPCon_ForceCam.Checked.ToString());
             cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
-            MainForm.m.mainPlayer.EnableSecond(true);
+            if(ConfigControl.forceCamera.boolVal)
+                Detached.EnableSecond(true);
+            else
+                Detached.DisableSecond();
         }
 
         private void cB_IPCon_ForceMode_SelectedIndexChanged(object sender, EventArgs e) {
@@ -384,9 +387,10 @@ namespace SSUtility2 {
                 }
 
                 OtherCamCom.currentConfig = config;
+                Detached.EnableSecond(true);
             }
-            InfoPanel.i.isCamera = ConfigControl.forceCameraType.boolVal;
 
+            InfoPanel.i.isCamera = ConfigControl.forceCameraType.boolVal;
         }
     }
 }

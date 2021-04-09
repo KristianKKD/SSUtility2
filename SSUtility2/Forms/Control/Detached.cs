@@ -39,7 +39,7 @@ namespace SSUtility2 {
                 } else {
                     secondView = new Detached(false);
                     secondView.settings.originalDetached = this;
-                    secondView.settings.Copy(settings);
+                    secondView.settings.CopyPlayerD(settings);
                     secondView.settings.Text = "Secondary Video Settings";
                     secondView.settings.isSecondary = true;
                     secondView.settings.tP_Secondary.Dispose();
@@ -84,8 +84,8 @@ namespace SSUtility2 {
                     });
                     if (this == MainForm.m.mainPlayer && showErrors) {
                         if (!secondView.settings.isPlaying) {
-                            secondView.settings.Copy(settings);
-                            secondView.Play(false, secondView);
+                            secondView.settings.CopyPlayerD(settings);
+                            Play(false, secondView);
                         }
                     }
 
@@ -103,15 +103,15 @@ namespace SSUtility2 {
             }
         }
 
-        public async Task<bool> Play(bool showError, Detached player) {
+        public static async Task<bool> Play(bool showError, Detached player) {
             try {
                 if (MainForm.m.lite) {
-                    settings.isPlaying = true;
+                    player.settings.isPlaying = true;
                     return true;
                 }
 
-                if (!this.IsHandleCreated)
-                    this.CreateHandle();
+                //if (!this.IsHandleCreated)
+                //    this.CreateHandle();
 
                 Uri combinedUrl = new Uri(VideoSettings.GetCombined(player.settings));
 
@@ -139,7 +139,7 @@ namespace SSUtility2 {
                     + player.settings.tB_PlayerD_Buffering.Text);
                 player.vlcPlayer.playlist.next();
 
-                settings.isPlaying = true;
+                player.settings.isPlaying = true;
 
                 return true;
             } catch (Exception e) {
@@ -148,30 +148,30 @@ namespace SSUtility2 {
             }
         }
 
-        public async Task EnableSecond(bool copySettings) {
+        public static async Task EnableSecond(bool copySettings) {
             if (MainForm.m.lite)
                 return;
 
             MainForm.m.Menu_Settings_Info.Visible = true;
-            settings.tC_PlayerSettings.TabPages.Add(settings.secondaryPage);
-
+            if(MainForm.m.mainPlayer.settings.tC_PlayerSettings.TabPages.Count == 1)
+                MainForm.m.mainPlayer.settings.tC_PlayerSettings.TabPages.Add(MainForm.m.mainPlayer.settings.secondaryPage);
 
             MainForm.m.sP_Player.Show();
             MainForm.m.sP_Player.BringToFront();
             if(copySettings)
-                secondView.settings.Copy(settings);
-            if (settings.isPlaying)
-                secondView.Play(false, secondView);
+                MainForm.m.mainPlayer.secondView.settings.CopyPlayerD(MainForm.m.mainPlayer.settings);
+            if (MainForm.m.mainPlayer.settings.isPlaying)
+                Play(false, MainForm.m.mainPlayer.secondView);
         }
 
-        public async Task DisableSecond() {
+        public static async Task DisableSecond() {
             MainForm.m.Menu_Settings_Info.Visible = false;
-            settings.tC_PlayerSettings.TabPages.Remove(settings.tP_Secondary);
+            MainForm.m.mainPlayer.settings.tC_PlayerSettings.TabPages.Remove(MainForm.m.mainPlayer.settings.tP_Secondary);
 
             MainForm.m.sP_Player.Hide(); //here
 
-            if (secondView.settings.isPlaying)
-                secondView.StopPlaying();
+            if (MainForm.m.mainPlayer.secondView.settings.isPlaying)
+                MainForm.m.mainPlayer.secondView.StopPlaying();
         }
 
         public void SnapShot() {
@@ -196,7 +196,26 @@ namespace SSUtility2 {
             recorderD = vals.Item2;
         }
 
-        public void UpdateMode() {
+        public void CustomSwap() {
+            try {
+                VideoSettings tempSettings = new VideoSettings();
+
+                tempSettings.CopyPlayerD(settings, true); //temp save old main settings
+                VideoSettings.CopySecondarySettingsMoveToMain(settings, settings); //move second to main
+                VideoSettings.CopyPrimarySettingsMoveToSecondary(tempSettings, settings); //move old settings to second
+
+                if(settings.isPlaying)
+                    Play(true, this);
+                if (secondView.settings.isPlaying)
+                    Play(true, secondView);
+
+                tempSettings.Dispose();
+            } catch (Exception e) {
+                MessageBox.Show("Swap Fail\n" + e.ToString());
+            }
+        }
+
+        public async Task UpdateMode() {
             try {
                 bool isCam = InfoPanel.i.isCamera;
 
@@ -204,7 +223,7 @@ namespace SSUtility2 {
                 settings.check_PlayerD_Manual.Checked = true;
 
                 if (isCam) {
-                    secondView.settings.Copy(settings);
+                    secondView.settings.CopyPlayerD(settings);
                 }
 
                 if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
@@ -226,7 +245,7 @@ namespace SSUtility2 {
                 Play(false, this);
                 if (isCam && secondView.settings.isPlaying) {
                     secondView.settings.check_PlayerD_Manual.Checked = true;
-                    secondView.Play(false, secondView);
+                    Play(false, secondView);
                 }
             } catch (Exception e) {
                 MessageBox.Show("UPDATEMODE\n" + e.ToString());

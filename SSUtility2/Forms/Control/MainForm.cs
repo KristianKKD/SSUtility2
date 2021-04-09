@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.4.1";
+        public const string version = "v2.4.5.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -381,8 +381,6 @@ namespace SSUtility2 {
                 dv.settings.tB_PlayerD_Password.Text = set.tB_PlayerD_Password.Text;
                 dv.settings.tB_PlayerD_Name.Text = set.tB_PlayerD_Name.Text;
                 dv.settings.tB_PlayerD_SimpleAdr.Text = set.tB_PlayerD_SimpleAdr.Text;
-                if(mainPlayer.settings.isPlaying)
-                    dv.Play(false, dv);
             }
             Tools.SetFeatureToAllControls(dv.Controls);
             return dv;
@@ -564,10 +562,10 @@ namespace SSUtility2 {
 
             if (!ConfigControl.savedCamera.stringVal.Contains("Thermal") &&
                 !ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
-                mainPlayer.EnableSecond(false);
+                Detached.EnableSecond(false);
             }
 
-            mainPlayer.EnableSecond(true);
+            Detached.EnableSecond(true);
         }
 
         private void Menu_Settings_Open_Click(object sender, EventArgs e) {
@@ -583,15 +581,23 @@ namespace SSUtility2 {
         }
 
         void SwapPlayers() {
-            string value;
-            if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
+            string value = "";
+            bool daythermswap = false;
+            if (mainPlayer.settings.tB_PlayerD_Adr.Text != mainPlayer.secondView.settings.tB_PlayerD_Adr.Text || ConfigControl.forceCamera.boolVal) {
+                mainPlayer.CustomSwap();
+            } else if (mainPlayer.settings.cB_PlayerD_CamType.Text.Contains("Thermal")) {
                 value = "Daylight";
-            } else {
+                daythermswap = true;
+            } else if (mainPlayer.settings.cB_PlayerD_CamType.Text.Contains("Daylight")) {
                 value = "Thermal";
+                daythermswap = true;
             }
 
-            setPage.cB_ipCon_CamType.Text = value;
-            setPage.UpdateSelectedCam(true);
+            if (daythermswap) {
+                setPage.cB_ipCon_CamType.Text = value;
+                setPage.UpdateSelectedCam(true);
+            }
+
         }
 
         public void StopCam() {
@@ -861,5 +867,6 @@ namespace SSUtility2 {
         private void tP_Cover_DoubleClick(object sender, EventArgs e) {
             SwapPlayers();
         }
+
     } // end of class MainForm
 } // end of namespace SSLUtility2
