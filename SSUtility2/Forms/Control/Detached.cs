@@ -204,10 +204,8 @@ namespace SSUtility2 {
                 VideoSettings.CopySecondarySettingsMoveToMain(settings, settings); //move second to main
                 VideoSettings.CopyPrimarySettingsMoveToSecondary(tempSettings, settings); //move old settings to second
 
-                if(settings.isPlaying)
-                    Play(true, this);
-                if (secondView.settings.isPlaying)
-                    Play(true, secondView);
+                Play(true, this);
+                Play(true, secondView);
 
                 tempSettings.Dispose();
             } catch (Exception e) {
