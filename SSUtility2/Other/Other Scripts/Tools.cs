@@ -236,7 +236,7 @@ namespace SSUtility2 {
             }
         }
 
-        public static void CopyConfig(string name) {
+        public static async Task CopyConfig(string name) {
             string configFile = ConfigControl.appFolder + ConfigControl.config;
             if (name != configFile) {
                 ResetFile(configFile);
@@ -246,6 +246,10 @@ namespace SSUtility2 {
                     File.AppendAllText(configFile, line + "\n");
                 }
 
+                ConfigControl.SetToDefaults();
+                await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
+                ConfigControl.FindVars();
+                MainForm.m.setPage.PopulateSettingText();
                 MessageBox.Show("Updated config file!\n(" + configFile + ")");
             } else {
                 if (name == configFile)

@@ -307,7 +307,7 @@ namespace SSUtility2 {
                     }
                 }
             } catch (Exception e) {
-                Tools.ShowPopup(CommandQueue.GetNameString() + "Message processing failed!\nShow more?", "Receive Failed!", e.ToString());
+                //Tools.ShowPopup(CommandQueue.GetNameString() + "Message processing failed!\nShow more?", "Receive Failed!", e.ToString());
             };
         }
 
