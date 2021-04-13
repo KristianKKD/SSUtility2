@@ -163,21 +163,26 @@ namespace SSUtility2 {
         }
 
         public static void CreateConfig(string path) {
-            Tools.ResetFile(path);
+            try {
+                Tools.ResetFile(path);
 
-            foreach (ConfigSetting setting in configArray) {
-                if (!portableMode.boolVal && (setting.settingName == finalSource.settingName || setting.settingName == finalDestination.settingName)) {
-                    continue;
+                File.AppendAllText(path, "SSUtility2.0 " + MainForm.version + " Config\n\n");
+
+                foreach (ConfigSetting setting in configArray) {
+                    if (!portableMode.boolVal && (setting.settingName == finalSource.settingName || setting.settingName == finalDestination.settingName)) {
+                        continue;
+                    }
+
+                    ConfigLine(path, setting.settingName, setting.stringVal);
                 }
 
-                ConfigLine(path, setting.settingName, setting.stringVal);
-            }
+                CommandQueue.UpdateTimerRate();
 
-            CommandQueue.UpdateTimerRate();
-
-
-            if (MainForm.m.finalMode) {
-                Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
+                if (MainForm.m.finalMode) {
+                    Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
+                }
+            } catch (Exception e) {
+                Tools.ShowPopup("Failed to write config!\nShow more?", "Critical Error Occurred!", e.ToString());
             }
         }
 

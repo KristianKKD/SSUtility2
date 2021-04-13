@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.6.0";
+        public const string version = "v2.4.6.1";
         private bool startLiteVersion = false;
 
         private bool closing = false;
