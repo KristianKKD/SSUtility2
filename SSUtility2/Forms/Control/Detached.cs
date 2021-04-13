@@ -110,9 +110,6 @@ namespace SSUtility2 {
                     return true;
                 }
 
-                //if (!this.IsHandleCreated)
-                //    this.CreateHandle();
-
                 Uri combinedUrl = new Uri(VideoSettings.GetCombined(player.settings));
 
                 //rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
@@ -140,11 +137,21 @@ namespace SSUtility2 {
                 player.vlcPlayer.playlist.next();
 
                 player.settings.isPlaying = true;
-
+                    
                 return true;
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
                 return false;
+            }
+        }
+
+        public void Replay() {
+            if (settings.isPlaying)
+                Play(false, this);
+
+            if (secondView.settings.isPlaying && InfoPanel.i.isCamera) {
+                MainForm.m.mainPlayer.secondView.settings.CopyPlayerD(MainForm.m.mainPlayer.settings);
+                Play(false, secondView);
             }
         }
 
@@ -160,8 +167,8 @@ namespace SSUtility2 {
             MainForm.m.sP_Player.BringToFront();
             if(copySettings)
                 MainForm.m.mainPlayer.secondView.settings.CopyPlayerD(MainForm.m.mainPlayer.settings);
-            if (MainForm.m.mainPlayer.settings.isPlaying)
-                Play(false, MainForm.m.mainPlayer.secondView);
+            
+            Play(false, MainForm.m.mainPlayer.secondView);
         }
 
         public static async Task DisableSecond() {
@@ -218,34 +225,24 @@ namespace SSUtility2 {
 
         public async Task UpdateMode() {
             try {
-                bool isCam = InfoPanel.i.isCamera;
+                settings.cB_PlayerD_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
 
-                settings.cB_PlayerD_CamType.Text = ConfigControl.savedCamera.stringVal;
-                settings.check_PlayerD_Manual.Checked = true;
+                secondView.settings.CopyPlayerD(settings);
 
-                if (isCam) {
-                    secondView.settings.CopyPlayerD(settings);
-                }
-
-                if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
+                if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("thermal")) {
                     settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
 
-                    if (isCam) {
-                        secondView.settings.cB_PlayerD_CamType.Text = "Daylight";
-                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
-                    }
-                } else if (ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
+                    secondView.settings.cB_PlayerD_CamType.Text = "Daylight";
+                    secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
+                } else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight")) {
                     settings.tB_PlayerD_RTSP.Text = VideoSettings.dayRTSP;
 
-                    if (isCam) {
-                        secondView.settings.cB_PlayerD_CamType.Text = "Thermal";
-                        secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
-                    }
+                    secondView.settings.cB_PlayerD_CamType.Text = "Thermal";
+                    secondView.settings.tB_PlayerD_RTSP.Text = VideoSettings.thermalRTSP;
                 }
 
                 Play(false, this);
-                if (isCam && secondView.settings.isPlaying) {
-                    secondView.settings.check_PlayerD_Manual.Checked = true;
+                if (InfoPanel.i.isCamera) {
                     Play(false, secondView);
                 }
             } catch (Exception e) {

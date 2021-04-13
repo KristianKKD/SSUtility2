@@ -258,7 +258,6 @@
     </Compile>
     <Compile Include="Other\Communication\AsyncCamCom.cs" />
     <Compile Include="Other\Communication\OsirisComs.cs" />
-    <Compile Include="Other\Other Scripts\AutoSave.cs" />
     <Compile Include="Other\Communication\Command.cs" />
     <Compile Include="Other\Other Scripts\ConfigControl.cs" />
     <Compile Include="Forms\Scripting\CustomScriptCommands.cs" />

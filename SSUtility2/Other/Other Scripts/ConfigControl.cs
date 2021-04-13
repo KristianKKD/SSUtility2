@@ -10,7 +10,6 @@ namespace SSUtility2 {
 
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
         public const string config = "config.txt";
-        public const string autoSave = "auto.txt";
 
         public static string savedFolder = appFolder + @"Saved\";
 
@@ -37,7 +36,7 @@ namespace SSUtility2 {
         public static ConfigSetting finalDestination = new ConfigSetting(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "FinalModeDestinationFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting savedIP = new ConfigSetting("192.168.1.71", "SavedIP", ConfigSetting.VarType.strings);
         public static ConfigSetting savedPort = new ConfigSetting("6791", "SavedPort", ConfigSetting.VarType.strings);
-        public static ConfigSetting savedCamera = new ConfigSetting("Daylight", "SavedCamera", ConfigSetting.VarType.strings);
+        public static ConfigSetting cameraSpeedMultiplier = new ConfigSetting("100", "CameraSpeedMultiplier", ConfigSetting.VarType.integer);
         public static ConfigSetting forceCameraType = new ConfigSetting("Strict", "ForcedCameraType", ConfigSetting.VarType.strings);
         public static ConfigSetting autoReconnect = new ConfigSetting("true", "AutoReconnect", ConfigSetting.VarType.boolean);
         public static ConfigSetting startupWidth = new ConfigSetting("1280", "StartupWidth", ConfigSetting.VarType.integer);
@@ -52,7 +51,6 @@ namespace SSUtility2 {
         public static ConfigSetting customButtonName7 = new ConfigSetting("7", "CustomButtonName7", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonName8 = new ConfigSetting("8", "CustomButtonName8", ConfigSetting.VarType.strings);
 
-
         public static ConfigSetting customButtonCommand1 = new ConfigSetting("Preset 1", "CustomButtonCommand1", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonCommand2 = new ConfigSetting("Preset 2", "CustomButtonCommand2", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonCommand3 = new ConfigSetting("Preset 3", "CustomButtonCommand3", ConfigSetting.VarType.strings);
@@ -61,6 +59,17 @@ namespace SSUtility2 {
         public static ConfigSetting customButtonCommand6 = new ConfigSetting("Preset 6", "CustomButtonCommand6", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonCommand7 = new ConfigSetting("Preset 7", "CustomButtonCommand7", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonCommand8 = new ConfigSetting("Preset 8", "CustomButtonCommand8", ConfigSetting.VarType.strings);
+
+        public static ConfigSetting mainPlayerName = new ConfigSetting("", "MainPlayerName", ConfigSetting.VarType.strings);
+        public static ConfigSetting mainPlayerFullAdr = new ConfigSetting("", "MainPlayerFullAdr", ConfigSetting.VarType.strings);
+        public static ConfigSetting mainPlayerCamType = new ConfigSetting("IONodes - Daylight", "MainPlayerCamType", ConfigSetting.VarType.strings);
+        public static ConfigSetting mainPlayerIPAdr = new ConfigSetting("192.168.1.71", "MainPlayerIPAdr", ConfigSetting.VarType.strings);
+        public static ConfigSetting mainPlayerPort = new ConfigSetting("554", "MainPlayerPort", ConfigSetting.VarType.strings);
+        public static ConfigSetting mainPlayerRTSP = new ConfigSetting("videoinput_1:0/h264_1/onvif.stm", "MainPlayerRTSP", ConfigSetting.VarType.strings);
+        public static ConfigSetting mainPlayerBuffering = new ConfigSetting("200", "MainPlayerBuffering", ConfigSetting.VarType.strings);
+        public static ConfigSetting mainPlayerUsername = new ConfigSetting("admin", "MainPlayerUsername", ConfigSetting.VarType.strings);
+        public static ConfigSetting mainPlayerPassword = new ConfigSetting("admin", "MainPlayerPassword", ConfigSetting.VarType.strings);
+
 
         public static ConfigSetting[] customButtonNamesArray = new ConfigSetting[] {
             customButtonName1,
@@ -102,7 +111,7 @@ namespace SSUtility2 {
             finalDestination,
             savedIP,
             savedPort,
-            savedCamera,
+            cameraSpeedMultiplier,
             forceCameraType,
             autoReconnect,
             startupWidth,
@@ -125,6 +134,16 @@ namespace SSUtility2 {
             customButtonCommand6,
             customButtonCommand7,
             customButtonCommand8,
+
+            mainPlayerName,
+            mainPlayerFullAdr,
+            mainPlayerCamType,
+            mainPlayerIPAdr,
+            mainPlayerPort,
+            mainPlayerRTSP,
+            mainPlayerBuffering,
+            mainPlayerUsername,
+            mainPlayerPassword,
         };
 
 
@@ -274,6 +293,7 @@ namespace SSUtility2 {
             if(val.Length == 0) {
                 return;
             }
+
             switch (myType) {
                 case VarType.boolean:
                     boolVal = ConfigControl.CheckVal(val);
@@ -282,6 +302,7 @@ namespace SSUtility2 {
                     intVal = int.Parse(val);
                     break;
             }
+
             stringVal = val;
         }
 

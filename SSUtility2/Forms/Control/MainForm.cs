@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.5.4";
+        public const string version = "v2.4.6.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -92,25 +92,17 @@ namespace SSUtility2 {
 
                 AutoConnect();
 
-                await Task.Delay(1000).ConfigureAwait(false);
+                await Task.Delay(500).ConfigureAwait(false);
                 finishedLoading = true;
             } catch (Exception e) {
                 Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
             }
         }
 
-        bool CheckIfFirstTime() {
-            if (File.Exists(ConfigControl.dirCheck + "location.txt")) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
         async Task AutoConnect() {
-            await Task.Delay(500).ConfigureAwait(false);
+            await Task.Delay(250).ConfigureAwait(false);
             bool connected = await AsyncCamCom.TryConnect(true).ConfigureAwait(false);
-            await Task.Delay(500).ConfigureAwait(false);
+            await Task.Delay(250).ConfigureAwait(false);
             if (ConfigControl.autoPlay.boolVal && connected && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "") {
                 mainPlayer.StartPlaying(false);
             }
@@ -125,7 +117,6 @@ namespace SSUtility2 {
 
             await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
             ConfigControl.FindVars();
-            AutoSave.LoadAuto(ConfigControl.appFolder + ConfigControl.autoSave, CheckIfFirstTime());
 
             if (ConfigControl.portableMode.boolVal) {
                 Menu_Final.Dispose();
@@ -134,7 +125,6 @@ namespace SSUtility2 {
 
         public static void CreateConfigFiles() {
             Tools.CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
-            Tools.CheckCreateFile(ConfigControl.autoSave, ConfigControl.appFolder);
             Tools.CheckCreateFile(null, ConfigControl.savedFolder);
         }
 
@@ -331,8 +321,6 @@ namespace SSUtility2 {
         void LiteToggle() {
             try {
                 if (!lite) {
-                    AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
-
                     lite = true;
                     ShowControlPanel();
                     m.MinimumSize = new Size(0, 0);
@@ -460,8 +448,8 @@ namespace SSUtility2 {
 
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             closing = true;
+            ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
             AsyncCamCom.Disconnect(true);
-            AutoSave.SaveAuto(ConfigControl.appFolder + ConfigControl.autoSave);
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
@@ -560,8 +548,8 @@ namespace SSUtility2 {
         private void Menu_Video_EnableSecondary_Click(object sender, EventArgs e) {
             Menu_Video_EnableSecondary.Visible = false;
 
-            if (!ConfigControl.savedCamera.stringVal.Contains("Thermal") &&
-                !ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
+            if (!ConfigControl.mainPlayerCamType.stringVal.Contains("Thermal") &&
+                !ConfigControl.mainPlayerCamType.stringVal.Contains("Daylight")) {
                 Detached.EnableSecond(false);
             }
 
@@ -585,16 +573,16 @@ namespace SSUtility2 {
             bool daythermswap = false;
             if (mainPlayer.settings.tB_PlayerD_Adr.Text != mainPlayer.secondView.settings.tB_PlayerD_Adr.Text || ConfigControl.forceCamera.boolVal) {
                 mainPlayer.CustomSwap();
-            } else if (mainPlayer.settings.cB_PlayerD_CamType.Text.Contains("Thermal")) {
+            } else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("thermal")) {
                 value = "Daylight";
                 daythermswap = true;
-            } else if (mainPlayer.settings.cB_PlayerD_CamType.Text.Contains("Daylight")) {
+            } else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight")) {
                 value = "Thermal";
                 daythermswap = true;
             }
 
             if (daythermswap) {
-                setPage.cB_ipCon_CamType.Text = value;
+                ConfigControl.mainPlayerCamType.UpdateValue(value);
                 setPage.UpdateSelectedCam(true);
             }
 
@@ -685,7 +673,7 @@ namespace SSUtility2 {
 
         void PTZMove(D.Tilt tilt = D.Tilt.Null, D.Pan pan = D.Pan.Null) {
             byte[] code;
-            uint speed = Convert.ToUInt32(63);
+            uint speed = Convert.ToUInt32((ConfigControl.cameraSpeedMultiplier.intVal / 200f) * 63);
 
             if (tilt != D.Tilt.Null) {
                 code = D.protocol.CameraTilt(Tools.MakeAdr(), tilt, speed);
@@ -712,6 +700,17 @@ namespace SSUtility2 {
                 MessageBox.Show("Not connected to camera!\nNo commands were sent!");
         }
 
+        uint JoystickSpeedFunction(float val) {
+            //0.5x^2 * y + 3
+            uint newVal = (Convert.ToUInt32(((0.5f * Math.Pow(Math.Abs(val), 2) * (ConfigControl.cameraSpeedMultiplier.intVal / 100f)) / 3969) * 63) + 3);
+
+            if (newVal > 63) {
+                newVal = 63;
+            }
+
+            return newVal;
+        }
+
         public void Tick() {
             try {
                 Point coords = Joystick.coords;
@@ -723,8 +722,8 @@ namespace SSUtility2 {
                     int x = coords.X;
                     int y = coords.Y;
 
-                    uint xSpeed = Convert.ToUInt32(((0.25f * Math.Pow(Math.Abs(x), 2)) / 992) * 63);
-                    uint ySpeed = Convert.ToUInt32(((0.25f * Math.Pow(Math.Abs(y), 2)) / 992) * 63);
+                    uint xSpeed = JoystickSpeedFunction(x);
+                    uint ySpeed = JoystickSpeedFunction(y);
 
                     //diagonals
                     D.Pan p = D.Pan.Null;
@@ -748,7 +747,7 @@ namespace SSUtility2 {
                     if (p != D.Pan.Null && t != D.Tilt.Null) {
                         code = D.protocol.CameraPanTilt(adr, p, xSpeed, t, ySpeed);
                     } else {
-                        //horizontal/vertical only
+                        //horizontal/verticals
                         if (x > 0 && y == 0) {
                             code = D.protocol.CameraPan(adr, D.Pan.Right, xSpeed);
                         } else if (x < 0 && y == 0) {
@@ -803,6 +802,7 @@ namespace SSUtility2 {
 
         private void tP_Cover_MouseMove(object sender, MouseEventArgs e) {
             Cursor = Cursors.Default;
+            tP_Cover.BringToFront();
             if (dragging) {
                 int xDragDist = e.X - eOriginalPos.X;
                 int yDragDist = e.Y - eOriginalPos.Y;

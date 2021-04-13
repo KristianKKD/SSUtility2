@@ -98,7 +98,7 @@ namespace SSUtility2
             this.tB_PlayerD_Name.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_Name.TabIndex = 54;
             this.tB_PlayerD_Name.TextChanged += new System.EventHandler(this.tB_PlayerD_Name_TextChanged);
-            this.tB_PlayerD_Name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PlayerD_Name_KeyPress);
+            this.tB_PlayerD_Name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             // 
             // tB_PlayerD_SimpleAdr
             // 
@@ -110,7 +110,7 @@ namespace SSUtility2
             this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_SimpleAdr.TabIndex = 28;
             this.tB_PlayerD_SimpleAdr.TextChanged += new System.EventHandler(this.tB_PlayerD_SimpleAdr_TextChanged);
-            this.tB_PlayerD_SimpleAdr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PlayerD_SimpleAdr_KeyPress);
+            this.tB_PlayerD_SimpleAdr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             // 
             // l_PlayerD_SimpleAdr
             // 
@@ -152,9 +152,10 @@ namespace SSUtility2
             this.cB_PlayerD_CamType.Name = "cB_PlayerD_CamType";
             this.cB_PlayerD_CamType.Size = new System.Drawing.Size(349, 21);
             this.cB_PlayerD_CamType.TabIndex = 5;
-            this.cB_PlayerD_CamType.Text = "Daylight";
+            this.cB_PlayerD_CamType.Text = "IONodes - Daylight";
             this.cB_PlayerD_CamType.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_Type_SelectedIndexChanged);
             this.cB_PlayerD_CamType.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.cB_PlayerD_CamType.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             // 
             // l_PlayerD_RTSP
             // 
@@ -181,6 +182,7 @@ namespace SSUtility2
             this.tB_PlayerD_Password.Text = "admin";
             this.tB_PlayerD_Password.Visible = false;
             this.tB_PlayerD_Password.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             // 
             // tB_PlayerD_Adr
             // 
@@ -193,6 +195,7 @@ namespace SSUtility2
             this.tB_PlayerD_Adr.TabIndex = 4;
             this.tB_PlayerD_Adr.Text = "192.168.1.71";
             this.tB_PlayerD_Adr.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Adr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             // 
             // l_PlayerD_Buffering
             // 
@@ -244,6 +247,7 @@ namespace SSUtility2
             this.tB_PlayerD_Port.TabIndex = 4;
             this.tB_PlayerD_Port.Text = "554";
             this.tB_PlayerD_Port.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Port.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             // 
             // tB_PlayerD_Buffering
             // 
@@ -257,6 +261,7 @@ namespace SSUtility2
             this.tB_PlayerD_Buffering.Text = "200";
             this.tB_PlayerD_Buffering.Visible = false;
             this.tB_PlayerD_Buffering.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Buffering.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             // 
             // l_PlayerD_Port
             // 
@@ -282,6 +287,7 @@ namespace SSUtility2
             this.tB_PlayerD_Username.Text = "admin";
             this.tB_PlayerD_Username.Visible = false;
             this.tB_PlayerD_Username.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Username.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             // 
             // tB_PlayerD_RTSP
             // 
@@ -295,6 +301,7 @@ namespace SSUtility2
             this.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
             this.tB_PlayerD_RTSP.Visible = false;
             this.tB_PlayerD_RTSP.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_RTSP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             // 
             // l_PlayerD_Adr
             // 

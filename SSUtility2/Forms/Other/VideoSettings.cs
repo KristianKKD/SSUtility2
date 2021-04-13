@@ -2,10 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace SSUtility2
-{
-    public partial class VideoSettings : Form
-    {
+namespace SSUtility2 {
+    public partial class VideoSettings : Form {
 
         public Detached originalDetached;
         public bool isSecondary = false;
@@ -53,6 +51,7 @@ namespace SSUtility2
                 l_Secondary_Username,
                 l_Secondary_Password,
             };
+
         }
 
         void ExtendPanel(Control[] controls, bool check) {
@@ -84,12 +83,12 @@ namespace SSUtility2
             if (!tempCopy) {
                 tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text + " 2";
 
-                if (ConfigControl.savedCamera.stringVal.Contains("Daylight")) {
-                    tB_PlayerD_RTSP.Text = thermalRTSP;
+                if (ConfigControl.mainPlayerCamType.stringVal.Contains("Daylight")) {
                     cB_PlayerD_CamType.Text = "Thermal";
-                } else if (ConfigControl.savedCamera.stringVal.Contains("Thermal")) {
-                    tB_PlayerD_RTSP.Text = dayRTSP;
+                    tB_PlayerD_RTSP.Text = thermalRTSP;
+                } else if (ConfigControl.mainPlayerCamType.stringVal.Contains("Thermal")) {
                     cB_PlayerD_CamType.Text = "Daylight";
+                    tB_PlayerD_RTSP.Text = dayRTSP;
                 } else
                     HideSecond();
 
@@ -130,14 +129,19 @@ namespace SSUtility2
         }
 
         public void UpdateSecondaryValues() {
-            CopyPrimarySettingsMoveToSecondary(MainForm.m.mainPlayer.secondView.settings, MainForm.m.mainPlayer.settings);
+            if(MainForm.m.finishedLoading)
+                CopyPrimarySettingsMoveToSecondary(MainForm.m.mainPlayer.secondView.settings, MainForm.m.mainPlayer.settings);
         }
 
         void ApplySecondaryChanges() {
-            CopySecondarySettingsMoveToMain(this, MainForm.m.mainPlayer.secondView.settings);
+            if (MainForm.m.finishedLoading)
+                CopySecondarySettingsMoveToMain(this, MainForm.m.mainPlayer.secondView.settings);
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+            
             string enc = cB_PlayerD_CamType.Text;
             string username = "";
             string password = "";
@@ -171,12 +175,13 @@ namespace SSUtility2
         }
 
         private void b_Play_Click(object sender, EventArgs e) {
-            if (isSecondary)
+            if (isSecondary) {
                 Detached.Play(true, originalDetached.secondView);
-            else {
+            } else {
                 originalDetached.StartPlaying(true);
-                if (originalDetached == MainForm.m.mainPlayer && InfoPanel.i.isCamera)
-                    Detached.Play(true, MainForm.m.mainPlayer);
+                if (originalDetached == MainForm.m.mainPlayer && InfoPanel.i.isCamera) {
+                    Detached.Play(false, MainForm.m.mainPlayer);
+                }
             }
         }
 
@@ -200,6 +205,8 @@ namespace SSUtility2
         }
 
         private void tB_TextChanged(object sender, EventArgs e) {
+            if (ActiveControl != this)
+                return;
             tB_PlayerD_SimpleAdr.Text = GetCombined(this);
             customFull = false;
             UpdateSecondaryValues();
@@ -230,23 +237,10 @@ namespace SSUtility2
             return full;
         }
 
-        private void tB_PlayerD_Name_KeyPress(object sender, KeyPressEventArgs e) {
-            if (tB_PlayerD_Name.Text != tB_PlayerD_Adr.Text) {
-                customName = true;
-            }
-        }
-
         private void tB_PlayerD_Name_TextChanged(object sender, EventArgs e) {
-            if (tB_PlayerD_Name.Text == tB_PlayerD_Adr.Text || tB_PlayerD_Name.Text.Length == 0) {
+            if (tB_PlayerD_Name.Text == tB_PlayerD_Adr.Text
+                || tB_PlayerD_Name.Text.Length == 0)
                 customName = false;
-            }
-        }
-
-        private void tB_PlayerD_SimpleAdr_KeyPress(object sender, KeyPressEventArgs e) {
-            if (tB_PlayerD_SimpleAdr.Text.Length > 0)
-                customFull = true;
-            else
-                customFull = false;
         }
 
         private void b_Secondary_Play_Click(object sender, EventArgs e) {
@@ -275,6 +269,8 @@ namespace SSUtility2
                 e.Cancel = true;
                 Hide();
             }
+
+            SaveConfigFields();
         }
 
         private void tB_PlayerD_SimpleAdr_TextChanged(object sender, EventArgs e) {
@@ -288,7 +284,7 @@ namespace SSUtility2
         }
 
         private void tB_Secondary_TextChanged(object sender, EventArgs e) {
-            if (MainForm.m.finishedLoading)
+            if (MainForm.m.finishedLoading && ActiveControl == this)
                 ApplySecondaryChanges();
         }
 
@@ -319,6 +315,25 @@ namespace SSUtility2
             tB_Secondary_RTSP.Text = rtsp;
             tB_Secondary_Username.Text = username;
             tB_Secondary_Password.Text = password;
+            SaveConfigFields();
+        }
+
+        void SaveConfigFields() {
+            if (originalDetached != MainForm.m.mainPlayer || !MainForm.m.finishedLoading)
+                return;
+            ConfigControl.mainPlayerName.UpdateValue(tB_PlayerD_Name.Text);
+            ConfigControl.mainPlayerFullAdr.UpdateValue(tB_PlayerD_SimpleAdr.Text);
+            ConfigControl.mainPlayerCamType.UpdateValue(cB_PlayerD_CamType.Text);
+            ConfigControl.mainPlayerIPAdr.UpdateValue(tB_PlayerD_Adr.Text);
+            ConfigControl.mainPlayerPort.UpdateValue(tB_PlayerD_Port.Text);
+            ConfigControl.mainPlayerRTSP.UpdateValue(tB_PlayerD_RTSP.Text);
+            ConfigControl.mainPlayerBuffering.UpdateValue(tB_PlayerD_Buffering.Text);
+            ConfigControl.mainPlayerUsername.UpdateValue(tB_PlayerD_Username.Text);
+            ConfigControl.mainPlayerPassword.UpdateValue(tB_PlayerD_Password.Text);
+        }
+
+        private void Any_KeyPress(object sender, KeyPressEventArgs e) {
+            SaveConfigFields();
         }
     }
 }

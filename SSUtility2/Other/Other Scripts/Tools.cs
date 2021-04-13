@@ -74,12 +74,12 @@ namespace SSUtility2 {
             else if (val.Contains("Thermal"))
                 return 2;
             else {
-                if (ConfigControl.savedCamera.stringVal.Contains("Daylight"))
+                if (ConfigControl.mainPlayerCamType.stringVal.Contains("Daylight"))
                     return 1;
-                else if (ConfigControl.savedCamera.stringVal.Contains("Thermal"))
+                else if (ConfigControl.mainPlayerCamType.stringVal.Contains("Thermal"))
                     return 2;
-                else if (int.TryParse(ConfigControl.savedCamera.stringVal, out int dontUse))
-                    return uint.Parse(ConfigControl.savedCamera.stringVal);
+                else if (int.TryParse(ConfigControl.mainPlayerCamType.stringVal, out int dontUse))
+                    return uint.Parse(ConfigControl.mainPlayerCamType.stringVal);
                 else
                     return 0;
             }
@@ -237,6 +237,7 @@ namespace SSUtility2 {
         }
 
         public static async Task CopyConfig(string name) {
+            MainForm.m.finishedLoading = false;
             string configFile = ConfigControl.appFolder + ConfigControl.config;
             if (name != configFile) {
                 ResetFile(configFile);
@@ -250,7 +251,10 @@ namespace SSUtility2 {
                 await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
                 ConfigControl.FindVars();
                 MainForm.m.setPage.PopulateSettingText();
+                MainForm.m.finishedLoading = true;
                 MessageBox.Show("Updated config file!\n(" + configFile + ")");
+                
+                MainForm.m.mainPlayer.Replay();
             } else {
                 if (name == configFile)
                     MessageBox.Show("Please don't try to replace the config file with itself!\nIgnored request!");

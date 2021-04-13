@@ -17,7 +17,9 @@ namespace SSUtility2 {
         public async Task PopulateSettingText() {
             tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
             tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
-            cB_ipCon_CamType.Text = ConfigControl.savedCamera.stringVal;
+            cB_ipCon_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
+            slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
+            tB_IPCon_CamSpeed.Text = ConfigControl.cameraSpeedMultiplier.intVal.ToString();
 
             tB_Paths_sCFolder.Text = ConfigControl.scFolder.stringVal;
             tB_Paths_vFolder.Text = ConfigControl.vFolder.stringVal;
@@ -50,12 +52,21 @@ namespace SSUtility2 {
             l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
             MainForm.m.sP_Player.Location = new System.Drawing.Point(MainForm.m.Width - MainForm.m.sP_Player.Width - 30, 15);
             l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
-
-
+           
             UpdateSelectedCam(false);
             LoadCustoms();
             MainForm.m.custom.UpdateButtonNames();
             UpdateCamType();
+
+            MainForm.m.mainPlayer.settings.tB_PlayerD_Name.Text = ConfigControl.mainPlayerName.stringVal;
+            MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = ConfigControl.mainPlayerFullAdr.stringVal;
+            MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
+            MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ConfigControl.mainPlayerIPAdr.stringVal;
+            MainForm.m.mainPlayer.settings.tB_PlayerD_Port.Text = ConfigControl.mainPlayerPort.stringVal;
+            MainForm.m.mainPlayer.settings.tB_PlayerD_RTSP.Text = ConfigControl.mainPlayerRTSP.stringVal;
+            MainForm.m.mainPlayer.settings.tB_PlayerD_Buffering.Text = ConfigControl.mainPlayerBuffering.stringVal;
+            MainForm.m.mainPlayer.settings.tB_PlayerD_Username.Text = ConfigControl.mainPlayerUsername.stringVal;
+            MainForm.m.mainPlayer.settings.tB_PlayerD_Password.Text = ConfigControl.mainPlayerPassword.stringVal;
         }
 
         private async Task ApplyAll() {
@@ -210,14 +221,14 @@ namespace SSUtility2 {
         }
 
         private void tB_IPCon_Adr_Leave(object sender, EventArgs e) {
-            AsyncCamCom.TryConnect(false);
             ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
+            AsyncCamCom.TryConnect(false);
         }
 
         private void tB_IPCon_Adr_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                AsyncCamCom.TryConnect(false);
                 ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
+                AsyncCamCom.TryConnect(false);
             }
         }
 
@@ -232,8 +243,8 @@ namespace SSUtility2 {
         }
 
         private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
-            AsyncCamCom.TryConnect(true);
             ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
+            AsyncCamCom.TryConnect(true);
             UpdatePresetCB();
         }
 
@@ -249,18 +260,14 @@ namespace SSUtility2 {
             ConfigControl.autoReconnect.UpdateValue(check_Other_AutoReconnect.Checked.ToString());
         }
 
-        private void cB_ipCon_Selected_TextChanged(object sender, EventArgs e) {
-            UpdateSelectedCam(true);
-        }
-
         public async Task UpdateSelectedCam(bool play) {
-            ConfigControl.savedCamera.UpdateValue(cB_ipCon_CamType.Text);
+            cB_ipCon_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
 
             MainForm.m.Menu_Settings_Swap.Enabled = true; // to disable in case it's not swappable (in else condition)
 
-            if (ConfigControl.savedCamera.stringVal.Contains("Daylight"))
+            if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight"))
                 MainForm.m.Menu_Settings_Swap.Text = "Swap to Thermal";
-            else if (ConfigControl.savedCamera.stringVal.Contains("Thermal"))
+            else if (ConfigControl.mainPlayerCamType.stringVal.Contains("thermal"))
                 MainForm.m.Menu_Settings_Swap.Text = "Swap to Daylight";
             else
                 MainForm.m.Menu_Settings_Swap.Enabled = false;
@@ -392,5 +399,55 @@ namespace SSUtility2 {
 
             InfoPanel.i.isCamera = ConfigControl.forceCameraType.boolVal;
         }
+
+        private void cB_ipCon_CamType_SelectedIndexChanged(object sender, EventArgs e) {
+            ConfigControl.mainPlayerCamType.UpdateValue(cB_ipCon_CamType.Text);
+            UpdateSelectedCam(true);
+        }
+
+        private void cB_ipCon_CamType_KeyPress(object sender, KeyPressEventArgs e) {
+            ConfigControl.mainPlayerCamType.UpdateValue(cB_ipCon_CamType.Text);
+            UpdateSelectedCam(true);
+        }
+
+        private void tB_IPCon_CamSpeed_KeyPress(object sender, KeyPressEventArgs e) {
+            if (float.TryParse(tB_IPCon_CamSpeed.Text, out float val)) {
+                if (val < 1f)
+                    val = 1;
+                else if (val > 200f)
+                    val = 200;
+
+                val = (float)Math.Truncate(val);
+
+                ConfigControl.cameraSpeedMultiplier.UpdateValue(val.ToString());
+            }
+            if (e.KeyChar == (char)Keys.Enter) {
+                tB_IPCon_CamSpeed.Text = ConfigControl.cameraSpeedMultiplier.intVal.ToString();
+                slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
+            }
+        }
+
+        private void tB_IPCon_CamSpeed_Leave(object sender, EventArgs e) {
+            tB_IPCon_CamSpeed.Text = (ConfigControl.cameraSpeedMultiplier.intVal).ToString();
+            slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
+        }
+
+        bool dragging = false;
+
+        private void slider_IPCon_ControlMultiplier_Scroll(object sender, EventArgs e) {
+            if (dragging) {
+                ConfigControl.cameraSpeedMultiplier.UpdateValue(slider_IPCon_ControlMultiplier.Value.ToString());
+                tB_IPCon_CamSpeed.Text = (ConfigControl.cameraSpeedMultiplier.intVal).ToString();
+            }
+        }
+
+        private void slider_IPCon_ControlMultiplier_MouseDown(object sender, MouseEventArgs e) {
+            dragging = true;
+        }
+
+        private void slider_IPCon_ControlMultiplier_MouseUp(object sender, MouseEventArgs e) {
+            dragging = false;
+        }
+
     }
 }
