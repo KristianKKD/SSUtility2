@@ -1,5 +1,6 @@
 ﻿using SSUtility2.Forms.FinalTest;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.7.0";
+        public const string version = "v2.4.8.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -20,7 +21,6 @@ namespace SSUtility2 {
         public bool lite = false;
         public bool finishedLoading = false;
 
-        public static Control[] autosaveControls;
         private static Control[] controlPanel;
 
         public CustomPanel custom;
@@ -55,16 +55,6 @@ namespace SSUtility2 {
                 AttachCustomPanel();
                 AttachPresetPanel();
 
-                autosaveControls = new Control[]{
-                    mainPlayer.settings.tB_PlayerD_Adr,
-                    mainPlayer.settings.tB_PlayerD_Port,
-                    mainPlayer.settings.tB_PlayerD_RTSP,
-                    mainPlayer.settings.tB_PlayerD_Buffering,
-                    mainPlayer.settings.tB_PlayerD_Username,
-                    mainPlayer.settings.tB_PlayerD_Password,
-                    mainPlayer.settings.tB_PlayerD_SimpleAdr,
-                    mainPlayer.settings.tB_PlayerD_Name,
-                };
                 controlPanel = new Control[] {
                     b_PTZ_Up,
                     b_PTZ_Down,
@@ -78,7 +68,7 @@ namespace SSUtility2 {
                     Joystick,
                 };
 
-                FileStuff();
+                FileStuff.FileWork();
 
                 setPage.PopulateSettingText();
                 
@@ -107,27 +97,7 @@ namespace SSUtility2 {
                 mainPlayer.StartPlaying(false);
             }
         }
-
-        async Task FileStuff() {
-            CheckPortableMode();
-            CheckForNewDir();
-            ConfigControl.SetToDefaults();
-            
-            CreateConfigFiles();
-
-            await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
-            ConfigControl.FindVars();
-
-            if (ConfigControl.portableMode.boolVal) {
-                Menu_Final.Dispose();
-            }
-        }
-
-        public static void CreateConfigFiles() {
-            Tools.CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
-            Tools.CheckCreateFile(null, ConfigControl.savedFolder);
-        }
-
+  
         public (bool, Recorder) StopStartRec(bool isPlaying, Detached player, Recorder r) {
             if (isPlaying) {
                 isPlaying = false;
@@ -157,57 +127,7 @@ namespace SSUtility2 {
                 return (isPlaying, rec);
             }
         }
-
-        string CheckFileForDir() {
-            try {
-                string[] lines = File.ReadAllLines(ConfigControl.dirLocationFile);
-
-                foreach (string line in lines) {
-                    string currentLine = line.Trim();
-                    if (currentLine.Contains(@":\")) {
-                        if (Tools.CheckIfNameValid(currentLine)) {
-                            Tools.CheckCreateFile(null, currentLine);
-                        }
-                        return currentLine;
-                    }
-                }
-            } catch { }
-            return null;   
-        }
-
-        void CheckForNewDir() {
-            bool noFile = Tools.CheckCreateFile(null, ConfigControl.dirCheck).Result;
-
-            if (noFile) {
-                ChooseNewDirectory();
-            } else {
-                string appLocation = CheckFileForDir();
-                if (appLocation != null) {
-                    ConfigControl.appFolder = appLocation;
-                } else {
-                    File.Delete(ConfigControl.dirCheck + "location.txt");
-                    ChooseNewDirectory();
-                }
-            }
-        }
-
-        public static void ChooseNewDirectory() {
-            bool choose = Tools.ShowPopup("Would you like to change your default directory?\nCurrent app folder: " + ConfigControl.appFolder, "Choose your directory", null, false);
-            if (choose) {
-                DirectoryChooser dc = new DirectoryChooser();
-                dc.ShowDialog();
-            }
-            Tools.ResetFile(ConfigControl.dirLocationFile);
-            File.AppendAllText(ConfigControl.dirLocationFile, ConfigControl.appFolder);
-        }
-
-        void CheckPortableMode() {
-            if (File.Exists(Directory.GetCurrentDirectory() + @"\" + ConfigControl.config)) {
-                ConfigControl.appFolder = (Directory.GetCurrentDirectory() + @"\");
-                ConfigControl.portableMode.UpdateValue("true");
-            }
-        }
-
+ 
         void AttachPlayer() {
             Detached d = DetachVid(false, new VideoSettings(), true).Result;
 

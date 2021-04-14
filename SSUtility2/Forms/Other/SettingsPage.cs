@@ -183,9 +183,9 @@ namespace SSUtility2 {
                 bool moveFiles = Tools.ShowPopup("Would you like to move all current directory files to the new directory too?", "Move files?", null, false);
                 string oldAppFolder = ConfigControl.appFolder;
 
-                MainForm.ChooseNewDirectory();
+                FileStuff.ChooseNewDirectory();
                 ConfigControl.SetToDefaults();
-                MainForm.CreateConfigFiles();
+                FileStuff.CreateConfigFiles();
 
                 if (oldAppFolder != ConfigControl.appFolder && oldAppFolder != ConfigControl.appFolder + @"SSUtility\") {
                     if (moveFiles) {

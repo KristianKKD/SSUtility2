@@ -220,6 +220,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileStuff.cs" />
+    <Compile Include="Forms\Other\ChooseConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Other\ChooseConfig.Designer.cs">
+      <DependentUpon>ChooseConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Control\CustomPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -334,6 +341,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\Other\ChooseConfig.resx">
+      <DependentUpon>ChooseConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Control\CustomPanel.resx">
       <DependentUpon>CustomPanel.cs</DependentUpon>
     </EmbeddedResource>

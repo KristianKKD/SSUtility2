@@ -9,7 +9,7 @@ namespace SSUtility2 {
     class ConfigControl {
 
         public static string appFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\SSUtility\";
-        public const string config = "config.txt";
+        public static string config = "config.txt";
 
         public static string savedFolder = appFolder + @"Saved\";
 
@@ -30,7 +30,7 @@ namespace SSUtility2 {
         public static ConfigSetting ignoreAddress = new ConfigSetting("false", "AddressInvalidHidden", ConfigSetting.VarType.boolean);
         public static ConfigSetting forceCamera = new ConfigSetting("false", "ForceCameraModeEnabled", ConfigSetting.VarType.boolean);
         public static ConfigSetting automaticPaths = new ConfigSetting("true", "AutomaticPaths", ConfigSetting.VarType.boolean);
-        public static ConfigSetting portableMode = new ConfigSetting("false", "PortableMode", ConfigSetting.VarType.boolean);
+        public static ConfigSetting portableMode = new ConfigSetting("true", "PortableMode", ConfigSetting.VarType.boolean);
         public static ConfigSetting finalSource = new ConfigSetting(@"\\192.168.1.118\netdrive\ProductionTesting\DEFAULT FILES", "FinalModeSourceFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting finalDestination = new ConfigSetting(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "FinalModeDestinationFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting savedIP = new ConfigSetting("192.168.1.71", "SavedIP", ConfigSetting.VarType.strings);
@@ -145,10 +145,7 @@ namespace SSUtility2 {
         };
 
 
-        public static List<ConfigVar> stringVarList {
-            get;
-            set;
-        }
+        public static List<ConfigVar> stringVarList;
 
         public static async Task SetToDefaults() {
             savedFolder = appFolder + @"Saved\";
