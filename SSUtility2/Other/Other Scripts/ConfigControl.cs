@@ -25,7 +25,6 @@ namespace SSUtility2 {
         public static ConfigSetting screencapFileName = new ConfigSetting("Recording", "ScreenRecordingFileName", ConfigSetting.VarType.strings);
         public static ConfigSetting recQual = new ConfigSetting("100", "RecordingQuality", ConfigSetting.VarType.integer);
         public static ConfigSetting recFPS = new ConfigSetting("30", "RecordingFramerate", ConfigSetting.VarType.integer);
-        public static ConfigSetting commandRateMs = new ConfigSetting("100", "UpdateStatsTimerMs", ConfigSetting.VarType.integer);
         public static ConfigSetting subnetNotif = new ConfigSetting("false", "SubnetNotificationHidden", ConfigSetting.VarType.boolean);
         public static ConfigSetting autoPlay = new ConfigSetting("true", "AutoPlayLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting ignoreAddress = new ConfigSetting("false", "AddressInvalidHidden", ConfigSetting.VarType.boolean);
@@ -100,7 +99,6 @@ namespace SSUtility2 {
             scFileName,
             recQual,
             recFPS,
-            commandRateMs,
             subnetNotif,
             autoPlay,
             ignoreAddress,
@@ -175,8 +173,6 @@ namespace SSUtility2 {
 
                     ConfigLine(path, setting.settingName, setting.stringVal);
                 }
-
-                CommandQueue.UpdateTimerRate();
 
                 if (MainForm.m.finalMode) {
                     Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);

@@ -58,7 +58,6 @@ namespace SSUtility2 {
             this.Menu_Settings_CP = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Keyboard = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_Swap = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_ImportConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_ExportConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
@@ -182,7 +181,6 @@ namespace SSUtility2 {
             this.Menu_Settings_CP,
             this.Menu_Settings_Lite,
             this.Menu_Settings_Keyboard,
-            this.Menu_Settings_Swap,
             this.Menu_Settings_ImportConfig,
             this.Menu_Settings_ExportConfig});
             this.Menu_Settings.Name = "Menu_Settings";
@@ -238,13 +236,6 @@ namespace SSUtility2 {
             this.Menu_Settings_Keyboard.Size = new System.Drawing.Size(207, 22);
             this.Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
             this.Menu_Settings_Keyboard.Click += new System.EventHandler(this.Menu_Settings_Keyboard_Click);
-            // 
-            // Menu_Settings_Swap
-            // 
-            this.Menu_Settings_Swap.Name = "Menu_Settings_Swap";
-            this.Menu_Settings_Swap.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_Swap.Text = "Swap To Thermal";
-            this.Menu_Settings_Swap.Click += new System.EventHandler(this.Menu_Settings_Swap_Click);
             // 
             // Menu_Settings_ImportConfig
             // 
@@ -1433,7 +1424,6 @@ namespace SSUtility2 {
         public Button b_PTZ_FocusPos;
         public Button b_PTZ_ZoomPos;
         public PictureBox pB_Background;
-        public ToolStripMenuItem Menu_Settings_Swap;
         public ToolStripMenuItem Menu_Settings_Keyboard;
         public ToolStripMenuItem Menu_Settings_CP;
         public ToolStripMenuItem Menu_Window_Settings;

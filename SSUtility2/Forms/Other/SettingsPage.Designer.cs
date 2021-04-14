@@ -45,13 +45,12 @@ namespace SSUtility2
             this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
+            this.l_IPCon_Percent = new System.Windows.Forms.Label();
             this.tB_IPCon_CamSpeed = new System.Windows.Forms.TextBox();
             this.l_IPCon_TrackBar = new System.Windows.Forms.Label();
             this.l_IPCon_ForceMode = new System.Windows.Forms.Label();
             this.cB_IPCon_ForceMode = new System.Windows.Forms.ComboBox();
             this.check_IPCon_ForceCam = new System.Windows.Forms.CheckBox();
-            this.cB_IPCon_RefreshRate = new System.Windows.Forms.ComboBox();
-            this.l_IPCon_CommandRate = new System.Windows.Forms.Label();
             this.cB_ipCon_CamType = new System.Windows.Forms.ComboBox();
             this.l_ipCon_Selected = new System.Windows.Forms.Label();
             this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
@@ -82,7 +81,6 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.l_IPCon_Percent = new System.Windows.Forms.Label();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -338,8 +336,6 @@ namespace SSUtility2
             this.tP_Control.Controls.Add(this.l_IPCon_ForceMode);
             this.tP_Control.Controls.Add(this.cB_IPCon_ForceMode);
             this.tP_Control.Controls.Add(this.check_IPCon_ForceCam);
-            this.tP_Control.Controls.Add(this.cB_IPCon_RefreshRate);
-            this.tP_Control.Controls.Add(this.l_IPCon_CommandRate);
             this.tP_Control.Controls.Add(this.cB_ipCon_CamType);
             this.tP_Control.Controls.Add(this.l_ipCon_Selected);
             this.tP_Control.Controls.Add(this.tB_IPCon_Port);
@@ -358,9 +354,18 @@ namespace SSUtility2
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
             // 
+            // l_IPCon_Percent
+            // 
+            this.l_IPCon_Percent.AutoSize = true;
+            this.l_IPCon_Percent.Location = new System.Drawing.Point(281, 121);
+            this.l_IPCon_Percent.Name = "l_IPCon_Percent";
+            this.l_IPCon_Percent.Size = new System.Drawing.Size(15, 13);
+            this.l_IPCon_Percent.TabIndex = 92;
+            this.l_IPCon_Percent.Text = "%";
+            // 
             // tB_IPCon_CamSpeed
             // 
-            this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(249, 140);
+            this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(245, 118);
             this.tB_IPCon_CamSpeed.Name = "tB_IPCon_CamSpeed";
             this.tB_IPCon_CamSpeed.Size = new System.Drawing.Size(34, 20);
             this.tB_IPCon_CamSpeed.TabIndex = 91;
@@ -370,7 +375,7 @@ namespace SSUtility2
             // l_IPCon_TrackBar
             // 
             this.l_IPCon_TrackBar.AutoSize = true;
-            this.l_IPCon_TrackBar.Location = new System.Drawing.Point(6, 143);
+            this.l_IPCon_TrackBar.Location = new System.Drawing.Point(6, 120);
             this.l_IPCon_TrackBar.Name = "l_IPCon_TrackBar";
             this.l_IPCon_TrackBar.Size = new System.Drawing.Size(101, 13);
             this.l_IPCon_TrackBar.TabIndex = 90;
@@ -416,33 +421,6 @@ namespace SSUtility2
             this.toolTips.SetToolTip(this.check_IPCon_ForceCam, "Reconnect upon entering a new IP in the IP Control section.");
             this.check_IPCon_ForceCam.UseVisualStyleBackColor = true;
             this.check_IPCon_ForceCam.CheckedChanged += new System.EventHandler(this.check_IPCon_ForceCam_CheckedChanged);
-            // 
-            // cB_IPCon_RefreshRate
-            // 
-            this.cB_IPCon_RefreshRate.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_IPCon_RefreshRate.FormattingEnabled = true;
-            this.cB_IPCon_RefreshRate.Items.AddRange(new object[] {
-            "100",
-            "200",
-            "500"});
-            this.cB_IPCon_RefreshRate.Location = new System.Drawing.Point(115, 112);
-            this.cB_IPCon_RefreshRate.Name = "cB_IPCon_RefreshRate";
-            this.cB_IPCon_RefreshRate.Size = new System.Drawing.Size(123, 21);
-            this.cB_IPCon_RefreshRate.TabIndex = 85;
-            this.toolTips.SetToolTip(this.cB_IPCon_RefreshRate, "General speed of the program, lower to decrease connection latency, increase to i" +
-        "mprove performance.");
-            this.cB_IPCon_RefreshRate.TextChanged += new System.EventHandler(this.cB_IPCon_RefreshRate_TextChanged);
-            // 
-            // l_IPCon_CommandRate
-            // 
-            this.l_IPCon_CommandRate.AutoSize = true;
-            this.l_IPCon_CommandRate.Location = new System.Drawing.Point(6, 115);
-            this.l_IPCon_CommandRate.Name = "l_IPCon_CommandRate";
-            this.l_IPCon_CommandRate.Size = new System.Drawing.Size(83, 13);
-            this.l_IPCon_CommandRate.TabIndex = 84;
-            this.l_IPCon_CommandRate.Text = "Send Rate (ms):";
-            this.toolTips.SetToolTip(this.l_IPCon_CommandRate, "General speed of the program, lower to decrease connection latency, increase to i" +
-        "mprove performance.");
             // 
             // cB_ipCon_CamType
             // 
@@ -533,7 +511,7 @@ namespace SSUtility2
             // slider_IPCon_ControlMultiplier
             // 
             this.slider_IPCon_ControlMultiplier.BackColor = System.Drawing.SystemColors.Window;
-            this.slider_IPCon_ControlMultiplier.Location = new System.Drawing.Point(109, 139);
+            this.slider_IPCon_ControlMultiplier.Location = new System.Drawing.Point(109, 116);
             this.slider_IPCon_ControlMultiplier.Maximum = 200;
             this.slider_IPCon_ControlMultiplier.Minimum = 1;
             this.slider_IPCon_ControlMultiplier.Name = "slider_IPCon_ControlMultiplier";
@@ -789,15 +767,6 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
-            // l_IPCon_Percent
-            // 
-            this.l_IPCon_Percent.AutoSize = true;
-            this.l_IPCon_Percent.Location = new System.Drawing.Point(285, 143);
-            this.l_IPCon_Percent.Name = "l_IPCon_Percent";
-            this.l_IPCon_Percent.Size = new System.Drawing.Size(15, 13);
-            this.l_IPCon_Percent.TabIndex = 92;
-            this.l_IPCon_Percent.Text = "%";
-            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -879,8 +848,6 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_Other_ResolutionWidth;
         public System.Windows.Forms.ComboBox cB_Rec_Quality;
         public System.Windows.Forms.Label l_Rec_Quality;
-        public System.Windows.Forms.ComboBox cB_IPCon_RefreshRate;
-        public System.Windows.Forms.Label l_IPCon_CommandRate;
         public System.Windows.Forms.CheckBox check_AddressInvalid;
         public System.Windows.Forms.DataGridView dgv_Custom_Buttons;
         private System.Windows.Forms.DataGridViewTextBoxColumn ButtonName;

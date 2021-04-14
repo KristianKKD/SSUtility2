@@ -33,8 +33,6 @@ namespace SSUtility2 {
             cB_Rec_Quality.Text = ConfigControl.recQual.stringVal;
             cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
-            cB_IPCon_RefreshRate.Text = ConfigControl.commandRateMs.stringVal;
-
             check_Other_Subnet.Checked = ConfigControl.subnetNotif.boolVal;
             check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
             check_Other_AutoReconnect.Checked = ConfigControl.autoReconnect.boolVal;
@@ -104,12 +102,6 @@ namespace SSUtility2 {
 
             b_Paths_sCBrowse.Enabled = auto;
             b_Paths_vBrowse.Enabled = auto;
-        }
-
-        private void cB_IPCon_RefreshRate_TextChanged(object sender, EventArgs e) {
-            if (Tools.CheckIfNameValid(cB_IPCon_RefreshRate.Text, true)) {
-                ConfigControl.commandRateMs.UpdateValue(cB_IPCon_RefreshRate.Text);
-            }
         }
 
         private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
@@ -262,15 +254,6 @@ namespace SSUtility2 {
 
         public async Task UpdateSelectedCam(bool play) {
             cB_ipCon_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
-
-            MainForm.m.Menu_Settings_Swap.Enabled = true; // to disable in case it's not swappable (in else condition)
-
-            if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight"))
-                MainForm.m.Menu_Settings_Swap.Text = "Swap to Thermal";
-            else if (ConfigControl.mainPlayerCamType.stringVal.Contains("thermal"))
-                MainForm.m.Menu_Settings_Swap.Text = "Swap to Daylight";
-            else
-                MainForm.m.Menu_Settings_Swap.Enabled = false;
 
             if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite)
                 MainForm.m.mainPlayer.UpdateMode();

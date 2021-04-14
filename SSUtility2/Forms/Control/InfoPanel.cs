@@ -15,19 +15,20 @@ namespace SSUtility2 {
 
         public Panel myPanel;
 
-        public bool thermalCam;
-
-        public bool isActive;
+        public bool isActive = false;
 
         public bool isCamera = false;
+        
+        public bool forcedQueueing = false;
 
         int panID;
         int tiltID;
         int fovID;
         int tFovID;
 
-        static int commandPos = 0;
+        public int commandPos = 0;
         int timeoutTime = 0;
+        int tickCount = 0;
 
         static float pan;
         static float tilt;
@@ -74,6 +75,7 @@ namespace SSUtility2 {
                 GenCommands();
 
                 isActive = true;
+                forcedQueueing = true;
                 MainForm.m.Menu_Settings_Info.Text = "Disable Info Panel";
                 ShowAll();
             } catch (Exception e) {
@@ -88,14 +90,18 @@ namespace SSUtility2 {
             MainForm.m.Menu_Settings_Info.Text = "Enable Info Panel";
         }
 
+
         public async Task InfoPanelTick() {
             try {
+                tickCount++;
+
                 if (!AsyncCamCom.sock.Connected) {
                     return;
                 }
 
                 if (isActive && isCamera) {
-                    UpdateAll();
+                    if (tickCount > CommandQueue.commandRate * 2 || forcedQueueing)
+                        UpdateAll();
                 } else {
                     if (!isCamera) {
                         if ((MainForm.m.mainPlayer.settings.isPlaying || MainForm.m.lite) && timeoutTime < CommandQueue.commandRetries) {
@@ -129,6 +135,8 @@ namespace SSUtility2 {
         async Task UpdateAll() {
             try {
                 if (commandPos >= 4) {
+                    forcedQueueing = false;
+                    tickCount = 0;
                     commandPos = 0;
                 }
 
@@ -170,7 +178,7 @@ namespace SSUtility2 {
                         tilt = OtherCamCom.CalculateTilt(result);
                         break;
                     case "5D": //fov
-                        if (commandPos == 3) {
+                        if (InfoPanel.i.commandPos == 3) {
                             fov = OtherCamCom.ReturnedHexValToFloat(result);
                         } else {
                             tfov = OtherCamCom.ReturnedHexValToFloat(result);

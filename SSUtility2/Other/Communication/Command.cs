@@ -15,6 +15,7 @@ namespace SSUtility2 {
         public static List<Command> oldList; //need to add response log handling for this
 
         public static int total = 0;
+        public const int commandRate = 100;
 
         public static int commandRetries = 10;
         
@@ -30,13 +31,9 @@ namespace SSUtility2 {
 
         public static void StartTimer() {
             SendTimer = new Timer();
-            SendTimer.Interval = ConfigControl.commandRateMs.intVal;
+            SendTimer.Interval = 100;
             SendTimer.Tick += new EventHandler(SendCurrentCommand);
             SendTimer.Start();
-        }
-
-        public static void UpdateTimerRate() {
-            SendTimer.Interval = ConfigControl.commandRateMs.intVal;
         }
 
         private static void SendCurrentCommand(object sender, EventArgs e) {
@@ -67,12 +64,12 @@ namespace SSUtility2 {
         public static async Task<bool> WaitForCommandDone(Command com) {
             for (int i = 0; i < commandRetries; i++) {
                 if (!com.done) {
-                    await Task.Delay(ConfigControl.commandRateMs.intVal).ConfigureAwait(false);
+                    await Task.Delay(commandRate).ConfigureAwait(false);
                 } else {
                     return true;
-
                 }
             }
+
             return false;
         }
 
@@ -97,7 +94,7 @@ namespace SSUtility2 {
                     if (com.done) {
                         break;
                     } else {
-                        await Task.Delay(ConfigControl.commandRateMs.intVal);
+                        await Task.Delay(commandRate);
                     }
                     i++;
                 }

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.6.1";
+        public const string version = "v2.4.7.0";
         private bool startLiteVersion = false;
 
         private bool closing = false;
@@ -564,10 +564,6 @@ namespace SSUtility2 {
             InfoPanel.i.StartStopTicking();
         }
 
-        private void Menu_Settings_Swap_Click(object sender, EventArgs e) {
-            SwapPlayers();
-        }
-
         void SwapPlayers() {
             string value = "";
             bool daythermswap = false;
@@ -691,6 +687,8 @@ namespace SSUtility2 {
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
             await Task.Delay(100).ConfigureAwait(false);
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
+            InfoPanel.i.forcedQueueing = true;
+            InfoPanel.i.commandPos = 0;
         }
 
         private void Joystick_MouseUp(object sender, MouseEventArgs e) {
