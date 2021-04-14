@@ -27,6 +27,7 @@ namespace SSUtility2
         /// </summary>
         private void InitializeComponent() {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandListWindow));
             this.dgv_Coms = new System.Windows.Forms.DataGridView();
             this.Commands = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -42,6 +43,7 @@ namespace SSUtility2
             this.dgv_Coms.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgv_Coms.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCellsExceptHeaders;
             this.dgv_Coms.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
@@ -56,6 +58,14 @@ namespace SSUtility2
             this.Commands,
             this.Message,
             this.h_Description});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv_Coms.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgv_Coms.Location = new System.Drawing.Point(0, 0);
             this.dgv_Coms.Name = "dgv_Coms";
             this.dgv_Coms.RowHeadersVisible = false;
@@ -79,6 +89,7 @@ namespace SSUtility2
             this.Message.HeaderText = "Message";
             this.Message.Name = "Message";
             this.Message.ReadOnly = true;
+            this.Message.Width = 80;
             // 
             // h_Description
             // 

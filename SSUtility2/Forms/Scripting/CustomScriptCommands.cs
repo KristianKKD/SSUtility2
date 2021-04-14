@@ -45,9 +45,9 @@ namespace SSUtility2 {
         readonly static ScriptCommand querypost = new ScriptCommand(new string[] { "querypost" }, new byte[] { 0x07, 0x6B, 0x00, 0x00 }, "Returns camera test data", true);
         readonly static ScriptCommand queryconfig = new ScriptCommand(new string[] { "queryconfig" }, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config, (thermal only)", true);
         
-        readonly static ScriptCommand learnPreset = new ScriptCommand(new string[] { "learnpreset", "setpreset" }, new byte[] { 0x00, 0x03, 0x00, 0x00 }, "", false, true, false, false);
-        readonly static ScriptCommand clearPreset = new ScriptCommand(new string[] { "clearpreset" }, new byte[] { 0x00, 0x05, 0x00, 0x00 }, "", false, true, false, false);
-        readonly static ScriptCommand gotoPreset = new ScriptCommand(new string[] { "gotopreset" }, new byte[] { 0x00, 0x07, 0x00, 0x00 }, "", false, true, false, false);
+        readonly static ScriptCommand learnPreset = new ScriptCommand(new string[] { "learnpreset", "setpreset" }, new byte[] { 0x00, 0x03, 0x00, 0x00 }, "Saves current PTZ state of the camera and assigns it to the X value memory position", false, true, false, false);
+        readonly static ScriptCommand clearPreset = new ScriptCommand(new string[] { "clearpreset" }, new byte[] { 0x00, 0x05, 0x00, 0x00 }, "Clears preset X from camera memory", false, true, false, false);
+        readonly static ScriptCommand gotoPreset = new ScriptCommand(new string[] { "gotopreset" }, new byte[] { 0x00, 0x07, 0x00, 0x00 }, "Restores preset X's PTZ settings", false, true, false, false);
 
         public readonly static ScriptCommand[] queryCommands = new ScriptCommand[] {
             querypan,

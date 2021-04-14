@@ -43,6 +43,7 @@ namespace SSUtility2 {
                     if (!curCom.custom) {
                         row.Cells[1].Value = Tools.ReadCommand(curCom.codeContent, true);
                     } else {
+                        row.Cells[1].Value = "Scripting";
                         row.Cells[2].Value = "(Custom Command) ";
                     }
 
@@ -56,25 +57,23 @@ namespace SSUtility2 {
         }
 
         private void dgv_Coms_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
-            if (!pelcoWindow) {
+            if (!pelcoWindow)
                 return;
-            }
+
             int row = e.RowIndex;
             int column = e.ColumnIndex;
+            string val = dgv_Coms.Rows[row].Cells[column].Value.ToString();
 
-            if (column == 2) {
+            if (column == 2 || val == "Scripting")
                 return;
-            }
 
             if (MainForm.m.pd.tB_Commands.Text.Length > 0) {
                 MainForm.m.pd.tB_Commands.Text += Environment.NewLine;
             }
 
-            string val = dgv_Coms.Rows[row].Cells[column].Value.ToString();
             if (column == 0) {
-                if (val.Contains(",")) {
+                if (val.Contains(","))
                     val = val.Substring(0, val.IndexOf(","));
-                }
             }
 
             MainForm.m.pd.tB_Commands.Text += val;

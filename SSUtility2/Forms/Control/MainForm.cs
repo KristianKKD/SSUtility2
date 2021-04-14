@@ -11,7 +11,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.8.0";
+        public const string version = "v2.4.8.2";
         private bool startLiteVersion = false;
 
         private bool closing = false;
