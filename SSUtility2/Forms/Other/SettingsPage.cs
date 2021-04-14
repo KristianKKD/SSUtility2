@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -213,15 +214,29 @@ namespace SSUtility2 {
         }
 
         private void tB_IPCon_Adr_Leave(object sender, EventArgs e) {
-            ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
-            AsyncCamCom.TryConnect(false);
+            NewConnect();
         }
 
         private void tB_IPCon_Adr_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
-                AsyncCamCom.TryConnect(false);
+                NewConnect();
             }
+        }
+
+        async Task NewConnect() {
+            ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
+            if (await AsyncCamCom.TryConnect(false).ConfigureAwait(false)) {
+                if (!MainForm.m.lite)
+                    return;
+
+                string playerIPAdr = MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text;
+
+                if (playerIPAdr == "" || playerIPAdr == ConfigControl.mainPlayerIPAdr.defaultVal || !MainForm.m.mainPlayer.settings.isPlaying) {
+                    MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ConfigControl.savedIP.stringVal;
+                    MainForm.m.mainPlayer.StartPlaying(false);
+                }
+            }
+
         }
 
         void UpdatePresetCB() {

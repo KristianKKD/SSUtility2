@@ -1,18 +1,16 @@
 ﻿using SSUtility2.Forms.FinalTest;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.8.2";
-        private bool startLiteVersion = false;
+        public const string version = "v2.4.8.3";
+        private bool startLiteVersion = false; //use lite, not this
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -20,6 +18,8 @@ namespace SSUtility2 {
         public bool finalMode = false;
         public bool lite = false;
         public bool finishedLoading = false;
+
+        public static MainForm m;
 
         private static Control[] controlPanel;
 
@@ -29,17 +29,12 @@ namespace SSUtility2 {
         public ResponseLog rl;
         public PresetPanel pp;
         public TabControl attachedpp;
-
         public Detached mainPlayer;
-        
         private Recorder screenRec;
 
         private string inUseVideoPath;
         private string screenRecordName;
-        
         public string finalDest;
-
-        public static MainForm m;
 
         public async Task StartupStuff() {
             try {
