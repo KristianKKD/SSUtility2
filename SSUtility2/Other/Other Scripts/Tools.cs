@@ -69,19 +69,21 @@ namespace SSUtility2 {
 
         public static uint MakeAdr() {
             string val = MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Text;
-            if (val.Contains("Daylight"))
+            string mainCamVal = ConfigControl.mainPlayerCamType.stringVal;
+
+            if (val.Contains("Daylight") && !MainForm.m.lite)
                 return 1;
-            else if (val.Contains("Thermal"))
+            else if (val.Contains("Thermal") && !MainForm.m.lite)
                 return 2;
             else {
-                if (ConfigControl.mainPlayerCamType.stringVal.Contains("Daylight"))
+                if (mainCamVal.Contains("Daylight"))
                     return 1;
-                else if (ConfigControl.mainPlayerCamType.stringVal.Contains("Thermal"))
+                else if (mainCamVal.Contains("Thermal"))
                     return 2;
-                else if (int.TryParse(ConfigControl.mainPlayerCamType.stringVal, out int dontUse))
-                    return uint.Parse(ConfigControl.mainPlayerCamType.stringVal);
+                else if (int.TryParse(mainCamVal, out int dontUse))
+                    return uint.Parse(mainCamVal);
                 else
-                    return 0;
+                    return 1;
             }
         }
 

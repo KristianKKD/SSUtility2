@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.8.3";
+        public const string version = "v2.4.8.4";
         private bool startLiteVersion = false; //use lite, not this
 
         private bool closing = false;
@@ -59,6 +59,8 @@ namespace SSUtility2 {
                     b_PTZ_ZoomNeg,
                     b_PTZ_FocusPos,
                     b_PTZ_FocusNeg,
+                    b_PTZ_Daylight,
+                    b_PTZ_Thermal,
                     pB_Background,
                     Joystick,
                 };
@@ -779,6 +781,16 @@ namespace SSUtility2 {
 
         private void tP_Cover_DoubleClick(object sender, EventArgs e) {
             SwapPlayers();
+        }
+
+        private void b_PTZ_Daylight_Click(object sender, EventArgs e) {
+            ConfigControl.mainPlayerCamType.UpdateValue("Daylight");
+            setPage.UpdateSelectedCam(true);
+        }
+
+        private void b_PTZ_Thermal_Click(object sender, EventArgs e) {
+            ConfigControl.mainPlayerCamType.UpdateValue("Thermal");
+            setPage.UpdateSelectedCam(true);
         }
 
     } // end of class MainForm
