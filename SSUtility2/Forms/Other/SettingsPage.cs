@@ -269,19 +269,21 @@ namespace SSUtility2 {
 
         public async Task UpdateSelectedCam(bool play) {
             cB_ipCon_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
+            
+            if (MainForm.m.lite) {
+                MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
+                MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
+                MainForm.m.b_PTZ_Daylight.Visible = true;
+                MainForm.m.b_PTZ_Thermal.Visible = true;
 
-            MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
-            MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
-            MainForm.m.b_PTZ_Daylight.Visible = true;
-            MainForm.m.b_PTZ_Thermal.Visible = true;
-
-            if (ConfigControl.mainPlayerCamType.stringVal.Contains("Daylight"))
-                MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.LightGreen;
-            else if (ConfigControl.mainPlayerCamType.stringVal.Contains("Thermal"))
-                MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.LightGreen;
-            else {
-                MainForm.m.b_PTZ_Daylight.Visible = false;
-                MainForm.m.b_PTZ_Thermal.Visible = false;
+                if (ConfigControl.mainPlayerCamType.stringVal.Contains("Daylight"))
+                    MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.LightGreen;
+                else if (ConfigControl.mainPlayerCamType.stringVal.Contains("Thermal"))
+                    MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.LightGreen;
+                else {
+                    MainForm.m.b_PTZ_Daylight.Visible = false;
+                    MainForm.m.b_PTZ_Thermal.Visible = false;
+                }
             }
 
             if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite)

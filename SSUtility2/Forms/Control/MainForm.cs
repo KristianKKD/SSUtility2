@@ -1,5 +1,6 @@
 ﻿using SSUtility2.Forms.FinalTest;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -9,8 +10,8 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.8.4";
-        private bool startLiteVersion = false; //use lite, not this
+        public const string version = "v2.4.8.5";
+        private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -21,7 +22,7 @@ namespace SSUtility2 {
 
         public static MainForm m;
 
-        private static Control[] controlPanel;
+        private static List<Control> controlPanel;
 
         public CustomPanel custom;
         public SettingsPage setPage;
@@ -50,7 +51,7 @@ namespace SSUtility2 {
                 AttachCustomPanel();
                 AttachPresetPanel();
 
-                controlPanel = new Control[] {
+                controlPanel = new List<Control>() {
                     b_PTZ_Up,
                     b_PTZ_Down,
                     b_PTZ_Left,
@@ -59,8 +60,6 @@ namespace SSUtility2 {
                     b_PTZ_ZoomNeg,
                     b_PTZ_FocusPos,
                     b_PTZ_FocusNeg,
-                    b_PTZ_Daylight,
-                    b_PTZ_Thermal,
                     pB_Background,
                     Joystick,
                 };
@@ -241,9 +240,17 @@ namespace SSUtility2 {
                     lite = true;
                     ShowControlPanel();
                     m.MinimumSize = new Size(0, 0);
-                    m.Size = new Size(305, 300);
+                    m.Size = new Size(305, 340);
                     m.MinimumSize = Size;
                     m.MaximumSize = Size;
+
+                    controlPanel.Add(b_PTZ_Daylight);
+                    controlPanel.Add(b_PTZ_Thermal);
+
+                    b_PTZ_Daylight.Visible = true;
+                    b_PTZ_Thermal.Visible = true;
+
+                    setPage.UpdateSelectedCam(false);
 
                     foreach (Control c in controlPanel) {
                         c.Top -= 50;
@@ -785,12 +792,12 @@ namespace SSUtility2 {
 
         private void b_PTZ_Daylight_Click(object sender, EventArgs e) {
             ConfigControl.mainPlayerCamType.UpdateValue("Daylight");
-            setPage.UpdateSelectedCam(true);
+            setPage.UpdateSelectedCam(false);
         }
 
         private void b_PTZ_Thermal_Click(object sender, EventArgs e) {
             ConfigControl.mainPlayerCamType.UpdateValue("Thermal");
-            setPage.UpdateSelectedCam(true);
+            setPage.UpdateSelectedCam(false);
         }
 
     } // end of class MainForm

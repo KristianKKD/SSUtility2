@@ -90,8 +90,8 @@ namespace SSUtility2 {
             this.tP_Cover = new SizeablePanel.TransparentPanel(this.components);
             this.Second_VLCPLayer = new AxAXVLC.AxVLCPlugin2();
             this.tP_MainCover = new SizeablePanel.TransparentPanel(this.components);
-            this.b_PTZ_Thermal = new System.Windows.Forms.Button();
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
+            this.b_PTZ_Thermal = new System.Windows.Forms.Button();
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
             this.p_Control.SuspendLayout();
@@ -575,18 +575,6 @@ namespace SSUtility2 {
             this.tP_MainCover.Size = new System.Drawing.Size(1264, 657);
             this.tP_MainCover.TabIndex = 96;
             // 
-            // b_PTZ_Thermal
-            // 
-            this.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
-            this.b_PTZ_Thermal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Thermal.Location = new System.Drawing.Point(68, 293);
-            this.b_PTZ_Thermal.Name = "b_PTZ_Thermal";
-            this.b_PTZ_Thermal.Size = new System.Drawing.Size(58, 30);
-            this.b_PTZ_Thermal.TabIndex = 97;
-            this.b_PTZ_Thermal.Text = "Thermal";
-            this.b_PTZ_Thermal.UseVisualStyleBackColor = false;
-            this.b_PTZ_Thermal.Click += new System.EventHandler(this.b_PTZ_Thermal_Click);
-            // 
             // b_PTZ_Daylight
             // 
             this.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
@@ -597,7 +585,21 @@ namespace SSUtility2 {
             this.b_PTZ_Daylight.TabIndex = 98;
             this.b_PTZ_Daylight.Text = "Daylight";
             this.b_PTZ_Daylight.UseVisualStyleBackColor = false;
+            this.b_PTZ_Daylight.Visible = false;
             this.b_PTZ_Daylight.Click += new System.EventHandler(this.b_PTZ_Daylight_Click);
+            // 
+            // b_PTZ_Thermal
+            // 
+            this.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
+            this.b_PTZ_Thermal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Thermal.Location = new System.Drawing.Point(68, 293);
+            this.b_PTZ_Thermal.Name = "b_PTZ_Thermal";
+            this.b_PTZ_Thermal.Size = new System.Drawing.Size(58, 30);
+            this.b_PTZ_Thermal.TabIndex = 97;
+            this.b_PTZ_Thermal.Text = "Thermal";
+            this.b_PTZ_Thermal.UseVisualStyleBackColor = false;
+            this.b_PTZ_Thermal.Visible = false;
+            this.b_PTZ_Thermal.Click += new System.EventHandler(this.b_PTZ_Thermal_Click);
             // 
             // MainForm
             // 
