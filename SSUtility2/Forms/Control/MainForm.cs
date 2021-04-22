@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.5.0.0";
+        public const string version = "v2.5.0.2";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -793,10 +793,6 @@ namespace SSUtility2 {
             Tools.SaveTextFile(lines, "configCopy");
         }
 
-        private void tP_Cover_DoubleClick(object sender, EventArgs e) {
-            SwapPlayers();
-        }
-
         private void b_PTZ_Daylight_Click(object sender, EventArgs e) {
             ConfigControl.mainPlayerCamType.UpdateValue("Daylight");
             setPage.UpdateSelectedCam(false);
@@ -805,6 +801,10 @@ namespace SSUtility2 {
         private void b_PTZ_Thermal_Click(object sender, EventArgs e) {
             ConfigControl.mainPlayerCamType.UpdateValue("Thermal");
             setPage.UpdateSelectedCam(false);
+        }
+
+        private void sP_Player_DoubleClick(object sender, EventArgs e) {
+            SwapPlayers();
         }
 
     } // end of class MainForm

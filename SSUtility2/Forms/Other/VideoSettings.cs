@@ -332,10 +332,21 @@ namespace SSUtility2 {
         }
 
         private void tB_PlayerD_SimpleAdr_KeyUp(object sender, KeyEventArgs e) {
-            ConfigControl.mainPlayerCustomFull.UpdateValue("true");
+            if (this != MainForm.m.mainPlayer.settings) {
+                return;
+            }
+
+            if(tB_PlayerD_SimpleAdr.Text.Length == 0)
+                ConfigControl.mainPlayerCustomFull.UpdateValue("false");
+            else
+                ConfigControl.mainPlayerCustomFull.UpdateValue("true");
         }
 
         private void tB_PlayerD_Name_KeyUp(object sender, KeyEventArgs e) {
+            if (this != MainForm.m.mainPlayer.settings) {
+                return;
+            }
+
             if (tB_PlayerD_Name.Text == tB_PlayerD_Adr.Text
                 || tB_PlayerD_Name.Text.Length == 0)
                 ConfigControl.mainPlayerCustomName.UpdateValue("false");

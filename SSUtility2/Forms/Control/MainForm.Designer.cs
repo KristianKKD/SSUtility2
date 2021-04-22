@@ -555,6 +555,7 @@ namespace SSUtility2 {
             this.sP_Player.Size = new System.Drawing.Size(400, 250);
             this.sP_Player.TabIndex = 2;
             this.sP_Player.Visible = false;
+            this.sP_Player.DoubleClick += new System.EventHandler(this.sP_Player_DoubleClick);
             // 
             // MainForm
             // 
