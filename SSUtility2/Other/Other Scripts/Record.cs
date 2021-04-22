@@ -4,6 +4,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using SharpAvi;
 using SharpAvi.Codecs;
 using SharpAvi.Output;
@@ -15,7 +16,7 @@ namespace SSUtility2 {
 
     public class Record {
 
-        public Record(string filename, int FrameRate, FourCC Encoder, int Quality, AxAXVLC.AxVLCPlugin2 player) {
+        public Record(string filename, int FrameRate, FourCC Encoder, int Quality, Panel player) {
             FileName = filename;
             FramesPerSecond = FrameRate;
             Codec = Encoder;

@@ -38,7 +38,7 @@ namespace SSUtility2.Forms.FinalTest {
 
                 string ip = HasIP(tB_Source.Text);
                 if (ip != "") {
-                    if (!OtherCamCom.PingAdr(IPAddress.Parse(ip)).Result) {
+                    if (!OtherCamCom.PingAdr(ip).Result) {
                         Tools.ShowPopup("Couldn't ping address given within Source Folder input!\nShow more?",
                             "Final Mode Failed!", "Tried to ping: " + ip);
                         return;

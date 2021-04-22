@@ -27,13 +27,13 @@
             this.Menu_StartStop = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
-            this.PlayerD_VLCPlayer = new AxAXVLC.AxVLCPlugin2();
+            this.p_Player = new System.Windows.Forms.Panel();
             this.Menu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PlayerD_VLCPlayer)).BeginInit();
             this.SuspendLayout();
             // 
             // Menu
             // 
+            this.Menu.BackColor = System.Drawing.Color.White;
             this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.videoStreamToolStripMenuItem});
             this.Menu.Location = new System.Drawing.Point(0, 0);
@@ -81,15 +81,15 @@
             this.Menu_Record.Text = "Start Recording";
             this.Menu_Record.Click += new System.EventHandler(this.Menu_Record_Click);
             // 
-            // PlayerD_VLCPlayer
+            // p_Player
             // 
-            this.PlayerD_VLCPlayer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PlayerD_VLCPlayer.Enabled = true;
-            this.PlayerD_VLCPlayer.Location = new System.Drawing.Point(0, 24);
-            this.PlayerD_VLCPlayer.Name = "PlayerD_VLCPlayer";
-            this.PlayerD_VLCPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("PlayerD_VLCPlayer.OcxState")));
-            this.PlayerD_VLCPlayer.Size = new System.Drawing.Size(772, 465);
-            this.PlayerD_VLCPlayer.TabIndex = 43;
+            this.p_Player.BackColor = System.Drawing.Color.Black;
+            this.p_Player.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.p_Player.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.p_Player.Location = new System.Drawing.Point(0, 24);
+            this.p_Player.Name = "p_Player";
+            this.p_Player.Size = new System.Drawing.Size(772, 465);
+            this.p_Player.TabIndex = 43;
             // 
             // Detached
             // 
@@ -97,7 +97,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(772, 489);
-            this.Controls.Add(this.PlayerD_VLCPlayer);
+            this.Controls.Add(this.p_Player);
             this.Controls.Add(this.Menu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Menu;
@@ -106,7 +106,6 @@
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
             this.Menu.ResumeLayout(false);
             this.Menu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PlayerD_VLCPlayer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -120,6 +119,6 @@
         public System.Windows.Forms.ToolStripMenuItem Menu_StartStop;
         public System.Windows.Forms.ToolStripMenuItem Menu_Snapshot;
         public System.Windows.Forms.ToolStripMenuItem Menu_Record;
-        private AxAXVLC.AxVLCPlugin2 PlayerD_VLCPlayer;
+        private System.Windows.Forms.Panel p_Player;
     }
 }

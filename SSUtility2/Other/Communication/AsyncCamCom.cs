@@ -120,7 +120,7 @@ namespace SSUtility2 {
                     return false;
                 }
 
-                if (!OtherCamCom.PingAdr(ep.Address).Result) {
+                if (!OtherCamCom.PingAdr(ep.Address.ToString()).Result) {
                     if (!hideErrors)
                         Tools.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "IP valid: " + parsedIP.ToString() + "\nPort valid: " + parsedPort.ToString() + "\nPing: Failed");

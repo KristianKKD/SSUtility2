@@ -97,8 +97,8 @@ namespace SSUtility2
             this.tB_PlayerD_Name.Name = "tB_PlayerD_Name";
             this.tB_PlayerD_Name.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_Name.TabIndex = 54;
-            this.tB_PlayerD_Name.TextChanged += new System.EventHandler(this.tB_PlayerD_Name_TextChanged);
             this.tB_PlayerD_Name.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
+            this.tB_PlayerD_Name.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_PlayerD_Name_KeyUp);
             // 
             // tB_PlayerD_SimpleAdr
             // 
@@ -111,6 +111,7 @@ namespace SSUtility2
             this.tB_PlayerD_SimpleAdr.TabIndex = 28;
             this.tB_PlayerD_SimpleAdr.TextChanged += new System.EventHandler(this.tB_PlayerD_SimpleAdr_TextChanged);
             this.tB_PlayerD_SimpleAdr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
+            this.tB_PlayerD_SimpleAdr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_PlayerD_SimpleAdr_KeyUp);
             // 
             // l_PlayerD_SimpleAdr
             // 

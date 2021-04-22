@@ -8,8 +8,6 @@ namespace SSUtility2 {
         public Detached originalDetached;
         public bool isSecondary = false;
         public bool isPlaying = false;
-        public bool customName = false;
-        public bool customFull = false;
 
         public const string dayRTSP = "videoinput_1:0/h264_1/onvif.stm";
         public const string thermalRTSP = "videoinput_2:0/h264_1/onvif.stm";
@@ -207,8 +205,8 @@ namespace SSUtility2 {
         private void tB_TextChanged(object sender, EventArgs e) {
             if (ActiveControl != this)
                 return;
-            tB_PlayerD_SimpleAdr.Text = GetCombined(this);
-            customFull = false;
+            if (tB_PlayerD_SimpleAdr.Text == "" || tB_PlayerD_SimpleAdr.Text == GetCombined(this))
+                ConfigControl.mainPlayerCustomFull.UpdateValue("false");
             UpdateSecondaryValues();
         }
 
@@ -218,7 +216,7 @@ namespace SSUtility2 {
             try {
                 string ipaddress = sets.tB_PlayerD_Adr.Text;
 
-                if (sets.customFull) {
+                if (ConfigControl.mainPlayerCustomFull.boolVal) {
                     full = sets.tB_PlayerD_SimpleAdr.Text;
                 } else {
                     string port = sets.tB_PlayerD_Port.Text;
@@ -227,20 +225,17 @@ namespace SSUtility2 {
                     string password = sets.tB_PlayerD_Password.Text;
 
                     full = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+                    
+                    sets.tB_PlayerD_SimpleAdr.Text = full;
                 }
 
-                if (!sets.customName)
+                if (!ConfigControl.mainPlayerCustomName.boolVal)
                     sets.tB_PlayerD_Name.Text = ipaddress;
+
 
             } catch { };
 
             return full;
-        }
-
-        private void tB_PlayerD_Name_TextChanged(object sender, EventArgs e) {
-            if (tB_PlayerD_Name.Text == tB_PlayerD_Adr.Text
-                || tB_PlayerD_Name.Text.Length == 0)
-                customName = false;
         }
 
         private void b_Secondary_Play_Click(object sender, EventArgs e) {
@@ -334,6 +329,18 @@ namespace SSUtility2 {
 
         private void Any_KeyPress(object sender, KeyPressEventArgs e) {
             SaveConfigFields();
+        }
+
+        private void tB_PlayerD_SimpleAdr_KeyUp(object sender, KeyEventArgs e) {
+            ConfigControl.mainPlayerCustomFull.UpdateValue("true");
+        }
+
+        private void tB_PlayerD_Name_KeyUp(object sender, KeyEventArgs e) {
+            if (tB_PlayerD_Name.Text == tB_PlayerD_Adr.Text
+                || tB_PlayerD_Name.Text.Length == 0)
+                ConfigControl.mainPlayerCustomName.UpdateValue("false");
+            else
+                ConfigControl.mainPlayerCustomName.UpdateValue("true");
         }
     }
 }

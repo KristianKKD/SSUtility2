@@ -77,7 +77,7 @@ namespace SSUtility2 {
             });
         }
 
-        public static async Task<bool> PingAdr(IPAddress address) {
+        public static async Task<bool> PingAdr(string address) {
             Ping pinger = null;
 
             if (address == null) {

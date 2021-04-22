@@ -68,6 +68,9 @@ namespace SSUtility2 {
         public static ConfigSetting mainPlayerBuffering = new ConfigSetting("200", "MainPlayerBuffering", ConfigSetting.VarType.strings);
         public static ConfigSetting mainPlayerUsername = new ConfigSetting("admin", "MainPlayerUsername", ConfigSetting.VarType.strings);
         public static ConfigSetting mainPlayerPassword = new ConfigSetting("admin", "MainPlayerPassword", ConfigSetting.VarType.strings);
+        
+        public static ConfigSetting mainPlayerCustomName = new ConfigSetting("false", "MainPlayerCustomName", ConfigSetting.VarType.boolean);
+        public static ConfigSetting mainPlayerCustomFull = new ConfigSetting("false", "MainPlayerCustomAdr", ConfigSetting.VarType.boolean);
 
 
         public static ConfigSetting[] customButtonNamesArray = new ConfigSetting[] {
@@ -142,6 +145,8 @@ namespace SSUtility2 {
             mainPlayerBuffering,
             mainPlayerUsername,
             mainPlayerPassword,
+            mainPlayerCustomName,
+            mainPlayerCustomFull,
         };
 
 

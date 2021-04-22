@@ -40,7 +40,6 @@ namespace SSUtility2 {
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.Menu_Window = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,7 +74,9 @@ namespace SSUtility2 {
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Main = new System.Windows.Forms.Panel();
             this.p_Control = new System.Windows.Forms.Panel();
+            this.b_PTZ_Daylight = new System.Windows.Forms.Button();
             this.b_Open = new System.Windows.Forms.Button();
+            this.b_PTZ_Thermal = new System.Windows.Forms.Button();
             this.Joystick = new Joystick.CentreStick();
             this.b_PTZ_Left = new System.Windows.Forms.Button();
             this.b_PTZ_Right = new System.Windows.Forms.Button();
@@ -87,19 +88,11 @@ namespace SSUtility2 {
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.pB_Background = new System.Windows.Forms.PictureBox();
             this.sP_Player = new SPanel.SizeablePanel();
-            this.tP_Cover = new SizeablePanel.TransparentPanel(this.components);
-            this.Second_VLCPLayer = new AxAXVLC.AxVLCPlugin2();
-            this.tP_MainCover = new SizeablePanel.TransparentPanel(this.components);
-            this.b_PTZ_Daylight = new System.Windows.Forms.Button();
-            this.b_PTZ_Thermal = new System.Windows.Forms.Button();
             this.MenuBar.SuspendLayout();
             this.p_Main.SuspendLayout();
             this.p_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Joystick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Background)).BeginInit();
-            this.sP_Player.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Second_VLCPLayer)).BeginInit();
-            this.tP_MainCover.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -367,7 +360,10 @@ namespace SSUtility2 {
             // 
             // p_Control
             // 
+            this.p_Control.BackColor = System.Drawing.Color.Black;
+            this.p_Control.Controls.Add(this.b_PTZ_Daylight);
             this.p_Control.Controls.Add(this.b_Open);
+            this.p_Control.Controls.Add(this.b_PTZ_Thermal);
             this.p_Control.Controls.Add(this.Joystick);
             this.p_Control.Controls.Add(this.b_PTZ_Left);
             this.p_Control.Controls.Add(this.b_PTZ_Right);
@@ -379,12 +375,24 @@ namespace SSUtility2 {
             this.p_Control.Controls.Add(this.b_PTZ_ZoomPos);
             this.p_Control.Controls.Add(this.pB_Background);
             this.p_Control.Controls.Add(this.sP_Player);
-            this.p_Control.Controls.Add(this.tP_MainCover);
             this.p_Control.Dock = System.Windows.Forms.DockStyle.Fill;
             this.p_Control.Location = new System.Drawing.Point(0, 0);
             this.p_Control.Name = "p_Control";
             this.p_Control.Size = new System.Drawing.Size(1264, 657);
             this.p_Control.TabIndex = 1;
+            // 
+            // b_PTZ_Daylight
+            // 
+            this.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
+            this.b_PTZ_Daylight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Daylight.Location = new System.Drawing.Point(160, 284);
+            this.b_PTZ_Daylight.Name = "b_PTZ_Daylight";
+            this.b_PTZ_Daylight.Size = new System.Drawing.Size(58, 30);
+            this.b_PTZ_Daylight.TabIndex = 98;
+            this.b_PTZ_Daylight.Text = "Daylight";
+            this.b_PTZ_Daylight.UseVisualStyleBackColor = false;
+            this.b_PTZ_Daylight.Visible = false;
+            this.b_PTZ_Daylight.Click += new System.EventHandler(this.b_PTZ_Daylight_Click);
             // 
             // b_Open
             // 
@@ -400,6 +408,19 @@ namespace SSUtility2 {
             this.b_Open.UseVisualStyleBackColor = false;
             this.b_Open.Visible = false;
             this.b_Open.Click += new System.EventHandler(this.b_Open_Click);
+            // 
+            // b_PTZ_Thermal
+            // 
+            this.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
+            this.b_PTZ_Thermal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Thermal.Location = new System.Drawing.Point(68, 284);
+            this.b_PTZ_Thermal.Name = "b_PTZ_Thermal";
+            this.b_PTZ_Thermal.Size = new System.Drawing.Size(58, 30);
+            this.b_PTZ_Thermal.TabIndex = 97;
+            this.b_PTZ_Thermal.Text = "Thermal";
+            this.b_PTZ_Thermal.UseVisualStyleBackColor = false;
+            this.b_PTZ_Thermal.Visible = false;
+            this.b_PTZ_Thermal.Click += new System.EventHandler(this.b_PTZ_Thermal_Click);
             // 
             // Joystick
             // 
@@ -529,77 +550,11 @@ namespace SSUtility2 {
             this.sP_Player.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.sP_Player.BackColor = System.Drawing.Color.Black;
             this.sP_Player.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.sP_Player.Controls.Add(this.tP_Cover);
-            this.sP_Player.Controls.Add(this.Second_VLCPLayer);
             this.sP_Player.Location = new System.Drawing.Point(850, 15);
             this.sP_Player.Name = "sP_Player";
             this.sP_Player.Size = new System.Drawing.Size(400, 250);
             this.sP_Player.TabIndex = 2;
             this.sP_Player.Visible = false;
-            // 
-            // tP_Cover
-            // 
-            this.tP_Cover.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tP_Cover.Location = new System.Drawing.Point(3, 3);
-            this.tP_Cover.Name = "tP_Cover";
-            this.tP_Cover.Size = new System.Drawing.Size(392, 242);
-            this.tP_Cover.TabIndex = 1;
-            this.tP_Cover.DoubleClick += new System.EventHandler(this.tP_Cover_DoubleClick);
-            this.tP_Cover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tP_Cover_MouseDown);
-            this.tP_Cover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tP_Cover_MouseMove);
-            this.tP_Cover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tP_Cover_MouseUp);
-            // 
-            // Second_VLCPLayer
-            // 
-            this.Second_VLCPLayer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Second_VLCPLayer.Enabled = true;
-            this.Second_VLCPLayer.Location = new System.Drawing.Point(3, 3);
-            this.Second_VLCPLayer.Name = "Second_VLCPLayer";
-            this.Second_VLCPLayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("Second_VLCPLayer.OcxState")));
-            this.Second_VLCPLayer.Size = new System.Drawing.Size(392, 242);
-            this.Second_VLCPLayer.TabIndex = 0;
-            // 
-            // tP_MainCover
-            // 
-            this.tP_MainCover.AllowDrop = true;
-            this.tP_MainCover.BackColor = System.Drawing.Color.Black;
-            this.tP_MainCover.Controls.Add(this.b_PTZ_Daylight);
-            this.tP_MainCover.Controls.Add(this.b_PTZ_Thermal);
-            this.tP_MainCover.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tP_MainCover.Location = new System.Drawing.Point(0, 0);
-            this.tP_MainCover.Name = "tP_MainCover";
-            this.tP_MainCover.Size = new System.Drawing.Size(1264, 657);
-            this.tP_MainCover.TabIndex = 96;
-            // 
-            // b_PTZ_Daylight
-            // 
-            this.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
-            this.b_PTZ_Daylight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Daylight.Location = new System.Drawing.Point(160, 293);
-            this.b_PTZ_Daylight.Name = "b_PTZ_Daylight";
-            this.b_PTZ_Daylight.Size = new System.Drawing.Size(58, 30);
-            this.b_PTZ_Daylight.TabIndex = 98;
-            this.b_PTZ_Daylight.Text = "Daylight";
-            this.b_PTZ_Daylight.UseVisualStyleBackColor = false;
-            this.b_PTZ_Daylight.Visible = false;
-            this.b_PTZ_Daylight.Click += new System.EventHandler(this.b_PTZ_Daylight_Click);
-            // 
-            // b_PTZ_Thermal
-            // 
-            this.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
-            this.b_PTZ_Thermal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Thermal.Location = new System.Drawing.Point(68, 293);
-            this.b_PTZ_Thermal.Name = "b_PTZ_Thermal";
-            this.b_PTZ_Thermal.Size = new System.Drawing.Size(58, 30);
-            this.b_PTZ_Thermal.TabIndex = 97;
-            this.b_PTZ_Thermal.Text = "Thermal";
-            this.b_PTZ_Thermal.UseVisualStyleBackColor = false;
-            this.b_PTZ_Thermal.Visible = false;
-            this.b_PTZ_Thermal.Click += new System.EventHandler(this.b_PTZ_Thermal_Click);
             // 
             // MainForm
             // 
@@ -623,9 +578,6 @@ namespace SSUtility2 {
             this.p_Control.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Joystick)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Background)).EndInit();
-            this.sP_Player.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Second_VLCPLayer)).EndInit();
-            this.tP_MainCover.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1460,14 +1412,11 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Settings_CP;
         public ToolStripMenuItem Menu_Window_Settings;
         public ToolStripMenuItem Menu_Settings_Lite;
-        public AxAXVLC.AxVLCPlugin2 Second_VLCPLayer;
-        private SizeablePanel.TransparentPanel tP_Cover;
         private ToolStripMenuItem Menu_QC_Custom;
         private ToolStripMenuItem Menu_Settings_Presets;
         private ToolStripMenuItem Menu_Settings_Custom;
         private ToolStripMenuItem Menu_Settings_ImportConfig;
         private ToolStripMenuItem Menu_Settings_ExportConfig;
-        private SizeablePanel.TransparentPanel tP_MainCover;
         public Button b_PTZ_Daylight;
         public Button b_PTZ_Thermal;
     } // end of partial class MainForm

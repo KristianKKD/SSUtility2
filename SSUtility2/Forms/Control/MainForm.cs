@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.4.8.5";
+        public const string version = "v2.5.0.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -37,6 +37,8 @@ namespace SSUtility2 {
         private string screenRecordName;
         public string finalDest;
 
+        private const string initString = "6D75724D7A4969576B5A7541475835676E34486D5965784659584E3555477868655756794C564A55553141755A58686C567778576F502F682F69426C59584E35";
+
         public async Task StartupStuff() {
             try {
                 m = this;
@@ -45,6 +47,8 @@ namespace SSUtility2 {
                 pd = new PelcoD();
                 pp = new PresetPanel();
                 D.protocol = new D();
+                EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init(initString);
+
 
                 AttachPlayer();
                 AttachInfoPanel();
@@ -118,29 +122,57 @@ namespace SSUtility2 {
                 inUseVideoPath = fullVideoPath;
                 isPlaying = true;
 
-                Recorder rec = Tools.Record(fullVideoPath, player.vlcPlayer);
+                Recorder rec = Tools.Record(fullVideoPath, player.myPlayer);
 
                 return (isPlaying, rec);
             }
         }
- 
+
+        bool dragging = false;
+        Point eOriginalPos;
+
         void AttachPlayer() {
             Detached d = DetachVid(false, new VideoSettings(), true).Result;
 
             if (!startLiteVersion) {
-                var c = Tools.GetAllType(d, typeof(AxAXVLC.AxVLCPlugin2));
+                var c = Tools.GetAllType(d, typeof(Panel));
                 p_Control.Controls.AddRange(c.ToArray());
             }
 
-            SizeablePanel.TransparentPanel tP = tP_MainCover;
+            Panel player = d.myPlayer;
 
-            tP.DragOver += (s, e) => {
+            sP_Player.MouseDown += (s, e) => {
+                if (e.Button == MouseButtons.Right) {
+                    mainPlayer.secondView.settings.Show();
+                    mainPlayer.secondView.settings.BringToFront();
+                } else if (e.Button == MouseButtons.Left) {
+                    eOriginalPos = new Point(e.X, e.Y);
+                    dragging = true;
+                }
+            };
+            sP_Player.MouseMove += (s, e) => { 
+                if (dragging && !sP_Player.resizing) {
+                    int xDragDist = e.X - eOriginalPos.X;
+                    int yDragDist = e.Y - eOriginalPos.Y;
+
+                    if (sP_Player.Location.X + xDragDist > 0 && sP_Player.Location.X + xDragDist < Width - sP_Player.Width)
+                        sP_Player.Left += xDragDist;
+
+                    if (sP_Player.Location.Y + yDragDist > 0 && sP_Player.Location.Y + yDragDist < Height - sP_Player.Height)
+                        sP_Player.Top += yDragDist;
+                }
+            };
+            sP_Player.MouseUp += (s, e) => {
+                dragging = false;
+                eOriginalPos = new Point(0, 0);
+            };
+            player.DragOver += (s, e) => {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                     e.Effect = DragDropEffects.Copy;
                 else
                     e.Effect = DragDropEffects.None;
             };
-            tP.DragDrop += (s, e) => {
+            player.DragDrop += (s, e) => {
                 try {
                     string[] fileName = e.Data.GetData(DataFormats.FileDrop) as string[];
                     if (fileName != null && fileName[0].Contains("txt")) {
@@ -153,7 +185,7 @@ namespace SSUtility2 {
                 }
             };
             if (!startLiteVersion) {
-                tP.MouseMove += (s, e) => {
+                player.MouseMove += (s, e) => {
                     if (!AsyncCamCom.sock.Connected)
                         return;
                     if (Cursor.Position.X - Location.X < 70) {
@@ -262,7 +294,7 @@ namespace SSUtility2 {
                     b_Open.Dispose();
 
                     sP_Player.Hide();
-                    mainPlayer.vlcPlayer.Hide();
+                    mainPlayer.myPlayer.Hide();
                     mainPlayer.settings.isPlaying = true;
                     Joystick.UpdateJoystickCentre();
 
@@ -510,12 +542,16 @@ namespace SSUtility2 {
 
         public void StopCam() {
             if (keyboardControl) {
+                keyDown = false;
                 CustomScriptCommands.QuickCommand("stop", false);
             }
         }
 
+        bool keyDown = false;
+
         public void KeyControl(Keys k) {
-            if (keyboardControl) {
+            if (keyboardControl && !keyDown) {
+                keyDown = true;
                 uint ptSpeed = Convert.ToUInt32(63);
                 byte[] code = null;
                 uint address = Tools.MakeAdr();
@@ -539,6 +575,8 @@ namespace SSUtility2 {
                     case Keys.Escape:
                         code = D.protocol.CameraZoom(address, D.Zoom.Wide);
                         break;
+                    default:
+                        return;
                 }
 
                 AsyncCamCom.SendNewCommand(code);
@@ -546,6 +584,8 @@ namespace SSUtility2 {
         }
 
         private void Menu_Settings_Keyboard_Click(object sender, EventArgs e) {
+            keyDown = false;
+
             if (keyboardControl) {
                 keyboardControl = false;
                 Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
@@ -707,39 +747,6 @@ namespace SSUtility2 {
 
         private void Menu_Settings_Lite_Click(object sender, EventArgs e) {
             LiteToggle();
-        }
-
-        bool dragging = false;
-        Point eOriginalPos;
-
-        private void tP_Cover_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Button == MouseButtons.Right) {
-                mainPlayer.secondView.settings.Show();
-                mainPlayer.secondView.settings.BringToFront();
-            } else if (e.Button == MouseButtons.Left) {
-                eOriginalPos = new Point(e.X, e.Y);
-                dragging = true;
-            }
-        }
-
-        private void tP_Cover_MouseMove(object sender, MouseEventArgs e) {
-            Cursor = Cursors.Default;
-            tP_Cover.BringToFront();
-            if (dragging) {
-                int xDragDist = e.X - eOriginalPos.X;
-                int yDragDist = e.Y - eOriginalPos.Y;
-
-                if (sP_Player.Location.X + xDragDist > 0 && sP_Player.Location.X + xDragDist < Width - sP_Player.Width)
-                    sP_Player.Left += xDragDist;
-
-                if (sP_Player.Location.Y + yDragDist > 0 && sP_Player.Location.Y + yDragDist < Height - sP_Player.Height)
-                    sP_Player.Top += yDragDist;
-            }
-        }
-
-        private void tP_Cover_MouseUp(object sender, MouseEventArgs e) {
-            dragging = false;
-            eOriginalPos = new Point(0, 0);
         }
 
         private void Menu_QC_Custom_Click(object sender, EventArgs e) {

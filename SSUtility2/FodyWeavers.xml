@@ -1,17 +1,3 @@
 ﻿<Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FodyWeavers.xsd">
-<Costura>
-LoadAtModuleInit='true'
-DisableCleanup='true'
-UseRuntimeReferencePaths='true'
-IncludeRuntimeReferences='true'
-DisableCompression='false'
-IgnoreSatelliteAssemblies='false'
-<IncludeAssemblies>
-SharpAvi
-Joystick
-SizeablePanel
-AxInterop.AXVLC
-Interop.AXVLC
-</IncludeAssemblies>
-</Costura>
+  <Costura />
 </Weavers>

@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EasyPlayerNetSDK;
 
 namespace SSUtility2 {
 
@@ -18,18 +19,26 @@ namespace SSUtility2 {
 
         public bool recording = false;
 
-        public AxAXVLC.AxVLCPlugin2 vlcPlayer;
+        public Panel myPlayer;
+
+        public int channelID = -1;
 
         public Detached(bool attachSecond) {
             InitializeComponent();
             settings = new VideoSettings();
             settings.originalDetached = this;
-            vlcPlayer = PlayerD_VLCPlayer;
+            myPlayer = p_Player;
+            CreateHandle();
+
             if (attachSecond) {
                 var t = new Thread(AttachSecond);
                 t.SetApartmentState(ApartmentState.STA);
                 t.Start();
+            } else {
+                settings.tP_Main.Text = "Detached Player";
+                settings.tP_Secondary.Dispose();
             }
+
         }
 
         void AttachSecond() {
@@ -42,11 +51,10 @@ namespace SSUtility2 {
                     secondView.settings.CopyPlayerD(settings);
                     secondView.settings.Text = "Secondary Video Settings";
                     secondView.settings.isSecondary = true;
-                    secondView.settings.tP_Secondary.Dispose();
                     secondView.settings.tP_Main.Text = "Secondary Player";
 
-                    secondView.PlayerD_VLCPlayer.Dispose();
-                    secondView.vlcPlayer = MainForm.m.Second_VLCPLayer;
+                    secondView.p_Player.Dispose();
+                    secondView.myPlayer = MainForm.m.sP_Player; //this might be interesting
                 }
             } catch (Exception e) {
                 MessageBox.Show("ATTACHSECOND\n" + e.ToString());
@@ -57,15 +65,23 @@ namespace SSUtility2 {
             if (settings.isPlaying) {
                 StopPlaying();
             } else {
-                StartPlaying(true);
+                if (this == MainForm.m.mainPlayer)
+                    StartPlaying(true);
+                else
+                    Play(true, this);
             }
         }
 
         public void StopPlaying() {
             if (!settings.isPlaying)
                 return;
-            vlcPlayer.playlist.stop();
-            vlcPlayer.playlist.items.clear();
+
+            int ret = PlayerSdk.EasyPlayer_CloseStream(channelID);
+            if (ret == 0)
+                channelID = -1;
+
+            myPlayer.BackColor = Color.Black;
+
             settings.isPlaying = false;
             if(!settings.isSecondary)
                 MainForm.m.Menu_Video_StartStop.Text = "Start Video Playback";
@@ -111,18 +127,15 @@ namespace SSUtility2 {
                 }
 
                 Uri combinedUrl = new Uri(VideoSettings.GetCombined(player.settings));
-
                 //rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
-
-                bool parsed = IPAddress.TryParse(combinedUrl.Host, out IPAddress parsedIP);
-
+               
                 if (!ConfigControl.ignoreAddress.boolVal) {
                     if (showError && !player.settings.isSecondary) {
-                        if (combinedUrl.Host == "" || !parsed) {
+                        if (combinedUrl.Host == "") {
                             MessageBox.Show("Address is invalid!");
                             return false;
                         }
-                        if (!OtherCamCom.PingAdr(parsedIP).Result) {
+                        if (!OtherCamCom.PingAdr(combinedUrl.Host).Result) {
                             MessageBox.Show("Address had no RTSP stream attached!");
                             return false;
                         }
@@ -132,9 +145,8 @@ namespace SSUtility2 {
                 if (player.settings.isPlaying)
                     player.StopPlaying();
 
-                player.vlcPlayer.playlist.add(combinedUrl.ToString(), null, ":avcodec -hw:network -caching="
-                    + player.settings.tB_PlayerD_Buffering.Text);
-                player.vlcPlayer.playlist.next();
+
+                SafePlay(player);
 
                 player.settings.isPlaying = true;
                     
@@ -142,6 +154,30 @@ namespace SSUtility2 {
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to play stream!\nShow more?", "Stream Failed!", e.ToString());
                 return false;
+            }
+        }
+
+
+        static void SafePlay(Detached player) {
+            try {
+
+                if (player.myPlayer.InvokeRequired) {
+                    player.Invoke((MethodInvoker)delegate {
+                        SafePlay(player);
+                    });
+                    return;
+                }
+
+                player.channelID = PlayerSdk.EasyPlayer_OpenStream(VideoSettings.GetCombined(player.settings),
+                    player.myPlayer.Handle, PlayerSdk.RENDER_FORMAT.DISPLAY_FORMAT_RGB24_GDI,
+                        1, "", "", null, IntPtr.Zero, false);
+
+                if (player.channelID > 0) {
+                    PlayerSdk.EasyPlayer_SetFrameCache(player.channelID, 3);
+                }
+
+            }catch(Exception e) {
+                Tools.ShowPopup("Failed to safely starting playing!\nShow more?", "Error occurred!", e.ToString());
             }
         }
 

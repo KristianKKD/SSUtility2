@@ -38,7 +38,7 @@ namespace SSUtility2 {
                     return false;
                 }
 
-                if (!OtherCamCom.PingAdr(ep.Address).Result) {
+                if (!OtherCamCom.PingAdr(ep.Address.ToString()).Result) {
                     Tools.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
                                         "Successfully parsed\nIP: " + parsedIP.ToString() + "\nPort: " + parsedPort.ToString());
                     return false;
