@@ -109,7 +109,6 @@ namespace SSUtility2
             this.tB_PlayerD_SimpleAdr.Name = "tB_PlayerD_SimpleAdr";
             this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_SimpleAdr.TabIndex = 28;
-            this.tB_PlayerD_SimpleAdr.TextChanged += new System.EventHandler(this.tB_PlayerD_SimpleAdr_TextChanged);
             this.tB_PlayerD_SimpleAdr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
             this.tB_PlayerD_SimpleAdr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_PlayerD_SimpleAdr_KeyUp);
             // 
@@ -155,8 +154,9 @@ namespace SSUtility2
             this.cB_PlayerD_CamType.TabIndex = 5;
             this.cB_PlayerD_CamType.Text = "IONodes - Daylight";
             this.cB_PlayerD_CamType.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_Type_SelectedIndexChanged);
-            this.cB_PlayerD_CamType.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.cB_PlayerD_CamType.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Fields_KeyDown);
             this.cB_PlayerD_CamType.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
+            this.cB_PlayerD_CamType.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Field_KeyUp);
             // 
             // l_PlayerD_RTSP
             // 
@@ -182,8 +182,9 @@ namespace SSUtility2
             this.tB_PlayerD_Password.TabIndex = 4;
             this.tB_PlayerD_Password.Text = "admin";
             this.tB_PlayerD_Password.Visible = false;
-            this.tB_PlayerD_Password.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Password.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Fields_KeyDown);
             this.tB_PlayerD_Password.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
+            this.tB_PlayerD_Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Field_KeyUp);
             // 
             // tB_PlayerD_Adr
             // 
@@ -195,8 +196,9 @@ namespace SSUtility2
             this.tB_PlayerD_Adr.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_Adr.TabIndex = 4;
             this.tB_PlayerD_Adr.Text = "192.168.1.71";
-            this.tB_PlayerD_Adr.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Adr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Fields_KeyDown);
             this.tB_PlayerD_Adr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
+            this.tB_PlayerD_Adr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Field_KeyUp);
             // 
             // l_PlayerD_Buffering
             // 
@@ -247,8 +249,9 @@ namespace SSUtility2
             this.tB_PlayerD_Port.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_Port.TabIndex = 4;
             this.tB_PlayerD_Port.Text = "554";
-            this.tB_PlayerD_Port.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Port.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Fields_KeyDown);
             this.tB_PlayerD_Port.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
+            this.tB_PlayerD_Port.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Field_KeyUp);
             // 
             // tB_PlayerD_Buffering
             // 
@@ -261,8 +264,9 @@ namespace SSUtility2
             this.tB_PlayerD_Buffering.TabIndex = 4;
             this.tB_PlayerD_Buffering.Text = "200";
             this.tB_PlayerD_Buffering.Visible = false;
-            this.tB_PlayerD_Buffering.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Buffering.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Fields_KeyDown);
             this.tB_PlayerD_Buffering.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
+            this.tB_PlayerD_Buffering.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Field_KeyUp);
             // 
             // l_PlayerD_Port
             // 
@@ -287,8 +291,9 @@ namespace SSUtility2
             this.tB_PlayerD_Username.TabIndex = 4;
             this.tB_PlayerD_Username.Text = "admin";
             this.tB_PlayerD_Username.Visible = false;
-            this.tB_PlayerD_Username.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_Username.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Fields_KeyDown);
             this.tB_PlayerD_Username.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
+            this.tB_PlayerD_Username.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Field_KeyUp);
             // 
             // tB_PlayerD_RTSP
             // 
@@ -301,8 +306,9 @@ namespace SSUtility2
             this.tB_PlayerD_RTSP.TabIndex = 4;
             this.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
             this.tB_PlayerD_RTSP.Visible = false;
-            this.tB_PlayerD_RTSP.TextChanged += new System.EventHandler(this.tB_TextChanged);
+            this.tB_PlayerD_RTSP.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Fields_KeyDown);
             this.tB_PlayerD_RTSP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Any_KeyPress);
+            this.tB_PlayerD_RTSP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Field_KeyUp);
             // 
             // l_PlayerD_Adr
             // 
@@ -455,7 +461,7 @@ namespace SSUtility2
             this.tB_Secondary_Password.TabIndex = 79;
             this.tB_Secondary_Password.Text = "admin";
             this.tB_Secondary_Password.Visible = false;
-            this.tB_Secondary_Password.TextChanged += new System.EventHandler(this.tB_Secondary_TextChanged);
+            this.tB_Secondary_Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SecondaryField_KeyUp);
             // 
             // l_Secondary_CamType
             // 
@@ -499,7 +505,7 @@ namespace SSUtility2
             this.cB_Secondary_CamType.TabIndex = 80;
             this.cB_Secondary_CamType.Text = "Daylight";
             this.cB_Secondary_CamType.SelectedIndexChanged += new System.EventHandler(this.cB_Secondary_CamType_SelectedIndexChanged);
-            this.cB_Secondary_CamType.TextChanged += new System.EventHandler(this.tB_Secondary_TextChanged);
+            this.cB_Secondary_CamType.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SecondaryField_KeyUp);
             // 
             // l_Secondary_Password
             // 
@@ -523,7 +529,7 @@ namespace SSUtility2
             this.tB_Secondary_SimpleAdr.Name = "tB_Secondary_SimpleAdr";
             this.tB_Secondary_SimpleAdr.Size = new System.Drawing.Size(349, 20);
             this.tB_Secondary_SimpleAdr.TabIndex = 82;
-            this.tB_Secondary_SimpleAdr.TextChanged += new System.EventHandler(this.tB_Secondary_TextChanged);
+            this.tB_Secondary_SimpleAdr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SecondaryField_KeyUp);
             // 
             // l_Secondary_Username
             // 
@@ -549,7 +555,7 @@ namespace SSUtility2
             this.tB_Secondary_Buffering.TabIndex = 74;
             this.tB_Secondary_Buffering.Text = "200";
             this.tB_Secondary_Buffering.Visible = false;
-            this.tB_Secondary_Buffering.TextChanged += new System.EventHandler(this.tB_Secondary_TextChanged);
+            this.tB_Secondary_Buffering.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SecondaryField_KeyUp);
             // 
             // l_Secondary_SimpleAdr
             // 
@@ -575,7 +581,7 @@ namespace SSUtility2
             this.tB_Secondary_Username.TabIndex = 75;
             this.tB_Secondary_Username.Text = "admin";
             this.tB_Secondary_Username.Visible = false;
-            this.tB_Secondary_Username.TextChanged += new System.EventHandler(this.tB_Secondary_TextChanged);
+            this.tB_Secondary_Username.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SecondaryField_KeyUp);
             // 
             // tB_Secondary_Port
             // 
@@ -587,7 +593,7 @@ namespace SSUtility2
             this.tB_Secondary_Port.Size = new System.Drawing.Size(349, 20);
             this.tB_Secondary_Port.TabIndex = 76;
             this.tB_Secondary_Port.Text = "554";
-            this.tB_Secondary_Port.TextChanged += new System.EventHandler(this.tB_Secondary_TextChanged);
+            this.tB_Secondary_Port.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SecondaryField_KeyUp);
             // 
             // tB_Secondary_RTSP
             // 
@@ -600,7 +606,7 @@ namespace SSUtility2
             this.tB_Secondary_RTSP.TabIndex = 77;
             this.tB_Secondary_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
             this.tB_Secondary_RTSP.Visible = false;
-            this.tB_Secondary_RTSP.TextChanged += new System.EventHandler(this.tB_Secondary_TextChanged);
+            this.tB_Secondary_RTSP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SecondaryField_KeyUp);
             // 
             // tB_Secondary_Adr
             // 
@@ -611,8 +617,8 @@ namespace SSUtility2
             this.tB_Secondary_Adr.Name = "tB_Secondary_Adr";
             this.tB_Secondary_Adr.Size = new System.Drawing.Size(349, 20);
             this.tB_Secondary_Adr.TabIndex = 78;
-            this.tB_Secondary_Adr.Text = "192.168.1.71";
-            this.tB_Secondary_Adr.TextChanged += new System.EventHandler(this.tB_Secondary_TextChanged);
+            this.tB_Secondary_Adr.Text = "192.168.1.7";
+            this.tB_Secondary_Adr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SecondaryField_KeyUp);
             // 
             // l_Secondary_Port
             // 
@@ -645,7 +651,7 @@ namespace SSUtility2
             this.tB_Secondary_Name.Name = "tB_Secondary_Name";
             this.tB_Secondary_Name.Size = new System.Drawing.Size(349, 20);
             this.tB_Secondary_Name.TabIndex = 83;
-            this.tB_Secondary_Name.TextChanged += new System.EventHandler(this.tB_Secondary_TextChanged);
+            this.tB_Secondary_Name.KeyUp += new System.Windows.Forms.KeyEventHandler(this.SecondaryField_KeyUp);
             // 
             // check_Secondary_Manual
             // 

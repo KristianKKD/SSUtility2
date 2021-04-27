@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.5.0.2";
+        public const string version = "v2.5.1.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -504,11 +504,6 @@ namespace SSUtility2 {
         private void Menu_Video_EnableSecondary_Click(object sender, EventArgs e) {
             Menu_Video_EnableSecondary.Visible = false;
 
-            if (!ConfigControl.mainPlayerCamType.stringVal.Contains("Thermal") &&
-                !ConfigControl.mainPlayerCamType.stringVal.Contains("Daylight")) {
-                Detached.EnableSecond(false);
-            }
-
             Detached.EnableSecond(true);
         }
 
@@ -523,14 +518,14 @@ namespace SSUtility2 {
         void SwapPlayers() {
             string value = "";
             bool daythermswap = false;
-            if (mainPlayer.settings.tB_PlayerD_Adr.Text != mainPlayer.secondView.settings.tB_PlayerD_Adr.Text || ConfigControl.forceCamera.boolVal) {
-                mainPlayer.CustomSwap();
-            } else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("thermal")) {
+            if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("thermal")) {
                 value = "Daylight";
                 daythermswap = true;
             } else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight")) {
                 value = "Thermal";
                 daythermswap = true;
+            } else if (mainPlayer.settings.tB_PlayerD_Adr.Text != mainPlayer.secondView.settings.tB_PlayerD_Adr.Text || ConfigControl.forceCamera.boolVal) {
+                mainPlayer.CustomSwap();
             }
 
             if (daythermswap) {
@@ -542,50 +537,85 @@ namespace SSUtility2 {
 
         public void StopCam() {
             if (keyboardControl) {
-                keyDown = false;
-                CustomScriptCommands.QuickCommand("stop", false);
+                DelayStop();
             }
         }
 
-        bool keyDown = false;
+        public void KeyControl(Keys k, Keys oldK) {
+            try {
+                if (keyboardControl) {
+                    uint ptSpeed = Convert.ToUInt32((ConfigControl.cameraSpeedMultiplier.intVal / 200f) * 63);
+                    byte[] code = null;
+                    uint address = Tools.MakeAdr();
 
-        public void KeyControl(Keys k) {
-            if (keyboardControl && !keyDown) {
-                keyDown = true;
-                uint ptSpeed = Convert.ToUInt32(63);
-                byte[] code = null;
-                uint address = Tools.MakeAdr();
+                    int x = 0;
+                    int y = 0;
 
-                switch (k) { //maybe add diagonal support later
-                    case Keys.Up:
-                        code = D.protocol.CameraTilt(address, D.Tilt.Up, ptSpeed);
-                        break;
-                    case Keys.Down:
-                        code = D.protocol.CameraTilt(address, D.Tilt.Down, ptSpeed);
-                        break;
-                    case Keys.Left:
-                        code = D.protocol.CameraPan(address, D.Pan.Left, ptSpeed);
-                        break;
-                    case Keys.Right:
-                        code = D.protocol.CameraPan(address, D.Pan.Right, ptSpeed);
-                        break;
-                    case Keys.Enter:
-                        code = D.protocol.CameraZoom(address, D.Zoom.Tele);
-                        break;
-                    case Keys.Escape:
-                        code = D.protocol.CameraZoom(address, D.Zoom.Wide);
-                        break;
-                    default:
+                    switch (k) {
+                        case Keys.Up:
+                            y += 1;
+                            break;
+                        case Keys.Down:
+                            y += -1;
+                            break;
+                        case Keys.Right:
+                            x += 1;
+                            break;
+                        case Keys.Left:
+                            x += -1;
+                            break;
+                        case Keys.Enter:
+                            code = D.protocol.CameraZoom(address, D.Zoom.Tele);
+                            break;
+                        case Keys.Escape:
+                        case Keys.Back:
+                            code = D.protocol.CameraZoom(address, D.Zoom.Wide);
+                            break;
+                    }
+                    switch (oldK) {
+                        case Keys.Up:
+                            y += 1;
+                            break;
+                        case Keys.Down:
+                            y += -1;
+                            break;
+                        case Keys.Right:
+                            x += 1;
+                            break;
+                        case Keys.Left:
+                            x += -1;
+                            break;
+                    }
+                    switch ((k, oldK)) {
+                        case (Keys.LShiftKey, Keys.M):
+                        case (Keys.M, Keys.LShiftKey):
+                            CustomScriptCommands.SendMechanicalMenu();
+                            break;
+                        case (Keys.LShiftKey, Keys.S):
+                        case (Keys.S, Keys.LShiftKey):
+                            CustomScriptCommands.SendAdminMenu();
+                            break;
+                        case (Keys.LShiftKey, Keys.D):
+                        case (Keys.D, Keys.LShiftKey):
+                            CustomScriptCommands.DoPreset(Convert.ToInt32(address), 2);
+                            break;
+                    }
+
+                    if (x != 0 || y != 0) {
+                        code = GetDirCode(x, y, ptSpeed, ptSpeed, address);
+                    }
+
+                    if (code == null)
                         return;
+                    else if (AsyncCamCom.sock.Connected)
+                        AsyncCamCom.SendNonAsync(code);
                 }
-
-                AsyncCamCom.SendNewCommand(code);
-            }
+            }catch(Exception e) {
+                MessageBox.Show("SENDKEY\n" + e.ToString());
+            } 
         }
 
         private void Menu_Settings_Keyboard_Click(object sender, EventArgs e) {
-            keyDown = false;
-
             if (keyboardControl) {
                 keyboardControl = false;
                 Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
@@ -657,7 +687,7 @@ namespace SSUtility2 {
 
         private void Joystick_MouseUp(object sender, MouseEventArgs e) {
             if (AsyncCamCom.sock.Connected)
-                CustomScriptCommands.QuickCommand("stop", false);
+                DelayStop();
             else
                 MessageBox.Show("Not connected to camera!\nNo commands were sent!");
         }
@@ -678,8 +708,6 @@ namespace SSUtility2 {
                 Point coords = Joystick.coords;
 
                 if (Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
-                    byte[] code = null;
-
                     uint adr = Tools.MakeAdr();
                     int x = coords.X;
                     int y = coords.Y;
@@ -687,40 +715,7 @@ namespace SSUtility2 {
                     uint xSpeed = JoystickSpeedFunction(x);
                     uint ySpeed = JoystickSpeedFunction(y);
 
-                    //diagonals
-                    D.Pan p = D.Pan.Null;
-                    D.Tilt t = D.Tilt.Null;
-
-                    if (x < 0 && y < 0) {
-                        p = D.Pan.Left;
-                        t = D.Tilt.Down;
-                    } else if (x > 0 && y < 0) {
-                        p = D.Pan.Right;
-                        t = D.Tilt.Down;
-                    } else if (x < 0 && y > 0) {
-                        p = D.Pan.Left;
-                        t = D.Tilt.Up;
-                    } else if (x > 0 && y > 0) {
-                        p = D.Pan.Right;
-                        t = D.Tilt.Up;
-                    }
-                    //
-
-                    if (p != D.Pan.Null && t != D.Tilt.Null) {
-                        code = D.protocol.CameraPanTilt(adr, p, xSpeed, t, ySpeed);
-                    } else {
-                        //horizontal/verticals
-                        if (x > 0 && y == 0) {
-                            code = D.protocol.CameraPan(adr, D.Pan.Right, xSpeed);
-                        } else if (x < 0 && y == 0) {
-                            code = D.protocol.CameraPan(adr, D.Pan.Left, xSpeed);
-                        } else if (y > 0 && x == 0) {
-                            code = D.protocol.CameraTilt(adr, D.Tilt.Up, ySpeed);
-                        } else if (y < 0 && x == 0) {
-                            code = D.protocol.CameraTilt(adr, D.Tilt.Down, ySpeed);
-                        }
-                        //
-                    }
+                    byte[] code = GetDirCode(x, y, xSpeed, ySpeed, adr);
 
                     if (code != null)
                         AsyncCamCom.SendNonAsync(code);
@@ -729,6 +724,47 @@ namespace SSUtility2 {
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", e.ToString());
             }
+        }
+
+        byte[] GetDirCode(int x, int y, uint xSpeed, uint ySpeed, uint adr) {
+            byte[] code = null;
+
+            D.Pan p = D.Pan.Null;
+            D.Tilt t = D.Tilt.Null;
+
+            //diagonals
+            if (x < 0 && y < 0) {
+                p = D.Pan.Left;
+                t = D.Tilt.Down;
+            } else if (x > 0 && y < 0) {
+                p = D.Pan.Right;
+                t = D.Tilt.Down;
+            } else if (x < 0 && y > 0) {
+                p = D.Pan.Left;
+                t = D.Tilt.Up;
+            } else if (x > 0 && y > 0) {
+                p = D.Pan.Right;
+                t = D.Tilt.Up;
+            }
+            //
+
+            if (p != D.Pan.Null && t != D.Tilt.Null) {
+                code = D.protocol.CameraPanTilt(adr, p, xSpeed, t, ySpeed);
+            } else {
+                //horizontal/verticals
+                if (x > 0 && y == 0) {
+                    code = D.protocol.CameraPan(adr, D.Pan.Right, xSpeed);
+                } else if (x < 0 && y == 0) {
+                    code = D.protocol.CameraPan(adr, D.Pan.Left, xSpeed);
+                } else if (y > 0 && x == 0) {
+                    code = D.protocol.CameraTilt(adr, D.Tilt.Up, ySpeed);
+                } else if (y < 0 && x == 0) {
+                    code = D.protocol.CameraTilt(adr, D.Tilt.Down, ySpeed);
+                }
+                //
+            }
+
+            return code;
         }
 
         private void Menu_Settings_CP_Click(object sender, EventArgs e) {

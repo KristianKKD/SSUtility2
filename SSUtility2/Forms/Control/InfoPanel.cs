@@ -95,16 +95,12 @@ namespace SSUtility2 {
             try {
                 tickCount++;
 
-                if (!AsyncCamCom.sock.Connected) {
-                    return;
-                }
-
                 if (isActive && isCamera) {
                     if (tickCount > CommandQueue.commandRate * 2 || forcedQueueing)
                         UpdateAll();
                 } else {
                     if (!isCamera) {
-                        if ((MainForm.m.mainPlayer.settings.isPlaying || MainForm.m.lite) && timeoutTime < CommandQueue.commandRetries) {
+                        if ((MainForm.m.mainPlayer.settings.isPlaying || MainForm.m.lite) && (timeoutTime < CommandQueue.commandRetries)) {
                             timeoutTime++;
                         } else {
                             timeoutTime = 0;
@@ -119,11 +115,14 @@ namespace SSUtility2 {
 
         public async Task CheckForCamera() {
             try {
-                if (ConfigControl.forceCamera.boolVal) {
-                    SettingsPage.UpdateCamType();
-                } else if (await OtherCamCom.CheckConfiguration() != OtherCamCom.CamConfig.Null) {
+                if (ConfigControl.forceCamera.boolVal && MainForm.m.finishedLoading) {
                     isCamera = true;
-                    Detached.EnableSecond(true);
+                    SettingsPage.UpdateCamType();
+                } else if (AsyncCamCom.sock.Connected) {
+                    if (await OtherCamCom.CheckConfiguration() != OtherCamCom.CamConfig.Null) {
+                        isCamera = true;
+                        Detached.EnableSecond(true);
+                    }
                 } else {
                     isCamera = false;
                 }

@@ -41,7 +41,7 @@ namespace SSUtility2 {
             check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
             cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
             check_IPCon_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
-            cB_IPCon_ForceMode.Text = ConfigControl.forceCameraType.stringVal;
+            cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
 
             ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
             ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
@@ -51,11 +51,6 @@ namespace SSUtility2 {
             l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
             MainForm.m.sP_Player.Location = new System.Drawing.Point(MainForm.m.Width - MainForm.m.sP_Player.Width - 30, 15);
             l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
-           
-            UpdateSelectedCam(false);
-            LoadCustoms();
-            MainForm.m.custom.UpdateButtonNames();
-            UpdateCamType();
 
             MainForm.m.mainPlayer.settings.tB_PlayerD_Name.Text = ConfigControl.mainPlayerName.stringVal;
             MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = ConfigControl.mainPlayerFullAdr.stringVal;
@@ -66,6 +61,11 @@ namespace SSUtility2 {
             MainForm.m.mainPlayer.settings.tB_PlayerD_Buffering.Text = ConfigControl.mainPlayerBuffering.stringVal;
             MainForm.m.mainPlayer.settings.tB_PlayerD_Username.Text = ConfigControl.mainPlayerUsername.stringVal;
             MainForm.m.mainPlayer.settings.tB_PlayerD_Password.Text = ConfigControl.mainPlayerPassword.stringVal;
+
+            UpdateSelectedCam(false);
+            LoadCustoms();
+            MainForm.m.custom.UpdateButtonNames();
+            UpdateCamType();
         }
 
         private async Task ApplyAll() {
@@ -83,14 +83,21 @@ namespace SSUtility2 {
         }
 
         private void check_Other_AutoPlay_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
             ConfigControl.autoPlay.UpdateValue(check_Other_AutoPlay.Checked.ToString());
         }
 
         private void check_Other_Subnet_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
             ConfigControl.subnetNotif.UpdateValue(check_Other_Subnet.Checked.ToString());
         }
 
         private void check_Paths_Manual_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
             bool auto = !check_Paths_Manual.Checked;
 
             ConfigControl.automaticPaths.UpdateValue((!auto).ToString());
@@ -264,6 +271,8 @@ namespace SSUtility2 {
         }
 
         private void check_Other_AutoReconnect_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
             ConfigControl.autoReconnect.UpdateValue(check_Other_AutoReconnect.Checked.ToString());
         }
 
@@ -286,8 +295,9 @@ namespace SSUtility2 {
                 }
             }
 
-            if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite)
-                    MainForm.m.mainPlayer.UpdateMode();
+            if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite) {
+                MainForm.m.mainPlayer.UpdateMode();
+            }
         }
 
         private void tB_Other_ResolutionWidth_TextChanged(object sender, EventArgs e) {
@@ -315,6 +325,8 @@ namespace SSUtility2 {
         }
 
         private void check_AddressInvalid_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
             ConfigControl.ignoreAddress.UpdateValue(check_AddressInvalid.Checked.ToString());
         }
 
@@ -375,24 +387,31 @@ namespace SSUtility2 {
         }
 
         private void check_IPCon_ForceCam_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
             ConfigControl.forceCamera.UpdateValue(check_IPCon_ForceCam.Checked.ToString());
             cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
-            if(ConfigControl.forceCamera.boolVal)
+
+
+            if (ConfigControl.forceCamera.boolVal)
                 Detached.EnableSecond(true);
-            else
+            else {
+                InfoPanel.i.isCamera = false;
                 Detached.DisableSecond();
+            }
         }
 
         private void cB_IPCon_ForceMode_SelectedIndexChanged(object sender, EventArgs e) {
-            ConfigControl.forceCameraType.UpdateValue(cB_IPCon_ForceMode.Text);
+            ConfigControl.forceType.UpdateValue(cB_IPCon_ForceMode.Text);
             UpdateCamType();
         }
 
         public static void UpdateCamType() {
-            if (ConfigControl.forceCameraType.boolVal) {
+            if (ConfigControl.forceCamera.boolVal) {
                 OtherCamCom.CamConfig config = OtherCamCom.CamConfig.Strict;
 
-                switch (ConfigControl.forceCameraType.stringVal) {
+                switch (ConfigControl.forceType.stringVal) {
                     case "SSTraditional":
                         config = OtherCamCom.CamConfig.SSTraditional;
                         break;
@@ -408,10 +427,10 @@ namespace SSUtility2 {
                 }
 
                 OtherCamCom.currentConfig = config;
-                Detached.EnableSecond(true);
-            }
 
-            InfoPanel.i.isCamera = ConfigControl.forceCameraType.boolVal;
+                if (MainForm.m.finishedLoading)
+                    Detached.EnableSecond(true);
+            } 
         }
 
         private void cB_ipCon_CamType_SelectedIndexChanged(object sender, EventArgs e) {

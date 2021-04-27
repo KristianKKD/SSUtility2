@@ -48,7 +48,8 @@ namespace SSUtility2 {
             if (!TryConnect().Result) {
                 return;
             }
-            MainForm.m.WriteToResponses(Tools.ReadCommand(code), true, false);
+
+            MainForm.m.WriteToResponses("Non-async command sent: " + Tools.ReadCommand(code), true, false);
             sock.SendTo(code, sock.RemoteEndPoint);
         }
 
@@ -178,7 +179,8 @@ namespace SSUtility2 {
                 if (sock == null)
                     return;
 
-                InfoPanel.i.isCamera = false;
+                if(!ConfigControl.forceCamera.boolVal)
+                    InfoPanel.i.isCamera = false;
                 if (!sock.Connected)
                     return;
                 sock.Shutdown(SocketShutdown.Both);

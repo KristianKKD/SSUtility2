@@ -45,19 +45,34 @@ namespace SSUtility2 {
         }
 
         private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+        static Keys currentKey = Keys.None;
+        static Keys lastKey = Keys.None;
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam) {
             if (ApplicationIsActivated()) {
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN) {
-                    int vkCode = Marshal.ReadInt32(lParam);
-                    MainForm.m.KeyControl((Keys)vkCode);
+                    Keys pressedKey = (Keys)Marshal.ReadInt32(lParam);
+
+                    if (currentKey != Keys.None && currentKey != pressedKey) {
+                        lastKey = currentKey;
+                    }
+
+                    if (currentKey != pressedKey) {
+                        currentKey = pressedKey;
+
+                        MainForm.m.KeyControl(currentKey, lastKey);
+                    }
                 }
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYUP) {
                     MainForm.m.StopCam();
+                    lastKey = Keys.None;
+                    currentKey = Keys.None;
                 }
             }
+
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
+
 
         public static bool ApplicationIsActivated() {
             var activatedHandle = GetForegroundWindow();

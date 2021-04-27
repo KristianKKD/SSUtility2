@@ -73,6 +73,9 @@ namespace SSUtility2 {
         }
 
         public void CopyPlayerD(VideoSettings sets, bool tempCopy = false) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
             tB_PlayerD_Adr.Text = sets.tB_PlayerD_Adr.Text;
             tB_PlayerD_Port.Text = sets.tB_PlayerD_Port.Text;
             tB_PlayerD_Buffering.Text = sets.tB_PlayerD_Buffering.Text;
@@ -113,7 +116,7 @@ namespace SSUtility2 {
             target.tB_PlayerD_Password.Text = source.tB_Secondary_Password.Text;
         }
 
-        public static void CopyPrimarySettingsMoveToSecondary(VideoSettings source, VideoSettings target) {
+        public static void CopyPrimarySettingsMoveToSecondary(VideoSettings source, VideoSettings target, bool changeRTSP = false) {
             //copy primary settings into the secondary settings
             target.tB_Secondary_Name.Text = source.tB_PlayerD_Name.Text;
             target.tB_Secondary_SimpleAdr.Text = source.tB_PlayerD_SimpleAdr.Text;
@@ -124,16 +127,26 @@ namespace SSUtility2 {
             target.tB_Secondary_Buffering.Text = source.tB_PlayerD_Buffering.Text;
             target.tB_Secondary_Username.Text = source.tB_PlayerD_Username.Text;
             target.tB_Secondary_Password.Text = source.tB_PlayerD_Password.Text;
+
+            if (changeRTSP) {
+                if (source.cB_PlayerD_CamType.Text.Contains("Daylight")) {
+                    target.cB_Secondary_CamType.Text = "Thermal";
+                    target.tB_Secondary_RTSP.Text = thermalRTSP;
+                } else if (source.cB_PlayerD_CamType.Text.Contains("Thermal")) {
+                    target.cB_Secondary_CamType.Text = "Daylight";
+                    target.tB_Secondary_RTSP.Text = dayRTSP;
+                }
+
+                target.tB_PlayerD_SimpleAdr.Text = GetCombined(target);
+            }
         }
 
-        public void UpdateSecondaryValues() {
-            if(MainForm.m.finishedLoading)
-                CopyPrimarySettingsMoveToSecondary(MainForm.m.mainPlayer.secondView.settings, MainForm.m.mainPlayer.settings);
+        public void UpdateMainPlayerSecondaryFields() {
+            CopyPrimarySettingsMoveToSecondary(MainForm.m.mainPlayer.secondView.settings, MainForm.m.mainPlayer.settings);
         }
 
         void ApplySecondaryChanges() {
-            if (MainForm.m.finishedLoading)
-                CopySecondarySettingsMoveToMain(this, MainForm.m.mainPlayer.secondView.settings);
+            CopySecondarySettingsMoveToMain(this, MainForm.m.mainPlayer.secondView.settings);
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -177,8 +190,10 @@ namespace SSUtility2 {
                 Detached.Play(true, originalDetached.secondView);
             } else {
                 originalDetached.StartPlaying(true);
-                if (originalDetached == MainForm.m.mainPlayer && InfoPanel.i.isCamera) {
-                    Detached.Play(false, MainForm.m.mainPlayer);
+                if (originalDetached == MainForm.m.mainPlayer && InfoPanel.i.isCamera) { //copy settings to second
+                    CopyPrimarySettingsMoveToSecondary(MainForm.m.mainPlayer.settings, MainForm.m.mainPlayer.settings, true);
+                    ApplySecondaryChanges();
+                    Detached.Play(false, MainForm.m.mainPlayer.secondView);
                 }
             }
         }
@@ -202,12 +217,11 @@ namespace SSUtility2 {
                 originalDetached.secondView.StopPlaying();
         }
 
-        private void tB_TextChanged(object sender, EventArgs e) {
-            if (ActiveControl != this)
-                return;
+        private void Field_KeyUp(object sender, KeyEventArgs e) {
             if (tB_PlayerD_SimpleAdr.Text == "" || tB_PlayerD_SimpleAdr.Text == GetCombined(this))
                 ConfigControl.mainPlayerCustomFull.UpdateValue("false");
-            UpdateSecondaryValues();
+
+            UpdateMainPlayerSecondaryFields();
         }
 
         public static string GetCombined(VideoSettings sets) {
@@ -268,19 +282,8 @@ namespace SSUtility2 {
             SaveConfigFields();
         }
 
-        private void tB_PlayerD_SimpleAdr_TextChanged(object sender, EventArgs e) {
-            if (isSecondary && MainForm.m.finishedLoading)
-                UpdateSecondaryValues();
-        }
-
         private void tC_PlayerSettings_SelectedIndexChanged(object sender, EventArgs e) {
-            if (MainForm.m.finishedLoading)
-                UpdateSecondaryValues();
-        }
-
-        private void tB_Secondary_TextChanged(object sender, EventArgs e) {
-            if (MainForm.m.finishedLoading && ActiveControl == this)
-                ApplySecondaryChanges();
+            UpdateMainPlayerSecondaryFields();
         }
 
         private void cB_Secondary_CamType_SelectedIndexChanged(object sender, EventArgs e) {
@@ -310,6 +313,7 @@ namespace SSUtility2 {
             tB_Secondary_RTSP.Text = rtsp;
             tB_Secondary_Username.Text = username;
             tB_Secondary_Password.Text = password;
+
             SaveConfigFields();
         }
 
@@ -332,11 +336,14 @@ namespace SSUtility2 {
         }
 
         private void tB_PlayerD_SimpleAdr_KeyUp(object sender, KeyEventArgs e) {
+            if (isSecondary)
+                UpdateMainPlayerSecondaryFields();
+
             if (this != MainForm.m.mainPlayer.settings) {
                 return;
             }
 
-            if(tB_PlayerD_SimpleAdr.Text.Length == 0)
+            if (tB_PlayerD_SimpleAdr.Text.Length == 0)
                 ConfigControl.mainPlayerCustomFull.UpdateValue("false");
             else
                 ConfigControl.mainPlayerCustomFull.UpdateValue("true");
@@ -353,5 +360,15 @@ namespace SSUtility2 {
             else
                 ConfigControl.mainPlayerCustomName.UpdateValue("true");
         }
+
+        private void Fields_KeyDown(object sender, KeyEventArgs e) {
+            ConfigControl.mainPlayerCustomFull.UpdateValue("false");
+        }
+
+        private void SecondaryField_KeyUp(object sender, KeyEventArgs e) {
+            ApplySecondaryChanges();
+        }
+
     }
 }
+

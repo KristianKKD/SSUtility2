@@ -36,7 +36,7 @@ namespace SSUtility2 {
         public static ConfigSetting savedIP = new ConfigSetting("192.168.1.71", "SavedIP", ConfigSetting.VarType.strings);
         public static ConfigSetting savedPort = new ConfigSetting("6791", "SavedPort", ConfigSetting.VarType.strings);
         public static ConfigSetting cameraSpeedMultiplier = new ConfigSetting("100", "CameraSpeedMultiplier", ConfigSetting.VarType.integer);
-        public static ConfigSetting forceCameraType = new ConfigSetting("Strict", "ForcedCameraType", ConfigSetting.VarType.strings);
+        public static ConfigSetting forceType = new ConfigSetting("Strict", "ForcedCameraType", ConfigSetting.VarType.strings);
         public static ConfigSetting autoReconnect = new ConfigSetting("true", "AutoReconnect", ConfigSetting.VarType.boolean);
         public static ConfigSetting startupWidth = new ConfigSetting("1280", "StartupWidth", ConfigSetting.VarType.integer);
         public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
@@ -113,7 +113,7 @@ namespace SSUtility2 {
             savedIP,
             savedPort,
             cameraSpeedMultiplier,
-            forceCameraType,
+            forceType,
             autoReconnect,
             startupWidth,
             startupHeight,

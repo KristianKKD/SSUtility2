@@ -99,7 +99,7 @@ namespace SSUtility2 {
                         MainForm.m.Menu_Video_StartStop.Text = "Stop Video Playback";
                     });
                     if (this == MainForm.m.mainPlayer && showErrors) {
-                        if (!secondView.settings.isPlaying) {
+                        if (InfoPanel.i.isCamera) {
                             secondView.settings.CopyPlayerD(settings);
                             Play(false, secondView);
                         }
@@ -114,7 +114,8 @@ namespace SSUtility2 {
                     StopPlaying();
                 }
             } catch (Exception e) {
-                Tools.ShowPopup("Failed to init stream!\nShow more?", "Stream Failed!", e.ToString());
+                if(showErrors)
+                    Tools.ShowPopup("Failed to init stream!\nShow more?", "Stream Failed!", e.ToString());
                 StopPlaying();
             }
         }
@@ -185,7 +186,7 @@ namespace SSUtility2 {
             if (settings.isPlaying)
                 Play(false, this);
 
-            if (secondView.settings.isPlaying && InfoPanel.i.isCamera) {
+            if (InfoPanel.i.isCamera) {
                 MainForm.m.mainPlayer.secondView.settings.CopyPlayerD(MainForm.m.mainPlayer.settings);
                 Play(false, secondView);
             }
@@ -201,9 +202,10 @@ namespace SSUtility2 {
 
             MainForm.m.sP_Player.Show();
             MainForm.m.sP_Player.BringToFront();
-            if(copySettings)
-                MainForm.m.mainPlayer.secondView.settings.CopyPlayerD(MainForm.m.mainPlayer.settings);
             
+            if (copySettings) {
+                MainForm.m.mainPlayer.secondView.settings.CopyPlayerD(MainForm.m.mainPlayer.settings);
+            }
             Play(false, MainForm.m.mainPlayer.secondView);
         }
 

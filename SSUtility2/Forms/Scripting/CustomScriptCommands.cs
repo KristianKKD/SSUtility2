@@ -45,9 +45,9 @@ namespace SSUtility2 {
         readonly static ScriptCommand querypost = new ScriptCommand(new string[] { "querypost" }, new byte[] { 0x07, 0x6B, 0x00, 0x00 }, "Returns camera test data", true);
         readonly static ScriptCommand queryconfig = new ScriptCommand(new string[] { "queryconfig" }, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config, (thermal only)", true);
         
-        readonly static ScriptCommand learnPreset = new ScriptCommand(new string[] { "learnpreset", "setpreset" }, new byte[] { 0x00, 0x03, 0x00, 0x00 }, "Saves current PTZ state of the camera and assigns it to the X value memory position", false, true, false, false);
-        readonly static ScriptCommand clearPreset = new ScriptCommand(new string[] { "clearpreset" }, new byte[] { 0x00, 0x05, 0x00, 0x00 }, "Clears preset X from camera memory", false, true, false, false);
-        readonly static ScriptCommand gotoPreset = new ScriptCommand(new string[] { "gotopreset" }, new byte[] { 0x00, 0x07, 0x00, 0x00 }, "Restores preset X's PTZ settings", false, true, false, false);
+        readonly static ScriptCommand learnPreset = new ScriptCommand(new string[] { "learnpreset", "setpreset", "learn" }, new byte[] { 0x00, 0x03, 0x00, 0x00 }, "Saves current PTZ state of the camera and assigns it to the X value memory position", false, true, false, false);
+        readonly static ScriptCommand clearPreset = new ScriptCommand(new string[] { "clearpreset", "clear" }, new byte[] { 0x00, 0x05, 0x00, 0x00 }, "Clears preset X from camera memory", false, true, false, false);
+        readonly static ScriptCommand gotoPreset = new ScriptCommand(new string[] { "gotopreset", "goto" }, new byte[] { 0x00, 0x07, 0x00, 0x00 }, "Restores preset X's PTZ settings", false, true, false, false);
 
         public readonly static ScriptCommand[] queryCommands = new ScriptCommand[] {
             querypan,
@@ -193,12 +193,17 @@ namespace SSUtility2 {
             return null;
         }
 
-        public static async Task QuickCommand(string command, bool sendAsync = true) {
+        public static async Task QuickCommand(string command, bool sendAsync = true, int manualAdr = -5) {
             if (!await AsyncCamCom.TryConnect().ConfigureAwait(false)) {
                 return;
             }
 
-            ScriptCommand send = CheckForCommands(command, Tools.MakeAdr(), false).Result;
+            uint adr = Convert.ToUInt32(manualAdr);
+            if (manualAdr == -5) {
+                adr = Tools.MakeAdr();
+            }
+
+            ScriptCommand send = CheckForCommands(command, adr, false).Result;
             if (send.codeContent == PelcoD.noCommand) {
                 if (command.Length == 0) {
                     MessageBox.Show("Command length is 0!\nMake sure to check the command in the settings!");
@@ -222,6 +227,32 @@ namespace SSUtility2 {
                 Task.WaitAll();
             }
            
+        }
+
+        public static void DoPreset(int adr, byte p) {
+            QuickCommand("goto " + p, false, adr);
+        }
+
+        public static async Task SendMechanicalMenu() {
+            if (!await AsyncCamCom.TryConnect().ConfigureAwait(false)) {
+                return;
+            }
+
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFF, 0x07 });
+        }
+
+        public static async Task SendAdminMenu() {
+            if (!await AsyncCamCom.TryConnect().ConfigureAwait(false)) {
+                return;
+            }
+
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFB, 0x03 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFD, 0x05 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFC, 0x04 });
+            AsyncCamCom.SendNonAsync(new byte[] { 0xFF, 0x01, 0x00, 0x07, 0x00, 0xFE, 0x06 });
         }
 
 

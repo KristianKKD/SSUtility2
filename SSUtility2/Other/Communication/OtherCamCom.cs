@@ -108,24 +108,10 @@ namespace SSUtility2 {
                 CamConfig newConfig;
                 string result = defaultResult;
 
-                for (int i = 0; i < 3; i++) {
-                    result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
+                result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
 
-                    bool failed = false;
-                    if (result == null) {
-                        failed = true;
-                        ;
-                    } else if (result.Length < 12) {
-                        failed = true;
-                    } else if (result == defaultResult) {
-                        failed = true;
-                    }
-
-                    if (!failed) {
-                        break;
-                    } else if (i >= 2) {
-                        return CamConfig.Null;
-                    }
+                if (result == defaultResult || result.Length < 12 || !result.ToLower().Contains("6d")) {
+                    return CamConfig.Null;
                 }
 
                 string type = result.Substring(13, 1);
