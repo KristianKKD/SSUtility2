@@ -65,6 +65,7 @@ namespace SSUtility2 {
             this.Menu_Video_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_EnableSecondary = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_Third = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Custom = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_PanZero = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +75,7 @@ namespace SSUtility2 {
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Main = new System.Windows.Forms.Panel();
             this.p_Control = new System.Windows.Forms.Panel();
+            this.sP_Third = new SPanel.SizeablePanel();
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
             this.b_Open = new System.Windows.Forms.Button();
             this.b_PTZ_Thermal = new System.Windows.Forms.Button();
@@ -254,7 +256,8 @@ namespace SSUtility2 {
             this.Menu_Video_StartStop,
             this.Menu_Video_Snapshot,
             this.Menu_Video_Record,
-            this.Menu_Video_EnableSecondary});
+            this.Menu_Video_EnableSecondary,
+            this.Menu_Video_Third});
             this.Menu_Video.Name = "Menu_Video";
             this.Menu_Video.Size = new System.Drawing.Size(93, 20);
             this.Menu_Video.Text = "Video Stream";
@@ -294,6 +297,13 @@ namespace SSUtility2 {
             this.Menu_Video_EnableSecondary.Text = "Enable Secondary Player";
             this.Menu_Video_EnableSecondary.Visible = false;
             this.Menu_Video_EnableSecondary.Click += new System.EventHandler(this.Menu_Video_EnableSecondary_Click);
+            // 
+            // Menu_Video_Third
+            // 
+            this.Menu_Video_Third.Name = "Menu_Video_Third";
+            this.Menu_Video_Third.Size = new System.Drawing.Size(211, 22);
+            this.Menu_Video_Third.Text = "Enable Third Player";
+            this.Menu_Video_Third.Click += new System.EventHandler(this.Menu_Video_Third_Click);
             // 
             // Menu_QC
             // 
@@ -361,6 +371,7 @@ namespace SSUtility2 {
             // p_Control
             // 
             this.p_Control.BackColor = System.Drawing.Color.Black;
+            this.p_Control.Controls.Add(this.sP_Third);
             this.p_Control.Controls.Add(this.b_PTZ_Daylight);
             this.p_Control.Controls.Add(this.b_Open);
             this.p_Control.Controls.Add(this.b_PTZ_Thermal);
@@ -380,6 +391,20 @@ namespace SSUtility2 {
             this.p_Control.Name = "p_Control";
             this.p_Control.Size = new System.Drawing.Size(1264, 657);
             this.p_Control.TabIndex = 1;
+            // 
+            // sP_Third
+            // 
+            this.sP_Third.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.sP_Third.BackColor = System.Drawing.Color.Black;
+            this.sP_Third.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.sP_Third.Location = new System.Drawing.Point(850, 395);
+            this.sP_Third.Name = "sP_Third";
+            this.sP_Third.Size = new System.Drawing.Size(400, 250);
+            this.sP_Third.TabIndex = 3;
+            this.sP_Third.Visible = false;
+            this.sP_Third.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseDown);
+            this.sP_Third.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseMove);
+            this.sP_Third.MouseUp += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseUp);
             // 
             // b_PTZ_Daylight
             // 
@@ -556,6 +581,9 @@ namespace SSUtility2 {
             this.sP_Player.TabIndex = 2;
             this.sP_Player.Visible = false;
             this.sP_Player.DoubleClick += new System.EventHandler(this.sP_Player_DoubleClick);
+            this.sP_Player.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseDown);
+            this.sP_Player.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseMove);
+            this.sP_Player.MouseUp += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseUp);
             // 
             // MainForm
             // 
@@ -1420,5 +1448,7 @@ namespace SSUtility2 {
         private ToolStripMenuItem Menu_Settings_ExportConfig;
         public Button b_PTZ_Daylight;
         public Button b_PTZ_Thermal;
+        public SPanel.SizeablePanel sP_Third;
+        private ToolStripMenuItem Menu_Video_Third;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

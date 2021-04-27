@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.5.1.0";
+        public const string version = "v2.5.2.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -31,6 +31,7 @@ namespace SSUtility2 {
         public PresetPanel pp;
         public TabControl attachedpp;
         public Detached mainPlayer;
+        public Detached thirdView;
         private Recorder screenRec;
 
         private string inUseVideoPath;
@@ -128,9 +129,6 @@ namespace SSUtility2 {
             }
         }
 
-        bool dragging = false;
-        Point eOriginalPos;
-
         void AttachPlayer() {
             Detached d = DetachVid(false, new VideoSettings(), true).Result;
 
@@ -140,32 +138,7 @@ namespace SSUtility2 {
             }
 
             Panel player = d.myPlayer;
-
-            sP_Player.MouseDown += (s, e) => {
-                if (e.Button == MouseButtons.Right) {
-                    mainPlayer.secondView.settings.Show();
-                    mainPlayer.secondView.settings.BringToFront();
-                } else if (e.Button == MouseButtons.Left) {
-                    eOriginalPos = new Point(e.X, e.Y);
-                    dragging = true;
-                }
-            };
-            sP_Player.MouseMove += (s, e) => { 
-                if (dragging && !sP_Player.resizing) {
-                    int xDragDist = e.X - eOriginalPos.X;
-                    int yDragDist = e.Y - eOriginalPos.Y;
-
-                    if (sP_Player.Location.X + xDragDist > 0 && sP_Player.Location.X + xDragDist < Width - sP_Player.Width)
-                        sP_Player.Left += xDragDist;
-
-                    if (sP_Player.Location.Y + yDragDist > 0 && sP_Player.Location.Y + yDragDist < Height - sP_Player.Height)
-                        sP_Player.Top += yDragDist;
-                }
-            };
-            sP_Player.MouseUp += (s, e) => {
-                dragging = false;
-                eOriginalPos = new Point(0, 0);
-            };
+    
             player.DragOver += (s, e) => {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                     e.Effect = DragDropEffects.Copy;
@@ -841,6 +814,71 @@ namespace SSUtility2 {
 
         private void sP_Player_DoubleClick(object sender, EventArgs e) {
             SwapPlayers();
+        }
+
+
+        bool dragging = false;
+        Point eOriginalPos;
+
+        private void sP_Player_MouseDown(object sender, MouseEventArgs e) {
+            if (e.Button == MouseButtons.Right) {
+                if (sender == sP_Player) {
+                    mainPlayer.secondView.settings.Show();
+                    mainPlayer.secondView.settings.BringToFront();
+                } else if (sender == sP_Third) {
+                    thirdView.settings.Show();
+                    thirdView.settings.BringToFront();
+                }
+            } else if (e.Button == MouseButtons.Left) {
+                eOriginalPos = new Point(e.X, e.Y);
+                dragging = true;
+            }
+        }
+
+        private void sP_Player_MouseMove(object sender, MouseEventArgs e) {
+            SPanel.SizeablePanel p = (SPanel.SizeablePanel)sender;
+
+            if (dragging && !p.resizing) {
+                int xDragDist = e.X - eOriginalPos.X;
+                int yDragDist = e.Y - eOriginalPos.Y;
+
+                if (p.Location.X + xDragDist > 0 && p.Location.X + xDragDist < Width - p.Width)
+                    p.Left += xDragDist;
+
+                if (p.Location.Y + yDragDist > 0 && p.Location.Y + yDragDist < Height - p.Height)
+                    p.Top += yDragDist;
+            }
+        }
+
+        private void sP_Player_MouseUp(object sender, MouseEventArgs e) {
+            dragging = false;
+            eOriginalPos = new Point(0, 0);
+        }
+
+        private void Menu_Video_Third_Click(object sender, EventArgs e) {
+            if (thirdView == null) {
+                thirdView = new Detached(false);
+                thirdView.myPlayer.Dispose();
+                thirdView.myPlayer = sP_Third;
+                thirdView.settings.originalDetached = thirdView;
+                thirdView.settings.CopyPlayerD(mainPlayer.settings, true);
+                thirdView.settings.Text = "Third Video Settings";
+                thirdView.settings.isThird = true;
+                thirdView.settings.tP_Main.Text = "Third Player";
+                Menu_Video_Third.Text = "Disable Third Player";
+                Detached.Play(false, thirdView);
+                sP_Third.Show();
+                sP_Third.BringToFront();
+            } else if (sP_Third.Visible) {
+                Menu_Video_Third.Text = "Enable Third Player";
+                sP_Third.Hide();
+                thirdView.StopPlaying();
+            } else {
+                Menu_Video_Third.Text = "Disable Third Player";
+                sP_Third.Show();
+                sP_Third.BringToFront();
+                Detached.Play(false, thirdView);
+            }
         }
 
     } // end of class MainForm

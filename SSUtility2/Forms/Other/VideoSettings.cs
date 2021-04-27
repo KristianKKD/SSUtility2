@@ -7,6 +7,7 @@ namespace SSUtility2 {
 
         public Detached originalDetached;
         public bool isSecondary = false;
+        public bool isThird = false;
         public bool isPlaying = false;
 
         public const string dayRTSP = "videoinput_1:0/h264_1/onvif.stm";
@@ -186,6 +187,11 @@ namespace SSUtility2 {
         }
 
         private void b_Play_Click(object sender, EventArgs e) {
+            if (isThird) {
+                Detached.Play(true, MainForm.m.thirdView);
+                return;
+            }
+
             if (isSecondary) {
                 Detached.Play(true, originalDetached.secondView);
             } else {
@@ -195,6 +201,7 @@ namespace SSUtility2 {
                     ApplySecondaryChanges();
                     Detached.Play(false, MainForm.m.mainPlayer.secondView);
                 }
+                SaveConfigFields();
             }
         }
 
@@ -255,6 +262,7 @@ namespace SSUtility2 {
         private void b_Secondary_Play_Click(object sender, EventArgs e) {
             ApplySecondaryChanges();
             Detached.Play(true, MainForm.m.mainPlayer.secondView);
+            SaveConfigFields();
         }
 
         private void b_Secondary_Stop_Click(object sender, EventArgs e) {
@@ -339,13 +347,13 @@ namespace SSUtility2 {
             if (isSecondary)
                 UpdateMainPlayerSecondaryFields();
 
-            if (this != MainForm.m.mainPlayer.settings) {
+            if (this != MainForm.m.mainPlayer.settings || MainForm.m.finishedLoading) {
                 return;
             }
 
             if (tB_PlayerD_SimpleAdr.Text.Length == 0)
                 ConfigControl.mainPlayerCustomFull.UpdateValue("false");
-            else
+            else if (ActiveControl == tB_PlayerD_Adr)
                 ConfigControl.mainPlayerCustomFull.UpdateValue("true");
         }
 

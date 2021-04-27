@@ -21,26 +21,26 @@
         /// </summary>
         public void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Detached));
-            this.Menu = new System.Windows.Forms.MenuStrip();
+            this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.videoStreamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_StartStop = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Player = new System.Windows.Forms.Panel();
-            this.Menu.SuspendLayout();
+            this.MenuBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // Menu
             // 
-            this.Menu.BackColor = System.Drawing.Color.White;
-            this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.MenuBar.BackColor = System.Drawing.Color.White;
+            this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.videoStreamToolStripMenuItem});
-            this.Menu.Location = new System.Drawing.Point(0, 0);
-            this.Menu.Name = "Menu";
-            this.Menu.Size = new System.Drawing.Size(772, 24);
-            this.Menu.TabIndex = 42;
-            this.Menu.Text = "Menu";
+            this.MenuBar.Location = new System.Drawing.Point(0, 0);
+            this.MenuBar.Name = "Menu";
+            this.MenuBar.Size = new System.Drawing.Size(772, 24);
+            this.MenuBar.TabIndex = 42;
+            this.MenuBar.Text = "Menu";
             // 
             // videoStreamToolStripMenuItem
             // 
@@ -98,21 +98,21 @@
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(772, 489);
             this.Controls.Add(this.p_Player);
-            this.Controls.Add(this.Menu);
+            this.Controls.Add(this.MenuBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.Menu;
+            this.MainMenuStrip = this.MenuBar;
             this.Name = "Detached";
             this.Text = "Player";
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
-            this.Menu.ResumeLayout(false);
-            this.Menu.PerformLayout();
+            this.MenuBar.ResumeLayout(false);
+            this.MenuBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        public System.Windows.Forms.MenuStrip Menu;
+        public System.Windows.Forms.MenuStrip MenuBar;
         public System.Windows.Forms.ToolStripMenuItem videoStreamToolStripMenuItem;
         public System.ComponentModel.IContainer components;
         public System.Windows.Forms.ToolStripMenuItem Menu_Settings;
