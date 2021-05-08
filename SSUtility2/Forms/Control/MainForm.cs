@@ -10,8 +10,8 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.0.0";
-        private bool startLiteVersion = false; //only for launch
+        public const string version = "v2.6.0.1";
+        private bool startLiteVersion = true; //only for launch
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -76,10 +76,11 @@ namespace SSUtility2 {
                 b_Open.BringToFront();
                 
                 CommandQueue.Init();
-                if(startLiteVersion)
+                if (startLiteVersion) {
+                    AsyncCamCom.TryConnect();
                     LiteToggle();
-
-                await AttachPlayers();
+                } else
+                    await AttachPlayers();
 
                 finishedLoading = true;
             } catch (Exception e) {
@@ -231,8 +232,8 @@ namespace SSUtility2 {
                         d.HidePlayer();
                     }
 
-                    mainPlayer.p_Player.Hide();
-                    mainPlayer.settings.channelID = 99;
+                    //mainPlayer.p_Player.Hide();
+                    mainPlayer.settings.channelID = -99;
                     Joystick.UpdateJoystickCentre();
 
                     if (startLiteVersion)
