@@ -100,11 +100,12 @@ namespace SSUtility2 {
                         UpdateAll();
                 } else {
                     if (!isCamera) {
-                        if ((MainForm.m.mainPlayer.settings.isPlaying || MainForm.m.lite) && (timeoutTime < CommandQueue.commandRetries)) {
-                            timeoutTime++;
-                        } else {
+                        if (!(MainForm.m.mainPlayer.settings.channelID >= 0 || MainForm.m.lite)
+                            && (timeoutTime > 30)) {
                             timeoutTime = 0;
                             CheckForCamera();
+                        } else {
+                            timeoutTime++;
                         }
                     }
                 }
@@ -121,7 +122,6 @@ namespace SSUtility2 {
                 } else if (AsyncCamCom.sock.Connected) {
                     if (await OtherCamCom.CheckConfiguration() != OtherCamCom.CamConfig.Null) {
                         isCamera = true;
-                        Detached.EnableSecond(true);
                     }
                 } else {
                     isCamera = false;

@@ -34,12 +34,14 @@ namespace SSUtility2 {
 
         private static void SendCurrentCommand(object sender, EventArgs e) {
             try {
-                MainForm.m.Tick();
                 if (!AsyncCamCom.sock.Connected || !MainForm.m.finishedLoading) {
                     if(ConfigControl.forceCamera.boolVal)
                         InfoPanel.i.InfoPanelTick();
                     return;
                 }
+
+                if(AsyncCamCom.sock.Connected)
+                    MainForm.m.Tick();
 
                 if (queueList.Count > 0) {
                     Command com = queueList[0];

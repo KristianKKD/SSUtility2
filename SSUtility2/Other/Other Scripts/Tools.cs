@@ -28,7 +28,7 @@ namespace SSUtility2 {
         public static void SetFeatureToAllControls(Control.ControlCollection cc) {
             if (cc != null) {
                 foreach (Control control in cc) {
-                    if (control != MainForm.m.p_Control) {
+                    if (control != MainForm.m) {
                         control.PreviewKeyDown += new PreviewKeyDownEventHandler(control_PreviewKeyDown);
                     }
                     SetFeatureToAllControls(control.Controls);
@@ -104,12 +104,13 @@ namespace SSUtility2 {
         }
 
         public static void SaveSnap(Detached player) {
-            string fullImagePath = GivePath(ConfigControl.scFolder.stringVal, ConfigControl.scFileName.stringVal, player, "Snapshots") + ".jpg";
+            string fullImagePath = GivePath(ConfigControl.scFolder.stringVal,
+                ConfigControl.scFileName.stringVal, player.settings, "Snapshots") + ".jpg";
 
-            Image bmp = new Bitmap(player.myPlayer.Width, player.myPlayer.Height);
+            Image bmp = new Bitmap(player.Width, player.Height);
             Graphics gfx = Graphics.FromImage(bmp);
-            Rectangle rec = player.myPlayer.RectangleToScreen(player.myPlayer.ClientRectangle);
-            gfx.CopyFromScreen(rec.Location, Point.Empty, player.myPlayer.Size);
+            Rectangle rec = player.RectangleToScreen(player.ClientRectangle);
+            gfx.CopyFromScreen(rec.Location, Point.Empty, player.Size);
 
             bmp.Save(fullImagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
 
@@ -155,10 +156,10 @@ namespace SSUtility2 {
             return fileDlg;
         }
 
-        public static string GivePath(string orgFolder, string orgName, Detached detachedPlayer, string folderType) {
+        public static string GivePath(string orgFolder, string orgName, VideoSettings player, string folderType) {
             string folder = orgFolder;
             string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
-            string adr = GetPlayerAdrOrName(detachedPlayer.settings);
+            string adr = GetPlayerAdrOrName(player);
 
             if (adr != "") {
                 adr += @"\";
@@ -256,7 +257,7 @@ namespace SSUtility2 {
                 MainForm.m.finishedLoading = true;
                 MessageBox.Show("Updated config file!\n(" + configFile + ")");
                 
-                MainForm.m.mainPlayer.Replay();
+                //MainForm.m.mainPlayer.Replay();
             } else {
                 if (name == configFile)
                     MessageBox.Show("Please don't try to replace the config file with itself!\nIgnored request!");

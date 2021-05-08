@@ -1,28 +1,48 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSUtility2 {
-    public partial class VideoSettings : Form {
+namespace SSUtility2
+{
+    public partial class VideoSettings : Form
+    {
 
-        public Detached originalDetached;
-        public bool isSecondary = false;
-        public bool isThird = false;
-        public bool isPlaying = false;
+        public enum CopyType
+        {
+            CopyFull,
+            CopyAsSecondary,
+            NoCopy
+        }
+
+        public Detached myDetached;
+
+        public int myAttachedIndex = 0; //0 means it is the base
+        public List<Detached> attachedList = new List<Detached>();
 
         public const string dayRTSP = "videoinput_1:0/h264_1/onvif.stm";
         public const string thermalRTSP = "videoinput_2:0/h264_1/onvif.stm";
 
-        Control[] extendedControls;
-        Control[] extendedSecondaryControls;
         const int minExtendedHeight = 375;
         const int minSimpleHeight = 275;
 
-        public TabPage secondaryPage;
+        public int channelID = -1;
+        public bool isMainPlayer;
+        public bool isAttached = false;
 
-        public VideoSettings() {
+        Control[] extendedControls;
+
+        Timer saveTimer;
+
+        public VideoSettings(Detached d, bool isMain) {
             InitializeComponent();
-            secondaryPage = tP_Secondary;
+
+            if (d == null)
+                return;
+
+            myDetached = d;
+            isMainPlayer = isMain;
 
             Size = new Size(500, minSimpleHeight);
             MinimumSize = new Size(500, minSimpleHeight);
@@ -39,121 +59,161 @@ namespace SSUtility2 {
                 l_PlayerD_Username,
                 l_PlayerD_Password,
             };
-            extendedSecondaryControls = new Control[] {
-                tB_Secondary_RTSP,
-                tB_Secondary_Buffering,
-                tB_Secondary_Username,
-                tB_Secondary_Password,
 
-                l_Secondary_RTSP,
-                l_Secondary_Buffering,
-                l_Secondary_Username,
-                l_Secondary_Password,
+
+            if (isMain) {
+                saveTimer = new Timer();
+                saveTimer.Interval = 1000;
+                saveTimer.Tick += new EventHandler(SaveConfigFields);
+            } else {
+                tP_Main.Text = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
+            }
+            GetCombined();
+        }
+
+        public void SwapSettings(VideoSettings other) {
+            try {
+                VideoSettings tempSettings = new VideoSettings(null, false);
+
+                myDetached.StopPlaying();
+                other.myDetached.StopPlaying();
+
+                CopySettings(tempSettings, this, CopyType.CopyFull); //temp save old settings
+                CopySettings(this, other, CopyType.CopyFull);
+                CopySettings(other, tempSettings, CopyType.CopyFull);
+
+                myDetached.Play(false);
+                other.myDetached.Play(false);
+
+                tempSettings.Dispose();
+
+                if (OtherCamCom.PingAdr(tB_PlayerD_Adr.Text).Result) {
+                    MainForm.m.setPage.tB_IPCon_Adr.Text = tB_PlayerD_Adr.Text;
+                    MainForm.m.setPage.cB_ipCon_CamType.Text = cB_PlayerD_CamType.Text;
+                    
+                    ConfigControl.savedIP.UpdateValue(tB_PlayerD_Adr.Text);
+
+                    AsyncCamCom.TryConnect(false, null, true);
+
+                    SaveConfigFields(null,null);
+                }
+
+            } catch (Exception e) {
+                MessageBox.Show("Swap Fail\n" + e.ToString());
+            }
+        }
+
+        public static void CopySettings(VideoSettings target, VideoSettings source, CopyType type) {
+            try {
+                string sourceCB = source.cB_PlayerD_CamType.Text;
+
+                switch (type) {
+                    case CopyType.CopyFull:
+                        target.cB_PlayerD_CamType.Text = sourceCB;
+                        target.tB_PlayerD_RTSP.Text = source.tB_PlayerD_RTSP.Text;
+                        break;
+                    case CopyType.CopyAsSecondary:
+                        if (sourceCB.ToLower().Contains("daylight")) {
+                            target.cB_PlayerD_CamType.SelectedIndex = 1;
+                            target.tB_PlayerD_RTSP.Text = thermalRTSP;
+                        } else if (sourceCB.ToLower().Contains("thermal")) {
+                            target.cB_PlayerD_CamType.SelectedIndex = 0;
+                            target.tB_PlayerD_RTSP.Text = dayRTSP;
+                        } else {
+                            target.cB_PlayerD_CamType.Text = sourceCB;
+                            target.tB_PlayerD_RTSP.Text = source.tB_PlayerD_RTSP.Text;
+                        }
+                        break;
+                    case CopyType.NoCopy:
+                        return;
+                }
+
+                foreach (TextBox targetTB in Tools.GetAllType(target, typeof(TextBox))) {
+                    foreach (TextBox sourceTB in Tools.GetAllType(source, typeof(TextBox))) {
+                        if (targetTB.Name == sourceTB.Name && targetTB.Name != target.tB_PlayerD_RTSP.Name) {
+                            targetTB.Text = sourceTB.Text;
+                            break;
+                        }
+                    }
+                }
+
+                target.GetCombined();
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
             };
-
         }
 
-        void ExtendPanel(Control[] controls, bool check) {
-            check_PlayerD_Manual.Checked = check;
-            check_Secondary_Manual.Checked = check;
+        public string GetCombined() {
+            string full = "";
 
-            foreach (Control c in controls) {
-                c.Visible = check;
-            }
+            try {
+                string ipaddress = tB_PlayerD_Adr.Text;
 
-            if (check) {
-                if (Size.Height < minExtendedHeight) {
-                    Height = minExtendedHeight;
-                }
-                MinimumSize = new Size(500, minExtendedHeight);
-            } else {
-                MinimumSize = new Size(500, minSimpleHeight);
-                Height -= 100;
-            }
-            MaximumSize = new Size(9999, MinimumSize.Height);
-        }
+                if (ConfigControl.mainPlayerCustomFull.boolVal && isMainPlayer) {
+                    full = tB_PlayerD_SimpleAdr.Text;
+                } else {
+                    string port = tB_PlayerD_Port.Text;
+                    string url = tB_PlayerD_RTSP.Text;
+                    string username = tB_PlayerD_Username.Text;
+                    string password = tB_PlayerD_Password.Text;
 
-        public void CopyPlayerD(VideoSettings sets, bool tempCopy = false) {
-            if (!MainForm.m.finishedLoading)
-                return;
+                    full = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
 
-            tB_PlayerD_Adr.Text = sets.tB_PlayerD_Adr.Text;
-            tB_PlayerD_Port.Text = sets.tB_PlayerD_Port.Text;
-            tB_PlayerD_Buffering.Text = sets.tB_PlayerD_Buffering.Text;
-            tB_PlayerD_Username.Text = sets.tB_PlayerD_Username.Text;
-            tB_PlayerD_Password.Text = sets.tB_PlayerD_Password.Text;
-            if (!tempCopy) {
-                tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text + " 2";
-
-                if (ConfigControl.mainPlayerCamType.stringVal.Contains("Daylight")) {
-                    cB_PlayerD_CamType.Text = "Thermal";
-                    tB_PlayerD_RTSP.Text = thermalRTSP;
-                } else if (ConfigControl.mainPlayerCamType.stringVal.Contains("Thermal")) {
-                    cB_PlayerD_CamType.Text = "Daylight";
-                    tB_PlayerD_RTSP.Text = dayRTSP;
-                } else
-                    HideSecond();
-
-                tB_PlayerD_SimpleAdr.Text = GetCombined(this);
-            } else {
-                tB_PlayerD_Name.Text = sets.tB_PlayerD_Name.Text;
-
-                tB_PlayerD_RTSP.Text = sets.tB_PlayerD_RTSP.Text;
-                tB_PlayerD_SimpleAdr.Text = sets.tB_PlayerD_SimpleAdr.Text;
-                cB_PlayerD_CamType.Text = sets.cB_PlayerD_CamType.Text;
-            }
-        }
-
-        public static void CopySecondarySettingsMoveToMain(VideoSettings source, VideoSettings target) {
-            //copy secondary settings into the primary settings
-            target.tB_PlayerD_Name.Text = source.tB_Secondary_Name.Text;
-            target.tB_PlayerD_SimpleAdr.Text = source.tB_Secondary_SimpleAdr.Text;
-            target.tB_PlayerD_Adr.Text = source.tB_Secondary_Adr.Text;
-            target.tB_PlayerD_Port.Text = source.tB_Secondary_Port.Text;
-            target.tB_PlayerD_RTSP.Text = source.tB_Secondary_RTSP.Text;
-            target.cB_PlayerD_CamType.Text = source.cB_Secondary_CamType.Text;
-            target.tB_PlayerD_Buffering.Text = source.tB_Secondary_Buffering.Text;
-            target.tB_PlayerD_Username.Text = source.tB_Secondary_Username.Text;
-            target.tB_PlayerD_Password.Text = source.tB_Secondary_Password.Text;
-        }
-
-        public static void CopyPrimarySettingsMoveToSecondary(VideoSettings source, VideoSettings target, bool changeRTSP = false) {
-            //copy primary settings into the secondary settings
-            target.tB_Secondary_Name.Text = source.tB_PlayerD_Name.Text;
-            target.tB_Secondary_SimpleAdr.Text = source.tB_PlayerD_SimpleAdr.Text;
-            target.tB_Secondary_Adr.Text = source.tB_PlayerD_Adr.Text;
-            target.tB_Secondary_Port.Text = source.tB_PlayerD_Port.Text;
-            target.tB_Secondary_RTSP.Text = source.tB_PlayerD_RTSP.Text;
-            target.cB_Secondary_CamType.Text = source.cB_PlayerD_CamType.Text;
-            target.tB_Secondary_Buffering.Text = source.tB_PlayerD_Buffering.Text;
-            target.tB_Secondary_Username.Text = source.tB_PlayerD_Username.Text;
-            target.tB_Secondary_Password.Text = source.tB_PlayerD_Password.Text;
-
-            if (changeRTSP) {
-                if (source.cB_PlayerD_CamType.Text.Contains("Daylight")) {
-                    target.cB_Secondary_CamType.Text = "Thermal";
-                    target.tB_Secondary_RTSP.Text = thermalRTSP;
-                } else if (source.cB_PlayerD_CamType.Text.Contains("Thermal")) {
-                    target.cB_Secondary_CamType.Text = "Daylight";
-                    target.tB_Secondary_RTSP.Text = dayRTSP;
+                    tB_PlayerD_SimpleAdr.Text = full;
                 }
 
-                target.tB_PlayerD_SimpleAdr.Text = GetCombined(target);
+                if (ConfigControl.mainPlayerCustomName.boolVal
+                    && ConfigControl.mainPlayerName.stringVal.Trim() != ""
+                    && isMainPlayer)
+                    tB_PlayerD_Name.Text = ConfigControl.mainPlayerName.stringVal;
+                else
+                    tB_PlayerD_Name.Text = ipaddress;
+
+
+            } catch { };
+
+            return full;
+        }
+
+        public bool AdrValid(bool showErrors) {
+            try {
+                Uri newUri = null;
+                string errorMsg = "";
+
+                try {
+                    newUri = new Uri(tB_PlayerD_SimpleAdr.Text);
+                } catch {
+                    errorMsg = "Address was invalid!\n";
+                }
+
+                if (!ConfigControl.ignoreAddress.boolVal && isMainPlayer && newUri != null) {
+                    if (!OtherCamCom.PingAdr(newUri.Host).Result) {
+                        errorMsg += "Address had no RTSP stream attached!\n";
+                    }
+                }
+
+                if (errorMsg != "") {
+                    if (showErrors)
+                        MessageBox.Show(errorMsg);
+                    return false;
+                }
+
+                return true;
+            } catch (Exception e) {
+                if (showErrors)
+                    Tools.ShowPopup("Failed to parse address!\nShow more?", "Error Occurred!", e.ToString());
+                return false;
             }
         }
 
-        public void UpdateMainPlayerSecondaryFields() {
-            CopyPrimarySettingsMoveToSecondary(MainForm.m.mainPlayer.secondView.settings, MainForm.m.mainPlayer.settings);
-        }
-
-        void ApplySecondaryChanges() {
-            CopySecondarySettingsMoveToMain(this, MainForm.m.mainPlayer.secondView.settings);
+        private void VideoSettings_FormClosing(object sender, FormClosingEventArgs e) {
+            if (e.CloseReason == CloseReason.UserClosing) {
+                e.Cancel = true;
+                Hide();
+            }
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!MainForm.m.finishedLoading)
-                return;
-            
             string enc = cB_PlayerD_CamType.Text;
             string username = "";
             string password = "";
@@ -163,14 +223,10 @@ namespace SSUtility2 {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_1:0/h264_1/onvif.stm";
-                if (originalDetached.secondView != null)
-                    originalDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
             } else if (enc.Contains("Thermal")) {
                 username = "admin";
                 password = "admin";
                 rtsp = "videoinput_2:0/h264_1/onvif.stm";
-                if (originalDetached.secondView != null)
-                    originalDetached.secondView.settings.tB_PlayerD_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
             } else if (enc.Contains("VIVOTEK")) {
                 username = "root";
                 password = "root1234";
@@ -184,150 +240,62 @@ namespace SSUtility2 {
             tB_PlayerD_RTSP.Text = rtsp;
             tB_PlayerD_Username.Text = username;
             tB_PlayerD_Password.Text = password;
+
+            GetCombined();
         }
 
-        private void b_Play_Click(object sender, EventArgs e) {
-            if (isThird) {
-                Detached.Play(true, MainForm.m.thirdView);
-                return;
-            }
-
-            if (isSecondary) {
-                Detached.Play(true, originalDetached.secondView);
-            } else {
-                originalDetached.StartPlaying(true);
-                if (originalDetached == MainForm.m.mainPlayer && InfoPanel.i.isCamera) { //copy settings to second
-                    CopyPrimarySettingsMoveToSecondary(MainForm.m.mainPlayer.settings, MainForm.m.mainPlayer.settings, true);
-                    ApplySecondaryChanges();
-                    Detached.Play(false, MainForm.m.mainPlayer.secondView);
-                }
-                SaveConfigFields();
-            }
-        }
-
-        private void VideoSettings_VisibleChanged(object sender, EventArgs e) {
-            if (isSecondary)
-                b_Hide.Show();
-        }
-
-        public void HideSecond() {
-            MainForm.m.sP_Player.Hide();
-            Hide();
-            MainForm.m.Menu_Video_EnableSecondary.Visible = true;
-            MainForm.m.mainPlayer.secondView.StopPlaying();
-        }
-
-        private void b_Stop_Click(object sender, EventArgs e) {
-            if (!isSecondary)
-                originalDetached.StopPlaying();
-            else
-                originalDetached.secondView.StopPlaying();
-        }
-
-        private void Field_KeyUp(object sender, KeyEventArgs e) {
-            if (tB_PlayerD_SimpleAdr.Text == "" || tB_PlayerD_SimpleAdr.Text == GetCombined(this))
-                ConfigControl.mainPlayerCustomFull.UpdateValue("false");
-
-            UpdateMainPlayerSecondaryFields();
-        }
-
-        public static string GetCombined(VideoSettings sets) {
-            string full = "";
-
-            try {
-                string ipaddress = sets.tB_PlayerD_Adr.Text;
-
-                if (ConfigControl.mainPlayerCustomFull.boolVal) {
-                    full = sets.tB_PlayerD_SimpleAdr.Text;
-                } else {
-                    string port = sets.tB_PlayerD_Port.Text;
-                    string url = sets.tB_PlayerD_RTSP.Text;
-                    string username = sets.tB_PlayerD_Username.Text;
-                    string password = sets.tB_PlayerD_Password.Text;
-
-                    full = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
-                    
-                    sets.tB_PlayerD_SimpleAdr.Text = full;
-                }
-
-                if (!ConfigControl.mainPlayerCustomName.boolVal)
-                    sets.tB_PlayerD_Name.Text = ipaddress;
-
-
-            } catch { };
-
-            return full;
-        }
-
-        private void b_Secondary_Play_Click(object sender, EventArgs e) {
-            ApplySecondaryChanges();
-            Detached.Play(true, MainForm.m.mainPlayer.secondView);
-            SaveConfigFields();
-        }
-
-        private void b_Secondary_Stop_Click(object sender, EventArgs e) {
-            MainForm.m.mainPlayer.secondView.StopPlaying();
-        }
-
-        private void b_Hide_Click(object sender, EventArgs e) {
-            HideSecond();
-        }
-
-        private void check_Secondary_Manual_CheckedChanged(object sender, EventArgs e) {
-            ExtendPanel(extendedSecondaryControls, check_Secondary_Manual.Checked);
-        }
-        
         private void check_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
-            ExtendPanel(extendedControls, check_PlayerD_Manual.Checked);
+            foreach (Control c in extendedControls)
+                c.Visible = check_PlayerD_Manual.Checked;
+
+            if (check_PlayerD_Manual.Checked) {
+                if (Size.Height < minExtendedHeight) {
+                    Height = minExtendedHeight;
+                }
+                MinimumSize = new Size(500, minExtendedHeight);
+            } else {
+                MinimumSize = new Size(500, minSimpleHeight);
+                Height -= 100;
+            }
+            MaximumSize = new Size(9999, MinimumSize.Height);
         }
 
-        private void VideoSettings_FormClosing(object sender, FormClosingEventArgs e) {
-            if (e.CloseReason == CloseReason.UserClosing) {
-                e.Cancel = true;
-                Hide();
+        private void b_PlayerD_Play_Click(object sender, EventArgs e) {
+            myDetached.Play(true, isMainPlayer);
+        }
+
+        private void VideoSettings_VisibleChanged_1(object sender, EventArgs e) {
+            if (MainForm.m.finishedLoading) {
+                GetCombined();
+                if (!isMainPlayer && isAttached) {
+                    b_Detach.Show();
+                }
+            }
+        }
+
+        private void b_PlayerD_Stop_Click(object sender, EventArgs e) {
+            myDetached.StopPlaying();
+        }
+
+        private void Fields_Any_Click(object sender, MouseEventArgs e) {
+            ConfigControl.mainPlayerCustomFull.UpdateValue("false");
+        }
+
+        private void tB_PlayerD_Name_KeyUp(object sender, EventArgs e) {
+            string name = tB_PlayerD_Name.Text.Trim();
+            if (name.Length == 0 || name == " " || name == tB_PlayerD_Adr.Text) {
+                ConfigControl.mainPlayerCustomName.UpdateValue("false");
+            } else {
+                ConfigControl.mainPlayerCustomName.UpdateValue("true");
             }
 
-            SaveConfigFields();
+            ConfigControl.mainPlayerName.UpdateValue(tB_PlayerD_Name.Text);
         }
 
-        private void tC_PlayerSettings_SelectedIndexChanged(object sender, EventArgs e) {
-            UpdateMainPlayerSecondaryFields();
-        }
-
-        private void cB_Secondary_CamType_SelectedIndexChanged(object sender, EventArgs e) {
-            string enc = cB_Secondary_CamType.Text;
-            string username = "";
-            string password = "";
-            string rtsp = "";
-
-            if (enc.Contains("Daylight")) {
-                username = "admin";
-                password = "admin";
-                rtsp = "videoinput_1:0/h264_1/onvif.stm";
-            } else if (enc.Contains("Thermal")) {
-                username = "admin";
-                password = "admin";
-                rtsp = "videoinput_2:0/h264_1/onvif.stm";
-            } else if (enc.Contains("VIVOTEK")) {
-                username = "root";
-                password = "root1234";
-                rtsp = "live.sdp";
-            } else if (enc.Contains("BOSCH")) {
-                username = "service";
-                password = "Service123!";
-                rtsp = "";
-            }
-
-            tB_Secondary_RTSP.Text = rtsp;
-            tB_Secondary_Username.Text = username;
-            tB_Secondary_Password.Text = password;
-
-            SaveConfigFields();
-        }
-
-        void SaveConfigFields() {
-            if (originalDetached != MainForm.m.mainPlayer || !MainForm.m.finishedLoading)
+        void SaveConfigFields(object sender, EventArgs e) {
+            if (!isMainPlayer || !MainForm.m.finishedLoading)
                 return;
+
             ConfigControl.mainPlayerName.UpdateValue(tB_PlayerD_Name.Text);
             ConfigControl.mainPlayerFullAdr.UpdateValue(tB_PlayerD_SimpleAdr.Text);
             ConfigControl.mainPlayerCamType.UpdateValue(cB_PlayerD_CamType.Text);
@@ -339,44 +307,43 @@ namespace SSUtility2 {
             ConfigControl.mainPlayerPassword.UpdateValue(tB_PlayerD_Password.Text);
         }
 
-        private void Any_KeyPress(object sender, KeyPressEventArgs e) {
-            SaveConfigFields();
+        private void AddressField_KeyUp(object sender, KeyEventArgs e) {
+            GetCombined();
+
+            if (isMainPlayer) {
+                if (e.KeyCode == Keys.Enter) { //bug with using arrow keys + enter to close error
+                    SaveConfigFields(null, null);
+                } else
+                    DoSaveTimer();
+            }
         }
 
-        private void tB_PlayerD_SimpleAdr_KeyUp(object sender, KeyEventArgs e) {
-            if (isSecondary)
-                UpdateMainPlayerSecondaryFields();
+        void DoSaveTimer() {
+            if (saveTimer != null && saveTimer.Enabled)
+                saveTimer.Stop();
 
-            if (this != MainForm.m.mainPlayer.settings || MainForm.m.finishedLoading) {
-                return;
+            saveTimer.Start();
+        }
+
+        public void UpdateMode() {
+            string value = ConfigControl.mainPlayerCamType.stringVal.ToLower();
+
+            if (value.Contains("thermal")) {
+                cB_PlayerD_CamType.SelectedIndex = 1;
+                tB_PlayerD_RTSP.Text = thermalRTSP;
+            } else if (value.Contains("daylight")) {
+                cB_PlayerD_CamType.SelectedIndex = 0;
+                tB_PlayerD_RTSP.Text = dayRTSP;
             }
 
-            if (tB_PlayerD_SimpleAdr.Text.Length == 0)
-                ConfigControl.mainPlayerCustomFull.UpdateValue("false");
-            else if (ActiveControl == tB_PlayerD_Adr)
-                ConfigControl.mainPlayerCustomFull.UpdateValue("true");
+            myDetached.Play(false, false);
         }
 
-        private void tB_PlayerD_Name_KeyUp(object sender, KeyEventArgs e) {
-            if (this != MainForm.m.mainPlayer.settings) {
-                return;
-            }
-
-            if (tB_PlayerD_Name.Text == tB_PlayerD_Adr.Text
-                || tB_PlayerD_Name.Text.Length == 0)
-                ConfigControl.mainPlayerCustomName.UpdateValue("false");
-            else
-                ConfigControl.mainPlayerCustomName.UpdateValue("true");
+        private void b_Detach_Click(object sender, EventArgs e) {
+            MainForm.m.mainPlayer.Detach(myDetached);
+            b_Detach.Visible = false;
+            Hide();
         }
-
-        private void Fields_KeyDown(object sender, KeyEventArgs e) {
-            ConfigControl.mainPlayerCustomFull.UpdateValue("false");
-        }
-
-        private void SecondaryField_KeyUp(object sender, KeyEventArgs e) {
-            ApplySecondaryChanges();
-        }
-
     }
 }
 

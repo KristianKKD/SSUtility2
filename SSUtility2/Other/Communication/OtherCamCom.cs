@@ -37,10 +37,10 @@ namespace SSUtility2 {
             Int32.TryParse(newSub, out int other);
 
             if (mine != other) {
-                Tools.ShowPopup("Local IP subnet is not the same as the camera subnet!\nShow possible fix?",
-                    "Subnet Error!", "Try changing your IP from: " + rawIp + "\n To: "
-                    + rawIp.Replace(mySub, newSub) + "\nThe new IP will also have to be static!");
-                return false;
+                bool result = Tools.ShowPopup("Local IP subnet is not the same as the camera subnet!" + "\nYour IP: " + rawIp + "\nOther IP: "
+                    + rawIp.Replace(mySub, newSub) + "\nProceed anyway?",
+                    "Subnet Error!", "", false);
+                return result;
             } else {
                 return true;
             }
@@ -65,42 +65,43 @@ namespace SSUtility2 {
         }
 
         public static void LabelDisplay(bool connected) {
-            MainForm.m.Invoke((MethodInvoker)delegate {
-                Label l = MainForm.m.setPage.l_IPCon_Connected;
-                if (connected) {
-                    l.Text = "✓";
-                    l.ForeColor = Color.Green;
-                } else {
-                    l.Text = "❌";
-                    l.ForeColor = Color.Red;
-                }
-            });
+            try {
+                MainForm.m.Invoke((MethodInvoker)delegate {
+                    Label l = MainForm.m.setPage.l_IPCon_Connected;
+                    if (connected) {
+                        l.Text = "✓";
+                        l.ForeColor = Color.Green;
+                    } else {
+                        l.Text = "❌";
+                        l.ForeColor = Color.Red;
+                    }
+                });
+            } catch { };
         }
 
         public static async Task<bool> PingAdr(string address) {
-            Ping pinger = null;
-
             if (address == null) {
                 return false;
             }
 
-            try {
-                pinger = new Ping();
-                PingReply reply = pinger.Send(address, 3);
-                if (reply.Status == IPStatus.Success) {
-                    //if (address.Port == 0 || address.ToString().Contains("w")) {
-                    //    return true;
-                    //}
-                    //using (var client = new TcpClient(address.Host, address.Port)) {
-                    //    return true;
-                    //}
-                    return true;
+            Ping pinger = null;
+            bool success = false;
+
+            for (int i = 0; i < 2; i++) {
+                try {
+                    pinger = new Ping();
+                    PingReply reply = pinger.Send(address, 2);
+                    if (reply.Status == IPStatus.Success) {
+                        success = true;
+                        break;
+                    }
+                } catch {
+                } finally {
+                    pinger.Dispose();
                 }
-            } catch {
-            } finally {
-                pinger.Dispose();
             }
-            return false;
+            
+            return success;
         }
         
         public static async Task<CamConfig> CheckConfiguration() {

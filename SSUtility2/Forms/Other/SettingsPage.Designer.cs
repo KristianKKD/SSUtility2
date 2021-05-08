@@ -451,6 +451,7 @@ namespace SSUtility2
             this.tB_IPCon_Port.Size = new System.Drawing.Size(123, 20);
             this.tB_IPCon_Port.TabIndex = 78;
             this.tB_IPCon_Port.TextChanged += new System.EventHandler(this.tB_IPCon_Port_TextChanged);
+            this.tB_IPCon_Port.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyUp);
             // 
             // tB_IPCon_Adr
             // 
@@ -458,8 +459,7 @@ namespace SSUtility2
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
             this.tB_IPCon_Adr.TabIndex = 77;
-            this.tB_IPCon_Adr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyDown);
-            this.tB_IPCon_Adr.Leave += new System.EventHandler(this.tB_IPCon_Adr_Leave);
+            this.tB_IPCon_Adr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyUp);
             // 
             // l_IPCon_Connected
             // 

@@ -32,14 +32,13 @@ namespace SSUtility2 {
 			}
 			base.Dispose(disposing);
 		}
-		
-		/// <summary>
-		/// This method is required for Windows Forms designer support.
-		/// Do not change the method contents inside the source code editor. The Forms designer might
-		/// not be able to load this method if it was changed manually.
-		/// </summary>
-		private void InitializeComponent()
-		{
+
+        /// <summary>
+        /// This method is required for Windows Forms designer support.
+        /// Do not change the method contents inside the source code editor. The Forms designer might
+        /// not be able to load this method if it was changed manually.
+        /// </summary>
+        private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.Menu_Window = new System.Windows.Forms.ToolStripMenuItem();
@@ -61,11 +60,8 @@ namespace SSUtility2 {
             this.Menu_Settings_ExportConfig = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video_StartStop = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Record = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video_EnableSecondary = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video_Third = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Custom = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_PanZero = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,28 +69,24 @@ namespace SSUtility2 {
             this.Menu_QC_Tilt = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
-            this.p_Main = new System.Windows.Forms.Panel();
-            this.p_Control = new System.Windows.Forms.Panel();
-            this.sP_Third = new SPanel.SizeablePanel();
+            this.p_PlayerPanel = new System.Windows.Forms.Panel();
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
             this.b_Open = new System.Windows.Forms.Button();
             this.b_PTZ_Thermal = new System.Windows.Forms.Button();
-            this.Joystick = new Joystick.CentreStick();
-            this.b_PTZ_Left = new System.Windows.Forms.Button();
-            this.b_PTZ_Right = new System.Windows.Forms.Button();
-            this.b_PTZ_Down = new System.Windows.Forms.Button();
-            this.b_PTZ_Up = new System.Windows.Forms.Button();
-            this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
-            this.b_PTZ_ZoomNeg = new System.Windows.Forms.Button();
-            this.b_PTZ_FocusPos = new System.Windows.Forms.Button();
-            this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.pB_Background = new System.Windows.Forms.PictureBox();
-            this.sP_Player = new SPanel.SizeablePanel();
+            this.Joystick = new Joystick.CentreStick();
+            this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
+            this.b_PTZ_Left = new System.Windows.Forms.Button();
+            this.b_PTZ_FocusPos = new System.Windows.Forms.Button();
+            this.b_PTZ_Right = new System.Windows.Forms.Button();
+            this.b_PTZ_ZoomNeg = new System.Windows.Forms.Button();
+            this.b_PTZ_Down = new System.Windows.Forms.Button();
+            this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
+            this.b_PTZ_Up = new System.Windows.Forms.Button();
             this.MenuBar.SuspendLayout();
-            this.p_Main.SuspendLayout();
-            this.p_Control.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Joystick)).BeginInit();
+            this.p_PlayerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Background)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Joystick)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -204,7 +196,6 @@ namespace SSUtility2 {
             this.Menu_Settings_Info.Name = "Menu_Settings_Info";
             this.Menu_Settings_Info.Size = new System.Drawing.Size(207, 22);
             this.Menu_Settings_Info.Text = "Enable Info Panel";
-            this.Menu_Settings_Info.Visible = false;
             this.Menu_Settings_Info.Click += new System.EventHandler(this.Menu_Settings_Info_Click);
             // 
             // Menu_Settings_Custom
@@ -253,11 +244,8 @@ namespace SSUtility2 {
             // 
             this.Menu_Video.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Video_Settings,
-            this.Menu_Video_StartStop,
             this.Menu_Video_Snapshot,
-            this.Menu_Video_Record,
-            this.Menu_Video_EnableSecondary,
-            this.Menu_Video_Third});
+            this.Menu_Video_Record});
             this.Menu_Video.Name = "Menu_Video";
             this.Menu_Video.Size = new System.Drawing.Size(93, 20);
             this.Menu_Video.Text = "Video Stream";
@@ -265,45 +253,23 @@ namespace SSUtility2 {
             // Menu_Video_Settings
             // 
             this.Menu_Video_Settings.Name = "Menu_Video_Settings";
-            this.Menu_Video_Settings.Size = new System.Drawing.Size(211, 22);
+            this.Menu_Video_Settings.Size = new System.Drawing.Size(183, 22);
             this.Menu_Video_Settings.Text = "Connection Settings";
             this.Menu_Video_Settings.Click += new System.EventHandler(this.Menu_Video_Settings_Click);
-            // 
-            // Menu_Video_StartStop
-            // 
-            this.Menu_Video_StartStop.Name = "Menu_Video_StartStop";
-            this.Menu_Video_StartStop.Size = new System.Drawing.Size(211, 22);
-            this.Menu_Video_StartStop.Text = "Start Video Playback";
-            this.Menu_Video_StartStop.Click += new System.EventHandler(this.Menu_Video_Stop_Click);
             // 
             // Menu_Video_Snapshot
             // 
             this.Menu_Video_Snapshot.Name = "Menu_Video_Snapshot";
-            this.Menu_Video_Snapshot.Size = new System.Drawing.Size(211, 22);
+            this.Menu_Video_Snapshot.Size = new System.Drawing.Size(183, 22);
             this.Menu_Video_Snapshot.Text = "Save Snapshot";
             this.Menu_Video_Snapshot.Click += new System.EventHandler(this.Menu_Video_Snapshot_Click);
             // 
             // Menu_Video_Record
             // 
             this.Menu_Video_Record.Name = "Menu_Video_Record";
-            this.Menu_Video_Record.Size = new System.Drawing.Size(211, 22);
+            this.Menu_Video_Record.Size = new System.Drawing.Size(183, 22);
             this.Menu_Video_Record.Text = "Start Recording";
             this.Menu_Video_Record.Click += new System.EventHandler(this.Menu_Video_Record_Click);
-            // 
-            // Menu_Video_EnableSecondary
-            // 
-            this.Menu_Video_EnableSecondary.Name = "Menu_Video_EnableSecondary";
-            this.Menu_Video_EnableSecondary.Size = new System.Drawing.Size(211, 22);
-            this.Menu_Video_EnableSecondary.Text = "Enable Secondary Player";
-            this.Menu_Video_EnableSecondary.Visible = false;
-            this.Menu_Video_EnableSecondary.Click += new System.EventHandler(this.Menu_Video_EnableSecondary_Click);
-            // 
-            // Menu_Video_Third
-            // 
-            this.Menu_Video_Third.Name = "Menu_Video_Third";
-            this.Menu_Video_Third.Size = new System.Drawing.Size(211, 22);
-            this.Menu_Video_Third.Text = "Enable Third Player";
-            this.Menu_Video_Third.Click += new System.EventHandler(this.Menu_Video_Third_Click);
             // 
             // Menu_QC
             // 
@@ -359,52 +325,31 @@ namespace SSUtility2 {
             this.Menu_Final_Open.Text = "Open...";
             this.Menu_Final_Open.Click += new System.EventHandler(this.Menu_Final_Open_Click);
             // 
-            // p_Main
+            // p_PlayerPanel
             // 
-            this.p_Main.Controls.Add(this.p_Control);
-            this.p_Main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.p_Main.Location = new System.Drawing.Point(0, 24);
-            this.p_Main.Name = "p_Main";
-            this.p_Main.Size = new System.Drawing.Size(1264, 657);
-            this.p_Main.TabIndex = 31;
-            // 
-            // p_Control
-            // 
-            this.p_Control.BackColor = System.Drawing.Color.Black;
-            this.p_Control.Controls.Add(this.sP_Third);
-            this.p_Control.Controls.Add(this.b_PTZ_Daylight);
-            this.p_Control.Controls.Add(this.b_Open);
-            this.p_Control.Controls.Add(this.b_PTZ_Thermal);
-            this.p_Control.Controls.Add(this.Joystick);
-            this.p_Control.Controls.Add(this.b_PTZ_Left);
-            this.p_Control.Controls.Add(this.b_PTZ_Right);
-            this.p_Control.Controls.Add(this.b_PTZ_Down);
-            this.p_Control.Controls.Add(this.b_PTZ_Up);
-            this.p_Control.Controls.Add(this.b_PTZ_FocusNeg);
-            this.p_Control.Controls.Add(this.b_PTZ_ZoomNeg);
-            this.p_Control.Controls.Add(this.b_PTZ_FocusPos);
-            this.p_Control.Controls.Add(this.b_PTZ_ZoomPos);
-            this.p_Control.Controls.Add(this.pB_Background);
-            this.p_Control.Controls.Add(this.sP_Player);
-            this.p_Control.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.p_Control.Location = new System.Drawing.Point(0, 0);
-            this.p_Control.Name = "p_Control";
-            this.p_Control.Size = new System.Drawing.Size(1264, 657);
-            this.p_Control.TabIndex = 1;
-            // 
-            // sP_Third
-            // 
-            this.sP_Third.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sP_Third.BackColor = System.Drawing.Color.Black;
-            this.sP_Third.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.sP_Third.Location = new System.Drawing.Point(850, 395);
-            this.sP_Third.Name = "sP_Third";
-            this.sP_Third.Size = new System.Drawing.Size(400, 250);
-            this.sP_Third.TabIndex = 3;
-            this.sP_Third.Visible = false;
-            this.sP_Third.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseDown);
-            this.sP_Third.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseMove);
-            this.sP_Third.MouseUp += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseUp);
+            this.p_PlayerPanel.AllowDrop = true;
+            this.p_PlayerPanel.BackColor = System.Drawing.Color.Black;
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Daylight);
+            this.p_PlayerPanel.Controls.Add(this.b_Open);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Thermal);
+            this.p_PlayerPanel.Controls.Add(this.pB_Background);
+            this.p_PlayerPanel.Controls.Add(this.Joystick);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_ZoomPos);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Left);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_FocusPos);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Right);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_ZoomNeg);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Down);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_FocusNeg);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Up);
+            this.p_PlayerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.p_PlayerPanel.Location = new System.Drawing.Point(0, 24);
+            this.p_PlayerPanel.Name = "p_PlayerPanel";
+            this.p_PlayerPanel.Size = new System.Drawing.Size(1264, 657);
+            this.p_PlayerPanel.TabIndex = 31;
+            this.p_PlayerPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragDrop);
+            this.p_PlayerPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragOver);
+            this.p_PlayerPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.p_PlayerPanel_MouseMove);
             // 
             // b_PTZ_Daylight
             // 
@@ -447,6 +392,15 @@ namespace SSUtility2 {
             this.b_PTZ_Thermal.Visible = false;
             this.b_PTZ_Thermal.Click += new System.EventHandler(this.b_PTZ_Thermal_Click);
             // 
+            // pB_Background
+            // 
+            this.pB_Background.BackColor = System.Drawing.SystemColors.Highlight;
+            this.pB_Background.Location = new System.Drawing.Point(68, 92);
+            this.pB_Background.Name = "pB_Background";
+            this.pB_Background.Size = new System.Drawing.Size(150, 150);
+            this.pB_Background.TabIndex = 91;
+            this.pB_Background.TabStop = false;
+            // 
             // Joystick
             // 
             this.Joystick.BackColor = System.Drawing.Color.Black;
@@ -456,97 +410,6 @@ namespace SSUtility2 {
             this.Joystick.TabIndex = 90;
             this.Joystick.TabStop = false;
             this.Joystick.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Joystick_MouseUp);
-            // 
-            // b_PTZ_Left
-            // 
-            this.b_PTZ_Left.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.b_PTZ_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Left.Location = new System.Drawing.Point(12, 151);
-            this.b_PTZ_Left.Name = "b_PTZ_Left";
-            this.b_PTZ_Left.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_Left.TabIndex = 95;
-            this.b_PTZ_Left.Text = "Left";
-            this.b_PTZ_Left.UseVisualStyleBackColor = false;
-            this.b_PTZ_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
-            this.b_PTZ_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_Right
-            // 
-            this.b_PTZ_Right.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.b_PTZ_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Right.Location = new System.Drawing.Point(224, 151);
-            this.b_PTZ_Right.Name = "b_PTZ_Right";
-            this.b_PTZ_Right.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_Right.TabIndex = 94;
-            this.b_PTZ_Right.Text = "Right";
-            this.b_PTZ_Right.UseVisualStyleBackColor = false;
-            this.b_PTZ_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Right_MouseDown);
-            this.b_PTZ_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_Down
-            // 
-            this.b_PTZ_Down.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.b_PTZ_Down.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Down.Location = new System.Drawing.Point(118, 248);
-            this.b_PTZ_Down.Name = "b_PTZ_Down";
-            this.b_PTZ_Down.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_Down.TabIndex = 93;
-            this.b_PTZ_Down.Text = "Down";
-            this.b_PTZ_Down.UseVisualStyleBackColor = false;
-            this.b_PTZ_Down.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Down_MouseDown);
-            this.b_PTZ_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_Up
-            // 
-            this.b_PTZ_Up.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.b_PTZ_Up.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Up.Location = new System.Drawing.Point(118, 56);
-            this.b_PTZ_Up.Name = "b_PTZ_Up";
-            this.b_PTZ_Up.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_Up.TabIndex = 92;
-            this.b_PTZ_Up.Text = "Up";
-            this.b_PTZ_Up.UseVisualStyleBackColor = false;
-            this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
-            this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_FocusNeg
-            // 
-            this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.YellowGreen;
-            this.b_PTZ_FocusNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(12, 248);
-            this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
-            this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_FocusNeg.TabIndex = 89;
-            this.b_PTZ_FocusNeg.Text = "F-";
-            this.b_PTZ_FocusNeg.UseVisualStyleBackColor = false;
-            this.b_PTZ_FocusNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_FocusNeg_MouseDown);
-            this.b_PTZ_FocusNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_ZoomNeg
-            // 
-            this.b_PTZ_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b_PTZ_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(224, 248);
-            this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
-            this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_ZoomNeg.TabIndex = 88;
-            this.b_PTZ_ZoomNeg.Text = "Z-";
-            this.b_PTZ_ZoomNeg.UseVisualStyleBackColor = false;
-            this.b_PTZ_ZoomNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomNeg_MouseDown);
-            this.b_PTZ_ZoomNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_FocusPos
-            // 
-            this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
-            this.b_PTZ_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(12, 56);
-            this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
-            this.b_PTZ_FocusPos.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_FocusPos.TabIndex = 87;
-            this.b_PTZ_FocusPos.Text = "F+";
-            this.b_PTZ_FocusPos.UseVisualStyleBackColor = false;
-            this.b_PTZ_FocusPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_FocusPos_MouseDown);
-            this.b_PTZ_FocusPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
             // b_PTZ_ZoomPos
             // 
@@ -561,29 +424,96 @@ namespace SSUtility2 {
             this.b_PTZ_ZoomPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomPos_MouseDown);
             this.b_PTZ_ZoomPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
-            // pB_Background
+            // b_PTZ_Left
             // 
-            this.pB_Background.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pB_Background.Location = new System.Drawing.Point(68, 92);
-            this.pB_Background.Name = "pB_Background";
-            this.pB_Background.Size = new System.Drawing.Size(150, 150);
-            this.pB_Background.TabIndex = 91;
-            this.pB_Background.TabStop = false;
+            this.b_PTZ_Left.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_PTZ_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Left.Location = new System.Drawing.Point(12, 151);
+            this.b_PTZ_Left.Name = "b_PTZ_Left";
+            this.b_PTZ_Left.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_Left.TabIndex = 95;
+            this.b_PTZ_Left.Text = "Left";
+            this.b_PTZ_Left.UseVisualStyleBackColor = false;
+            this.b_PTZ_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
+            this.b_PTZ_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
-            // sP_Player
+            // b_PTZ_FocusPos
             // 
-            this.sP_Player.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.sP_Player.BackColor = System.Drawing.Color.Black;
-            this.sP_Player.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.sP_Player.Location = new System.Drawing.Point(850, 15);
-            this.sP_Player.Name = "sP_Player";
-            this.sP_Player.Size = new System.Drawing.Size(400, 250);
-            this.sP_Player.TabIndex = 2;
-            this.sP_Player.Visible = false;
-            this.sP_Player.DoubleClick += new System.EventHandler(this.sP_Player_DoubleClick);
-            this.sP_Player.MouseDown += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseDown);
-            this.sP_Player.MouseMove += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseMove);
-            this.sP_Player.MouseUp += new System.Windows.Forms.MouseEventHandler(this.sP_Player_MouseUp);
+            this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
+            this.b_PTZ_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(12, 56);
+            this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
+            this.b_PTZ_FocusPos.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_FocusPos.TabIndex = 87;
+            this.b_PTZ_FocusPos.Text = "F+";
+            this.b_PTZ_FocusPos.UseVisualStyleBackColor = false;
+            this.b_PTZ_FocusPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_FocusPos_MouseDown);
+            this.b_PTZ_FocusPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_Right
+            // 
+            this.b_PTZ_Right.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_PTZ_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Right.Location = new System.Drawing.Point(224, 151);
+            this.b_PTZ_Right.Name = "b_PTZ_Right";
+            this.b_PTZ_Right.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_Right.TabIndex = 94;
+            this.b_PTZ_Right.Text = "Right";
+            this.b_PTZ_Right.UseVisualStyleBackColor = false;
+            this.b_PTZ_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Right_MouseDown);
+            this.b_PTZ_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_ZoomNeg
+            // 
+            this.b_PTZ_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_PTZ_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(224, 248);
+            this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
+            this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_ZoomNeg.TabIndex = 88;
+            this.b_PTZ_ZoomNeg.Text = "Z-";
+            this.b_PTZ_ZoomNeg.UseVisualStyleBackColor = false;
+            this.b_PTZ_ZoomNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomNeg_MouseDown);
+            this.b_PTZ_ZoomNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_Down
+            // 
+            this.b_PTZ_Down.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_PTZ_Down.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Down.Location = new System.Drawing.Point(118, 248);
+            this.b_PTZ_Down.Name = "b_PTZ_Down";
+            this.b_PTZ_Down.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_Down.TabIndex = 93;
+            this.b_PTZ_Down.Text = "Down";
+            this.b_PTZ_Down.UseVisualStyleBackColor = false;
+            this.b_PTZ_Down.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Down_MouseDown);
+            this.b_PTZ_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_FocusNeg
+            // 
+            this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.YellowGreen;
+            this.b_PTZ_FocusNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(12, 248);
+            this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
+            this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_FocusNeg.TabIndex = 89;
+            this.b_PTZ_FocusNeg.Text = "F-";
+            this.b_PTZ_FocusNeg.UseVisualStyleBackColor = false;
+            this.b_PTZ_FocusNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_FocusNeg_MouseDown);
+            this.b_PTZ_FocusNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_Up
+            // 
+            this.b_PTZ_Up.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_PTZ_Up.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Up.Location = new System.Drawing.Point(118, 56);
+            this.b_PTZ_Up.Name = "b_PTZ_Up";
+            this.b_PTZ_Up.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_Up.TabIndex = 92;
+            this.b_PTZ_Up.Text = "Up";
+            this.b_PTZ_Up.UseVisualStyleBackColor = false;
+            this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
+            this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
             // MainForm
             // 
@@ -591,7 +521,7 @@ namespace SSUtility2 {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1264, 681);
-            this.Controls.Add(this.p_Main);
+            this.Controls.Add(this.p_PlayerPanel);
             this.Controls.Add(this.MenuBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MenuBar;
@@ -603,10 +533,9 @@ namespace SSUtility2 {
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
-            this.p_Main.ResumeLayout(false);
-            this.p_Control.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Joystick)).EndInit();
+            this.p_PlayerPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pB_Background)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Joystick)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1410,8 +1339,7 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Window_Response;
         public ToolStripMenuItem Menu_QC;
         public ToolStripMenuItem Menu_QC_PanZero;
-        public Panel p_Main;
-        public Panel p_Control;
+        public Panel p_PlayerPanel;
         public ToolStripMenuItem Menu_QC_Pan;
         public ToolStripMenuItem Menu_QC_Tilt;
         public ToolStripMenuItem Menu_Window_Osiris;
@@ -1419,11 +1347,8 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Video_Settings;
         public ToolStripMenuItem Menu_Video_Snapshot;
         public ToolStripMenuItem Menu_Video_Record;
-        public ToolStripMenuItem Menu_Video_StartStop;
         public ToolStripMenuItem Menu_Window_Presets;
         public Button b_Open;
-        public ToolStripMenuItem Menu_Video_EnableSecondary;
-        public SPanel.SizeablePanel sP_Player;
         public ToolStripMenuItem Menu_Settings;
         public ToolStripMenuItem Menu_Settings_Open;
         public ToolStripMenuItem Menu_Settings_Info;
@@ -1448,7 +1373,5 @@ namespace SSUtility2 {
         private ToolStripMenuItem Menu_Settings_ExportConfig;
         public Button b_PTZ_Daylight;
         public Button b_PTZ_Thermal;
-        public SPanel.SizeablePanel sP_Third;
-        private ToolStripMenuItem Menu_Video_Third;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

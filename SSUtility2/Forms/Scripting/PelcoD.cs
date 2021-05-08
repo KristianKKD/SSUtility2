@@ -31,7 +31,7 @@ namespace SSUtility2 {
             });
             try {
                 if (cB_Mode.Text == "IP") {
-                    if (!await AsyncCamCom.TryConnect(false).ConfigureAwait(false)) {
+                    if (!await AsyncCamCom.TryConnect(true).ConfigureAwait(false)) {
                         return;
                     }
                 }

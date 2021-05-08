@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.5.2.0";
+        public const string version = "v2.6.0.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -31,7 +31,6 @@ namespace SSUtility2 {
         public PresetPanel pp;
         public TabControl attachedpp;
         public Detached mainPlayer;
-        public Detached thirdView;
         private Recorder screenRec;
 
         private string inUseVideoPath;
@@ -49,9 +48,8 @@ namespace SSUtility2 {
                 pp = new PresetPanel();
                 D.protocol = new D();
                 EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init(initString);
-
-
-                AttachPlayer();
+                
+                mainPlayer = new Detached(true);
                 AttachInfoPanel();
                 AttachCustomPanel();
                 AttachPresetPanel();
@@ -81,24 +79,14 @@ namespace SSUtility2 {
                 if(startLiteVersion)
                     LiteToggle();
 
-                AutoConnect();
+                await AttachPlayers();
 
-                await Task.Delay(500).ConfigureAwait(false);
                 finishedLoading = true;
             } catch (Exception e) {
                 Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
             }
         }
 
-        async Task AutoConnect() {
-            await Task.Delay(250).ConfigureAwait(false);
-            bool connected = await AsyncCamCom.TryConnect(true).ConfigureAwait(false);
-            await Task.Delay(250).ConfigureAwait(false);
-            if (ConfigControl.autoPlay.boolVal && connected && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "") {
-                mainPlayer.StartPlaying(false);
-            }
-        }
-  
         public (bool, Recorder) StopStartRec(bool isPlaying, Detached player, Recorder r) {
             if (isPlaying) {
                 isPlaying = false;
@@ -119,56 +107,31 @@ namespace SSUtility2 {
 
                 return (isPlaying, null);
             } else {
-                string fullVideoPath = Tools.GivePath(ConfigControl.vFolder.stringVal, ConfigControl.vFileName.stringVal, player, "Recordings") + ".avi";
+                string fullVideoPath = Tools.GivePath(ConfigControl.vFolder.stringVal, ConfigControl.vFileName.stringVal, player.settings, "Recordings") + ".avi";
                 inUseVideoPath = fullVideoPath;
                 isPlaying = true;
 
-                Recorder rec = Tools.Record(fullVideoPath, player.myPlayer);
+                Recorder rec = Tools.Record(fullVideoPath, player.p_Player);
 
                 return (isPlaying, rec);
             }
         }
 
-        void AttachPlayer() {
-            Detached d = DetachVid(false, new VideoSettings(), true).Result;
+        async Task AttachPlayers() {
+            Detached secondPlayer = new Detached(false);
+            mainPlayer.AttachPlayerToThis(secondPlayer,
+                new Point(mainPlayer.p_Player.Width - 350, 50),
+                VideoSettings.CopyType.CopyAsSecondary);
 
-            if (!startLiteVersion) {
-                var c = Tools.GetAllType(d, typeof(Panel));
-                p_Control.Controls.AddRange(c.ToArray());
-            }
+            Detached thirdPlayer = new Detached(false);
+            mainPlayer.AttachPlayerToThis(thirdPlayer,
+                new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250),
+                VideoSettings.CopyType.CopyAsSecondary);
 
-            Panel player = d.myPlayer;
-    
-            player.DragOver += (s, e) => {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                    e.Effect = DragDropEffects.Copy;
-                else
-                    e.Effect = DragDropEffects.None;
-            };
-            player.DragDrop += (s, e) => {
-                try {
-                    string[] fileName = e.Data.GetData(DataFormats.FileDrop) as string[];
-                    if (fileName != null && fileName[0].Contains("txt")) {
-                        Tools.CopyConfig(fileName[0]);
-                    } else {
-                        MessageBox.Show("SSUtility2 only supports dragging/dropping .txt config files!");
-                    }
-                } catch (Exception error) {
-                    Tools.ShowPopup("Failed to open script!\nShow more?", "Script load failed!", error.ToString());
-                }
-            };
-            if (!startLiteVersion) {
-                player.MouseMove += (s, e) => {
-                    if (!AsyncCamCom.sock.Connected)
-                        return;
-                    if (Cursor.Position.X - Location.X < 70) {
-                        b_Open.Visible = true;
-                        b_Open.BringToFront();
-                    } else
-                        b_Open.Visible = false;
-                };
+            if (ConfigControl.autoPlay.boolVal && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "") {
+                mainPlayer.settings.GetCombined();
+                mainPlayer.Play(false, false);
             }
-             mainPlayer = d;
         }
 
         void AttachInfoPanel() {
@@ -183,7 +146,7 @@ namespace SSUtility2 {
 
             p.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
 
-            p_Control.Controls.Add(p);
+            Controls.Add(p);
 
             i.myPanel = p;
             p.Hide();
@@ -194,13 +157,13 @@ namespace SSUtility2 {
             custom = new CustomPanel();
 
             p.Size = new Size(140, 160);
-            p.Location = new Point(m.p_Control.Width - p.Width, m.p_Control.Height - p.Height);
+            p.Location = new Point(m.Width - p.Width, m.Height - p.Height);
 
             var c = Tools.GetAllType(custom, typeof(Button));
             p.Controls.AddRange(c.ToArray());
 
             p.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-            p_Control.Controls.Add(p);
+            Controls.Add(p);
 
             custom.myPanel = p;
             p.Visible = false;
@@ -212,7 +175,7 @@ namespace SSUtility2 {
                 PresetPanel hiddenpanel = new PresetPanel();
                 attachedpp = hiddenpanel.tC_Presets_Default;
 
-                p_Control.Controls.Add(attachedpp);
+                Controls.Add(attachedpp);
 
                 attachedpp.Location = new Point(0, Height - attachedpp.Height - 65);
                 attachedpp.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
@@ -255,8 +218,6 @@ namespace SSUtility2 {
                     b_PTZ_Daylight.Visible = true;
                     b_PTZ_Thermal.Visible = true;
 
-                    setPage.UpdateSelectedCam(false);
-
                     foreach (Control c in controlPanel) {
                         c.Top -= 50;
                     }
@@ -266,9 +227,12 @@ namespace SSUtility2 {
                     Menu_Video.Dispose();
                     b_Open.Dispose();
 
-                    sP_Player.Hide();
-                    mainPlayer.myPlayer.Hide();
-                    mainPlayer.settings.isPlaying = true;
+                    foreach (Detached d in mainPlayer.attachedPlayers) {
+                        d.HidePlayer();
+                    }
+
+                    mainPlayer.p_Player.Hide();
+                    mainPlayer.settings.channelID = 99;
                     Joystick.UpdateJoystickCentre();
 
                     if (startLiteVersion)
@@ -285,24 +249,7 @@ namespace SSUtility2 {
                 Tools.ShowPopup("Failed to init Lite Mode!\nShow more?", "Error Occured!", er.ToString());
             }
         }
-
-        public async Task<Detached> DetachVid(bool show, VideoSettings set, bool attachSecond) {
-            Detached dv = new Detached(attachSecond);
-            if (show) {
-                dv.Show();
-                await Task.Delay(100).ConfigureAwait(false);
-                dv.settings.tB_PlayerD_Adr.Text = set.tB_PlayerD_Adr.Text;
-                dv.settings.tB_PlayerD_Port.Text = set.tB_PlayerD_Port.Text;
-                dv.settings.tB_PlayerD_RTSP.Text = set.tB_PlayerD_RTSP.Text;
-                dv.settings.tB_PlayerD_Username.Text = set.tB_PlayerD_Username.Text;
-                dv.settings.tB_PlayerD_Password.Text = set.tB_PlayerD_Password.Text;
-                dv.settings.tB_PlayerD_Name.Text = set.tB_PlayerD_Name.Text;
-                dv.settings.tB_PlayerD_SimpleAdr.Text = set.tB_PlayerD_SimpleAdr.Text;
-            }
-            Tools.SetFeatureToAllControls(dv.Controls);
-            return dv;
-        }
-
+        
         public void OpenPelco() {
             pd.Show();
             pd.BringToFront();
@@ -382,7 +329,11 @@ namespace SSUtility2 {
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
-            DetachVid(true, mainPlayer.settings, false);
+            Detached d = new Detached(false);
+            VideoSettings.CopySettings(d.settings, mainPlayer.settings, VideoSettings.CopyType.CopyFull);
+            d.Show();
+            if (mainPlayer.settings.channelID > 0)
+                d.Play(false);
         }
 
         private void Menu_Window_PelcoD_Click(object sender, EventArgs e) {
@@ -430,11 +381,11 @@ namespace SSUtility2 {
         }
 
         private void Menu_Video_Stop_Click(object sender, EventArgs e) {
-            mainPlayer.StartStop();
+            mainPlayer.ToggleStopStart();
         }
 
         private void Menu_Video_Snapshot_Click(object sender, EventArgs e) {
-            mainPlayer.SnapShot();
+            
         }
 
         private void Menu_Video_Record_Click(object sender, EventArgs e) {
@@ -474,12 +425,6 @@ namespace SSUtility2 {
             OpenCloseCP();
         }
 
-        private void Menu_Video_EnableSecondary_Click(object sender, EventArgs e) {
-            Menu_Video_EnableSecondary.Visible = false;
-
-            Detached.EnableSecond(true);
-        }
-
         private void Menu_Settings_Open_Click(object sender, EventArgs e) {
             OpenSettings();
         }
@@ -488,23 +433,29 @@ namespace SSUtility2 {
             InfoPanel.i.StartStopTicking();
         }
 
-        void SwapPlayers() {
-            string value = "";
-            bool daythermswap = false;
-            if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("thermal")) {
-                value = "Daylight";
-                daythermswap = true;
-            } else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight")) {
-                value = "Thermal";
-                daythermswap = true;
-            } else if (mainPlayer.settings.tB_PlayerD_Adr.Text != mainPlayer.secondView.settings.tB_PlayerD_Adr.Text || ConfigControl.forceCamera.boolVal) {
-                mainPlayer.CustomSwap();
-            }
+        public void SwapSettings(Detached player) {
+            mainPlayer.settings.SwapSettings(player.settings);
+        }
 
-            if (daythermswap) {
-                ConfigControl.mainPlayerCamType.UpdateValue(value);
-                setPage.UpdateSelectedCam(true);
-            }
+        void SwapPlayers() {
+            //custom swap between players and their cam types
+
+            //string value = "";
+            //bool daythermswap = false;
+            //if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("thermal")) {
+            //    value = "Daylight";
+            //    daythermswap = true;
+            //} else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight")) {
+            //    value = "Thermal";
+            //    daythermswap = true;
+            //} else if (mainPlayer.settings.tB_PlayerD_Adr.Text != mainPlayer.secondView.settings.tB_PlayerD_Adr.Text || ConfigControl.forceCamera.boolVal) {
+            //    mainPlayer.CustomSwap();
+            //}
+
+            //if (daythermswap) {
+            //    ConfigControl.mainPlayerCamType.UpdateValue(value);
+            //    setPage.UpdateSelectedCam(true);
+            //}
 
         }
 
@@ -680,7 +631,7 @@ namespace SSUtility2 {
             try {
                 Point coords = Joystick.coords;
 
-                if (Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
+                if (Joystick.distance != 0) {
                     uint adr = Tools.MakeAdr();
                     int x = coords.X;
                     int y = coords.Y;
@@ -696,6 +647,7 @@ namespace SSUtility2 {
 
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", e.ToString());
+                Joystick.Centre();
             }
         }
 
@@ -816,70 +768,34 @@ namespace SSUtility2 {
             SwapPlayers();
         }
 
+        private void p_PlayerPanel_MouseMove(object sender, MouseEventArgs e) {
+            if (!AsyncCamCom.sock.Connected)
+                return;
+            if (Cursor.Position.X - Location.X < 70) {
+                b_Open.Visible = true;
+                b_Open.BringToFront();
+            } else
+                b_Open.Visible = false;
+        }
 
-        bool dragging = false;
-        Point eOriginalPos;
+        private void p_PlayerPanel_DragOver(object sender, DragEventArgs e) {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.None;
+        }
 
-        private void sP_Player_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Button == MouseButtons.Right) {
-                if (sender == sP_Player) {
-                    mainPlayer.secondView.settings.Show();
-                    mainPlayer.secondView.settings.BringToFront();
-                } else if (sender == sP_Third) {
-                    thirdView.settings.Show();
-                    thirdView.settings.BringToFront();
+        private void p_PlayerPanel_DragDrop(object sender, DragEventArgs e) {
+            try {
+                string[] fileName = e.Data.GetData(DataFormats.FileDrop) as string[];
+                if (fileName != null && fileName[0].Contains("txt")) {
+                    Tools.CopyConfig(fileName[0]);
+                } else {
+                    MessageBox.Show("SSUtility2 only supports dragging/dropping .txt config files!");
                 }
-            } else if (e.Button == MouseButtons.Left) {
-                eOriginalPos = new Point(e.X, e.Y);
-                dragging = true;
+            } catch (Exception error) {
+                Tools.ShowPopup("Failed to open script!\nShow more?", "Script load failed!", error.ToString());
             }
         }
-
-        private void sP_Player_MouseMove(object sender, MouseEventArgs e) {
-            SPanel.SizeablePanel p = (SPanel.SizeablePanel)sender;
-
-            if (dragging && !p.resizing) {
-                int xDragDist = e.X - eOriginalPos.X;
-                int yDragDist = e.Y - eOriginalPos.Y;
-
-                if (p.Location.X + xDragDist > 0 && p.Location.X + xDragDist < Width - p.Width)
-                    p.Left += xDragDist;
-
-                if (p.Location.Y + yDragDist > 0 && p.Location.Y + yDragDist < Height - p.Height)
-                    p.Top += yDragDist;
-            }
-        }
-
-        private void sP_Player_MouseUp(object sender, MouseEventArgs e) {
-            dragging = false;
-            eOriginalPos = new Point(0, 0);
-        }
-
-        private void Menu_Video_Third_Click(object sender, EventArgs e) {
-            if (thirdView == null) {
-                thirdView = new Detached(false);
-                thirdView.myPlayer.Dispose();
-                thirdView.myPlayer = sP_Third;
-                thirdView.settings.originalDetached = thirdView;
-                thirdView.settings.CopyPlayerD(mainPlayer.settings, true);
-                thirdView.settings.Text = "Third Video Settings";
-                thirdView.settings.isThird = true;
-                thirdView.settings.tP_Main.Text = "Third Player";
-                Menu_Video_Third.Text = "Disable Third Player";
-                Detached.Play(false, thirdView);
-                sP_Third.Show();
-                sP_Third.BringToFront();
-            } else if (sP_Third.Visible) {
-                Menu_Video_Third.Text = "Enable Third Player";
-                sP_Third.Hide();
-                thirdView.StopPlaying();
-            } else {
-                Menu_Video_Third.Text = "Disable Third Player";
-                sP_Third.Show();
-                sP_Third.BringToFront();
-                Detached.Play(false, thirdView);
-            }
-        }
-
     } // end of class MainForm
 } // end of namespace SSLUtility2

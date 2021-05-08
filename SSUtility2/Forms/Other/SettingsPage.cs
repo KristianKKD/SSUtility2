@@ -8,17 +8,20 @@ namespace SSUtility2 {
     public partial class SettingsPage : Form {
 
         CommandListWindow clw = null;
+        Timer connectTimer;
 
         public SettingsPage() {
             InitializeComponent();
             l_Version.Text = l_Version.Text + MainForm.version;
             UpdatePresetCB();
+            connectTimer = new Timer();
+            connectTimer.Interval = 1000;
+            connectTimer.Tick += new EventHandler(TimerCallback);
         }
 
         public async Task PopulateSettingText() {
             tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
             tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
-            cB_ipCon_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
             slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
             tB_IPCon_CamSpeed.Text = ConfigControl.cameraSpeedMultiplier.intVal.ToString();
 
@@ -49,7 +52,6 @@ namespace SSUtility2 {
             MainForm.m.Width = ConfigControl.startupWidth.intVal;
             MainForm.m.Height = ConfigControl.startupHeight.intVal;
             l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
-            MainForm.m.sP_Player.Location = new System.Drawing.Point(MainForm.m.Width - MainForm.m.sP_Player.Width - 30, 15);
             l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
 
             MainForm.m.mainPlayer.settings.tB_PlayerD_Name.Text = ConfigControl.mainPlayerName.stringVal;
@@ -220,30 +222,51 @@ namespace SSUtility2 {
             tB_IPCon_Port.Text = port;
         }
 
-        private void tB_IPCon_Adr_Leave(object sender, EventArgs e) {
-            NewConnect();
+        private void tB_IPCon_Adr_KeyUp(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) { //bug with using arrow keys + enter to close error
+                ConnectToCamera(true);
+                connectTimer.Stop();
+            } else
+                DoConnectTimer();
         }
 
-        private void tB_IPCon_Adr_KeyDown(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) {
-                NewConnect();
+        void DoConnectTimer() {
+            if (connectTimer.Enabled)
+                connectTimer.Stop();
+
+            connectTimer.Start();
+        }
+
+        void TimerCallback(object sender, EventArgs e) {
+            try {
+                connectTimer.Stop();
+
+                IPAddress parsed;
+                if (IPAddress.TryParse(tB_IPCon_Adr.Text, out parsed)) {
+                    ConnectToCamera(false);
+                } else {
+                    OtherCamCom.LabelDisplay(false);
+                }
+            } catch {
+                OtherCamCom.LabelDisplay(false);
             }
         }
 
-        async Task NewConnect() {
+        async Task ConnectToCamera(bool showErrors) {
+            connectTimer.Stop();
+
             ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
-            if (await AsyncCamCom.TryConnect(false).ConfigureAwait(false)) {
+            if (await AsyncCamCom.TryConnect(showErrors).ConfigureAwait(false)) {
                 if (!MainForm.m.lite)
                     return;
 
                 string playerIPAdr = MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text;
 
-                if (playerIPAdr == "" || playerIPAdr == ConfigControl.mainPlayerIPAdr.defaultVal || !MainForm.m.mainPlayer.settings.isPlaying) {
+                if (playerIPAdr == "" || playerIPAdr == ConfigControl.mainPlayerIPAdr.defaultVal || MainForm.m.mainPlayer.settings.channelID < 0) {
                     MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ConfigControl.savedIP.stringVal;
-                    MainForm.m.mainPlayer.StartPlaying(false);
+                    MainForm.m.mainPlayer.Play(false);
                 }
             }
-
         }
 
         void UpdatePresetCB() {
@@ -258,7 +281,6 @@ namespace SSUtility2 {
 
         private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
             ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
-            AsyncCamCom.TryConnect(true);
             UpdatePresetCB();
         }
 
@@ -285,9 +307,9 @@ namespace SSUtility2 {
                 MainForm.m.b_PTZ_Daylight.Visible = true;
                 MainForm.m.b_PTZ_Thermal.Visible = true;
 
-                if (ConfigControl.mainPlayerCamType.stringVal.Contains("Daylight"))
+                if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight"))
                     MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.LightGreen;
-                else if (ConfigControl.mainPlayerCamType.stringVal.Contains("Thermal"))
+                else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("thermal"))
                     MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.LightGreen;
                 else {
                     MainForm.m.b_PTZ_Daylight.Visible = false;
@@ -295,8 +317,8 @@ namespace SSUtility2 {
                 }
             }
 
-            if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite) {
-                MainForm.m.mainPlayer.UpdateMode();
+            if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite) { //cb is changed
+                //MainForm.m.mainPlayer.settings.UpdateSettingsMode();
             }
         }
 
@@ -394,12 +416,7 @@ namespace SSUtility2 {
             cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
 
 
-            if (ConfigControl.forceCamera.boolVal)
-                Detached.EnableSecond(true);
-            else {
-                InfoPanel.i.isCamera = false;
-                Detached.DisableSecond();
-            }
+            InfoPanel.i.isCamera = ConfigControl.forceCamera.boolVal;
         }
 
         private void cB_IPCon_ForceMode_SelectedIndexChanged(object sender, EventArgs e) {
@@ -427,20 +444,17 @@ namespace SSUtility2 {
                 }
 
                 OtherCamCom.currentConfig = config;
-
-                if (MainForm.m.finishedLoading)
-                    Detached.EnableSecond(true);
             } 
         }
 
         private void cB_ipCon_CamType_SelectedIndexChanged(object sender, EventArgs e) {
             ConfigControl.mainPlayerCamType.UpdateValue(cB_ipCon_CamType.Text);
-            UpdateSelectedCam(true);
+            MainForm.m.mainPlayer.settings.UpdateMode();
         }
 
         private void cB_ipCon_CamType_KeyPress(object sender, KeyPressEventArgs e) {
             ConfigControl.mainPlayerCamType.UpdateValue(cB_ipCon_CamType.Text);
-            UpdateSelectedCam(true);
+            MainForm.m.mainPlayer.settings.UpdateMode();
         }
 
         private void tB_IPCon_CamSpeed_KeyPress(object sender, KeyPressEventArgs e) {
