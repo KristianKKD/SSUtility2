@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.0.4";
+        public const string version = "v2.6.0.5";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -35,8 +35,6 @@ namespace SSUtility2 {
         private string inUseVideoPath;
         private string screenRecordName;
         public string finalDest;
-
-        //private const string initString = "6D75724D7A4969576B5A7541475835676E34486D5965784659584E3555477868655756794C564A55553141755A58686C567778576F502F682F69426C59584E35";
 
         public async Task StartupStuff() {
             try {
