@@ -64,8 +64,11 @@ namespace SSUtility2 {
             throw new Exception("No network adapters with an IPv4 address in the system!");
         }
 
-        public static void LabelDisplay(bool connected) {
+        public static async Task LabelDisplay(bool connected) {
             try {
+                if (!MainForm.m.finishedLoading)
+                    await Task.Delay(1000).ConfigureAwait(false);
+
                 MainForm.m.Invoke((MethodInvoker)delegate {
                     Label l = MainForm.m.setPage.l_IPCon_Connected;
                     if (connected) {
@@ -76,7 +79,9 @@ namespace SSUtility2 {
                         l.ForeColor = Color.Red;
                     }
                 });
-            } catch { };
+            } catch (Exception e) { 
+                Console.WriteLine("LABEL DISPLAY\n" + e.ToString());
+            };
         }
 
         public static async Task<bool> PingAdr(string address) {

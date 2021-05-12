@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -25,7 +23,10 @@ namespace SSUtility2 {
         }
 
         public void HidePlayer() {
-                    
+            try {
+                p_Player.Hide();
+                Dispose();
+            } catch { }
         }
 
         public async Task StopPlaying() {
@@ -47,6 +48,8 @@ namespace SSUtility2 {
 
         public async Task Play(bool showErrors, bool updateValues = true) {
             try {
+                Console.WriteLine("playing");
+
                 if (MainForm.m.lite && settings.isMainPlayer) {
                     settings.channelID = 1;
                     return;
@@ -80,52 +83,64 @@ namespace SSUtility2 {
                     StopPlaying();
                 }
 
-                if (settings.isMainPlayer && showErrors) {
+                if (settings.isMainPlayer) {
                     //if (InfoPanel.i.isCamera) { //all players instead of this
                     //    secondView.settings.CopyPlayerD(settings);
                     //    Play(false, secondView);
                     //}
                 }
 
-                if (ConfigControl.autoReconnect.boolVal && updateValues) {
-                    MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;
-                    ConfigControl.savedIP.UpdateValue(MainForm.m.setPage.tB_IPCon_Adr.Text);
+                if (updateValues) {
+                    if (ConfigControl.autoReconnect.boolVal) {
+                        MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;
+                        ConfigControl.savedIP.UpdateValue(MainForm.m.setPage.tB_IPCon_Adr.Text);
+                    }
                     AsyncCamCom.TryConnect(false, null, true);
                 }
-
+                
             } catch (Exception e) {
                 if(showErrors)
                     Tools.ShowPopup("Failed to init player stream!\nShow more?", "Error Occurred!", e.ToString());
+                Console.WriteLine(e.ToString());
                 StopPlaying();
                 return;
             }
         }
 
-        public void AttachPlayerToThis(Detached secondPlayer, Point pos, VideoSettings.CopyType type) {
-            attachedPlayers.Add(secondPlayer);
-            secondPlayer.settings.isAttached = true;
+        public SPanel.SizeablePanel AttachPlayerToThis(Detached secondPlayer, Point pos, VideoSettings.CopyType type, bool updateVals = true, bool playOnLaunch = true) {
+            try {
+                attachedPlayers.Add(secondPlayer);
+                secondPlayer.settings.isAttached = true;
 
-            SPanel.SizeablePanel sP_Secondary = new SPanel.SizeablePanel();
-            secondPlayer.p_Player = sP_Secondary;
-            p_Player.Controls.Add(sP_Secondary);
+                SPanel.SizeablePanel sP_Secondary = new SPanel.SizeablePanel();
+                secondPlayer.p_Player = sP_Secondary;
+                p_Player.Controls.Add(sP_Secondary);
 
-            sP_Secondary.Size = new Size(300, 200);
-            sP_Secondary.Location = pos;
-            sP_Secondary.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
+                sP_Secondary.Size = new Size(300, 200);
+                sP_Secondary.Location = pos;
+                sP_Secondary.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
 
-            sP_Secondary.MouseDown += (s, e) => {
-                if (e.Button == MouseButtons.Right) {
-                    secondPlayer.settings.Show();
-                    secondPlayer.settings.BringToFront();
-                }
-            };
+                sP_Secondary.MouseDown += (s, e) => {
+                    if (e.Button == MouseButtons.Right) {
+                        secondPlayer.settings.Show();
+                        secondPlayer.settings.BringToFront();
+                    }
+                };
 
-            sP_Secondary.DoubleClick += (s, e) => {
-                MainForm.m.SwapSettings(secondPlayer);
-            };
+                sP_Secondary.DoubleClick += (s, e) => {
+                    MainForm.m.SwapSettings(secondPlayer);
+                };
 
-            VideoSettings.CopySettings(secondPlayer.settings, MainForm.m.mainPlayer.settings, type);
-            secondPlayer.Play(false);
+                VideoSettings.CopySettings(secondPlayer.settings, MainForm.m.mainPlayer.settings, type);
+                
+                if(playOnLaunch)
+                    secondPlayer.Play(false, updateVals);
+
+                return sP_Secondary;
+            } catch (Exception e) {
+                Tools.ShowPopup("Failed to attach player!\nShow more?", "Error Occurred!", e.ToString());
+                return null;
+            }
         }
 
         public void Detach(Detached detachable) {

@@ -170,7 +170,9 @@ namespace SSUtility2
                     tB_PlayerD_Name.Text = ipaddress;
 
 
-            } catch { };
+            } catch (Exception e) {
+                Console.WriteLine(e.ToString());
+            };
 
             return full;
         }

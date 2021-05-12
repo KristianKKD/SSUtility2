@@ -1,4 +1,4 @@
-﻿namespace SSUtility2.Forms.FinalTest
+﻿namespace SSUtility2
 {
     partial class Final
     {

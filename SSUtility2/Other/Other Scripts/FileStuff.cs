@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SSUtility2 {
@@ -11,25 +10,30 @@ namespace SSUtility2 {
         static int configFinderCurPoint = 0;
 
         public static async Task<bool> FileWork() {
-            if (!CheckForNewDir())
-                CheckForMultipleConfigs();
+            try {
+                if (!CheckForNewDir())
+                    CheckForMultipleConfigs();
 
-            ConfigControl.SetToDefaults();
+                ConfigControl.SetToDefaults();
 
-            CreateConfigFiles();
+                CreateConfigFiles();
 
-            await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
-            ConfigControl.FindVars();
+                await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
+                ConfigControl.FindVars();
 
-            if (ConfigControl.portableMode.boolVal) {
-                MainForm.m.Menu_Final.Dispose();
+                if (ConfigControl.portableMode.boolVal) {
+                    MainForm.m.Menu_Final.Dispose();
+                }
+
+                if (AppDomain.CurrentDomain.FriendlyName.ToLower().Contains("lite")) {
+                    return true;
+                }
+
+                return false;
+            } catch (Exception e) {
+                Tools.ShowPopup("File work error occurred!\nShow more?", "Error Occurred!", e.ToString());
+                return false;
             }
-
-            if (AppDomain.CurrentDomain.FriendlyName.ToLower().Contains("lite")) {
-                return true;
-            }
-
-            return false;
         }
 
         static string CheckFileForDir() {
@@ -46,6 +50,7 @@ namespace SSUtility2 {
                     }
                 }
             } catch { }
+
             return null;
         }
 

@@ -1,5 +1,4 @@
-﻿using SSUtility2.Forms.FinalTest;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -10,7 +9,7 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.0.2";
+        public const string version = "v2.6.0.4";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -37,7 +36,7 @@ namespace SSUtility2 {
         private string screenRecordName;
         public string finalDest;
 
-        private const string initString = "6D75724D7A4969576B5A7541475835676E34486D5965784659584E3555477868655756794C564A55553141755A58686C567778576F502F682F69426C59584E35";
+        //private const string initString = "6D75724D7A4969576B5A7541475835676E34486D5965784659584E3555477868655756794C564A55553141755A58686C567778576F502F682F69426C59584E35";
 
         public async Task StartupStuff() {
             try {
@@ -47,7 +46,7 @@ namespace SSUtility2 {
                 pd = new PelcoD();
                 pp = new PresetPanel();
                 D.protocol = new D();
-                EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init(initString);
+                EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init();
                 
                 mainPlayer = new Detached(true);
                 AttachInfoPanel();
@@ -67,16 +66,17 @@ namespace SSUtility2 {
                     Joystick,
                 };
 
+                HideControlPanel();
+                b_Open.BringToFront();
+
                 bool hasLiteInName = FileStuff.FileWork().Result;
                 if (!startLiteVersion)
                     startLiteVersion = hasLiteInName;
 
                 setPage.PopulateSettingText();
-                
+
                 Tools.SetFeatureToAllControls(m.Controls);
-                HideControlPanel();
-                b_Open.BringToFront();
-                
+
                 CommandQueue.Init();
                 if (startLiteVersion) {
                     AsyncCamCom.TryConnect();
@@ -121,56 +121,75 @@ namespace SSUtility2 {
         }
 
         async Task AttachPlayers() {
-            Detached secondPlayer = new Detached(false);
-            mainPlayer.AttachPlayerToThis(secondPlayer,
-                new Point(mainPlayer.p_Player.Width - 350, 50),
-                VideoSettings.CopyType.CopyAsSecondary);
+            try {
+                bool autoPlay = ConfigControl.autoPlay.boolVal;
 
-            Detached thirdPlayer = new Detached(false);
-            mainPlayer.AttachPlayerToThis(thirdPlayer,
-                new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250),
-                VideoSettings.CopyType.CopyAsSecondary);
+                if (autoPlay && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "") {
+                    mainPlayer.settings.GetCombined();
+                    mainPlayer.Play(false, true);
+                }
 
-            if (ConfigControl.autoPlay.boolVal && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "") {
-                mainPlayer.settings.GetCombined();
-                mainPlayer.Play(false, false);
+                Detached secondPlayer = new Detached(false);
+                SPanel.SizeablePanel second = mainPlayer.AttachPlayerToThis(secondPlayer,
+                    new Point(mainPlayer.p_Player.Width - 350, 50),
+                    VideoSettings.CopyType.CopyAsSecondary, false, autoPlay);
+
+                second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+
+                Detached thirdPlayer = new Detached(false);
+                SPanel.SizeablePanel third = mainPlayer.AttachPlayerToThis(thirdPlayer,
+                    new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250),
+                    VideoSettings.CopyType.CopyAsSecondary, false, autoPlay);
+
+                third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+            } catch (Exception e) {
+                MessageBox.Show("ATTACH\n" + e.ToString());
             }
         }
 
         void AttachInfoPanel() {
-            Panel p = new Panel();
-            InfoPanel i = new InfoPanel();
-            
-            p.Size = new Size(i.Width, i.Height - 35);
-            p.Location = new Point(m.Size.Width - i.Width, 0);
+            try {
+                Panel p = new Panel();
+                InfoPanel i = new InfoPanel();
 
-            var c = Tools.GetAllType(i, typeof(Label));
-            p.Controls.AddRange(c.ToArray());
+                p.Size = new Size(i.Width, i.Height - 35);
+                p.Location = new Point(m.Size.Width - i.Width, 0);
 
-            p.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+                var c = Tools.GetAllType(i, typeof(Label));
+                p.Controls.AddRange(c.ToArray());
 
-            Controls.Add(p);
+                p.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
 
-            i.myPanel = p;
-            p.Hide();
+                Controls.Add(p);
+
+                i.myPanel = p;
+                p.Hide();
+            } catch (Exception e) {
+                MessageBox.Show("ATTACH INFO\n" + e.ToString());
+            }
         }
 
         void AttachCustomPanel() {
-            Panel p = new Panel();
-            custom = new CustomPanel();
+            try {
+                Panel p = new Panel();
+                custom = new CustomPanel();
 
-            p.Size = new Size(custom.Width, custom.Height);
-            p.Location = new Point(m.Width - p.Width, m.Height - p.Height);
+                p.Size = custom.Size;
+                p.Location = new Point(m.Width - p.Width, m.Height - p.Height);
 
-            var c = Tools.GetAllType(custom, typeof(Button));
-            p.Controls.AddRange(c.ToArray());
+                var c = Tools.GetAllType(custom, typeof(Button));
+                p.Controls.AddRange(c.ToArray());
 
-            p.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-            Controls.Add(p);
+                p.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+                Controls.Add(p);
 
-            custom.myPanel = p;
-            p.Visible = false;
-            p.BringToFront();
+                custom.myPanel = p;
+                p.Visible = false;
+                p.BringToFront();
+            } catch (Exception e) {
+                MessageBox.Show("ATTACH CUSTOM\n" + e.ToString());
+            }
         }
 
         void AttachPresetPanel() {
@@ -180,11 +199,12 @@ namespace SSUtility2 {
 
                 Controls.Add(attachedpp);
 
-                attachedpp.Location = new Point(0, Height - attachedpp.Height - 65);
+                attachedpp.Size = hiddenpanel.tC_Presets_Default.Size;
+                attachedpp.Location = new Point(0, Height - attachedpp.Height - 40);
                 attachedpp.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
                 attachedpp.Hide();
             } catch (Exception e) {
-                MessageBox.Show("TC\n" + e.ToString());
+                MessageBox.Show("ATTACH PRESET\n" + e.ToString());
             }
         }
 
@@ -198,11 +218,15 @@ namespace SSUtility2 {
         }
 
         public void HideControlPanel() {
-            foreach (Control c in controlPanel) {
-                c.Hide();
+            try {
+                foreach (Control c in controlPanel) {
+                    c.Hide();
+                }
+                Menu_Settings_CP.Text = "Show Control Panel";
+                b_Open.Text = ">>";
+            } catch (Exception e) {
+                MessageBox.Show("HIDE PANEL\n" + e.ToString());
             }
-            Menu_Settings_CP.Text = "Show Control Panel";
-            b_Open.Text = ">>";
         }
 
         void LiteToggle() {
@@ -234,7 +258,7 @@ namespace SSUtility2 {
                         d.HidePlayer();
                     }
 
-                    //mainPlayer.p_Player.Hide();
+                    mainPlayer.p_Player.Hide();
                     mainPlayer.settings.channelID = -99;
                     Joystick.UpdateJoystickCentre();
 

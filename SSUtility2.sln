@@ -8,8 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SizeablePanel", "..\Sizeabl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Joystick", "..\Joystick\Joystick\Joystick.csproj", "{AB940C90-1173-4155-81A8-BC2C56259810}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPlayer-RTSP.NetSDK", "..\EasyPlayerNetSDK\EasyPlayer-RTSP.NetSDK.csproj", "{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,18 +54,6 @@ Global
 		{AB940C90-1173-4155-81A8-BC2C56259810}.Release|x64.Build.0 = Release|Any CPU
 		{AB940C90-1173-4155-81A8-BC2C56259810}.Release|x86.ActiveCfg = Release|Any CPU
 		{AB940C90-1173-4155-81A8-BC2C56259810}.Release|x86.Build.0 = Release|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|x64.Build.0 = Debug|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|x86.Build.0 = Debug|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|x64.ActiveCfg = Release|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|x64.Build.0 = Release|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|x86.ActiveCfg = Release|Any CPU
-		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

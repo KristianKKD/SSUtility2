@@ -194,39 +194,43 @@ namespace SSUtility2 {
         }
 
         public static async Task QuickCommand(string command, bool sendAsync = true, int manualAdr = -5) {
-            if (!await AsyncCamCom.TryConnect().ConfigureAwait(false)) {
-                return;
-            }
-
-            uint adr = Convert.ToUInt32(manualAdr);
-            if (manualAdr == -5) {
-                adr = Tools.MakeAdr();
-            }
-
-            ScriptCommand send = CheckForCommands(command, adr, false).Result;
-            if (send.codeContent == PelcoD.noCommand) {
-                if (command.Length == 0) {
-                    MessageBox.Show("Command length is 0!\nMake sure to check the command in the settings!");
+            try {
+                if (!await AsyncCamCom.TryConnect().ConfigureAwait(false)) {
                     return;
-                } else {
-                    byte[] code = PelcoD.FullCommand(command);
-                    if (code == null) {
-                        MessageBox.Show("Command invalid!\nMake sure to enter command in perfect format!\n(FF 0x xx xx xx xx yy)");
-                        return;
-                    }
-                    send = new ScriptCommand(new string[] { "custom" }, code, "");
                 }
-            }
 
-            if (!sendAsync) {
-                AsyncCamCom.SendNonAsync(send.codeContent);
-            } else {
-                var t = Task.Factory.StartNew(() => {
-                    AsyncCamCom.SendScriptCommand(send);
-                });
-                Task.WaitAll();
+                uint adr = Tools.MakeAdr();
+
+                if (manualAdr != -5) { //if sending preset
+                    adr = Convert.ToUInt32(manualAdr);
+                }
+
+                ScriptCommand send = CheckForCommands(command, adr, false).Result;
+                if (send.codeContent == PelcoD.noCommand) {
+                    if (command.Length == 0) {
+                        MessageBox.Show("Command length is 0!\nMake sure to check the command in the settings!");
+                        return;
+                    } else {
+                        byte[] code = PelcoD.FullCommand(command);
+                        if (code == null) {
+                            MessageBox.Show("Command invalid!\nMake sure to enter command in perfect format!\n(FF 0x xx xx xx xx yy)");
+                            return;
+                        }
+                        send = new ScriptCommand(new string[] { "custom" }, code, "");
+                    }
+                }
+
+                if (!sendAsync) {
+                    AsyncCamCom.SendNonAsync(send.codeContent);
+                } else {
+                    var t = Task.Factory.StartNew(() => {
+                        AsyncCamCom.SendScriptCommand(send);
+                    });
+                    Task.WaitAll();
+                }
+            } catch (Exception e) {
+                Tools.ShowPopup("Failed to send quick command!\nShow more?", "Error Occurred!", e.ToString());
             }
-           
         }
 
         public static void DoPreset(int adr, byte p) {

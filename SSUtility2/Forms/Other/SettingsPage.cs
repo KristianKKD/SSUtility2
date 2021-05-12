@@ -20,54 +20,58 @@ namespace SSUtility2 {
         }
 
         public async Task PopulateSettingText() {
-            tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
-            tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
-            slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
-            tB_IPCon_CamSpeed.Text = ConfigControl.cameraSpeedMultiplier.intVal.ToString();
+            try {
+                tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
+                tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
+                slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
+                tB_IPCon_CamSpeed.Text = ConfigControl.cameraSpeedMultiplier.intVal.ToString();
 
-            tB_Paths_sCFolder.Text = ConfigControl.scFolder.stringVal;
-            tB_Paths_vFolder.Text = ConfigControl.vFolder.stringVal;
+                tB_Paths_sCFolder.Text = ConfigControl.scFolder.stringVal;
+                tB_Paths_vFolder.Text = ConfigControl.vFolder.stringVal;
 
-            tB_Rec_vFileN.Text = ConfigControl.vFileName.stringVal;
-            tB_Rec_scFileN.Text = ConfigControl.scFileName.stringVal;
+                tB_Rec_vFileN.Text = ConfigControl.vFileName.stringVal;
+                tB_Rec_scFileN.Text = ConfigControl.scFileName.stringVal;
 
-            tB_Other_ResolutionWidth.Text = ConfigControl.startupWidth.stringVal;
-            tB_Other_ResolutionHeight.Text = ConfigControl.startupHeight.stringVal;
+                tB_Other_ResolutionWidth.Text = ConfigControl.startupWidth.stringVal;
+                tB_Other_ResolutionHeight.Text = ConfigControl.startupHeight.stringVal;
 
-            cB_Rec_Quality.Text = ConfigControl.recQual.stringVal;
-            cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
+                cB_Rec_Quality.Text = ConfigControl.recQual.stringVal;
+                cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
-            check_Other_Subnet.Checked = ConfigControl.subnetNotif.boolVal;
-            check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
-            check_Other_AutoReconnect.Checked = ConfigControl.autoReconnect.boolVal;
-            check_AddressInvalid.Checked = ConfigControl.ignoreAddress.boolVal;
-            check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
-            cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
-            check_IPCon_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
-            cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
+                check_Other_Subnet.Checked = ConfigControl.subnetNotif.boolVal;
+                check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
+                check_Other_AutoReconnect.Checked = ConfigControl.autoReconnect.boolVal;
+                check_AddressInvalid.Checked = ConfigControl.ignoreAddress.boolVal;
+                check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
+                cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
+                check_IPCon_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
+                cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
 
-            ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
-            ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
+                ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
+                ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
 
-            MainForm.m.Width = ConfigControl.startupWidth.intVal;
-            MainForm.m.Height = ConfigControl.startupHeight.intVal;
-            l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
-            l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
+                MainForm.m.Width = ConfigControl.startupWidth.intVal;
+                MainForm.m.Height = ConfigControl.startupHeight.intVal;
+                l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
+                l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
 
-            MainForm.m.mainPlayer.settings.tB_PlayerD_Name.Text = ConfigControl.mainPlayerName.stringVal;
-            MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = ConfigControl.mainPlayerFullAdr.stringVal;
-            MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
-            MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ConfigControl.mainPlayerIPAdr.stringVal;
-            MainForm.m.mainPlayer.settings.tB_PlayerD_Port.Text = ConfigControl.mainPlayerPort.stringVal;
-            MainForm.m.mainPlayer.settings.tB_PlayerD_RTSP.Text = ConfigControl.mainPlayerRTSP.stringVal;
-            MainForm.m.mainPlayer.settings.tB_PlayerD_Buffering.Text = ConfigControl.mainPlayerBuffering.stringVal;
-            MainForm.m.mainPlayer.settings.tB_PlayerD_Username.Text = ConfigControl.mainPlayerUsername.stringVal;
-            MainForm.m.mainPlayer.settings.tB_PlayerD_Password.Text = ConfigControl.mainPlayerPassword.stringVal;
+                MainForm.m.mainPlayer.settings.tB_PlayerD_Name.Text = ConfigControl.mainPlayerName.stringVal;
+                MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = ConfigControl.mainPlayerFullAdr.stringVal;
+                MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
+                MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ConfigControl.mainPlayerIPAdr.stringVal;
+                MainForm.m.mainPlayer.settings.tB_PlayerD_Port.Text = ConfigControl.mainPlayerPort.stringVal;
+                MainForm.m.mainPlayer.settings.tB_PlayerD_RTSP.Text = ConfigControl.mainPlayerRTSP.stringVal;
+                MainForm.m.mainPlayer.settings.tB_PlayerD_Buffering.Text = ConfigControl.mainPlayerBuffering.stringVal;
+                MainForm.m.mainPlayer.settings.tB_PlayerD_Username.Text = ConfigControl.mainPlayerUsername.stringVal;
+                MainForm.m.mainPlayer.settings.tB_PlayerD_Password.Text = ConfigControl.mainPlayerPassword.stringVal;
 
-            UpdateSelectedCam(false);
-            LoadCustoms();
-            MainForm.m.custom.UpdateButtonNames();
-            UpdateCamType();
+                UpdateSelectedCam(false);
+                LoadCustoms();
+                MainForm.m.custom.UpdateButtonNames();
+                UpdateCamType();
+            }catch (Exception e) {
+                Tools.ShowPopup("Failed to update settings!\nShow more?", "Error Occurred!", e.ToString());
+            }
         }
 
         private async Task ApplyAll() {
@@ -260,13 +264,12 @@ namespace SSUtility2 {
                 if (!MainForm.m.lite)
                     return;
 
-                string playerIPAdr = MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text;
-
-                if (playerIPAdr == "" || playerIPAdr == ConfigControl.mainPlayerIPAdr.defaultVal || MainForm.m.mainPlayer.settings.channelID < 0) {
+                if (ConfigControl.autoReconnect.boolVal && MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text != ConfigControl.savedIP.stringVal) {
                     MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ConfigControl.savedIP.stringVal;
                     MainForm.m.mainPlayer.Play(false);
                 }
             }
+
         }
 
         void UpdatePresetCB() {
