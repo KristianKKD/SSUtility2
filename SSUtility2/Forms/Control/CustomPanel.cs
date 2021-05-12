@@ -64,17 +64,17 @@ namespace SSUtility2 {
         void DoCommand(int index) {
             string val = ConfigControl.customButtonCommandsArray[index - 1].stringVal;
             bool isDigitPresent = false;
-            string valueChar = "";
+            string presetValue = "";
 
             foreach (char c in val.ToArray()) {
                 if (char.IsDigit(c)) {
                     isDigitPresent = true;
-                    valueChar = c.ToString();
+                    presetValue += c.ToString();
                 }
             }
 
             if (val.ToLower().Contains("preset") && isDigitPresent)
-                val = "gotopreset " + valueChar;
+                val = "gotopreset " + presetValue;
 
             CustomScriptCommands.QuickCommand(val, false);
         }

@@ -246,6 +246,18 @@ namespace SSUtility2 {
                 ResetFile(configFile);
 
                 string[] lines = File.ReadAllLines(name);
+                bool isValid = false;
+                foreach (string line in lines) {
+                    string val = line.ToLower();
+                    if (val.Contains("ssutility2.0") && val.Contains("config"))
+                        isValid = true;
+                }
+
+                if (!isValid) {
+                    MessageBox.Show("Text file is not a config file!");
+                    return;
+                }
+
                 foreach (string line in lines) {
                     File.AppendAllText(configFile, line + "\n");
                 }
@@ -256,8 +268,8 @@ namespace SSUtility2 {
                 MainForm.m.setPage.PopulateSettingText();
                 MainForm.m.finishedLoading = true;
                 MessageBox.Show("Updated config file!\n(" + configFile + ")");
-                
-                //MainForm.m.mainPlayer.Replay();
+
+                MainForm.m.mainPlayer.Play(false, false);
             } else {
                 if (name == configFile)
                     MessageBox.Show("Please don't try to replace the config file with itself!\nIgnored request!");

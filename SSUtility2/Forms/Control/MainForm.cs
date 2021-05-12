@@ -10,8 +10,8 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.0.1";
-        private bool startLiteVersion = true; //only for launch
+        public const string version = "v2.6.0.2";
+        private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
         private bool keyboardControl = false;
@@ -67,7 +67,9 @@ namespace SSUtility2 {
                     Joystick,
                 };
 
-                FileStuff.FileWork();
+                bool hasLiteInName = FileStuff.FileWork().Result;
+                if (!startLiteVersion)
+                    startLiteVersion = hasLiteInName;
 
                 setPage.PopulateSettingText();
                 
@@ -157,7 +159,7 @@ namespace SSUtility2 {
             Panel p = new Panel();
             custom = new CustomPanel();
 
-            p.Size = new Size(140, 160);
+            p.Size = new Size(custom.Width, custom.Height);
             p.Location = new Point(m.Width - p.Width, m.Height - p.Height);
 
             var c = Tools.GetAllType(custom, typeof(Button));
@@ -381,12 +383,8 @@ namespace SSUtility2 {
             mainPlayer.settings.Location = Location;
         }
 
-        private void Menu_Video_Stop_Click(object sender, EventArgs e) {
-            mainPlayer.ToggleStopStart();
-        }
-
         private void Menu_Video_Snapshot_Click(object sender, EventArgs e) {
-            
+            Tools.SaveSnap(mainPlayer);
         }
 
         private void Menu_Video_Record_Click(object sender, EventArgs e) {
@@ -436,28 +434,6 @@ namespace SSUtility2 {
 
         public void SwapSettings(Detached player) {
             mainPlayer.settings.SwapSettings(player.settings);
-        }
-
-        void SwapPlayers() {
-            //custom swap between players and their cam types
-
-            //string value = "";
-            //bool daythermswap = false;
-            //if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("thermal")) {
-            //    value = "Daylight";
-            //    daythermswap = true;
-            //} else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight")) {
-            //    value = "Thermal";
-            //    daythermswap = true;
-            //} else if (mainPlayer.settings.tB_PlayerD_Adr.Text != mainPlayer.secondView.settings.tB_PlayerD_Adr.Text || ConfigControl.forceCamera.boolVal) {
-            //    mainPlayer.CustomSwap();
-            //}
-
-            //if (daythermswap) {
-            //    ConfigControl.mainPlayerCamType.UpdateValue(value);
-            //    setPage.UpdateSelectedCam(true);
-            //}
-
         }
 
         public void StopCam() {
@@ -765,10 +741,6 @@ namespace SSUtility2 {
             setPage.UpdateSelectedCam(false);
         }
 
-        private void sP_Player_DoubleClick(object sender, EventArgs e) {
-            SwapPlayers();
-        }
-
         private void p_PlayerPanel_MouseMove(object sender, MouseEventArgs e) {
             if (!AsyncCamCom.sock.Connected)
                 return;
@@ -798,5 +770,6 @@ namespace SSUtility2 {
                 Tools.ShowPopup("Failed to open script!\nShow more?", "Script load failed!", error.ToString());
             }
         }
+
     } // end of class MainForm
 } // end of namespace SSLUtility2

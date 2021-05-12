@@ -10,7 +10,7 @@ namespace SSUtility2 {
         
         static int configFinderCurPoint = 0;
 
-        public static async Task FileWork() {
+        public static async Task<bool> FileWork() {
             if (!CheckForNewDir())
                 CheckForMultipleConfigs();
 
@@ -24,6 +24,12 @@ namespace SSUtility2 {
             if (ConfigControl.portableMode.boolVal) {
                 MainForm.m.Menu_Final.Dispose();
             }
+
+            if (AppDomain.CurrentDomain.FriendlyName.ToLower().Contains("lite")) {
+                return true;
+            }
+
+            return false;
         }
 
         static string CheckFileForDir() {
