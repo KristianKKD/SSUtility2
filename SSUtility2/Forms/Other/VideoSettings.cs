@@ -143,13 +143,13 @@ namespace SSUtility2
             };
         }
 
-        public string GetCombined() {
+        public string GetCombined(bool ignoreConditions = false) {
             string full = "";
 
             try {
                 string ipaddress = tB_PlayerD_Adr.Text;
 
-                if (ConfigControl.mainPlayerCustomFull.boolVal && isMainPlayer) {
+                if (ConfigControl.mainPlayerCustomFull.boolVal && isMainPlayer && !ignoreConditions) {
                     full = tB_PlayerD_SimpleAdr.Text;
                 } else {
                     string port = tB_PlayerD_Port.Text;
@@ -159,12 +159,13 @@ namespace SSUtility2
 
                     full = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
 
-                    tB_PlayerD_SimpleAdr.Text = full;
+                    if(!ignoreConditions)
+                        tB_PlayerD_SimpleAdr.Text = full;
                 }
 
                 if (ConfigControl.mainPlayerCustomName.boolVal
                     && ConfigControl.mainPlayerName.stringVal.Trim() != ""
-                    && isMainPlayer)
+                    && isMainPlayer && !ignoreConditions)
                     tB_PlayerD_Name.Text = ConfigControl.mainPlayerName.stringVal;
                 else
                     tB_PlayerD_Name.Text = ipaddress;
@@ -213,6 +214,7 @@ namespace SSUtility2
                 e.Cancel = true;
                 Hide();
             }
+            SaveConfigFields(null,null);
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -346,6 +348,18 @@ namespace SSUtility2
             b_Detach.Visible = false;
             Hide();
         }
+
+        private void tB_PlayerD_SimpleAdr_KeyPress(object sender, KeyPressEventArgs e) {
+            string val = tB_PlayerD_SimpleAdr.Text.Trim();
+            
+            if (val == "" || val == GetCombined(true))
+                ConfigControl.mainPlayerCustomFull.UpdateValue("false");
+            else
+                ConfigControl.mainPlayerCustomFull.UpdateValue("true");
+
+            ConfigControl.mainPlayerFullAdr.UpdateValue(val);
+        }
+
     }
 }
 

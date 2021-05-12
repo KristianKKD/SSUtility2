@@ -48,15 +48,17 @@ namespace SSUtility2 {
 
         public async Task Play(bool showErrors, bool updateValues = true) {
             try {
-                Console.WriteLine("playing");
+                Console.WriteLine("try play");
 
                 if (MainForm.m.lite && settings.isMainPlayer) {
                     settings.channelID = 1;
                     return;
                 }
 
-                if (!settings.AdrValid(showErrors))
-                    return;
+                if (!ConfigControl.mainPlayerCustomFull.boolVal) {
+                    if (!settings.AdrValid(showErrors))
+                        return;
+                }
 
                 if (InvokeRequired) {
                     Invoke((MethodInvoker)delegate {
@@ -67,6 +69,8 @@ namespace SSUtility2 {
 
                 Uri combinedUrl = new Uri(settings.tB_PlayerD_SimpleAdr.Text);
                 //rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
+
+                Console.WriteLine("playing " + combinedUrl.ToString());
 
                 if (settings.channelID > 0)
                     StopPlaying();
@@ -90,7 +94,7 @@ namespace SSUtility2 {
                     //}
                 }
 
-                if (updateValues) {
+                if (updateValues && !ConfigControl.mainPlayerCustomFull.boolVal) {
                     if (ConfigControl.autoReconnect.boolVal) {
                         MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;
                         ConfigControl.savedIP.UpdateValue(MainForm.m.setPage.tB_IPCon_Adr.Text);

@@ -85,6 +85,7 @@ namespace SSUtility2
             this.tB_PlayerD_SimpleAdr.Name = "tB_PlayerD_SimpleAdr";
             this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_SimpleAdr.TabIndex = 28;
+            this.tB_PlayerD_SimpleAdr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PlayerD_SimpleAdr_KeyPress);
             // 
             // l_PlayerD_SimpleAdr
             // 
