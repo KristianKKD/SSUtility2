@@ -11,7 +11,8 @@ namespace SSUtility2 {
         static byte[] receiveBuffer;
         static bool connectingAlready = false;
 
-        public static async Task<bool> TryConnect(bool showErrors = false, IPEndPoint customep = null, bool isPlayer = false) {
+        public static async Task<bool> TryConnect(bool showErrors = false, IPEndPoint customep = null,
+            bool noPlayerReplay = false) {
             bool result = true;
             try {
                 if (connectingAlready)
@@ -33,7 +34,7 @@ namespace SSUtility2 {
                 }
 
                 if (result) {
-                    result = Connect(ep, showErrors, isPlayer);
+                    result = Connect(ep, showErrors, noPlayerReplay);
                 }
 
             } catch (Exception e){
@@ -61,7 +62,7 @@ namespace SSUtility2 {
         }
 
         public static Command SendScriptCommand(ScriptCommand com) {
-            Command sendCommand = new Command(com.codeContent, false, false, com.spammable, com.names[0]);
+            Command sendCommand = new Command(com.codeContent, false, false, com.isQuery, com.names[0]);
             return sendCommand;
         }
 
@@ -105,39 +106,39 @@ namespace SSUtility2 {
 
         private static bool Connect(IPEndPoint ep, bool showErrors, bool isPlayer) {
             try {
-                Console.WriteLine("connecting");
-
-                if (sock == null || ep == null) {
-                    Console.WriteLine("a");
+                if (sock == null || ep == null || ep.Address == null || ep.Port == 0 || ep.Address.ToString().Length == 0) {
                     return false;
                 } else if (sock.Connected && ep.ToString() == sock.RemoteEndPoint.ToString()) {
-                    Console.WriteLine("b");
                     return true;
                 } else if (sock.Connected && ep.ToString() != sock.RemoteEndPoint.ToString()) {
                     Console.WriteLine("trying to disconnect " + sock.RemoteEndPoint.ToString() + "\n" + ep.ToString());
-                    Disconnect();
+                    Disconnect(true);
                 }
 
-                Console.WriteLine("will connect");
+                Console.WriteLine("trying to connect to " + ep.Address.ToString() + ":" + ep.Port.ToString());
 
                 if (!ConfigControl.forceCamera.boolVal)
                     InfoPanel.i.isCamera = false;
 
                 sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-                bool parsedIP = IPAddress.TryParse(ConfigControl.savedIP.stringVal, out IPAddress ip);
-                bool parsedPort = int.TryParse(ConfigControl.savedPort.stringVal, out int port);
+                bool parsedIP = IPAddress.TryParse(ep.Address.ToString(), out IPAddress ip);
+                bool parsedPort = int.TryParse(ep.Port.ToString(), out int port);
+                
+                string errorMessage = "IP (" + ep.Address.ToString() + ") valid: " + parsedIP.ToString() + "\nPort (" + ep.Port.ToString()
+                                        + ") valid: " + parsedPort.ToString();
+
                 if (!parsedIP || !parsedPort) {
                     if (showErrors)
                         Tools.ShowPopup("Failed to parse endpoint!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
-                                        "IP valid: " + parsedIP.ToString() + "\nPort valid: " + parsedPort.ToString());
+                                        errorMessage);
                     return false;
                 }
 
                 if (!OtherCamCom.PingAdr(ep.Address.ToString()).Result) {
                     if (showErrors)
                         Tools.ShowPopup("Failed to ping IP address!\nAddress provided is likely invalid!\nShow more?", "Failed to connect!",
-                                        "IP valid: " + parsedIP.ToString() + "\nPort valid: " + parsedPort.ToString() + "\nPing: Failed");
+                                        errorMessage + "\nPing: Failed");
                     return false;
                 }
 
@@ -194,11 +195,16 @@ namespace SSUtility2 {
             }
         }
 
-        public static void Disconnect(bool hideErrors = false) {
+        public static void Disconnect(bool showErrors = true) {
             try {
                 if (sock == null || !MainForm.m.finishedLoading)
                     return;
-                
+
+                string oldAdr = null;
+                try {
+                    oldAdr = sock.RemoteEndPoint.ToString();
+                } catch { }
+
                 OtherCamCom.LabelDisplay(false);
 
                 if (!ConfigControl.forceCamera.boolVal)
@@ -208,9 +214,12 @@ namespace SSUtility2 {
                 sock.Shutdown(SocketShutdown.Both);
                 sock.Close();
 
+                if (oldAdr != null)
+                    MainForm.m.WriteToResponses("Disconnected from: " + oldAdr, true);
+
                 Console.WriteLine("disconnected");
             } catch (Exception e){
-                if (!hideErrors)
+                if (showErrors)
                     Tools.ShowPopup("Disconnect error occurred!\nShow more?", "Error Occurred!", e.ToString());
             }
         }

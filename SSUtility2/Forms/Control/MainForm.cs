@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.1.2";
+        public const string version = "v2.6.2.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -362,7 +362,7 @@ namespace SSUtility2 {
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             closing = true;
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
-            AsyncCamCom.Disconnect(true);
+            AsyncCamCom.Disconnect(false);
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {

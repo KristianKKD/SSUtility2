@@ -11,9 +11,11 @@ namespace SSUtility2 {
         bool stop;
 
         public static byte[] noCommand = { 2, 3, 4, 5 };
-        public static byte[] pause = { 1, 2, 3, 4 };
+        public readonly static byte[] pause = { 1, 2, 3, 4 };
         public static byte[] loop = { 3, 4, 5, 6 };
         public static byte[] loopStop = { 4, 5, 6, 7 };
+        public static byte[] connect = { 5, 6, 7, 8 };
+        public static byte[] disconnect = { 6, 7, 8, 9 };
 
         int loopPos = -1;
         int currentLoops = 0;
@@ -22,23 +24,29 @@ namespace SSUtility2 {
 
         public PelcoD() {
             InitializeComponent();
-            tt_CommandFormat.SetToolTip(check_PD_Perfect, "Perfect Format disabled example: 00 53 00 00");
         }
 
         async Task Fire() {
-            Invoke((MethodInvoker)delegate {
-                b_PD_Fire.Enabled = false;
-            });
             try {
                 if (cB_Mode.Text == "IP") {
-                    if (!await AsyncCamCom.TryConnect(true).ConfigureAwait(false)) {
-                        return;
+                    if (!await AsyncCamCom.TryConnect(false).ConfigureAwait(false)) {
+                        if (Tools.ShowPopup("Failed to connect to camera!\nIP: " + ConfigControl.savedIP.stringVal
+                            + "\nPort: " + ConfigControl.savedPort.stringVal + "\nCancel script execution?", "Failed to Connect!", null, false)){
+                            b_PD_Fire.Enabled = true;
+                            return;
+                        }
                     }
                 }
+
+                Invoke((MethodInvoker)delegate {
+                    b_PD_Fire.Enabled = false;
+                    b_PD_Stop.Enabled = true;
+                });
+
                 loopAmount = 0;
                 loopPos = -1;
-                b_PD_Stop.Enabled = true;
                 for (int i = 0; i < tB_Commands.Lines.Length; i++) {
+
                     string l = tB_Commands.Lines[i];
                     if (!stop) {
                         await CheckLine(l, i);
@@ -46,6 +54,7 @@ namespace SSUtility2 {
                         stop = false;
                         break;
                     }
+
                     if (loopNow && loopPos != -1) {
                         MainForm.m.WriteToResponses("Looped " + currentLoops.ToString() + "/" + loopAmount.ToString(), true, false);
                         if (currentLoops < loopAmount) {
@@ -56,8 +65,10 @@ namespace SSUtility2 {
                         }
                         loopNow = false;
                     }
-                    await Task.Delay(300).ConfigureAwait(false);
+
+                    await Task.Delay(100).ConfigureAwait(false);
                 }
+
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to send commands!\nShow more?", "Command firing failed", e.ToString());
             }
@@ -75,7 +86,7 @@ namespace SSUtility2 {
                 line = line.Replace(",", "");
                 line = line.ToLower().Replace("x", "0");
 
-                ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, false, false, false, false);
+                ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, 0);
                 if (check_PD_Perfect.Checked) {
                     sendCom.codeContent = FullCommand(line);
                 } else {

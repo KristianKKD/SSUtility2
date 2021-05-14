@@ -142,6 +142,7 @@
             this.check_PD_Perfect.Size = new System.Drawing.Size(95, 17);
             this.check_PD_Perfect.TabIndex = 92;
             this.check_PD_Perfect.Text = "Perfect Format";
+            this.tt_CommandFormat.SetToolTip(this.check_PD_Perfect, "Perfect Format disabled example: 00 53 00 00");
             this.check_PD_Perfect.UseVisualStyleBackColor = true;
             this.check_PD_Perfect.CheckedChanged += new System.EventHandler(this.check_PD_Perfect_CheckedChanged);
             // 

@@ -31,7 +31,7 @@ namespace SSUtility2 {
                     string names = "";
                     for (int x = 0; x < curCom.names.Length; x++) {
                         names += curCom.names[x];
-                        if (curCom.valueAccepting) {
+                        if (curCom.valueCount > 0) {
                             names += " 0";
                         }
 
