@@ -70,6 +70,7 @@ namespace SSUtility2 {
                 LoadCustoms();
                 MainForm.m.custom.UpdateButtonNames();
                 UpdateCamType();
+                UpdateRatioLabel();
             }catch (Exception e) {
                 Tools.ShowPopup("Failed to update settings!\nShow more?", "Error Occurred!", e.ToString());
             }
@@ -361,6 +362,8 @@ namespace SSUtility2 {
                 b_Custom_CommandList.Visible = true;
             else
                 b_Custom_CommandList.Visible = false;
+
+            UpdateRatioLabel();
         }
 
         void LoadCustoms() {
@@ -505,6 +508,7 @@ namespace SSUtility2 {
                 return;
 
             bool val = check_Other_Aspect.Checked;
+
             ConfigControl.maintainAspectRatio.UpdateValue(val.ToString());
 
             if (val)
@@ -512,7 +516,15 @@ namespace SSUtility2 {
             else
                 MainForm.m.StopRatioTimer();
 
+            UpdateRatioLabel();
+
             BringToFront();
         }
+
+        public void UpdateRatioLabel() {
+            l_Other_Ratio.Visible = ConfigControl.maintainAspectRatio.boolVal;
+            l_Other_Ratio.Text = "(" + Math.Round(MainForm.m.currentAspectRatio,3).ToString() + ":1)";
+        }
+
     }
 }

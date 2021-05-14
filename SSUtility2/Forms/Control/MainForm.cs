@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.1.1";
+        public const string version = "v2.6.1.2";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -41,7 +41,7 @@ namespace SSUtility2 {
         private Timer RatioTimer;
         private Point currentDragPos;
         private bool resizing = false;
-        private float currentAspectRatio;
+        public float currentAspectRatio;
         private Direction resizeDir;
 
         public async Task StartupStuff() {
@@ -715,7 +715,8 @@ namespace SSUtility2 {
             try {
                 setPage.l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
                 resizing = false;
-            } catch{ }
+                mainPlayer.RefreshPlayers();
+            } catch { }
         }
 
         private void Menu_Settings_Lite_Click(object sender, EventArgs e) {
@@ -816,6 +817,7 @@ namespace SSUtility2 {
 
         public void StartRatioTimer() {
             currentAspectRatio = (float)Width / (float)Height;
+            setPage.UpdateRatioLabel();
 
             MinimumSize = Size;
             MaximumSize = Size;
@@ -881,8 +883,6 @@ namespace SSUtility2 {
 
                         MinimumSize = s;
                         MaximumSize = s;
-
-                        mainPlayer.RefreshPlayers();
                     }
 
                 }

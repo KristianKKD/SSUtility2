@@ -82,6 +82,7 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
+            this.l_Other_Ratio = new System.Windows.Forms.Label();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -467,8 +468,9 @@ namespace SSUtility2
             this.l_IPCon_Connected.AutoSize = true;
             this.l_IPCon_Connected.Location = new System.Drawing.Point(254, 36);
             this.l_IPCon_Connected.Name = "l_IPCon_Connected";
-            this.l_IPCon_Connected.Size = new System.Drawing.Size(0, 13);
+            this.l_IPCon_Connected.Size = new System.Drawing.Size(14, 13);
             this.l_IPCon_Connected.TabIndex = 81;
+            this.l_IPCon_Connected.Text = "X";
             // 
             // cB_IPCon_PresetType
             // 
@@ -650,6 +652,7 @@ namespace SSUtility2
             // 
             // tP_Other
             // 
+            this.tP_Other.Controls.Add(this.l_Other_Ratio);
             this.tP_Other.Controls.Add(this.check_Other_Aspect);
             this.tP_Other.Controls.Add(this.check_AddressInvalid);
             this.tP_Other.Controls.Add(this.l_Other_CurrentResolution);
@@ -782,6 +785,17 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
+            // l_Other_Ratio
+            // 
+            this.l_Other_Ratio.AutoSize = true;
+            this.l_Other_Ratio.Location = new System.Drawing.Point(186, 99);
+            this.l_Other_Ratio.Name = "l_Other_Ratio";
+            this.l_Other_Ratio.Size = new System.Drawing.Size(22, 13);
+            this.l_Other_Ratio.TabIndex = 39;
+            this.l_Other_Ratio.Text = "1:1";
+            this.l_Other_Ratio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.l_Other_Ratio.Visible = false;
+            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -876,5 +890,6 @@ namespace SSUtility2
         private System.Windows.Forms.TrackBar slider_IPCon_ControlMultiplier;
         private System.Windows.Forms.Label l_IPCon_Percent;
         public System.Windows.Forms.CheckBox check_Other_Aspect;
+        private System.Windows.Forms.Label l_Other_Ratio;
     }
 }
