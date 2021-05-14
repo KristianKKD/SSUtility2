@@ -71,6 +71,7 @@ namespace SSUtility2
             this.ButtonName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ButtonsCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tP_Other = new System.Windows.Forms.TabPage();
+            this.check_Other_Aspect = new System.Windows.Forms.CheckBox();
             this.check_AddressInvalid = new System.Windows.Forms.CheckBox();
             this.l_Other_CurrentResolution = new System.Windows.Forms.Label();
             this.tB_Other_ResolutionHeight = new System.Windows.Forms.TextBox();
@@ -649,6 +650,7 @@ namespace SSUtility2
             // 
             // tP_Other
             // 
+            this.tP_Other.Controls.Add(this.check_Other_Aspect);
             this.tP_Other.Controls.Add(this.check_AddressInvalid);
             this.tP_Other.Controls.Add(this.l_Other_CurrentResolution);
             this.tP_Other.Controls.Add(this.tB_Other_ResolutionHeight);
@@ -665,6 +667,19 @@ namespace SSUtility2
             this.tP_Other.TabIndex = 2;
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
+            // 
+            // check_Other_Aspect
+            // 
+            this.check_Other_Aspect.Location = new System.Drawing.Point(6, 98);
+            this.check_Other_Aspect.Name = "check_Other_Aspect";
+            this.check_Other_Aspect.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_Aspect.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_Aspect.TabIndex = 38;
+            this.check_Other_Aspect.Text = "Maintain Current Aspect Ratio";
+            this.check_Other_Aspect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Other_Aspect, "Resize the MainPlayer to maintain the given aspect ratio");
+            this.check_Other_Aspect.UseVisualStyleBackColor = true;
+            this.check_Other_Aspect.CheckedChanged += new System.EventHandler(this.check_Other_Aspect_CheckedChanged);
             // 
             // check_AddressInvalid
             // 
@@ -860,5 +875,6 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_IPCon_TrackBar;
         private System.Windows.Forms.TrackBar slider_IPCon_ControlMultiplier;
         private System.Windows.Forms.Label l_IPCon_Percent;
+        public System.Windows.Forms.CheckBox check_Other_Aspect;
     }
 }

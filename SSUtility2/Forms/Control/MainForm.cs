@@ -5,11 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static SPanel.SizeablePanel;
 
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.0.6";
+        public const string version = "v2.6.1.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -36,6 +37,13 @@ namespace SSUtility2 {
         private string screenRecordName;
         public string finalDest;
 
+
+        private Timer RatioTimer;
+        private Point currentDragPos;
+        private bool resizing = false;
+        private float currentAspectRatio;
+        private Direction resizeDir;
+
         public async Task StartupStuff() {
             try {
                 m = this;
@@ -45,7 +53,7 @@ namespace SSUtility2 {
                 pp = new PresetPanel();
                 D.protocol = new D();
                 EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init();
-                
+
                 mainPlayer = new Detached(true);
                 AttachInfoPanel();
                 AttachCustomPanel();
@@ -83,6 +91,10 @@ namespace SSUtility2 {
                     await AttachPlayers();
 
                 finishedLoading = true;
+
+                if (ConfigControl.maintainAspectRatio.boolVal)
+                    StartRatioTimer();
+
             } catch (Exception e) {
                 Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
             }
@@ -626,11 +638,11 @@ namespace SSUtility2 {
             return newVal;
         }
 
-        public void Tick() {
+        public void Tick() { ////////////////////////////////////////////////////////TICK
             try {
                 Point coords = Joystick.coords;
 
-                if (Joystick.distance != 0) {
+                if (Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
                     uint adr = Tools.MakeAdr();
                     int x = coords.X;
                     int y = coords.Y;
@@ -644,8 +656,8 @@ namespace SSUtility2 {
                         AsyncCamCom.SendNonAsync(code);
                 }
 
-            } catch (Exception e) {
-                Tools.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", e.ToString());
+            } catch (Exception err) {
+                Tools.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", err.ToString());
                 Joystick.Centre();
             }
         }
@@ -702,8 +714,9 @@ namespace SSUtility2 {
         private void MainForm_ResizeEnd(object sender, EventArgs e) {
             try {
                 setPage.l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
+                resizing = false;
             } catch{ }
-            }
+        }
 
         private void Menu_Settings_Lite_Click(object sender, EventArgs e) {
             LiteToggle();
@@ -793,5 +806,118 @@ namespace SSUtility2 {
             }
         }
 
+
+        public void StopRatioTimer() {
+            MinimumSize = new Size(800, 600);
+            MaximumSize = new Size(0, 0);
+
+            RatioTimer.Stop();
+        }
+
+        public void StartRatioTimer() {
+            currentAspectRatio = (float)Width / (float)Height;
+
+            MinimumSize = Size;
+            MaximumSize = Size;
+
+            RatioTimer = new Timer();
+            RatioTimer.Interval = 1;
+            RatioTimer.Tick += new EventHandler(MaintainRatio);
+            RatioTimer.Start();
+        }
+
+        void MaintainRatio(object sender, EventArgs e) {
+            try {
+                if (resizing) {
+                    Point pos = new Point(Cursor.Position.X - Location.X, Cursor.Position.Y - Location.Y);
+
+                    Size s = new Size();
+
+                    switch (resizeDir) {
+                        case Direction.Up:
+                            s = new Size(Width, Height - pos.Y);
+                            break;
+                        case Direction.Down:
+                            s = new Size(Width, Height + (pos.Y - currentDragPos.Y));
+                            break;
+                        case Direction.Left:
+                            s = new Size(Width - pos.X, Height);
+                            break;
+                        case Direction.Right:
+                            s = new Size(Width + (pos.X - currentDragPos.X), Height);
+                            break;
+                        case Direction.UpL:
+                            s = new Size(Width - pos.X, Height - pos.Y);
+                            break;
+                        case Direction.UpR:
+                            s = new Size(Width + (pos.X - currentDragPos.X), Height - pos.Y);
+                            break;
+                        case Direction.DownR:
+                            s = new Size(Width + (pos.X - currentDragPos.X), Height + (pos.Y - currentDragPos.Y));
+                            break;
+                        case Direction.DownL:
+                            s = new Size(Width - pos.X, Height + (pos.Y - currentDragPos.Y));
+                            break;
+                        default:
+                            break;
+                    }
+
+                    currentDragPos = pos;
+
+                    if ((s.Width > 0 || s.Height > 0) && s.Width >= 800 && s.Height >= 600) {
+                        if (s.Width != Width) {
+                            int hVal = (int)Math.Round(MinimumSize.Width / currentAspectRatio);
+                            if (hVal < 600)
+                                hVal = 600;
+
+                            s = new Size(s.Width, hVal);
+                        } else if (s.Height != Height) {
+                            int wVal = (int)Math.Round(MinimumSize.Height * currentAspectRatio);
+                            if (wVal < 800)
+                                wVal = 800;
+
+                            s = new Size(wVal, s.Height);
+                        }
+
+                        MinimumSize = s;
+                        MaximumSize = s;
+                    }
+
+                }
+            } catch { }
+        }
+
+        private void MainForm_ResizeBegin(object sender, EventArgs e) {
+            try {
+                currentDragPos = new Point(Cursor.Position.X - Location.X, Cursor.Position.Y - Location.Y);
+                resizing = true;
+
+                int cGripSize = 5;
+                Point pos = new Point(Cursor.Position.X - Location.X, Cursor.Position.Y - Location.Y);
+
+                if (pos.X >= this.ClientSize.Width - cGripSize) {       //grabbed right side
+                    if (pos.Y >= this.ClientSize.Height - cGripSize) {  // bottom right
+                        resizeDir = Direction.DownR;
+                    } else if (pos.Y <= cGripSize) {                    // top right
+                        resizeDir = Direction.UpR;
+                    } else {                                            // right
+                        resizeDir = Direction.Right;
+                    }
+                } else if (pos.X <= cGripSize) {                        //grabbed left side
+                    if (pos.Y >= this.ClientSize.Height - cGripSize) {  // bottom left
+                        resizeDir = Direction.DownL;
+                    } else if (pos.Y <= cGripSize) {                    // top left
+                        resizeDir = Direction.UpL;
+                    } else {                                            // left
+                        resizeDir = Direction.Left;
+                    }
+                } else if (pos.Y >= this.ClientSize.Height - cGripSize) {//grabbed down
+                    resizeDir = Direction.Down;
+                } else if (pos.Y <= cGripSize) {                        //up
+                    resizeDir = Direction.Up;
+                }
+            } catch { }
+        }
+
     } // end of class MainForm
-} // end of namespace SSLUtility2
+} // end of namespace SSUtility2

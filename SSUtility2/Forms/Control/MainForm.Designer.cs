@@ -329,6 +329,7 @@ namespace SSUtility2 {
             // 
             this.p_PlayerPanel.AllowDrop = true;
             this.p_PlayerPanel.BackColor = System.Drawing.Color.Black;
+            this.p_PlayerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.p_PlayerPanel.Controls.Add(this.b_PTZ_Daylight);
             this.p_PlayerPanel.Controls.Add(this.b_Open);
             this.p_PlayerPanel.Controls.Add(this.b_PTZ_Thermal);
@@ -530,6 +531,7 @@ namespace SSUtility2 {
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SSUtility V2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.ResizeBegin += new System.EventHandler(this.MainForm_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();

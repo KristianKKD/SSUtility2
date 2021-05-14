@@ -34,14 +34,17 @@ namespace SSUtility2 {
 
         private static void SendCurrentCommand(object sender, EventArgs e) {
             try {
-                if (!AsyncCamCom.sock.Connected || !MainForm.m.finishedLoading) {
-                    if(ConfigControl.forceCamera.boolVal)
-                        InfoPanel.i.InfoPanelTick();
+                if (!MainForm.m.finishedLoading) {
                     return;
                 }
 
-                if(AsyncCamCom.sock.Connected)
-                    MainForm.m.Tick();
+                MainForm.m.Tick();
+
+                bool infoTicked = false;
+                if (ConfigControl.forceCamera.boolVal) {
+                    InfoPanel.i.InfoPanelTick();
+                    infoTicked = true;
+                }
 
                 if (queueList.Count > 0) {
                     Command com = queueList[0];
@@ -53,8 +56,10 @@ namespace SSUtility2 {
                         queueList.RemoveAt(0);
                     }
                 } else {
-                    InfoPanel.i.InfoPanelTick();
+                    if(!infoTicked)
+                        InfoPanel.i.InfoPanelTick();
                 }
+
             } catch (Exception err){
                 MessageBox.Show("Error in queuelist.\n" + err.ToString());
             }

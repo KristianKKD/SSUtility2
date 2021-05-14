@@ -45,6 +45,7 @@ namespace SSUtility2 {
                 check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
                 cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
                 check_IPCon_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
+                check_Other_Aspect.Checked = ConfigControl.maintainAspectRatio.boolVal;
                 cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
 
                 ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
@@ -499,5 +500,18 @@ namespace SSUtility2 {
             dragging = false;
         }
 
+        private void check_Other_Aspect_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            bool val = check_Other_Aspect.Checked;
+            ConfigControl.maintainAspectRatio.UpdateValue(val.ToString());
+
+            if (val)
+                MainForm.m.StartRatioTimer();
+            else
+                MainForm.m.StopRatioTimer();
+
+        }
     }
 }
