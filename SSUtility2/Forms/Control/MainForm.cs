@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.1.0";
+        public const string version = "v2.6.1.1";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -881,6 +881,8 @@ namespace SSUtility2 {
 
                         MinimumSize = s;
                         MaximumSize = s;
+
+                        mainPlayer.RefreshPlayers();
                     }
 
                 }
@@ -890,32 +892,37 @@ namespace SSUtility2 {
         private void MainForm_ResizeBegin(object sender, EventArgs e) {
             try {
                 currentDragPos = new Point(Cursor.Position.X - Location.X, Cursor.Position.Y - Location.Y);
-                resizing = true;
 
-                int cGripSize = 5;
+                int grip = 5;
                 Point pos = new Point(Cursor.Position.X - Location.X, Cursor.Position.Y - Location.Y);
 
-                if (pos.X >= this.ClientSize.Width - cGripSize) {       //grabbed right side
-                    if (pos.Y >= this.ClientSize.Height - cGripSize) {  // bottom right
+                if (pos.X >= this.ClientSize.Width - grip) {       //grabbed right side
+                    if (pos.Y >= this.ClientSize.Height - grip) {  // bottom right
                         resizeDir = Direction.DownR;
-                    } else if (pos.Y <= cGripSize) {                    // top right
+                    } else if (pos.Y <= grip) {                    // top right
                         resizeDir = Direction.UpR;
                     } else {                                            // right
                         resizeDir = Direction.Right;
                     }
-                } else if (pos.X <= cGripSize) {                        //grabbed left side
-                    if (pos.Y >= this.ClientSize.Height - cGripSize) {  // bottom left
+                } else if (pos.X <= grip) {                        //grabbed left side
+                    if (pos.Y >= this.ClientSize.Height - grip) {  // bottom left
                         resizeDir = Direction.DownL;
-                    } else if (pos.Y <= cGripSize) {                    // top left
+                    } else if (pos.Y <= grip) {                    // top left
                         resizeDir = Direction.UpL;
                     } else {                                            // left
                         resizeDir = Direction.Left;
                     }
-                } else if (pos.Y >= this.ClientSize.Height - cGripSize) {//grabbed down
+                } else if (pos.Y >= this.ClientSize.Height - grip) {//grabbed down
                     resizeDir = Direction.Down;
-                } else if (pos.Y <= cGripSize) {                        //up
+                } else if (pos.Y <= grip) {                        //up
                     resizeDir = Direction.Up;
+                } else {
+                    resizeDir = Direction.None;
                 }
+
+                if (resizeDir != Direction.None)
+                    resizing = true;
+
             } catch { }
         }
 

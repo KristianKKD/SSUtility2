@@ -512,6 +512,7 @@ namespace SSUtility2 {
             else
                 MainForm.m.StopRatioTimer();
 
+            BringToFront();
         }
     }
 }

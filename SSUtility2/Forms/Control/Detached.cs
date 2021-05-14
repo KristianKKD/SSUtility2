@@ -215,6 +215,13 @@ namespace SSUtility2 {
             main.AttachPlayerToThis(this, new Point((int)Math.Round(main.Width / 2f),
                 (int)Math.Round(main.Height / 2f)), VideoSettings.CopyType.NoCopy);
         }
+
+        public void RefreshPlayers() {
+            p_Player.Refresh();
+            foreach (Detached d in attachedPlayers) {
+                d.p_Player.Refresh();
+            }
+        }
     }
 
 }
