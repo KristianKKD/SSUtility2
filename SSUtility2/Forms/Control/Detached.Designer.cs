@@ -24,7 +24,6 @@
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.videoStreamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_StartStop = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Attach = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,7 +46,6 @@
             // 
             this.videoStreamToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Settings,
-            this.Menu_StartStop,
             this.Menu_Snapshot,
             this.Menu_Record,
             this.Menu_Attach});
@@ -61,13 +59,6 @@
             this.Menu_Settings.Size = new System.Drawing.Size(181, 22);
             this.Menu_Settings.Text = "Connection Settings";
             this.Menu_Settings.Click += new System.EventHandler(this.Menu_Settings_Click);
-            // 
-            // Menu_StartStop
-            // 
-            this.Menu_StartStop.Name = "Menu_StartStop";
-            this.Menu_StartStop.Size = new System.Drawing.Size(181, 22);
-            this.Menu_StartStop.Text = "Start Video Playback";
-            this.Menu_StartStop.Click += new System.EventHandler(this.Menu_StartStop_Click);
             // 
             // Menu_Snapshot
             // 
@@ -125,7 +116,6 @@
         public System.Windows.Forms.ToolStripMenuItem videoStreamToolStripMenuItem;
         public System.ComponentModel.IContainer components;
         public System.Windows.Forms.ToolStripMenuItem Menu_Settings;
-        public System.Windows.Forms.ToolStripMenuItem Menu_StartStop;
         public System.Windows.Forms.ToolStripMenuItem Menu_Snapshot;
         public System.Windows.Forms.ToolStripMenuItem Menu_Record;
         public System.Windows.Forms.Panel p_Player;

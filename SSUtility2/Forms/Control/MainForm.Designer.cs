@@ -83,6 +83,8 @@ namespace SSUtility2 {
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
+            this.Menu_Video_Snap_Single = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_Snap_Panoramic = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuBar.SuspendLayout();
             this.p_PlayerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Background)).BeginInit();
@@ -259,10 +261,12 @@ namespace SSUtility2 {
             // 
             // Menu_Video_Snapshot
             // 
+            this.Menu_Video_Snapshot.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Video_Snap_Single,
+            this.Menu_Video_Snap_Panoramic});
             this.Menu_Video_Snapshot.Name = "Menu_Video_Snapshot";
             this.Menu_Video_Snapshot.Size = new System.Drawing.Size(183, 22);
             this.Menu_Video_Snapshot.Text = "Save Snapshot";
-            this.Menu_Video_Snapshot.Click += new System.EventHandler(this.Menu_Video_Snapshot_Click);
             // 
             // Menu_Video_Record
             // 
@@ -515,6 +519,20 @@ namespace SSUtility2 {
             this.b_PTZ_Up.UseVisualStyleBackColor = false;
             this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
             this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // Menu_Video_Snap_Single
+            // 
+            this.Menu_Video_Snap_Single.Name = "Menu_Video_Snap_Single";
+            this.Menu_Video_Snap_Single.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Video_Snap_Single.Text = "Single";
+            this.Menu_Video_Snap_Single.Click += new System.EventHandler(this.Menu_Video_Snap_Single_Click);
+            // 
+            // Menu_Video_Snap_Panoramic
+            // 
+            this.Menu_Video_Snap_Panoramic.Name = "Menu_Video_Snap_Panoramic";
+            this.Menu_Video_Snap_Panoramic.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Video_Snap_Panoramic.Text = "Panoramic";
+            this.Menu_Video_Snap_Panoramic.Click += new System.EventHandler(this.Menu_Video_Snap_Panoramic_Click);
             // 
             // MainForm
             // 
@@ -1375,5 +1393,7 @@ namespace SSUtility2 {
         private ToolStripMenuItem Menu_Settings_ExportConfig;
         public Button b_PTZ_Daylight;
         public Button b_PTZ_Thermal;
+        private ToolStripMenuItem Menu_Video_Snap_Single;
+        private ToolStripMenuItem Menu_Video_Snap_Panoramic;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

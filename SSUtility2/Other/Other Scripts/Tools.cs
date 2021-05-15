@@ -105,14 +105,9 @@ namespace SSUtility2 {
 
         public static void SaveSnap(Detached player) {
             string fullImagePath = GivePath(ConfigControl.scFolder.stringVal,
-                ConfigControl.scFileName.stringVal, player.settings, "Snapshots") + ".jpg";
+                ConfigControl.scFileName.stringVal, player.settings, "Snapshots", ".jpg");
 
-            Image bmp = new Bitmap(player.Width, player.Height);
-            Graphics gfx = Graphics.FromImage(bmp);
-            Rectangle rec = player.RectangleToScreen(player.ClientRectangle);
-            gfx.CopyFromScreen(rec.Location, Point.Empty, player.Size);
-
-            bmp.Save(fullImagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+            Screenshot(player, fullImagePath);
 
             if (MainForm.m.finalMode) {
                 SaveFileDialog fdg = SaveFile(ConfigControl.scFileName.stringVal, ".jpg", MainForm.m.finalDest);
@@ -125,6 +120,67 @@ namespace SSUtility2 {
             } else {
                 MessageBox.Show("Image saved : " + fullImagePath);
             }
+        }
+
+        private static Image Screenshot(Detached d, string path) {
+            try {
+                Panel player = d.p_Player;
+
+                Image bmp = new Bitmap(player.Width, player.Height);
+                Graphics gfx = Graphics.FromImage(bmp);
+                gfx.CopyFromScreen(player.RectangleToScreen(player.ClientRectangle).Location, Point.Empty, player.Size);
+
+                bmp.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                return bmp;
+            } catch (Exception e) {
+                MessageBox.Show("SCREENSHOT\n" + e.ToString());
+                return null;
+            }
+        }
+
+        public static void Panoramic(Detached player) {
+            //build temp path
+
+            //pan/tilt to zero
+
+            //while angle < 360
+            //screenshot to temp
+            //rotate X degrees (fov of the camera)
+            //wait for finish rotate
+
+            //merge images in temp path
+            //move merged to save path
+            //final test mode
+
+            string tempDir = NameNoOverwrite(ConfigControl.savedFolder + @"temp\");
+            CheckCreateFile(null, tempDir);
+
+            //CustomScriptCommands.QuickCommand("panzero");
+
+            float fov = 120;
+
+            for (int i = 0; i < 360/fov; i++) {
+                string tempName = NameNoOverwrite(tempDir + "tempsnapshot");
+                Screenshot(player, tempName);
+            }
+
+        }
+
+        public static string NameNoOverwrite(string originalPath) {
+            string path = originalPath.Substring(0, originalPath.LastIndexOf(@"\") + 1);
+            string name = originalPath.Substring(path.Length);
+            string extension = name.Substring(name.IndexOf("."));
+            name = name.Substring(0, name.Length - extension.Length);
+            string fullPath = path + name + extension;
+
+            int numAdd = 0;
+
+            while (File.Exists(fullPath)) {
+                fullPath = path + name + "(" + (++numAdd).ToString() + ")" + extension;
+            }
+
+            return fullPath;
         }
 
         public static async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
@@ -156,9 +212,12 @@ namespace SSUtility2 {
             return fileDlg;
         }
 
-        public static string GivePath(string orgFolder, string orgName, VideoSettings player, string folderType) {
+        public static string GivePath(string orgFolder, string orgName, VideoSettings player, string folderType, string extension) {
             string folder = orgFolder;
-            string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
+            //string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
+            string fullTemp = NameNoOverwrite(orgFolder + orgName + extension);
+            string name = fullTemp.Substring(fullTemp.LastIndexOf(@"\") + 1);
+
             string adr = GetPlayerAdrOrName(player);
 
             if (adr != "") {
@@ -170,12 +229,12 @@ namespace SSUtility2 {
             if (ConfigControl.automaticPaths.boolVal) {
                 folder = ConfigControl.savedFolder + adr + folderType;
                 string timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
-                fileName = orgName + " " + timeText;
+                name = orgName + " " + timeText;
             }
 
             CheckCreateFile(null, folder);
 
-            string full = folder + @"\" + fileName;
+            string full = folder + @"\" + name;
             return full;
         }
 

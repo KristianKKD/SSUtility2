@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.2.0";
+        public const string version = "v2.6.2.1";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -120,7 +120,8 @@ namespace SSUtility2 {
 
                 return (isPlaying, null);
             } else {
-                string fullVideoPath = Tools.GivePath(ConfigControl.vFolder.stringVal, ConfigControl.vFileName.stringVal, player.settings, "Recordings") + ".avi";
+                string fullVideoPath = Tools.GivePath(ConfigControl.vFolder.stringVal,
+                    ConfigControl.vFileName.stringVal, player.settings, "Recordings", ".avi");
                 inUseVideoPath = fullVideoPath;
                 isPlaying = true;
 
@@ -415,10 +416,6 @@ namespace SSUtility2 {
             mainPlayer.settings.Show();
             mainPlayer.settings.BringToFront();
             mainPlayer.settings.Location = Location;
-        }
-
-        private void Menu_Video_Snapshot_Click(object sender, EventArgs e) {
-            Tools.SaveSnap(mainPlayer);
         }
 
         private void Menu_Video_Record_Click(object sender, EventArgs e) {
@@ -924,6 +921,14 @@ namespace SSUtility2 {
                     resizing = true;
 
             } catch { }
+        }
+
+        private void Menu_Video_Snap_Single_Click(object sender, EventArgs e) {
+            Tools.SaveSnap(mainPlayer);
+        }
+
+        private void Menu_Video_Snap_Panoramic_Click(object sender, EventArgs e) {
+
         }
 
     } // end of class MainForm

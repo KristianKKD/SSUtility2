@@ -182,8 +182,6 @@ namespace SSUtility2 {
             try {
                 string location = ConfigControl.vFolder.stringVal + ConfigControl.mainPlayerName.stringVal + @"\";
 
-                Console.WriteLine(Menu_Record.Text);
-
                 if (Menu_Record.Text == "Start Recording") {
                     Menu_Record.Text = "Stop Recording";
                     PlayerSdk.EasyPlayer_StartManuRecording(settings.channelID, location);
