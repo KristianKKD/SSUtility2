@@ -59,6 +59,7 @@ namespace SSUtility2 {
 
             MainForm.m.WriteToResponses("Non-async command sent: " + Tools.ReadCommand(code), true, false);
             sock.SendTo(code, sock.RemoteEndPoint);
+            CommandQueue.totalCommands++;
         }
 
         public static Command SendScriptCommand(ScriptCommand com) {
@@ -82,7 +83,7 @@ namespace SSUtility2 {
             return result;
         }
 
-        private static async Task<string> CheckCommandResult(Command oldCom) { //have timer check if queued result and if it is send it back
+        public static async Task<string> CheckCommandResult(Command oldCom) { //have timer check if queued result and if it is send it back
             await CommandQueue.WaitForCommandDone(oldCom).ConfigureAwait(false);
 
             if (oldCom != null) {
@@ -98,6 +99,8 @@ namespace SSUtility2 {
                 Command oldCom = CommandQueue.FindCommandByID(id);
                 if (oldCom != null) {
                     Command com = new Command(oldCom.content, true, true, true, oldCom.name);
+                } else {
+                    MessageBox.Show("none found");
                 }
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to queue a repeating command!\nShow more?", "Command Queuing Failed!", e.ToString());
@@ -239,6 +242,7 @@ namespace SSUtility2 {
                         commandText = commandText + " (" + currentCom.name + ")";
                     }
                     MainForm.m.WriteToResponses("Sending: " + commandText, true, currentCom.isInfo);
+                    CommandQueue.totalCommands++;
                 }
                 sock.BeginSend(currentCom.content, 0, currentCom.content.Length, SocketFlags.None, SendCallback, null);
             } catch (SocketException ex) {
@@ -311,15 +315,14 @@ namespace SSUtility2 {
                 }
 
                 msg = msg.Trim();
+                
+                if (currentCom.isInfo)
+                    InfoPanel.i.ReadResult(msg);
 
                 if (msg.Length > 0 && msg.StartsWith("F")) {
                     if (currentCom == null) {
                         MainForm.m.WriteToResponses("(Listening) Received: " + msg, true, false);
                         return;
-                    }
-
-                    if (currentCom.isInfo) {
-                        InfoPanel.ReadResult(msg);
                     }
 
                     CommandQueue.oldList.Add(currentCom);

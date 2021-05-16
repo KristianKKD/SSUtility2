@@ -34,6 +34,8 @@
             this.tB_Log = new System.Windows.Forms.RichTextBox();
             this.check_Timestamp = new System.Windows.Forms.CheckBox();
             this.check_AutoScroll = new System.Windows.Forms.CheckBox();
+            this.l_TotalSent = new System.Windows.Forms.Label();
+            this.l_Queue = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // b_RL_Clear
@@ -132,12 +134,32 @@
             this.check_AutoScroll.Text = "Auto Scroll";
             this.check_AutoScroll.UseVisualStyleBackColor = true;
             // 
+            // l_TotalSent
+            // 
+            this.l_TotalSent.AutoSize = true;
+            this.l_TotalSent.Location = new System.Drawing.Point(441, 303);
+            this.l_TotalSent.Name = "l_TotalSent";
+            this.l_TotalSent.Size = new System.Drawing.Size(89, 26);
+            this.l_TotalSent.TabIndex = 20;
+            this.l_TotalSent.Text = "Total Commands \r\nSent:";
+            // 
+            // l_Queue
+            // 
+            this.l_Queue.AutoSize = true;
+            this.l_Queue.Location = new System.Drawing.Point(441, 352);
+            this.l_Queue.Name = "l_Queue";
+            this.l_Queue.Size = new System.Drawing.Size(92, 26);
+            this.l_Queue.TabIndex = 21;
+            this.l_Queue.Text = "Command Queue \r\nLength:";
+            // 
             // ResponseLog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(543, 446);
+            this.Controls.Add(this.l_Queue);
+            this.Controls.Add(this.l_TotalSent);
             this.Controls.Add(this.check_AutoScroll);
             this.Controls.Add(this.check_Timestamp);
             this.Controls.Add(this.tB_Log);
@@ -164,5 +186,7 @@
         public System.Windows.Forms.RichTextBox tB_Log;
         public System.Windows.Forms.CheckBox check_Timestamp;
         public System.Windows.Forms.CheckBox check_AutoScroll;
+        private System.Windows.Forms.Label l_TotalSent;
+        private System.Windows.Forms.Label l_Queue;
     }
 }

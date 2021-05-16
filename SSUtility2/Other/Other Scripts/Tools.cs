@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
-    public class Tools {
+    public static class Tools {
 
         public static IEnumerable<Control> GetAll(Control control) {
             var controls = control.Controls.Cast<Control>();
@@ -137,34 +138,6 @@ namespace SSUtility2 {
                 MessageBox.Show("SCREENSHOT\n" + e.ToString());
                 return null;
             }
-        }
-
-        public static void Panoramic(Detached player) {
-            //build temp path
-
-            //pan/tilt to zero
-
-            //while angle < 360
-            //screenshot to temp
-            //rotate X degrees (fov of the camera)
-            //wait for finish rotate
-
-            //merge images in temp path
-            //move merged to save path
-            //final test mode
-
-            string tempDir = NameNoOverwrite(ConfigControl.savedFolder + @"temp\");
-            CheckCreateFile(null, tempDir);
-
-            //CustomScriptCommands.QuickCommand("panzero");
-
-            float fov = 120;
-
-            for (int i = 0; i < 360/fov; i++) {
-                string tempName = NameNoOverwrite(tempDir + "tempsnapshot");
-                Screenshot(player, tempName);
-            }
-
         }
 
         public static string NameNoOverwrite(string originalPath) {

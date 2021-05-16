@@ -342,6 +342,7 @@ namespace SSUtility2
             // 
             // tP_Main
             // 
+            this.tP_Main.BackColor = System.Drawing.Color.White;
             this.tP_Main.Controls.Add(this.b_Detach);
             this.tP_Main.Controls.Add(this.l_PlayerD_RTSP);
             this.tP_Main.Controls.Add(this.tB_PlayerD_Password);
@@ -370,7 +371,6 @@ namespace SSUtility2
             this.tP_Main.Size = new System.Drawing.Size(455, 288);
             this.tP_Main.TabIndex = 0;
             this.tP_Main.Text = "Main Player";
-            this.tP_Main.UseVisualStyleBackColor = true;
             // 
             // b_Detach
             // 
@@ -398,7 +398,7 @@ namespace SSUtility2
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VideoSettings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VideoSettings_FormClosing);
-            this.VisibleChanged += new System.EventHandler(this.VideoSettings_VisibleChanged_1);
+            this.VisibleChanged += new System.EventHandler(this.VideoSettings_VisibleChanged);
             this.tC_PlayerSettings.ResumeLayout(false);
             this.tP_Main.ResumeLayout(false);
             this.tP_Main.PerformLayout();

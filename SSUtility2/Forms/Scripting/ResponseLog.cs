@@ -41,5 +41,10 @@ namespace SSUtility2 {
             }
         }
 
+        public void UpdateLabels() {
+            l_Queue.Text = "Command Queue\nLength: " + CommandQueue.queueList.Count.ToString();
+            l_TotalSent.Text = "Total Commands\nSent: " + CommandQueue.totalCommands.ToString();
+        }
+
     }
 }

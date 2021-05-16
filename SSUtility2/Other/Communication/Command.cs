@@ -9,6 +9,7 @@ namespace SSUtility2 {
         public static List<Command> savedCommandList;
         public static List<Command> queueList;
         public static List<Command> oldList; //need to add response log handling for this
+        public static int totalCommands = 0;
 
         public static int total = 0;
         public const int commandRate = 100;
@@ -27,7 +28,7 @@ namespace SSUtility2 {
 
         public static void StartTimer() {
             SendTimer = new Timer();
-            SendTimer.Interval = 100;
+            SendTimer.Interval = commandRate;
             SendTimer.Tick += new EventHandler(SendCurrentCommand);
             SendTimer.Start();
         }
@@ -39,6 +40,7 @@ namespace SSUtility2 {
                 }
 
                 MainForm.m.Tick();
+                MainForm.m.rl.UpdateLabels();
 
                 bool infoTicked = false;
                 if (ConfigControl.forceCamera.boolVal) {
@@ -51,8 +53,20 @@ namespace SSUtility2 {
 
                     if (!com.invalid && !com.sent && com != null) {
                         AsyncCamCom.currentCom = com;
+
+                        if (com.isInfo && queueList.Count > 1) {
+                            foreach (Command c in queueList) {
+                                if (c != null && c != com && !c.isInfo) {
+                                    queueList.RemoveAt(0);
+                                    com = queueList[0];
+                                    break;
+                                }
+                            }
+                        }
+
                         WaitForCommandResponse(com).ConfigureAwait(false);
                     } else {
+                        SendCurrentCommand(null, null);
                         queueList.RemoveAt(0);
                     }
                 } else {

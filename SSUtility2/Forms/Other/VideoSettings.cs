@@ -4,13 +4,10 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSUtility2
-{
-    public partial class VideoSettings : Form
-    {
+namespace SSUtility2 {
+    public partial class VideoSettings : Form {
 
-        public enum CopyType
-        {
+        public enum CopyType {
             CopyFull,
             CopyAsSecondary,
             NoCopy
@@ -101,6 +98,101 @@ namespace SSUtility2
             } catch (Exception e) {
                 MessageBox.Show("Swap Fail\n" + e.ToString());
             }
+        }
+  
+        private void VideoSettings_VisibleChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            GetCombined();
+            
+            if (!isMainPlayer && isAttached) {
+                b_Detach.Show();
+            }
+
+            if (isMainPlayer) {
+
+                foreach (TabPage tp in tC_PlayerSettings.TabPages) {
+                    if (tp == tP_Main)
+                        continue;
+
+                    tp.Dispose();
+                }
+
+                foreach (Detached d in myDetached.attachedPlayers) {
+                    TabPage tp = CopyPage(d.settings);
+                    tp.Text = "Player " + (tC_PlayerSettings.TabPages.Count + 1).ToString();
+                    tC_PlayerSettings.TabPages.Add(tp);
+                }
+
+            }
+            
+        }
+
+        public static TabPage CopyPage(VideoSettings copyStats) {
+            TabPage tp = new TabPage();
+            TabPage source = MainForm.m.mainPlayer.settings.tP_Main;
+            try {
+
+                foreach (Control c in source.Controls) {
+                    Control copyC = null;
+
+                    if (c.GetType() == typeof(TextBox))
+                        copyC = new TextBox();
+                    else if (c.GetType() == typeof(Label))
+                        copyC = new Label();
+                    else if (c.GetType() == typeof(CheckBox))
+                        copyC = new CheckBox();
+                    else if (c.GetType() == typeof(ComboBox)) {
+                        ComboBox cb = new ComboBox();
+                        ComboBox copyCB = new ComboBox();
+
+                        cb = (ComboBox)c;
+
+                        foreach (var entry in cb.Items) {
+                            copyCB.Items.Add(entry);
+                        }
+
+                        copyC = copyCB;
+                        copyC.Text = copyStats.cB_PlayerD_CamType.Text;
+
+                        //add selectindex changed functionality
+
+                    } else if (c.GetType() == typeof(Button)) {
+                        Button b = new Button();
+                        Button copyB = new Button();
+                        b = (Button)c;
+                        copyB.FlatStyle = b.FlatStyle;
+                        copyC = copyB;
+                    }
+
+                    if (copyC != null) {
+                        copyC.Location = c.Location;
+                        copyC.Size = c.Size;
+                        copyC.Visible = c.Visible;
+                        copyC.Name = c.Name;
+                        copyC.BackColor = c.BackColor;
+
+                        if(copyC.GetType() != typeof(ComboBox))
+                            copyC.Text = c.Text;
+
+                        foreach (TextBox sourceTB in Tools.GetAllType(copyStats, typeof(TextBox))) {
+                            if (copyC.Name == sourceTB.Name) {
+                                copyC.Text = sourceTB.Text;
+                                break;
+                            }
+                        }
+
+                        tp.Controls.Add(copyC);
+                    }
+
+                }
+
+                tp.BackColor = source.BackColor;
+            } catch (Exception e) {
+                MessageBox.Show(e.ToString());
+            }
+            return tp;
         }
 
         public static void CopySettings(VideoSettings target, VideoSettings source, CopyType type) {
@@ -266,15 +358,6 @@ namespace SSUtility2
 
         private void b_PlayerD_Play_Click(object sender, EventArgs e) {
             myDetached.Play(true, isMainPlayer);
-        }
-
-        private void VideoSettings_VisibleChanged_1(object sender, EventArgs e) {
-            if (MainForm.m.finishedLoading) {
-                GetCombined();
-                if (!isMainPlayer && isAttached) {
-                    b_Detach.Show();
-                }
-            }
         }
 
         private void b_PlayerD_Stop_Click(object sender, EventArgs e) {

@@ -32,7 +32,7 @@ namespace SSUtility2 {
         
         readonly static ScriptCommand stop = new ScriptCommand(new string[] { "stop" }, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing", 0);
         readonly static ScriptCommand mono = new ScriptCommand(new string[] { "mono", "monocolour", "monocolor" }, new byte[] { 0x00, 0x07, 0x00, 0x03 }, "Camera video toggles between color and black/white pallete", 0);
-        readonly static ScriptCommand panzero = new ScriptCommand(new string[] { "panzero", "zeropan", "azimuth" }, new byte[] { 0x00, 0x49, 0x00, 0x00 }, "Sets camera pan to zero", 0);
+        readonly static ScriptCommand panzero = new ScriptCommand(new string[] { "panzero", "zeropan", "azimuth" }, new byte[] { 0x00, 0x49, 0x00, 0x00 }, "The camera's zero pan is set to the current rotation", 0);
 
         readonly static ScriptCommand setzoomspeed = new ScriptCommand(new string[] { "setzoomspeed" }, new byte[] { 0x00, 0x25, 0x00, 0x00 }, "Sets camera zoom speed to X (DATA 2)", 1);
         readonly static ScriptCommand setpantiltspeed = new ScriptCommand(new string[] { "setpantiltspeed" }, new byte[] { 0x00, 0x4B, 0x00, 0x00 }, "Sets camera pan and tilt speed to X (DATA 2)", 1);
@@ -180,6 +180,19 @@ namespace SSUtility2 {
             }
 
             return null;
+        }
+
+        public static async Task<string> QuickQuery(string command) {
+            uint adr = Tools.MakeAdr();
+            ScriptCommand send = CheckForCommands(command, adr, false).Result;
+
+            string result = "";
+            var t = Task.Factory.StartNew(() => {
+                result = AsyncCamCom.QueryNewCommand(send.codeContent).Result;
+            });
+            Task.WaitAll();
+
+            return result;
         }
 
         public static async Task QuickCommand(string command, bool sendAsync = true, int manualAdr = -5) {

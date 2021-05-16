@@ -16,17 +16,15 @@ namespace SSUtility2 {
         public Panel myPanel;
 
         public bool isActive = false;
-
         public bool isCamera = false;
-        
-        public bool forcedQueueing = false;
+
+        int commandPos = 0;
 
         int panID;
         int tiltID;
         int fovID;
         int tFovID;
 
-        public int commandPos = 0;
         int timeoutTime = 0;
         int tickCount = 0;
 
@@ -60,22 +58,23 @@ namespace SSUtility2 {
 
         public async Task StartStopTicking() {
             try {
-                if (!this.IsHandleCreated) {
-                    this.CreateHandle();
-                }
-
                 if (MainForm.m.lite)
                     return;
 
+                if (!this.IsHandleCreated)
+                    this.CreateHandle();
+
                 if (isActive) {
-                    StopTicking();
+                    HideAll();
+                    isActive = false;
+                    MainForm.m.Menu_Settings_Info.Text = "Enable Info Panel";
                     return;
                 }
 
                 GenCommands();
 
                 isActive = true;
-                forcedQueueing = true;
+                UpdateNext();
                 MainForm.m.Menu_Settings_Info.Text = "Disable Info Panel";
                 ShowAll();
             } catch (Exception e) {
@@ -84,20 +83,13 @@ namespace SSUtility2 {
             }
         }
 
-        public void StopTicking() {
-            HideAll();
-            isActive = false;
-            MainForm.m.Menu_Settings_Info.Text = "Enable Info Panel";
-        }
-
-
         public async Task InfoPanelTick() {
             try {
                 tickCount++;
 
                 if (isActive && isCamera) {
-                    if (tickCount > CommandQueue.commandRate * 2 || forcedQueueing)
-                        UpdateAll();
+                    if (tickCount > CommandQueue.commandRate)
+                        UpdateNext();
                 } else {
                     if (!isCamera) {
                         if (!(MainForm.m.mainPlayer.settings.channelID >= 0 || MainForm.m.lite)
@@ -131,42 +123,50 @@ namespace SSUtility2 {
             }
         }
 
-        async Task UpdateAll() {
+        public async Task UpdateNext() {
             try {
+                if (!isActive)
+                    return;
+
                 if (commandPos >= 4) {
-                    forcedQueueing = false;
-                    tickCount = 0;
                     commandPos = 0;
+                    return;
                 }
 
+                tickCount = 0;
+
+                int id = 0;
                 switch (commandPos) {
                     case 0:
-                        AsyncCamCom.QueueRepeatingCommand(panID);
+                        id = panID;
                         break;
                     case 1:
-                        AsyncCamCom.QueueRepeatingCommand(tiltID);
+                        id = tiltID;
                         break;
                     case 2:
-                        AsyncCamCom.QueueRepeatingCommand(fovID);
+                        id = fovID;
                         break;
                     case 3:
-                        AsyncCamCom.QueueRepeatingCommand(tFovID);
+                        id = tFovID;
                         break;
                 }
+                
+                AsyncCamCom.QueueRepeatingCommand(id);
 
-                l_Tilt.Text = "TILT: " + tilt.ToString() + " °";
-                l_FOV.Text = "DAYLIGHT FOV: " + fov.ToString() + " °";
-                l_TFOV.Text = "THERMAL FOV: " + tfov.ToString() + " °";
-                l_Pan.Text = "PAN: " + pan.ToString() + " °";
                 commandPos++;
 
+                UpdateNext();
             } catch (Exception e){
                 MessageBox.Show(e.ToString());
             }
         }
 
-        public static async Task ReadResult(string result) {
+        public async Task ReadResult(string result) {
             try {
+
+                if (result == "")
+                    return;
+
                 string commandType = result.Substring(9, 2);
 
                 switch (commandType) {
@@ -184,6 +184,14 @@ namespace SSUtility2 {
                         }
                         break;
                 }
+
+                Invoke((MethodInvoker)delegate {
+                    l_Tilt.Text = "TILT: " + tilt.ToString() + " °";
+                    l_FOV.Text = "DAYLIGHT FOV: " + fov.ToString() + " °";
+                    l_TFOV.Text = "THERMAL FOV: " + tfov.ToString() + " °";
+                    l_Pan.Text = "PAN: " + pan.ToString() + " °";
+                });
+
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }

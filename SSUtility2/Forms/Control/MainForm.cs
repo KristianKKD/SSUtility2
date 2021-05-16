@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.2.1";
+        public const string version = "v2.6.3.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -165,7 +165,7 @@ namespace SSUtility2 {
                 InfoPanel i = new InfoPanel();
 
                 p.Size = new Size(i.Width, i.Height - 35);
-                p.Location = new Point(m.Size.Width - i.Width, 0);
+                p.Location = new Point(m.Size.Width - i.Width, MenuBar.Height + 3);
 
                 var c = Tools.GetAllType(i, typeof(Label));
                 p.Controls.AddRange(c.ToArray());
@@ -613,8 +613,7 @@ namespace SSUtility2 {
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
             await Task.Delay(100).ConfigureAwait(false);
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
-            InfoPanel.i.forcedQueueing = true;
-            InfoPanel.i.commandPos = 0;
+            InfoPanel.i.UpdateNext();
         }
 
         private void Joystick_MouseUp(object sender, MouseEventArgs e) {
@@ -635,7 +634,8 @@ namespace SSUtility2 {
             return newVal;
         }
 
-        public void Tick() { ////////////////////////////////////////////////////////TICK
+        byte[] lastCode;
+        public void Tick() {
             try {
                 Point coords = Joystick.coords;
 
@@ -649,8 +649,10 @@ namespace SSUtility2 {
 
                     byte[] code = GetDirCode(x, y, xSpeed, ySpeed, adr);
 
-                    if (code != null)
+                    if (code != null & code != lastCode)
                         AsyncCamCom.SendNonAsync(code);
+
+                    lastCode = code;
                 }
 
             } catch (Exception err) {
@@ -928,6 +930,57 @@ namespace SSUtility2 {
         }
 
         private void Menu_Video_Snap_Panoramic_Click(object sender, EventArgs e) {
+            Panoramic();
+        }
+
+        async Task Panoramic() {
+            //move merged to save path
+            //final test mode
+
+            if (!await AsyncCamCom.TryConnect(true).ConfigureAwait(false)) {
+                return;
+            }
+
+            foreach (Detached d in mainPlayer.attachedPlayers) {
+                d.Hide();
+            }
+
+            //string fovString = CustomScriptCommands.QuickQuery("queryfov").Result;
+            //float fov;
+            //if (!float.TryParse(fovString, out fov)) {
+            //    MessageBox.Show("failed to get fov! defaulting to 30");
+            //    fov = 30;
+            //}
+
+
+            string tempStorage = ConfigControl.savedFolder + @"temp\";
+            Tools.CheckCreateFile(null, tempStorage);
+
+            int fov = 60;
+
+            Panel pPlayer = mainPlayer.p_Player;
+            int width = pPlayer.Width;
+            int height = pPlayer.Height;
+
+            Image fullScreenshot = new Bitmap(width * (360 / fov), height);
+
+            for (int i = 0; i < 360 / fov; i++) {
+                await CustomScriptCommands.QuickCommand("setpan " + (i * fov).ToString(), true).ConfigureAwait(false); //redo this
+                await Task.Delay(5000);
+
+                using (Image part = new Bitmap(width, height)) {
+                    Graphics gfx = Graphics.FromImage(part);
+                    gfx.CopyFromScreen(pPlayer.RectangleToScreen(pPlayer.ClientRectangle).Location, Point.Empty, pPlayer.Size);
+                    Graphics.FromImage(fullScreenshot).DrawImage(part, new Point(width * i, 0));
+                    part.Save(tempStorage + "test" + i.ToString() + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+            }
+
+            fullScreenshot.Save(ConfigControl.savedFolder + @"temp\" + "test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            foreach (Detached d in mainPlayer.attachedPlayers) {
+                d.Show();
+            }
 
         }
 
