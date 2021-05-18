@@ -11,6 +11,8 @@ namespace SSUtility2 {
         static byte[] receiveBuffer;
         static bool connectingAlready = false;
 
+        public static Command currentCom;
+
         public static async Task<bool> TryConnect(bool showErrors = false, IPEndPoint customep = null,
             bool noPlayerReplay = false) {
             bool result = true;
@@ -71,26 +73,24 @@ namespace SSUtility2 {
             Command com = new Command(code, false, false, spammable, null);
 
             if (com.invalid) {
-                MainForm.m.WriteToResponses("Failed to send " + Tools.ReadCommand(code), true);
+                MainForm.m.WriteToResponses("Failed to create " + Tools.ReadCommand(code), true);
                 return null;
             }
             return com;
         }
 
-        public async static Task<string> QueryNewCommand(byte[] send) {
-            Command com = SendNewCommand(send, true);
-            string result = await CheckCommandResult(com).ConfigureAwait(false);
-            return result;
-        }
+        public async static Task<string> QueryNewCommand(ScriptCommand com) {
+            Command sendCommand = new Command(com.codeContent, false, false, com.isQuery, com.names[0]);
 
-        public static async Task<string> CheckCommandResult(Command oldCom) { //have timer check if queued result and if it is send it back
-            await CommandQueue.WaitForCommandDone(oldCom).ConfigureAwait(false);
+            if (!sendCommand.invalid) {
+                await CommandQueue.WaitForCommandDone(sendCommand);
+                Console.WriteLine("b");
 
-            if (oldCom != null) {
-                if (!ReturnCommand.CheckInvalid(oldCom.myReturn.msg)) {
-                    return oldCom.myReturn.msg;
+                if (!ReturnCommand.CheckInvalid(sendCommand.myReturn.msg)) {
+                    return sendCommand.myReturn.msg;
                 }
             }
+
             return OtherCamCom.defaultResult;
         }
 
@@ -186,15 +186,16 @@ namespace SSUtility2 {
                     sock.EndConnect(AR);
                 if (!sock.Connected)
                     return;
-                receiveBuffer = new byte[sock.ReceiveBufferSize];
+                receiveBuffer = new byte[14];
                 sock.BeginReceive(receiveBuffer, 0, receiveBuffer.Length, SocketFlags.None, ReceiveCallback, null);
+                InfoPanel.i.CheckForCamera();
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (ObjectDisposedException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);
             } catch (Exception e) {
-                //Tools.ShowPopup("Connect callback failed!\nIP likely does not belong to a camera!\nShow more?", "Connect Failed!", e.ToString());
-                //Disconnect();
+                Tools.ShowPopup("Connect callback failed!\nIP likely does not belong to a camera!\nShow more?", "Connect Failed!", e.ToString());
+                Disconnect();
             }
         }
 
@@ -215,8 +216,6 @@ namespace SSUtility2 {
                 if (!sock.Connected)
                     return;
                 sock.Shutdown(SocketShutdown.Both);
-                sock.Close();
-
                 if (oldAdr != null)
                     MainForm.m.WriteToResponses("Disconnected from: " + oldAdr, true);
 
@@ -227,7 +226,6 @@ namespace SSUtility2 {
             }
         }
 
-        public static Command currentCom;
 
         public static void SendCurrent(bool repeatedCommand) {
             try {
@@ -304,7 +302,7 @@ namespace SSUtility2 {
                     }
 
                     if (comCount > 0) {
-                        if (hex.Length == 1) {
+                        if (hex != null && hex.Length == 1) {
                             hex = "0" + hex;
                         }
                         msg += hex + " ";
@@ -314,12 +312,13 @@ namespace SSUtility2 {
                     }
                 }
 
-                msg = msg.Trim();
-                
-                if (currentCom.isInfo)
-                    InfoPanel.i.ReadResult(msg);
+                string oldMsg = msg;
+                msg = Tools.ValidateResponse(msg);
 
-                if (msg.Length > 0 && msg.StartsWith("F")) {
+                if (msg != null) {
+                    if (currentCom.isInfo)
+                        InfoPanel.i.ReadResult(msg);
+
                     if (currentCom == null) {
                         MainForm.m.WriteToResponses("(Listening) Received: " + msg, true, false);
                         return;
@@ -340,13 +339,14 @@ namespace SSUtility2 {
                         return;
 
                     if (currentCom == null) {
-                        MainForm.m.WriteToResponses("(Listening) Received CORRUPTED message: " + msg, true, currentCom.isInfo);
+                        MainForm.m.WriteToResponses("(Listening) Received CORRUPTED message: " + oldMsg, true, true);
                     } else {
-                        MainForm.m.WriteToResponses(CommandQueue.GetNameString() + "Received CORRUPTED response: " + msg, true, currentCom.isInfo);
+                        MainForm.m.WriteToResponses(CommandQueue.GetNameString() + "Received CORRUPTED response: " + oldMsg, true, true);
                     }
                 }
             } catch (Exception e) {
-                //Tools.ShowPopup(CommandQueue.GetNameString() + "Message processing failed!\nShow more?", "Receive Failed!", e.ToString());
+                Console.WriteLine(e.ToString());
+                MainForm.m.WriteToResponses(CommandQueue.GetNameString() + "Message processing failed!\n" + e.ToString(), true, true);
             };
         }
 

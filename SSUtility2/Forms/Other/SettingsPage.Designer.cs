@@ -71,6 +71,7 @@ namespace SSUtility2
             this.ButtonName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ButtonsCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tP_Other = new System.Windows.Forms.TabPage();
+            this.l_Other_Ratio = new System.Windows.Forms.Label();
             this.check_Other_Aspect = new System.Windows.Forms.CheckBox();
             this.check_AddressInvalid = new System.Windows.Forms.CheckBox();
             this.l_Other_CurrentResolution = new System.Windows.Forms.Label();
@@ -82,7 +83,7 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.l_Other_Ratio = new System.Windows.Forms.Label();
+            this.b_IPCon_Recheck = new System.Windows.Forms.Button();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -332,6 +333,7 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
+            this.tP_Control.Controls.Add(this.b_IPCon_Recheck);
             this.tP_Control.Controls.Add(this.l_IPCon_Percent);
             this.tP_Control.Controls.Add(this.tB_IPCon_CamSpeed);
             this.tP_Control.Controls.Add(this.l_IPCon_TrackBar);
@@ -671,6 +673,17 @@ namespace SSUtility2
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
             // 
+            // l_Other_Ratio
+            // 
+            this.l_Other_Ratio.AutoSize = true;
+            this.l_Other_Ratio.Location = new System.Drawing.Point(186, 99);
+            this.l_Other_Ratio.Name = "l_Other_Ratio";
+            this.l_Other_Ratio.Size = new System.Drawing.Size(22, 13);
+            this.l_Other_Ratio.TabIndex = 39;
+            this.l_Other_Ratio.Text = "1:1";
+            this.l_Other_Ratio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.l_Other_Ratio.Visible = false;
+            // 
             // check_Other_Aspect
             // 
             this.check_Other_Aspect.Location = new System.Drawing.Point(6, 98);
@@ -785,16 +798,15 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
-            // l_Other_Ratio
+            // b_IPCon_Recheck
             // 
-            this.l_Other_Ratio.AutoSize = true;
-            this.l_Other_Ratio.Location = new System.Drawing.Point(186, 99);
-            this.l_Other_Ratio.Name = "l_Other_Ratio";
-            this.l_Other_Ratio.Size = new System.Drawing.Size(22, 13);
-            this.l_Other_Ratio.TabIndex = 39;
-            this.l_Other_Ratio.Text = "1:1";
-            this.l_Other_Ratio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.l_Other_Ratio.Visible = false;
+            this.b_IPCon_Recheck.Location = new System.Drawing.Point(257, 192);
+            this.b_IPCon_Recheck.Name = "b_IPCon_Recheck";
+            this.b_IPCon_Recheck.Size = new System.Drawing.Size(90, 21);
+            this.b_IPCon_Recheck.TabIndex = 93;
+            this.b_IPCon_Recheck.Text = "Recheck Mode";
+            this.b_IPCon_Recheck.UseVisualStyleBackColor = true;
+            this.b_IPCon_Recheck.Click += new System.EventHandler(this.b_IPCon_Recheck_Click);
             // 
             // SettingsPage
             // 
@@ -891,5 +903,6 @@ namespace SSUtility2
         private System.Windows.Forms.Label l_IPCon_Percent;
         public System.Windows.Forms.CheckBox check_Other_Aspect;
         private System.Windows.Forms.Label l_Other_Ratio;
+        private System.Windows.Forms.Button b_IPCon_Recheck;
     }
 }

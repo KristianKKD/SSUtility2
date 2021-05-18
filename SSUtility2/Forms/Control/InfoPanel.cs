@@ -108,15 +108,19 @@ namespace SSUtility2 {
 
         public async Task CheckForCamera() {
             try {
+                Console.WriteLine("checking for cam");
                 if (ConfigControl.forceCamera.boolVal && MainForm.m.finishedLoading) {
                     isCamera = true;
                     SettingsPage.UpdateCamType();
                 } else if (AsyncCamCom.sock.Connected) {
-                    if (await OtherCamCom.CheckConfiguration() != OtherCamCom.CamConfig.Null) {
+                    OtherCamCom.CamConfig cfg = await OtherCamCom.CheckConfiguration();
+                    if (cfg != OtherCamCom.CamConfig.Null) {
                         isCamera = true;
                     }
+                    MainForm.m.setPage.UpdateCamConfig(cfg);
                 } else {
                     isCamera = false;
+                    isActive = false;
                 }
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
@@ -150,7 +154,7 @@ namespace SSUtility2 {
                         id = tFovID;
                         break;
                 }
-                
+
                 AsyncCamCom.QueueRepeatingCommand(id);
 
                 commandPos++;
@@ -163,7 +167,7 @@ namespace SSUtility2 {
 
         public async Task ReadResult(string result) {
             try {
-
+                
                 if (result == "")
                     return;
 
@@ -206,6 +210,10 @@ namespace SSUtility2 {
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }
+        }
+
+        private void l_Pan_DoubleClick(object sender, EventArgs e) {
+            AsyncCamCom.QueueRepeatingCommand(panID);
         }
 
     }

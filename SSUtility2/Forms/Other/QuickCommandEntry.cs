@@ -16,6 +16,7 @@ namespace SSUtility2 {
 
         public QuickCommandEntry(string com, string labelText, bool custom = false) {
             InitializeComponent();
+            Location = MainForm.m.Location;
             command = com;
             customCommand = custom;
             l_EntryInfo.Text = labelText;
@@ -30,6 +31,7 @@ namespace SSUtility2 {
 
             if (customCommand) {
                 CustomScriptCommands.QuickCommand(rtb_Entry.Text, false);
+                InfoPanel.i.UpdateNext();
                 this.Close();
             } else {
                 if (int.TryParse(rtb_Entry.Text, out int output)) {

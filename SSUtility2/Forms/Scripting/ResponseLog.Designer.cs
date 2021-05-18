@@ -29,8 +29,8 @@
             this.b_RL_Clear = new System.Windows.Forms.Button();
             this.b_RL_Save = new System.Windows.Forms.Button();
             this.l_RL_RL = new System.Windows.Forms.Label();
-            this.check_RL_All = new System.Windows.Forms.CheckBox();
-            this.check_Info = new System.Windows.Forms.CheckBox();
+            this.check_Hide = new System.Windows.Forms.CheckBox();
+            this.check_Spam = new System.Windows.Forms.CheckBox();
             this.tB_Log = new System.Windows.Forms.RichTextBox();
             this.check_Timestamp = new System.Windows.Forms.CheckBox();
             this.check_AutoScroll = new System.Windows.Forms.CheckBox();
@@ -74,31 +74,31 @@
             this.l_RL_RL.TabIndex = 14;
             this.l_RL_RL.Text = "Response Log";
             // 
-            // check_RL_All
+            // check_Hide
             // 
-            this.check_RL_All.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.check_RL_All.AutoSize = true;
-            this.check_RL_All.Checked = true;
-            this.check_RL_All.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.check_RL_All.Location = new System.Drawing.Point(444, 90);
-            this.check_RL_All.Name = "check_RL_All";
-            this.check_RL_All.Size = new System.Drawing.Size(90, 17);
-            this.check_RL_All.TabIndex = 15;
-            this.check_RL_All.Text = "Show Hidden";
-            this.check_RL_All.UseVisualStyleBackColor = true;
+            this.check_Hide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.check_Hide.AutoSize = true;
+            this.check_Hide.Checked = true;
+            this.check_Hide.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.check_Hide.Location = new System.Drawing.Point(444, 90);
+            this.check_Hide.Name = "check_Hide";
+            this.check_Hide.Size = new System.Drawing.Size(90, 17);
+            this.check_Hide.TabIndex = 15;
+            this.check_Hide.Text = "Show Hidden";
+            this.check_Hide.UseVisualStyleBackColor = true;
             // 
-            // check_Info
+            // check_Spam
             // 
-            this.check_Info.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.check_Info.AutoSize = true;
-            this.check_Info.Checked = true;
-            this.check_Info.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.check_Info.Location = new System.Drawing.Point(444, 113);
-            this.check_Info.Name = "check_Info";
-            this.check_Info.Size = new System.Drawing.Size(83, 17);
-            this.check_Info.TabIndex = 16;
-            this.check_Info.Text = "Show Spam";
-            this.check_Info.UseVisualStyleBackColor = true;
+            this.check_Spam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.check_Spam.AutoSize = true;
+            this.check_Spam.Checked = true;
+            this.check_Spam.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.check_Spam.Location = new System.Drawing.Point(444, 113);
+            this.check_Spam.Name = "check_Spam";
+            this.check_Spam.Size = new System.Drawing.Size(83, 17);
+            this.check_Spam.TabIndex = 16;
+            this.check_Spam.Text = "Show Spam";
+            this.check_Spam.UseVisualStyleBackColor = true;
             // 
             // tB_Log
             // 
@@ -163,8 +163,8 @@
             this.Controls.Add(this.check_AutoScroll);
             this.Controls.Add(this.check_Timestamp);
             this.Controls.Add(this.tB_Log);
-            this.Controls.Add(this.check_Info);
-            this.Controls.Add(this.check_RL_All);
+            this.Controls.Add(this.check_Spam);
+            this.Controls.Add(this.check_Hide);
             this.Controls.Add(this.l_RL_RL);
             this.Controls.Add(this.b_RL_Save);
             this.Controls.Add(this.b_RL_Clear);
@@ -181,8 +181,8 @@
         public System.Windows.Forms.Button b_RL_Clear;
         public System.Windows.Forms.Button b_RL_Save;
         public System.Windows.Forms.Label l_RL_RL;
-        public System.Windows.Forms.CheckBox check_RL_All;
-        public System.Windows.Forms.CheckBox check_Info;
+        public System.Windows.Forms.CheckBox check_Hide;
+        public System.Windows.Forms.CheckBox check_Spam;
         public System.Windows.Forms.RichTextBox tB_Log;
         public System.Windows.Forms.CheckBox check_Timestamp;
         public System.Windows.Forms.CheckBox check_AutoScroll;

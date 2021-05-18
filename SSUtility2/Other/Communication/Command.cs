@@ -79,16 +79,14 @@ namespace SSUtility2 {
             }
         }
 
-        public static async Task<bool> WaitForCommandDone(Command com) {
-            for (int i = 0; i < commandRetries; i++) {
+        public static async Task WaitForCommandDone(Command com) {
+            for (int i = 0; i < commandRetries * 2; i++) {
                 if (!com.done) {
                     await Task.Delay(commandRate).ConfigureAwait(false);
                 } else {
-                    return true;
+                    break;
                 }
             }
-
-            return false;
         }
 
         static async Task WaitForCommandResponse(Command com) {
@@ -99,10 +97,9 @@ namespace SSUtility2 {
                     com.done = false;
 
                 int i = 0;
+                bool repeated = false;
                 while (i < commandRetries) {
-                    bool repeated = false;
-                    if (i > 0)
-                        repeated = true;
+                     repeated = i > 0;
 
                     AsyncCamCom.SendCurrent(repeated);
                     if (!com.spammable && !com.isInfo) {
@@ -116,7 +113,7 @@ namespace SSUtility2 {
                     }
                     i++;
                 }
-                if(i > 1)
+                if(repeated)
                     MainForm.m.WriteToResponses("Sent command " + i + " times!", true, com.isInfo);
 
                 if (!com.done) {

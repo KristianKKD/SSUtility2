@@ -88,6 +88,122 @@ namespace SSUtility2 {
             }
         }
 
+        public static uint GetCheckSum(byte[] code, uint adr) {
+            uint checksum = 0;
+            for (int i = 0; i < code.Length; i++) {
+                checksum += code[i];
+            }
+            checksum += adr;
+
+            checksum = checksum % 256;
+
+            return checksum;
+        }
+
+        public static string ValidateResponse(string msg) {
+            try {
+                if (msg == null)
+                    return null;
+
+                msg = RemoveWhitespace(msg);
+
+                if (msg.Length < 14)
+                    return null;
+
+                int startPos = msg.IndexOf("FF");
+                if (startPos == -1) {
+                    return null;
+                } else if (startPos > 0) { //restructure
+                    try {
+                        string newMsg = "";
+                        foreach (char c in msg.Substring(startPos, 14 - startPos))
+                            newMsg += c;
+
+                        foreach (char c in msg.Substring(0, startPos))
+                            newMsg += c;
+
+                        if (CheckMessage(newMsg)) {
+                            newMsg = ReformatMessage(newMsg);
+                            Console.WriteLine("new msg(" + newMsg.Length.ToString() + ")= " + newMsg + " old msg(" + msg.Length.ToString() + ")= " + ReformatMessage(msg));
+
+                            return newMsg;
+                        }
+                    } catch (Exception e) {
+                        Console.WriteLine("NEW MSG\n" + e.ToString());
+                        return null;
+                    }
+                }
+
+                if (!CheckMessage(msg)) {
+                    return null;
+                } else {
+                    Console.WriteLine("GOOD MESSAGE: " + msg);
+                }
+
+                return ReformatMessage(msg);
+            }catch(Exception e) {
+                Console.WriteLine("VALIDATE(" + msg+")\n" + e.ToString());
+                return null;
+            }
+        }
+
+        static string ReformatMessage(string msg) {
+            string newMsg = "";
+            for (int i = 0; i < 7; i++) {
+                newMsg += msg.Substring(i * 2, 2) + " ";
+            }
+            return newMsg;
+        }
+
+        static bool CheckMessage(string msg) {
+            try {
+                bool isGoodNewMsg = false;
+                byte[] tryConvert = ConvertMsgToByte(msg);
+                if (tryConvert != null) {
+                    byte[] checksumCheck = new byte[4] { tryConvert[2], tryConvert[3], tryConvert[4], tryConvert[5] };
+                    if ((byte)GetCheckSum(checksumCheck, Convert.ToUInt32(tryConvert[1])) == Convert.ToUInt32(tryConvert[6])
+                        && Convert.ToUInt32(tryConvert[6]) != 0) {
+                        isGoodNewMsg = true;
+                    }
+                }
+
+                if (!isGoodNewMsg)
+                    Console.WriteLine(msg + " BBBB\nChecksum should be:" + GetCheckSum(tryConvert, 0).ToString() + " instead got: " + tryConvert[6].ToString());
+
+                return isGoodNewMsg;
+            } catch (Exception e){
+                Console.WriteLine("CHECK MESSAGE\n" + e.ToString());
+                return false;
+            }
+        }
+
+        public static byte[] ConvertMsgToByte(string msg) {
+            try {
+                msg = RemoveWhitespace(msg);
+                if (msg.Length != 14) {
+                    return null;
+                }
+
+                byte[] fullCommand = new byte[7];
+
+                for (int i = 0; i < 7; i++) {
+                    uint b = uint.Parse(msg.Substring(i*2, 2), System.Globalization.NumberStyles.HexNumber);
+                    fullCommand[i] = (byte)b;
+                }
+
+                return fullCommand;
+            } catch (Exception e) {
+                Console.WriteLine("FAILED TO CONVERT\n" + e.ToString());
+                return null; 
+            }
+        }
+
+        public static string RemoveWhitespace(this string input) {
+            return new string(input.ToCharArray()
+                .Where(c => !Char.IsWhiteSpace(c))
+                .ToArray());
+        }
+
         public static string ReadCommand(byte[] command, bool hide = true) {
             string msg = "";
             for (int i = 0; i < command.Length; i++) {

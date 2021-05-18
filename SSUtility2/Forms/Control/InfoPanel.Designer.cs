@@ -40,6 +40,7 @@
             this.l_Pan.Size = new System.Drawing.Size(40, 17);
             this.l_Pan.TabIndex = 0;
             this.l_Pan.Text = "PAN:";
+            this.l_Pan.DoubleClick += new System.EventHandler(this.l_Pan_DoubleClick);
             // 
             // l_Tilt
             // 

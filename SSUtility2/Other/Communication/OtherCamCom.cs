@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SSUtility2 {
-    class OtherCamCom {
+    public class OtherCamCom {
 
         public enum CamConfig {
             SSTraditional,
@@ -114,14 +114,19 @@ namespace SSUtility2 {
                 CamConfig newConfig;
                 string result = defaultResult;
 
-                result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
+                Console.WriteLine("checking");
+                //result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
+                result = await CustomScriptCommands.QuickQuery("queryconfig");
+                Console.WriteLine("RESULT: " + result);
 
                 if (result == defaultResult || result.Length < 12 || !result.ToLower().Contains("6d")) {
+                    Console.WriteLine("checked null");
+                    MainForm.m.WriteToResponses("Cam config received null", false);
                     return CamConfig.Null;
                 }
 
                 string type = result.Substring(13, 1);
-                MainForm.m.WriteToResponses("Cam config received response: " + result + "(" + type + ")", true);
+                MainForm.m.WriteToResponses("Cam config received response: " + result + "(" + type + ")", false);
 
                 switch (type) {
                     case "0":
@@ -142,11 +147,14 @@ namespace SSUtility2 {
                 }
 
 
-                MainForm.m.WriteToResponses("Cam config type: " + newConfig.ToString(), true);
+                MainForm.m.WriteToResponses("Cam config type: " + newConfig.ToString(), false);
+                Console.WriteLine("Cam config type: " + newConfig.ToString());
 
                 currentConfig = newConfig;
+
                 return newConfig;
             } catch (Exception e) {
+                Console.WriteLine(e.ToString());
                 MessageBox.Show("CHECK CAM CONFIG\n" + e.ToString());
                 return CamConfig.Null;
             }

@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.3.0";
+        public const string version = "v2.6.3.1";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -333,13 +333,13 @@ namespace SSUtility2 {
             finalDest = destination;
         }
 
-        public void WriteToResponses(string text, bool hide, bool isInfo = false) {
+        public void WriteToResponses(string text, bool hide, bool isSpam = false) {
             if (closing) {
                 return;
             }
             if (this.InvokeRequired) {
                 this.Invoke((MethodInvoker)delegate {
-                    WriteToResponses(text, hide, isInfo);
+                    WriteToResponses(text, hide, isSpam);
                 });
             } else {
                 string finalText = text;
@@ -348,13 +348,13 @@ namespace SSUtility2 {
                     rl.tB_Log.Clear();
                 }
                 string sender = AsyncCamCom.GetSockEndpoint();
-                if (hide && !isInfo) {
+                if (hide && !isSpam) {
                     sender = "CLIENT";
                 }
-                if (isInfo && !rl.check_Info.Enabled) {
+                if (isSpam && !rl.check_Spam.Checked) {
                     return;
                 }
-                if (!hide || rl.check_RL_All.Checked) {
+                if (!hide || rl.check_Hide.Checked) {
                     rl.AddText(finalText, sender);
                 }
             }

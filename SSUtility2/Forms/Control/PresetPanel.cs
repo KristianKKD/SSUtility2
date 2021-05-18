@@ -181,9 +181,9 @@ namespace SSUtility2 {
             byte presetNumber = Convert.ToByte(tB_Presets_Number.Text);
 
             if (learn) {
-                AsyncCamCom.SendNonAsync(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Set));
+                AsyncCamCom.SendNewCommand(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Set));
             } else {
-                AsyncCamCom.SendNonAsync(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Goto));
+                AsyncCamCom.SendNewCommand(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Goto));
             }
         }
 

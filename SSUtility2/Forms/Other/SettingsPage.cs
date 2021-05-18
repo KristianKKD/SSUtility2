@@ -526,5 +526,14 @@ namespace SSUtility2 {
             l_Other_Ratio.Text = "(" + Math.Round(MainForm.m.currentAspectRatio,3).ToString() + ":1)";
         }
 
+        public void UpdateCamConfig(OtherCamCom.CamConfig type) {
+            cB_IPCon_ForceMode.Text = type.ToString();
+            ConfigControl.forceType.UpdateValue(cB_IPCon_ForceMode.Text);
+        }
+
+        private void b_IPCon_Recheck_Click(object sender, EventArgs e) {
+            OtherCamCom.CheckConfiguration();
+            //UpdateCamConfig(OtherCamCom.CheckConfiguration().Result);
+        }
     }
 }

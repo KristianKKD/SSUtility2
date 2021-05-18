@@ -29,6 +29,7 @@ namespace SSUtility2 {
         readonly static ScriptCommand loop = new ScriptCommand(new string[] { "loop", "repeat" }, PelcoD.loop, "Loop any following commands X number of times. Looped commands will continue to be sent until the stated quanitity of loops is met or the stop execution button is pressed", 1, false, true);
         readonly static ScriptCommand loopStop = new ScriptCommand(new string[] { "loopstop", "stoploop" }, PelcoD.loopStop, "Will start reading scripted lines directly below the previous loop command. *If there is no loop, this command will be ignored.*", 1, false, true);
         readonly static ScriptCommand connect = new ScriptCommand(new string[] { "connect", "ip" }, PelcoD.connect, "Connect to specified IP + port, example usage: 'connect 192.168.1.183:554'", 1, false, true);
+        readonly static ScriptCommand reconfig = new ScriptCommand(new string[] { "reconfig" }, PelcoD.reconfig, "Query for camera config and apply it to settings", 0, true, true);
         
         readonly static ScriptCommand stop = new ScriptCommand(new string[] { "stop" }, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing", 0);
         readonly static ScriptCommand mono = new ScriptCommand(new string[] { "mono", "monocolour", "monocolor" }, new byte[] { 0x00, 0x07, 0x00, 0x03 }, "Camera video toggles between color and black/white pallete", 0);
@@ -56,6 +57,7 @@ namespace SSUtility2 {
             loop,
             loopStop,
             connect,
+            reconfig,
         };
 
         public readonly static ScriptCommand[] queryCommands = new ScriptCommand[] {
@@ -137,20 +139,9 @@ namespace SSUtility2 {
                 }
             }
 
-            uint checksum = GetCheckSum(code, adr);
+            uint checksum = Tools.GetCheckSum(code, adr);
             com.codeContent = new byte[] { 0xFF, (byte)adr, code[0], code[1], code[2], code[3], (byte)checksum };
             return com;
-        }
-
-        public static uint GetCheckSum(byte[] code, uint adr) {
-            uint checksum = 0;
-            for (int i = 0; i < code.Length; i++) {
-                checksum += code[i];
-            }
-            checksum += adr;
-            checksum = checksum % 256;
-
-            return checksum;
         }
 
         public static async Task<ScriptCommand> CheckForPresets(string line) {
@@ -183,16 +174,9 @@ namespace SSUtility2 {
         }
 
         public static async Task<string> QuickQuery(string command) {
-            uint adr = Tools.MakeAdr();
-            ScriptCommand send = CheckForCommands(command, adr, false).Result;
+            ScriptCommand send = CheckForCommands(command, Tools.MakeAdr(), false).Result;
 
-            string result = "";
-            var t = Task.Factory.StartNew(() => {
-                result = AsyncCamCom.QueryNewCommand(send.codeContent).Result;
-            });
-            Task.WaitAll();
-
-            return result;
+            return await AsyncCamCom.QueryNewCommand(send);
         }
 
         public static async Task QuickCommand(string command, bool sendAsync = true, int manualAdr = -5) {
@@ -221,6 +205,7 @@ namespace SSUtility2 {
                         send = new ScriptCommand(new string[] { "custom" }, code, "", 0);
                     }
                 }
+                    
 
                 if (!sendAsync) {
                     AsyncCamCom.SendNonAsync(send.codeContent);
@@ -266,7 +251,7 @@ namespace SSUtility2 {
             if (com.codeContent == PelcoD.pause) {
                 int value = CheckForVal(line);
                 MainForm.m.WriteToResponses("Waiting: " + value.ToString() + "ms", true);
-                
+
                 while (value > 0) {
                     if (stopScript) {
                         break;
@@ -291,6 +276,9 @@ namespace SSUtility2 {
                     await AsyncCamCom.TryConnect(false, new IPEndPoint(parsed, port), true);
                 }
 
+            } else if (com.codeContent == PelcoD.reconfig) {
+                Console.WriteLine("here");
+                InfoPanel.i.CheckForCamera();
             }
 
         }

@@ -16,6 +16,7 @@ namespace SSUtility2 {
         public static byte[] loopStop = { 4, 5, 6, 7 };
         public static byte[] connect = { 5, 6, 7, 8 };
         public static byte[] disconnect = { 6, 7, 8, 9 };
+        public static byte[] reconfig = { 7, 8, 9, 10 };
 
         int loopPos = -1;
         int currentLoops = 0;
@@ -82,48 +83,58 @@ namespace SSUtility2 {
         }
 
         async Task CheckLine(string line, int linePos) {
-            if (line != "" && !line.StartsWith("//")) {
-                line = line.Replace(",", "");
-                line = line.ToLower().Replace("x", "0");
+            Console.WriteLine(line);
+            try {
+                if (line != "" && !line.StartsWith("//")) {
+                    line = line.Replace(",", "");
+                    line = line.ToLower().Replace("x", "0");
 
-                ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, 0);
-                if (check_PD_Perfect.Checked) {
-                    sendCom.codeContent = FullCommand(line);
-                } else {
-                    uint adr = 0;
-                    Invoke((MethodInvoker)delegate {
-                        adr = Tools.MakeAdr();
-                    });
-                    sendCom = await CustomScriptCommands.CheckForCommands(line, adr, true).ConfigureAwait(false);
-                    if (sendCom.codeContent == noCommand) {
-                        sendCom.codeContent = MakeCommand(line);
+                    ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, 0);
+                    if (check_PD_Perfect.Checked) {
+                        sendCom = new ScriptCommand(new string[] { "" }, FullCommand(line), "", 0);
+
+                    } else {
+                        uint adr = 0;
+                        Invoke((MethodInvoker)delegate {
+                            adr = Tools.MakeAdr();
+                        });
+                        sendCom = await CustomScriptCommands.CheckForCommands(line, adr, true).ConfigureAwait(false);
+                        if (sendCom.codeContent == noCommand) {
+                            sendCom = new ScriptCommand(new string[] { "" }, MakeCommand(line), "", 0);
+                        }
+                    }
+
+                    if (sendCom == null || sendCom.codeContent == null || sendCom.custom) {
+
+                        if ((sendCom == null || sendCom.codeContent == null) && !sendCom.custom) {
+                            MainForm.m.WriteToResponses(line + " is invalid!", true);
+                        } else if (sendCom.codeContent == loop) {
+                            int val = CustomScriptCommands.CheckForVal(line);
+                            if (val > 0) {
+                                loopPos = linePos;
+                                loopAmount = val;
+                            }
+                        } else if (sendCom.codeContent == loopStop) {
+                            if (loopPos != -1) {
+                                currentLoops++;
+                            }
+                            loopNow = true;
+                        }
+                        
+                        if(sendCom != null && !sendCom.custom)
+                            Console.WriteLine("null command");
+                        return;
+                    }
+
+                    if (cB_Mode.Text == "IP") {
+                        await IPSend(sendCom, line);
+                    } else {
+                        //SerialSend(send, line);
                     }
                 }
-
-                if (sendCom.codeContent == null || sendCom.custom) {
-
-                    if (sendCom.codeContent == null) {
-                        MainForm.m.WriteToResponses(line + " is invalid!", true);
-                    } else if (sendCom.codeContent == loop) {
-                        int val = CustomScriptCommands.CheckForVal(line);
-                        if (val > 0) {
-                            loopPos = linePos;
-                            loopAmount = val;
-                        }
-                    } else if (sendCom.codeContent == loopStop) {
-                        if (loopPos != -1) {
-                            currentLoops++;
-                        }
-                        loopNow = true;
-                    }
-                    return;
-                }
-
-                if (cB_Mode.Text == "IP") {
-                    await IPSend(sendCom, line);
-                } else {
-                    //SerialSend(send, line);
-                }
+            } catch (Exception e) {
+                MainForm.m.WriteToResponses("Failed to parse line! (" + line + ")\n" + e.ToString()
+                    , false);
             }
         }
 
@@ -133,22 +144,18 @@ namespace SSUtility2 {
                 MainForm.m.WriteToResponses("Command: " + curLine + " could not be sent because it's invalid!", true);
             }
 
-            await CommandQueue.WaitForCommandDone(sendCommand).ConfigureAwait(false);
+            //await CommandQueue.WaitForCommandDone(sendCommand);
 
-            if (sendCommand.myReturn.msg == OtherCamCom.defaultResult) {
-                MainForm.m.WriteToResponses("Command: " + curLine + " didn't receive a response.", true);
-            }
-        }
-
-        void SerialSend(byte[] send, string curLine) {
-
+            //if (sendCommand.myReturn.msg == OtherCamCom.defaultResult) {
+            //    MainForm.m.WriteToResponses("Command: " + curLine + " didn't receive a response.", true);
+            //}
         }
 
         public static byte[] FullCommand(string line) {
             try {
                 line = line.Trim();
                 if (line.Length != 20) {
-                    MainForm.m.WriteToResponses(line + " was not in the correct perfect format, ignored.", true, false);
+                    //MainForm.m.WriteToResponses(line + " was not in the correct perfect format, ignored.", true, false);
                     return null;
                 }
                 uint send = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
@@ -165,6 +172,7 @@ namespace SSUtility2 {
 
                 return fullCommand;
             } catch {
+                Console.WriteLine("Not full");
                 return null;
             }
         }
@@ -173,7 +181,7 @@ namespace SSUtility2 {
             try {
                 line = line.Trim();
                 if (line.Length != 11) {
-                    MainForm.m.WriteToResponses(line + " was not in the correct format, ignored.", true, false);
+                    //MainForm.m.WriteToResponses(line + " was not in the correct format, ignored.", true, false);
                     return null;
                 }
                 uint cm1 = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
@@ -189,8 +197,10 @@ namespace SSUtility2 {
                 uint checksum = (cm1 + cm2 + d1 + d2 + adr) % 256;
 
                 byte[] fullCommand = new byte[7] { 0xFF, (byte)adr, (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
+
                 return fullCommand;
             } catch {
+                Console.WriteLine("Not made");
                 return null;
             }
         }
