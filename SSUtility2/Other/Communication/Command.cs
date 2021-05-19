@@ -81,11 +81,10 @@ namespace SSUtility2 {
 
         public static async Task WaitForCommandDone(Command com) {
             for (int i = 0; i < commandRetries * 2; i++) {
-                if (!com.done) {
-                    await Task.Delay(commandRate).ConfigureAwait(false);
-                } else {
+                await Task.Delay(commandRate).ConfigureAwait(false);
+
+                if (com.done) 
                     break;
-                }
             }
         }
 

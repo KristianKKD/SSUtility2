@@ -9,8 +9,8 @@ using static SPanel.SizeablePanel;
 
 namespace SSUtility2 {
     public partial class MainForm : Form {
-        
-        public const string version = "v2.6.4.0";
+
+        public const string version = "v2.6.5.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -265,7 +265,7 @@ namespace SSUtility2 {
                     b_Open.Dispose();
 
                     foreach (Detached d in mainPlayer.attachedPlayers) {
-                        d.HidePlayer();
+                        d.DestroyPlayer();
                     }
 
                     mainPlayer.p_Player.Hide();
@@ -286,7 +286,7 @@ namespace SSUtility2 {
                 Tools.ShowPopup("Failed to init Lite Mode!\nShow more?", "Error Occured!", er.ToString());
             }
         }
-        
+
         public void OpenPelco() {
             pd.Show();
             pd.BringToFront();
@@ -476,8 +476,8 @@ namespace SSUtility2 {
             try {
                 if (custom.myPanel.Visible && k.ToString().Length == 2) {
                     int but;
-                    if(int.TryParse(k.ToString().Substring(1,1), out but)){
-                        if(but>0 && but<10)
+                    if (int.TryParse(k.ToString().Substring(1, 1), out but)) {
+                        if (but > 0 && but < 10)
                             custom.DoCommand(but);
                     }
                 }
@@ -549,9 +549,9 @@ namespace SSUtility2 {
                     else if (AsyncCamCom.sock.Connected)
                         AsyncCamCom.SendNonAsync(code);
                 }
-            }catch(Exception e) {
+            } catch (Exception e) {
                 MessageBox.Show("SENDKEY\n" + e.ToString());
-            } 
+            }
         }
 
         private void Menu_Settings_Keyboard_Click(object sender, EventArgs e) {
@@ -567,7 +567,7 @@ namespace SSUtility2 {
         private void b_PTZ_ZoomPos_MouseDown(object sender, MouseEventArgs e) {
             AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), D.Zoom.Tele));
         }
-         
+
         private void b_PTZ_ZoomNeg_MouseDown(object sender, MouseEventArgs e) {
             AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), D.Zoom.Wide));
         }
@@ -712,7 +712,7 @@ namespace SSUtility2 {
         private void Menu_Settings_CP_Click(object sender, EventArgs e) {
             OpenCloseCP();
         }
-        
+
         private void Menu_Window_Settings_Click(object sender, EventArgs e) {
             OpenSettings();
         }
@@ -936,59 +936,89 @@ namespace SSUtility2 {
             Tools.SaveSnap(mainPlayer);
         }
 
+
+        bool stopPano = false;
         private void Menu_Video_Snap_Panoramic_Click(object sender, EventArgs e) {
+            if (Menu_Video_Snap_Panoramic.Text == "Stop Panoramic") {
+                stopPano = true;
+                return;
+            }
+
+            Menu_Video_Snap_Panoramic.Text = "Stop Panoramic";
             Panoramic();
         }
 
         async Task Panoramic() {
-            //move merged to save path
-            //final test mode
+            try {
+                //move merged to save path
+                //final test mode
+                //show screenshot on screen and make clickable
 
-            if (!await AsyncCamCom.TryConnect(true).ConfigureAwait(false)) {
-                return;
-            }
-
-            foreach (Detached d in mainPlayer.attachedPlayers) {
-                d.Hide();
-            }
-
-            //string fovString = CustomScriptCommands.QuickQuery("queryfov").Result;
-            //float fov;
-            //if (!float.TryParse(fovString, out fov)) {
-            //    MessageBox.Show("failed to get fov! defaulting to 30");
-            //    fov = 30;
-            //}
-
-
-            string tempStorage = ConfigControl.savedFolder + @"temp\";
-            Tools.CheckCreateFile(null, tempStorage);
-
-            int fov = 60;
-
-            Panel pPlayer = mainPlayer.p_Player;
-            int width = pPlayer.Width;
-            int height = pPlayer.Height;
-
-            Image fullScreenshot = new Bitmap(width * (360 / fov), height);
-
-            for (int i = 0; i < 360 / fov; i++) {
-                await CustomScriptCommands.QuickCommand("setpan " + (i * fov).ToString(), true).ConfigureAwait(false); //redo this
-                await Task.Delay(5000);
-
-                using (Image part = new Bitmap(width, height)) {
-                    Graphics gfx = Graphics.FromImage(part);
-                    gfx.CopyFromScreen(pPlayer.RectangleToScreen(pPlayer.ClientRectangle).Location, Point.Empty, pPlayer.Size);
-                    Graphics.FromImage(fullScreenshot).DrawImage(part, new Point(width * i, 0));
-                    part.Save(tempStorage + "test" + i.ToString() + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                if (!await AsyncCamCom.TryConnect(true)) {
+                    return;
                 }
+
+                //string fovString = "";
+                //float parsedFOV = -999;
+
+                //for (int i = 0; i < 5; i++) {
+                //    fovString = await CustomScriptCommands.QuickQuery("queryfov");
+                //    if (fovString != "" && fovString != OtherCamCom.defaultResult) {
+                //        parsedFOV = OtherCamCom.ReturnedHexValToFloat(fovString);
+                //        break;
+                //    } else {
+                //        await Task.Delay(500);
+                //    }
+                //}
+
+                int fov = 40;
+                //if (parsedFOV != -999) {
+                //    fov = (int)Math.Round(30 - parsedFOV);
+                //} else {
+                //    if (!Tools.ShowPopup("Failed to fetch FOV!\nIgnore and proceed with FOV of 40?", "Fetch Failed!", null, false))
+                //        return;
+                //}
+
+                mainPlayer.HideAttached();
+
+                string tempStorage = ConfigControl.savedFolder + @"temp\";
+                Tools.CheckCreateFile(null, tempStorage);
+
+                Panel pPlayer = mainPlayer.p_Player;
+                int width = pPlayer.Width;
+                int height = pPlayer.Height;
+
+                int snapshotCount = (int)Math.Round(360f / fov) + 1;
+                Image fullScreenshot = new Bitmap(width * snapshotCount, height);
+
+                for (int i = 0; i < snapshotCount || stopPano; i++) {
+                    await CustomScriptCommands.QuickCommand("setpan " + (i * fov).ToString(), true).ConfigureAwait(false); //redo this
+
+                    int waitAmount = 3000;
+                    if (i == 0)
+                        waitAmount = 5000;
+
+                    await Task.Delay(waitAmount);
+
+                    using (Image part = new Bitmap(width, height)) {
+                        Graphics gfx = Graphics.FromImage(part);
+                        gfx.CopyFromScreen(pPlayer.RectangleToScreen(pPlayer.ClientRectangle).Location, Point.Empty, pPlayer.Size);
+                        Graphics.FromImage(fullScreenshot).DrawImage(part, new Point(width * i, 0));
+                        part.Save(tempStorage + "test" + i.ToString() + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                    }
+
+                }
+
+                if(!stopPano)
+                    fullScreenshot.Save(ConfigControl.savedFolder + @"temp\" + "test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+            
+            } catch (Exception e) {
+                Tools.ShowPopup("Error occurred whilst creating a panoramic screenshot!\nShow more?", "Error Occurred!", e.ToString());
             }
 
-            fullScreenshot.Save(ConfigControl.savedFolder + @"temp\" + "test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            foreach (Detached d in mainPlayer.attachedPlayers) {
-                d.Show();
-            }
-
+            mainPlayer.ShowAttached();
+            Menu_Video_Snap_Panoramic.Text = "Panoramic";
+            stopPano = false;
         }
 
     } // end of class MainForm

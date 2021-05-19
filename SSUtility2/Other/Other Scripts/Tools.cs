@@ -124,7 +124,7 @@ namespace SSUtility2 {
 
                         if (CheckMessage(newMsg)) {
                             newMsg = ReformatMessage(newMsg);
-                            Console.WriteLine("new msg(" + newMsg.Length.ToString() + ")= " + newMsg + " old msg(" + msg.Length.ToString() + ")= " + ReformatMessage(msg));
+                            //Console.WriteLine("new msg(" + newMsg.Length.ToString() + ")= " + newMsg + " old msg(" + msg.Length.ToString() + ")= " + ReformatMessage(msg));
 
                             return newMsg;
                         }
@@ -167,8 +167,8 @@ namespace SSUtility2 {
                     }
                 }
 
-                if (!isGoodNewMsg)
-                    Console.WriteLine(msg + " BBBB\nChecksum should be:" + GetCheckSum(tryConvert, 0).ToString() + " instead got: " + tryConvert[6].ToString());
+                //if (!isGoodNewMsg)
+                //    Console.WriteLine(msg + " BBBB\nChecksum should be:" + GetCheckSum(tryConvert, 0).ToString() + " instead got: " + tryConvert[6].ToString());
 
                 return isGoodNewMsg;
             } catch (Exception e){

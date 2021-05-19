@@ -22,11 +22,24 @@ namespace SSUtility2 {
                 p_Player = MainForm.m.p_PlayerPanel;
         }
 
-        public void HidePlayer() {
+        public void DestroyPlayer() {
             try {
                 p_Player.Hide();
                 Dispose();
             } catch { }
+        }
+
+        public void HideAttached() {
+            foreach (Detached d in attachedPlayers) {
+                d.p_Player.Hide();
+            }
+        }
+
+        public void ShowAttached() {
+            foreach (Detached d in attachedPlayers) {
+                d.p_Player.Visible = true;
+                d.p_Player.BringToFront();
+            }
         }
 
         public async Task StopPlaying() {

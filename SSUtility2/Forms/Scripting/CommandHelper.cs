@@ -47,7 +47,20 @@ namespace SSUtility2 {
                         row.Cells[2].Value = "(Custom Command) ";
                     }
 
-                    row.Cells[2].Value += curCom.description;
+                    string description = curCom.description;
+                    if (curCom.valueCount > 0 && !curCom.custom) {
+                        int xIndex = description.IndexOf("X") + 1;
+                        string attachment = "";
+                        if (curCom.valueCount == 1) {
+                            attachment = " (D2) ";
+                        } else if (curCom.valueCount == 2) {
+                            attachment = " (D1 & D2)";
+                        }
+                        description = description.Substring(0, xIndex) + attachment
+                             + description.Substring(xIndex);
+                    }
+
+                    row.Cells[2].Value += description;
 
                     dgv_Coms.Rows.Add(row);
                 }
