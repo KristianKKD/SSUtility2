@@ -33,7 +33,6 @@ namespace SSUtility2 {
         static float fov;
         static float tfov;
 
-
         public void HideAll() {
             try {
                 Invoke((MethodInvoker)delegate {
@@ -92,7 +91,7 @@ namespace SSUtility2 {
                         UpdateNext();
                 } else {
                     if (!isCamera) {
-                        if (!(MainForm.m.mainPlayer.settings.channelID >= 0 || MainForm.m.lite)
+                        if (!(MainForm.m.mainPlayer.settings.channelID <= 0 || MainForm.m.lite)
                             && (timeoutTime > 30)) {
                             timeoutTime = 0;
                             CheckForCamera();
@@ -155,21 +154,11 @@ namespace SSUtility2 {
                         break;
                 }
 
-                AsyncCamCom.QueueRepeatingCommand(id);
-
-                commandPos++;
-
-                UpdateNext();
-            } catch (Exception e){
-                MessageBox.Show(e.ToString());
-            }
-        }
-
-        public async Task ReadResult(string result) {
-            try {
-                
-                if (result == "")
+                string result = await AsyncCamCom.QueueRepeatingCommand(id);
+                if (result == OtherCamCom.defaultResult) {
+                    UpdateNext();
                     return;
+                }
 
                 string commandType = result.Substring(9, 2);
 
@@ -187,6 +176,8 @@ namespace SSUtility2 {
                             tfov = OtherCamCom.ReturnedHexValToFloat(result);
                         }
                         break;
+                    default:
+                        return;
                 }
 
                 Invoke((MethodInvoker)delegate {
@@ -196,7 +187,9 @@ namespace SSUtility2 {
                     l_Pan.Text = "PAN: " + pan.ToString() + " °";
                 });
 
-            } catch (Exception e) {
+                commandPos++;
+                UpdateNext();
+            } catch (Exception e){
                 MessageBox.Show(e.ToString());
             }
         }
@@ -210,10 +203,6 @@ namespace SSUtility2 {
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }
-        }
-
-        private void l_Pan_DoubleClick(object sender, EventArgs e) {
-            AsyncCamCom.QueueRepeatingCommand(panID);
         }
 
     }

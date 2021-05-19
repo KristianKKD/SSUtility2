@@ -61,7 +61,11 @@ namespace SSUtility2 {
             DoCommand(8);
         }
 
-        void DoCommand(int index) {
+        private void b_9_Click(object sender, EventArgs e) {
+            DoCommand(9);
+        }
+
+        public void DoCommand(int index) {
             string val = ConfigControl.customButtonCommandsArray[index - 1].stringVal;
             bool isDigitPresent = false;
             string presetValue = "";
@@ -78,5 +82,7 @@ namespace SSUtility2 {
 
             CustomScriptCommands.QuickCommand(val, false);
         }
+
+
     }
 }

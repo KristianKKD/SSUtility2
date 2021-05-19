@@ -124,7 +124,7 @@ namespace SSUtility2 {
             CustomScriptCommands.DoPreset(2, 188);
         }
 
-        private void Presets_Peak_LampOff_Click(object sender, EventArgs e) { 
+        private void b_Presets_Peak_LampOff_Click(object sender, EventArgs e) {
             CustomScriptCommands.DoPreset(2, 187);
         }
 
@@ -168,7 +168,7 @@ namespace SSUtility2 {
             PresetLearnGoto(false);
         }
 
-        private void b_Presets_Learn_Click(object sender, EventArgs e) { //can combine these 2 easily
+        private void b_Presets_Learn_Click(object sender, EventArgs e) {
             PresetLearnGoto(true);
         }
 

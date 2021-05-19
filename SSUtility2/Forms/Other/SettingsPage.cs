@@ -372,11 +372,11 @@ namespace SSUtility2 {
                     ButtonsCommand.Items.Add("Preset " + (i + 1).ToString());
                 }
 
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i < ConfigControl.customButtonNamesArray.Length; i++) {
                     dgv_Custom_Buttons.Rows.Add(ConfigControl.customButtonNamesArray[i].stringVal);
                 }
             } else { //if defaulting
-                for (int i = 0; i < 8; i++) {
+                for (int i = 0; i < ConfigControl.customButtonNamesArray.Length; i++) {
                     dgv_Custom_Buttons.Rows[i].SetValues(ConfigControl.customButtonNamesArray[i].stringVal, ConfigControl.customButtonCommandsArray[i].stringVal);
                 }
             }

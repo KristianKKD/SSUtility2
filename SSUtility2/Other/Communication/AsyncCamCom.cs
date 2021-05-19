@@ -81,10 +81,24 @@ namespace SSUtility2 {
 
         public async static Task<string> QueryNewCommand(ScriptCommand com) {
             Command sendCommand = new Command(com.codeContent, false, false, com.isQuery, com.names[0]);
+            return await WaitForResponse(sendCommand);
+        }
 
+        public static async Task<string> QueueRepeatingCommand(int id) {
+            try {
+                Command oldCom = CommandQueue.FindCommandByID(id);
+                Command com = new Command(oldCom.content, true, true, true, oldCom.name);
+                return await WaitForResponse(com);
+            } catch (Exception e) {
+                Tools.ShowPopup("Failed to queue a repeating command!\nShow more?", "Command Queuing Failed!", e.ToString());
+            }
+
+            return OtherCamCom.defaultResult;
+        }
+
+        private static async Task<string> WaitForResponse(Command sendCommand) {
             if (!sendCommand.invalid) {
                 await CommandQueue.WaitForCommandDone(sendCommand);
-                Console.WriteLine("b");
 
                 if (!ReturnCommand.CheckInvalid(sendCommand.myReturn.msg)) {
                     return sendCommand.myReturn.msg;
@@ -92,19 +106,6 @@ namespace SSUtility2 {
             }
 
             return OtherCamCom.defaultResult;
-        }
-
-        public static void QueueRepeatingCommand(int id) {
-            try {
-                Command oldCom = CommandQueue.FindCommandByID(id);
-                if (oldCom != null) {
-                    Command com = new Command(oldCom.content, true, true, true, oldCom.name);
-                } else {
-                    MessageBox.Show("none found");
-                }
-            } catch (Exception e) {
-                Tools.ShowPopup("Failed to queue a repeating command!\nShow more?", "Command Queuing Failed!", e.ToString());
-            }
         }
 
         private static bool Connect(IPEndPoint ep, bool showErrors, bool isPlayer) {
@@ -316,9 +317,6 @@ namespace SSUtility2 {
                 msg = Tools.ValidateResponse(msg);
 
                 if (msg != null) {
-                    if (currentCom.isInfo)
-                        InfoPanel.i.ReadResult(msg);
-
                     if (currentCom == null) {
                         MainForm.m.WriteToResponses("(Listening) Received: " + msg, true, false);
                         return;

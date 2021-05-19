@@ -72,8 +72,6 @@ namespace SSUtility2
             this.b_Presets_Peak_ZoomIn = new System.Windows.Forms.Button();
             this.b_Presets_Peak_LampOff = new System.Windows.Forms.Button();
             this.b_Presets_Peak_StrobeLamp = new System.Windows.Forms.Button();
-            this.b_Presets_CHARM_Aquire = new System.Windows.Forms.Button();
-            this.b_Presets_CHARM_Standby = new System.Windows.Forms.Button();
             this.l_Presets_Default = new System.Windows.Forms.Label();
             this.tB_Presets_Number = new System.Windows.Forms.TextBox();
             this.l_Presets_Number = new System.Windows.Forms.Label();
@@ -631,26 +629,6 @@ namespace SSUtility2
             this.b_Presets_Peak_StrobeLamp.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_StrobeLamp.Click += new System.EventHandler(this.b_Presets_Peak_StrobeLamp_Click);
             // 
-            // b_Presets_CHARM_Aquire
-            // 
-            this.b_Presets_CHARM_Aquire.Location = new System.Drawing.Point(7, 45);
-            this.b_Presets_CHARM_Aquire.Name = "b_Presets_CHARM_Aquire";
-            this.b_Presets_CHARM_Aquire.Size = new System.Drawing.Size(214, 27);
-            this.b_Presets_CHARM_Aquire.TabIndex = 10;
-            this.b_Presets_CHARM_Aquire.Text = "Aquire";
-            this.b_Presets_CHARM_Aquire.UseVisualStyleBackColor = true;
-            this.b_Presets_CHARM_Aquire.Click += new System.EventHandler(this.b_Presets_CHARM_Aquire_Click);
-            // 
-            // b_Presets_CHARM_Standby
-            // 
-            this.b_Presets_CHARM_Standby.Location = new System.Drawing.Point(7, 12);
-            this.b_Presets_CHARM_Standby.Name = "b_Presets_CHARM_Standby";
-            this.b_Presets_CHARM_Standby.Size = new System.Drawing.Size(214, 27);
-            this.b_Presets_CHARM_Standby.TabIndex = 10;
-            this.b_Presets_CHARM_Standby.Text = "Standby";
-            this.b_Presets_CHARM_Standby.UseVisualStyleBackColor = true;
-            this.b_Presets_CHARM_Standby.Click += new System.EventHandler(this.b_Presets_CHARM_Standby_Click);
-            // 
             // l_Presets_Default
             // 
             this.l_Presets_Default.AutoSize = true;
@@ -739,18 +717,6 @@ namespace SSUtility2
 
         }
 
-        private void b_Presets_CHARM_Standby_Click(object sender, EventArgs e) {
-            
-        }
-
-        private void b_Presets_CHARM_Aquire_Click(object sender, EventArgs e) {
-            
-        }
-
-        private void b_Presets_Peak_LampOff_Click(object sender, EventArgs e) {
-            
-        }
-
         #endregion
 
         public System.Windows.Forms.TabControl tC_Presets_Default;
@@ -790,9 +756,6 @@ namespace SSUtility2
         public System.Windows.Forms.Button b_Presets_Peak_ZoomIn;
         public System.Windows.Forms.Button b_Presets_Peak_LampOff;
         public System.Windows.Forms.Button b_Presets_Peak_StrobeLamp;
-        //public System.Windows.Forms.TabPage charmPage;
-        public System.Windows.Forms.Button b_Presets_CHARM_Aquire;
-        public System.Windows.Forms.Button b_Presets_CHARM_Standby;
         public System.Windows.Forms.Label l_Presets_Default;
         public System.Windows.Forms.Button b_Presets_SLG_AllLightsOff;
         public System.Windows.Forms.Button b_Presets_Daylight_Extender;

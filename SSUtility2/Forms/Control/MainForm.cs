@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
         
-        public const string version = "v2.6.3.1";
+        public const string version = "v2.6.4.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -36,7 +36,6 @@ namespace SSUtility2 {
         private string inUseVideoPath;
         private string screenRecordName;
         public string finalDest;
-
 
         private Timer RatioTimer;
         private Point currentDragPos;
@@ -475,6 +474,14 @@ namespace SSUtility2 {
 
         public void KeyControl(Keys k, Keys oldK) {
             try {
+                if (custom.myPanel.Visible && k.ToString().Length == 2) {
+                    int but;
+                    if(int.TryParse(k.ToString().Substring(1,1), out but)){
+                        if(but>0 && but<10)
+                            custom.DoCommand(but);
+                    }
+                }
+
                 if (keyboardControl) {
                     uint ptSpeed = Convert.ToUInt32((ConfigControl.cameraSpeedMultiplier.intVal / 200f) * 63);
                     byte[] code = null;

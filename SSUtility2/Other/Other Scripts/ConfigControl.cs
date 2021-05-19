@@ -50,6 +50,7 @@ namespace SSUtility2 {
         public static ConfigSetting customButtonName6 = new ConfigSetting("6", "CustomButtonName6", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonName7 = new ConfigSetting("7", "CustomButtonName7", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonName8 = new ConfigSetting("8", "CustomButtonName8", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonName9 = new ConfigSetting("9", "CustomButtonName9", ConfigSetting.VarType.strings);
 
         public static ConfigSetting customButtonCommand1 = new ConfigSetting("Preset 1", "CustomButtonCommand1", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonCommand2 = new ConfigSetting("Preset 2", "CustomButtonCommand2", ConfigSetting.VarType.strings);
@@ -59,6 +60,7 @@ namespace SSUtility2 {
         public static ConfigSetting customButtonCommand6 = new ConfigSetting("Preset 6", "CustomButtonCommand6", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonCommand7 = new ConfigSetting("Preset 7", "CustomButtonCommand7", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonCommand8 = new ConfigSetting("Preset 8", "CustomButtonCommand8", ConfigSetting.VarType.strings);
+        public static ConfigSetting customButtonCommand9 = new ConfigSetting("Preset 9", "CustomButtonCommand9", ConfigSetting.VarType.strings);
 
         public static ConfigSetting mainPlayerName = new ConfigSetting("", "MainPlayerName", ConfigSetting.VarType.strings);
         public static ConfigSetting mainPlayerFullAdr = new ConfigSetting("", "MainPlayerFullAdr", ConfigSetting.VarType.strings);
@@ -83,6 +85,7 @@ namespace SSUtility2 {
             customButtonName6,
             customButtonName7,
             customButtonName8,
+            customButtonName9,
         };
 
         public static ConfigSetting[] customButtonCommandsArray = new ConfigSetting[] {
@@ -94,6 +97,7 @@ namespace SSUtility2 {
             customButtonCommand6,
             customButtonCommand7,
             customButtonCommand8,
+            customButtonCommand9,
         };
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
@@ -127,6 +131,7 @@ namespace SSUtility2 {
             customButtonName6,
             customButtonName7,
             customButtonName8,
+            customButtonName9,
 
             customButtonCommand1,
             customButtonCommand2,
@@ -136,6 +141,7 @@ namespace SSUtility2 {
             customButtonCommand6,
             customButtonCommand7,
             customButtonCommand8,
+            customButtonCommand9,
 
             mainPlayerName,
             mainPlayerFullAdr,
