@@ -61,8 +61,6 @@ namespace SSUtility2 {
 
         public async Task Play(bool showErrors, bool updateValues = true) {
             try {
-                Console.WriteLine("try play");
-
                 if (MainForm.m.lite && settings.isMainPlayer) {
                     settings.channelID = 1;
                     return;

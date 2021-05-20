@@ -50,7 +50,7 @@ namespace SSUtility2
             this.b_PlayerD_Stop = new System.Windows.Forms.Button();
             this.tC_PlayerSettings = new System.Windows.Forms.TabControl();
             this.tP_Main = new System.Windows.Forms.TabPage();
-            this.b_Detach = new System.Windows.Forms.Button();
+            this.b_PlayerD_Detach = new System.Windows.Forms.Button();
             this.tC_PlayerSettings.SuspendLayout();
             this.tP_Main.SuspendLayout();
             this.SuspendLayout();
@@ -85,7 +85,7 @@ namespace SSUtility2
             this.tB_PlayerD_SimpleAdr.Name = "tB_PlayerD_SimpleAdr";
             this.tB_PlayerD_SimpleAdr.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_SimpleAdr.TabIndex = 28;
-            this.tB_PlayerD_SimpleAdr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PlayerD_SimpleAdr_KeyPress);
+            this.tB_PlayerD_SimpleAdr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_PlayerD_SimpleAdr_KeyUp);
             // 
             // l_PlayerD_SimpleAdr
             // 
@@ -343,7 +343,7 @@ namespace SSUtility2
             // tP_Main
             // 
             this.tP_Main.BackColor = System.Drawing.Color.White;
-            this.tP_Main.Controls.Add(this.b_Detach);
+            this.tP_Main.Controls.Add(this.b_PlayerD_Detach);
             this.tP_Main.Controls.Add(this.l_PlayerD_RTSP);
             this.tP_Main.Controls.Add(this.tB_PlayerD_Password);
             this.tP_Main.Controls.Add(this.l_PlayerD_CamType);
@@ -374,17 +374,17 @@ namespace SSUtility2
             // 
             // b_Detach
             // 
-            this.b_Detach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Detach.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Detach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Detach.Location = new System.Drawing.Point(275, 259);
-            this.b_Detach.Name = "b_Detach";
-            this.b_Detach.Size = new System.Drawing.Size(54, 23);
-            this.b_Detach.TabIndex = 63;
-            this.b_Detach.Text = "Detach";
-            this.b_Detach.UseVisualStyleBackColor = false;
-            this.b_Detach.Visible = false;
-            this.b_Detach.Click += new System.EventHandler(this.b_Detach_Click);
+            this.b_PlayerD_Detach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_PlayerD_Detach.BackColor = System.Drawing.SystemColors.Control;
+            this.b_PlayerD_Detach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PlayerD_Detach.Location = new System.Drawing.Point(275, 259);
+            this.b_PlayerD_Detach.Name = "b_Detach";
+            this.b_PlayerD_Detach.Size = new System.Drawing.Size(54, 23);
+            this.b_PlayerD_Detach.TabIndex = 63;
+            this.b_PlayerD_Detach.Text = "Detach";
+            this.b_PlayerD_Detach.UseVisualStyleBackColor = false;
+            this.b_PlayerD_Detach.Visible = false;
+            this.b_PlayerD_Detach.Click += new System.EventHandler(this.b_PlayerD_Detach_Click);
             // 
             // VideoSettings
             // 
@@ -431,6 +431,6 @@ namespace SSUtility2
         public System.Windows.Forms.Button b_PlayerD_Stop;
         public System.Windows.Forms.TabControl tC_PlayerSettings;
         public System.Windows.Forms.TabPage tP_Main;
-        public System.Windows.Forms.Button b_Detach;
+        public System.Windows.Forms.Button b_PlayerD_Detach;
     }
 }

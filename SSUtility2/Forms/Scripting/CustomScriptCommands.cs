@@ -30,6 +30,7 @@ namespace SSUtility2 {
         readonly static ScriptCommand loopStop = new ScriptCommand(new string[] { "loopstop", "stoploop" }, PelcoD.loopStop, "Will start reading scripted lines directly below the previous loop command. *If there is no loop, this command will be ignored.*", 1, false, true);
         readonly static ScriptCommand connect = new ScriptCommand(new string[] { "connect", "ip" }, PelcoD.connect, "Connect to specified IP + port, example usage: 'connect 192.168.1.183:554'", 1, false, true);
         readonly static ScriptCommand reconfig = new ScriptCommand(new string[] { "reconfig" }, PelcoD.reconfig, "Query for camera config and apply it to settings", 0, true, true);
+        readonly static ScriptCommand mainplayerconnect = new ScriptCommand(new string[] { "play", "mainplayerplay" }, PelcoD.mainplay, "Play given X RTSP address on the mainplayer", 1, false, true);//
         
         readonly static ScriptCommand stop = new ScriptCommand(new string[] { "stop" }, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing", 0);
         readonly static ScriptCommand mono = new ScriptCommand(new string[] { "mono", "monocolour", "monocolor" }, new byte[] { 0x00, 0x07, 0x00, 0x03 }, "Camera video toggles between color and black/white pallete", 0);
@@ -74,6 +75,7 @@ namespace SSUtility2 {
             loopStop,
             connect,
             reconfig,
+            mainplayerconnect,
         };
 
         public readonly static ScriptCommand[] queryCommands = new ScriptCommand[] {
@@ -296,7 +298,6 @@ namespace SSUtility2 {
                 stopScript = false;
 
             } else if (com.codeContent == PelcoD.connect) {
-
                 int ipmarker = line.IndexOf(" ");
                 int portmarker = line.IndexOf(":");
                 if (ipmarker == -1 || portmarker == -1) {
@@ -309,10 +310,16 @@ namespace SSUtility2 {
                 if (IPAddress.TryParse(line.Substring(ipmarker + 1, portmarker - ipmarker - 1), out parsed) && int.TryParse(line.Substring(portmarker + 1), out port)) {
                     await AsyncCamCom.TryConnect(false, new IPEndPoint(parsed, port), true);
                 }
-
             } else if (com.codeContent == PelcoD.reconfig) {
-                Console.WriteLine("here");
                 InfoPanel.i.CheckForCamera();
+            } else if (com.codeContent == PelcoD.mainplay) {
+                int marker = line.IndexOf(" ");
+                if (marker == -1)
+                    marker = line.IndexOf(":");
+
+                ConfigControl.mainPlayerCustomFull.UpdateValue("true");
+                MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = line.Substring(marker + 1);
+                MainForm.m.mainPlayer.Play(false, false);
             }
 
         }

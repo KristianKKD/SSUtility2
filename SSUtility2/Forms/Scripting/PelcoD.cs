@@ -11,12 +11,13 @@ namespace SSUtility2 {
         bool stop;
 
         public static byte[] noCommand = { 2, 3, 4, 5 };
-        public readonly static byte[] pause = { 1, 2, 3, 4 };
-        public static byte[] loop = { 3, 4, 5, 6 };
-        public static byte[] loopStop = { 4, 5, 6, 7 };
-        public static byte[] connect = { 5, 6, 7, 8 };
-        public static byte[] disconnect = { 6, 7, 8, 9 };
-        public static byte[] reconfig = { 7, 8, 9, 10 };
+        public readonly static byte[] pause = { 3, 3, 4, 5 };
+        public static byte[] loop = { 4, 3, 4, 5 };
+        public static byte[] loopStop = { 5, 3, 4, 5 };
+        public static byte[] connect = { 6, 3, 4, 5 };
+        public static byte[] disconnect = { 7, 3, 4, 5 };
+        public static byte[] reconfig = { 8, 3, 4, 5 };
+        public static byte[] mainplay = { 9, 3, 4, 5 };
 
         int loopPos = -1;
         int currentLoops = 0;

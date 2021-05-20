@@ -14,6 +14,7 @@ namespace SSUtility2 {
         }
 
         public Detached myDetached;
+        public TabPage myLinkedMainPage;
 
         public int myAttachedIndex = 0; //0 means it is the base
         public List<Detached> attachedList = new List<Detached>();
@@ -28,7 +29,7 @@ namespace SSUtility2 {
         public bool isMainPlayer;
         public bool isAttached = false;
 
-        Control[] extendedControls;
+        public static Control[] extendedControls;
 
         Timer saveTimer;
 
@@ -63,7 +64,7 @@ namespace SSUtility2 {
                 saveTimer.Interval = 1000;
                 saveTimer.Tick += new EventHandler(SaveConfigFields);
             } else {
-                tP_Main.Text = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
+                tP_Main.Text = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 2).ToString();
             }
             GetCombined();
         }
@@ -107,7 +108,7 @@ namespace SSUtility2 {
             GetCombined();
             
             if (!isMainPlayer && isAttached) {
-                b_Detach.Show();
+                b_PlayerD_Detach.Show();
             }
 
             if (isMainPlayer) {
@@ -119,34 +120,57 @@ namespace SSUtility2 {
                     tp.Dispose();
                 }
 
-                foreach (Detached d in myDetached.attachedPlayers) {
+                foreach (Detached d in myDetached.attachedPlayers) { //order them based on name later
                     TabPage tp = CopyPage(d.settings);
-                    tp.Text = "Player " + (tC_PlayerSettings.TabPages.Count + 1).ToString();
+                    tp.Text = d.settings.tP_Main.Text;
                     tC_PlayerSettings.TabPages.Add(tp);
+                    d.settings.myLinkedMainPage = tp;
                 }
 
             }
-            
+
         }
 
-        public static TabPage CopyPage(VideoSettings copyStats) {
+        public static TabPage CopyPage(VideoSettings originalSets) {
             TabPage tp = new TabPage();
-            TabPage source = MainForm.m.mainPlayer.settings.tP_Main;
-            try {
 
-                foreach (Control c in source.Controls) {
+            try {
+                VideoSettings mainSettings = MainForm.m.mainPlayer.settings;
+
+                tp.Size = mainSettings.tP_Main.Size;
+
+                foreach (Control c in mainSettings.tP_Main.Controls) {
                     Control copyC = null;
 
-                    if (c.GetType() == typeof(TextBox))
+                    if (c.GetType() == typeof(TextBox)) {
                         copyC = new TextBox();
-                    else if (c.GetType() == typeof(Label))
-                        copyC = new Label();
-                    else if (c.GetType() == typeof(CheckBox))
-                        copyC = new CheckBox();
-                    else if (c.GetType() == typeof(ComboBox)) {
+                        copyC.KeyUp += (s, e) => {
+                            originalSets.UpdateField(copyC, originalSets, originalSets.tP_Main);
+                            originalSets.GetCombined(); 
+                        };
+                    }else if (c.GetType() == typeof(Label)) {
+                        Label copyL = new Label();
+
+                        Label l = new Label();
+                        l = (Label)c;
+
+                        copyL.AutoSize = true;
+                        copyC = copyL;
+                    } else if (c.GetType() == typeof(CheckBox)) {
+                        CheckBox copyCb = new CheckBox();
+
+                        CheckBox cb = new CheckBox();
+                        cb = (CheckBox)c;
+
+                        copyCb.Checked = cb.Checked;
+                        copyCb.AutoSize = true;
+                        copyCb.CheckedChanged += (s, e) => {
+                            ExtendFields(tp, copyCb.Checked, mainSettings);
+                        };
+                        copyC = copyCb;
+                    } else if (c.GetType() == typeof(ComboBox)) {
                         ComboBox cb = new ComboBox();
                         ComboBox copyCB = new ComboBox();
-
                         cb = (ComboBox)c;
 
                         foreach (var entry in cb.Items) {
@@ -154,29 +178,37 @@ namespace SSUtility2 {
                         }
 
                         copyC = copyCB;
-                        copyC.Text = copyStats.cB_PlayerD_CamType.Text;
-
-                        //add selectindex changed functionality
-
+                        copyC.Text = originalSets.cB_PlayerD_CamType.Text; //because cb text should be inverted to main
+                        copyCB.SelectedIndexChanged += (s, e) => { CameraCBType(tp); };
                     } else if (c.GetType() == typeof(Button)) {
                         Button b = new Button();
                         Button copyB = new Button();
                         b = (Button)c;
+
                         copyB.FlatStyle = b.FlatStyle;
                         copyC = copyB;
                     }
 
                     if (copyC != null) {
+                        copyC.Anchor = c.Anchor;
                         copyC.Location = c.Location;
                         copyC.Size = c.Size;
                         copyC.Visible = c.Visible;
                         copyC.Name = c.Name;
                         copyC.BackColor = c.BackColor;
 
-                        if(copyC.GetType() != typeof(ComboBox))
+                        if (copyC.GetType() == typeof(ComboBox) || copyC.GetType() == typeof(TextBox)) {
+                            copyC.KeyUp += (s, e) => {
+                                originalSets.UpdateField(copyC, originalSets, originalSets.tP_Main);
+                                FindControl(tp, mainSettings.tB_PlayerD_SimpleAdr).Text = originalSets.GetCombined();
+                            };
+                        } else if (copyC.GetType() != typeof(ComboBox))
                             copyC.Text = c.Text;
 
-                        foreach (TextBox sourceTB in Tools.GetAllType(copyStats, typeof(TextBox))) {
+                        if (copyC.GetType() == typeof(Button))
+                            copyC.Visible = true;
+
+                        foreach (TextBox sourceTB in Tools.GetAllType(originalSets, typeof(TextBox))) {
                             if (copyC.Name == sourceTB.Name) {
                                 copyC.Text = sourceTB.Text;
                                 break;
@@ -188,7 +220,18 @@ namespace SSUtility2 {
 
                 }
 
-                tp.BackColor = source.BackColor;
+                FindControl(tp, mainSettings.b_PlayerD_Play).Click += (s, e) => {
+                    originalSets.myDetached.Play(true, originalSets.isMainPlayer);
+                };
+                FindControl(tp, mainSettings.b_PlayerD_Stop).Click += (s, e) => {
+                    originalSets.myDetached.StopPlaying();
+                };
+                FindControl(tp, mainSettings.b_PlayerD_Detach).Click += (s, e) => {
+                    MainForm.m.mainPlayer.Detach(originalSets.myDetached);
+                    mainSettings.Hide();
+                };
+
+                tp.BackColor = mainSettings.tP_Main.BackColor;
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }
@@ -262,7 +305,6 @@ namespace SSUtility2 {
                 else
                     tB_PlayerD_Name.Text = ipaddress;
 
-
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
             };
@@ -310,50 +352,87 @@ namespace SSUtility2 {
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
-            string enc = cB_PlayerD_CamType.Text;
-            string username = "";
-            string password = "";
-            string rtsp = "";
+            CameraCBType(tP_Main);
+        }
 
-            if (enc.Contains("Daylight")) {
-                username = "admin";
-                password = "admin";
-                rtsp = "videoinput_1:0/h264_1/onvif.stm";
-            } else if (enc.Contains("Thermal")) {
-                username = "admin";
-                password = "admin";
-                rtsp = "videoinput_2:0/h264_1/onvif.stm";
-            } else if (enc.Contains("VIVOTEK")) {
-                username = "root";
-                password = "root1234";
-                rtsp = "live.sdp";
-            } else if (enc.Contains("BOSCH")) {
-                username = "service";
-                password = "Service123!";
-                rtsp = "";
+        public static void CameraCBType(TabPage tp) {
+            try {
+                VideoSettings refSets = MainForm.m.mainPlayer.settings;
+
+                string enc = FindControl(tp, refSets.cB_PlayerD_CamType).Text;
+                string username = "";
+                string password = "";
+                string rtsp = "";
+
+                if (enc.Contains("Daylight")) {
+                    username = "admin";
+                    password = "admin";
+                    rtsp = "videoinput_1:0/h264_1/onvif.stm";
+                } else if (enc.Contains("Thermal")) {
+                    username = "admin";
+                    password = "admin";
+                    rtsp = "videoinput_2:0/h264_1/onvif.stm";
+                } else if (enc.Contains("VIVOTEK")) {
+                    username = "root";
+                    password = "root1234";
+                    rtsp = "live.sdp";
+                } else if (enc.Contains("BOSCH")) {
+                    username = "service";
+                    password = "Service123!";
+                    rtsp = "";
+                }
+
+
+                FindControl(tp, refSets.tB_PlayerD_RTSP).Text = rtsp;
+                FindControl(tp, refSets.tB_PlayerD_Username).Text = username;
+                FindControl(tp, refSets.tB_PlayerD_Password).Text = password;
+
+
+                VideoSettings vs = (VideoSettings)tp.Parent.Parent;
+                vs.GetCombined();
+            } catch (Exception e) {
+                MessageBox.Show("SELECTINDEX\n" + e.ToString());
+            }
+        }
+
+        static Control FindControl(TabPage tp, object reference) {
+            foreach (Control c in Tools.GetAllType(tp, reference.GetType())){
+                Control refCopy = (Control)reference;
+                if (c.Name == refCopy.Name) {
+                    return c;
+                }
             }
 
-            tB_PlayerD_RTSP.Text = rtsp;
-            tB_PlayerD_Username.Text = username;
-            tB_PlayerD_Password.Text = password;
-
-            GetCombined();
+            return null;
         }
 
         private void check_PlayerD_Manual_CheckedChanged(object sender, EventArgs e) {
-            foreach (Control c in extendedControls)
-                c.Visible = check_PlayerD_Manual.Checked;
+            ExtendFields(tP_Main, check_PlayerD_Manual.Checked, this);
+        }
 
-            if (check_PlayerD_Manual.Checked) {
-                if (Size.Height < minExtendedHeight) {
-                    Height = minExtendedHeight;
+        static void ExtendFields(TabPage tp, bool check, VideoSettings sets) {
+            foreach (Control c in tp.Controls) {
+                foreach (Control eC in extendedControls) {
+                    if (eC.Name == c.Name)
+                        c.Visible = check;
                 }
-                MinimumSize = new Size(500, minExtendedHeight);
-            } else {
-                MinimumSize = new Size(500, minSimpleHeight);
-                Height -= 100;
             }
-            MaximumSize = new Size(9999, MinimumSize.Height);
+
+            foreach (TabPage t in sets.tC_PlayerSettings.TabPages) {
+                CheckBox cb = (CheckBox)FindControl(t, sets.check_PlayerD_Manual);
+                cb.Checked = check;
+            }
+
+            if (check) {
+                if (sets.Height < minExtendedHeight) {
+                    sets.Height = minExtendedHeight;
+                }
+                sets.MinimumSize = new Size(500, minExtendedHeight);
+            } else {
+                sets.MinimumSize = new Size(500, minSimpleHeight);
+                sets.Height -= 100;
+            }
+            sets.MaximumSize = new Size(9999, sets.MinimumSize.Height);
         }
 
         private void b_PlayerD_Play_Click(object sender, EventArgs e) {
@@ -369,6 +448,11 @@ namespace SSUtility2 {
         }
 
         private void tB_PlayerD_Name_KeyUp(object sender, EventArgs e) {
+            if (!isMainPlayer) {
+                UpdateField((Control)sender, this, myLinkedMainPage);
+                GetCombined();
+            }
+
             string name = tB_PlayerD_Name.Text.Trim();
             if (name.Length == 0 || name == " " || name == tB_PlayerD_Adr.Text) {
                 ConfigControl.mainPlayerCustomName.UpdateValue("false");
@@ -395,6 +479,10 @@ namespace SSUtility2 {
         }
 
         private void AddressField_KeyUp(object sender, KeyEventArgs e) {
+            if (!isMainPlayer) {
+                UpdateField((Control)sender, this, myLinkedMainPage);
+            }
+
             GetCombined();
 
             if (isMainPlayer) {
@@ -426,13 +514,18 @@ namespace SSUtility2 {
             myDetached.Play(false, false);
         }
 
-        private void b_Detach_Click(object sender, EventArgs e) {
+        private void b_PlayerD_Detach_Click(object sender, EventArgs e) {
             MainForm.m.mainPlayer.Detach(myDetached);
-            b_Detach.Visible = false;
+            b_PlayerD_Detach.Visible = false;
             Hide();
+            MainForm.m.mainPlayer.settings.Hide();
         }
 
-        private void tB_PlayerD_SimpleAdr_KeyPress(object sender, KeyPressEventArgs e) {
+        private void tB_PlayerD_SimpleAdr_KeyUp(object sender, KeyEventArgs e) {
+            if (!isMainPlayer) {
+                UpdateField((Control)sender, this, myLinkedMainPage);
+            }
+
             string val = tB_PlayerD_SimpleAdr.Text.Trim();
             
             if (val == "" || val == GetCombined(true))
@@ -441,6 +534,17 @@ namespace SSUtility2 {
                 ConfigControl.mainPlayerCustomFull.UpdateValue("true");
 
             ConfigControl.mainPlayerFullAdr.UpdateValue(val);
+        }
+
+        public void UpdateField(Control c, VideoSettings sets, TabPage tp) {
+            foreach (Control tpC in tp.Controls) {
+                if (c.Name == tpC.Name) {
+                    tpC.Text = c.Text;
+                }
+            }
+         
+            FindControl(tp, sets.tB_PlayerD_SimpleAdr).Text = sets.GetCombined();
+            FindControl(tp, sets.tB_PlayerD_Name).Text = sets.tB_PlayerD_Name.Text;
         }
 
     }
