@@ -61,7 +61,7 @@ namespace SSUtility2 {
 
         readonly static ScriptCommand querypan = new ScriptCommand(new string[] { "querypan" }, new byte[] { 0x00, 0x51, 0x00, 0x00 }, "Returns camera pan position", 0, true);
         readonly static ScriptCommand querytilt = new ScriptCommand(new string[] { "querytilt" }, new byte[] { 0x00, 0x53, 0x00, 0x00 }, "Returns camera tilt position", 0, true);
-        readonly static ScriptCommand queryzoom = new ScriptCommand(new string[] { "queryzoom", "queryfov" }, new byte[] { 0x00, 0x55, 0x00, 0x00 }, "Returns camera FOV", 0, true);
+        readonly static ScriptCommand queryzoom = new ScriptCommand(new string[] { "queryfov", "queryzoom"}, new byte[] { 0x00, 0x55, 0x00, 0x00 }, "Returns camera FOV", 0, true);
         readonly static ScriptCommand queryfocus = new ScriptCommand(new string[] { "queryfocus" }, new byte[] { 0x01, 0x55, 0x00, 0x00 }, "Returns camera focus value", 0, true);
         readonly static ScriptCommand querypost = new ScriptCommand(new string[] { "querypost" }, new byte[] { 0x07, 0x6B, 0x00, 0x00 }, "Returns camera test data", 0, true);
         readonly static ScriptCommand queryconfig = new ScriptCommand(new string[] { "queryconfig" }, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config", 0, true);

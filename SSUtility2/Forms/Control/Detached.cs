@@ -98,8 +98,8 @@ namespace SSUtility2 {
                     StopPlaying();
                 }
 
-                if (updateValues && !ConfigControl.mainPlayerCustomFull.boolVal) {
-                    if (ConfigControl.autoReconnect.boolVal) {
+                if (updateValues) {
+                    if (ConfigControl.autoReconnect.boolVal && !ConfigControl.mainPlayerCustomFull.boolVal) {
                         MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;
                         ConfigControl.savedIP.UpdateValue(MainForm.m.setPage.tB_IPCon_Adr.Text);
                     }

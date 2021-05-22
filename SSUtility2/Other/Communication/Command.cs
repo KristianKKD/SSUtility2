@@ -116,16 +116,19 @@ namespace SSUtility2 {
                     MainForm.m.WriteToResponses("Sent command " + i + " times!", true, com.isInfo);
 
                 if (!com.done) {
-                    MainForm.m.WriteToResponses(GetNameString() + "No response!", false, com.isInfo);
+                    MainForm.m.WriteToResponses(GetNameString() + "No response!", true, com.isInfo);
                 } else {
-                    MainForm.m.WriteToResponses(GetNameString() + "Received: " + com.myReturn.msg, false, com.isInfo);
+                    string msg = com.myReturn.msg;
+                    if (com.name.Contains("query"))
+                        msg = OtherCamCom.ConvertQueryResult(com.name, com.myReturn.msg);
+                    
+                    MainForm.m.WriteToResponses(GetNameString() + "Received: " + msg, false, com.isInfo);
                 }
 
                 com.done = true;
 
                 if (queueList.Contains(com))
                     queueList.Remove(com);
-                
                 
                 SendTimer.Start();
             } catch (Exception e) {

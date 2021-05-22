@@ -84,7 +84,6 @@ namespace SSUtility2 {
         }
 
         async Task CheckLine(string line, int linePos) {
-            Console.WriteLine(line);
             try {
                 if (line != "" && !line.StartsWith("//")) {
                     line = line.Replace(",", "");
@@ -141,15 +140,10 @@ namespace SSUtility2 {
 
         async Task IPSend(ScriptCommand send, string curLine) {
             Command sendCommand = AsyncCamCom.SendScriptCommand(send);
-            if (sendCommand.invalid) {
+
+            if (sendCommand == null || sendCommand.invalid) {
                 MainForm.m.WriteToResponses("Command: " + curLine + " could not be sent because it's invalid!", true);
             }
-
-            //await CommandQueue.WaitForCommandDone(sendCommand);
-
-            //if (sendCommand.myReturn.msg == OtherCamCom.defaultResult) {
-            //    MainForm.m.WriteToResponses("Command: " + curLine + " didn't receive a response.", true);
-            //}
         }
 
         public static byte[] FullCommand(string line) {

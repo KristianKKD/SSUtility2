@@ -160,6 +160,34 @@ namespace SSUtility2 {
             }
         }
 
+        public static string ConvertQueryResult(string comName, string result) {
+            string returnResult = "";
+
+            switch (comName) {
+                case "querypan":
+                    returnResult = CalculatePan(result).ToString();
+                    break;
+                case "querytilt":
+                    returnResult = CalculateTilt(result).ToString();
+                    break;
+                case "queryfov":
+                    returnResult = ReturnedHexValToFloat(result).ToString();
+                    break;
+                case "queryfocus":
+                    returnResult = ReturnedHexValToFloat(result).ToString();
+                    break;
+                case "querypost":
+                    break;
+                case "queryconfig":
+                    break;
+            }
+
+            if (returnResult == "")
+                returnResult = "(raw)" + result;
+
+            return returnResult;
+        }
+
         public static float CalculateTilt(string code) {
             float finalValue = ReturnedHexValToFloat(code);
 

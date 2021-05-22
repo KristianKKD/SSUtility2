@@ -331,7 +331,6 @@ namespace SSUtility2 {
                     } else {
                         MainForm.m.WriteToResponses(CommandQueue.GetNameString() + "Received response but send command is corrupt!", true, currentCom.isInfo);
                     }
-
                 } else {
                     if (MainForm.m == null)
                         return;
