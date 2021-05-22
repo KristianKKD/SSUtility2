@@ -32,7 +32,7 @@ namespace SSUtility2 {
                     for (int x = 0; x < curCom.names.Length; x++) {
                         names += curCom.names[x];
                         if (curCom.valueCount > 0) {
-                            names += " 0";
+                            names += " X";
                         }
 
                         if (x < curCom.names.Length - 1)
@@ -41,7 +41,16 @@ namespace SSUtility2 {
                     row.Cells[0].Value = names;
 
                     if (!curCom.custom) {
-                        row.Cells[1].Value = Tools.ReadCommand(curCom.codeContent, true);
+                        string comContent = Tools.ReadCommand(curCom.codeContent, true);
+                        //comcontent(11) = XX XX YY YY
+
+                        if (curCom.valueCount == 1) {
+                            comContent = comContent.Substring(0, 9) + "XX";
+                        } else if (curCom.valueCount == 2) {
+                            comContent = comContent.Substring(0, 6) + "XX XX";
+                        }
+
+                        row.Cells[1].Value = comContent;
                     } else {
                         row.Cells[1].Value = "Scripting";
                         row.Cells[2].Value = "(Custom Command) ";
@@ -50,13 +59,10 @@ namespace SSUtility2 {
                     string description = curCom.description;
                     if (curCom.valueCount > 0 && !curCom.custom) {
                         int xIndex = description.IndexOf("X") + 1;
-                        string attachment = "";
-                        if (curCom.valueCount == 1) {
-                            attachment = " (D2) ";
-                        } else if (curCom.valueCount == 2) {
-                            attachment = " (D1 & D2)";
-                        }
-                        description = description.Substring(0, xIndex) + attachment
+
+                        string vals = " (" + curCom.validValues + ") ";
+
+                        description = description.Substring(0, xIndex) + vals
                              + description.Substring(xIndex);
                     }
 
@@ -87,6 +93,9 @@ namespace SSUtility2 {
             if (column == 0) {
                 if (val.Contains(","))
                     val = val.Substring(0, val.IndexOf(","));
+
+                if (val.Contains(" X"))
+                    val = val.Substring(0, val.IndexOf(" X")) + " 0";
             }
 
             MainForm.m.pd.tB_Commands.Text += val;

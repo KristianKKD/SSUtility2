@@ -98,13 +98,6 @@ namespace SSUtility2 {
                     StopPlaying();
                 }
 
-                if (settings.isMainPlayer) {
-                    //if (InfoPanel.i.isCamera) { //all players instead of this
-                    //    secondView.settings.CopyPlayerD(settings);
-                    //    Play(false, secondView);
-                    //}
-                }
-
                 if (updateValues && !ConfigControl.mainPlayerCustomFull.boolVal) {
                     if (ConfigControl.autoReconnect.boolVal) {
                         MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;

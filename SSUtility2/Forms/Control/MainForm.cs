@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.6.6.0";
+        public const string version = "v2.6.6.1";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -57,7 +57,7 @@ namespace SSUtility2 {
                 AttachInfoPanel();
                 AttachCustomPanel();
                 AttachPresetPanel();
-
+                
                 controlPanel = new List<Control>() {
                     b_PTZ_Up,
                     b_PTZ_Down,
@@ -67,8 +67,7 @@ namespace SSUtility2 {
                     b_PTZ_ZoomNeg,
                     b_PTZ_FocusPos,
                     b_PTZ_FocusNeg,
-                    pB_Background,
-                    Joystick,
+                    JoyBack,
                 };
 
                 HideControlPanel();
@@ -152,6 +151,8 @@ namespace SSUtility2 {
                     VideoSettings.CopyType.CopyAsSecondary, false, autoPlay);
 
                 third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+                JoyBack.Parent = mainPlayer.p_Player;
 
             } catch (Exception e) {
                 MessageBox.Show("ATTACH\n" + e.ToString());
@@ -252,10 +253,8 @@ namespace SSUtility2 {
                     controlPanel.Add(b_PTZ_Daylight);
                     controlPanel.Add(b_PTZ_Thermal);
 
-                    b_PTZ_Daylight.Visible = true;
-                    b_PTZ_Thermal.Visible = true;
-
                     foreach (Control c in controlPanel) {
+                        c.Show();
                         c.Top -= 50;
                     }
 
@@ -268,9 +267,8 @@ namespace SSUtility2 {
                         d.DestroyPlayer();
                     }
 
-                    mainPlayer.p_Player.Hide();
                     mainPlayer.settings.channelID = -99;
-                    Joystick.UpdateJoystickCentre();
+                    JoyBack.Joystick.UpdateJoystickCentre();
 
                     if (startLiteVersion)
                         Menu_Settings_Lite.Dispose();
@@ -306,8 +304,9 @@ namespace SSUtility2 {
             o.BringToFront();
             o.Location = Location;
         }
+
         void OpenCloseCP() {
-            if (!Joystick.Visible) {
+            if (!JoyBack.Visible) {
                 ShowControlPanel();
             } else {
                 HideControlPanel();
@@ -623,7 +622,7 @@ namespace SSUtility2 {
             InfoPanel.i.UpdateNext();
         }
 
-        private void Joystick_MouseUp(object sender, MouseEventArgs e) {
+        private void JoyBack_JoyReleased(object sender, EventArgs e) {
             if (AsyncCamCom.sock.Connected)
                 DelayStop();
             else
@@ -644,9 +643,9 @@ namespace SSUtility2 {
         byte[] lastCode;
         public void Tick() {
             try {
-                Point coords = Joystick.coords;
+                Point coords = JoyBack.Joystick.coords;
 
-                if (Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
+                if (JoyBack.Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
                     uint adr = Tools.MakeAdr();
                     int x = coords.X;
                     int y = coords.Y;
@@ -664,7 +663,7 @@ namespace SSUtility2 {
 
             } catch (Exception err) {
                 Tools.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", err.ToString());
-                Joystick.Centre();
+                JoyBack.Joystick.Centre();
             }
         }
 
@@ -784,7 +783,7 @@ namespace SSUtility2 {
         }
 
         private void p_PlayerPanel_MouseMove(object sender, MouseEventArgs e) {
-            if (!AsyncCamCom.sock.Connected)
+            if (!AsyncCamCom.sock.Connected || lite)
                 return;
             if (Cursor.Position.X - Location.X < 70) {
                 b_Open.Visible = true;

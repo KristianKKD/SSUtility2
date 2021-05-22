@@ -11,22 +11,24 @@ namespace SSUtility2 {
         public bool custom;
         public int valueCount;
         public bool isQuery;
+        public string validValues;
 
         public ScriptCommand(string[] n, byte[] code, string text, int values,
-            bool queryType = false, bool scriptCommand = false) {
+            bool queryType = false, bool scriptCommand = false, string validVals = "") {
             names = n;
             codeContent = code;
             description = text;
             custom = scriptCommand;
             valueCount = values;
             isQuery = queryType;
+            validValues = validVals;
         }
     }
 
     public class CustomScriptCommands {
 
-        readonly static ScriptCommand pause = new ScriptCommand(new string[] { "pause", "wait" }, PelcoD.pause, "Pause the script execution for X milliseconds", 1, false, true);
-        readonly static ScriptCommand loop = new ScriptCommand(new string[] { "loop", "repeat" }, PelcoD.loop, "Loop any following commands X number of times. Looped commands will continue to be sent until the stated quanitity of loops is met or the stop execution button is pressed", 1, false, true);
+        readonly static ScriptCommand pause = new ScriptCommand(new string[] { "pause", "wait" }, PelcoD.pause, "Pause the script execution for X milliseconds", 1, false, true, "0-inf");
+        readonly static ScriptCommand loop = new ScriptCommand(new string[] { "loop", "repeat" }, PelcoD.loop, "Loop any following commands X number of times. Looped commands will continue to be sent until the stated quanitity of loops is met or the stop execution button is pressed", 1, false, true, "0-INF");
         readonly static ScriptCommand loopStop = new ScriptCommand(new string[] { "loopstop", "stoploop" }, PelcoD.loopStop, "Will start reading scripted lines directly below the previous loop command. *If there is no loop, this command will be ignored.*", 1, false, true);
         readonly static ScriptCommand connect = new ScriptCommand(new string[] { "connect", "ip" }, PelcoD.connect, "Connect to specified IP + port, example usage: 'connect 192.168.1.183:554'", 1, false, true);
         readonly static ScriptCommand reconfig = new ScriptCommand(new string[] { "reconfig" }, PelcoD.reconfig, "Query for camera config and apply it to settings", 0, true, true);
@@ -37,36 +39,36 @@ namespace SSUtility2 {
         readonly static ScriptCommand panzero = new ScriptCommand(new string[] { "panzero", "zeropan", "azimuth" }, new byte[] { 0x00, 0x49, 0x00, 0x00 }, "The camera's zero pan is set to the current rotation", 0);
         readonly static ScriptCommand systemrestart = new ScriptCommand(new string[] { "restart", "remotereset" }, new byte[] { 0x00, 0x0F, 0x00, 0x00 }, "Causes a system restart (soft boot)", 0); //
         readonly static ScriptCommand toggleosd = new ScriptCommand(new string[] { "osd", "toggleosd" }, new byte[] { 0x00, 0x17, 0x00, 0x00 }, "Toggle OSD On/Off", 0);//
-        readonly static ScriptCommand startrecordpattern = new ScriptCommand(new string[] { "recordpatternstart" }, new byte[] { 0x00, 0x1F, 0x00, 0x00 }, "Starts recording X Mimic Tour", 1);//
-        readonly static ScriptCommand stoprecordpattern = new ScriptCommand(new string[] { "recordpatternstop" }, new byte[] { 0x00, 0x21, 0x00, 0x00 }, "Stops recording X Mimic Tour", 1);//
-        readonly static ScriptCommand runpattern = new ScriptCommand(new string[] { "runpattern" }, new byte[] { 0x00, 0x23, 0x00, 0x00 }, "Run tour X", 1);//
+        readonly static ScriptCommand startrecordpattern = new ScriptCommand(new string[] { "recordpatternstart" }, new byte[] { 0x00, 0x1F, 0x00, 0x00 }, "Starts recording X Mimic Tour", 1, false, false, "0-3");//
+        readonly static ScriptCommand stoprecordpattern = new ScriptCommand(new string[] { "recordpatternstop" }, new byte[] { 0x00, 0x21, 0x00, 0x00 }, "Stops recording X Mimic Tour", 0);//
+        readonly static ScriptCommand runpattern = new ScriptCommand(new string[] { "runpattern" }, new byte[] { 0x00, 0x23, 0x00, 0x00 }, "Run tour X", 1, false, false, "0-19");//
 
-        readonly static ScriptCommand setzoomspeed = new ScriptCommand(new string[] { "setzoomspeed", "zoomspeed", "speedzoom" }, new byte[] { 0x00, 0x25, 0x00, 0x00 }, "Sets camera zoom speed to X", 1);
-        readonly static ScriptCommand setfocusspeed = new ScriptCommand(new string[] { "setfocusspeed", "focusspeed", "speedfocus" }, new byte[] { 0x00, 0x27, 0x00, 0x00 }, "Sets camera focus speed to X", 1);
-        readonly static ScriptCommand setpanpos = new ScriptCommand(new string[] { "setpanpos", "setpan", "abspan" }, new byte[] { 0x00, 0x4B, 0x00, 0x00 }, "Sets camera pan position to X", 2);
-        readonly static ScriptCommand setiltpos = new ScriptCommand(new string[] { "settiltpos", "settilt", "abstilt" }, new byte[] { 0x00, 0x4D, 0x00, 0x00 }, "Sets camera tilt position to X", 2);
-        readonly static ScriptCommand setzoompos = new ScriptCommand(new string[] { "setzoompos", "setzoom", "abszoom" }, new byte[] { 0x00, 0x4F, 0x00, 0x00 }, "Sets camera zoom pos position to X", 2);//
-        readonly static ScriptCommand setfocuspos = new ScriptCommand(new string[] { "setfocuspos", "setfocus", "absfocus" }, new byte[] { 0x01, 0x4F, 0x00, 0x00 }, "Sets camera focus pos position to X", 2);//
+        readonly static ScriptCommand setzoomspeed = new ScriptCommand(new string[] { "setzoomspeed", "zoomspeed", "speedzoom" }, new byte[] { 0x00, 0x25, 0x00, 0x00 }, "Sets camera zoom speed to X", 1, false, false, "0-3");
+        readonly static ScriptCommand setfocusspeed = new ScriptCommand(new string[] { "setfocusspeed", "focusspeed", "speedfocus" }, new byte[] { 0x00, 0x27, 0x00, 0x00 }, "Sets camera focus speed to X", 1, false, false, "0-3");
+        readonly static ScriptCommand setpanpos = new ScriptCommand(new string[] { "setpanpos", "setpan", "abspan" }, new byte[] { 0x00, 0x4B, 0x00, 0x00 }, "Sets camera pan position to X", 2, false, false, "0-360");
+        readonly static ScriptCommand setiltpos = new ScriptCommand(new string[] { "settiltpos", "settilt", "abstilt" }, new byte[] { 0x00, 0x4D, 0x00, 0x00 }, "Sets camera tilt position to X", 2, false, false, "0-360");
+        readonly static ScriptCommand setzoompos = new ScriptCommand(new string[] { "setzoompos", "setzoom", "abszoom" }, new byte[] { 0x00, 0x4F, 0x00, 0x00 }, "Sets camera zoom pos position to X", 2, false, false, "0-655");//
+        readonly static ScriptCommand setfocuspos = new ScriptCommand(new string[] { "setfocuspos", "setfocus", "absfocus" }, new byte[] { 0x01, 0x4F, 0x00, 0x00 }, "Sets camera focus pos position to X", 2, false, false, "0-655");//
         
-        readonly static ScriptCommand setautofocus = new ScriptCommand(new string[] { "af", "setautofocus" }, new byte[] { 0x00, 0x2B, 0x00, 0x00 }, "Set autofocus to On or Off with X", 1);//
-        readonly static ScriptCommand setautoiris = new ScriptCommand(new string[] { "autoiris", "setautoiris" }, new byte[] { 0x00, 0x2D, 0x00, 0x00 }, "Set autoiris to On or Off with X", 1);//
-        readonly static ScriptCommand setagc = new ScriptCommand(new string[] { "agc", "setautomaticgaincontrol" }, new byte[] { 0x00, 0x2F, 0x00, 0x00 }, "Set Automatic Gain Control to On or Off with X", 1);//
-        readonly static ScriptCommand setblc = new ScriptCommand(new string[] { "blc", "setbacklightcompensation" }, new byte[] { 0x00, 0x31, 0x00, 0x00 }, "Set Back Light Compensation to On or Off with X", 1);//
-        readonly static ScriptCommand setwdr = new ScriptCommand(new string[] { "wdr", "setwidedynamicrange" }, new byte[] { 0x01, 0x31, 0x00, 0x00 }, "Set Wide Dynamic Range to On or Off with X", 1);//
-        readonly static ScriptCommand settagcgb = new ScriptCommand(new string[] { "tagcgb", "setthermalagcgainbias" }, new byte[] { 0x02, 0x3F, 0x00, 0x00 }, "Set Thermal AGC Gain Bias to X", 2);//
-        readonly static ScriptCommand settagclb = new ScriptCommand(new string[] { "tagclb", "setthermalagclevelbias" }, new byte[] { 0x03, 0x3F, 0x00, 0x00 }, "Set Thermal AGC Level Bias to X", 2);//
-        readonly static ScriptCommand setdrsice = new ScriptCommand(new string[] { "drsice", "setdrsice" }, new byte[] { 0x04, 0x3F, 0x00, 0x00 }, "Set DRS ICE level to X", 1);
+        readonly static ScriptCommand setautofocus = new ScriptCommand(new string[] { "af", "setautofocus" }, new byte[] { 0x00, 0x2B, 0x00, 0x00 }, "Set autofocus to On or Off with X", 1, false, false, "0-1");//
+        readonly static ScriptCommand setautoiris = new ScriptCommand(new string[] { "autoiris", "setautoiris" }, new byte[] { 0x00, 0x2D, 0x00, 0x00 }, "Set autoiris to On or Off with X", 1, false, false, "0-1");//
+        readonly static ScriptCommand setagc = new ScriptCommand(new string[] { "agc", "setautomaticgaincontrol" }, new byte[] { 0x00, 0x2F, 0x00, 0x00 }, "Set Automatic Gain Control to On or Off with X", 1, false, false, "0-1");//
+        readonly static ScriptCommand setblc = new ScriptCommand(new string[] { "blc", "setbacklightcompensation" }, new byte[] { 0x00, 0x31, 0x00, 0x00 }, "Set Back Light Compensation to On or Off with X", 1, false, false, "0-1");//
+        readonly static ScriptCommand setwdr = new ScriptCommand(new string[] { "wdr", "setwidedynamicrange" }, new byte[] { 0x01, 0x31, 0x00, 0x00 }, "Set Wide Dynamic Range to On or Off with X", 1, false, false, "0-1");//
+        //readonly static ScriptCommand settagcgb = new ScriptCommand(new string[] { "tagcgb", "setthermalagcgainbias" }, new byte[] { 0x02, 0x3F, 0x00, 0x00 }, "Set Thermal AGC Gain Bias to X", 2);//values seem weird
+        //readonly static ScriptCommand settagclb = new ScriptCommand(new string[] { "tagclb", "setthermalagclevelbias" }, new byte[] { 0x03, 0x3F, 0x00, 0x00 }, "Set Thermal AGC Level Bias to X", 2);//values seem weird
+        readonly static ScriptCommand setdrsice = new ScriptCommand(new string[] { "drsice", "setdrsice" }, new byte[] { 0x04, 0x3F, 0x00, 0x00 }, "Set DRS ICE level to X", 1, false, false, "0-7");
 
         readonly static ScriptCommand querypan = new ScriptCommand(new string[] { "querypan" }, new byte[] { 0x00, 0x51, 0x00, 0x00 }, "Returns camera pan position", 0, true);
         readonly static ScriptCommand querytilt = new ScriptCommand(new string[] { "querytilt" }, new byte[] { 0x00, 0x53, 0x00, 0x00 }, "Returns camera tilt position", 0, true);
         readonly static ScriptCommand queryzoom = new ScriptCommand(new string[] { "queryzoom", "queryfov" }, new byte[] { 0x00, 0x55, 0x00, 0x00 }, "Returns camera FOV", 0, true);
         readonly static ScriptCommand queryfocus = new ScriptCommand(new string[] { "queryfocus" }, new byte[] { 0x01, 0x55, 0x00, 0x00 }, "Returns camera focus value", 0, true);
         readonly static ScriptCommand querypost = new ScriptCommand(new string[] { "querypost" }, new byte[] { 0x07, 0x6B, 0x00, 0x00 }, "Returns camera test data", 0, true);
-        readonly static ScriptCommand queryconfig = new ScriptCommand(new string[] { "queryconfig" }, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config, (thermal only)", 0, true);
+        readonly static ScriptCommand queryconfig = new ScriptCommand(new string[] { "queryconfig" }, new byte[] { 0x03, 0x6B, 0x00, 0x00 }, "Returns camera config", 0, true);
         
-        readonly static ScriptCommand learnPreset = new ScriptCommand(new string[] { "learnpreset", "setpreset", "learn" }, new byte[] { 0x00, 0x03, 0x00, 0x00 }, "Saves current PTZ state of the camera and assigns it to the X value memory position", 1);
-        readonly static ScriptCommand clearPreset = new ScriptCommand(new string[] { "clearpreset", "clear" }, new byte[] { 0x00, 0x05, 0x00, 0x00 }, "Clears preset X from camera memory", 1);
-        readonly static ScriptCommand gotoPreset = new ScriptCommand(new string[] { "gotopreset", "goto" }, new byte[] { 0x00, 0x07, 0x00, 0x00 }, "Restores preset X PTZ settings", 1);
+        readonly static ScriptCommand learnPreset = new ScriptCommand(new string[] { "learnpreset", "setpreset", "learn" }, new byte[] { 0x00, 0x03, 0x00, 0x00 }, "Saves current PTZ state of the camera and assigns it to the X value memory position", 1, false, false, "1-255");
+        readonly static ScriptCommand clearPreset = new ScriptCommand(new string[] { "clearpreset", "clear" }, new byte[] { 0x00, 0x05, 0x00, 0x00 }, "Clears preset X from camera memory", 1, false, false, "1-255");
+        readonly static ScriptCommand gotoPreset = new ScriptCommand(new string[] { "gotopreset", "goto" }, new byte[] { 0x00, 0x07, 0x00, 0x00 }, "Restores preset X PTZ settings", 1, false, false, "1-255");
 
 
         public readonly static ScriptCommand[] customCommands = new ScriptCommand[] {
@@ -114,8 +116,8 @@ namespace SSUtility2 {
             setagc,
             setblc,
             setwdr,
-            settagcgb,
-            settagclb,
+            //settagcgb,
+            //settagclb,
             setdrsice,
         };
 

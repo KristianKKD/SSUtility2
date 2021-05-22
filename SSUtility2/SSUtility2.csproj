@@ -107,6 +107,9 @@
     <Reference Include="Costura, Version=5.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.5.3.0\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
+    <Reference Include="Joystick">
+      <HintPath>..\..\Joystick\Joystick\bin\Release\Joystick.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
       <Private>True</Private>
@@ -437,6 +440,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Other\VideoSettings.resx">
       <DependentUpon>VideoSettings.cs</DependentUpon>
@@ -462,10 +466,6 @@
     <Content Include="Other\SSLogo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Joystick\Joystick\Joystick.csproj">
-      <Project>{AB940C90-1173-4155-81A8-BC2C56259810}</Project>
-      <Name>Joystick</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SizeablePanel\SizeablePanel\SizeablePanel.csproj">
       <Project>{104A7E26-594E-4621-9AE7-0163BDCDE920}</Project>
       <Name>SizeablePanel</Name>

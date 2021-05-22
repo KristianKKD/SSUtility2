@@ -61,6 +61,8 @@ namespace SSUtility2 {
             this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_Snap_Single = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Video_Snap_Panoramic = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Custom = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,8 +75,6 @@ namespace SSUtility2 {
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
             this.b_Open = new System.Windows.Forms.Button();
             this.b_PTZ_Thermal = new System.Windows.Forms.Button();
-            this.pB_Background = new System.Windows.Forms.PictureBox();
-            this.Joystick = new Joystick.CentreStick();
             this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
             this.b_PTZ_Left = new System.Windows.Forms.Button();
             this.b_PTZ_FocusPos = new System.Windows.Forms.Button();
@@ -83,12 +83,10 @@ namespace SSUtility2 {
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
-            this.Menu_Video_Snap_Single = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video_Snap_Panoramic = new System.Windows.Forms.ToolStripMenuItem();
+            this.JoyBack = new Joystick.Back();
             this.MenuBar.SuspendLayout();
             this.p_PlayerPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pB_Background)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Joystick)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -268,6 +266,20 @@ namespace SSUtility2 {
             this.Menu_Video_Snapshot.Size = new System.Drawing.Size(183, 22);
             this.Menu_Video_Snapshot.Text = "Save Snapshot";
             // 
+            // Menu_Video_Snap_Single
+            // 
+            this.Menu_Video_Snap_Single.Name = "Menu_Video_Snap_Single";
+            this.Menu_Video_Snap_Single.Size = new System.Drawing.Size(134, 22);
+            this.Menu_Video_Snap_Single.Text = "Single";
+            this.Menu_Video_Snap_Single.Click += new System.EventHandler(this.Menu_Video_Snap_Single_Click);
+            // 
+            // Menu_Video_Snap_Panoramic
+            // 
+            this.Menu_Video_Snap_Panoramic.Name = "Menu_Video_Snap_Panoramic";
+            this.Menu_Video_Snap_Panoramic.Size = new System.Drawing.Size(134, 22);
+            this.Menu_Video_Snap_Panoramic.Text = "Panoramic";
+            this.Menu_Video_Snap_Panoramic.Click += new System.EventHandler(this.Menu_Video_Snap_Panoramic_Click);
+            // 
             // Menu_Video_Record
             // 
             this.Menu_Video_Record.Name = "Menu_Video_Record";
@@ -334,11 +346,10 @@ namespace SSUtility2 {
             this.p_PlayerPanel.AllowDrop = true;
             this.p_PlayerPanel.BackColor = System.Drawing.Color.Black;
             this.p_PlayerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_PlayerPanel.Controls.Add(this.JoyBack);
             this.p_PlayerPanel.Controls.Add(this.b_PTZ_Daylight);
             this.p_PlayerPanel.Controls.Add(this.b_Open);
             this.p_PlayerPanel.Controls.Add(this.b_PTZ_Thermal);
-            this.p_PlayerPanel.Controls.Add(this.pB_Background);
-            this.p_PlayerPanel.Controls.Add(this.Joystick);
             this.p_PlayerPanel.Controls.Add(this.b_PTZ_ZoomPos);
             this.p_PlayerPanel.Controls.Add(this.b_PTZ_Left);
             this.p_PlayerPanel.Controls.Add(this.b_PTZ_FocusPos);
@@ -396,25 +407,6 @@ namespace SSUtility2 {
             this.b_PTZ_Thermal.UseVisualStyleBackColor = false;
             this.b_PTZ_Thermal.Visible = false;
             this.b_PTZ_Thermal.Click += new System.EventHandler(this.b_PTZ_Thermal_Click);
-            // 
-            // pB_Background
-            // 
-            this.pB_Background.BackColor = System.Drawing.SystemColors.Highlight;
-            this.pB_Background.Location = new System.Drawing.Point(68, 92);
-            this.pB_Background.Name = "pB_Background";
-            this.pB_Background.Size = new System.Drawing.Size(150, 150);
-            this.pB_Background.TabIndex = 91;
-            this.pB_Background.TabStop = false;
-            // 
-            // Joystick
-            // 
-            this.Joystick.BackColor = System.Drawing.Color.Black;
-            this.Joystick.Location = new System.Drawing.Point(118, 142);
-            this.Joystick.Name = "Joystick";
-            this.Joystick.Size = new System.Drawing.Size(50, 50);
-            this.Joystick.TabIndex = 90;
-            this.Joystick.TabStop = false;
-            this.Joystick.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Joystick_MouseUp);
             // 
             // b_PTZ_ZoomPos
             // 
@@ -520,19 +512,15 @@ namespace SSUtility2 {
             this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
             this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
-            // Menu_Video_Snap_Single
+            // JoyBack
             // 
-            this.Menu_Video_Snap_Single.Name = "Menu_Video_Snap_Single";
-            this.Menu_Video_Snap_Single.Size = new System.Drawing.Size(180, 22);
-            this.Menu_Video_Snap_Single.Text = "Single";
-            this.Menu_Video_Snap_Single.Click += new System.EventHandler(this.Menu_Video_Snap_Single_Click);
-            // 
-            // Menu_Video_Snap_Panoramic
-            // 
-            this.Menu_Video_Snap_Panoramic.Name = "Menu_Video_Snap_Panoramic";
-            this.Menu_Video_Snap_Panoramic.Size = new System.Drawing.Size(180, 22);
-            this.Menu_Video_Snap_Panoramic.Text = "Panoramic";
-            this.Menu_Video_Snap_Panoramic.Click += new System.EventHandler(this.Menu_Video_Snap_Panoramic_Click);
+            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
+            this.JoyBack.Location = new System.Drawing.Point(68, 92);
+            this.JoyBack.Name = "JoyBack";
+            this.JoyBack.Size = new System.Drawing.Size(150, 150);
+            this.JoyBack.TabIndex = 99;
+            this.JoyBack.TabStop = false;
+            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
             // 
             // MainForm
             // 
@@ -554,8 +542,7 @@ namespace SSUtility2 {
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_PlayerPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pB_Background)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Joystick)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1372,7 +1359,6 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Settings;
         public ToolStripMenuItem Menu_Settings_Open;
         public ToolStripMenuItem Menu_Settings_Info;
-        public Joystick.CentreStick Joystick;
         public Button b_PTZ_Left;
         public Button b_PTZ_Right;
         public Button b_PTZ_Down;
@@ -1381,7 +1367,6 @@ namespace SSUtility2 {
         public Button b_PTZ_ZoomNeg;
         public Button b_PTZ_FocusPos;
         public Button b_PTZ_ZoomPos;
-        public PictureBox pB_Background;
         public ToolStripMenuItem Menu_Settings_Keyboard;
         public ToolStripMenuItem Menu_Settings_CP;
         public ToolStripMenuItem Menu_Window_Settings;
@@ -1395,5 +1380,6 @@ namespace SSUtility2 {
         public Button b_PTZ_Thermal;
         private ToolStripMenuItem Menu_Video_Snap_Single;
         private ToolStripMenuItem Menu_Video_Snap_Panoramic;
+        private Joystick.Back JoyBack;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
