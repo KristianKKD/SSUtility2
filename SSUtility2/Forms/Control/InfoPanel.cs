@@ -91,8 +91,8 @@ namespace SSUtility2 {
                         UpdateNext();
                 } else {
                     if (!isCamera) {
-                        if (!(MainForm.m.mainPlayer.settings.channelID <= 0 || MainForm.m.lite)
-                            && (timeoutTime > 30)) {
+                        if (!MainForm.m.mainPlayer.IsPlaying() && !MainForm.m.lite
+                            && timeoutTime >= 30) {
                             timeoutTime = 0;
                             CheckForCamera();
                         } else {
@@ -103,7 +103,7 @@ namespace SSUtility2 {
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }
-}
+        }
 
         public async Task CheckForCamera() {
             try {

@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.6.6.1";
+        public const string version = "v2.6.6.2";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -368,7 +368,7 @@ namespace SSUtility2 {
             Detached d = new Detached(false);
             VideoSettings.CopySettings(d.settings, mainPlayer.settings, VideoSettings.CopyType.CopyFull);
             d.Show();
-            if (mainPlayer.settings.channelID > 0)
+            if (mainPlayer.IsPlaying())
                 d.Play(false);
         }
 
@@ -949,13 +949,15 @@ namespace SSUtility2 {
 
         async Task Panoramic() {
             try {
-                //move merged to save path
-                //final test mode
                 //show screenshot on screen and make clickable
 
-                if (!await AsyncCamCom.TryConnect(true)) {
+                if (!mainPlayer.IsPlaying()) {
+                    MessageBox.Show("Player is not playing!");
                     return;
                 }
+
+                if (!await AsyncCamCom.TryConnect(true)) //has inbuilt error messages
+                    return;
 
                 //string fovString = "";
                 //float parsedFOV = -999;
@@ -1005,12 +1007,19 @@ namespace SSUtility2 {
                         Graphics.FromImage(fullScreenshot).DrawImage(part, new Point(width * i, 0));
                         part.Save(tempStorage + "test" + i.ToString() + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
                     }
-
                 }
 
-                if(!stopPano)
-                    fullScreenshot.Save(ConfigControl.savedFolder + @"temp\" + "test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
-            
+                if (!stopPano) {
+                    string fullImagePath = Tools.GivePath(ConfigControl.scFolder.stringVal,
+                    "Panoramic", mainPlayer.settings, "Snapshots", ".jpg");
+
+                    fullScreenshot.Save(fullImagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+                    Tools.FinalScreenshot(fullImagePath);
+                }
+
+                //if(Directory.Exists(tempStorage))
+                //    Tools.DeleteDirectory(tempStorage); //test this
+
             } catch (Exception e) {
                 Tools.ShowPopup("Error occurred whilst creating a panoramic screenshot!\nShow more?", "Error Occurred!", e.ToString());
             }

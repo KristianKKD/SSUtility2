@@ -52,7 +52,7 @@ namespace SSUtility2 {
         }
 
         public void ToggleStopStart() {
-            if (settings.channelID > 0) {
+            if (IsPlaying()) {
                 StopPlaying();
             } else {
                 Play(true);
@@ -83,14 +83,14 @@ namespace SSUtility2 {
 
                 Console.WriteLine("playing " + combinedUrl.ToString());
 
-                if (settings.channelID > 0)
+                if (IsPlaying())
                     StopPlaying();
 
                 settings.channelID = PlayerSdk.EasyPlayer_OpenStream(combinedUrl.ToString(),
                     p_Player.Handle, PlayerSdk.RENDER_FORMAT.DISPLAY_FORMAT_RGB24_GDI,
                         1, "", "", null, IntPtr.Zero, false);
 
-                if (settings.channelID > 0)
+                if (IsPlaying())
                     PlayerSdk.EasyPlayer_SetFrameCache(settings.channelID, 3);
                 else {
                     if(showErrors)
@@ -156,7 +156,7 @@ namespace SSUtility2 {
             detachable.settings.isAttached = false;
 
             bool wasPlaying = false;
-            if (detachable.settings.channelID > 0)
+            if (detachable.IsPlaying())
                 wasPlaying = true;
 
             detachable.StopPlaying();
@@ -223,6 +223,10 @@ namespace SSUtility2 {
             foreach (Detached d in attachedPlayers) {
                 d.p_Player.Refresh();
             }
+        }
+
+        public bool IsPlaying() {
+            return settings.channelID > 0;
         }
     }
 

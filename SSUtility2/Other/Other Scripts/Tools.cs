@@ -225,7 +225,24 @@ namespace SSUtility2 {
                 ConfigControl.scFileName.stringVal, player.settings, "Snapshots", ".jpg");
 
             Screenshot(player, fullImagePath);
+            FinalScreenshot(fullImagePath);
+        }
 
+        private static void Screenshot(Detached d, string path) {
+            try {
+                Panel player = d.p_Player;
+
+                Image bmp = new Bitmap(player.Width, player.Height);
+                Graphics gfx = Graphics.FromImage(bmp);
+                gfx.CopyFromScreen(player.RectangleToScreen(player.ClientRectangle).Location, Point.Empty, player.Size);
+
+                bmp.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
+            } catch (Exception e) {
+                MessageBox.Show("SCREENSHOT\n" + e.ToString());
+            }
+        }
+
+        public static void FinalScreenshot(string fullImagePath) {
             if (MainForm.m.finalMode) {
                 SaveFileDialog fdg = SaveFile(ConfigControl.scFileName.stringVal, ".jpg", MainForm.m.finalDest);
                 DialogResult result = fdg.ShowDialog();
@@ -236,23 +253,6 @@ namespace SSUtility2 {
                         "\nFinal saved: " + fdg.FileName);
             } else {
                 MessageBox.Show("Image saved : " + fullImagePath);
-            }
-        }
-
-        private static Image Screenshot(Detached d, string path) {
-            try {
-                Panel player = d.p_Player;
-
-                Image bmp = new Bitmap(player.Width, player.Height);
-                Graphics gfx = Graphics.FromImage(bmp);
-                gfx.CopyFromScreen(player.RectangleToScreen(player.ClientRectangle).Location, Point.Empty, player.Size);
-
-                bmp.Save(path, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-                return bmp;
-            } catch (Exception e) {
-                MessageBox.Show("SCREENSHOT\n" + e.ToString());
-                return null;
             }
         }
 
@@ -303,20 +303,19 @@ namespace SSUtility2 {
 
         public static string GivePath(string orgFolder, string orgName, VideoSettings player, string folderType, string extension) {
             string folder = orgFolder;
-            //string fileName = orgName + (Directory.GetFiles(orgFolder).Length + 1).ToString();
             string fullTemp = NameNoOverwrite(orgFolder + orgName + extension);
             string name = fullTemp.Substring(fullTemp.LastIndexOf(@"\") + 1);
 
-            string adr = GetPlayerAdrOrName(player);
+            string playerName = player.tB_PlayerD_Name.Text;
 
-            if (adr != "") {
-                adr += @"\";
+            if (playerName != "") {
+                playerName += @"\";
             } else {
                 folderType = "";
             }
 
             if (ConfigControl.automaticPaths.boolVal) {
-                folder = ConfigControl.savedFolder + adr + folderType;
+                folder = ConfigControl.savedFolder + playerName + folderType;
                 string timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
                 name = orgName + " " + timeText;
             }
@@ -470,29 +469,6 @@ namespace SSUtility2 {
                 ShowPopup("Couldn't copy directory to new location!\nShow more info?",
                     "Copy failed!", "Directory: " + curDir + "\nfailed to copy to:\n" + newLocation +
                     "\n\nError: " + e.ToString());
-            }
-        }
-
-        public static string GetPlayerAdrOrName(VideoSettings settings) {
-            try {
-                string nameText = settings.tB_PlayerD_Name.Text;
-                string adrText = settings.tB_PlayerD_SimpleAdr.Text;
-                string returnString = "";
-
-                if (adrText != "") {
-                    Uri uriAddress = new Uri(adrText);
-                    returnString = uriAddress.Host;
-                }
-                if (nameText != "") {
-                    returnString = nameText;
-                }
-                if (!CheckIfNameValid(returnString, false)) {
-                    return "";
-                }
-
-                return returnString;
-            } catch {
-                return "";
             }
         }
 
