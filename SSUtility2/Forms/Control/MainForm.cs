@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.6.6.7";
+        public const string version = "v2.6.6.8";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -464,7 +464,7 @@ namespace SSUtility2 {
         }
 
         public void SwapSettings(Detached player) {
-            mainPlayer.settings.SwapSettings(player.settings);
+            VideoSettings.SwapSettings(player.settings);
         }
 
         public void StopCam() {

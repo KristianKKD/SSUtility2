@@ -69,31 +69,33 @@ namespace SSUtility2 {
             GetCombined();
         }
 
-        public void SwapSettings(VideoSettings other) {
+        public static void SwapSettings(VideoSettings second) {
             try {
+                VideoSettings main = MainForm.m.mainPlayer.settings;
+
                 VideoSettings tempSettings = new VideoSettings(null, false);
 
-                myDetached.StopPlaying();
-                other.myDetached.StopPlaying();
+                main.myDetached.StopPlaying();
+                second.myDetached.StopPlaying();
 
-                CopySettings(tempSettings, this, CopyType.CopyFull); //temp save old settings
-                CopySettings(this, other, CopyType.CopyFull);
-                CopySettings(other, tempSettings, CopyType.CopyFull);
+                CopySettings(tempSettings, main, CopyType.CopyFull); //temp save old settings
+                CopySettings(main, second, CopyType.CopyFull);
+                CopySettings(second, tempSettings, CopyType.CopyFull);
 
-                myDetached.Play(false);
-                other.myDetached.Play(false);
+                main.myDetached.Play(false);
+                second.myDetached.Play(false);
 
                 tempSettings.Dispose();
 
-                if (OtherCamCom.PingAdr(tB_PlayerD_Adr.Text).Result) {
-                    MainForm.m.setPage.tB_IPCon_Adr.Text = tB_PlayerD_Adr.Text;
-                    MainForm.m.setPage.cB_ipCon_CamType.Text = cB_PlayerD_CamType.Text;
+                if (OtherCamCom.PingAdr(main.tB_PlayerD_Adr.Text).Result && ConfigControl.autoReconnect.boolVal) {
+                    MainForm.m.setPage.tB_IPCon_Adr.Text = main.tB_PlayerD_Adr.Text;
+                    MainForm.m.setPage.cB_ipCon_CamType.Text = main.cB_PlayerD_CamType.Text;
                     
-                    ConfigControl.savedIP.UpdateValue(tB_PlayerD_Adr.Text);
+                    ConfigControl.savedIP.UpdateValue(main.tB_PlayerD_Adr.Text);
 
                     AsyncCamCom.TryConnect(false, null, true);
 
-                    SaveConfigFields(null,null);
+                    main.SaveConfigFields(null,null);
                 }
 
             } catch (Exception e) {
@@ -239,31 +241,35 @@ namespace SSUtility2 {
 
         public static void CopySettings(VideoSettings target, VideoSettings source, CopyType type) {
             try {
-                string sourceCB = source.cB_PlayerD_CamType.Text;
+                VideoSettings mainSets = MainForm.m.mainPlayer.settings;
+
+                string sourceCB = FindControl(source.tP_Main, mainSets.cB_PlayerD_CamType).Text;
 
                 switch (type) {
                     case CopyType.CopyFull:
                         target.cB_PlayerD_CamType.Text = sourceCB;
-                        target.tB_PlayerD_RTSP.Text = source.tB_PlayerD_RTSP.Text;
+                        target.tB_PlayerD_RTSP.Text = FindControl(source.tP_Main, mainSets.tB_PlayerD_RTSP).Text;
                         break;
                     case CopyType.CopyAsSecondary:
+                        ComboBox cb = (ComboBox)FindControl(target.tP_Main, mainSets.cB_PlayerD_CamType);
+                        TextBox tb = (TextBox)FindControl(target.tP_Main, mainSets.tB_PlayerD_RTSP);
                         if (sourceCB.ToLower().Contains("daylight")) {
-                            target.cB_PlayerD_CamType.SelectedIndex = 1;
-                            target.tB_PlayerD_RTSP.Text = thermalRTSP;
+                            cb.SelectedIndex = 1;
+                            tb.Text = thermalRTSP;
                         } else if (sourceCB.ToLower().Contains("thermal")) {
-                            target.cB_PlayerD_CamType.SelectedIndex = 0;
-                            target.tB_PlayerD_RTSP.Text = dayRTSP;
+                            cb.SelectedIndex = 0;
+                            tb.Text = dayRTSP;
                         } else {
-                            target.cB_PlayerD_CamType.Text = sourceCB;
-                            target.tB_PlayerD_RTSP.Text = source.tB_PlayerD_RTSP.Text;
+                            cb.Text = sourceCB;
+                            tb.Text = FindControl(source.tP_Main, mainSets.tB_PlayerD_RTSP).Text;
                         }
                         break;
                     case CopyType.NoCopy:
                         return;
                 }
 
-                foreach (TextBox targetTB in Tools.GetAllType(target, typeof(TextBox))) {
-                    foreach (TextBox sourceTB in Tools.GetAllType(source, typeof(TextBox))) {
+                foreach (TextBox targetTB in Tools.GetAllType(target.tP_Main, typeof(TextBox))) {
+                    foreach (TextBox sourceTB in Tools.GetAllType(source.tP_Main, typeof(TextBox))) {
                         if (targetTB.Name == sourceTB.Name && targetTB.Name != target.tB_PlayerD_RTSP.Name) {
                             targetTB.Text = sourceTB.Text;
                             break;
