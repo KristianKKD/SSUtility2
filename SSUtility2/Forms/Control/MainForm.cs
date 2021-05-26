@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.6.6.4";
+        public const string version = "v2.6.6.5";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -940,13 +940,22 @@ namespace SSUtility2 {
         bool stopPano = false;
         int panoFOV = 40;
         private void Menu_Video_Snap_Panoramic_Click(object sender, EventArgs e) {
-            if (Menu_Video_Snap_Panoramic.Text == "Stop Panoramic") {
-                stopPano = true;
+            panoFOV = 40;
+            string stop = "Stop Panoramic";
+
+            if (displaying) {
+                pB_Panoramic.Hide();
+                displaying = false;
+                Menu_Video_Snap_Panoramic.Text = "Panoramic";
                 return;
             }
 
-            Menu_Video_Snap_Panoramic.Text = "Stop Panoramic";
-            Panoramic();
+            if (Menu_Video_Snap_Panoramic.Text == stop) {
+                stopPano = true;
+            } else {
+                Menu_Video_Snap_Panoramic.Text = stop;
+                Panoramic();
+            }
         }
 
         async Task Panoramic() {
@@ -975,13 +984,11 @@ namespace SSUtility2 {
                 //if (parsedFOV != -999) {
                 //    fov = (int)Math.Round(30 - parsedFOV);
                 //} else {
-                //    if (!Tools.ShowPopup("Failed to fetch FOV!\nIgnore and proceed with FOV of 40?", "Fetch Failed!", null, false))
+                //    if (!Tools.ShowPopup("Failed to fetch FOV!\nIgnore and proceed with FOV of " + panoFOV.ToString() + "?", "Fetch Failed!", null, false))
                 //        return;
                 //}
 
                 mainPlayer.HideAttached();
-                pB_Panoramic.Hide();
-                displaying = false;
 
                 string tempStorage = ConfigControl.savedFolder + @"temp\";
                 Tools.CheckCreateFile(null, tempStorage);
@@ -1022,19 +1029,23 @@ namespace SSUtility2 {
                     pB_Panoramic.BringToFront();
                     pB_Panoramic.SizeMode = PictureBoxSizeMode.Zoom;
                     pB_Panoramic.Image = fullScreenshot;
+
                     displaying = true;
+                    Menu_Video_Snap_Panoramic.Text = "Hide Panoramic";
                 }
 
-                //if(Directory.Exists(tempStorage))
-                //    Tools.DeleteDirectory(tempStorage); //test this
+                if (Directory.Exists(tempStorage))
+                    Tools.DeleteDirectory(tempStorage); //test this
 
             } catch (Exception e) {
                 Tools.ShowPopup("Error occurred whilst creating a panoramic screenshot!\nShow more?", "Error Occurred!", e.ToString());
             }
 
             mainPlayer.ShowAttached();
-            Menu_Video_Snap_Panoramic.Text = "Panoramic";
             stopPano = false;
+
+            if (!displaying)
+                Menu_Video_Snap_Panoramic.Text = "Panoramic";
         }
 
         private void pB_Panoramic_MouseClick(object sender, MouseEventArgs e) {
