@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.6.6.6";
+        public const string version = "v2.6.6.7";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;

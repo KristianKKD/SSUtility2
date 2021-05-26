@@ -84,7 +84,7 @@ namespace SSUtility2 {
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
-            this.JoyBack = new Joystick.Back();
+            this.JoyBack = new Joystick.JoyBack();
             this.MenuBar.SuspendLayout();
             this.p_PlayerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
@@ -1399,7 +1399,7 @@ namespace SSUtility2 {
         public Button b_PTZ_Thermal;
         private ToolStripMenuItem Menu_Video_Snap_Single;
         private ToolStripMenuItem Menu_Video_Snap_Panoramic;
-        private Joystick.Back JoyBack;
+        private Joystick.JoyBack JoyBack;
         private PictureBox pB_Panoramic;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
