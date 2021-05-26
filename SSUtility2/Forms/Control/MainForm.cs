@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.6.6.5";
+        public const string version = "v2.6.6.6";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -69,6 +69,7 @@ namespace SSUtility2 {
                     b_PTZ_FocusNeg,
                     JoyBack,
                 };
+
 
                 HideControlPanel();
                 b_Open.BringToFront();
@@ -240,9 +241,10 @@ namespace SSUtility2 {
             }
         }
 
-        void LiteToggle() {
+        async Task LiteToggle() {
             try {
                 if (!lite) {
+                    await Task.Delay(50);
                     lite = true;
                     ShowControlPanel();
                     m.MinimumSize = new Size(0, 0);
@@ -267,7 +269,7 @@ namespace SSUtility2 {
                         d.DestroyPlayer();
                     }
 
-                    mainPlayer.settings.channelID = -99;
+                    mainPlayer.StopPlaying();
                     JoyBack.Joystick.UpdateJoystickCentre();
 
                     if (startLiteVersion)

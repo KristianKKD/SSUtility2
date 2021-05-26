@@ -128,7 +128,6 @@ namespace SSUtility2 {
                 }
 
             }
-
         }
 
         public static TabPage CopyPage(VideoSettings originalSets) {
@@ -444,7 +443,8 @@ namespace SSUtility2 {
         }
 
         private void Fields_Any_Click(object sender, MouseEventArgs e) {
-            ConfigControl.mainPlayerCustomFull.UpdateValue("false");
+            if(isMainPlayer)
+                ConfigControl.mainPlayerCustomFull.UpdateValue("false");
         }
 
         private void tB_PlayerD_Name_KeyUp(object sender, EventArgs e) {
@@ -479,7 +479,7 @@ namespace SSUtility2 {
         }
 
         private void AddressField_KeyUp(object sender, KeyEventArgs e) {
-            if (!isMainPlayer) {
+            if (!isMainPlayer && myLinkedMainPage != null) {
                 UpdateField((Control)sender, this, myLinkedMainPage);
             }
 
