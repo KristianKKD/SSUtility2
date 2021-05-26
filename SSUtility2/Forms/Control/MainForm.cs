@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.6.6.3;
+        public const string version = "v2.6.6.4";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -936,7 +936,9 @@ namespace SSUtility2 {
         }
 
 
+        bool displaying = false;
         bool stopPano = false;
+        int panoFOV = 40;
         private void Menu_Video_Snap_Panoramic_Click(object sender, EventArgs e) {
             if (Menu_Video_Snap_Panoramic.Text == "Stop Panoramic") {
                 stopPano = true;
@@ -949,8 +951,6 @@ namespace SSUtility2 {
 
         async Task Panoramic() {
             try {
-                //show screenshot on screen and make clickable
-
                 if (!mainPlayer.IsPlaying()) {
                     MessageBox.Show("Player is not playing!");
                     return;
@@ -972,7 +972,6 @@ namespace SSUtility2 {
                 //    }
                 //}
 
-                int fov = 40;
                 //if (parsedFOV != -999) {
                 //    fov = (int)Math.Round(30 - parsedFOV);
                 //} else {
@@ -981,6 +980,8 @@ namespace SSUtility2 {
                 //}
 
                 mainPlayer.HideAttached();
+                pB_Panoramic.Hide();
+                displaying = false;
 
                 string tempStorage = ConfigControl.savedFolder + @"temp\";
                 Tools.CheckCreateFile(null, tempStorage);
@@ -989,11 +990,11 @@ namespace SSUtility2 {
                 int width = pPlayer.Width;
                 int height = pPlayer.Height;
 
-                int snapshotCount = (int)Math.Round(360f / fov) + 1;
-                Image fullScreenshot = new Bitmap(width * snapshotCount, height);
-
+                int snapshotCount = (int)Math.Round(360f / panoFOV) + 1;
+                Image fullScreenshot = new Bitmap(@"C:\Users\waakk\Documents\SSUtility\Saved\temp\test.jpg");
+                
                 for (int i = 0; i < snapshotCount || stopPano; i++) {
-                    await CustomScriptCommands.QuickCommand("setpan " + (i * fov).ToString(), true).ConfigureAwait(false); //redo this
+                    CustomScriptCommands.QuickCommand("setpan " + (i * panoFOV).ToString(), true);
 
                     int waitAmount = 3000;
                     if (i == 0)
@@ -1015,6 +1016,13 @@ namespace SSUtility2 {
 
                     fullScreenshot.Save(fullImagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
                     Tools.FinalScreenshot(fullImagePath);
+
+                    pB_Panoramic.Parent = pPlayer; //test this especially
+                    pB_Panoramic.Show();
+                    pB_Panoramic.BringToFront();
+                    pB_Panoramic.SizeMode = PictureBoxSizeMode.Zoom;
+                    pB_Panoramic.Image = fullScreenshot;
+                    displaying = true;
                 }
 
                 //if(Directory.Exists(tempStorage))
@@ -1027,6 +1035,16 @@ namespace SSUtility2 {
             mainPlayer.ShowAttached();
             Menu_Video_Snap_Panoramic.Text = "Panoramic";
             stopPano = false;
+        }
+
+        private void pB_Panoramic_MouseClick(object sender, MouseEventArgs e) {
+            if (displaying) {
+                float scaled = e.X / (Width / 360f);
+                int pos = ((int)Math.Round(scaled / panoFOV) * panoFOV);
+                CustomScriptCommands.QuickCommand("setpan " + pos.ToString(), true);
+            }
+
+            Hide();
         }
 
     } // end of class MainForm

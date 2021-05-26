@@ -72,6 +72,8 @@ namespace SSUtility2 {
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_PlayerPanel = new System.Windows.Forms.Panel();
+            this.pB_Panoramic = new System.Windows.Forms.PictureBox();
+            this.JoyBack = new Joystick.Back();
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
             this.b_Open = new System.Windows.Forms.Button();
             this.b_PTZ_Thermal = new System.Windows.Forms.Button();
@@ -83,9 +85,9 @@ namespace SSUtility2 {
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
-            this.JoyBack = new Joystick.Back();
             this.MenuBar.SuspendLayout();
             this.p_PlayerPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
             this.SuspendLayout();
             // 
@@ -346,6 +348,7 @@ namespace SSUtility2 {
             this.p_PlayerPanel.AllowDrop = true;
             this.p_PlayerPanel.BackColor = System.Drawing.Color.Black;
             this.p_PlayerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_PlayerPanel.Controls.Add(this.pB_Panoramic);
             this.p_PlayerPanel.Controls.Add(this.JoyBack);
             this.p_PlayerPanel.Controls.Add(this.b_PTZ_Daylight);
             this.p_PlayerPanel.Controls.Add(this.b_Open);
@@ -366,6 +369,29 @@ namespace SSUtility2 {
             this.p_PlayerPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragDrop);
             this.p_PlayerPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragOver);
             this.p_PlayerPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.p_PlayerPanel_MouseMove);
+            // 
+            // pB_Panoramic
+            // 
+            this.pB_Panoramic.BackColor = System.Drawing.Color.Transparent;
+            this.pB_Panoramic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pB_Panoramic.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pB_Panoramic.Location = new System.Drawing.Point(0, 645);
+            this.pB_Panoramic.Name = "pB_Panoramic";
+            this.pB_Panoramic.Size = new System.Drawing.Size(1262, 10);
+            this.pB_Panoramic.TabIndex = 100;
+            this.pB_Panoramic.TabStop = false;
+            this.pB_Panoramic.Visible = false;
+            this.pB_Panoramic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pB_Panoramic_MouseClick);
+            // 
+            // JoyBack
+            // 
+            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
+            this.JoyBack.Location = new System.Drawing.Point(68, 92);
+            this.JoyBack.Name = "JoyBack";
+            this.JoyBack.Size = new System.Drawing.Size(150, 150);
+            this.JoyBack.TabIndex = 99;
+            this.JoyBack.TabStop = false;
+            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
             // 
             // b_PTZ_Daylight
             // 
@@ -512,16 +538,6 @@ namespace SSUtility2 {
             this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
             this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
-            // JoyBack
-            // 
-            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
-            this.JoyBack.Location = new System.Drawing.Point(68, 92);
-            this.JoyBack.Name = "JoyBack";
-            this.JoyBack.Size = new System.Drawing.Size(150, 150);
-            this.JoyBack.TabIndex = 99;
-            this.JoyBack.TabStop = false;
-            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -542,6 +558,7 @@ namespace SSUtility2 {
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_PlayerPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1381,5 +1398,6 @@ namespace SSUtility2 {
         private ToolStripMenuItem Menu_Video_Snap_Single;
         private ToolStripMenuItem Menu_Video_Snap_Panoramic;
         private Joystick.Back JoyBack;
+        private PictureBox pB_Panoramic;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
