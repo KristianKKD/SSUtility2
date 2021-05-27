@@ -115,11 +115,9 @@ namespace SSUtility2 {
                 string result = defaultResult;
 
                 Console.WriteLine("checking");
-                //result = await AsyncCamCom.QueryNewCommand(new byte[] { 0xFF, 0x01, 0x03, 0x6B, 0x00, 0x00, 0x6F }).ConfigureAwait(false);
                 result = await CustomScriptCommands.QuickQuery("queryconfig");
-                Console.WriteLine("RESULT: " + result);
 
-                if (result == defaultResult || result.Length < 12 || !result.ToLower().Contains("6d")) {
+                if (result == null || result == defaultResult || result.Length < 12 || !result.ToLower().Contains("6d")) {
                     Console.WriteLine("checked null");
                     MainForm.m.WriteToResponses("Cam config received null", false);
                     return CamConfig.Null;

@@ -66,21 +66,25 @@ namespace SSUtility2 {
         }
 
         public void DoCommand(int index) {
-            string val = ConfigControl.customButtonCommandsArray[index - 1].stringVal;
-            bool isDigitPresent = false;
-            string presetValue = "";
+            try {
+                string val = ConfigControl.customButtonCommandsArray[index - 1].stringVal;
+                bool isDigitPresent = false;
+                string presetValue = "";
 
-            foreach (char c in val.ToArray()) {
-                if (char.IsDigit(c)) {
-                    isDigitPresent = true;
-                    presetValue += c.ToString();
+                foreach (char c in val.ToArray()) {
+                    if (char.IsDigit(c)) {
+                        isDigitPresent = true;
+                        presetValue += c.ToString();
+                    }
                 }
+
+                if (val.ToLower().Contains("preset") && isDigitPresent)
+                    val = "gotopreset " + presetValue;
+
+                CustomScriptCommands.QuickCommand(val, false);
+            } catch (Exception e) {
+                MessageBox.Show("DO COMMAND" + e.ToString());
             }
-
-            if (val.ToLower().Contains("preset") && isDigitPresent)
-                val = "gotopreset " + presetValue;
-
-            CustomScriptCommands.QuickCommand(val, false);
         }
 
 

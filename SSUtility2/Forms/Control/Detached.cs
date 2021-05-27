@@ -151,8 +151,16 @@ namespace SSUtility2 {
             }
         }
 
-        public void Detach(Detached detachable) {
+        public void Detach(Detached detachable, bool destroy) {
             attachedPlayers.Remove(detachable);
+
+            if (destroy) {
+                detachable.p_Player.Dispose();
+                detachable.settings.Dispose();
+                detachable.Dispose();
+                return;
+            }
+
             detachable.settings.isAttached = false;
 
             bool wasPlaying = false;

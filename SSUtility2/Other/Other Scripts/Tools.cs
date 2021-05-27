@@ -69,12 +69,12 @@ namespace SSUtility2 {
         }
 
         public static uint MakeAdr() {
-            string val = MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Text;
+            string val = MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Text.ToLower();
             string mainCamVal = ConfigControl.mainPlayerCamType.stringVal;
 
-            if (val.Contains("Daylight") && !MainForm.m.lite)
+            if (val.Contains("daylight") && !MainForm.m.lite)
                 return 1;
-            else if (val.Contains("Thermal") && !MainForm.m.lite)
+            else if (val.Contains("thermal") || val.Contains("vivotek") && !MainForm.m.lite)
                 return 2;
             else {
                 if (mainCamVal.Contains("Daylight"))

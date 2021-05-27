@@ -45,6 +45,7 @@ namespace SSUtility2
             this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
+            this.b_IPCon_Recheck = new System.Windows.Forms.Button();
             this.l_IPCon_Percent = new System.Windows.Forms.Label();
             this.tB_IPCon_CamSpeed = new System.Windows.Forms.TextBox();
             this.l_IPCon_TrackBar = new System.Windows.Forms.Label();
@@ -83,7 +84,8 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.b_IPCon_Recheck = new System.Windows.Forms.Button();
+            this.cB_Other_PlayerCount = new System.Windows.Forms.ComboBox();
+            this.l_Other_PlayerCount = new System.Windows.Forms.Label();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -358,6 +360,16 @@ namespace SSUtility2
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
             // 
+            // b_IPCon_Recheck
+            // 
+            this.b_IPCon_Recheck.Location = new System.Drawing.Point(257, 192);
+            this.b_IPCon_Recheck.Name = "b_IPCon_Recheck";
+            this.b_IPCon_Recheck.Size = new System.Drawing.Size(90, 21);
+            this.b_IPCon_Recheck.TabIndex = 93;
+            this.b_IPCon_Recheck.Text = "Recheck Mode";
+            this.b_IPCon_Recheck.UseVisualStyleBackColor = true;
+            this.b_IPCon_Recheck.Click += new System.EventHandler(this.b_IPCon_Recheck_Click);
+            // 
             // l_IPCon_Percent
             // 
             this.l_IPCon_Percent.AutoSize = true;
@@ -381,9 +393,9 @@ namespace SSUtility2
             this.l_IPCon_TrackBar.AutoSize = true;
             this.l_IPCon_TrackBar.Location = new System.Drawing.Point(6, 120);
             this.l_IPCon_TrackBar.Name = "l_IPCon_TrackBar";
-            this.l_IPCon_TrackBar.Size = new System.Drawing.Size(101, 13);
+            this.l_IPCon_TrackBar.Size = new System.Drawing.Size(98, 13);
             this.l_IPCon_TrackBar.TabIndex = 90;
-            this.l_IPCon_TrackBar.Text = "PTZ Control Speed:";
+            this.l_IPCon_TrackBar.Text = "PTZ Control Speed";
             this.toolTips.SetToolTip(this.l_IPCon_TrackBar, "General speed of the program, lower to decrease connection latency, increase to i" +
         "mprove performance.");
             // 
@@ -392,9 +404,9 @@ namespace SSUtility2
             this.l_IPCon_ForceMode.AutoSize = true;
             this.l_IPCon_ForceMode.Location = new System.Drawing.Point(6, 195);
             this.l_IPCon_ForceMode.Name = "l_IPCon_ForceMode";
-            this.l_IPCon_ForceMode.Size = new System.Drawing.Size(76, 13);
+            this.l_IPCon_ForceMode.Size = new System.Drawing.Size(73, 13);
             this.l_IPCon_ForceMode.TabIndex = 88;
-            this.l_IPCon_ForceMode.Text = "Camera Mode:";
+            this.l_IPCon_ForceMode.Text = "Camera Mode";
             this.toolTips.SetToolTip(this.l_IPCon_ForceMode, "General speed of the program, lower to decrease connection latency, increase to i" +
         "mprove performance.");
             // 
@@ -420,7 +432,7 @@ namespace SSUtility2
             this.check_IPCon_ForceCam.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_IPCon_ForceCam.Size = new System.Drawing.Size(125, 24);
             this.check_IPCon_ForceCam.TabIndex = 86;
-            this.check_IPCon_ForceCam.Text = ":Force Camera Mode";
+            this.check_IPCon_ForceCam.Text = "Force Camera Mode";
             this.check_IPCon_ForceCam.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTips.SetToolTip(this.check_IPCon_ForceCam, "Reconnect upon entering a new IP in the IP Control section.");
             this.check_IPCon_ForceCam.UseVisualStyleBackColor = true;
@@ -444,9 +456,9 @@ namespace SSUtility2
             this.l_ipCon_Selected.AutoSize = true;
             this.l_ipCon_Selected.Location = new System.Drawing.Point(6, 88);
             this.l_ipCon_Selected.Name = "l_ipCon_Selected";
-            this.l_ipCon_Selected.Size = new System.Drawing.Size(91, 13);
+            this.l_ipCon_Selected.Size = new System.Drawing.Size(88, 13);
             this.l_ipCon_Selected.TabIndex = 82;
-            this.l_ipCon_Selected.Text = "Selected Camera:";
+            this.l_ipCon_Selected.Text = "Selected Camera";
             // 
             // tB_IPCon_Port
             // 
@@ -491,27 +503,27 @@ namespace SSUtility2
             this.l_IPCon_Port.AutoSize = true;
             this.l_IPCon_Port.Location = new System.Drawing.Point(6, 62);
             this.l_IPCon_Port.Name = "l_IPCon_Port";
-            this.l_IPCon_Port.Size = new System.Drawing.Size(70, 13);
+            this.l_IPCon_Port.Size = new System.Drawing.Size(67, 13);
             this.l_IPCon_Port.TabIndex = 75;
-            this.l_IPCon_Port.Text = "Address Port:";
+            this.l_IPCon_Port.Text = "Address Port";
             // 
             // l_IPCon_ConType
             // 
             this.l_IPCon_ConType.AutoSize = true;
             this.l_IPCon_ConType.Location = new System.Drawing.Point(6, 9);
             this.l_IPCon_ConType.Name = "l_IPCon_ConType";
-            this.l_IPCon_ConType.Size = new System.Drawing.Size(103, 13);
+            this.l_IPCon_ConType.Size = new System.Drawing.Size(100, 13);
             this.l_IPCon_ConType.TabIndex = 74;
-            this.l_IPCon_ConType.Text = "Preset Control Type:";
+            this.l_IPCon_ConType.Text = "Preset Control Type";
             // 
             // l_IPCon_Adr
             // 
             this.l_IPCon_Adr.AutoSize = true;
             this.l_IPCon_Adr.Location = new System.Drawing.Point(6, 36);
             this.l_IPCon_Adr.Name = "l_IPCon_Adr";
-            this.l_IPCon_Adr.Size = new System.Drawing.Size(61, 13);
+            this.l_IPCon_Adr.Size = new System.Drawing.Size(58, 13);
             this.l_IPCon_Adr.TabIndex = 73;
-            this.l_IPCon_Adr.Text = "IP Address:";
+            this.l_IPCon_Adr.Text = "IP Address";
             // 
             // slider_IPCon_ControlMultiplier
             // 
@@ -654,6 +666,8 @@ namespace SSUtility2
             // 
             // tP_Other
             // 
+            this.tP_Other.Controls.Add(this.l_Other_PlayerCount);
+            this.tP_Other.Controls.Add(this.cB_Other_PlayerCount);
             this.tP_Other.Controls.Add(this.l_Other_Ratio);
             this.tP_Other.Controls.Add(this.check_Other_Aspect);
             this.tP_Other.Controls.Add(this.check_AddressInvalid);
@@ -676,7 +690,7 @@ namespace SSUtility2
             // l_Other_Ratio
             // 
             this.l_Other_Ratio.AutoSize = true;
-            this.l_Other_Ratio.Location = new System.Drawing.Point(186, 99);
+            this.l_Other_Ratio.Location = new System.Drawing.Point(186, 171);
             this.l_Other_Ratio.Name = "l_Other_Ratio";
             this.l_Other_Ratio.Size = new System.Drawing.Size(22, 13);
             this.l_Other_Ratio.TabIndex = 39;
@@ -686,10 +700,10 @@ namespace SSUtility2
             // 
             // check_Other_Aspect
             // 
-            this.check_Other_Aspect.Location = new System.Drawing.Point(6, 98);
+            this.check_Other_Aspect.Location = new System.Drawing.Point(5, 166);
             this.check_Other_Aspect.Name = "check_Other_Aspect";
             this.check_Other_Aspect.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Other_Aspect.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_Aspect.Size = new System.Drawing.Size(175, 24);
             this.check_Other_Aspect.TabIndex = 38;
             this.check_Other_Aspect.Text = "Maintain Current Aspect Ratio";
             this.check_Other_Aspect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -699,21 +713,21 @@ namespace SSUtility2
             // 
             // check_AddressInvalid
             // 
-            this.check_AddressInvalid.Location = new System.Drawing.Point(6, 75);
+            this.check_AddressInvalid.Location = new System.Drawing.Point(190, 29);
             this.check_AddressInvalid.Name = "check_AddressInvalid";
             this.check_AddressInvalid.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_AddressInvalid.Size = new System.Drawing.Size(174, 17);
             this.check_AddressInvalid.TabIndex = 37;
             this.check_AddressInvalid.Text = "Hide Address Invalid Error";
             this.check_AddressInvalid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_AddressInvalid, "Reconnect upon entering a new IP in the IP Control section.");
+            this.toolTips.SetToolTip(this.check_AddressInvalid, "Ignores errors to do with given player addresses being invalid");
             this.check_AddressInvalid.UseVisualStyleBackColor = true;
             this.check_AddressInvalid.CheckedChanged += new System.EventHandler(this.check_AddressInvalid_CheckedChanged);
             // 
             // l_Other_CurrentResolution
             // 
             this.l_Other_CurrentResolution.AutoSize = true;
-            this.l_Other_CurrentResolution.Location = new System.Drawing.Point(6, 188);
+            this.l_Other_CurrentResolution.Location = new System.Drawing.Point(5, 193);
             this.l_Other_CurrentResolution.Name = "l_Other_CurrentResolution";
             this.l_Other_CurrentResolution.Size = new System.Drawing.Size(116, 13);
             this.l_Other_CurrentResolution.TabIndex = 36;
@@ -724,7 +738,7 @@ namespace SSUtility2
             // 
             this.tB_Other_ResolutionHeight.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Other_ResolutionHeight.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Other_ResolutionHeight.Location = new System.Drawing.Point(165, 161);
+            this.tB_Other_ResolutionHeight.Location = new System.Drawing.Point(165, 140);
             this.tB_Other_ResolutionHeight.Name = "tB_Other_ResolutionHeight";
             this.tB_Other_ResolutionHeight.Size = new System.Drawing.Size(114, 20);
             this.tB_Other_ResolutionHeight.TabIndex = 35;
@@ -734,7 +748,7 @@ namespace SSUtility2
             // l_Other_ResolutionHeight
             // 
             this.l_Other_ResolutionHeight.AutoSize = true;
-            this.l_Other_ResolutionHeight.Location = new System.Drawing.Point(6, 165);
+            this.l_Other_ResolutionHeight.Location = new System.Drawing.Point(6, 144);
             this.l_Other_ResolutionHeight.Name = "l_Other_ResolutionHeight";
             this.l_Other_ResolutionHeight.Size = new System.Drawing.Size(124, 13);
             this.l_Other_ResolutionHeight.TabIndex = 34;
@@ -745,7 +759,7 @@ namespace SSUtility2
             // 
             this.tB_Other_ResolutionWidth.BackColor = System.Drawing.SystemColors.Window;
             this.tB_Other_ResolutionWidth.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Other_ResolutionWidth.Location = new System.Drawing.Point(165, 136);
+            this.tB_Other_ResolutionWidth.Location = new System.Drawing.Point(165, 115);
             this.tB_Other_ResolutionWidth.Name = "tB_Other_ResolutionWidth";
             this.tB_Other_ResolutionWidth.Size = new System.Drawing.Size(114, 20);
             this.tB_Other_ResolutionWidth.TabIndex = 33;
@@ -755,7 +769,7 @@ namespace SSUtility2
             // l_Other_ResolutionWidth
             // 
             this.l_Other_ResolutionWidth.AutoSize = true;
-            this.l_Other_ResolutionWidth.Location = new System.Drawing.Point(6, 139);
+            this.l_Other_ResolutionWidth.Location = new System.Drawing.Point(6, 118);
             this.l_Other_ResolutionWidth.Name = "l_Other_ResolutionWidth";
             this.l_Other_ResolutionWidth.Size = new System.Drawing.Size(121, 13);
             this.l_Other_ResolutionWidth.TabIndex = 32;
@@ -764,12 +778,12 @@ namespace SSUtility2
             // 
             // check_Other_AutoReconnect
             // 
-            this.check_Other_AutoReconnect.Location = new System.Drawing.Point(6, 52);
+            this.check_Other_AutoReconnect.Location = new System.Drawing.Point(189, 6);
             this.check_Other_AutoReconnect.Name = "check_Other_AutoReconnect";
             this.check_Other_AutoReconnect.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_Other_AutoReconnect.Size = new System.Drawing.Size(174, 17);
             this.check_Other_AutoReconnect.TabIndex = 31;
-            this.check_Other_AutoReconnect.Text = "Auto Reconnect On New IP";
+            this.check_Other_AutoReconnect.Text = "Auto Reconnect on New IP";
             this.check_Other_AutoReconnect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTips.SetToolTip(this.check_Other_AutoReconnect, "Reconnect upon entering a new IP in the IP Control section.");
             this.check_Other_AutoReconnect.UseVisualStyleBackColor = true;
@@ -798,15 +812,30 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
-            // b_IPCon_Recheck
+            // cB_Other_PlayerCount
             // 
-            this.b_IPCon_Recheck.Location = new System.Drawing.Point(257, 192);
-            this.b_IPCon_Recheck.Name = "b_IPCon_Recheck";
-            this.b_IPCon_Recheck.Size = new System.Drawing.Size(90, 21);
-            this.b_IPCon_Recheck.TabIndex = 93;
-            this.b_IPCon_Recheck.Text = "Recheck Mode";
-            this.b_IPCon_Recheck.UseVisualStyleBackColor = true;
-            this.b_IPCon_Recheck.Click += new System.EventHandler(this.b_IPCon_Recheck_Click);
+            this.cB_Other_PlayerCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Other_PlayerCount.FormattingEnabled = true;
+            this.cB_Other_PlayerCount.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3"});
+            this.cB_Other_PlayerCount.Location = new System.Drawing.Point(165, 52);
+            this.cB_Other_PlayerCount.Name = "cB_Other_PlayerCount";
+            this.cB_Other_PlayerCount.Size = new System.Drawing.Size(114, 21);
+            this.cB_Other_PlayerCount.TabIndex = 40;
+            this.toolTips.SetToolTip(this.cB_Other_PlayerCount, "Number of players (including the MainPlayer) spawned on launch");
+            this.cB_Other_PlayerCount.SelectedIndexChanged += new System.EventHandler(this.cB_Other_PlayerCount_SelectedIndexChanged);
+            // 
+            // l_Other_PlayerCount
+            // 
+            this.l_Other_PlayerCount.AutoSize = true;
+            this.l_Other_PlayerCount.Location = new System.Drawing.Point(6, 55);
+            this.l_Other_PlayerCount.Name = "l_Other_PlayerCount";
+            this.l_Other_PlayerCount.Size = new System.Drawing.Size(147, 13);
+            this.l_Other_PlayerCount.TabIndex = 41;
+            this.l_Other_PlayerCount.Text = "Number of Players on Launch";
+            this.toolTips.SetToolTip(this.l_Other_PlayerCount, "Number of players (including the MainPlayer) spawned");
             // 
             // SettingsPage
             // 
@@ -904,5 +933,7 @@ namespace SSUtility2
         public System.Windows.Forms.CheckBox check_Other_Aspect;
         private System.Windows.Forms.Label l_Other_Ratio;
         private System.Windows.Forms.Button b_IPCon_Recheck;
+        private System.Windows.Forms.Label l_Other_PlayerCount;
+        private System.Windows.Forms.ComboBox cB_Other_PlayerCount;
     }
 }

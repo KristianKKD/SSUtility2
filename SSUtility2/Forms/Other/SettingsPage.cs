@@ -47,6 +47,7 @@ namespace SSUtility2 {
                 check_IPCon_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
                 check_Other_Aspect.Checked = ConfigControl.maintainAspectRatio.boolVal;
                 cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
+                cB_Other_PlayerCount.Text = ConfigControl.playerCount.stringVal;
 
                 ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
                 ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
@@ -532,8 +533,19 @@ namespace SSUtility2 {
         }
 
         private void b_IPCon_Recheck_Click(object sender, EventArgs e) {
-            OtherCamCom.CheckConfiguration();
-            //UpdateCamConfig(OtherCamCom.CheckConfiguration().Result);
+            CheckConfig();
+        }
+
+        async Task CheckConfig() {
+            UpdateCamConfig(await OtherCamCom.CheckConfiguration());
+        }
+
+        private void cB_Other_PlayerCount_SelectedIndexChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            ConfigControl.playerCount.UpdateValue(cB_Other_PlayerCount.Text);
+            MainForm.m.AttachPlayers(true);
         }
     }
 }

@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.6.6.8";
+        public const string version = "v2.6.6.9";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -130,30 +130,41 @@ namespace SSUtility2 {
             }
         }
 
-        async Task AttachPlayers() {
+        Detached secondPlayer;
+        Detached thirdPlayer;
+        public async Task AttachPlayers(bool redo = false) {
             try {
                 bool autoPlay = ConfigControl.autoPlay.boolVal;
 
-                if (autoPlay && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "") {
+                if (autoPlay && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "" && !redo) {
                     mainPlayer.settings.GetCombined();
                     mainPlayer.Play(false, true);
                 }
 
-                Detached secondPlayer = new Detached(false);
-                SPanel.SizeablePanel second = mainPlayer.AttachPlayerToThis(secondPlayer,
-                    new Point(mainPlayer.p_Player.Width - 350, 50),
-                    VideoSettings.CopyType.CopyAsSecondary, false, autoPlay);
+                int toAttach = ConfigControl.playerCount.intVal;
+                List<Detached> areAttached = mainPlayer.attachedPlayers;
 
-                second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                if (toAttach >= 2 && areAttached.Count < 1) {
+                    secondPlayer = new Detached(false);
+                    SPanel.SizeablePanel second = mainPlayer.AttachPlayerToThis(secondPlayer,
+                        new Point(mainPlayer.p_Player.Width - 350, 50),
+                        VideoSettings.CopyType.CopyAsSecondary, false, autoPlay);
 
-                Detached thirdPlayer = new Detached(false);
-                SPanel.SizeablePanel third = mainPlayer.AttachPlayerToThis(thirdPlayer,
-                    new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250),
-                    VideoSettings.CopyType.CopyAsSecondary, false, autoPlay);
+                    second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                } else if (toAttach < 2 && mainPlayer.attachedPlayers.Contains(secondPlayer)) {
+                    mainPlayer.Detach(secondPlayer, true);
+                }
 
-                third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+                if (toAttach >= 3 && areAttached.Count < 2) {
+                    thirdPlayer = new Detached(false);
+                    SPanel.SizeablePanel third = mainPlayer.AttachPlayerToThis(thirdPlayer,
+                        new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250),
+                        VideoSettings.CopyType.CopyAsSecondary, false, autoPlay);
 
-                JoyBack.Parent = mainPlayer.p_Player;
+                    third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+                } else if (toAttach < 3 && areAttached.Contains(thirdPlayer)) {
+                    mainPlayer.Detach(thirdPlayer, true);
+                }
 
             } catch (Exception e) {
                 MessageBox.Show("ATTACH\n" + e.ToString());

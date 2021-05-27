@@ -10,7 +10,7 @@ namespace SSUtility2 {
         public enum CopyType {
             CopyFull,
             CopyAsSecondary,
-            NoCopy
+            NoCopy,
         }
 
         public Detached myDetached;
@@ -57,7 +57,6 @@ namespace SSUtility2 {
                 l_PlayerD_Username,
                 l_PlayerD_Password,
             };
-
 
             if (isMain) {
                 saveTimer = new Timer();
@@ -228,7 +227,7 @@ namespace SSUtility2 {
                     originalSets.myDetached.StopPlaying();
                 };
                 FindControl(tp, mainSettings.b_PlayerD_Detach).Click += (s, e) => {
-                    MainForm.m.mainPlayer.Detach(originalSets.myDetached);
+                    MainForm.m.mainPlayer.Detach(originalSets.myDetached, false);
                     mainSettings.Hide();
                 };
 
@@ -353,6 +352,7 @@ namespace SSUtility2 {
                 e.Cancel = true;
                 Hide();
             }
+
             SaveConfigFields(null,null);
         }
 
@@ -386,7 +386,6 @@ namespace SSUtility2 {
                     password = "Service123!";
                     rtsp = "";
                 }
-
 
                 FindControl(tp, refSets.tB_PlayerD_RTSP).Text = rtsp;
                 FindControl(tp, refSets.tB_PlayerD_Username).Text = username;
@@ -521,7 +520,7 @@ namespace SSUtility2 {
         }
 
         private void b_PlayerD_Detach_Click(object sender, EventArgs e) {
-            MainForm.m.mainPlayer.Detach(myDetached);
+            MainForm.m.mainPlayer.Detach(myDetached, false);
             b_PlayerD_Detach.Visible = false;
             Hide();
             MainForm.m.mainPlayer.settings.Hide();

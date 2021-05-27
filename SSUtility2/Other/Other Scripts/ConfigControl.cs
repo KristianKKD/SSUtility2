@@ -41,6 +41,7 @@ namespace SSUtility2 {
         public static ConfigSetting startupWidth = new ConfigSetting("1280", "StartupWidth", ConfigSetting.VarType.integer);
         public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
         public static ConfigSetting maintainAspectRatio = new ConfigSetting("false", "MaintainAspectRatio", ConfigSetting.VarType.boolean);
+        public static ConfigSetting playerCount = new ConfigSetting("1", "PlayerCount", ConfigSetting.VarType.integer);
 
         public static ConfigSetting customButtonName1 = new ConfigSetting("1", "CustomButtonName1", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonName2 = new ConfigSetting("2", "CustomButtonName2", ConfigSetting.VarType.strings);
@@ -71,7 +72,7 @@ namespace SSUtility2 {
         public static ConfigSetting mainPlayerBuffering = new ConfigSetting("200", "MainPlayerBuffering", ConfigSetting.VarType.strings);
         public static ConfigSetting mainPlayerUsername = new ConfigSetting("admin", "MainPlayerUsername", ConfigSetting.VarType.strings);
         public static ConfigSetting mainPlayerPassword = new ConfigSetting("admin", "MainPlayerPassword", ConfigSetting.VarType.strings);
-        
+
         public static ConfigSetting mainPlayerCustomName = new ConfigSetting("false", "MainPlayerCustomName", ConfigSetting.VarType.boolean);
         public static ConfigSetting mainPlayerCustomFull = new ConfigSetting("false", "MainPlayerCustomAdr", ConfigSetting.VarType.boolean);
 
@@ -122,6 +123,7 @@ namespace SSUtility2 {
             autoReconnect,
             startupWidth,
             startupHeight,
+            playerCount,
 
             customButtonName1,
             customButtonName2,

@@ -83,7 +83,7 @@ namespace SSUtility2 {
             });
         }
 
-        async Task CheckLine(string line, int linePos) {
+        public async Task CheckLine(string line, int linePos) {
             try {
                 if (line != "" && !line.StartsWith("//")) {
                     line = line.Replace(",", "");
