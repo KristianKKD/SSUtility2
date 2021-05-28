@@ -72,6 +72,8 @@ namespace SSUtility2
             this.ButtonName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ButtonsCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.tP_Other = new System.Windows.Forms.TabPage();
+            this.l_Other_PlayerCount = new System.Windows.Forms.Label();
+            this.cB_Other_PlayerCount = new System.Windows.Forms.ComboBox();
             this.l_Other_Ratio = new System.Windows.Forms.Label();
             this.check_Other_Aspect = new System.Windows.Forms.CheckBox();
             this.check_AddressInvalid = new System.Windows.Forms.CheckBox();
@@ -84,8 +86,8 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.cB_Other_PlayerCount = new System.Windows.Forms.ComboBox();
-            this.l_Other_PlayerCount = new System.Windows.Forms.Label();
+            this.l_IPCon_PelcoID = new System.Windows.Forms.Label();
+            this.b_IPCon_EditCamType = new System.Windows.Forms.Button();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -335,6 +337,8 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
+            this.tP_Control.Controls.Add(this.b_IPCon_EditCamType);
+            this.tP_Control.Controls.Add(this.l_IPCon_PelcoID);
             this.tP_Control.Controls.Add(this.b_IPCon_Recheck);
             this.tP_Control.Controls.Add(this.l_IPCon_Percent);
             this.tP_Control.Controls.Add(this.tB_IPCon_CamSpeed);
@@ -687,6 +691,31 @@ namespace SSUtility2
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
             // 
+            // l_Other_PlayerCount
+            // 
+            this.l_Other_PlayerCount.AutoSize = true;
+            this.l_Other_PlayerCount.Location = new System.Drawing.Point(6, 55);
+            this.l_Other_PlayerCount.Name = "l_Other_PlayerCount";
+            this.l_Other_PlayerCount.Size = new System.Drawing.Size(147, 13);
+            this.l_Other_PlayerCount.TabIndex = 41;
+            this.l_Other_PlayerCount.Text = "Number of Players on Launch";
+            this.toolTips.SetToolTip(this.l_Other_PlayerCount, "Number of players (including the MainPlayer) spawned");
+            // 
+            // cB_Other_PlayerCount
+            // 
+            this.cB_Other_PlayerCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Other_PlayerCount.FormattingEnabled = true;
+            this.cB_Other_PlayerCount.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3"});
+            this.cB_Other_PlayerCount.Location = new System.Drawing.Point(165, 52);
+            this.cB_Other_PlayerCount.Name = "cB_Other_PlayerCount";
+            this.cB_Other_PlayerCount.Size = new System.Drawing.Size(114, 21);
+            this.cB_Other_PlayerCount.TabIndex = 40;
+            this.toolTips.SetToolTip(this.cB_Other_PlayerCount, "Number of players (including the MainPlayer) spawned on launch");
+            this.cB_Other_PlayerCount.SelectedIndexChanged += new System.EventHandler(this.cB_Other_PlayerCount_SelectedIndexChanged);
+            // 
             // l_Other_Ratio
             // 
             this.l_Other_Ratio.AutoSize = true;
@@ -812,30 +841,23 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
-            // cB_Other_PlayerCount
+            // l_IPCon_PelcoID
             // 
-            this.cB_Other_PlayerCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cB_Other_PlayerCount.FormattingEnabled = true;
-            this.cB_Other_PlayerCount.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3"});
-            this.cB_Other_PlayerCount.Location = new System.Drawing.Point(165, 52);
-            this.cB_Other_PlayerCount.Name = "cB_Other_PlayerCount";
-            this.cB_Other_PlayerCount.Size = new System.Drawing.Size(114, 21);
-            this.cB_Other_PlayerCount.TabIndex = 40;
-            this.toolTips.SetToolTip(this.cB_Other_PlayerCount, "Number of players (including the MainPlayer) spawned on launch");
-            this.cB_Other_PlayerCount.SelectedIndexChanged += new System.EventHandler(this.cB_Other_PlayerCount_SelectedIndexChanged);
+            this.l_IPCon_PelcoID.AutoSize = true;
+            this.l_IPCon_PelcoID.Location = new System.Drawing.Point(244, 88);
+            this.l_IPCon_PelcoID.Name = "l_IPCon_PelcoID";
+            this.l_IPCon_PelcoID.Size = new System.Drawing.Size(66, 13);
+            this.l_IPCon_PelcoID.TabIndex = 94;
+            this.l_IPCon_PelcoID.Text = "(Pelco ID: 1)";
             // 
-            // l_Other_PlayerCount
+            // b_IPCon_EditCamType
             // 
-            this.l_Other_PlayerCount.AutoSize = true;
-            this.l_Other_PlayerCount.Location = new System.Drawing.Point(6, 55);
-            this.l_Other_PlayerCount.Name = "l_Other_PlayerCount";
-            this.l_Other_PlayerCount.Size = new System.Drawing.Size(147, 13);
-            this.l_Other_PlayerCount.TabIndex = 41;
-            this.l_Other_PlayerCount.Text = "Number of Players on Launch";
-            this.toolTips.SetToolTip(this.l_Other_PlayerCount, "Number of players (including the MainPlayer) spawned");
+            this.b_IPCon_EditCamType.Location = new System.Drawing.Point(316, 85);
+            this.b_IPCon_EditCamType.Name = "b_IPCon_EditCamType";
+            this.b_IPCon_EditCamType.Size = new System.Drawing.Size(43, 21);
+            this.b_IPCon_EditCamType.TabIndex = 95;
+            this.b_IPCon_EditCamType.Text = "Edit...";
+            this.b_IPCon_EditCamType.UseVisualStyleBackColor = true;
             // 
             // SettingsPage
             // 
@@ -935,5 +957,7 @@ namespace SSUtility2
         private System.Windows.Forms.Button b_IPCon_Recheck;
         private System.Windows.Forms.Label l_Other_PlayerCount;
         private System.Windows.Forms.ComboBox cB_Other_PlayerCount;
+        private System.Windows.Forms.Label l_IPCon_PelcoID;
+        private System.Windows.Forms.Button b_IPCon_EditCamType;
     }
 }

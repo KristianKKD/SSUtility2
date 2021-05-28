@@ -19,7 +19,6 @@ namespace SSUtility2 {
                 CreateConfigFiles();
 
                 await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
-                ConfigControl.FindVars();
 
                 if (ConfigControl.portableMode.boolVal) {
                     MainForm.m.Menu_Final.Dispose();

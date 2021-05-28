@@ -16,7 +16,7 @@ namespace SSUtility2 {
         }
 
         private void b_Done_Click(object sender, EventArgs e) {
-            if (Tools.CheckIfNameValid(tB_Dir.Text) && ConfigControl.CheckIfExists(tB_Dir, null)) {
+            if (Tools.CheckIfNameValid(tB_Dir.Text) && Tools.CheckIfExists(tB_Dir, null)) {
                 string dirLocation = tB_Dir.Text;
                 if (!dirLocation.EndsWith(@"\")){
                     dirLocation += @"\";

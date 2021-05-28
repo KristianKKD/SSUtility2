@@ -49,23 +49,13 @@ namespace SSUtility2 {
                 cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
                 cB_Other_PlayerCount.Text = ConfigControl.playerCount.stringVal;
 
-                ConfigControl.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
-                ConfigControl.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
+                Tools.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
+                Tools.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
 
                 MainForm.m.Width = ConfigControl.startupWidth.intVal;
                 MainForm.m.Height = ConfigControl.startupHeight.intVal;
                 l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
                 l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
-
-                MainForm.m.mainPlayer.settings.tB_PlayerD_Name.Text = ConfigControl.mainPlayerName.stringVal;
-                MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = ConfigControl.mainPlayerFullAdr.stringVal;
-                MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
-                MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ConfigControl.mainPlayerIPAdr.stringVal;
-                MainForm.m.mainPlayer.settings.tB_PlayerD_Port.Text = ConfigControl.mainPlayerPort.stringVal;
-                MainForm.m.mainPlayer.settings.tB_PlayerD_RTSP.Text = ConfigControl.mainPlayerRTSP.stringVal;
-                MainForm.m.mainPlayer.settings.tB_PlayerD_Buffering.Text = ConfigControl.mainPlayerBuffering.stringVal;
-                MainForm.m.mainPlayer.settings.tB_PlayerD_Username.Text = ConfigControl.mainPlayerUsername.stringVal;
-                MainForm.m.mainPlayer.settings.tB_PlayerD_Password.Text = ConfigControl.mainPlayerPassword.stringVal;
 
                 UpdateSelectedCam(false);
                 LoadCustoms();
@@ -305,17 +295,17 @@ namespace SSUtility2 {
         }
 
         public async Task UpdateSelectedCam(bool play) {
-            cB_ipCon_CamType.Text = ConfigControl.mainPlayerCamType.stringVal;
-            
+            cB_ipCon_CamType.Text = ConfigControl.pelcoID.stringVal;
+
             if (MainForm.m.lite) {
                 MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
                 MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
                 MainForm.m.b_PTZ_Daylight.Visible = true;
                 MainForm.m.b_PTZ_Thermal.Visible = true;
 
-                if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("daylight"))
+                if (ConfigControl.pelcoID.intVal == 1)
                     MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.LightGreen;
-                else if (ConfigControl.mainPlayerCamType.stringVal.ToLower().Contains("thermal"))
+                else if (ConfigControl.pelcoID.intVal == 2)
                     MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.LightGreen;
                 else {
                     MainForm.m.b_PTZ_Daylight.Visible = false;
@@ -323,9 +313,9 @@ namespace SSUtility2 {
                 }
             }
 
-            if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite) { //cb is changed
-                //MainForm.m.mainPlayer.settings.UpdateSettingsMode();
-            }
+            //if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite) { //cb is changed
+            //    MainForm.m.mainPlayer.settings.UpdateSettingsMode();
+            //}
         }
 
         private void tB_Other_ResolutionWidth_TextChanged(object sender, EventArgs e) {
@@ -455,13 +445,13 @@ namespace SSUtility2 {
             } 
         }
 
-        private void cB_ipCon_CamType_SelectedIndexChanged(object sender, EventArgs e) {
-            ConfigControl.mainPlayerCamType.UpdateValue(cB_ipCon_CamType.Text);
+        private void cB_ipCon_CamType_SelectedIndexChanged(object sender, EventArgs e) { //cant combine both because it is changed elsewhere
+            ConfigControl.pelcoID.UpdateValue(cB_ipCon_CamType.Text);
             MainForm.m.mainPlayer.settings.UpdateMode();
         }
 
         private void cB_ipCon_CamType_KeyPress(object sender, KeyPressEventArgs e) {
-            ConfigControl.mainPlayerCamType.UpdateValue(cB_ipCon_CamType.Text);
+            ConfigControl.pelcoID.UpdateValue(cB_ipCon_CamType.Text);
             MainForm.m.mainPlayer.settings.UpdateMode();
         }
 
@@ -545,7 +535,8 @@ namespace SSUtility2 {
                 return;
 
             ConfigControl.playerCount.UpdateValue(cB_Other_PlayerCount.Text);
-            MainForm.m.AttachPlayers(true);
+            MainForm.m.AttachPlayers();
         }
+
     }
 }

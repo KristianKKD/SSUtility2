@@ -17,6 +17,8 @@ namespace SSUtility2 {
         public static string dirLocationFile = dirCheck + "location.txt";
 
         private const string varPrefix = "v"; //What the prefix of the actual value is ([varPrefix]ScreenshotFolder:bin/obj/)
+        private const string playerPrefix = "p"; //Player config prefix
+        private const string playerConfigPrefix = "c"; //Player config prefix
         
         public static ConfigSetting scFolder = new ConfigSetting(savedFolder, "SnapshotFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting vFolder = new ConfigSetting(savedFolder, "VideoFolder", ConfigSetting.VarType.strings);
@@ -42,6 +44,7 @@ namespace SSUtility2 {
         public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
         public static ConfigSetting maintainAspectRatio = new ConfigSetting("false", "MaintainAspectRatio", ConfigSetting.VarType.boolean);
         public static ConfigSetting playerCount = new ConfigSetting("1", "PlayerCount", ConfigSetting.VarType.integer);
+        public static ConfigSetting pelcoID = new ConfigSetting("1", "SelectedPelcoID", ConfigSetting.VarType.integer);
 
         public static ConfigSetting customButtonName1 = new ConfigSetting("1", "CustomButtonName1", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonName2 = new ConfigSetting("2", "CustomButtonName2", ConfigSetting.VarType.strings);
@@ -62,20 +65,6 @@ namespace SSUtility2 {
         public static ConfigSetting customButtonCommand7 = new ConfigSetting("Preset 7", "CustomButtonCommand7", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonCommand8 = new ConfigSetting("Preset 8", "CustomButtonCommand8", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonCommand9 = new ConfigSetting("Preset 9", "CustomButtonCommand9", ConfigSetting.VarType.strings);
-
-        public static ConfigSetting mainPlayerName = new ConfigSetting("", "MainPlayerName", ConfigSetting.VarType.strings);
-        public static ConfigSetting mainPlayerFullAdr = new ConfigSetting("", "MainPlayerFullAdr", ConfigSetting.VarType.strings);
-        public static ConfigSetting mainPlayerCamType = new ConfigSetting("IONodes - Daylight", "MainPlayerCamType", ConfigSetting.VarType.strings);
-        public static ConfigSetting mainPlayerIPAdr = new ConfigSetting("192.168.1.71", "MainPlayerIPAdr", ConfigSetting.VarType.strings);
-        public static ConfigSetting mainPlayerPort = new ConfigSetting("554", "MainPlayerPort", ConfigSetting.VarType.strings);
-        public static ConfigSetting mainPlayerRTSP = new ConfigSetting("videoinput_1:0/h264_1/onvif.stm", "MainPlayerRTSP", ConfigSetting.VarType.strings);
-        public static ConfigSetting mainPlayerBuffering = new ConfigSetting("200", "MainPlayerBuffering", ConfigSetting.VarType.strings);
-        public static ConfigSetting mainPlayerUsername = new ConfigSetting("admin", "MainPlayerUsername", ConfigSetting.VarType.strings);
-        public static ConfigSetting mainPlayerPassword = new ConfigSetting("admin", "MainPlayerPassword", ConfigSetting.VarType.strings);
-
-        public static ConfigSetting mainPlayerCustomName = new ConfigSetting("false", "MainPlayerCustomName", ConfigSetting.VarType.boolean);
-        public static ConfigSetting mainPlayerCustomFull = new ConfigSetting("false", "MainPlayerCustomAdr", ConfigSetting.VarType.boolean);
-
 
         public static ConfigSetting[] customButtonNamesArray = new ConfigSetting[] {
             customButtonName1,
@@ -124,6 +113,8 @@ namespace SSUtility2 {
             startupWidth,
             startupHeight,
             playerCount,
+            maintainAspectRatio,
+            pelcoID,
 
             customButtonName1,
             customButtonName2,
@@ -144,23 +135,7 @@ namespace SSUtility2 {
             customButtonCommand7,
             customButtonCommand8,
             customButtonCommand9,
-
-            mainPlayerName,
-            mainPlayerFullAdr,
-            mainPlayerCamType,
-            mainPlayerIPAdr,
-            mainPlayerPort,
-            mainPlayerRTSP,
-            mainPlayerBuffering,
-            mainPlayerUsername,
-            mainPlayerPassword,
-            mainPlayerCustomName,
-            mainPlayerCustomFull,
-            maintainAspectRatio,
         };
-
-
-        public static List<ConfigVar> stringVarList;
 
         public static async Task SetToDefaults() {
             savedFolder = appFolder + @"Saved\";
@@ -183,72 +158,87 @@ namespace SSUtility2 {
                         continue;
                     }
 
-                    ConfigLine(path, setting.settingName, setting.stringVal);
+                    ConfigLine(path, setting.settingName, setting.stringVal, varPrefix);
                 }
 
-                if (MainForm.m.finalMode) {
-                    Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
+                for (int i = -1; i < MainForm.m.mainPlayer.attachedPlayers.Count; i++) { //will only save the first two players for now
+                    Detached d = MainForm.m.mainPlayer;
+                    if (i != -1)
+                        d = MainForm.m.mainPlayer.attachedPlayers[i];
+
+                    List<(string, string)> setList = d.settings.SaveToConfig();
+                    for (int o = 0; o < setList.Count; o++) {
+                        (string, string) s = setList[o];
+
+                        if(o == 0)
+                            ConfigLine(path, s.Item1, s.Item2, playerPrefix);
+                        else
+                            ConfigLine(path, s.Item1, s.Item2, playerConfigPrefix);
+                    }
                 }
+
+                if (MainForm.m.finalMode)
+                    Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to write config!\nShow more?", "Critical Error Occurred!", e.ToString());
             }
         }
 
-        static void ConfigLine(string path, string variable, string value) {
-            File.AppendAllText(path, varPrefix + variable + ":" + value + "\n");
-        }
-
-        public static async Task FindVars() {
-            foreach (ConfigVar v in stringVarList) {
-                foreach (ConfigSetting setting in configArray) {
-                    if (v.name == setting.settingName) {
-                        setting.UpdateValue(v.value);
-                    }
-                }
-            }
-        }
-
-        public static bool CheckVal(string v) {
-            if (v.ToLower() == "true") {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-
-        public static bool CheckIfExists(TextBox tb, Label linkedLabel) {
-            bool exists;
-            string lText;
-            exists = Directory.Exists(tb.Text);
-
-            if (linkedLabel != null) {
-                if (exists) {
-                    lText = "✓";
-                } else {
-                    lText = "❌";
-                }
-                linkedLabel.Text = lText;
-            }
-            return exists;
+        static void ConfigLine(string path, string variable, string value, string prefix) {
+            File.AppendAllText(path, prefix + variable + ":" + value + "\n");
         }
 
         public async static Task SearchForVarsAsync(string path) {
-            string[] lines = File.ReadAllLines(path);
+            try {
+                string[] lines = File.ReadAllLines(path);
 
-            List<ConfigVar> varFound = new List<ConfigVar>();
-            foreach (string line in lines) {
-                if (line.StartsWith(varPrefix)) {
-                    varFound.Add(CreateConfigVar(line));
+                List<ConfigVar> varFound = new List<ConfigVar>();
+                List<List<ConfigVar>> playersFound = new List<List<ConfigVar>>();
+
+                for (int i = 0; i < lines.Length; i++) {
+                    string line = lines[i];
+
+                    if (line.StartsWith(varPrefix))
+                        varFound.Add(CreateConfigVar(line));
+                    else if (line.StartsWith(playerPrefix)) {
+                        List<ConfigVar> config = new List<ConfigVar>();
+
+                        int valPos = line.IndexOf(":") + 1;
+                        if (valPos == 0)
+                            continue;
+
+                        int val = 0;
+                        if (!int.TryParse(line.Substring(valPos), out val))
+                            continue;
+
+                        for (int o = 0; o < val; o++)
+                            config.Add(CreateConfigVar(lines[i + o]));
+
+                        playersFound.Add(config);
+                    }
                 }
+
+                foreach (ConfigVar v in varFound) {
+                    foreach (ConfigSetting setting in configArray) {
+                        if (v.name == setting.settingName)
+                            setting.UpdateValue(v.value);
+                    }
+                }
+
+                if (playersFound.Count > 0) {
+                    MainForm.m.mainPlayer.settings.LoadConfig(playersFound[0]);
+
+                    for (int o = 1; o < playersFound.Count; o++)
+                        MainForm.m.playerConfigList.Add(playersFound[o]);
+                }
+            } catch (Exception e) {
+                MessageBox.Show("LOAD CONFIG\n" + e.ToString());
             }
-           
-            stringVarList = varFound;
         }
 
         static ConfigVar CreateConfigVar(string l) {
             int nameMarker = l.IndexOf(":") + 1;
-            string name = l.Substring(varPrefix.Length, nameMarker - varPrefix.Length - 1);
+            string name = l.Substring(1, nameMarker - varPrefix.Length - 1);
             string text = l.Substring(nameMarker);
 
             return new ConfigVar(name, text);
@@ -256,8 +246,7 @@ namespace SSUtility2 {
 
     }
 
-    class ConfigVar {
-
+    public class ConfigVar {
         public string name;
         public string value;
 
@@ -265,11 +254,10 @@ namespace SSUtility2 {
             name = n;
             value = t;
         }
-
     }
 
 
-    class ConfigSetting {
+    public class ConfigSetting {
 
         public string defaultVal;
         public string settingName;
@@ -294,7 +282,7 @@ namespace SSUtility2 {
 
             switch (type) {
                 case VarType.boolean:
-                    boolVal = ConfigControl.CheckVal(defVal);
+                    boolVal = CheckVal(defVal);
                     break;
                 case VarType.integer:
                     intVal = int.Parse(defVal);
@@ -309,7 +297,7 @@ namespace SSUtility2 {
 
             switch (myType) {
                 case VarType.boolean:
-                    boolVal = ConfigControl.CheckVal(val);
+                    boolVal = CheckVal(val);
                     break;
                 case VarType.integer:
                     intVal = int.Parse(val);
@@ -323,5 +311,12 @@ namespace SSUtility2 {
             defaultVal = val;
         }
 
+        public static bool CheckVal(string v) {
+            if (v.ToLower() == "true") {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

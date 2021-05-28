@@ -69,22 +69,15 @@ namespace SSUtility2 {
         }
 
         public static uint MakeAdr() {
-            string val = MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Text.ToLower();
-            string mainCamVal = ConfigControl.mainPlayerCamType.stringVal;
+            string settingsVal = MainForm.m.setPage.cB_ipCon_CamType.Text;
 
-            if (val.Contains("daylight") && !MainForm.m.lite)
+            if (settingsVal.Contains("daylight") && !MainForm.m.lite) //temp stuff
                 return 1;
-            else if (val.Contains("thermal") || val.Contains("vivotek") && !MainForm.m.lite)
+            else if (settingsVal.Contains("thermal") || settingsVal.Contains("vivotek") && !MainForm.m.lite)
                 return 2;
             else {
-                if (mainCamVal.Contains("Daylight"))
-                    return 1;
-                else if (mainCamVal.Contains("Thermal"))
-                    return 2;
-                else if (int.TryParse(mainCamVal, out int dontUse))
-                    return uint.Parse(mainCamVal);
-                else
-                    return 1;
+                int val = ConfigControl.pelcoID.intVal;
+                return Convert.ToUInt32(val);
             }
         }
 
@@ -113,7 +106,7 @@ namespace SSUtility2 {
                 int startPos = msg.IndexOf("FF");
                 if (startPos == -1) {
                     return null;
-                } else if (startPos > 0) { //restructure
+                } else if (startPos > 0) { //restructures incoming responses
                     try {
                         string newMsg = "";
                         foreach (char c in msg.Substring(startPos, 14 - startPos))
@@ -277,7 +270,7 @@ namespace SSUtility2 {
                 tb.Text = ConfigControl.appFolder;
                 return false;
             }
-            if (ConfigControl.CheckIfExists(tb, linkLabel)) {
+            if (Tools.CheckIfExists(tb, linkLabel)) {
                 return true;
             }
             return false;
@@ -386,41 +379,51 @@ namespace SSUtility2 {
             }
         }
 
-        public static async Task CopyConfig(string name) {
-            MainForm.m.finishedLoading = false;
-            string configFile = ConfigControl.appFolder + ConfigControl.config;
-            if (name != configFile) {
-                ResetFile(configFile);
+        public static async Task ImportConfig(string name, bool dragdrop) {
+            try {
+                MainForm.m.finishedLoading = false;
+                string configFile = ConfigControl.appFolder + ConfigControl.config;
+                if (name != configFile) {
+                    ResetFile(configFile);
 
-                string[] lines = File.ReadAllLines(name);
-                bool isValid = false;
-                foreach (string line in lines) {
-                    string val = line.ToLower();
-                    if (val.Contains("ssutility2.0") && val.Contains("config"))
-                        isValid = true;
+                    string[] lines = File.ReadAllLines(name);
+                    bool isValid = false;
+                    foreach (string line in lines) {
+                        string val = line.ToLower();
+                        if (val.Contains("ssutility2.0") && val.Contains("config")) {
+                            isValid = true;
+                            break;
+                        }
+                    }
+
+                    if (!isValid) {
+                        MessageBox.Show("Text file is not a config file!");
+                        MainForm.m.finishedLoading = true;
+                        return;
+                    } else if (dragdrop && !ShowPopup("Config file detected!\n(" + name + ")\nImport new settings, replacing current config?", "New Config Detected!", "", false)) {
+                        MainForm.m.finishedLoading = true;
+                        return;
+                    }
+
+                    foreach (string line in lines) {
+                        File.AppendAllText(configFile, line + "\n");
+                    }
+
+                    ConfigControl.SetToDefaults();
+                    await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
+                    MainForm.m.setPage.PopulateSettingText();
+                    MessageBox.Show("Updated config file!\n(" + configFile + ")");
+
+                    MainForm.m.AttachPlayers();
+                } else {
+                    if (name == configFile)
+                        MessageBox.Show("Please don't try to replace the config file with itself!\nIgnored request!");
                 }
-
-                if (!isValid) {
-                    MessageBox.Show("Text file is not a config file!");
-                    return;
-                }
-
-                foreach (string line in lines) {
-                    File.AppendAllText(configFile, line + "\n");
-                }
-
-                ConfigControl.SetToDefaults();
-                await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
-                ConfigControl.FindVars();
-                MainForm.m.setPage.PopulateSettingText();
-                MainForm.m.finishedLoading = true;
-                MessageBox.Show("Updated config file!\n(" + configFile + ")");
-
-                MainForm.m.mainPlayer.Play(false, false);
-            } else {
-                if (name == configFile)
-                    MessageBox.Show("Please don't try to replace the config file with itself!\nIgnored request!");
+            } catch (Exception e) {
+                ShowPopup("Failed to import config!\nShow more?", "Error Occurred!", e.ToString());
             }
+
+            MainForm.m.finishedLoading = true;
         }
 
         public static void ResetFile(string path) {
@@ -524,5 +527,20 @@ namespace SSUtility2 {
             return didntExist;
         }
 
+        public static bool CheckIfExists(TextBox tb, Label linkedLabel) {
+            bool exists;
+            string lText;
+            exists = Directory.Exists(tb.Text);
+
+            if (linkedLabel != null) {
+                if (exists) {
+                    lText = "✓";
+                } else {
+                    lText = "❌";
+                }
+                linkedLabel.Text = lText;
+            }
+            return exists;
+        }
     }
 }

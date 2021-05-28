@@ -24,7 +24,12 @@ namespace SSUtility2 {
 
         public void DestroyPlayer() {
             try {
-                p_Player.Hide();
+                p_Player.Dispose();
+            } catch { }
+            try {
+                settings.Dispose();
+            } catch { }
+            try {
                 Dispose();
             } catch { }
         }
@@ -66,10 +71,8 @@ namespace SSUtility2 {
                     return;
                 }
 
-                if (!ConfigControl.mainPlayerCustomFull.boolVal) {
-                    if (!settings.AdrValid(showErrors))
-                        return;
-                }
+                if (!settings.AdrValid(showErrors))
+                    return;
 
                 if (InvokeRequired) {
                     Invoke((MethodInvoker)delegate {
@@ -98,14 +101,13 @@ namespace SSUtility2 {
                     StopPlaying();
                 }
 
-                if (updateValues) {
-                    if (ConfigControl.autoReconnect.boolVal && !ConfigControl.mainPlayerCustomFull.boolVal) {
+                if (updateValues && settings.isMainPlayer) {
+                    if (ConfigControl.autoReconnect.boolVal && !settings.customFull) {
                         MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;
                         ConfigControl.savedIP.UpdateValue(MainForm.m.setPage.tB_IPCon_Adr.Text);
                     }
                     AsyncCamCom.TryConnect(false, null, true);
                 }
-                
             } catch (Exception e) {
                 if(showErrors)
                     Tools.ShowPopup("Failed to init player stream!\nShow more?", "Error Occurred!", e.ToString());
@@ -115,7 +117,7 @@ namespace SSUtility2 {
             }
         }
 
-        public SPanel.SizeablePanel AttachPlayerToThis(Detached secondPlayer, Point pos, VideoSettings.CopyType type, bool updateVals = true, bool playOnLaunch = true) {
+        public SPanel.SizeablePanel AttachPlayerToThis(Detached secondPlayer, Point pos, bool updateVals = true, bool playOnLaunch = true) {
             try {
                 attachedPlayers.Add(secondPlayer);
                 secondPlayer.settings.isAttached = true;
@@ -139,10 +141,12 @@ namespace SSUtility2 {
                     MainForm.m.SwapSettings(secondPlayer);
                 };
 
-                VideoSettings.CopySettings(secondPlayer.settings, MainForm.m.mainPlayer.settings, type);
+                VideoSettings.CopySettings(secondPlayer.settings, MainForm.m.mainPlayer.settings, VideoSettings.CopyType.NoCopy);
                 
                 if(playOnLaunch)
                     secondPlayer.Play(false, updateVals);
+
+                secondPlayer.settings.tP_Main.Text = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
 
                 return sP_Secondary;
             } catch (Exception e) {
@@ -155,9 +159,7 @@ namespace SSUtility2 {
             attachedPlayers.Remove(detachable);
 
             if (destroy) {
-                detachable.p_Player.Dispose();
-                detachable.settings.Dispose();
-                detachable.Dispose();
+                detachable.DestroyPlayer();
                 return;
             }
 
@@ -192,7 +194,7 @@ namespace SSUtility2 {
 
         private void Menu_Record_Click(object sender, EventArgs e) {
             try {
-                string location = ConfigControl.vFolder.stringVal + ConfigControl.mainPlayerName.stringVal + @"\";
+                string location = ConfigControl.vFolder.stringVal + MainForm.m.mainPlayer.settings.tB_PlayerD_Name.Text + @"\";
 
                 if (Menu_Record.Text == "Start Recording") {
                     Menu_Record.Text = "Stop Recording";
@@ -223,7 +225,7 @@ namespace SSUtility2 {
 
             Detached main = MainForm.m.mainPlayer;
             main.AttachPlayerToThis(this, new Point((int)Math.Round(main.Width / 2f),
-                (int)Math.Round(main.Height / 2f)), VideoSettings.CopyType.NoCopy);
+                (int)Math.Round(main.Height / 2f)));
         }
 
         public void RefreshPlayers() {

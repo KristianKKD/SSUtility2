@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.6.6.9";
+        public const string version = "v2.7.0.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -43,6 +43,8 @@ namespace SSUtility2 {
         public float currentAspectRatio;
         private Direction resizeDir;
 
+        public List<List<ConfigVar>> playerConfigList;
+
         public async Task StartupStuff() {
             try {
                 m = this;
@@ -51,13 +53,14 @@ namespace SSUtility2 {
                 pd = new PelcoD();
                 pp = new PresetPanel();
                 D.protocol = new D();
+                playerConfigList = new List<List<ConfigVar>>();
                 EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init();
 
                 mainPlayer = new Detached(true);
                 AttachInfoPanel();
                 AttachCustomPanel();
                 AttachPresetPanel();
-                
+
                 controlPanel = new List<Control>() {
                     b_PTZ_Up,
                     b_PTZ_Down,
@@ -132,38 +135,44 @@ namespace SSUtility2 {
 
         Detached secondPlayer;
         Detached thirdPlayer;
-        public async Task AttachPlayers(bool redo = false) {
+        public async Task AttachPlayers() {
             try {
                 bool autoPlay = ConfigControl.autoPlay.boolVal;
 
-                if (autoPlay && mainPlayer.settings.tB_PlayerD_SimpleAdr.Text != "" && !redo) {
-                    mainPlayer.settings.GetCombined();
-                    mainPlayer.Play(false, true);
-                }
+                int playercount = ConfigControl.playerCount.intVal;
 
-                int toAttach = ConfigControl.playerCount.intVal;
-                List<Detached> areAttached = mainPlayer.attachedPlayers;
+                if (playercount >= 2 && mainPlayer.attachedPlayers.Count < 1) {
+                    if (secondPlayer == null) {
+                        secondPlayer = new Detached(false);
+                        SPanel.SizeablePanel second = mainPlayer.AttachPlayerToThis(secondPlayer,
+                            new Point(mainPlayer.p_Player.Width - 350, 50), false, autoPlay);
 
-                if (toAttach >= 2 && areAttached.Count < 1) {
-                    secondPlayer = new Detached(false);
-                    SPanel.SizeablePanel second = mainPlayer.AttachPlayerToThis(secondPlayer,
-                        new Point(mainPlayer.p_Player.Width - 350, 50),
-                        VideoSettings.CopyType.CopyAsSecondary, false, autoPlay);
+                        second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+                    }
 
-                    second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-                } else if (toAttach < 2 && mainPlayer.attachedPlayers.Contains(secondPlayer)) {
+                    if (playerConfigList.Count >= 1 && playerConfigList[0] != null)
+                        secondPlayer.settings.LoadConfig(playerConfigList[0]);
+
+                } else if (playercount < 2 && mainPlayer.attachedPlayers.Contains(secondPlayer)) {
                     mainPlayer.Detach(secondPlayer, true);
+                    secondPlayer = null;
                 }
 
-                if (toAttach >= 3 && areAttached.Count < 2) {
-                    thirdPlayer = new Detached(false);
-                    SPanel.SizeablePanel third = mainPlayer.AttachPlayerToThis(thirdPlayer,
-                        new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250),
-                        VideoSettings.CopyType.CopyAsSecondary, false, autoPlay);
+                if (playercount >= 3 && mainPlayer.attachedPlayers.Count < 2) {
+                    if (thirdPlayer == null) {
+                        thirdPlayer = new Detached(false);
+                        SPanel.SizeablePanel third = mainPlayer.AttachPlayerToThis(thirdPlayer,
+                            new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250), false, autoPlay);
 
-                    third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-                } else if (toAttach < 3 && areAttached.Contains(thirdPlayer)) {
+                        third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+                    }
+
+                    if (playerConfigList.Count >= 2 && playerConfigList[1] != null)
+                        thirdPlayer.settings.LoadConfig(playerConfigList[1]);
+
+                } else if (playercount < 3 && mainPlayer.attachedPlayers.Contains(thirdPlayer)) {
                     mainPlayer.Detach(thirdPlayer, true);
+                    thirdPlayer = null;
                 }
 
             } catch (Exception e) {
@@ -374,7 +383,6 @@ namespace SSUtility2 {
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             closing = true;
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
-            AsyncCamCom.Disconnect(false);
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
@@ -772,7 +780,7 @@ namespace SSUtility2 {
             DialogResult result = fdg.ShowDialog();
             if (result == DialogResult.OK) {
                 if (fdg.FileName.Contains(".txt")) {
-                    Tools.CopyConfig(fdg.FileName);
+                    Tools.ImportConfig(fdg.FileName, false);
                 } else {
                     Tools.ShowPopup("Please open a .txt file!\nUser tried to open an unsupported file type! Show more info?", "Invalid File Type!",
                         "User tried opening: " + fdg.FileName + "\nTry opening a .txt file instead.");
@@ -786,13 +794,13 @@ namespace SSUtility2 {
         }
 
         private void b_PTZ_Daylight_Click(object sender, EventArgs e) {
-            ConfigControl.mainPlayerCamType.UpdateValue("Daylight");
-            setPage.UpdateSelectedCam(false);
+            ConfigControl.pelcoID.UpdateValue("1");
+            setPage.UpdateSelectedCam(true);
         }
 
         private void b_PTZ_Thermal_Click(object sender, EventArgs e) {
-            ConfigControl.mainPlayerCamType.UpdateValue("Thermal");
-            setPage.UpdateSelectedCam(false);
+            ConfigControl.pelcoID.UpdateValue("2");
+            setPage.UpdateSelectedCam(true);
         }
 
         private void p_PlayerPanel_MouseMove(object sender, MouseEventArgs e) {
@@ -816,7 +824,7 @@ namespace SSUtility2 {
             try {
                 string[] fileName = e.Data.GetData(DataFormats.FileDrop) as string[];
                 if (fileName != null && fileName[0].Contains("txt")) {
-                    Tools.CopyConfig(fileName[0]);
+                    Tools.ImportConfig(fileName[0], true);
                 } else {
                     MessageBox.Show("SSUtility2 only supports dragging/dropping .txt config files!");
                 }
@@ -947,7 +955,6 @@ namespace SSUtility2 {
         private void Menu_Video_Snap_Single_Click(object sender, EventArgs e) {
             Tools.SaveSnap(mainPlayer);
         }
-
 
         bool displaying = false;
         bool stopPano = false;

@@ -319,7 +319,7 @@ namespace SSUtility2 {
                 if (marker == -1)
                     marker = line.IndexOf(":");
 
-                ConfigControl.mainPlayerCustomFull.UpdateValue("true");
+                MainForm.m.mainPlayer.settings.customFull = true;
                 MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = line.Substring(marker + 1);
                 MainForm.m.mainPlayer.Play(false, false);
             }

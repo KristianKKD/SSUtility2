@@ -16,7 +16,6 @@ namespace SSUtility2 {
         public Detached myDetached;
         public TabPage myLinkedMainPage;
 
-        public int myAttachedIndex = 0; //0 means it is the base
         public List<Detached> attachedList = new List<Detached>();
 
         public const string dayRTSP = "videoinput_1:0/h264_1/onvif.stm";
@@ -29,9 +28,10 @@ namespace SSUtility2 {
         public bool isMainPlayer;
         public bool isAttached = false;
 
-        public static Control[] extendedControls;
+        public bool customName = false;
+        public bool customFull = false;
 
-        Timer saveTimer;
+        public static Control[] extendedControls;
 
         public VideoSettings(Detached d, bool isMain) {
             InitializeComponent();
@@ -58,13 +58,9 @@ namespace SSUtility2 {
                 l_PlayerD_Password,
             };
 
-            if (isMain) {
-                saveTimer = new Timer();
-                saveTimer.Interval = 1000;
-                saveTimer.Tick += new EventHandler(SaveConfigFields);
-            } else {
-                tP_Main.Text = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 2).ToString();
-            }
+            if (!isMain)
+                tP_Main.Text = "Detached Player";
+
             GetCombined();
         }
 
@@ -93,8 +89,6 @@ namespace SSUtility2 {
                     ConfigControl.savedIP.UpdateValue(main.tB_PlayerD_Adr.Text);
 
                     AsyncCamCom.TryConnect(false, null, true);
-
-                    main.SaveConfigFields(null,null);
                 }
 
             } catch (Exception e) {
@@ -108,26 +102,28 @@ namespace SSUtility2 {
 
             GetCombined();
             
-            if (!isMainPlayer && isAttached) {
+            if (!isMainPlayer && isAttached)
                 b_PlayerD_Detach.Show();
+
+            if (isMainPlayer) 
+                AddPages();
+            else if (myLinkedMainPage == null)
+                MainForm.m.mainPlayer.settings.AddPages();
+        }
+
+        public void AddPages() {
+            foreach (TabPage tp in tC_PlayerSettings.TabPages) {
+                if (tp == tP_Main)
+                    continue;
+
+                tp.Dispose();
             }
 
-            if (isMainPlayer) {
-
-                foreach (TabPage tp in tC_PlayerSettings.TabPages) {
-                    if (tp == tP_Main)
-                        continue;
-
-                    tp.Dispose();
-                }
-
-                foreach (Detached d in myDetached.attachedPlayers) { //order them based on name later
-                    TabPage tp = CopyPage(d.settings);
-                    tp.Text = d.settings.tP_Main.Text;
-                    tC_PlayerSettings.TabPages.Add(tp);
-                    d.settings.myLinkedMainPage = tp;
-                }
-
+            foreach (Detached d in myDetached.attachedPlayers) { //order them based on name later
+                TabPage tp = CopyPage(d.settings);
+                tp.Text = d.settings.tP_Main.Text;
+                tC_PlayerSettings.TabPages.Add(tp);
+                d.settings.myLinkedMainPage = tp;
             }
         }
 
@@ -144,11 +140,7 @@ namespace SSUtility2 {
 
                     if (c.GetType() == typeof(TextBox)) {
                         copyC = new TextBox();
-                        copyC.KeyUp += (s, e) => {
-                            originalSets.UpdateField(copyC, originalSets, originalSets.tP_Main);
-                            originalSets.GetCombined(); 
-                        };
-                    }else if (c.GetType() == typeof(Label)) {
+                    } else if (c.GetType() == typeof(Label)) {
                         Label copyL = new Label();
 
                         Label l = new Label();
@@ -179,7 +171,9 @@ namespace SSUtility2 {
 
                         copyC = copyCB;
                         copyC.Text = originalSets.cB_PlayerD_CamType.Text; //because cb text should be inverted to main
-                        copyCB.SelectedIndexChanged += (s, e) => { CameraCBType(tp); };
+                        copyCB.SelectedIndexChanged += (s, e) => { 
+                            CameraCBType(tp); 
+                        };
                     } else if (c.GetType() == typeof(Button)) {
                         Button b = new Button();
                         Button copyB = new Button();
@@ -200,7 +194,12 @@ namespace SSUtility2 {
                         if (copyC.GetType() == typeof(ComboBox) || copyC.GetType() == typeof(TextBox)) {
                             copyC.KeyUp += (s, e) => {
                                 originalSets.UpdateField(copyC, originalSets, originalSets.tP_Main);
-                                FindControl(tp, mainSettings.tB_PlayerD_SimpleAdr).Text = originalSets.GetCombined();
+                                originalSets.GetCombined();
+
+                                if (copyC.Name == FindControl(tp, mainSettings.tB_PlayerD_Name).Name)
+                                    originalSets.UpdateName(copyC);
+                                else if (copyC.Name == FindControl(tp, mainSettings.tB_PlayerD_SimpleAdr).Name)
+                                    originalSets.UpdateCustomFull(copyC);
                             };
                         } else if (copyC.GetType() != typeof(ComboBox))
                             copyC.Text = c.Text;
@@ -233,7 +232,7 @@ namespace SSUtility2 {
 
                 tp.BackColor = mainSettings.tP_Main.BackColor;
             } catch (Exception e) {
-                MessageBox.Show(e.ToString());
+                MessageBox.Show("SPAWN TAB\n" + e.ToString());
             }
             return tp;
         }
@@ -282,38 +281,37 @@ namespace SSUtility2 {
             };
         }
 
-        public string GetCombined(bool ignoreConditions = false) {
+        public string GetCombined() {
             string full = "";
 
             try {
-                string ipaddress = tB_PlayerD_Adr.Text;
+                string ipaddress = FindControl(tP_Main, tB_PlayerD_Adr).Text;
 
-                if (ConfigControl.mainPlayerCustomFull.boolVal && isMainPlayer && !ignoreConditions) {
-                    full = tB_PlayerD_SimpleAdr.Text;
+                if (customFull) {
+                    full = FindControl(tP_Main, tB_PlayerD_SimpleAdr).Text;
                 } else {
-                    string port = tB_PlayerD_Port.Text;
-                    string url = tB_PlayerD_RTSP.Text;
-                    string username = tB_PlayerD_Username.Text;
-                    string password = tB_PlayerD_Password.Text;
-
-                    full = "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
-
-                    if(!ignoreConditions)
-                        tB_PlayerD_SimpleAdr.Text = full;
+                    full = GetFullAdr();
+                    FindControl(tP_Main, tB_PlayerD_SimpleAdr).Text = full;
                 }
 
-                if (ConfigControl.mainPlayerCustomName.boolVal
-                    && ConfigControl.mainPlayerName.stringVal.Trim() != ""
-                    && isMainPlayer && !ignoreConditions)
-                    tB_PlayerD_Name.Text = ConfigControl.mainPlayerName.stringVal;
-                else
-                    tB_PlayerD_Name.Text = ipaddress;
+                if (!customName)
+                    FindControl(tP_Main, tB_PlayerD_Name).Text = ipaddress;
 
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
             };
 
             return full;
+        }
+
+        string GetFullAdr() {
+            string ipaddress = FindControl(tP_Main, tB_PlayerD_Adr).Text;
+            string port = FindControl(tP_Main, tB_PlayerD_Port).Text;
+            string url = FindControl(tP_Main, tB_PlayerD_RTSP).Text;
+            string username = FindControl(tP_Main, tB_PlayerD_Username).Text;
+            string password = FindControl(tP_Main, tB_PlayerD_Password).Text;
+
+            return "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
         }
 
         public bool AdrValid(bool showErrors) {
@@ -327,7 +325,8 @@ namespace SSUtility2 {
                     errorMsg = "Address was invalid!\n";
                 }
 
-                if (!ConfigControl.ignoreAddress.boolVal && isMainPlayer && newUri != null) {
+                if (newUri != null && !ConfigControl.ignoreAddress.boolVal 
+                    && !customFull && isMainPlayer) {
                     if (!OtherCamCom.PingAdr(newUri.Host).Result) {
                         errorMsg += "Address had no RTSP stream attached!\n";
                     }
@@ -352,8 +351,6 @@ namespace SSUtility2 {
                 e.Cancel = true;
                 Hide();
             }
-
-            SaveConfigFields(null,null);
         }
 
         private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
@@ -448,39 +445,23 @@ namespace SSUtility2 {
         }
 
         private void Fields_Any_Click(object sender, MouseEventArgs e) {
-            if(isMainPlayer)
-                ConfigControl.mainPlayerCustomFull.UpdateValue("false");
+            customFull = false;
         }
 
         private void tB_PlayerD_Name_KeyUp(object sender, EventArgs e) {
-            if (!isMainPlayer) {
-                UpdateField((Control)sender, this, myLinkedMainPage);
-                GetCombined();
-            }
-
-            string name = tB_PlayerD_Name.Text.Trim();
-            if (name.Length == 0 || name == " " || name == tB_PlayerD_Adr.Text) {
-                ConfigControl.mainPlayerCustomName.UpdateValue("false");
-            } else {
-                ConfigControl.mainPlayerCustomName.UpdateValue("true");
-            }
-
-            ConfigControl.mainPlayerName.UpdateValue(tB_PlayerD_Name.Text);
+            UpdateName(sender);   
         }
 
-        void SaveConfigFields(object sender, EventArgs e) {
-            if (!isMainPlayer || !MainForm.m.finishedLoading)
-                return;
+        void UpdateName(object sender) {
+            string name = FindControl(tP_Main, tB_PlayerD_Name).Text.Trim();
+            if (name.Length == 0 || name == FindControl(tP_Main, tB_PlayerD_Adr).Text) {
+                customName = false;
+            } else {
+                customName = true;
+            }
 
-            ConfigControl.mainPlayerName.UpdateValue(tB_PlayerD_Name.Text);
-            ConfigControl.mainPlayerFullAdr.UpdateValue(tB_PlayerD_SimpleAdr.Text);
-            ConfigControl.mainPlayerCamType.UpdateValue(cB_PlayerD_CamType.Text);
-            ConfigControl.mainPlayerIPAdr.UpdateValue(tB_PlayerD_Adr.Text);
-            ConfigControl.mainPlayerPort.UpdateValue(tB_PlayerD_Port.Text);
-            ConfigControl.mainPlayerRTSP.UpdateValue(tB_PlayerD_RTSP.Text);
-            ConfigControl.mainPlayerBuffering.UpdateValue(tB_PlayerD_Buffering.Text);
-            ConfigControl.mainPlayerUsername.UpdateValue(tB_PlayerD_Username.Text);
-            ConfigControl.mainPlayerPassword.UpdateValue(tB_PlayerD_Password.Text);
+            if (!isMainPlayer)
+                UpdateField((Control)sender, this, myLinkedMainPage);
         }
 
         private void AddressField_KeyUp(object sender, KeyEventArgs e) {
@@ -489,31 +470,19 @@ namespace SSUtility2 {
             }
 
             GetCombined();
-
-            if (isMainPlayer) {
-                if (e.KeyCode == Keys.Enter) { //bug with using arrow keys + enter to close error
-                    SaveConfigFields(null, null);
-                } else
-                    DoSaveTimer();
-            }
-        }
-
-        void DoSaveTimer() {
-            if (saveTimer != null && saveTimer.Enabled)
-                saveTimer.Stop();
-
-            saveTimer.Start();
         }
 
         public void UpdateMode() {
-            string value = ConfigControl.mainPlayerCamType.stringVal.ToLower();
+            int val = ConfigControl.pelcoID.intVal;
+            ComboBox cb = (ComboBox)FindControl(tP_Main, cB_PlayerD_CamType);
+            TextBox tb = (TextBox)FindControl(tP_Main, tB_PlayerD_RTSP);
 
-            if (value.Contains("thermal")) {
-                cB_PlayerD_CamType.SelectedIndex = 1;
-                tB_PlayerD_RTSP.Text = thermalRTSP;
-            } else if (value.Contains("daylight")) {
-                cB_PlayerD_CamType.SelectedIndex = 0;
-                tB_PlayerD_RTSP.Text = dayRTSP;
+            if (val == 1) {
+                cb.SelectedIndex = 1;
+                tb.Text = thermalRTSP;
+            } else if (val == 2) {
+                cb.SelectedIndex = 0;
+                tb.Text = dayRTSP;
             }
 
             myDetached.Play(false, false);
@@ -527,29 +496,87 @@ namespace SSUtility2 {
         }
 
         private void tB_PlayerD_SimpleAdr_KeyUp(object sender, KeyEventArgs e) {
-            if (!isMainPlayer) {
-                UpdateField((Control)sender, this, myLinkedMainPage);
-            }
-
-            string val = tB_PlayerD_SimpleAdr.Text.Trim();
-            
-            if (val == "" || val == GetCombined(true))
-                ConfigControl.mainPlayerCustomFull.UpdateValue("false");
-            else
-                ConfigControl.mainPlayerCustomFull.UpdateValue("true");
-
-            ConfigControl.mainPlayerFullAdr.UpdateValue(val);
+            UpdateCustomFull(sender);
         }
 
-        public void UpdateField(Control c, VideoSettings sets, TabPage tp) {
-            foreach (Control tpC in tp.Controls) {
-                if (c.Name == tpC.Name) {
-                    tpC.Text = c.Text;
+        void UpdateCustomFull(object sender) {
+            string val = FindControl(tP_Main, tB_PlayerD_SimpleAdr).Text.Trim();
+
+            if (val == "" || val == GetFullAdr())
+                customFull = false;
+            else
+                customFull = true;
+
+            if (!isMainPlayer) {
+                UpdateField((Control)sender, this, myLinkedMainPage);
+                GetCombined();
+            }
+        }
+
+        public void UpdateField(Control senderControl, VideoSettings sets, TabPage tp) {
+            try {
+                foreach (Control tabPageControl in tp.Controls) {
+                    if (tabPageControl.Name == senderControl.Name) {
+                        tabPageControl.Text = senderControl.Text;
+                        break;
+                    }
+                }
+
+                FindControl(tp, sets.tB_PlayerD_SimpleAdr).Text = sets.GetCombined();
+                FindControl(tp, sets.tB_PlayerD_Name).Text = sets.tB_PlayerD_Name.Text;
+            } catch (Exception e){
+                Tools.ShowPopup("Updating player field failed!\nShow more?", "Error Occurred!", e.ToString());
+            }
+        }
+
+        public List<(string, string)> SaveToConfig() {
+            List<(string, string)> varList = new List<(string, string)>();
+
+            Control[] saveList = {
+                tB_PlayerD_Name,
+                tB_PlayerD_SimpleAdr,
+                cB_PlayerD_CamType,
+                tB_PlayerD_Adr,
+                tB_PlayerD_Port,
+                tB_PlayerD_Buffering,
+                tB_PlayerD_Username,
+                tB_PlayerD_Password,
+
+            };
+
+            foreach (Control c in saveList) {
+                varList.Add((c.Name, FindControl(tP_Main, c).Text));
+            }
+
+            varList.Add(("CUSTOMNAME", customName.ToString()));
+            varList.Add(("CUSTOMFULL", customFull.ToString()));
+
+            varList.Add((tP_Main.Text, varList.Count.ToString())); //needs to be first so reverse the list
+
+            varList.Reverse();
+            return varList;
+        }
+
+        public void LoadConfig(List<ConfigVar> configList) {
+            for (int i = 0; i < configList.Count; i++) {
+                ConfigVar v = configList[i];
+                foreach (Control c in tP_Main.Controls) {
+                    if (v.name == c.Name) {
+                        c.Text = v.value;
+                        break;
+                    } else if (v.name.ToLower() == "customname") {
+                        customName = ConfigSetting.CheckVal(v.value);
+                        break;
+                    }
+                    else if (v.name.ToLower() == "customfull") {
+                        customName = ConfigSetting.CheckVal(v.value);
+                        break;
+                    }
                 }
             }
-         
-            FindControl(tp, sets.tB_PlayerD_SimpleAdr).Text = sets.GetCombined();
-            FindControl(tp, sets.tB_PlayerD_Name).Text = sets.tB_PlayerD_Name.Text;
+
+            if(ConfigControl.autoPlay.boolVal)
+                myDetached.Play(false, false);
         }
 
     }
