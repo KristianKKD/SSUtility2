@@ -18,7 +18,8 @@ namespace SSUtility2 {
 
         private const string varPrefix = "v"; //What the prefix of the actual value is ([varPrefix]ScreenshotFolder:bin/obj/)
         private const string playerPrefix = "p"; //Player config prefix
-        private const string playerConfigPrefix = "c"; //Player config prefix
+        private const string presetTypePrefix = "t"; //Preset config prefix
+        private const string subPrefix = " "; //Preset config prefix
         
         public static ConfigSetting scFolder = new ConfigSetting(savedFolder, "SnapshotFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting vFolder = new ConfigSetting(savedFolder, "VideoFolder", ConfigSetting.VarType.strings);
@@ -27,7 +28,6 @@ namespace SSUtility2 {
         public static ConfigSetting screencapFileName = new ConfigSetting("Recording", "ScreenRecordingFileName", ConfigSetting.VarType.strings);
         public static ConfigSetting recQual = new ConfigSetting("100", "RecordingQuality", ConfigSetting.VarType.integer);
         public static ConfigSetting recFPS = new ConfigSetting("30", "RecordingFramerate", ConfigSetting.VarType.integer);
-        public static ConfigSetting subnetNotif = new ConfigSetting("false", "SubnetNotificationHidden", ConfigSetting.VarType.boolean);
         public static ConfigSetting autoPlay = new ConfigSetting("true", "AutoPlayLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting ignoreAddress = new ConfigSetting("false", "AddressInvalidHidden", ConfigSetting.VarType.boolean);
         public static ConfigSetting forceCamera = new ConfigSetting("false", "ForceCameraModeEnabled", ConfigSetting.VarType.boolean);
@@ -97,7 +97,6 @@ namespace SSUtility2 {
             scFileName,
             recQual,
             recFPS,
-            subnetNotif,
             autoPlay,
             ignoreAddress,
             forceCamera,
@@ -161,7 +160,7 @@ namespace SSUtility2 {
                     ConfigLine(path, setting.settingName, setting.stringVal, varPrefix);
                 }
 
-                for (int i = -1; i < MainForm.m.mainPlayer.attachedPlayers.Count; i++) { //will only save the first two players for now
+                for (int i = -1; i < MainForm.m.mainPlayer.attachedPlayers.Count; i++) {
                     Detached d = MainForm.m.mainPlayer;
                     if (i != -1)
                         d = MainForm.m.mainPlayer.attachedPlayers[i];
@@ -173,12 +172,19 @@ namespace SSUtility2 {
                         if(o == 0)
                             ConfigLine(path, s.Item1, s.Item2, playerPrefix);
                         else
-                            ConfigLine(path, s.Item1, s.Item2, playerConfigPrefix);
+                            ConfigLine(path, s.Item1, s.Item2, subPrefix);
                     }
                 }
 
+                UserPresets up = MainForm.m.up;
+                int rowCount = up.CountRows();
+                ConfigLine(path, "Presets", rowCount.ToString(), presetTypePrefix);
+                for (int i = 0; i < rowCount; i++)
+                    File.AppendAllText(path, subPrefix + up.GetRowCellVals(up.dgv_Presets.Rows[i]) + "\n");
+
                 if (MainForm.m.finalMode)
                     Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
+
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to write config!\nShow more?", "Critical Error Occurred!", e.ToString());
             }
@@ -200,8 +206,7 @@ namespace SSUtility2 {
 
                     if (line.StartsWith(varPrefix))
                         varFound.Add(CreateConfigVar(line));
-                    else if (line.StartsWith(playerPrefix)) {
-                        List<ConfigVar> config = new List<ConfigVar>();
+                    else {
 
                         int valPos = line.IndexOf(":") + 1;
                         if (valPos == 0)
@@ -211,11 +216,24 @@ namespace SSUtility2 {
                         if (!int.TryParse(line.Substring(valPos), out val))
                             continue;
 
-                        for (int o = 0; o < val; o++)
-                            config.Add(CreateConfigVar(lines[i + o]));
+                        if (line.StartsWith(playerPrefix)) {
+                            List<ConfigVar> config = new List<ConfigVar>();
 
-                        playersFound.Add(config);
+                            for (int o = 0; o < val; o++)
+                                config.Add(CreateConfigVar(lines[i + o]));
+
+                            playersFound.Add(config);
+                            i += val;
+                        } else if (line.StartsWith(presetTypePrefix)) {
+                            i++;
+                            for (int o = 0; o < val; o++) {
+                                MainForm.m.up.AddPreset(lines[i + o]);
+                            }
+
+                            i += val;
+                        }
                     }
+
                 }
 
                 foreach (ConfigVar v in varFound) {
@@ -256,7 +274,6 @@ namespace SSUtility2 {
         }
     }
 
-
     public class ConfigSetting {
 
         public string defaultVal;
@@ -282,10 +299,10 @@ namespace SSUtility2 {
 
             switch (type) {
                 case VarType.boolean:
-                    boolVal = CheckVal(defVal);
+                    boolVal = CheckBoolVal(defVal);
                     break;
                 case VarType.integer:
-                    intVal = int.Parse(defVal);
+                    UpdateIntVal(defVal);
                     break;
             }
         }
@@ -297,21 +314,29 @@ namespace SSUtility2 {
 
             switch (myType) {
                 case VarType.boolean:
-                    boolVal = CheckVal(val);
+                    boolVal = CheckBoolVal(val);
                     break;
                 case VarType.integer:
-                    intVal = int.Parse(val);
+                    UpdateIntVal(val);
                     break;
             }
 
             stringVal = val;
         }
 
+        void UpdateIntVal(string val) {
+            int parsed;
+            if (int.TryParse(val, out parsed))
+                intVal = parsed;
+            else
+                intVal = 0;
+        }
+
         public void ChangeDefault(string val) {
             defaultVal = val;
         }
 
-        public static bool CheckVal(string v) {
+        public static bool CheckBoolVal(string v) {
             if (v.ToLower() == "true") {
                 return true;
             } else {

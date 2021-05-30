@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.0.0";
+        public const string version = "v2.7.1.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -31,6 +31,7 @@ namespace SSUtility2 {
         public PresetPanel pp;
         public TabControl attachedpp;
         public Detached mainPlayer;
+        public UserPresets up;
         private Recorder screenRec;
 
         private string inUseVideoPath;
@@ -47,11 +48,13 @@ namespace SSUtility2 {
 
         public async Task StartupStuff() {
             try {
+                CreateHandle();
                 m = this;
                 setPage = new SettingsPage();
                 rl = new ResponseLog();
                 pd = new PelcoD();
                 pp = new PresetPanel();
+                up = new UserPresets();
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
                 EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init();
@@ -73,7 +76,6 @@ namespace SSUtility2 {
                     JoyBack,
                 };
 
-
                 HideControlPanel();
                 b_Open.BringToFront();
 
@@ -86,8 +88,8 @@ namespace SSUtility2 {
                 Tools.SetFeatureToAllControls(m.Controls);
 
                 CommandQueue.Init();
+
                 if (startLiteVersion) {
-                    AsyncCamCom.TryConnect();
                     LiteToggle();
                 } else
                     await AttachPlayers();
@@ -97,6 +99,7 @@ namespace SSUtility2 {
                 if (ConfigControl.maintainAspectRatio.boolVal)
                     StartRatioTimer();
 
+                AsyncCamCom.TryConnect(false);
             } catch (Exception e) {
                 Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
             }

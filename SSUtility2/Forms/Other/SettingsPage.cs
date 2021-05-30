@@ -9,14 +9,21 @@ namespace SSUtility2 {
 
         CommandListWindow clw = null;
         Timer connectTimer;
+        Timer pelcoIdTimer;
+
 
         public SettingsPage() {
             InitializeComponent();
+            CreateHandle();
             l_Version.Text = l_Version.Text + MainForm.version;
             UpdatePresetCB();
             connectTimer = new Timer();
             connectTimer.Interval = 1000;
-            connectTimer.Tick += new EventHandler(TimerCallback);
+            connectTimer.Tick += new EventHandler(ConnectTimerCallback);
+
+            pelcoIdTimer = new Timer();
+            pelcoIdTimer.Interval = 500;
+            pelcoIdTimer.Tick += new EventHandler(PelcoIDTimerCallback);
         }
 
         public async Task PopulateSettingText() {
@@ -38,7 +45,6 @@ namespace SSUtility2 {
                 cB_Rec_Quality.Text = ConfigControl.recQual.stringVal;
                 cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
-                check_Other_Subnet.Checked = ConfigControl.subnetNotif.boolVal;
                 check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
                 check_Other_AutoReconnect.Checked = ConfigControl.autoReconnect.boolVal;
                 check_AddressInvalid.Checked = ConfigControl.ignoreAddress.boolVal;
@@ -56,6 +62,8 @@ namespace SSUtility2 {
                 MainForm.m.Height = ConfigControl.startupHeight.intVal;
                 l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
                 l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
+
+                l_IPCon_PelcoID.Text = "Pelco ID: " + ConfigControl.pelcoID.stringVal;
 
                 UpdateSelectedCam(false);
                 LoadCustoms();
@@ -85,12 +93,6 @@ namespace SSUtility2 {
             if (!MainForm.m.finishedLoading)
                 return;
             ConfigControl.autoPlay.UpdateValue(check_Other_AutoPlay.Checked.ToString());
-        }
-
-        private void check_Other_Subnet_CheckedChanged(object sender, EventArgs e) {
-            if (!MainForm.m.finishedLoading)
-                return;
-            ConfigControl.subnetNotif.UpdateValue(check_Other_Subnet.Checked.ToString());
         }
 
         private void check_Paths_Manual_CheckedChanged(object sender, EventArgs e) {
@@ -234,7 +236,7 @@ namespace SSUtility2 {
             connectTimer.Start();
         }
 
-        void TimerCallback(object sender, EventArgs e) {
+        void ConnectTimerCallback(object sender, EventArgs e) {
             try {
                 connectTimer.Stop();
 
@@ -247,6 +249,36 @@ namespace SSUtility2 {
             } catch {
                 OtherCamCom.LabelDisplay(false);
             }
+        }
+
+        private void cB_ipCon_CamType_SelectedIndexChanged(object sender, EventArgs e) {
+            UpdateID();
+        }
+
+        private void cB_ipCon_CamType_KeyUp(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                UpdateID();
+                connectTimer.Stop();
+            } else
+                DoIDTimer();
+        }
+
+        void DoIDTimer() {
+            if (pelcoIdTimer.Enabled)
+                pelcoIdTimer.Stop();
+
+            pelcoIdTimer.Start();
+        }
+
+        void PelcoIDTimerCallback(object sender, EventArgs e) {
+            pelcoIdTimer.Stop();
+            UpdateID();
+        }
+
+        async Task UpdateID() {
+            ConfigControl.pelcoID.UpdateValue(UserPresets.GetPelcoID(cB_ipCon_CamType.Text).ToString());
+            MainForm.m.mainPlayer.settings.UpdateMode();
+            l_IPCon_PelcoID.Text = "Pelco ID: " + ConfigControl.pelcoID.stringVal;
         }
 
         async Task ConnectToCamera(bool showErrors) {
@@ -445,16 +477,6 @@ namespace SSUtility2 {
             } 
         }
 
-        private void cB_ipCon_CamType_SelectedIndexChanged(object sender, EventArgs e) { //cant combine both because it is changed elsewhere
-            ConfigControl.pelcoID.UpdateValue(cB_ipCon_CamType.Text);
-            MainForm.m.mainPlayer.settings.UpdateMode();
-        }
-
-        private void cB_ipCon_CamType_KeyPress(object sender, KeyPressEventArgs e) {
-            ConfigControl.pelcoID.UpdateValue(cB_ipCon_CamType.Text);
-            MainForm.m.mainPlayer.settings.UpdateMode();
-        }
-
         private void tB_IPCon_CamSpeed_KeyPress(object sender, KeyPressEventArgs e) {
             if (float.TryParse(tB_IPCon_CamSpeed.Text, out float val)) {
                 if (val < 1f)
@@ -518,8 +540,10 @@ namespace SSUtility2 {
         }
 
         public void UpdateCamConfig(OtherCamCom.CamConfig type) {
-            cB_IPCon_ForceMode.Text = type.ToString();
-            ConfigControl.forceType.UpdateValue(cB_IPCon_ForceMode.Text);
+            Invoke((MethodInvoker)delegate {
+                cB_IPCon_ForceMode.Text = type.ToString();
+                ConfigControl.forceType.UpdateValue(cB_IPCon_ForceMode.Text);
+            });
         }
 
         private void b_IPCon_Recheck_Click(object sender, EventArgs e) {
@@ -536,6 +560,10 @@ namespace SSUtility2 {
 
             ConfigControl.playerCount.UpdateValue(cB_Other_PlayerCount.Text);
             MainForm.m.AttachPlayers();
+        }
+
+        private void b_IPCon_EditCamType_Click(object sender, EventArgs e) {
+            MainForm.m.up.Show();
         }
 
     }

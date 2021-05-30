@@ -69,7 +69,7 @@ namespace SSUtility2 {
         }
 
         public static uint MakeAdr() {
-            string settingsVal = MainForm.m.setPage.cB_ipCon_CamType.Text;
+            string settingsVal = ConfigControl.pelcoID.stringVal;
 
             if (settingsVal.Contains("daylight") && !MainForm.m.lite) //temp stuff
                 return 1;

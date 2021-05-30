@@ -36,11 +36,9 @@ namespace SSUtility2
             this.l_PlayerD_RTSP = new System.Windows.Forms.Label();
             this.tB_PlayerD_Password = new System.Windows.Forms.TextBox();
             this.tB_PlayerD_Adr = new System.Windows.Forms.TextBox();
-            this.l_PlayerD_Buffering = new System.Windows.Forms.Label();
             this.l_PlayerD_Password = new System.Windows.Forms.Label();
             this.l_PlayerD_Username = new System.Windows.Forms.Label();
             this.tB_PlayerD_Port = new System.Windows.Forms.TextBox();
-            this.tB_PlayerD_Buffering = new System.Windows.Forms.TextBox();
             this.l_PlayerD_Port = new System.Windows.Forms.Label();
             this.tB_PlayerD_Username = new System.Windows.Forms.TextBox();
             this.tB_PlayerD_RTSP = new System.Windows.Forms.TextBox();
@@ -150,7 +148,7 @@ namespace SSUtility2
             this.tB_PlayerD_Password.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_PlayerD_Password.Location = new System.Drawing.Point(94, 233);
+            this.tB_PlayerD_Password.Location = new System.Drawing.Point(94, 207);
             this.tB_PlayerD_Password.Name = "tB_PlayerD_Password";
             this.tB_PlayerD_Password.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_Password.TabIndex = 4;
@@ -172,26 +170,13 @@ namespace SSUtility2
             this.tB_PlayerD_Adr.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Fields_Any_Click);
             this.tB_PlayerD_Adr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.AddressField_KeyUp);
             // 
-            // l_PlayerD_Buffering
-            // 
-            this.l_PlayerD_Buffering.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.l_PlayerD_Buffering.AutoSize = true;
-            this.l_PlayerD_Buffering.Location = new System.Drawing.Point(11, 184);
-            this.l_PlayerD_Buffering.Name = "l_PlayerD_Buffering";
-            this.l_PlayerD_Buffering.Size = new System.Drawing.Size(77, 13);
-            this.l_PlayerD_Buffering.TabIndex = 2;
-            this.l_PlayerD_Buffering.Text = "Buffering (ms): ";
-            this.l_PlayerD_Buffering.Visible = false;
-            // 
             // l_PlayerD_Password
             // 
             this.l_PlayerD_Password.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PlayerD_Password.AutoSize = true;
-            this.l_PlayerD_Password.Location = new System.Drawing.Point(11, 236);
+            this.l_PlayerD_Password.Location = new System.Drawing.Point(11, 210);
             this.l_PlayerD_Password.Name = "l_PlayerD_Password";
             this.l_PlayerD_Password.Size = new System.Drawing.Size(56, 13);
             this.l_PlayerD_Password.TabIndex = 2;
@@ -204,7 +189,7 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PlayerD_Username.AutoSize = true;
-            this.l_PlayerD_Username.Location = new System.Drawing.Point(11, 210);
+            this.l_PlayerD_Username.Location = new System.Drawing.Point(11, 184);
             this.l_PlayerD_Username.Name = "l_PlayerD_Username";
             this.l_PlayerD_Username.Size = new System.Drawing.Size(58, 13);
             this.l_PlayerD_Username.TabIndex = 2;
@@ -224,20 +209,6 @@ namespace SSUtility2
             this.tB_PlayerD_Port.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Fields_Any_Click);
             this.tB_PlayerD_Port.KeyUp += new System.Windows.Forms.KeyEventHandler(this.AddressField_KeyUp);
             // 
-            // tB_PlayerD_Buffering
-            // 
-            this.tB_PlayerD_Buffering.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_PlayerD_Buffering.Location = new System.Drawing.Point(94, 181);
-            this.tB_PlayerD_Buffering.Name = "tB_PlayerD_Buffering";
-            this.tB_PlayerD_Buffering.Size = new System.Drawing.Size(349, 20);
-            this.tB_PlayerD_Buffering.TabIndex = 4;
-            this.tB_PlayerD_Buffering.Text = "200";
-            this.tB_PlayerD_Buffering.Visible = false;
-            this.tB_PlayerD_Buffering.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Fields_Any_Click);
-            this.tB_PlayerD_Buffering.KeyUp += new System.Windows.Forms.KeyEventHandler(this.AddressField_KeyUp);
-            // 
             // l_PlayerD_Port
             // 
             this.l_PlayerD_Port.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -255,7 +226,7 @@ namespace SSUtility2
             this.tB_PlayerD_Username.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_PlayerD_Username.Location = new System.Drawing.Point(94, 207);
+            this.tB_PlayerD_Username.Location = new System.Drawing.Point(94, 181);
             this.tB_PlayerD_Username.Name = "tB_PlayerD_Username";
             this.tB_PlayerD_Username.Size = new System.Drawing.Size(349, 20);
             this.tB_PlayerD_Username.TabIndex = 4;
@@ -294,7 +265,7 @@ namespace SSUtility2
             // 
             this.check_PlayerD_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.check_PlayerD_Manual.AutoSize = true;
-            this.check_PlayerD_Manual.Location = new System.Drawing.Point(6, 265);
+            this.check_PlayerD_Manual.Location = new System.Drawing.Point(14, 240);
             this.check_PlayerD_Manual.Name = "check_PlayerD_Manual";
             this.check_PlayerD_Manual.Size = new System.Drawing.Size(144, 17);
             this.check_PlayerD_Manual.TabIndex = 55;
@@ -307,7 +278,7 @@ namespace SSUtility2
             this.b_PlayerD_Play.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PlayerD_Play.BackColor = System.Drawing.SystemColors.Control;
             this.b_PlayerD_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PlayerD_Play.Location = new System.Drawing.Point(395, 259);
+            this.b_PlayerD_Play.Location = new System.Drawing.Point(389, 234);
             this.b_PlayerD_Play.Name = "b_PlayerD_Play";
             this.b_PlayerD_Play.Size = new System.Drawing.Size(54, 23);
             this.b_PlayerD_Play.TabIndex = 59;
@@ -320,7 +291,7 @@ namespace SSUtility2
             this.b_PlayerD_Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PlayerD_Stop.BackColor = System.Drawing.SystemColors.Control;
             this.b_PlayerD_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PlayerD_Stop.Location = new System.Drawing.Point(335, 259);
+            this.b_PlayerD_Stop.Location = new System.Drawing.Point(329, 234);
             this.b_PlayerD_Stop.Name = "b_PlayerD_Stop";
             this.b_PlayerD_Stop.Size = new System.Drawing.Size(54, 23);
             this.b_PlayerD_Stop.TabIndex = 61;
@@ -337,7 +308,7 @@ namespace SSUtility2
             this.tC_PlayerSettings.Location = new System.Drawing.Point(12, 12);
             this.tC_PlayerSettings.Name = "tC_PlayerSettings";
             this.tC_PlayerSettings.SelectedIndex = 0;
-            this.tC_PlayerSettings.Size = new System.Drawing.Size(463, 314);
+            this.tC_PlayerSettings.Size = new System.Drawing.Size(463, 289);
             this.tC_PlayerSettings.TabIndex = 62;
             // 
             // tP_Main
@@ -347,12 +318,10 @@ namespace SSUtility2
             this.tP_Main.Controls.Add(this.l_PlayerD_RTSP);
             this.tP_Main.Controls.Add(this.tB_PlayerD_Password);
             this.tP_Main.Controls.Add(this.l_PlayerD_CamType);
-            this.tP_Main.Controls.Add(this.l_PlayerD_Buffering);
             this.tP_Main.Controls.Add(this.cB_PlayerD_CamType);
             this.tP_Main.Controls.Add(this.l_PlayerD_Password);
             this.tP_Main.Controls.Add(this.tB_PlayerD_SimpleAdr);
             this.tP_Main.Controls.Add(this.l_PlayerD_Username);
-            this.tP_Main.Controls.Add(this.tB_PlayerD_Buffering);
             this.tP_Main.Controls.Add(this.l_PlayerD_SimpleAdr);
             this.tP_Main.Controls.Add(this.tB_PlayerD_Username);
             this.tP_Main.Controls.Add(this.tB_PlayerD_Port);
@@ -368,17 +337,17 @@ namespace SSUtility2
             this.tP_Main.Location = new System.Drawing.Point(4, 22);
             this.tP_Main.Name = "tP_Main";
             this.tP_Main.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Main.Size = new System.Drawing.Size(455, 288);
+            this.tP_Main.Size = new System.Drawing.Size(455, 263);
             this.tP_Main.TabIndex = 0;
             this.tP_Main.Text = "Main Player";
             // 
-            // b_Detach
+            // b_PlayerD_Detach
             // 
             this.b_PlayerD_Detach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_PlayerD_Detach.BackColor = System.Drawing.SystemColors.Control;
             this.b_PlayerD_Detach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PlayerD_Detach.Location = new System.Drawing.Point(275, 259);
-            this.b_PlayerD_Detach.Name = "b_Detach";
+            this.b_PlayerD_Detach.Location = new System.Drawing.Point(269, 234);
+            this.b_PlayerD_Detach.Name = "b_PlayerD_Detach";
             this.b_PlayerD_Detach.Size = new System.Drawing.Size(54, 23);
             this.b_PlayerD_Detach.TabIndex = 63;
             this.b_PlayerD_Detach.Text = "Detach";
@@ -391,7 +360,7 @@ namespace SSUtility2
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(484, 336);
+            this.ClientSize = new System.Drawing.Size(484, 311);
             this.Controls.Add(this.tC_PlayerSettings);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VideoSettings";
@@ -417,11 +386,9 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_PlayerD_RTSP;
         public System.Windows.Forms.TextBox tB_PlayerD_Password;
         public System.Windows.Forms.TextBox tB_PlayerD_Adr;
-        public System.Windows.Forms.Label l_PlayerD_Buffering;
         public System.Windows.Forms.Label l_PlayerD_Password;
         public System.Windows.Forms.Label l_PlayerD_Username;
         public System.Windows.Forms.TextBox tB_PlayerD_Port;
-        public System.Windows.Forms.TextBox tB_PlayerD_Buffering;
         public System.Windows.Forms.Label l_PlayerD_Port;
         public System.Windows.Forms.TextBox tB_PlayerD_Username;
         public System.Windows.Forms.TextBox tB_PlayerD_RTSP;

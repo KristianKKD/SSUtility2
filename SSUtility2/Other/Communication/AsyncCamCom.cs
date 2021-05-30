@@ -152,11 +152,7 @@ namespace SSUtility2 {
                     return false;
                 }
 
-                if (showErrors && !ConfigControl.subnetNotif.boolVal) {
-                    if (!OtherCamCom.CheckIsSameSubnet(ep.Address.ToString())) {
-                        return false;
-                    }
-                }
+                OtherCamCom.CheckIsSameSubnet(ep.Address.ToString());
 
                 if (ConfigControl.autoReconnect.boolVal && !isPlayer) {
                     MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ip.ToString();

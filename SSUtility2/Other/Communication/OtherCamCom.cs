@@ -24,25 +24,33 @@ namespace SSUtility2 {
 
         public const string defaultResult = "00 00 00 00 00 00 00";
 
-        public static bool CheckIsSameSubnet(string newIp) {
-            if (!IPAddress.TryParse(newIp, out IPAddress dontuse)) {
-                return false;
-            }
+        public static void CheckIsSameSubnet(string newIp) {
+            try {
+                Label l = MainForm.m.setPage.l_IPCon_Subnet;
+                ToolTip tp = MainForm.m.setPage.toolTips;
+                if (!IPAddress.TryParse(newIp, out IPAddress dontuse)) {
+                    l.Text = "";
+                    tp.SetToolTip(l, "");
+                    return;
+                }
 
-            string rawIp = GetLocalIPAddress();
-            string mySub = FindSubnet(rawIp);
-            string newSub = FindSubnet(newIp);
+                string rawIp = GetLocalIPAddress();
+                string mySub = FindSubnet(rawIp);
+                string newSub = FindSubnet(newIp);
 
-            Int32.TryParse(mySub, out int mine);
-            Int32.TryParse(newSub, out int other);
+                Int32.TryParse(mySub, out int mine);
+                Int32.TryParse(newSub, out int other);
 
-            if (mine != other) {
-                bool result = Tools.ShowPopup("Local IP subnet is not the same as the camera subnet!" + "\nYour IP: " + rawIp + "\nOther IP: "
-                    + rawIp.Replace(mySub, newSub) + "\nProceed anyway?",
-                    "Subnet Error!", "", false);
-                return result;
-            } else {
-                return true;
+                if (mine != other) {
+                    l.Text = "Different subnet!";
+                    tp.SetToolTip(l, "Local IP subnet is not the same as the camera subnet!"
+                        + "\nYour IP: " + rawIp + "\nGiven IP: " + rawIp.Replace(mySub, newSub));
+                } else {
+                    l.Text = "";
+                    tp.SetToolTip(l, "");
+                }
+            }catch(Exception e) {
+                MessageBox.Show("SUBNET CHECK\n" + e.ToString());
             }
         }
 

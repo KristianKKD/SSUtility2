@@ -21,7 +21,7 @@ namespace SSUtility2 {
         public const string dayRTSP = "videoinput_1:0/h264_1/onvif.stm";
         public const string thermalRTSP = "videoinput_2:0/h264_1/onvif.stm";
 
-        const int minExtendedHeight = 375;
+        const int minExtendedHeight = 350;
         const int minSimpleHeight = 275;
 
         public int channelID = -1;
@@ -48,12 +48,10 @@ namespace SSUtility2 {
 
             extendedControls = new Control[] {
                 tB_PlayerD_RTSP,
-                tB_PlayerD_Buffering,
                 tB_PlayerD_Username,
                 tB_PlayerD_Password,
 
                 l_PlayerD_RTSP,
-                l_PlayerD_Buffering,
                 l_PlayerD_Username,
                 l_PlayerD_Password,
             };
@@ -473,6 +471,8 @@ namespace SSUtility2 {
         }
 
         public void UpdateMode() {
+            return;
+
             int val = ConfigControl.pelcoID.intVal;
             ComboBox cb = (ComboBox)FindControl(tP_Main, cB_PlayerD_CamType);
             TextBox tb = (TextBox)FindControl(tP_Main, tB_PlayerD_RTSP);
@@ -538,10 +538,8 @@ namespace SSUtility2 {
                 cB_PlayerD_CamType,
                 tB_PlayerD_Adr,
                 tB_PlayerD_Port,
-                tB_PlayerD_Buffering,
                 tB_PlayerD_Username,
                 tB_PlayerD_Password,
-
             };
 
             foreach (Control c in saveList) {
@@ -565,11 +563,11 @@ namespace SSUtility2 {
                         c.Text = v.value;
                         break;
                     } else if (v.name.ToLower() == "customname") {
-                        customName = ConfigSetting.CheckVal(v.value);
+                        customName = ConfigSetting.CheckBoolVal(v.value);
                         break;
                     }
                     else if (v.name.ToLower() == "customfull") {
-                        customName = ConfigSetting.CheckVal(v.value);
+                        customName = ConfigSetting.CheckBoolVal(v.value);
                         break;
                     }
                 }
