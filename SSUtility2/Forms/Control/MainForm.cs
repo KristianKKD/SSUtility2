@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.1.0";
+        public const string version = "v2.7.2.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -45,6 +45,7 @@ namespace SSUtility2 {
         private Direction resizeDir;
 
         public List<List<ConfigVar>> playerConfigList;
+        public List<VideoSettings> allSettingsList;
 
         public async Task StartupStuff() {
             try {
@@ -57,6 +58,7 @@ namespace SSUtility2 {
                 up = new UserPresets();
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
+                allSettingsList = new List<VideoSettings>();
                 EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init();
 
                 mainPlayer = new Detached(true);

@@ -39,6 +39,8 @@ namespace SSUtility2 {
             if (d == null)
                 return;
 
+            MainForm.m.allSettingsList.Add(this);
+
             myDetached = d;
             isMainPlayer = isMain;
 

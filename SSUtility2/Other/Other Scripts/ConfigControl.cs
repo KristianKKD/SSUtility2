@@ -45,6 +45,7 @@ namespace SSUtility2 {
         public static ConfigSetting maintainAspectRatio = new ConfigSetting("false", "MaintainAspectRatio", ConfigSetting.VarType.boolean);
         public static ConfigSetting playerCount = new ConfigSetting("1", "PlayerCount", ConfigSetting.VarType.integer);
         public static ConfigSetting pelcoID = new ConfigSetting("1", "SelectedPelcoID", ConfigSetting.VarType.integer);
+        public static ConfigSetting selectedPresetName = new ConfigSetting("", "SelectedPresetName", ConfigSetting.VarType.strings);
 
         public static ConfigSetting customButtonName1 = new ConfigSetting("1", "CustomButtonName1", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonName2 = new ConfigSetting("2", "CustomButtonName2", ConfigSetting.VarType.strings);
@@ -114,6 +115,7 @@ namespace SSUtility2 {
             playerCount,
             maintainAspectRatio,
             pelcoID,
+            selectedPresetName,
 
             customButtonName1,
             customButtonName2,
@@ -207,9 +209,8 @@ namespace SSUtility2 {
                     if (line.StartsWith(varPrefix))
                         varFound.Add(CreateConfigVar(line));
                     else {
-
                         int valPos = line.IndexOf(":") + 1;
-                        if (valPos == 0)
+                        if (valPos <= 0)
                             continue;
 
                         int val = 0;
@@ -220,15 +221,17 @@ namespace SSUtility2 {
                             List<ConfigVar> config = new List<ConfigVar>();
 
                             for (int o = 0; o < val; o++)
-                                config.Add(CreateConfigVar(lines[i + o]));
+                                if (lines.Length - 1 >= i + o)
+                                    config.Add(CreateConfigVar(lines[i + o]));
 
                             playersFound.Add(config);
                             i += val;
                         } else if (line.StartsWith(presetTypePrefix)) {
                             i++;
-                            for (int o = 0; o < val; o++) {
-                                MainForm.m.up.AddPreset(lines[i + o]);
-                            }
+
+                            for (int o = 0; o < val; o++)
+                                if (lines.Length - 1 >= i + o)
+                                    MainForm.m.up.AddPreset(lines[i + o]);
 
                             i += val;
                         }

@@ -459,9 +459,6 @@ namespace SSUtility2
             // cB_ipCon_CamType
             // 
             this.cB_ipCon_CamType.FormattingEnabled = true;
-            this.cB_ipCon_CamType.Items.AddRange(new object[] {
-            "Daylight",
-            "Thermal"});
             this.cB_ipCon_CamType.Location = new System.Drawing.Point(115, 85);
             this.cB_ipCon_CamType.Name = "cB_ipCon_CamType";
             this.cB_ipCon_CamType.Size = new System.Drawing.Size(123, 21);
@@ -475,9 +472,9 @@ namespace SSUtility2
             this.l_ipCon_Selected.AutoSize = true;
             this.l_ipCon_Selected.Location = new System.Drawing.Point(6, 88);
             this.l_ipCon_Selected.Name = "l_ipCon_Selected";
-            this.l_ipCon_Selected.Size = new System.Drawing.Size(88, 13);
+            this.l_ipCon_Selected.Size = new System.Drawing.Size(93, 13);
             this.l_ipCon_Selected.TabIndex = 82;
-            this.l_ipCon_Selected.Text = "Selected Camera";
+            this.l_ipCon_Selected.Text = "Selected Pelco ID";
             this.toolTips.SetToolTip(this.l_ipCon_Selected, "Commands are sent to this Pelco ID in the camera");
             // 
             // tB_IPCon_Port

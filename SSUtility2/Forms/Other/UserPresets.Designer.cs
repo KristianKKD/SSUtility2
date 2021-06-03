@@ -55,6 +55,9 @@ namespace SSUtility2 {
             this.dgv_Presets.RowHeadersVisible = false;
             this.dgv_Presets.Size = new System.Drawing.Size(800, 450);
             this.dgv_Presets.TabIndex = 0;
+            this.dgv_Presets.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgv_Presets_CellBeginEdit);
+            this.dgv_Presets.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Presets_CellEndEdit);
+            this.dgv_Presets.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Presets_CellValueChanged);
             // 
             // PresetName
             // 

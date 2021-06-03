@@ -277,6 +277,7 @@ namespace SSUtility2 {
 
         async Task UpdateID() {
             ConfigControl.pelcoID.UpdateValue(UserPresets.GetPelcoID(cB_ipCon_CamType.Text).ToString());
+            ConfigControl.selectedPresetName.UpdateValue(cB_ipCon_CamType.Text.ToString());
             MainForm.m.mainPlayer.settings.UpdateMode();
             l_IPCon_PelcoID.Text = "Pelco ID: " + ConfigControl.pelcoID.stringVal;
         }
@@ -327,7 +328,7 @@ namespace SSUtility2 {
         }
 
         public async Task UpdateSelectedCam(bool play) {
-            cB_ipCon_CamType.Text = ConfigControl.pelcoID.stringVal;
+            cB_ipCon_CamType.Text = ConfigControl.selectedPresetName.stringVal;
 
             if (MainForm.m.lite) {
                 MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
@@ -564,6 +565,26 @@ namespace SSUtility2 {
 
         private void b_IPCon_EditCamType_Click(object sender, EventArgs e) {
             MainForm.m.up.Show();
+        }
+
+        public void AddPresetOption(DataGridViewRow row) {
+            cB_ipCon_CamType.Items.Add(row.Cells[0].Value);
+        }
+
+        public void RemovePresetOption(DataGridViewRow row) {
+            if(cB_ipCon_CamType.Items.Contains(row.Cells[0].Value))
+                cB_ipCon_CamType.Items.Remove(row.Cells[0].Value);
+        }
+
+        public void EditPresetOption(DataGridViewRow row, DataGridViewRow oldRow) {
+            int index = -1;
+            if (cB_ipCon_CamType.Items.Contains(oldRow.Cells[0].Value))
+                index = cB_ipCon_CamType.Items.IndexOf(oldRow.Cells[0].Value);
+
+            if (index == -1) 
+                return;
+
+            cB_ipCon_CamType.Items[index] = row.Cells[0].Value;
         }
 
     }
