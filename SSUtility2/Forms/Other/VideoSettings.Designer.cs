@@ -116,17 +116,12 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cB_PlayerD_CamType.FormattingEnabled = true;
-            this.cB_PlayerD_CamType.Items.AddRange(new object[] {
-            "IONodes - Daylight",
-            "IONodes - Thermal",
-            "VIVOTEK",
-            "BOSCH"});
             this.cB_PlayerD_CamType.Location = new System.Drawing.Point(94, 75);
             this.cB_PlayerD_CamType.Name = "cB_PlayerD_CamType";
             this.cB_PlayerD_CamType.Size = new System.Drawing.Size(349, 21);
             this.cB_PlayerD_CamType.TabIndex = 5;
             this.cB_PlayerD_CamType.Text = "IONodes - Daylight";
-            this.cB_PlayerD_CamType.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_Type_SelectedIndexChanged);
+            this.cB_PlayerD_CamType.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_CamType_SelectedIndexChanged);
             this.cB_PlayerD_CamType.KeyUp += new System.Windows.Forms.KeyEventHandler(this.AddressField_KeyUp);
             this.cB_PlayerD_CamType.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Fields_Any_Click);
             // 

@@ -9,17 +9,15 @@ namespace SSUtility2 {
 
         public enum CopyType {
             CopyFull,
-            CopyAsSecondary,
             NoCopy,
         }
+
+        public static List<VideoSettings> allSettings;
 
         public Detached myDetached;
         public TabPage myLinkedMainPage;
 
         public List<Detached> attachedList = new List<Detached>();
-
-        public const string dayRTSP = "videoinput_1:0/h264_1/onvif.stm";
-        public const string thermalRTSP = "videoinput_2:0/h264_1/onvif.stm";
 
         const int minExtendedHeight = 350;
         const int minSimpleHeight = 275;
@@ -39,7 +37,7 @@ namespace SSUtility2 {
             if (d == null)
                 return;
 
-            MainForm.m.allSettingsList.Add(this);
+            allSettings.Add(this);
 
             myDetached = d;
             isMainPlayer = isMain;
@@ -58,10 +56,53 @@ namespace SSUtility2 {
                 l_PlayerD_Password,
             };
 
-            if (!isMain)
+            if (!isMain) {
                 tP_Main.Text = "Detached Player";
 
+                foreach (string s in MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Items)
+                    cB_PlayerD_CamType.Items.Add(s);
+            }
             GetCombined();
+        }
+
+        public static void AddPresetOption(DataGridViewRow row) {
+            foreach (VideoSettings vs in allSettings) {
+                if (vs == null || vs.myDetached == null)
+                    continue;
+
+                ComboBox cb = (ComboBox)FindControl(vs.tP_Main, MainForm.m.mainPlayer.settings.cB_PlayerD_CamType);
+                cb.Items.Add(row.Cells[0].Value);
+            }
+        }
+
+        public static void RemovePresetOption(DataGridViewRow row) {
+            foreach (VideoSettings vs in allSettings) {
+                if (vs == null || vs.myDetached == null)
+                    continue;
+
+                ComboBox cb = (ComboBox)FindControl(vs.tP_Main, MainForm.m.mainPlayer.settings.cB_PlayerD_CamType);
+
+                if(cb.Items.Contains(row.Cells[0].Value))
+                    cb.Items.Remove(row.Cells[0].Value);
+            }
+        }
+
+        public static void EditPresetOption(DataGridViewRow row, DataGridViewRow oldRow) {
+            foreach (VideoSettings vs in allSettings) {
+                if (vs == null || vs.myDetached == null)
+                    continue;
+
+                ComboBox cb = (ComboBox)FindControl(vs.tP_Main, MainForm.m.mainPlayer.settings.cB_PlayerD_CamType);
+
+                int index = -1;
+                if (cb.Items.Contains(oldRow.Cells[0].Value))
+                    index = cb.Items.IndexOf(oldRow.Cells[0].Value);
+
+                if (index == -1)
+                    cb.Items.Add(row.Cells[0].Value);
+                else
+                    cb.Items[index] = row.Cells[0].Value;
+            }
         }
 
         public static void SwapSettings(VideoSettings second) {
@@ -172,7 +213,8 @@ namespace SSUtility2 {
                         copyC = copyCB;
                         copyC.Text = originalSets.cB_PlayerD_CamType.Text; //because cb text should be inverted to main
                         copyCB.SelectedIndexChanged += (s, e) => { 
-                            CameraCBType(tp); 
+                            CameraCBType(originalSets, tp);
+                            originalSets.UpdateField(copyC, originalSets, originalSets.tP_Main);
                         };
                     } else if (c.GetType() == typeof(Button)) {
                         Button b = new Button();
@@ -192,14 +234,16 @@ namespace SSUtility2 {
                         copyC.BackColor = c.BackColor;
 
                         if (copyC.GetType() == typeof(ComboBox) || copyC.GetType() == typeof(TextBox)) {
-                            copyC.KeyUp += (s, e) => {
+                            copyC.KeyUp += (s, e) => { //come back and fix this (playerfulladr and playername)
                                 originalSets.UpdateField(copyC, originalSets, originalSets.tP_Main);
-                                originalSets.GetCombined();
 
                                 if (copyC.Name == FindControl(tp, mainSettings.tB_PlayerD_Name).Name)
                                     originalSets.UpdateName(copyC);
                                 else if (copyC.Name == FindControl(tp, mainSettings.tB_PlayerD_SimpleAdr).Name)
                                     originalSets.UpdateCustomFull(copyC);
+                                else 
+                                    FindControl(tp, mainSettings.tB_PlayerD_SimpleAdr).Text = originalSets.GetCombined();
+
                             };
                         } else if (copyC.GetType() != typeof(ComboBox))
                             copyC.Text = c.Text;
@@ -246,21 +290,6 @@ namespace SSUtility2 {
                 switch (type) {
                     case CopyType.CopyFull:
                         target.cB_PlayerD_CamType.Text = sourceCB;
-                        target.tB_PlayerD_RTSP.Text = FindControl(source.tP_Main, mainSets.tB_PlayerD_RTSP).Text;
-                        break;
-                    case CopyType.CopyAsSecondary:
-                        ComboBox cb = (ComboBox)FindControl(target.tP_Main, mainSets.cB_PlayerD_CamType);
-                        TextBox tb = (TextBox)FindControl(target.tP_Main, mainSets.tB_PlayerD_RTSP);
-                        if (sourceCB.ToLower().Contains("daylight")) {
-                            cb.SelectedIndex = 1;
-                            tb.Text = thermalRTSP;
-                        } else if (sourceCB.ToLower().Contains("thermal")) {
-                            cb.SelectedIndex = 0;
-                            tb.Text = dayRTSP;
-                        } else {
-                            cb.Text = sourceCB;
-                            tb.Text = FindControl(source.tP_Main, mainSets.tB_PlayerD_RTSP).Text;
-                        }
                         break;
                     case CopyType.NoCopy:
                         return;
@@ -268,7 +297,7 @@ namespace SSUtility2 {
 
                 foreach (TextBox targetTB in Tools.GetAllType(target.tP_Main, typeof(TextBox))) {
                     foreach (TextBox sourceTB in Tools.GetAllType(source.tP_Main, typeof(TextBox))) {
-                        if (targetTB.Name == sourceTB.Name && targetTB.Name != target.tB_PlayerD_RTSP.Name) {
+                        if (targetTB.Name == sourceTB.Name) {
                             targetTB.Text = sourceTB.Text;
                             break;
                         }
@@ -291,7 +320,6 @@ namespace SSUtility2 {
                     full = FindControl(tP_Main, tB_PlayerD_SimpleAdr).Text;
                 } else {
                     full = GetFullAdr();
-                    FindControl(tP_Main, tB_PlayerD_SimpleAdr).Text = full;
                 }
 
                 if (!customName)
@@ -353,44 +381,46 @@ namespace SSUtility2 {
             }
         }
 
-        private void cB_PlayerD_Type_SelectedIndexChanged(object sender, EventArgs e) {
-            CameraCBType(tP_Main);
+        private void cB_PlayerD_CamType_SelectedIndexChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            CameraCBType(this, tP_Main);
+            if (isMainPlayer)
+                MainForm.m.setPage.UpdateID(cB_PlayerD_CamType);
+            else
+                UpdateField((Control)sender, this, myLinkedMainPage);
         }
 
-        public static void CameraCBType(TabPage tp) {
+        public static void CameraCBType(VideoSettings vs, TabPage tp) {
             try {
                 VideoSettings refSets = MainForm.m.mainPlayer.settings;
 
                 string enc = FindControl(tp, refSets.cB_PlayerD_CamType).Text;
-                string username = "";
-                string password = "";
-                string rtsp = "";
 
-                if (enc.Contains("Daylight")) {
-                    username = "admin";
-                    password = "admin";
-                    rtsp = "videoinput_1:0/h264_1/onvif.stm";
-                } else if (enc.Contains("Thermal")) {
-                    username = "admin";
-                    password = "admin";
-                    rtsp = "videoinput_2:0/h264_1/onvif.stm";
-                } else if (enc.Contains("VIVOTEK")) {
-                    username = "root";
-                    password = "root1234";
-                    rtsp = "live.sdp";
-                } else if (enc.Contains("BOSCH")) {
-                    username = "service";
-                    password = "Service123!";
-                    rtsp = "";
+                TextBox[] tBArr = {
+                    refSets.tB_PlayerD_Adr,
+                    refSets.tB_PlayerD_Port,
+                    refSets.tB_PlayerD_RTSP,
+                    refSets.tB_PlayerD_Username,
+                    refSets.tB_PlayerD_Password,
+                };
+
+                foreach (DataGridViewRow row in MainForm.m.up.dgv_Presets.Rows) {
+                    if (row.Cells[0].Value.ToString().Contains(enc)) {
+                        for (int i = 0; i < tBArr.Length; i++) {
+                            string val = row.Cells[i + 2].Value.ToString().Trim();
+                            if (val.Length > 0) {
+                                Control c = FindControl(tp, tBArr[i]);
+                                c.Text = val;
+                                vs.UpdateField(c, vs, vs.tP_Main);
+                            }
+                        }
+                        break;
+                    }
                 }
 
-                FindControl(tp, refSets.tB_PlayerD_RTSP).Text = rtsp;
-                FindControl(tp, refSets.tB_PlayerD_Username).Text = username;
-                FindControl(tp, refSets.tB_PlayerD_Password).Text = password;
-
-
-                VideoSettings vs = (VideoSettings)tp.Parent.Parent;
-                vs.GetCombined();
+                FindControl(tp, refSets.tB_PlayerD_SimpleAdr).Text = vs.GetCombined();
             } catch (Exception e) {
                 MessageBox.Show("SELECTINDEX\n" + e.ToString());
             }
@@ -469,25 +499,14 @@ namespace SSUtility2 {
                 UpdateField((Control)sender, this, myLinkedMainPage);
             }
 
-            GetCombined();
+            tB_PlayerD_SimpleAdr.Text = GetCombined();
         }
 
         public void UpdateMode() {
-            return;
-
-            int val = ConfigControl.pelcoID.intVal;
-            ComboBox cb = (ComboBox)FindControl(tP_Main, cB_PlayerD_CamType);
-            TextBox tb = (TextBox)FindControl(tP_Main, tB_PlayerD_RTSP);
-
-            if (val == 1) {
-                cb.SelectedIndex = 1;
-                tb.Text = thermalRTSP;
-            } else if (val == 2) {
-                cb.SelectedIndex = 0;
-                tb.Text = dayRTSP;
-            }
-
-            myDetached.Play(false, false);
+            cB_PlayerD_CamType.Text = ConfigControl.selectedPresetName.stringVal;
+            CameraCBType(this, tP_Main);
+            if (ConfigControl.autoReconnect.boolVal)
+                myDetached.Play(false, false);
         }
 
         private void b_PlayerD_Detach_Click(object sender, EventArgs e) {

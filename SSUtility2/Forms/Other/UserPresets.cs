@@ -28,10 +28,10 @@ namespace SSUtility2 {
         void StartupDefaults() {
             try {
                 dayRow = (DataGridViewRow)dgv_Presets.Rows[0].Clone();
-                AddPreset("IONodes - Daylight;2; ; ;videoinput_1:0/h264_1/onvif.stm;", dayRow);
+                AddPreset("IONodes - Daylight;1; ; ;videoinput_1:0/h264_1/onvif.stm;admin;admin;", dayRow);
 
                 thermalRow = (DataGridViewRow)dgv_Presets.Rows[0].Clone();
-                AddPreset("IONodes - Thermal;1; ; ;videoinput_2:0/h264_1/onvif.stm;", thermalRow);
+                AddPreset("IONodes - Thermal;2; ; ;videoinput_2:0/h264_1/onvif.stm;admin;admin;", thermalRow);
 
                 vivoRow = (DataGridViewRow)dgv_Presets.Rows[0].Clone();
                 AddPreset("VIVOTEK;1; ; ;live.sdp;root;root1234;", vivoRow);
@@ -64,19 +64,17 @@ namespace SSUtility2 {
                 if (int.TryParse(enteredString, out parsed))
                     return parsed;
 
-                DataGridView dgv = MainForm.m.up.dgv_Presets;
-
-                for (int i = 0; i < dgv.Rows.Count - 1; i++) {
-                    if (dgv.Rows[i].Cells[0].Value.ToString().Contains(enteredString)) {
+                foreach (DataGridViewRow row in MainForm.m.up.dgv_Presets.Rows) {
+                    if (row.Cells[0].Value.ToString().Contains(enteredString)) {
                         int val = 0;
-                        int.TryParse(dgv.Rows[i].Cells[1].Value.ToString(), out val);
-                        return val;
+                        if (int.TryParse(row.Cells[1].Value.ToString(), out val))
+                            return val;
+                        else
+                            return 0;
                     }
                 }
 
-            }catch(Exception e) {
-                MessageBox.Show("GET PELCO ID\n" + e.ToString());
-            }
+            } catch { }
 
             return 0;
         }
@@ -110,13 +108,13 @@ namespace SSUtility2 {
 
                 AddToOptions(curRow);
             } catch (Exception e) {
-                MessageBox.Show("ADD PRESET\n" + e.ToString());
+                MessageBox.Show("ADD PRESET\n" + line + "\n" + e.ToString());
             }
         }
 
         void AddToOptions(DataGridViewRow row) {
             MainForm.m.setPage.AddPresetOption(row);
-            VideoSettings(row);
+            VideoSettings.AddPresetOption(row);
         }
 
         void RemoveFromOptions(DataGridViewRow row) {
@@ -124,15 +122,20 @@ namespace SSUtility2 {
                 dgv_Presets.Rows.Remove(row);
 
             MainForm.m.setPage.RemovePresetOption(row);
+            VideoSettings.RemovePresetOption(row);
         }
 
         void EditInOptions() {
             MainForm.m.setPage.EditPresetOption(dgv_Presets.Rows[rowIndex], editRow);
+            VideoSettings.EditPresetOption(dgv_Presets.Rows[rowIndex], editRow);
         }
 
         public int CountRows() {
             int rowCount = 0;
             foreach (DataGridViewRow row in dgv_Presets.Rows) {
+                if (row.IsNewRow)
+                    continue;
+
                 if (!RowIsNull(row))
                     rowCount++;
             }
@@ -176,19 +179,27 @@ namespace SSUtility2 {
         private void dgv_Presets_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e) {
             rowIndex = e.RowIndex;
             editRow = (DataGridViewRow)dgv_Presets.Rows[0].Clone();
-            for (int i = 0; i < dgv_Presets.Columns.Count; i++)
-                editRow.Cells[i].Value = dgv_Presets.Rows[rowIndex].Cells[i].Value;
+
+            if (dgv_Presets.Rows[rowIndex].IsNewRow) {
+                rowIndex = -2;
+            } else {
+                for (int i = 0; i < dgv_Presets.Columns.Count; i++)
+                    editRow.Cells[i].Value = dgv_Presets.Rows[rowIndex].Cells[i].Value;
+            }
         }
         
         private void dgv_Presets_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+            if (rowIndex == -2)
+                AddToOptions(dgv_Presets.Rows[e.RowIndex]);
+
             rowIndex = -1;
         }
 
         private void dgv_Presets_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
             if (rowIndex == -1)
                 return;
-
-            EditInOptions();
+            else if (rowIndex > 0)
+                EditInOptions();
         }
     }
 }

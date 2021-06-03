@@ -45,7 +45,7 @@ namespace SSUtility2 {
         public static ConfigSetting maintainAspectRatio = new ConfigSetting("false", "MaintainAspectRatio", ConfigSetting.VarType.boolean);
         public static ConfigSetting playerCount = new ConfigSetting("1", "PlayerCount", ConfigSetting.VarType.integer);
         public static ConfigSetting pelcoID = new ConfigSetting("1", "SelectedPelcoID", ConfigSetting.VarType.integer);
-        public static ConfigSetting selectedPresetName = new ConfigSetting("", "SelectedPresetName", ConfigSetting.VarType.strings);
+        public static ConfigSetting selectedPresetName = new ConfigSetting("IONodes - Daylight", "SelectedPresetName", ConfigSetting.VarType.strings);
 
         public static ConfigSetting customButtonName1 = new ConfigSetting("1", "CustomButtonName1", ConfigSetting.VarType.strings);
         public static ConfigSetting customButtonName2 = new ConfigSetting("2", "CustomButtonName2", ConfigSetting.VarType.strings);

@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.2.0";
+        public const string version = "v2.7.3.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -45,26 +45,26 @@ namespace SSUtility2 {
         private Direction resizeDir;
 
         public List<List<ConfigVar>> playerConfigList;
-        public List<VideoSettings> allSettingsList;
 
         public async Task StartupStuff() {
             try {
                 CreateHandle();
                 m = this;
+                VideoSettings.allSettings = new List<VideoSettings>();
                 setPage = new SettingsPage();
                 rl = new ResponseLog();
                 pd = new PelcoD();
                 pp = new PresetPanel();
-                up = new UserPresets();
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
-                allSettingsList = new List<VideoSettings>();
                 EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init();
 
                 mainPlayer = new Detached(true);
                 AttachInfoPanel();
                 AttachCustomPanel();
                 AttachPresetPanel();
+
+                up = new UserPresets();
 
                 controlPanel = new List<Control>() {
                     b_PTZ_Up,

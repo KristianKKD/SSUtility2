@@ -252,12 +252,12 @@ namespace SSUtility2 {
         }
 
         private void cB_ipCon_CamType_SelectedIndexChanged(object sender, EventArgs e) {
-            UpdateID();
+            UpdateID(cB_ipCon_CamType);
         }
 
         private void cB_ipCon_CamType_KeyUp(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
-                UpdateID();
+                UpdateID(cB_ipCon_CamType);
                 connectTimer.Stop();
             } else
                 DoIDTimer();
@@ -272,13 +272,17 @@ namespace SSUtility2 {
 
         void PelcoIDTimerCallback(object sender, EventArgs e) {
             pelcoIdTimer.Stop();
-            UpdateID();
+            UpdateID(cB_ipCon_CamType);
         }
 
-        async Task UpdateID() {
-            ConfigControl.pelcoID.UpdateValue(UserPresets.GetPelcoID(cB_ipCon_CamType.Text).ToString());
-            ConfigControl.selectedPresetName.UpdateValue(cB_ipCon_CamType.Text.ToString());
-            MainForm.m.mainPlayer.settings.UpdateMode();
+        public void UpdateID(ComboBox cb) {
+            ConfigControl.pelcoID.UpdateValue(UserPresets.GetPelcoID(cb.Text).ToString());
+            ConfigControl.selectedPresetName.UpdateValue(cb.Text.ToString());
+            if (cb == cB_ipCon_CamType)
+                MainForm.m.mainPlayer.settings.UpdateMode();
+            else
+                cB_ipCon_CamType.Text = ConfigControl.selectedPresetName.stringVal;
+
             l_IPCon_PelcoID.Text = "Pelco ID: " + ConfigControl.pelcoID.stringVal;
         }
 
@@ -581,10 +585,10 @@ namespace SSUtility2 {
             if (cB_ipCon_CamType.Items.Contains(oldRow.Cells[0].Value))
                 index = cB_ipCon_CamType.Items.IndexOf(oldRow.Cells[0].Value);
 
-            if (index == -1) 
-                return;
-
-            cB_ipCon_CamType.Items[index] = row.Cells[0].Value;
+            if (index == -1)
+                cB_ipCon_CamType.Items.Add(row.Cells[0].Value);
+            else
+                cB_ipCon_CamType.Items[index] = row.Cells[0].Value;
         }
 
     }
