@@ -130,42 +130,6 @@ namespace SSUtility2 {
             VideoSettings.EditPresetOption(dgv_Presets.Rows[rowIndex], editRow);
         }
 
-        public int CountRows() {
-            int rowCount = 0;
-            foreach (DataGridViewRow row in dgv_Presets.Rows) {
-                if (row.IsNewRow)
-                    continue;
-
-                if (!RowIsNull(row))
-                    rowCount++;
-            }
-
-            return rowCount;
-        }
-
-        bool RowIsNull(DataGridViewRow row) {
-            string val = GetRowCellVals(row);
-
-            string checkForNull = val.Replace(";", "");
-            checkForNull = checkForNull.Replace(" ", "");
-
-            return (checkForNull.Length == 0);
-        }
-
-        public string GetRowCellVals(DataGridViewRow row) {
-            string val = "";
-
-            for (int i = 0; i < row.Cells.Count; i++) {
-                string cellVal = row.Cells[i].Value + ";";
-                if (cellVal == ";")
-                    cellVal = " ;";
-
-                val += cellVal;
-            }
-
-            return val;
-        }
-
         private void UserPresets_FormClosing(object sender, FormClosingEventArgs e) {
             if (e.CloseReason == CloseReason.UserClosing) {
                 e.Cancel = true;
@@ -189,7 +153,7 @@ namespace SSUtility2 {
         }
         
         private void dgv_Presets_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-            if (rowIndex == -2)
+            if (rowIndex == -2 && !Tools.RowIsNull(dgv_Presets.Rows[e.RowIndex]))
                 AddToOptions(dgv_Presets.Rows[e.RowIndex]);
 
             rowIndex = -1;

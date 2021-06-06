@@ -542,5 +542,63 @@ namespace SSUtility2 {
             }
             return exists;
         }
+
+        public static List<int> GetValidRows(DataGridView dgv) {
+            List<int> validRows = new List<int>();
+            for (int i = 0; i < dgv.Rows.Count; i++) {
+                DataGridViewRow row = dgv.Rows[i];
+
+                if (row.IsNewRow)
+                    continue;
+
+                if (!RowIsNull(row))
+                    validRows.Add(i);
+            }
+
+
+            return validRows;
+        }
+
+        public static bool RowIsNull(DataGridViewRow row) {
+            string val = GetRowCellVals(row);
+
+            string checkForNull = val.Replace(";", "");
+            checkForNull = checkForNull.Replace(" ", "");
+
+            return (checkForNull.Length == 0);
+        }
+
+        public static string GetRowCellVals(DataGridViewRow row) {
+            string val = "";
+
+            for (int i = 0; i < row.Cells.Count; i++) {
+                string cellVal = row.Cells[i].Value + ";";
+                if (cellVal == ";")
+                    cellVal = " ;";
+
+                val += cellVal;
+            }
+
+            return val;
+        }
+
+        public static string[] GetRowValueArray(DataGridView dgv, string line) {
+            line = line.Trim();
+            string[] sets = new string[dgv.Columns.Count];
+
+            string val = "";
+            int setsPos = 0;
+            foreach (char c in line.ToCharArray()) {
+                if (c.ToString() == ";") {
+                    sets[setsPos] = val;
+                    val = "";
+                    setsPos++;
+                } else
+                    val += c.ToString();
+            }
+
+            return sets;
+        }
+
     }
 }

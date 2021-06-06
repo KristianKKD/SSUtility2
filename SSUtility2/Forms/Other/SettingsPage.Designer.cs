@@ -654,7 +654,6 @@ namespace SSUtility2
             // 
             // dgv_Custom_Buttons
             // 
-            this.dgv_Custom_Buttons.AllowUserToAddRows = false;
             this.dgv_Custom_Buttons.AllowUserToDeleteRows = false;
             this.dgv_Custom_Buttons.AllowUserToResizeColumns = false;
             this.dgv_Custom_Buttons.AllowUserToResizeRows = false;

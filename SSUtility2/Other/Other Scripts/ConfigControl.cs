@@ -16,10 +16,11 @@ namespace SSUtility2 {
         public static string dirCheck = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\SSUtility\";
         public static string dirLocationFile = dirCheck + "location.txt";
 
-        private const string varPrefix = "v"; //What the prefix of the actual value is ([varPrefix]ScreenshotFolder:bin/obj/)
-        private const string playerPrefix = "p"; //Player config prefix
-        private const string presetTypePrefix = "t"; //Preset config prefix
-        private const string subPrefix = " "; //Preset config prefix
+        private const string configVarPrefix = "v"; //What the prefix of the actual value is ([varPrefix]ScreenshotFolder:bin/obj/)
+        private const string playerPrefix = "p"; 
+        private const string presetTypePrefix = "t";
+        private const string customButtonsPrefix = "c";
+        private const string subPrefix = " ";
         
         public static ConfigSetting scFolder = new ConfigSetting(savedFolder, "SnapshotFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting vFolder = new ConfigSetting(savedFolder, "VideoFolder", ConfigSetting.VarType.strings);
@@ -47,49 +48,49 @@ namespace SSUtility2 {
         public static ConfigSetting pelcoID = new ConfigSetting("1", "SelectedPelcoID", ConfigSetting.VarType.integer);
         public static ConfigSetting selectedPresetName = new ConfigSetting("IONodes - Daylight", "SelectedPresetName", ConfigSetting.VarType.strings);
 
-        public static ConfigSetting customButtonName1 = new ConfigSetting("1", "CustomButtonName1", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonName2 = new ConfigSetting("2", "CustomButtonName2", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonName3 = new ConfigSetting("3", "CustomButtonName3", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonName4 = new ConfigSetting("4", "CustomButtonName4", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonName5 = new ConfigSetting("5", "CustomButtonName5", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonName6 = new ConfigSetting("6", "CustomButtonName6", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonName7 = new ConfigSetting("7", "CustomButtonName7", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonName8 = new ConfigSetting("8", "CustomButtonName8", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonName9 = new ConfigSetting("9", "CustomButtonName9", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonName1 = new ConfigSetting("1", "CustomButtonName1", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonName2 = new ConfigSetting("2", "CustomButtonName2", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonName3 = new ConfigSetting("3", "CustomButtonName3", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonName4 = new ConfigSetting("4", "CustomButtonName4", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonName5 = new ConfigSetting("5", "CustomButtonName5", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonName6 = new ConfigSetting("6", "CustomButtonName6", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonName7 = new ConfigSetting("7", "CustomButtonName7", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonName8 = new ConfigSetting("8", "CustomButtonName8", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonName9 = new ConfigSetting("9", "CustomButtonName9", ConfigSetting.VarType.strings);
 
-        public static ConfigSetting customButtonCommand1 = new ConfigSetting("Preset 1", "CustomButtonCommand1", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonCommand2 = new ConfigSetting("Preset 2", "CustomButtonCommand2", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonCommand3 = new ConfigSetting("Preset 3", "CustomButtonCommand3", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonCommand4 = new ConfigSetting("Preset 4", "CustomButtonCommand4", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonCommand5 = new ConfigSetting("Preset 5", "CustomButtonCommand5", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonCommand6 = new ConfigSetting("Preset 6", "CustomButtonCommand6", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonCommand7 = new ConfigSetting("Preset 7", "CustomButtonCommand7", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonCommand8 = new ConfigSetting("Preset 8", "CustomButtonCommand8", ConfigSetting.VarType.strings);
-        public static ConfigSetting customButtonCommand9 = new ConfigSetting("Preset 9", "CustomButtonCommand9", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonCommand1 = new ConfigSetting("Preset 1", "CustomButtonCommand1", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonCommand2 = new ConfigSetting("Preset 2", "CustomButtonCommand2", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonCommand3 = new ConfigSetting("Preset 3", "CustomButtonCommand3", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonCommand4 = new ConfigSetting("Preset 4", "CustomButtonCommand4", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonCommand5 = new ConfigSetting("Preset 5", "CustomButtonCommand5", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonCommand6 = new ConfigSetting("Preset 6", "CustomButtonCommand6", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonCommand7 = new ConfigSetting("Preset 7", "CustomButtonCommand7", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonCommand8 = new ConfigSetting("Preset 8", "CustomButtonCommand8", ConfigSetting.VarType.strings);
+        //public static ConfigSetting customButtonCommand9 = new ConfigSetting("Preset 9", "CustomButtonCommand9", ConfigSetting.VarType.strings);
 
-        public static ConfigSetting[] customButtonNamesArray = new ConfigSetting[] {
-            customButtonName1,
-            customButtonName2,
-            customButtonName3,
-            customButtonName4,
-            customButtonName5,
-            customButtonName6,
-            customButtonName7,
-            customButtonName8,
-            customButtonName9,
-        };
+        //public static ConfigSetting[] customButtonNamesArray = new ConfigSetting[] {
+        //    customButtonName1,
+        //    customButtonName2,
+        //    customButtonName3,
+        //    customButtonName4,
+        //    customButtonName5,
+        //    customButtonName6,
+        //    customButtonName7,
+        //    customButtonName8,
+        //    customButtonName9,
+        //};
 
-        public static ConfigSetting[] customButtonCommandsArray = new ConfigSetting[] {
-            customButtonCommand1,
-            customButtonCommand2,
-            customButtonCommand3,
-            customButtonCommand4,
-            customButtonCommand5,
-            customButtonCommand6,
-            customButtonCommand7,
-            customButtonCommand8,
-            customButtonCommand9,
-        };
+        //public static ConfigSetting[] customButtonCommandsArray = new ConfigSetting[] {
+        //    customButtonCommand1,
+        //    customButtonCommand2,
+        //    customButtonCommand3,
+        //    customButtonCommand4,
+        //    customButtonCommand5,
+        //    customButtonCommand6,
+        //    customButtonCommand7,
+        //    customButtonCommand8,
+        //    customButtonCommand9,
+        //};
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -117,25 +118,25 @@ namespace SSUtility2 {
             pelcoID,
             selectedPresetName,
 
-            customButtonName1,
-            customButtonName2,
-            customButtonName3,
-            customButtonName4,
-            customButtonName5,
-            customButtonName6,
-            customButtonName7,
-            customButtonName8,
-            customButtonName9,
+            //customButtonName1,
+            //customButtonName2,
+            //customButtonName3,
+            //customButtonName4,
+            //customButtonName5,
+            //customButtonName6,
+            //customButtonName7,
+            //customButtonName8,
+            //customButtonName9,
 
-            customButtonCommand1,
-            customButtonCommand2,
-            customButtonCommand3,
-            customButtonCommand4,
-            customButtonCommand5,
-            customButtonCommand6,
-            customButtonCommand7,
-            customButtonCommand8,
-            customButtonCommand9,
+            //customButtonCommand1,
+            //customButtonCommand2,
+            //customButtonCommand3,
+            //customButtonCommand4,
+            //customButtonCommand5,
+            //customButtonCommand6,
+            //customButtonCommand7,
+            //customButtonCommand8,
+            //customButtonCommand9,
         };
 
         public static async Task SetToDefaults() {
@@ -152,14 +153,13 @@ namespace SSUtility2 {
             try {
                 Tools.ResetFile(path);
 
-                File.AppendAllText(path, "SSUtility2.0 " + MainForm.version + " Config\n\n");
+                File.AppendAllText(path, "#SSUtility2.0 " + MainForm.version + " Config\n\n");
 
                 foreach (ConfigSetting setting in configArray) {
-                    if (!portableMode.boolVal && (setting.settingName == finalSource.settingName || setting.settingName == finalDestination.settingName)) {
+                    if (!portableMode.boolVal && (setting.settingName == finalSource.settingName || setting.settingName == finalDestination.settingName))
                         continue;
-                    }
 
-                    ConfigLine(path, setting.settingName, setting.stringVal, varPrefix);
+                    ConfigLine(path, setting.settingName, setting.stringVal, configVarPrefix);
                 }
 
                 for (int i = -1; i < MainForm.m.mainPlayer.attachedPlayers.Count; i++) {
@@ -178,11 +178,8 @@ namespace SSUtility2 {
                     }
                 }
 
-                UserPresets up = MainForm.m.up;
-                int rowCount = up.CountRows();
-                ConfigLine(path, "Presets", rowCount.ToString(), presetTypePrefix);
-                for (int i = 0; i < rowCount; i++)
-                    File.AppendAllText(path, subPrefix + up.GetRowCellVals(up.dgv_Presets.Rows[i]) + "\n");
+                SaveDGV(path, MainForm.m.up.dgv_Presets, "Presets", presetTypePrefix);
+                SaveDGV(path, MainForm.m.setPage.dgv_Custom_Buttons, "CustomButtons", customButtonsPrefix);
 
                 if (MainForm.m.finalMode)
                     Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
@@ -190,6 +187,13 @@ namespace SSUtility2 {
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to write config!\nShow more?", "Critical Error Occurred!", e.ToString());
             }
+        }
+
+        static void SaveDGV(string path, DataGridView dgv, string saveName, string definingRowPrefix) {
+            List<int> validRows = Tools.GetValidRows(dgv);
+            ConfigLine(path, saveName, validRows.Count.ToString(), definingRowPrefix);
+            foreach (int validRow in validRows)
+                File.AppendAllText(path, subPrefix + Tools.GetRowCellVals(dgv.Rows[validRow]) + "\n");
         }
 
         static void ConfigLine(string path, string variable, string value, string prefix) {
@@ -206,7 +210,11 @@ namespace SSUtility2 {
                 for (int i = 0; i < lines.Length; i++) {
                     string line = lines[i];
 
-                    if (line.StartsWith(varPrefix))
+                    if (line.StartsWith("//") || line.StartsWith("#")
+                        || line.StartsWith(@"\\") || line.StartsWith(" "))
+                        continue;
+
+                    if (line.StartsWith(configVarPrefix))
                         varFound.Add(CreateConfigVar(line));
                     else {
                         int valPos = line.IndexOf(":") + 1;
@@ -233,7 +241,15 @@ namespace SSUtility2 {
                                 if (lines.Length - 1 >= i + o)
                                     MainForm.m.up.AddPreset(lines[i + o]);
 
-                            i += val;
+                            i += val - 1;
+                        } else if (line.StartsWith(customButtonsPrefix)) {
+                            i++;
+
+                            for (int o = 0; o < val; o++)
+                                if (lines.Length - 1 >= i + o)
+                                    MainForm.m.setPage.AddCustomButton(lines[i + o]);
+
+                            i += val - 1;
                         }
                     }
 
@@ -259,7 +275,7 @@ namespace SSUtility2 {
 
         static ConfigVar CreateConfigVar(string l) {
             int nameMarker = l.IndexOf(":") + 1;
-            string name = l.Substring(1, nameMarker - varPrefix.Length - 1);
+            string name = l.Substring(1, nameMarker - configVarPrefix.Length - 1);
             string text = l.Substring(nameMarker);
 
             return new ConfigVar(name, text);

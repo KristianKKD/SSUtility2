@@ -24,6 +24,11 @@ namespace SSUtility2 {
             pelcoIdTimer = new Timer();
             pelcoIdTimer.Interval = 500;
             pelcoIdTimer.Tick += new EventHandler(PelcoIDTimerCallback);
+
+            ButtonsCommand.Items.Add(" ");
+
+            for (int i = 0; i < 200; i++)
+                ButtonsCommand.Items.Add("Preset " + (i + 1).ToString());
         }
 
         public async Task PopulateSettingText() {
@@ -66,7 +71,6 @@ namespace SSUtility2 {
                 l_IPCon_PelcoID.Text = "Pelco ID: " + ConfigControl.pelcoID.stringVal;
 
                 UpdateSelectedCam(false);
-                LoadCustoms();
                 MainForm.m.custom.UpdateButtonNames();
                 UpdateCamType();
                 UpdateRatioLabel();
@@ -394,29 +398,35 @@ namespace SSUtility2 {
             UpdateRatioLabel();
         }
 
-        void LoadCustoms() {
-            if (dgv_Custom_Buttons.Rows.Count < 1) { //on launch
-                for (int i = 0; i < 200; i++) {
-                    ButtonsCommand.Items.Add("Preset " + (i + 1).ToString());
-                }
+        public void AddCustomButton(string line) {
+            try {
+                string[] sets = Tools.GetRowValueArray(dgv_Custom_Buttons, line);
 
-                for (int i = 0; i < ConfigControl.customButtonNamesArray.Length; i++) {
-                    dgv_Custom_Buttons.Rows.Add(ConfigControl.customButtonNamesArray[i].stringVal);
-                }
-            } else { //if defaulting
-                for (int i = 0; i < ConfigControl.customButtonNamesArray.Length; i++) {
-                    dgv_Custom_Buttons.Rows[i].SetValues(ConfigControl.customButtonNamesArray[i].stringVal, ConfigControl.customButtonCommandsArray[i].stringVal);
-                }
-            }
+                DataGridViewRow curRow = (DataGridViewRow)dgv_Custom_Buttons.Rows[0].Clone();
 
-            for (int i = 0; i < ConfigControl.customButtonCommandsArray.Length; i++) {
-                string val = ConfigControl.customButtonCommandsArray[i].stringVal;
-                if (val != "") {
-                    if(!ButtonsCommand.Items.Contains(val))
-                        ButtonsCommand.Items.Add(val);
-                    dgv_Custom_Buttons.Rows[i].SetValues(dgv_Custom_Buttons.Rows[i].Cells[0].Value, val);
-                }
+                for (int i = 0; i < sets.Length; i++)
+                    curRow.Cells[i].Value = sets[i];
+
+                dgv_Custom_Buttons.Rows.Add(curRow);
+
+                AddToOptions(sets[1]);
+
+                MainForm.m.custom.AddButton(sets[1]);
+            } catch (Exception e) {
+                MessageBox.Show("ADD PRESET\n" + line + "\n" + e.ToString());
             }
+        }
+
+        bool AddToOptions(string cbVal) {
+            try {
+                cbVal = cbVal.Trim();
+
+                if (!ButtonsCommand.Items.Contains(cbVal) && cbVal != "") {
+                    ButtonsCommand.Items.Add(cbVal);
+                    return true;
+                }
+            } catch { }
+            return false;
         }
 
         private void dgv_Custom_Buttons_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e) {
@@ -429,17 +439,9 @@ namespace SSUtility2 {
         }
 
         private void dgv_Custom_Buttons_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
-            if (e.ColumnIndex == ButtonsCommand.DisplayIndex) { //save cell value
-                if (!ButtonsCommand.Items.Contains(e.FormattedValue) && e.FormattedValue.ToString() != "") {
-                    ButtonsCommand.Items.Add(e.FormattedValue);
-                    dgv_Custom_Buttons.Rows[e.RowIndex].SetValues(dgv_Custom_Buttons.Rows[e.RowIndex].Cells[0].Value, e.FormattedValue);
-                }
-            }
-
-            if (e.ColumnIndex == 0) { //changed name
-                ConfigControl.customButtonNamesArray[e.RowIndex].UpdateValue(e.FormattedValue.ToString());
-            } else { //changed command
-                ConfigControl.customButtonCommandsArray[e.RowIndex].UpdateValue(e.FormattedValue.ToString());
+            if (e.ColumnIndex == 1 && AddToOptions(e.FormattedValue.ToString())) {
+                dgv_Custom_Buttons.Rows[e.RowIndex].SetValues(dgv_Custom_Buttons.Rows[e.RowIndex].Cells[0].Value, e.FormattedValue);
+                MainForm.m.custom.AddButton(e.FormattedValue.ToString());
             }
         }
 

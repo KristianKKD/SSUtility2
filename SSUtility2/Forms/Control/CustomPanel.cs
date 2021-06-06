@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -7,25 +9,41 @@ namespace SSUtility2 {
 
         public Panel myPanel;
 
-        Button[] buttonArray;
+        int buttonIndex;
+
+        List<Button> buttonList;
 
         public CustomPanel() {
             InitializeComponent();
-            buttonArray = new Button[]{
-                b_1,
-                b_2,
-                b_3,
-                b_4,
-                b_5,
-                b_6,
-                b_7,
-                b_8,
-            };
+            buttonList = new List<Button>();
+            buttonIndex = 1;
+        }
+
+        public void AddButton(string name) {
+            //70 30
+            Button b = new Button();
+
+            b.Size = new Size(70, 30);
+            b.Location = new Point(buttonList.Count * 70, 0);
+            b.Text = name;
+            
+            buttonList.Add(b);
+            myPanel.Controls.Add(b);
+            myPanel.Size = new Size(buttonList.Count * 71, 32);
+            myPanel.Location = new Point(MainForm.m.mainPlayer.p_Player.Width - myPanel.Width, MainForm.m.mainPlayer.p_Player.Height - 32);
         }
 
         public void UpdateButtonNames() {
-            for (int i = 0; i < buttonArray.Length; i++) {
-                buttonArray[i].Text = ConfigControl.customButtonNamesArray[i].stringVal;
+            DataGridView dgv = MainForm.m.setPage.dgv_Custom_Buttons;
+            List<int> validRows = Tools.GetValidRows(dgv);
+
+            int i = 0;
+            foreach (int valid in validRows) {
+                if (buttonList.Count < i)
+                    break;
+
+                buttonList[i].Text = dgv.Rows[valid].Cells[0].Value.ToString();
+                i++;
             }
         }
 
@@ -67,21 +85,21 @@ namespace SSUtility2 {
 
         public void DoCommand(int index) {
             try {
-                string val = ConfigControl.customButtonCommandsArray[index - 1].stringVal;
-                bool isDigitPresent = false;
-                string presetValue = "";
+                //string val = ConfigControl.customButtonCommandsArray[index - 1].stringVal;
+                //bool isDigitPresent = false;
+                //string presetValue = "";
 
-                foreach (char c in val.ToArray()) {
-                    if (char.IsDigit(c)) {
-                        isDigitPresent = true;
-                        presetValue += c.ToString();
-                    }
-                }
+                //foreach (char c in val.ToArray()) {
+                //    if (char.IsDigit(c)) {
+                //        isDigitPresent = true;
+                //        presetValue += c.ToString();
+                //    }
+                //}
 
-                if (val.ToLower().Contains("preset") && isDigitPresent)
-                    val = "gotopreset " + presetValue;
+                //if (val.ToLower().Contains("preset") && isDigitPresent)
+                //    val = "gotopreset " + presetValue;
 
-                CustomScriptCommands.QuickCommand(val, false);
+                //CustomScriptCommands.QuickCommand(val, false);
             } catch (Exception e) {
                 MessageBox.Show("DO COMMAND" + e.ToString());
             }

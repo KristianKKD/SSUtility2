@@ -10,7 +10,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.3.0";
+        public const string version = "v2.7.4.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -211,12 +211,6 @@ namespace SSUtility2 {
             try {
                 Panel p = new Panel();
                 custom = new CustomPanel();
-
-                p.Size = custom.Size;
-                p.Location = new Point(m.Width - p.Width, m.Height - p.Height);
-
-                var c = Tools.GetAllType(custom, typeof(Button));
-                p.Controls.AddRange(c.ToArray());
 
                 p.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
                 Controls.Add(p);
