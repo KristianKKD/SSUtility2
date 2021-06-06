@@ -29,6 +29,7 @@ namespace SSUtility2 {
 
             for (int i = 0; i < 200; i++)
                 ButtonsCommand.Items.Add("Preset " + (i + 1).ToString());
+
         }
 
         public async Task PopulateSettingText() {
@@ -81,7 +82,6 @@ namespace SSUtility2 {
 
         private async Task ApplyAll() {
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
-            MainForm.m.custom.UpdateButtonNames();
         }
 
         private void b_Settings_Default_Click(object sender, EventArgs e) {
@@ -398,53 +398,6 @@ namespace SSUtility2 {
             UpdateRatioLabel();
         }
 
-        public void AddCustomButton(string line) {
-            try {
-                string[] sets = Tools.GetRowValueArray(dgv_Custom_Buttons, line);
-
-                DataGridViewRow curRow = (DataGridViewRow)dgv_Custom_Buttons.Rows[0].Clone();
-
-                for (int i = 0; i < sets.Length; i++)
-                    curRow.Cells[i].Value = sets[i];
-
-                dgv_Custom_Buttons.Rows.Add(curRow);
-
-                AddToOptions(sets[1]);
-
-                MainForm.m.custom.AddButton(sets[1]);
-            } catch (Exception e) {
-                MessageBox.Show("ADD PRESET\n" + line + "\n" + e.ToString());
-            }
-        }
-
-        bool AddToOptions(string cbVal) {
-            try {
-                cbVal = cbVal.Trim();
-
-                if (!ButtonsCommand.Items.Contains(cbVal) && cbVal != "") {
-                    ButtonsCommand.Items.Add(cbVal);
-                    return true;
-                }
-            } catch { }
-            return false;
-        }
-
-        private void dgv_Custom_Buttons_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e) {
-            if (dgv_Custom_Buttons.CurrentCellAddress.X == ButtonsCommand.DisplayIndex) { //type into cell
-                ComboBox cb = e.Control as ComboBox;
-                if (cb != null) {
-                    cb.DropDownStyle = ComboBoxStyle.DropDown;
-                }
-            }
-        }
-
-        private void dgv_Custom_Buttons_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
-            if (e.ColumnIndex == 1 && AddToOptions(e.FormattedValue.ToString())) {
-                dgv_Custom_Buttons.Rows[e.RowIndex].SetValues(dgv_Custom_Buttons.Rows[e.RowIndex].Cells[0].Value, e.FormattedValue);
-                MainForm.m.custom.AddButton(e.FormattedValue.ToString());
-            }
-        }
-
         private void check_IPCon_ForceCam_CheckedChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
@@ -591,6 +544,76 @@ namespace SSUtility2 {
                 cB_ipCon_CamType.Items.Add(row.Cells[0].Value);
             else
                 cB_ipCon_CamType.Items[index] = row.Cells[0].Value;
+        }
+
+
+        public void AddCustomButton(string line) {
+            try {
+                string[] sets = Tools.GetRowValueArray(dgv_Custom_Buttons, line);
+
+                DataGridViewRow curRow = (DataGridViewRow)dgv_Custom_Buttons.Rows[0].Clone();
+
+                for (int i = 0; i < sets.Length; i++)
+                    curRow.Cells[i].Value = sets[i];
+
+                dgv_Custom_Buttons.Rows.Add(curRow);
+
+                AddToOptions(sets[1]);
+
+                MainForm.m.custom.AddButton(sets[1]);
+            } catch (Exception e) {
+                MessageBox.Show("ADD PRESET\n" + line + "\n" + e.ToString());
+            }
+        }
+
+        void AddToOptions(string cbVal) {
+            try {
+                cbVal = cbVal.Trim();
+
+                if (!ButtonsCommand.Items.Contains(cbVal))
+                    ButtonsCommand.Items.Add(cbVal);
+            } catch { }
+        }
+
+        private void dgv_Custom_Buttons_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e) {
+            if (dgv_Custom_Buttons.CurrentCellAddress.X == ButtonsCommand.DisplayIndex) { //type into cell
+                ComboBox cb = (ComboBox)e.Control;
+                if (cb != null)
+                    cb.DropDownStyle = ComboBoxStyle.DropDown;
+            }
+        }
+
+        private void dgv_Custom_Buttons_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+            try {
+                CustomButtons custom = MainForm.m.custom;
+                DataGridViewRow row = dgv_Custom_Buttons.Rows[e.RowIndex];
+
+                if (row.Cells[e.ColumnIndex].Value == null) {
+                    custom.RemoveButton(e.RowIndex);
+                    dgv_Custom_Buttons.Rows.Remove(row);
+                    return;
+                }
+
+                string val = row.Cells[e.ColumnIndex].Value.ToString().Trim();
+
+                if (e.ColumnIndex == 0)
+                    custom.UpdateButtonNames();
+                else if (e.ColumnIndex == 1) {
+                    AddToOptions(val);
+                    row.SetValues(row.Cells[0].Value, val);
+                }
+            } catch (Exception er) {
+                MessageBox.Show("DGV VAL CHANGED\n" + er.ToString());
+            }
+        }
+
+        private void dgv_Custom_Buttons_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            MainForm.m.custom.AddButton(dgv_Custom_Buttons.Rows[e.RowIndex - 2].Cells[0].Value.ToString());
         }
 
     }

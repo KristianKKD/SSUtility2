@@ -19,14 +19,13 @@ namespace SSUtility2 {
                 CreateConfigFiles();
 
                 await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
+                MainForm.m.custom.HideButtons();
 
-                if (ConfigControl.portableMode.boolVal) {
+                if (ConfigControl.portableMode.boolVal)
                     MainForm.m.Menu_Final.Dispose();
-                }
 
-                if (AppDomain.CurrentDomain.FriendlyName.ToLower().Contains("lite")) {
+                if (AppDomain.CurrentDomain.FriendlyName.ToLower().Contains("lite"))
                     return true;
-                }
 
                 return false;
             } catch (Exception e) {

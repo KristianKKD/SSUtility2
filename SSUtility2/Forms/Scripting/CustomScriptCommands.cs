@@ -220,14 +220,14 @@ namespace SSUtility2 {
         public static async Task QuickCommand(string command, bool sendAsync = true, int manualAdr = -5) {
             try {
                 if (!await AsyncCamCom.TryConnect().ConfigureAwait(false)) {
+                    MessageBox.Show("Not connected to camera!\nTried sending: " + command);
                     return;
                 }
 
                 uint adr = Tools.MakeAdr();
 
-                if (manualAdr != -5) { //if sending preset
+                if (manualAdr != -5) //if sending preset
                     adr = Convert.ToUInt32(manualAdr);
-                }
 
                 ScriptCommand send = CheckForCommands(command, adr, false).Result;
                 if (send.codeContent == PelcoD.noCommand) {
@@ -243,7 +243,6 @@ namespace SSUtility2 {
                         send = new ScriptCommand(new string[] { "custom" }, code, "", 0);
                     }
                 }
-                    
 
                 if (!sendAsync) {
                     AsyncCamCom.SendNonAsync(send.codeContent);

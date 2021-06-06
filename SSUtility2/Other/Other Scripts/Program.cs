@@ -106,7 +106,9 @@ namespace SSUtility2 {
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
-
+        
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Winapi)]
+        public static extern IntPtr GetFocus();
 
     }
 }

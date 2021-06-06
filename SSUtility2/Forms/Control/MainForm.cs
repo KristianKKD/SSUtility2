@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static SPanel.SizeablePanel;
@@ -10,7 +11,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.4.0";
+        public const string version = "v2.7.4.1";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -22,9 +23,9 @@ namespace SSUtility2 {
 
         public static MainForm m;
 
-        private static List<Control> controlPanel;
+        public static List<Control> controlPanel;
 
-        public CustomPanel custom;
+        public CustomButtons custom;
         public SettingsPage setPage;
         public PelcoD pd;
         public ResponseLog rl;
@@ -55,13 +56,13 @@ namespace SSUtility2 {
                 rl = new ResponseLog();
                 pd = new PelcoD();
                 pp = new PresetPanel();
+                custom = new CustomButtons();
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
                 EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init();
 
                 mainPlayer = new Detached(true);
                 AttachInfoPanel();
-                AttachCustomPanel();
                 AttachPresetPanel();
 
                 up = new UserPresets();
@@ -204,22 +205,6 @@ namespace SSUtility2 {
                 p.Hide();
             } catch (Exception e) {
                 MessageBox.Show("ATTACH INFO\n" + e.ToString());
-            }
-        }
-
-        void AttachCustomPanel() {
-            try {
-                Panel p = new Panel();
-                custom = new CustomPanel();
-
-                p.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-                Controls.Add(p);
-
-                custom.myPanel = p;
-                p.Visible = false;
-                p.BringToFront();
-            } catch (Exception e) {
-                MessageBox.Show("ATTACH CUSTOM\n" + e.ToString());
             }
         }
 
@@ -486,18 +471,20 @@ namespace SSUtility2 {
         }
 
         public void StopCam() {
-            if (keyboardControl) {
+            if (keyboardControl)
                 DelayStop();
-            }
         }
 
         public void KeyControl(Keys k, Keys oldK) {
             try {
-                if (custom.myPanel.Visible && k.ToString().Length == 2) {
+                if (!Tools.IsMainActive())
+                    return;
+
+                if (custom.isVisible && k.ToString().Length == 2) {
                     int but;
                     if (int.TryParse(k.ToString().Substring(1, 1), out but)) {
                         if (but > 0 && but < 10)
-                            custom.DoCommand(but);
+                            custom.DoCommand(but - 1);
                     }
                 }
 
@@ -559,9 +546,8 @@ namespace SSUtility2 {
                             break;
                     }
 
-                    if (x != 0 || y != 0) {
+                    if (x != 0 || y != 0)
                         code = GetDirCode(x, y, ptSpeed, ptSpeed, address);
-                    }
 
                     if (code == null)
                         return;
@@ -764,14 +750,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_Settings_Custom_Click(object sender, EventArgs e) {
-            if (custom.myPanel.Visible) {
-                custom.myPanel.Visible = false;
-                Menu_Settings_Custom.Text = "Enable Custom Panel";
-            } else {
-                custom.myPanel.Visible = true;
-                custom.myPanel.BringToFront();
-                Menu_Settings_Custom.Text = "Disable Custom Panel";
-            }
+            custom.ToggleCustomVisible();
         }
 
         private void Menu_Settings_ImportConfig_Click(object sender, EventArgs e) {

@@ -1390,16 +1390,16 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Settings_CP;
         public ToolStripMenuItem Menu_Window_Settings;
         public ToolStripMenuItem Menu_Settings_Lite;
-        private ToolStripMenuItem Menu_QC_Custom;
-        private ToolStripMenuItem Menu_Settings_Presets;
-        private ToolStripMenuItem Menu_Settings_Custom;
-        private ToolStripMenuItem Menu_Settings_ImportConfig;
-        private ToolStripMenuItem Menu_Settings_ExportConfig;
+        public ToolStripMenuItem Menu_QC_Custom;
+        public ToolStripMenuItem Menu_Settings_Presets;
+        public ToolStripMenuItem Menu_Settings_Custom;
+        public ToolStripMenuItem Menu_Settings_ImportConfig;
+        public ToolStripMenuItem Menu_Settings_ExportConfig;
         public Button b_PTZ_Daylight;
         public Button b_PTZ_Thermal;
-        private ToolStripMenuItem Menu_Video_Snap_Single;
-        private ToolStripMenuItem Menu_Video_Snap_Panoramic;
-        private Joystick.JoyBack JoyBack;
-        private PictureBox pB_Panoramic;
+        public ToolStripMenuItem Menu_Video_Snap_Single;
+        public ToolStripMenuItem Menu_Video_Snap_Panoramic;
+        public Joystick.JoyBack JoyBack;
+        public PictureBox pB_Panoramic;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

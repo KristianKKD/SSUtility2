@@ -600,5 +600,38 @@ namespace SSUtility2 {
             return sets;
         }
 
+        public static bool IsMainActive() {
+            try {
+                Control currentControl = GetFocusedControl();
+
+                if (currentControl == null)
+                    return false;
+
+                MainForm m = MainForm.m;
+
+                if ((currentControl == m.mainPlayer || currentControl == m.MenuBar || currentControl == m))
+                    return true;
+
+                foreach (Button b in m.custom.buttonList)
+                    if (currentControl == b)
+                        return true;
+
+                foreach (Button b in MainForm.controlPanel)
+                    if (currentControl == b)
+                        return true;
+
+            } catch { }
+            return false;
+        }
+
+        private static Control GetFocusedControl() {
+            Control focusedControl = null;
+            IntPtr focusedHandle = Program.GetFocus();
+            if (focusedHandle != IntPtr.Zero)
+                focusedControl = Control.FromHandle(focusedHandle);
+
+            return focusedControl;
+        }
+
     }
 }

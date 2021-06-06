@@ -279,18 +279,13 @@
     <Compile Include="Forms\Other\UserPresets.Designer.cs">
       <DependentUpon>UserPresets.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\Other Scripts\CustomButtons.cs" />
     <Compile Include="Other\Other Scripts\FileStuff.cs" />
     <Compile Include="Forms\Other\ChooseConfig.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\Other\ChooseConfig.Designer.cs">
       <DependentUpon>ChooseConfig.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Control\CustomPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Control\CustomPanel.Designer.cs">
-      <DependentUpon>CustomPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Other\DirectoryChooser.cs">
       <SubType>Form</SubType>
@@ -402,9 +397,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\Other\ChooseConfig.resx">
       <DependentUpon>ChooseConfig.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Control\CustomPanel.resx">
-      <DependentUpon>CustomPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Control\Detached.resx">
       <DependentUpon>Detached.cs</DependentUpon>
