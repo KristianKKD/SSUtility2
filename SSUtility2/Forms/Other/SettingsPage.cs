@@ -584,6 +584,10 @@ namespace SSUtility2 {
         }
 
         private void dgv_Custom_Buttons_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+            if (dgv_Custom_Buttons.Rows.Count >= 9) {
+                dgv_Custom_Buttons.AllowUserToAddRows = false;
+                return;
+            }
             if (!MainForm.m.finishedLoading)
                 return;
             try {
@@ -593,6 +597,8 @@ namespace SSUtility2 {
                 if (row.Cells[e.ColumnIndex].Value == null) {
                     custom.RemoveButton(e.RowIndex);
                     dgv_Custom_Buttons.Rows.Remove(row);
+                    if (dgv_Custom_Buttons.Rows.Count < 9)
+                        dgv_Custom_Buttons.AllowUserToAddRows = true;
                     return;
                 }
 
@@ -613,7 +619,16 @@ namespace SSUtility2 {
             if (!MainForm.m.finishedLoading)
                 return;
 
-            MainForm.m.custom.AddButton(dgv_Custom_Buttons.Rows[e.RowIndex - 2].Cells[0].Value.ToString());
+            int pos = e.RowIndex - 2;
+
+            if (e.RowIndex == 1)
+                pos = 1;
+
+            string val = "";
+            if (dgv_Custom_Buttons.Rows[pos].Cells[0].Value != null)
+                val = dgv_Custom_Buttons.Rows[pos].Cells[0].Value.ToString();
+
+            MainForm.m.custom.AddButton(val);
         }
 
     }
