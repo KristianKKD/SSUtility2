@@ -113,6 +113,7 @@ namespace SSUtility2 {
         }
 
         void AddToOptions(DataGridViewRow row) {
+            row.Cells[dgv_Presets.Columns.Count - 1].Value = "X";
             MainForm.m.setPage.AddPresetOption(row);
             VideoSettings.AddPresetOption(row);
         }
@@ -150,6 +151,7 @@ namespace SSUtility2 {
                 for (int i = 0; i < dgv_Presets.Columns.Count; i++)
                     editRow.Cells[i].Value = dgv_Presets.Rows[rowIndex].Cells[i].Value;
             }
+
         }
         
         private void dgv_Presets_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
@@ -165,5 +167,15 @@ namespace SSUtility2 {
             else if (rowIndex > 0)
                 EditInOptions();
         }
+
+        private void dgv_Presets_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
+        }
+
+        private void dgv_Presets_CellContentClick(object sender, DataGridViewCellEventArgs e) {
+            if (e.ColumnIndex == dgv_Presets.Columns.Count - 1 && !dgv_Presets.Rows[e.RowIndex].IsNewRow)
+                if(Tools.ShowPopup("Are you sure you want to delete preset: " + dgv_Presets.Rows[e.RowIndex].Cells[0].Value.ToString() + "?", "Confirmation", null, false))
+                    RemoveFromOptions(dgv_Presets.Rows[e.RowIndex]);
+        }
+
     }
 }

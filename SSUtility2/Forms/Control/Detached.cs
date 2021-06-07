@@ -146,7 +146,9 @@ namespace SSUtility2 {
                 if(playOnLaunch)
                     secondPlayer.Play(false, updateVals);
 
-                secondPlayer.settings.tP_Main.Text = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
+                string name = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
+                secondPlayer.settings.tP_Main.Text = name;
+                secondPlayer.settings.originalName = name;
 
                 return sP_Secondary;
             } catch (Exception e) {

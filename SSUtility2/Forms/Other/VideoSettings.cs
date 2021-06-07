@@ -29,6 +29,8 @@ namespace SSUtility2 {
         public bool customName = false;
         public bool customFull = false;
 
+        public string originalName;
+
         public static Control[] extendedControls;
 
         public VideoSettings(Detached d, bool isMain) {
@@ -62,6 +64,8 @@ namespace SSUtility2 {
                 foreach (string s in MainForm.m.mainPlayer.settings.cB_PlayerD_CamType.Items)
                     cB_PlayerD_CamType.Items.Add(s);
             }
+
+            originalName = tP_Main.Text;
             GetCombined();
         }
 
@@ -141,7 +145,8 @@ namespace SSUtility2 {
             if (!MainForm.m.finishedLoading)
                 return;
 
-            GetCombined();
+            foreach(VideoSettings vs in allSettings)
+                vs.GetCombined();
             
             if (!isMainPlayer && isAttached)
                 b_PlayerD_Detach.Show();
@@ -316,14 +321,13 @@ namespace SSUtility2 {
             try {
                 string ipaddress = FindControl(tP_Main, tB_PlayerD_Adr).Text;
 
-                if (customFull) {
+                if (customFull)
                     full = FindControl(tP_Main, tB_PlayerD_SimpleAdr).Text;
-                } else {
+                else
                     full = GetFullAdr();
-                }
 
                 if (!customName)
-                    FindControl(tP_Main, tB_PlayerD_Name).Text = ipaddress;
+                    FindControl(tP_Main, tB_PlayerD_Name).Text = originalName;
 
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
@@ -484,11 +488,22 @@ namespace SSUtility2 {
 
         void UpdateName(object sender) {
             string name = FindControl(tP_Main, tB_PlayerD_Name).Text.Trim();
-            if (name.Length == 0 || name == FindControl(tP_Main, tB_PlayerD_Adr).Text) {
-                customName = false;
-            } else {
-                customName = true;
-            }
+            customName = !(name.Length == 0 || name == FindControl(tP_Main, tB_PlayerD_Adr).Text);
+
+            string nameVal = originalName;
+            if (customName)
+                nameVal = name;
+
+            tP_Main.Text = nameVal;
+            myLinkedMainPage.Text = nameVal;
+
+            if (!isMainPlayer)
+                UpdateField((Control)sender, this, myLinkedMainPage);
+        }
+
+        void UpdateCustomFull(object sender) {
+            string val = FindControl(tP_Main, tB_PlayerD_SimpleAdr).Text.Trim();
+            customFull = !(val == "" || val == GetFullAdr());
 
             if (!isMainPlayer)
                 UpdateField((Control)sender, this, myLinkedMainPage);
@@ -520,21 +535,7 @@ namespace SSUtility2 {
             UpdateCustomFull(sender);
         }
 
-        void UpdateCustomFull(object sender) {
-            string val = FindControl(tP_Main, tB_PlayerD_SimpleAdr).Text.Trim();
-
-            if (val == "" || val == GetFullAdr())
-                customFull = false;
-            else
-                customFull = true;
-
-            if (!isMainPlayer) {
-                UpdateField((Control)sender, this, myLinkedMainPage);
-                GetCombined();
-            }
-        }
-
-        public void UpdateField(Control senderControl, VideoSettings sets, TabPage tp) {
+        public void UpdateField(Control senderControl, VideoSettings sets, TabPage tp, bool noUpdate = false) {
             try {
                 foreach (Control tabPageControl in tp.Controls) {
                     if (tabPageControl.Name == senderControl.Name) {
@@ -542,8 +543,10 @@ namespace SSUtility2 {
                         break;
                     }
                 }
+                
+                if(senderControl.Name != tB_PlayerD_Name.Name && senderControl.Name != tB_PlayerD_SimpleAdr.Name)
+                    FindControl(tp, sets.tB_PlayerD_SimpleAdr).Text = sets.GetCombined();
 
-                FindControl(tp, sets.tB_PlayerD_SimpleAdr).Text = sets.GetCombined();
                 FindControl(tp, sets.tB_PlayerD_Name).Text = sets.tB_PlayerD_Name.Text;
             } catch (Exception e){
                 Tools.ShowPopup("Updating player field failed!\nShow more?", "Error Occurred!", e.ToString());

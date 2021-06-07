@@ -33,6 +33,7 @@ namespace SSUtility2 {
             this.RTSP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Username = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeleteRow = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Presets)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,7 +49,8 @@ namespace SSUtility2 {
             this.Port,
             this.RTSP,
             this.Username,
-            this.Password});
+            this.Password,
+            this.DeleteRow});
             this.dgv_Presets.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_Presets.Location = new System.Drawing.Point(0, 0);
             this.dgv_Presets.Name = "dgv_Presets";
@@ -56,43 +58,70 @@ namespace SSUtility2 {
             this.dgv_Presets.Size = new System.Drawing.Size(800, 450);
             this.dgv_Presets.TabIndex = 0;
             this.dgv_Presets.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgv_Presets_CellBeginEdit);
+            this.dgv_Presets.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Presets_CellContentClick);
             this.dgv_Presets.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Presets_CellEndEdit);
             this.dgv_Presets.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Presets_CellValueChanged);
+            this.dgv_Presets.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgv_Presets_RowsAdded);
             // 
             // PresetName
             // 
+            this.PresetName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.PresetName.FillWeight = 130F;
             this.PresetName.HeaderText = "Preset Name";
             this.PresetName.Name = "PresetName";
             // 
             // PelcoID
             // 
+            this.PelcoID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.PelcoID.FillWeight = 85F;
             this.PelcoID.HeaderText = "Pelco ID";
             this.PelcoID.Name = "PelcoID";
             // 
             // IPAdr
             // 
+            this.IPAdr.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.IPAdr.FillWeight = 150F;
             this.IPAdr.HeaderText = "IP Address";
             this.IPAdr.Name = "IPAdr";
             // 
             // Port
             // 
+            this.Port.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Port.FillWeight = 95.4632F;
             this.Port.HeaderText = "Port";
             this.Port.Name = "Port";
             // 
             // RTSP
             // 
+            this.RTSP.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.RTSP.FillWeight = 180F;
             this.RTSP.HeaderText = "RTSP";
             this.RTSP.Name = "RTSP";
             // 
             // Username
             // 
+            this.Username.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Username.FillWeight = 95.4632F;
             this.Username.HeaderText = "Username";
             this.Username.Name = "Username";
             // 
             // Password
             // 
+            this.Password.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Password.FillWeight = 95.4632F;
             this.Password.HeaderText = "Password";
             this.Password.Name = "Password";
+            // 
+            // DeleteRow
+            // 
+            this.DeleteRow.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DeleteRow.FillWeight = 95.4632F;
+            this.DeleteRow.HeaderText = "Delete";
+            this.DeleteRow.Name = "DeleteRow";
+            this.DeleteRow.ReadOnly = true;
+            this.DeleteRow.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.DeleteRow.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.DeleteRow.Width = 60;
             // 
             // UserPresets
             // 
@@ -120,5 +149,6 @@ namespace SSUtility2 {
         private System.Windows.Forms.DataGridViewTextBoxColumn RTSP;
         private System.Windows.Forms.DataGridViewTextBoxColumn Username;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
+        private System.Windows.Forms.DataGridViewButtonColumn DeleteRow;
     }
 }
