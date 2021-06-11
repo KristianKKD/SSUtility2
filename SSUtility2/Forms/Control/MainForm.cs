@@ -11,7 +11,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.4.3";
+        public const string version = "v2.7.5.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -33,6 +33,7 @@ namespace SSUtility2 {
         public TabControl attachedpp;
         public Detached mainPlayer;
         public UserPresets up;
+        public CommandListWindow clw;
         private Recorder screenRec;
 
         private string inUseVideoPath;
@@ -57,6 +58,7 @@ namespace SSUtility2 {
                 pd = new PelcoD();
                 pp = new PresetPanel();
                 custom = new CustomButtons();
+                clw = new CommandListWindow();
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
                 EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init();

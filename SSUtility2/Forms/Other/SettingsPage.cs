@@ -7,10 +7,8 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class SettingsPage : Form {
 
-        CommandListWindow clw = null;
         Timer connectTimer;
         Timer pelcoIdTimer;
-
 
         public SettingsPage() {
             InitializeComponent();
@@ -322,11 +320,7 @@ namespace SSUtility2 {
         }
 
         private void b_Custom_CommandList_Click(object sender, EventArgs e) {
-            if (clw == null) {
-                clw = new CommandListWindow(false);
-            }
-            clw.Show();
-            clw.BringToFront();
+            MainForm.m.clw.ShowWindow();
         }
 
         private void check_Other_AutoReconnect_CheckedChanged(object sender, EventArgs e) {

@@ -30,9 +30,9 @@ namespace SSUtility2
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandListWindow));
             this.dgv_Coms = new System.Windows.Forms.DataGridView();
-            this.h_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Commands = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.h_Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Coms)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,24 +71,9 @@ namespace SSUtility2
             this.dgv_Coms.RowHeadersVisible = false;
             this.dgv_Coms.Size = new System.Drawing.Size(683, 450);
             this.dgv_Coms.TabIndex = 0;
+            this.dgv_Coms.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Coms_CellClick);
             this.dgv_Coms.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Coms_CellDoubleClick);
-            // 
-            // h_Description
-            // 
-            this.h_Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.h_Description.HeaderText = "Command Description";
-            this.h_Description.MinimumWidth = 100;
-            this.h_Description.Name = "h_Description";
-            this.h_Description.ReadOnly = true;
-            this.h_Description.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Message
-            // 
-            this.Message.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Message.HeaderText = "Message";
-            this.Message.Name = "Message";
-            this.Message.ReadOnly = true;
-            this.Message.Width = 80;
+            this.dgv_Coms.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Coms_CellEndEdit);
             // 
             // Commands
             // 
@@ -99,6 +84,23 @@ namespace SSUtility2
             this.Commands.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Commands.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Commands.Width = 200;
+            // 
+            // Message
+            // 
+            this.Message.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Message.HeaderText = "Message";
+            this.Message.Name = "Message";
+            this.Message.ReadOnly = true;
+            this.Message.Width = 80;
+            // 
+            // h_Description
+            // 
+            this.h_Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.h_Description.HeaderText = "Command Description";
+            this.h_Description.MinimumWidth = 100;
+            this.h_Description.Name = "h_Description";
+            this.h_Description.ReadOnly = true;
+            this.h_Description.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // CommandListWindow
             // 

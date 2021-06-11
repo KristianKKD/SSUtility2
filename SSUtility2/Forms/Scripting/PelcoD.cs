@@ -59,9 +59,9 @@ namespace SSUtility2 {
 
                     if (loopNow && loopPos != -1) {
                         MainForm.m.WriteToResponses("Looped " + currentLoops.ToString() + "/" + loopAmount.ToString(), true, false);
-                        if (currentLoops < loopAmount) {
+                        if (currentLoops < loopAmount)
                             i = loopPos;
-                        } else {
+                        else {
                             loopPos = -1;
                             currentLoops = 0;
                         }
@@ -141,9 +141,8 @@ namespace SSUtility2 {
         async Task IPSend(ScriptCommand send, string curLine) {
             Command sendCommand = AsyncCamCom.SendScriptCommand(send);
 
-            if (sendCommand == null || sendCommand.invalid) {
+            if (sendCommand == null || sendCommand.invalid)
                 MainForm.m.WriteToResponses("Command: " + curLine + " could not be sent because it's invalid!", true);
-            }
         }
 
         public static byte[] FullCommand(string line) {
@@ -241,13 +240,8 @@ namespace SSUtility2 {
             MainForm.m.rl.Location = new System.Drawing.Point(Location.X + MainForm.m.rl.Width, Location.Y);
         }
 
-        CommandListWindow clw = null;
         private void b_PD_ComList_Click(object sender, EventArgs e) {
-            if (clw == null) {
-                clw = new CommandListWindow(true);
-            }
-            clw.Show();
-            clw.BringToFront();
+            MainForm.m.clw.ShowWindow();
         }
 
         private void check_PD_Perfect_CheckedChanged(object sender, EventArgs e) {

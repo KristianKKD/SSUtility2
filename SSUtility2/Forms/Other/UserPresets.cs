@@ -168,9 +168,6 @@ namespace SSUtility2 {
                 EditInOptions();
         }
 
-        private void dgv_Presets_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) {
-        }
-
         private void dgv_Presets_CellContentClick(object sender, DataGridViewCellEventArgs e) {
             if (e.ColumnIndex == dgv_Presets.Columns.Count - 1 && !dgv_Presets.Rows[e.RowIndex].IsNewRow)
                 if(Tools.ShowPopup("Are you sure you want to delete preset: " + dgv_Presets.Rows[e.RowIndex].Cells[0].Value.ToString() + "?", "Confirmation", null, false))

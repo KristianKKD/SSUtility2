@@ -61,7 +61,6 @@ namespace SSUtility2 {
             this.dgv_Presets.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Presets_CellContentClick);
             this.dgv_Presets.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Presets_CellEndEdit);
             this.dgv_Presets.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Presets_CellValueChanged);
-            this.dgv_Presets.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgv_Presets_RowsAdded);
             // 
             // PresetName
             // 

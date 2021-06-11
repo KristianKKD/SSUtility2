@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -130,13 +131,14 @@ namespace SSUtility2 {
 
         public static bool stopScript;
 
+        public static List<ScriptCommand> userAddedCommands;
+
         public static async Task<ScriptCommand> CheckForCommands(string line, uint adr, bool allowCustom) {
             ScriptCommand presetCom = CheckForPresets(line).Result;
             ScriptCommand fail = new ScriptCommand(null, PelcoD.noCommand, null, 0, false, true);
             
-            if (presetCom == null || (!allowCustom && presetCom.custom)) {
+            if (presetCom == null || (!allowCustom && presetCom.custom))
                 return fail;
-            }
 
             ScriptCommand com = new ScriptCommand(presetCom.names, presetCom.codeContent, presetCom.description,
                  presetCom.valueCount, presetCom.isQuery, presetCom.custom); //need to be careful not to overwrite my commands
@@ -187,25 +189,28 @@ namespace SSUtility2 {
 
             int markerPos = line.IndexOf(" ");
 
-            if (markerPos > 0) {
-                start = line.Substring(0, markerPos);
-                start = start.Trim();
-            }
+            if (markerPos > 0) 
+                start = line.Substring(0, markerPos).Trim();
 
-                foreach (ScriptCommand[] commandArray in cameraArrayCommands) {
-                    foreach (ScriptCommand sc in commandArray) {
+            List<ScriptCommand> allCommands = new List<ScriptCommand>();
 
-                    if(line.Contains(Tools.ReadCommand(sc.codeContent, true))){
+            foreach (ScriptCommand[] commandArray in cameraArrayCommands)
+                foreach (ScriptCommand sc in commandArray)
+                    allCommands.Add(sc);
+
+
+            if(userAddedCommands != null)
+                foreach(ScriptCommand sc in userAddedCommands)
+                    allCommands.Add(sc);
+
+            foreach (ScriptCommand sc in allCommands) {
+                if(line.Contains(Tools.ReadCommand(sc.codeContent, true)))
+                    return sc;
+
+                for (int x = 0; x < sc.names.Length; x++)
+                    if (sc.names[x] == start)
                         return sc;
-                    }
 
-                    for (int x = 0; x < sc.names.Length; x++) {
-                        if (sc.names[x] == start) {
-                            return sc;
-                        }
-                    }
-
-                }
             }
 
             return null;
