@@ -190,8 +190,9 @@ namespace SSUtility2 {
             return returnVal;
         }
 
-        void DestroyCustomCommand(DataGridViewRow row) { //ctrl+x bug
+        async Task DestroyCustomCommand(DataGridViewRow row) { //ctrl+x bug
             try {
+                await Task.Delay(150);
                 Console.WriteLine("destroy");
 
                 if (row.IsNewRow)
@@ -254,8 +255,7 @@ namespace SSUtility2 {
             if (countedVals < 0)
                 return null;
 
-
-            byte[] fullCom = MainForm.m.pd.MakeCommand(row.Cells[1].Value.ToString());
+            byte[] fullCom = MainForm.m.pd.MakeCommand(row.Cells[1].Value.ToString().Replace("X", "0"));
 
             ScriptCommand sc = new ScriptCommand(GenNames(row), new byte[] { fullCom[2], fullCom[3], fullCom[4], fullCom[5] },
                 GenDescription(row), countedVals);
@@ -323,7 +323,8 @@ namespace SSUtility2 {
                 if (foundX % 2 == 1)
                     foundX++;
 
-                row.Cells[1].Value = row.Cells[1].Value.ToString().Replace("X", "0");
+                foundX = foundX / 2;
+
             } catch (Exception e) {
                 MessageBox.Show("COUNT VALS\n" + e.ToString());
             }
