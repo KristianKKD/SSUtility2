@@ -73,6 +73,7 @@ namespace SSUtility2 {
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_PlayerPanel = new System.Windows.Forms.Panel();
             this.pB_Panoramic = new System.Windows.Forms.PictureBox();
+            this.JoyBack = new Joystick.JoyBack();
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
             this.b_Open = new System.Windows.Forms.Button();
             this.b_PTZ_Thermal = new System.Windows.Forms.Button();
@@ -84,7 +85,6 @@ namespace SSUtility2 {
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
-            this.JoyBack = new Joystick.JoyBack();
             this.MenuBar.SuspendLayout();
             this.p_PlayerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
@@ -303,28 +303,28 @@ namespace SSUtility2 {
             // Menu_QC_Custom
             // 
             this.Menu_QC_Custom.Name = "Menu_QC_Custom";
-            this.Menu_QC_Custom.Size = new System.Drawing.Size(209, 22);
-            this.Menu_QC_Custom.Text = "Enter Custom Command";
+            this.Menu_QC_Custom.Size = new System.Drawing.Size(198, 22);
+            this.Menu_QC_Custom.Text = "Enter Quick Command";
             this.Menu_QC_Custom.Click += new System.EventHandler(this.Menu_QC_Custom_Click);
             // 
             // Menu_QC_PanZero
             // 
             this.Menu_QC_PanZero.Name = "Menu_QC_PanZero";
-            this.Menu_QC_PanZero.Size = new System.Drawing.Size(209, 22);
+            this.Menu_QC_PanZero.Size = new System.Drawing.Size(198, 22);
             this.Menu_QC_PanZero.Text = "Set Pan = 0";
             this.Menu_QC_PanZero.Click += new System.EventHandler(this.Menu_QC_PanZero_Click);
             // 
             // Menu_QC_Pan
             // 
             this.Menu_QC_Pan.Name = "Menu_QC_Pan";
-            this.Menu_QC_Pan.Size = new System.Drawing.Size(209, 22);
+            this.Menu_QC_Pan.Size = new System.Drawing.Size(198, 22);
             this.Menu_QC_Pan.Text = "Quick Pan";
             this.Menu_QC_Pan.Click += new System.EventHandler(this.Menu_QC_Pan_Click);
             // 
             // Menu_QC_Tilt
             // 
             this.Menu_QC_Tilt.Name = "Menu_QC_Tilt";
-            this.Menu_QC_Tilt.Size = new System.Drawing.Size(209, 22);
+            this.Menu_QC_Tilt.Size = new System.Drawing.Size(198, 22);
             this.Menu_QC_Tilt.Text = "Quick TIlt";
             this.Menu_QC_Tilt.Click += new System.EventHandler(this.Menu_QC_Tilt_Click);
             // 
@@ -382,6 +382,18 @@ namespace SSUtility2 {
             this.pB_Panoramic.TabStop = false;
             this.pB_Panoramic.Visible = false;
             this.pB_Panoramic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pB_Panoramic_MouseClick);
+            // 
+            // JoyBack
+            // 
+            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
+            this.JoyBack.Location = new System.Drawing.Point(68, 92);
+            this.JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
+            this.JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
+            this.JoyBack.Name = "JoyBack";
+            this.JoyBack.Size = new System.Drawing.Size(150, 150);
+            this.JoyBack.TabIndex = 99;
+            this.JoyBack.TabStop = false;
+            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
             // 
             // b_PTZ_Daylight
             // 
@@ -527,18 +539,6 @@ namespace SSUtility2 {
             this.b_PTZ_Up.UseVisualStyleBackColor = false;
             this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
             this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // JoyBack
-            // 
-            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
-            this.JoyBack.Location = new System.Drawing.Point(68, 92);
-            this.JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
-            this.JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
-            this.JoyBack.Name = "JoyBack";
-            this.JoyBack.Size = new System.Drawing.Size(150, 150);
-            this.JoyBack.TabIndex = 99;
-            this.JoyBack.TabStop = false;
-            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
             // 
             // MainForm
             // 

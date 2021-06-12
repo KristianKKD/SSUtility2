@@ -42,5 +42,8 @@ namespace SSUtility2 {
 
         }
 
+        private void b_CommandList_Click(object sender, EventArgs e) {
+            MainForm.m.clw.ShowWindow();
+        }
     }
 }

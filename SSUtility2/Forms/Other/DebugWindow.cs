@@ -19,30 +19,8 @@ namespace SSUtility2 {
 
         private void b_Debug_Click(object sender, EventArgs e) {
             sc = CustomScriptCommands.CheckForCommands(tB_Debug.Text, 0, false).Result;
-
-            string fullMsg = GenName();
-            fullMsg += "\nVALUES(" + sc.valueCount.ToString() + ")   CONTENT:";
-
-            if (sc.codeContent != null)
-                fullMsg += Tools.ReadCommand(sc.codeContent);
-            else
-                fullMsg += "NULL";
-
-            MessageBox.Show(fullMsg);
+            Tools.ShowScriptCommandInfo(sc,true);
         }
 
-
-        string GenName() {
-            string name = "";
-
-            if (sc.names != null)
-                foreach (string s in sc.names)
-                    name += s + ", ";
-
-                if (name != "")
-                    name = name.Substring(0, name.Length - 2); //remove last comma+whitespace
-
-            return name;
-        }
     }
 }

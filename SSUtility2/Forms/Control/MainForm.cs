@@ -11,7 +11,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.5.3";
+        public const string version = "v2.7.5.4";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -743,7 +743,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_QC_Custom_Click(object sender, EventArgs e) {
-            new QuickCommandEntry("", "Enter custom command", true);
+            new QuickCommandEntry("", "Enter quick command", true);
         }
 
         private void Menu_Settings_Presets_Click(object sender, EventArgs e) {

@@ -632,5 +632,28 @@ namespace SSUtility2 {
             return focusedControl;
         }
 
+        public static string ShowScriptCommandInfo(ScriptCommand sc, bool show) {
+            string fullMsg = "";
+
+            if (sc.names != null)
+                foreach (string s in sc.names)
+                    fullMsg += s + ", ";
+
+            if (fullMsg != "")
+                fullMsg = fullMsg.Substring(0, fullMsg.Length - 2); //removes last comma+whitespace
+
+            fullMsg += "\nVALUES(" + sc.valueCount.ToString() + ")   CONTENT:";
+
+            if (sc.codeContent != null)
+                fullMsg += ReadCommand(sc.codeContent);
+            else
+                fullMsg += "NULL";
+
+            if (show)
+                MessageBox.Show(fullMsg);
+
+            return fullMsg;
+        }
+
     }
 }

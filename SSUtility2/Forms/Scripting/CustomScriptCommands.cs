@@ -34,6 +34,7 @@ namespace SSUtility2 {
         readonly static ScriptCommand connect = new ScriptCommand(new string[] { "connect", "ip" }, PelcoD.connect, "Connect to specified IP + port, example usage: 'connect 192.168.1.183:554'", 1, false, true);
         readonly static ScriptCommand reconfig = new ScriptCommand(new string[] { "reconfig" }, PelcoD.reconfig, "Query for camera config and apply it to settings", 0, true, true);
         readonly static ScriptCommand mainplayerconnect = new ScriptCommand(new string[] { "play", "mainplayerplay" }, PelcoD.mainplay, "Play given X RTSP address on the mainplayer", 1, false, true);//
+        readonly static ScriptCommand swapToPreset = new ScriptCommand(new string[] { "swapto", "campreset", "usecampreset" }, PelcoD.swapPreset, "Select given User Preset (can give index or name)", 1, false, true);//
         
         readonly static ScriptCommand stop = new ScriptCommand(new string[] { "stop" }, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing", 0);
         readonly static ScriptCommand mono = new ScriptCommand(new string[] { "mono", "monocolour", "monocolor" }, new byte[] { 0x00, 0x07, 0x00, 0x03 }, "Camera video toggles between color and black/white pallete", 0);
@@ -79,6 +80,7 @@ namespace SSUtility2 {
             connect,
             reconfig,
             mainplayerconnect,
+            swapToPreset,
         };
 
         public readonly static ScriptCommand[] queryCommands = new ScriptCommand[] {
@@ -292,44 +294,77 @@ namespace SSUtility2 {
 
 
         static async Task DoCustomCommand(ScriptCommand com, string line) {
-            if (com.codeContent == PelcoD.pause) {
-                int value = CheckForVal(line);
-                MainForm.m.WriteToResponses("Waiting: " + value.ToString() + "ms", true);
+            try {
+                if (com.codeContent == PelcoD.pause) {
+                    int value = CheckForVal(line);
+                    MainForm.m.WriteToResponses("Waiting: " + value.ToString() + "ms", true);
 
-                while (value > 0) {
-                    if (stopScript) {
-                        break;
+                    while (value > 0) {
+                        if (stopScript) {
+                            break;
+                        }
+                        value -= 200;
+                        await Task.Delay(200).ConfigureAwait(false);
                     }
-                    value -= 200;
-                    await Task.Delay(200).ConfigureAwait(false);
-                }
-                stopScript = false;
+                    stopScript = false;
 
-            } else if (com.codeContent == PelcoD.connect) {
-                int ipmarker = line.IndexOf(" ");
-                int portmarker = line.IndexOf(":");
-                if (ipmarker == -1 || portmarker == -1) {
-                    MainForm.m.WriteToResponses("Failed to parse IP or port! (" + line + ")", false);
-                    return;
+                } else if (com.codeContent == PelcoD.connect) {
+                    int ipmarker = line.IndexOf(" ");
+                    int portmarker = line.IndexOf(":");
+                    if (ipmarker == -1 || portmarker == -1) {
+                        MainForm.m.WriteToResponses("Failed to parse IP or port! (" + line + ")", false);
+                        return;
+                    }
+
+                    IPAddress parsed;
+                    int port;
+                    if (IPAddress.TryParse(line.Substring(ipmarker + 1, portmarker - ipmarker - 1), out parsed) && int.TryParse(line.Substring(portmarker + 1), out port)) {
+                        await AsyncCamCom.TryConnect(false, new IPEndPoint(parsed, port), true);
+                    }
+                } else if (com.codeContent == PelcoD.reconfig) {
+                    InfoPanel.i.CheckForCamera();
+                } else if (com.codeContent == PelcoD.mainplay) {
+                    int marker = line.IndexOf(" "); //maybe move this up if more customs need it
+                    if (marker <= 0)
+                        marker = line.IndexOf(":");
+
+                    MainForm.m.mainPlayer.settings.customFull = true;
+                    MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = line.Substring(marker + 1).Trim();
+                    MainForm.m.mainPlayer.Play(false, false);
+                } else if (com.codeContent == PelcoD.swapPreset) {
+                    ComboBox cb = MainForm.m.setPage.cB_ipCon_CamType;
+                    string oldVal = cb.Text;
+
+                    int marker = line.IndexOf(" ");
+                    if (marker <= 0)
+                        marker = line.IndexOf(":");
+
+                    string val = line.Substring(marker + 1).Trim().ToLower();
+                    int foundInt;
+
+                    if (int.TryParse(val, out foundInt) && cb.Items[foundInt - 1] != null) //index of preset
+                        cb.SelectedIndex = foundInt - 1;
+                    else {
+                        foreach (DataGridViewRow row in MainForm.m.up.dgv_Presets.Rows) {
+                            if (row.Cells[0].Value != null) {
+                                if (row.Cells[0].Value.ToString().ToLower().Trim().Contains(val)) { //set it to the preset found
+                                    cb.Text = row.Cells[0].Value.ToString();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if (cb.Text != oldVal)
+                        MainForm.m.setPage.UpdateID(cb);
+                    else
+                        MainForm.m.WriteToResponses("Failed to find user preset: " + val, false);
                 }
 
-                IPAddress parsed;
-                int port;
-                if (IPAddress.TryParse(line.Substring(ipmarker + 1, portmarker - ipmarker - 1), out parsed) && int.TryParse(line.Substring(portmarker + 1), out port)) {
-                    await AsyncCamCom.TryConnect(false, new IPEndPoint(parsed, port), true);
-                }
-            } else if (com.codeContent == PelcoD.reconfig) {
-                InfoPanel.i.CheckForCamera();
-            } else if (com.codeContent == PelcoD.mainplay) {
-                int marker = line.IndexOf(" ");
-                if (marker == -1)
-                    marker = line.IndexOf(":");
 
-                MainForm.m.mainPlayer.settings.customFull = true;
-                MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = line.Substring(marker + 1);
-                MainForm.m.mainPlayer.Play(false, false);
+            }catch(Exception e) {
+                MainForm.m.WriteToResponses("Failed to execute custom command: " + line + Tools.ShowScriptCommandInfo(com, false) + "\n" + e.ToString(), false);
             }
-
         }
 
     }

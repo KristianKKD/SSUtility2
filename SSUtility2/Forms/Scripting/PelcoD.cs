@@ -18,6 +18,7 @@ namespace SSUtility2 {
         public static byte[] disconnect = { 7, 3, 4, 5 };
         public static byte[] reconfig = { 8, 3, 4, 5 };
         public static byte[] mainplay = { 9, 3, 4, 5 };
+        public static byte[] swapPreset = { 0, 3, 4, 5 };
 
         int loopPos = -1;
         int currentLoops = 0;
