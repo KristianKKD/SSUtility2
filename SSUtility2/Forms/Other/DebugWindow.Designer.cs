@@ -1,8 +1,7 @@
 ﻿
-namespace SSUtility2.Forms.Other
+namespace SSUtility2
 {
-    partial class DebugWindow
-    {
+    partial class DebugWindow {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -32,6 +31,9 @@ namespace SSUtility2.Forms.Other
             // 
             // tB_Debug
             // 
+            this.tB_Debug.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_Debug.Location = new System.Drawing.Point(12, 12);
             this.tB_Debug.Name = "tB_Debug";
             this.tB_Debug.Size = new System.Drawing.Size(443, 20);
@@ -39,6 +41,9 @@ namespace SSUtility2.Forms.Other
             // 
             // b_DebugReadCom
             // 
+            this.b_DebugReadCom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.b_DebugReadCom.Location = new System.Drawing.Point(281, 38);
             this.b_DebugReadCom.Name = "b_DebugReadCom";
             this.b_DebugReadCom.Size = new System.Drawing.Size(174, 25);

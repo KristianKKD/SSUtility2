@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSUtility2.Forms.Other
-{
-    public partial class DebugWindow : Form
-    {
+namespace SSUtility2 {
+    public partial class DebugWindow : Form {
+        
+        ScriptCommand sc;
+
         public DebugWindow() {
             InitializeComponent();
         }
-        ScriptCommand sc;
 
         private void b_Debug_Click(object sender, EventArgs e) {
             sc = CustomScriptCommands.CheckForCommands(tB_Debug.Text, 0, false).Result;

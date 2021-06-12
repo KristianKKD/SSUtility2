@@ -292,16 +292,7 @@ namespace SSUtility2 {
             connectTimer.Stop();
 
             ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
-            if (await AsyncCamCom.TryConnect(showErrors).ConfigureAwait(false)) {
-                if (!MainForm.m.lite)
-                    return;
-
-                if (ConfigControl.autoReconnect.boolVal && MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text != ConfigControl.savedIP.stringVal) {
-                    MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ConfigControl.savedIP.stringVal;
-                    MainForm.m.mainPlayer.Play(false);
-                }
-            }
-
+            AsyncCamCom.TryConnect(showErrors).ConfigureAwait(false);
         }
 
         void UpdatePresetCB() {

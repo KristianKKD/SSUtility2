@@ -13,17 +13,19 @@ namespace SSUtility2 {
     public partial class DirectoryChooser : Form {
         public DirectoryChooser() {
             InitializeComponent();
+            tB_Dir.Text = ConfigControl.appFolder;
         }
 
         private void b_Done_Click(object sender, EventArgs e) {
             if (Tools.CheckIfNameValid(tB_Dir.Text) && Tools.CheckIfExists(tB_Dir, null)) {
                 string dirLocation = tB_Dir.Text;
-                if (!dirLocation.EndsWith(@"\")){
+
+                if (!dirLocation.EndsWith(@"\"))
                     dirLocation += @"\";
-                }
-                if (Directory.GetFiles(dirLocation).Length > 0 || Directory.GetDirectoryRoot(dirLocation) == dirLocation) {
+
+                if (Directory.GetFiles(dirLocation).Length > 0 || Directory.GetDirectoryRoot(dirLocation) == dirLocation)
                     dirLocation += @"SSUtility\";
-                }
+
                 ConfigControl.appFolder = dirLocation;
                 Dispose();
             } else {
@@ -37,7 +39,7 @@ namespace SSUtility2 {
         }
 
         private void b_Default_Click(object sender, EventArgs e) {
-            tB_Dir.Text = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            tB_Dir.Text = ConfigControl.appFolder;
         }
     }
 }

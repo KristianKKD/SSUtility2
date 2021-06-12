@@ -155,8 +155,11 @@ namespace SSUtility2 {
                 OtherCamCom.CheckIsSameSubnet(ep.Address.ToString());
 
                 if (ConfigControl.autoReconnect.boolVal && !isPlayer) {
-                    MainForm.m.mainPlayer.settings.tB_PlayerD_Adr.Text = ip.ToString();
-                    MainForm.m.mainPlayer.Play(false);
+                    VideoSettings vs = MainForm.m.mainPlayer.settings;
+
+                    vs.tB_PlayerD_Adr.Text = ConfigControl.savedIP.stringVal;
+                    vs.tB_PlayerD_SimpleAdr.Text = vs.GetCombined();
+                    MainForm.m.mainPlayer.Play(false, false);
                 }
 
                 connecting = sock.BeginConnect(end, ConnectCallback, null);

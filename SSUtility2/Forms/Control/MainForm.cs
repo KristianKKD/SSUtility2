@@ -11,7 +11,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.5.2";
+        public const string version = "v2.7.5.3";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -482,7 +482,7 @@ namespace SSUtility2 {
 
                 if ((oldK == Keys.LControlKey && k == Keys.L) ||
                     (k == Keys.LControlKey && oldK == Keys.L)) {
-                    Forms.Other.DebugWindow dg = new Forms.Other.DebugWindow();
+                    DebugWindow dg = new DebugWindow();
                     dg.Show();
                     dg.BringToFront();
                     return;
