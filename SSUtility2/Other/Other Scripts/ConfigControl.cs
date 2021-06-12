@@ -20,6 +20,7 @@ namespace SSUtility2 {
         private const string playerPrefix = "p"; 
         private const string presetTypePrefix = "t";
         private const string customButtonsPrefix = "c";
+        private const string userAddedComPrefix = "u";
         private const string subPrefix = " ";
         
         public static ConfigSetting scFolder = new ConfigSetting(savedFolder, "SnapshotFolder", ConfigSetting.VarType.strings);
@@ -117,6 +118,9 @@ namespace SSUtility2 {
                 SaveDGV(path, MainForm.m.up.dgv_Presets, "Presets", presetTypePrefix);
                 SaveDGV(path, MainForm.m.setPage.dgv_Custom_Buttons, "CustomButtons", customButtonsPrefix);
 
+                CommandListWindow clw = MainForm.m.clw;
+                SaveDGV(path, MainForm.m.clw.dgv_Coms, "UserAddedCommands", userAddedComPrefix, clw.defaultCommandCount);
+
                 if (MainForm.m.finalMode)
                     Tools.CopySingleFile(MainForm.m.finalDest + @"\SSUtility2\" + config, path);
 
@@ -125,8 +129,8 @@ namespace SSUtility2 {
             }
         }
 
-        static void SaveDGV(string path, DataGridView dgv, string saveName, string definingRowPrefix) {
-            List<int> validRows = Tools.GetValidRows(dgv);
+        static void SaveDGV(string path, DataGridView dgv, string saveName, string definingRowPrefix, int fromRow = 0) {
+            List<int> validRows = Tools.GetValidRows(dgv, fromRow);
             ConfigLine(path, saveName, validRows.Count.ToString(), definingRowPrefix);
             foreach (int validRow in validRows)
                 File.AppendAllText(path, subPrefix + Tools.GetRowCellVals(dgv.Rows[validRow]) + "\n");
@@ -184,6 +188,14 @@ namespace SSUtility2 {
                             for (int o = 0; o < val; o++)
                                 if (lines.Length - 1 >= i + o)
                                     MainForm.m.setPage.AddCustomButton(lines[i + o]);
+
+                            i += val - 1;
+                        } else if (line.StartsWith(userAddedComPrefix)) {
+                            i++;
+
+                            for (int o = 0; o < val; o++)
+                                if (lines.Length - 1 >= i + o)
+                                    MainForm.m.clw.LoadCommand(lines[i + o]);
 
                             i += val - 1;
                         }

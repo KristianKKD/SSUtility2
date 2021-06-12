@@ -11,7 +11,7 @@ using static SPanel.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.5.0";
+        public const string version = "v2.7.5.1";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -53,6 +53,7 @@ namespace SSUtility2 {
                 CreateHandle();
                 m = this;
                 VideoSettings.allSettings = new List<VideoSettings>();
+                CustomScriptCommands.userAddedCommands = new List<ScriptCommand>();
                 setPage = new SettingsPage();
                 rl = new ResponseLog();
                 pd = new PelcoD();
@@ -373,10 +374,7 @@ namespace SSUtility2 {
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
             Detached d = new Detached(false);
-            VideoSettings.CopySettings(d.settings, mainPlayer.settings, VideoSettings.CopyType.CopyFull);
             d.Show();
-            if (mainPlayer.IsPlaying())
-                d.Play(false);
         }
 
         private void Menu_Window_PelcoD_Click(object sender, EventArgs e) {
@@ -481,6 +479,14 @@ namespace SSUtility2 {
             try {
                 if (!Tools.IsMainActive())
                     return;
+
+                if ((oldK == Keys.LControlKey && k == Keys.L) ||
+                    (k == Keys.LControlKey && oldK == Keys.L)) {
+                    Forms.Other.DebugWindow dg = new Forms.Other.DebugWindow();
+                    dg.Show();
+                    dg.BringToFront();
+                    return;
+                }
 
                 if (custom.isVisible && k.ToString().Length == 2) {
                     int but;

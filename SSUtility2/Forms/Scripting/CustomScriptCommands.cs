@@ -185,32 +185,34 @@ namespace SSUtility2 {
         }
 
         public static async Task<ScriptCommand> CheckForPresets(string line) {
-            string start = line;
+            try {
+                string start = line;
 
-            int markerPos = line.IndexOf(" ");
+                int markerPos = line.IndexOf(" ");
 
-            if (markerPos > 0) 
-                start = line.Substring(0, markerPos).Trim();
+                if (markerPos > 0)
+                    start = line.Substring(0, markerPos).Trim();
 
-            List<ScriptCommand> allCommands = new List<ScriptCommand>();
+                List<ScriptCommand> allCommands = new List<ScriptCommand>();
 
-            foreach (ScriptCommand[] commandArray in cameraArrayCommands)
-                foreach (ScriptCommand sc in commandArray)
+                foreach (ScriptCommand[] commandArray in cameraArrayCommands)
+                    foreach (ScriptCommand sc in commandArray)
+                        allCommands.Add(sc);
+
+                foreach (ScriptCommand sc in userAddedCommands)
                     allCommands.Add(sc);
 
-
-            if(userAddedCommands != null)
-                foreach(ScriptCommand sc in userAddedCommands)
-                    allCommands.Add(sc);
-
-            foreach (ScriptCommand sc in allCommands) {
-                if(line.Contains(Tools.ReadCommand(sc.codeContent, true)))
-                    return sc;
-
-                for (int x = 0; x < sc.names.Length; x++)
-                    if (sc.names[x] == start)
+                foreach (ScriptCommand sc in allCommands) {
+                    if (line.Contains(Tools.ReadCommand(sc.codeContent, true)))
                         return sc;
 
+                    for (int x = 0; x < sc.names.Length; x++)
+                        if (sc.names[x] == start)
+                            return sc;
+
+                }
+            }catch(Exception e) {
+                Console.WriteLine("CUSTOMSCRIPTCOMMANDSPRESETCHECK\n" + e.ToString());
             }
 
             return null;
@@ -240,7 +242,7 @@ namespace SSUtility2 {
                         MessageBox.Show("Command length is 0!\nMake sure to check the command in the settings!");
                         return;
                     } else {
-                        byte[] code = PelcoD.FullCommand(command);
+                        byte[] code = Tools.ConvertMsgToByte(command);
                         if (code == null) {
                             MessageBox.Show("Command invalid!\nMake sure to enter command in perfect format!\n(FF 0x xx xx xx xx yy)");
                             return;

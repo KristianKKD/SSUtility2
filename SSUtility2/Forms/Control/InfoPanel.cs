@@ -107,20 +107,22 @@ namespace SSUtility2 {
 
         public async Task CheckForCamera() {
             try {
-                Console.WriteLine("checking for cam");
-                if (ConfigControl.forceCamera.boolVal && MainForm.m.finishedLoading) {
-                    isCamera = true;
-                    SettingsPage.UpdateCamType();
-                } else if (AsyncCamCom.sock.Connected) {
-                    OtherCamCom.CamConfig cfg = await OtherCamCom.CheckConfiguration();
-                    if (cfg != OtherCamCom.CamConfig.Null) {
-                        isCamera = true;
-                    }
-                    MainForm.m.setPage.UpdateCamConfig(cfg);
-                } else {
+                if (!MainForm.m.finishedLoading || !AsyncCamCom.sock.Connected) {
                     isCamera = false;
                     isActive = false;
+                    return;
                 }
+
+                if (ConfigControl.forceCamera.boolVal) {
+                    isCamera = true;
+                    SettingsPage.UpdateCamType();
+                } else {
+                    OtherCamCom.CamConfig cfg = await OtherCamCom.CheckConfiguration();
+                    if (cfg != OtherCamCom.CamConfig.Null)
+                        isCamera = true;
+
+                    MainForm.m.setPage.UpdateCamConfig(cfg);
+                } 
             } catch (Exception e) {
                 MessageBox.Show(e.ToString());
             }

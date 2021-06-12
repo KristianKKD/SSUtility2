@@ -91,7 +91,7 @@ namespace SSUtility2 {
 
                     ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, 0);
                     if (check_PD_Perfect.Checked) {
-                        sendCom = new ScriptCommand(new string[] { "" }, FullCommand(line), "", 0);
+                        sendCom = new ScriptCommand(new string[] { "" }, Tools.ConvertMsgToByte(line), "", 0);
 
                     } else {
                         uint adr = 0;
@@ -145,33 +145,7 @@ namespace SSUtility2 {
                 MainForm.m.WriteToResponses("Command: " + curLine + " could not be sent because it's invalid!", true);
         }
 
-        public static byte[] FullCommand(string line) {
-            try {
-                line = line.Trim();
-                if (line.Length != 20) {
-                    //MainForm.m.WriteToResponses(line + " was not in the correct perfect format, ignored.", true, false);
-                    return null;
-                }
-                uint send = uint.Parse(line.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
-                uint camAdr = uint.Parse(line.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
-
-                uint cm1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
-                uint cm2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
-                uint d1 = uint.Parse(line.Substring(12, 2), System.Globalization.NumberStyles.HexNumber);
-                uint d2 = uint.Parse(line.Substring(15, 2), System.Globalization.NumberStyles.HexNumber);
-
-                uint checksum = uint.Parse(line.Substring(18, 2), System.Globalization.NumberStyles.HexNumber);
-
-                byte[] fullCommand = new byte[7] { (byte)send, (byte)camAdr, (byte)cm1, (byte)cm2, (byte)d1, (byte)d2, (byte)checksum };
-
-                return fullCommand;
-            } catch {
-                Console.WriteLine("Not full");
-                return null;
-            }
-        }
-
-        byte[] MakeCommand(string line) {
+        public byte[] MakeCommand(string line) {
             try {
                 line = line.Trim();
                 if (line.Length != 11) {
@@ -183,10 +157,7 @@ namespace SSUtility2 {
                 uint d1 = uint.Parse(line.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
                 uint d2 = uint.Parse(line.Substring(9, 2), System.Globalization.NumberStyles.HexNumber);
 
-                uint adr = 0;
-                Invoke((MethodInvoker)delegate {
-                    adr = Tools.MakeAdr();
-                });
+                uint adr = Tools.MakeAdr();
 
                 uint checksum = (cm1 + cm2 + d1 + d2 + adr) % 256;
 

@@ -93,13 +93,12 @@ namespace SSUtility2 {
 
         public void UpdateButtonNames() {
             DataGridView dgv = MainForm.m.setPage.dgv_Custom_Buttons;
-            List<int> validRows = Tools.GetValidRows(dgv);
+            List<int> validRows = Tools.GetValidRows(dgv, 0);
 
             int i = 0;
             foreach (int valid in validRows) {
                 if (buttonList.Count - 1 < i)
                     break;
-
                 buttonList[i].Text = dgv.Rows[valid].Cells[0].Value.ToString();
                 i++;
             }

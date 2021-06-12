@@ -12,10 +12,15 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class CommandListWindow : Form {
 
-        int defaultCommandCount;
+        public int defaultCommandCount;
+
+        List<int> addedRows;
+        DataGridViewRow destroyRow;
 
         public CommandListWindow() {
             InitializeComponent();
+            addedRows = new List<int>();
+
             LoadContents();
         }
 
@@ -80,7 +85,8 @@ namespace SSUtility2 {
         }
 
         private void dgv_Coms_CellDoubleClick(object sender, DataGridViewCellEventArgs e) {
-            if (!MainForm.m.pd.Visible || dgv_Coms.Rows[e.RowIndex].IsNewRow)
+            if (!MainForm.m.pd.Visible || dgv_Coms.Rows[e.RowIndex].IsNewRow ||
+                    dgv_Coms.Rows[e.RowIndex].Cells[e.ColumnIndex].Value == null)
                 return;
 
             int row = e.RowIndex;
@@ -112,113 +118,234 @@ namespace SSUtility2 {
         }
 
         private void dgv_Coms_CellClick(object sender, DataGridViewCellEventArgs e) {
-            DataGridViewRow curRow = dgv_Coms.Rows[e.RowIndex];
+            try {
+                DataGridViewRow curRow = dgv_Coms.Rows[e.RowIndex];
 
-            if (e.RowIndex < defaultCommandCount)
-                return;
+                if (e.RowIndex < defaultCommandCount)
+                    return;
 
-            if (destroyRow != null && destroyRow.Cells.Contains(curRow.Cells[e.ColumnIndex]))
-                return;
+                if (destroyRow != null && destroyRow.Cells.Contains(curRow.Cells[e.ColumnIndex]))
+                    return;
 
-            dgv_Coms.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly = false;
+                dgv_Coms.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly = false;
+            }catch(Exception err) {
+                MessageBox.Show("CELLCLICK\n" + err.ToString());
+            }
+        }
+
+        public void LoadCommand(string line) {
+            try {
+                line = line.Trim();
+                string[] sets = new string[dgv_Coms.Columns.Count];
+
+                string val = "";
+                int setsPos = 0;
+                foreach (char c in line.ToCharArray()) {
+                    if (c.ToString() == ";") {
+                        sets[setsPos] = val;
+                        val = "";
+                        setsPos++;
+                    } else
+                        val += c.ToString();
+                }
+
+                DataGridViewRow curRow = (DataGridViewRow)dgv_Coms.Rows[0].Clone();
+
+                for (int i = 0; i < sets.Length; i++)
+                    curRow.Cells[i].Value = sets[i];
+
+                dgv_Coms.Rows.Add(curRow);
+
+                AddCustomCommand(curRow);
+            } catch (Exception e) {
+                MessageBox.Show("ADD PRESET\n" + line + "\n" + e.ToString());
+            }
         }
 
         void AddCustomCommand(DataGridViewRow row) {
-            //if (row.Cells[1].Value.ToString().Trim() == "")
-            //    MessageBox.Show("New custom command content is empty, command ignored");
-            Console.WriteLine("added");
+            try {
+                Console.WriteLine("adding");
 
-            if (!addedRows.Contains(row.Index))
-                addedRows.Add(row.Index);
+                if (!addedRows.Contains(row.Index))
+                    addedRows.Add(row.Index);
+
+                if (row.Cells[0].Value == null || row.Cells[1].Value == null)
+                    return;
+
+                ScriptCommand newsc = CreateCommand(row);
+
+                if (!IsNullSC(newsc))
+                    CustomScriptCommands.userAddedCommands.Add(newsc);
+
+            } catch (Exception e) {
+                MessageBox.Show("ADD\n" + e.ToString());
+            }
+        }
+
+        bool IsNullSC(ScriptCommand sc) {
+            bool returnVal = (sc == null || sc.names == null || sc.codeContent == null);
+            if(returnVal)
+                Console.WriteLine("null com");
+
+            return returnVal;
         }
 
         void DestroyCustomCommand(DataGridViewRow row) { //ctrl+x bug
-            if (row.IsNewRow)
-                return;
+            try {
+                Console.WriteLine("destroy");
 
-            destroyRow = row;
+                if (row.IsNewRow)
+                    return;
 
-            Console.WriteLine("destroy");
+                destroyRow = row;
 
-            if(addedRows.Contains(row.Index))
-                addedRows.Remove(row.Index);
 
-            if(dgv_Coms.Rows.Contains(row))
-                dgv_Coms.Rows.Remove(row);
+                if (addedRows.Contains(row.Index))
+                    addedRows.Remove(row.Index);
+
+                if (dgv_Coms.Rows.Contains(row))
+                    dgv_Coms.Rows.Remove(row);
+            }catch(Exception e) {
+                MessageBox.Show("DESTROY\n" + e.ToString());
+            }
         }
 
         void EditCustomCommand(DataGridViewRow row) {
-            Console.WriteLine("edit");
+            try {
+                Console.WriteLine("edit");
 
-            GenNames(row);
+                ScriptCommand newsc = CreateCommand(row);
 
-            //ScriptCommand newsc = new ScriptCommand(GenNames(row), null, GenDescription(row), CountValues(row));
+                if (IsNullSC(newsc))
+                    return;
 
-            //for (int i = 0; i < CustomScriptCommands.userAddedCommands.Count; i++)
-            //    if (CustomScriptCommands.userAddedCommands[i].codeContent == newsc.codeContent) {
-            //        CustomScriptCommands.userAddedCommands[i] = newsc;
-            //        return;
-            //    }
+                for (int i = 0; i < CustomScriptCommands.userAddedCommands.Count; i++) {
+                    bool foundCode = false;
+                    bool foundName = false;
+                    
+                    if (Tools.ReadCommand(CustomScriptCommands.userAddedCommands[i].codeContent) == Tools.ReadCommand(newsc.codeContent))
+                        foundCode = true;
 
-            //AddCustomCommand(row); //if it cant find the scriptcommand
+                    if (!foundCode)
+                        for (int x = 0; x < newsc.names.Length; x++)
+                            if (CustomScriptCommands.userAddedCommands[i].names.Contains(newsc.names[x].Trim())) {
+                                foundName = true;
+                                break;
+                            } 
+
+                    if (foundCode || foundName) {
+                        if (foundName)
+                            newsc.valueCount = CustomScriptCommands.userAddedCommands[i].valueCount;
+
+                        CustomScriptCommands.userAddedCommands.RemoveAt(i);
+                        CustomScriptCommands.userAddedCommands.Add(newsc);
+                        return;
+                    }
+                }
+
+                AddCustomCommand(row); //if it cant find the scriptcommand
+            }catch(Exception e) {
+                MessageBox.Show("EDIT\n" + e.ToString());
+            }
+        }
+
+        ScriptCommand CreateCommand(DataGridViewRow row) {
+            int countedVals = CountValues(row);
+            if (countedVals < 0)
+                return null;
+
+
+            byte[] fullCom = MainForm.m.pd.MakeCommand(row.Cells[1].Value.ToString());
+
+            ScriptCommand sc = new ScriptCommand(GenNames(row), new byte[] { fullCom[2], fullCom[3], fullCom[4], fullCom[5] },
+                GenDescription(row), countedVals);
+
+            return sc;
         }
 
         string GenDescription(DataGridViewRow row) {
-            if (row.Cells[2].Value != null)
-                return row.Cells[2].Value.ToString();
+            try {
+                if (row.Cells[2].Value != null)
+                    return row.Cells[2].Value.ToString();
+            } catch (Exception e) {
+                MessageBox.Show("GENDESC\n" + e.ToString());
+            }
 
             return "";
+
         }
 
         string[] GenNames(DataGridViewRow row) {
-            if (row.Cells[0].Value == null)
+            try {
+                if (row.Cells[0].Value == null)
+                    return null;
+
+                string vals = row.Cells[0].Value.ToString();
+                List<string> namesFound = new List<string>();
+
+                int lastPos = 0;
+                while (true) {
+                    int posOfNext = vals.Substring(lastPos).IndexOf(",");
+                    if (posOfNext <= 0)
+                        break;
+
+                    namesFound.Add(vals.Substring(lastPos, posOfNext).Trim());
+                    lastPos += posOfNext + 1;
+                }
+                if (row.Cells[0].Value.ToString().Replace(" ", "").Length != 0 && vals[vals.Length - 1] != ',')
+                    namesFound.Add(vals.Substring(lastPos).Trim());
+
+                return namesFound.ToArray();
+            } catch (Exception e) {
+                MessageBox.Show("GEN NAMES\n" + e.ToString());
                 return null;
-
-            string vals = row.Cells[0].Value.ToString();
-            List<string> namesFound = new List<string>();
-
-            int lastPos = 0;
-            while (true) {
-                int posOfNext = vals.Substring(lastPos).IndexOf(",");
-                if (posOfNext <= 0)
-                    break;
-
-                namesFound.Add(vals.Substring(lastPos, posOfNext).Trim());
-                lastPos += posOfNext + 1;
             }
-            if (lastPos > 0 && vals[vals.Length - 1] != ',')
-                namesFound.Add(vals.Substring(lastPos).Trim());
-
-            Console.WriteLine("-------");
-
-            foreach (string s in namesFound)
-                Console.WriteLine(s);
-
-            return namesFound.ToArray();
         }
 
         int CountValues(DataGridViewRow row) {
-            //count xx in message
-            return 0;
-        }
+            int foundX = 0;
+            try {
 
-        List<int> addedRows;
-        DataGridViewRow destroyRow;
+                if (row.Cells[1].Value == null)
+                    return foundX;
+
+
+                string cellVal = row.Cells[1].Value.ToString().ToUpper();
+                while (true) {
+                    int posOfNext = cellVal.IndexOf("X");
+                    if (posOfNext < 0)
+                        break;
+
+                    foundX++;
+                    cellVal = cellVal.Substring(posOfNext + 1);
+                }
+
+                if (foundX % 2 == 1)
+                    foundX++;
+
+                row.Cells[1].Value = row.Cells[1].Value.ToString().Replace("X", "0");
+            } catch (Exception e) {
+                MessageBox.Show("COUNT VALS\n" + e.ToString());
+            }
+
+            return foundX;
+        }
 
         private void dgv_Coms_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-            if (addedRows == null)
-                addedRows = new List<int>();
-
-            //add to customscriptcommands, consider checking for content too?
-            DataGridViewRow row = dgv_Coms.Rows[e.RowIndex];
-            var val = row.Cells[e.ColumnIndex].Value;
-            if (val == null || val.ToString().Length == 0)
-                DestroyCustomCommand(row);
-            else if (addedRows.Contains(e.RowIndex))
-                EditCustomCommand(row);
-            else if (e.RowIndex == dgv_Coms.Rows.Count - 2)
-                AddCustomCommand(row);
+            try {
+                DataGridViewRow row = dgv_Coms.Rows[e.RowIndex];
+                var val = row.Cells[e.ColumnIndex].Value;
+                if (val == null || val.ToString().Length == 0)
+                    DestroyCustomCommand(row);
+                else if (addedRows.Contains(e.RowIndex))
+                    EditCustomCommand(row);
+                else if (e.RowIndex == dgv_Coms.Rows.Count - 2)
+                    AddCustomCommand(row);
+            }catch(Exception err) {
+                MessageBox.Show("CELLENDEDIT\n" + err.ToString());
+            }
 
         }
+
     }
 }

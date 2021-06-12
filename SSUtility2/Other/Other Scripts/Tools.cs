@@ -173,9 +173,8 @@ namespace SSUtility2 {
         public static byte[] ConvertMsgToByte(string msg) {
             try {
                 msg = RemoveWhitespace(msg);
-                if (msg.Length != 14) {
+                if (msg.Length != 14)
                     return null;
-                }
 
                 byte[] fullCommand = new byte[7];
 
@@ -543,9 +542,9 @@ namespace SSUtility2 {
             return exists;
         }
 
-        public static List<int> GetValidRows(DataGridView dgv) {
+        public static List<int> GetValidRows(DataGridView dgv, int startingFrom) {
             List<int> validRows = new List<int>();
-            for (int i = 0; i < dgv.Rows.Count; i++) {
+            for (int i = startingFrom; i < dgv.Rows.Count; i++) {
                 DataGridViewRow row = dgv.Rows[i];
 
                 if (row.IsNewRow)

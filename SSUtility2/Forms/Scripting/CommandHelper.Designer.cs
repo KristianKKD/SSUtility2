@@ -119,7 +119,7 @@ namespace SSUtility2
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dgv_Coms;
+        public System.Windows.Forms.DataGridView dgv_Coms;
         private System.Windows.Forms.DataGridViewTextBoxColumn Commands;
         private System.Windows.Forms.DataGridViewTextBoxColumn Message;
         private System.Windows.Forms.DataGridViewTextBoxColumn h_Description;

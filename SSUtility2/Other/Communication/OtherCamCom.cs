@@ -122,7 +122,7 @@ namespace SSUtility2 {
                 CamConfig newConfig;
                 string result = defaultResult;
 
-                Console.WriteLine("checking");
+                Console.WriteLine("checking for cam");
                 result = await CustomScriptCommands.QuickQuery("queryconfig");
 
                 if (result == null || result == defaultResult || result.Length < 12 || !result.ToLower().Contains("6d")) {
