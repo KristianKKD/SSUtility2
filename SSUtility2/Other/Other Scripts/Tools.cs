@@ -623,7 +623,7 @@ namespace SSUtility2 {
             return false;
         }
 
-        private static Control GetFocusedControl() {
+        public static Control GetFocusedControl() {
             Control focusedControl = null;
             IntPtr focusedHandle = Program.GetFocus();
             if (focusedHandle != IntPtr.Zero)

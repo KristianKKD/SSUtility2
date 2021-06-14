@@ -22,28 +22,36 @@ namespace SSUtility2 {
             l_EntryInfo.Text = labelText;
             Show();
             BringToFront();
+            tB_Entry.Focus();
         }
 
         private void b_Done_Click(object sender, EventArgs e) {
-            if (rtb_Entry.Text.Length == 0) {
+            Send();
+        }
+
+        void Send() {
+            string text = tB_Entry.Text;
+            if (text.Length == 0)
                 return;
-            }
 
-            if (customCommand) {
-                CustomScriptCommands.QuickCommand(rtb_Entry.Text, false);
-                InfoPanel.i.UpdateNext();
-                this.Close();
-            } else {
-                if (int.TryParse(rtb_Entry.Text, out int output)) {
+            if (customCommand)
+                CustomScriptCommands.QuickCommand(text, false);
+            else
+                if (int.TryParse(text, out int output))
                     CustomScriptCommands.QuickCommand(command + " " + output.ToString(), false);
-                    this.Close();
-                }
-            }
 
+            InfoPanel.i.UpdateNext();
+            tB_Entry.Text = "";
+            this.Close();
         }
 
         private void b_CommandList_Click(object sender, EventArgs e) {
             MainForm.m.clw.ShowWindow();
+        }
+
+        private void tB_Entry_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter)
+                Send();
         }
     }
 }
