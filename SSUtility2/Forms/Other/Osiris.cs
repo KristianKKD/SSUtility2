@@ -19,46 +19,47 @@ namespace SSUtility2 {
         IPEndPoint lastEP;
 
         async Task Connect() {
-            string ip = tB_IP.Text;
-            string port = tB_Port.Text;
+            //string ip = tB_IP.Text;
+            //string port = tB_Port.Text;
 
-            if (ip.Length == 0 || port.Length == 0) {
-                Tools.ShowPopup("Connection fields are empty!\nShow more?", "Can't Connect!",
-                    "Full address: " + ip + ":" + port);
-                return;
-            }
+            //if (ip.Length == 0 || port.Length == 0) {
+            //    Tools.ShowPopup("Connection fields are empty!\nShow more?", "Can't Connect!",
+            //        "Full address: " + ip + ":" + port);
+            //    return;
+            //}
 
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), int.Parse(port));
-            if (ep == lastEP) {
-                return;
-            }
+            //IPEndPoint ep = new IPEndPoint(IPAddress.Parse(ip), int.Parse(port));
+            //if (ep == lastEP) {
+            //    return;
+            //}
 
-            lastEP = ep;
-            OsirisComs.Connect(lastEP);
-            CheckConfig();
+            //lastEP = ep;
+            //OsirisComs.Connect(lastEP);
+            //CheckConfig();
         }
 
         async Task<string> SendCommand(byte[] command) {
             Connect();
             //command[command.Length - 1] = (byte)GetCRC(command); //apply crc to 2nd last byte
 
-            bool checkPassed = false;
-            for (int i = 3; i < 4 && !checkPassed; i++) {
-                OsirisComs.Send(command);
+            //bool checkPassed = false;
+            //for (int i = 3; i < 4 && !checkPassed; i++) {
+            //    OsirisComs.Send(command);
 
-                for (int x = 0; x < 5 && !OsirisComs.doneReceive; x++) {
-                    Task.Delay(100);
-                }
-                checkPassed = CheckResponse(OsirisComs.lastMsg);
-            }
+            //    for (int x = 0; x < 5 && !OsirisComs.doneReceive; x++) {
+            //        Task.Delay(100);
+            //    }
+            //    checkPassed = CheckResponse(OsirisComs.lastMsg);
+            //}
 
-            if (!checkPassed) {
-                Tools.ShowPopup("Failed to send message!\nShow more?", "Send Failed!",
-                    "Failed to send:\n" + Tools.ReadCommand(command, true));
-                return "";
-            }
+            //if (!checkPassed) {
+            //    Tools.ShowPopup("Failed to send message!\nShow more?", "Send Failed!",
+            //        "Failed to send:\n" + Tools.ReadCommand(command, true));
+            //    return "";
+            //}
 
-            return OsirisComs.lastMsg;
+            //return OsirisComs.lastMsg;
+            return "";
         }
 
         void GenWriteCommand(uint command1, uint command2) {

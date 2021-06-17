@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EasyPlayerNetSDK;
+using Kaiser;
 
 namespace SSUtility2 {
 
@@ -117,12 +118,12 @@ namespace SSUtility2 {
             }
         }
 
-        public SPanel.SizeablePanel AttachPlayerToThis(Detached secondPlayer, Point pos, bool updateVals = true, bool playOnLaunch = true) {
+        public SizeablePanel AttachPlayerToThis(Detached secondPlayer, Point pos, bool updateVals = true, bool playOnLaunch = true) {
             try {
                 attachedPlayers.Add(secondPlayer);
                 secondPlayer.settings.isAttached = true;
 
-                SPanel.SizeablePanel sP_Secondary = new SPanel.SizeablePanel();
+                SizeablePanel sP_Secondary = new SizeablePanel();
                 secondPlayer.p_Player = sP_Secondary;
                 p_Player.Controls.Add(sP_Secondary);
 

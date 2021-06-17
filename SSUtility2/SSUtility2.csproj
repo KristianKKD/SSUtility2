@@ -110,8 +110,8 @@
     <Reference Include="EasyPlayer-RTSP.NetSDK">
       <HintPath>..\..\EasyPlayerNetSDK\obj\Debug\EasyPlayer-RTSP.NetSDK.dll</HintPath>
     </Reference>
-    <Reference Include="Joystick">
-      <HintPath>..\..\Joystick\Joystick\bin\Release\Joystick.dll</HintPath>
+    <Reference Include="KaiserControls">
+      <HintPath>..\..\KaiserControls\KaiserControls\bin\Release\KaiserControls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
@@ -324,7 +324,6 @@
       <DependentUpon>Osiris.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\Communication\AsyncCamCom.cs" />
-    <Compile Include="Other\Communication\OsirisComs.cs" />
     <Compile Include="Other\Communication\Command.cs" />
     <Compile Include="Other\Other Scripts\ConfigControl.cs" />
     <Compile Include="Forms\Scripting\CustomScriptCommands.cs" />
@@ -476,12 +475,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Other\SSLogo.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\SizeablePanel\SizeablePanel\SizeablePanel.csproj">
-      <Project>{104A7E26-594E-4621-9AE7-0163BDCDE920}</Project>
-      <Name>SizeablePanel</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!--<Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />-->

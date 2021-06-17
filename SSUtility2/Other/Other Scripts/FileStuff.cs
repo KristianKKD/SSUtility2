@@ -80,7 +80,6 @@ namespace SSUtility2 {
             File.AppendAllText(ConfigControl.dirLocationFile, ConfigControl.appFolder);
         }
 
-
         static void CheckForMultipleConfigs() {
             try {
                 configFinderCurPoint = 0;

@@ -6,12 +6,13 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static SPanel.SizeablePanel;
+using Kaiser;
+using static Kaiser.SizeablePanel;
 
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.5.5";
+        public const string version = "v2.7.5.6";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -153,7 +154,7 @@ namespace SSUtility2 {
                 if (playercount >= 2 && mainPlayer.attachedPlayers.Count < 1) {
                     if (secondPlayer == null) {
                         secondPlayer = new Detached(false);
-                        SPanel.SizeablePanel second = mainPlayer.AttachPlayerToThis(secondPlayer,
+                        SizeablePanel second = mainPlayer.AttachPlayerToThis(secondPlayer,
                             new Point(mainPlayer.p_Player.Width - 350, 50), false, autoPlay);
 
                         second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -170,7 +171,7 @@ namespace SSUtility2 {
                 if (playercount >= 3 && mainPlayer.attachedPlayers.Count < 2) {
                     if (thirdPlayer == null) {
                         thirdPlayer = new Detached(false);
-                        SPanel.SizeablePanel third = mainPlayer.AttachPlayerToThis(thirdPlayer,
+                        SizeablePanel third = mainPlayer.AttachPlayerToThis(thirdPlayer,
                             new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250), false, autoPlay);
 
                         third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
@@ -408,11 +409,15 @@ namespace SSUtility2 {
         }
 
         private void Menu_QC_Pan_Click(object sender, EventArgs e) {
-            new QuickCommandEntry("setpan", "Enter pan pos value");
+            new QuickCommandEntry("abspan", "Enter pan pos value");
         }
 
         private void Menu_QC_Tilt_Click(object sender, EventArgs e) {
-            new QuickCommandEntry("settilt", "Enter tilt pos value");
+            new QuickCommandEntry("abstilt", "Enter tilt pos value");
+        }
+
+        private void Menu_QC_Zoom_Click(object sender, EventArgs e) {
+            new QuickCommandEntry("abszoom", "Enter zoom pos value");
         }
 
         private void Menu_Video_Settings_Click(object sender, EventArgs e) {
@@ -942,16 +947,16 @@ namespace SSUtility2 {
             Tools.SaveSnap(mainPlayer);
         }
 
-        bool displaying = false;
+        bool displayingPano = false;
         bool stopPano = false;
         int panoFOV = 40;
         private void Menu_Video_Snap_Panoramic_Click(object sender, EventArgs e) {
             panoFOV = 40;
             string stop = "Stop Panoramic";
 
-            if (displaying) {
+            if (displayingPano) {
                 pB_Panoramic.Hide();
-                displaying = false;
+                displayingPano = false;
                 Menu_Video_Snap_Panoramic.Text = "Panoramic";
                 return;
             }
@@ -995,6 +1000,7 @@ namespace SSUtility2 {
                 //}
 
                 mainPlayer.HideAttached();
+                HideControlPanel();
 
                 string tempStorage = ConfigControl.savedFolder + @"temp\";
                 Tools.CheckCreateFile(null, tempStorage);
@@ -1003,15 +1009,17 @@ namespace SSUtility2 {
                 int width = pPlayer.Width;
                 int height = pPlayer.Height;
 
-                int snapshotCount = (int)Math.Round(360f / panoFOV) + 1;
+                int snapshotCount = (int)Math.Round(360f / panoFOV) - 1; //look into this
                 Image fullScreenshot = new Bitmap(@"C:\Users\waakk\Documents\SSUtility\Saved\temp\test.jpg");
-                
+
+                CustomScriptCommands.QuickCommand("abszoom 0", true);
+
                 for (int i = 0; i < snapshotCount || stopPano; i++) {
                     CustomScriptCommands.QuickCommand("setpan " + (i * panoFOV).ToString(), true);
 
-                    int waitAmount = 3000;
+                    int waitAmount = 1500;
                     if (i == 0)
-                        waitAmount = 5000;
+                        waitAmount = 3000;
 
                     await Task.Delay(waitAmount);
 
@@ -1030,18 +1038,19 @@ namespace SSUtility2 {
                     fullScreenshot.Save(fullImagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
                     Tools.FinalScreenshot(fullImagePath);
 
-                    pB_Panoramic.Parent = pPlayer; //test this especially
+                    pB_Panoramic.Parent = pPlayer;
                     pB_Panoramic.Show();
                     pB_Panoramic.BringToFront();
+                    pB_Panoramic.Height = (int)Math.Round(Height / 4f);
                     pB_Panoramic.SizeMode = PictureBoxSizeMode.Zoom;
                     pB_Panoramic.Image = fullScreenshot;
 
-                    displaying = true;
+                    displayingPano = true;
                     Menu_Video_Snap_Panoramic.Text = "Hide Panoramic";
                 }
 
-                if (Directory.Exists(tempStorage))
-                    Tools.DeleteDirectory(tempStorage); //test this
+                //if (Directory.Exists(tempStorage))
+                //    Tools.DeleteDirectory(tempStorage); //test this //doesnt work because it conflicts with pB_Pano
 
             } catch (Exception e) {
                 Tools.ShowPopup("Error occurred whilst creating a panoramic screenshot!\nShow more?", "Error Occurred!", e.ToString());
@@ -1050,18 +1059,23 @@ namespace SSUtility2 {
             mainPlayer.ShowAttached();
             stopPano = false;
 
-            if (!displaying)
+            if (!displayingPano)
                 Menu_Video_Snap_Panoramic.Text = "Panoramic";
         }
 
         private void pB_Panoramic_MouseClick(object sender, MouseEventArgs e) {
-            if (displaying) {
-                float scaled = e.X / (Width / 360f);
-                int pos = ((int)Math.Round(scaled / panoFOV) * panoFOV);
-                CustomScriptCommands.QuickCommand("setpan " + pos.ToString(), true);
+            try {
+                if (displayingPano) {
+                    float scaled = e.X / (MainForm.m.mainPlayer.p_Player.Width / 360f);
+                    int pos = ((int)Math.Round(scaled / panoFOV) * panoFOV);
+                    Console.WriteLine(scaled.ToString() + " " + pos.ToString());
+                    CustomScriptCommands.QuickCommand("abspan " + pos.ToString(), true);
+                }
+            }catch(Exception er) {
+                MessageBox.Show("PANOMOUSECLICK\n" + er.ToString());
             }
 
-            Hide();
+            //pB_Panoramic.Hide();
         }
 
     } // end of class MainForm
