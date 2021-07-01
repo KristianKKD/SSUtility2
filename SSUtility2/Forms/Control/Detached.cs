@@ -159,8 +159,14 @@ namespace SSUtility2 {
         }
 
         public void DetachAll(bool destroy) {
+            List<Detached> dList = new List<Detached>();
             foreach (Detached d in attachedPlayers)
-                Detach(d, destroy);
+                dList.Add(d);
+
+            foreach (Detached d in dList) {
+                attachedPlayers.Remove(d);
+                d.DestroyPlayer();
+            }
         }
 
         public void Detach(Detached detachable, bool destroy) {
