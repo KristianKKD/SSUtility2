@@ -56,14 +56,16 @@ namespace SSUtility2 {
             this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Open = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_Presets = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_Info = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_Custom = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_CP = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Panels = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Panels_QF = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Panels_IP = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Panels_Custom = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Panels_CP = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Keyboard = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_ImportConfig = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_ExportConfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Config = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Config_Import = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Config_Export = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Video_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,6 +82,7 @@ namespace SSUtility2 {
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_PlayerPanel = new System.Windows.Forms.Panel();
             this.pB_Panoramic = new System.Windows.Forms.PictureBox();
+            this.JoyBack = new Kaiser.JoyBack();
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
             this.b_Open = new System.Windows.Forms.Button();
             this.b_PTZ_Thermal = new System.Windows.Forms.Button();
@@ -91,7 +94,6 @@ namespace SSUtility2 {
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
-            this.JoyBack = new Kaiser.JoyBack();
             this.MenuBar.SuspendLayout();
             this.p_PlayerPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
@@ -174,14 +176,10 @@ namespace SSUtility2 {
             // 
             this.Menu_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Settings_Open,
-            this.Menu_Settings_Presets,
-            this.Menu_Settings_Info,
-            this.Menu_Settings_Custom,
-            this.Menu_Settings_CP,
             this.Menu_Settings_Lite,
             this.Menu_Settings_Keyboard,
-            this.Menu_Settings_ImportConfig,
-            this.Menu_Settings_ExportConfig});
+            this.Menu_Settings_Panels,
+            this.Menu_Settings_Config});
             this.Menu_Settings.Name = "Menu_Settings";
             this.Menu_Settings.Size = new System.Drawing.Size(63, 20);
             this.Menu_Settings.Text = "Settings";
@@ -189,65 +187,85 @@ namespace SSUtility2 {
             // Menu_Settings_Open
             // 
             this.Menu_Settings_Open.Name = "Menu_Settings_Open";
-            this.Menu_Settings_Open.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_Open.Size = new System.Drawing.Size(193, 22);
             this.Menu_Settings_Open.Text = "Open Settings";
             this.Menu_Settings_Open.Click += new System.EventHandler(this.Menu_Settings_Open_Click);
             // 
-            // Menu_Settings_Presets
+            // Menu_Settings_Panels
             // 
-            this.Menu_Settings_Presets.Name = "Menu_Settings_Presets";
-            this.Menu_Settings_Presets.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_Presets.Text = "Enable Preset Panel";
-            this.Menu_Settings_Presets.Click += new System.EventHandler(this.Menu_Settings_Presets_Click);
+            this.Menu_Settings_Panels.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Settings_Panels_QF,
+            this.Menu_Settings_Panels_IP,
+            this.Menu_Settings_Panels_Custom,
+            this.Menu_Settings_Panels_CP});
+            this.Menu_Settings_Panels.Name = "Menu_Settings_Panels";
+            this.Menu_Settings_Panels.Size = new System.Drawing.Size(193, 22);
+            this.Menu_Settings_Panels.Text = "Panels";
             // 
-            // Menu_Settings_Info
+            // Menu_Settings_Panels_QF
             // 
-            this.Menu_Settings_Info.Name = "Menu_Settings_Info";
-            this.Menu_Settings_Info.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_Info.Text = "Enable Info Panel";
-            this.Menu_Settings_Info.Click += new System.EventHandler(this.Menu_Settings_Info_Click);
+            this.Menu_Settings_Panels_QF.Name = "Menu_Settings_Panels_QF";
+            this.Menu_Settings_Panels_QF.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Settings_Panels_QF.Text = "Quick Functions";
+            this.Menu_Settings_Panels_QF.Click += new System.EventHandler(this.Menu_Settings_Panels_QF_Click);
             // 
-            // Menu_Settings_Custom
+            // Menu_Settings_Panels_IP
             // 
-            this.Menu_Settings_Custom.Name = "Menu_Settings_Custom";
-            this.Menu_Settings_Custom.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_Custom.Text = "Enable Custom Panel";
-            this.Menu_Settings_Custom.Click += new System.EventHandler(this.Menu_Settings_Custom_Click);
+            this.Menu_Settings_Panels_IP.Name = "Menu_Settings_Panels_IP";
+            this.Menu_Settings_Panels_IP.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Settings_Panels_IP.Text = "Info Panel";
+            this.Menu_Settings_Panels_IP.Click += new System.EventHandler(this.Menu_Settings_Panels_IP_Click);
             // 
-            // Menu_Settings_CP
+            // Menu_Settings_Panels_Custom
             // 
-            this.Menu_Settings_CP.Name = "Menu_Settings_CP";
-            this.Menu_Settings_CP.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_CP.Text = "Show PTZ Control Panel";
-            this.Menu_Settings_CP.Click += new System.EventHandler(this.Menu_Settings_CP_Click);
+            this.Menu_Settings_Panels_Custom.Name = "Menu_Settings_Panels_Custom";
+            this.Menu_Settings_Panels_Custom.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Settings_Panels_Custom.Text = "Custom Panel";
+            this.Menu_Settings_Panels_Custom.Click += new System.EventHandler(this.Menu_Settings_Panels_Custom_Click);
+            // 
+            // Menu_Settings_Panels_CP
+            // 
+            this.Menu_Settings_Panels_CP.Name = "Menu_Settings_Panels_CP";
+            this.Menu_Settings_Panels_CP.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Settings_Panels_CP.Text = "PTZ Control Panel";
+            this.Menu_Settings_Panels_CP.Click += new System.EventHandler(this.Menu_Settings_Panels_CP_Click);
             // 
             // Menu_Settings_Lite
             // 
             this.Menu_Settings_Lite.Name = "Menu_Settings_Lite";
-            this.Menu_Settings_Lite.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_Lite.Size = new System.Drawing.Size(193, 22);
             this.Menu_Settings_Lite.Text = "Lite Mode";
             this.Menu_Settings_Lite.Click += new System.EventHandler(this.Menu_Settings_Lite_Click);
             // 
             // Menu_Settings_Keyboard
             // 
             this.Menu_Settings_Keyboard.Name = "Menu_Settings_Keyboard";
-            this.Menu_Settings_Keyboard.Size = new System.Drawing.Size(207, 22);
+            this.Menu_Settings_Keyboard.Size = new System.Drawing.Size(193, 22);
             this.Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
             this.Menu_Settings_Keyboard.Click += new System.EventHandler(this.Menu_Settings_Keyboard_Click);
             // 
-            // Menu_Settings_ImportConfig
+            // Menu_Settings_Config
             // 
-            this.Menu_Settings_ImportConfig.Name = "Menu_Settings_ImportConfig";
-            this.Menu_Settings_ImportConfig.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_ImportConfig.Text = "Import Config File";
-            this.Menu_Settings_ImportConfig.Click += new System.EventHandler(this.Menu_Settings_ImportConfig_Click);
+            this.Menu_Settings_Config.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Settings_Config_Import,
+            this.Menu_Settings_Config_Export});
+            this.Menu_Settings_Config.Name = "Menu_Settings_Config";
+            this.Menu_Settings_Config.Size = new System.Drawing.Size(193, 22);
+            this.Menu_Settings_Config.Text = "Config";
             // 
-            // Menu_Settings_ExportConfig
+            // Menu_Settings_Config_Import
             // 
-            this.Menu_Settings_ExportConfig.Name = "Menu_Settings_ExportConfig";
-            this.Menu_Settings_ExportConfig.Size = new System.Drawing.Size(207, 22);
-            this.Menu_Settings_ExportConfig.Text = "Export Config File";
-            this.Menu_Settings_ExportConfig.Click += new System.EventHandler(this.Menu_Settings_ExportConfig_Click);
+            this.Menu_Settings_Config_Import.Name = "Menu_Settings_Config_Import";
+            this.Menu_Settings_Config_Import.Size = new System.Drawing.Size(118, 22);
+            this.Menu_Settings_Config_Import.Text = "Import...";
+            this.Menu_Settings_Config_Import.Click += new System.EventHandler(this.Menu_Settings_Config_Import_Click);
+            // 
+            // Menu_Settings_Config_Export
+            // 
+            this.Menu_Settings_Config_Export.Name = "Menu_Settings_Config_Export";
+            this.Menu_Settings_Config_Export.Size = new System.Drawing.Size(118, 22);
+            this.Menu_Settings_Config_Export.Text = "Export...";
+            this.Menu_Settings_Config_Export.Click += new System.EventHandler(this.Menu_Settings_Config_Export_Click);
             // 
             // Menu_Video
             // 
@@ -398,6 +416,18 @@ namespace SSUtility2 {
             this.pB_Panoramic.Visible = false;
             this.pB_Panoramic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pB_Panoramic_MouseClick);
             // 
+            // JoyBack
+            // 
+            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
+            this.JoyBack.Location = new System.Drawing.Point(68, 92);
+            this.JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
+            this.JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
+            this.JoyBack.Name = "JoyBack";
+            this.JoyBack.Size = new System.Drawing.Size(150, 150);
+            this.JoyBack.TabIndex = 99;
+            this.JoyBack.TabStop = false;
+            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
+            // 
             // b_PTZ_Daylight
             // 
             this.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
@@ -543,18 +573,6 @@ namespace SSUtility2 {
             this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
             this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
-            // JoyBack
-            // 
-            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
-            this.JoyBack.Location = new System.Drawing.Point(68, 92);
-            this.JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
-            this.JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
-            this.JoyBack.Name = "JoyBack";
-            this.JoyBack.Size = new System.Drawing.Size(150, 150);
-            this.JoyBack.TabIndex = 99;
-            this.JoyBack.TabStop = false;
-            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -603,7 +621,6 @@ namespace SSUtility2 {
         public Button b_Open;
         public ToolStripMenuItem Menu_Settings;
         public ToolStripMenuItem Menu_Settings_Open;
-        public ToolStripMenuItem Menu_Settings_Info;
         public Button b_PTZ_Left;
         public Button b_PTZ_Right;
         public Button b_PTZ_Down;
@@ -613,14 +630,9 @@ namespace SSUtility2 {
         public Button b_PTZ_FocusPos;
         public Button b_PTZ_ZoomPos;
         public ToolStripMenuItem Menu_Settings_Keyboard;
-        public ToolStripMenuItem Menu_Settings_CP;
         public ToolStripMenuItem Menu_Window_Settings;
         public ToolStripMenuItem Menu_Settings_Lite;
         public ToolStripMenuItem Menu_QC_Custom;
-        public ToolStripMenuItem Menu_Settings_Presets;
-        public ToolStripMenuItem Menu_Settings_Custom;
-        public ToolStripMenuItem Menu_Settings_ImportConfig;
-        public ToolStripMenuItem Menu_Settings_ExportConfig;
         public Button b_PTZ_Daylight;
         public Button b_PTZ_Thermal;
         public ToolStripMenuItem Menu_Video_Snap_Single;
@@ -628,5 +640,13 @@ namespace SSUtility2 {
         public Kaiser.JoyBack JoyBack;
         public PictureBox pB_Panoramic;
         private ToolStripMenuItem Menu_QC_Zoom;
+        public ToolStripMenuItem Menu_Settings_Config;
+        public ToolStripMenuItem Menu_Settings_Config_Import;
+        public ToolStripMenuItem Menu_Settings_Config_Export;
+        public ToolStripMenuItem Menu_Settings_Panels;
+        public ToolStripMenuItem Menu_Settings_Panels_QF;
+        public ToolStripMenuItem Menu_Settings_Panels_IP;
+        public ToolStripMenuItem Menu_Settings_Panels_Custom;
+        public ToolStripMenuItem Menu_Settings_Panels_CP;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.5.6";
+        public const string version = "v2.7.5.7";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -233,7 +233,7 @@ namespace SSUtility2 {
                 c.Show();
                 c.BringToFront();
             }
-            Menu_Settings_CP.Text = "Hide Control Panel";
+            Menu_Settings_Panels_CP.Text = "Hide Control Panel";
             b_Open.Text = "<<";
         }
 
@@ -242,7 +242,7 @@ namespace SSUtility2 {
                 foreach (Control c in controlPanel) {
                     c.Hide();
                 }
-                Menu_Settings_CP.Text = "Show Control Panel";
+                Menu_Settings_Panels_CP.Text = "Control Panel";
                 b_Open.Text = ">>";
             } catch (Exception e) {
                 MessageBox.Show("HIDE PANEL\n" + e.ToString());
@@ -268,14 +268,12 @@ namespace SSUtility2 {
                         c.Top -= 50;
                     }
 
-                    Menu_Settings_Info.Dispose();
-                    Menu_Settings_CP.Dispose();
+                    Menu_Settings_Panels_IP.Dispose();
+                    Menu_Settings_Panels_CP.Dispose();
                     Menu_Video.Dispose();
                     b_Open.Dispose();
 
-                    foreach (Detached d in mainPlayer.attachedPlayers) {
-                        d.DestroyPlayer();
-                    }
+                    mainPlayer.DetachAll(true);
 
                     mainPlayer.StopPlaying();
                     JoyBack.Joystick.UpdateJoystickCentre();
@@ -467,10 +465,6 @@ namespace SSUtility2 {
             OpenSettings();
         }
 
-        private void Menu_Settings_Info_Click(object sender, EventArgs e) {
-            InfoPanel.i.StartStopTicking();
-        }
-
         public void SwapSettings(Detached player) {
             VideoSettings.SwapSettings(player.settings);
         }
@@ -575,10 +569,10 @@ namespace SSUtility2 {
         private void Menu_Settings_Keyboard_Click(object sender, EventArgs e) {
             if (keyboardControl) {
                 keyboardControl = false;
-                Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
+                Menu_Settings_Keyboard.Text = "PTZ Keyboard";
             } else {
                 keyboardControl = true;
-                Menu_Settings_Keyboard.Text = "Disable PTZ Keyboard";
+                Menu_Settings_Keyboard.Text = "Hide PTZ Keyboard";
             }
         }
 
@@ -727,7 +721,29 @@ namespace SSUtility2 {
             return code;
         }
 
-        private void Menu_Settings_CP_Click(object sender, EventArgs e) {
+        private void Menu_Settings_Panels_QF_Click(object sender, EventArgs e) {
+            if (attachedpp.Visible) {
+                attachedpp.Hide();
+                Menu_Settings_Panels_QF.Text = "Quick Functions";
+            } else {
+                attachedpp.Show();
+                attachedpp.BringToFront();
+                Menu_Settings_Panels_QF.Text = "Hide Quick Functions";
+            }
+        }
+
+        private void Menu_Settings_Panels_IP_Click(object sender, EventArgs e) {
+            InfoPanel.i.StartStopTicking();
+        }
+
+        private void Menu_Settings_Panels_Custom_Click(object sender, EventArgs e) {
+            if (custom.isVisible)
+                custom.HideButtons();
+            else
+                custom.ShowButtons();
+        }
+
+        private void Menu_Settings_Panels_CP_Click(object sender, EventArgs e) {
             OpenCloseCP();
         }
 
@@ -751,22 +767,7 @@ namespace SSUtility2 {
             new QuickCommandEntry("", "Enter quick command", true);
         }
 
-        private void Menu_Settings_Presets_Click(object sender, EventArgs e) {
-            if (attachedpp.Visible) {
-                attachedpp.Hide();
-                Menu_Settings_Presets.Text = "Enable Preset Panel";
-            } else {
-                attachedpp.Show();
-                attachedpp.BringToFront();
-                Menu_Settings_Presets.Text = "Disable Preset Panel";
-            }
-        }
-
-        private void Menu_Settings_Custom_Click(object sender, EventArgs e) {
-            custom.ToggleCustomVisible();
-        }
-
-        private void Menu_Settings_ImportConfig_Click(object sender, EventArgs e) {
+        private void Menu_Settings_Config_Import_Click(object sender, EventArgs e) {
             OpenFileDialog fdg = Tools.OpenFile();
             DialogResult result = fdg.ShowDialog();
             if (result == DialogResult.OK) {
@@ -779,7 +780,7 @@ namespace SSUtility2 {
             }
         }
 
-        private void Menu_Settings_ExportConfig_Click(object sender, EventArgs e) {
+        private void Menu_Settings_Config_Export_Click(object sender, EventArgs e) {
             string[] lines = File.ReadAllLines(ConfigControl.appFolder + ConfigControl.config);
             Tools.SaveTextFile(lines, "configCopy");
         }
@@ -823,7 +824,6 @@ namespace SSUtility2 {
                 Tools.ShowPopup("Failed to open script!\nShow more?", "Script load failed!", error.ToString());
             }
         }
-
 
         public void StopRatioTimer() {
             MinimumSize = new Size(800, 600);

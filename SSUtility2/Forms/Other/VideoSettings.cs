@@ -92,20 +92,24 @@ namespace SSUtility2 {
         }
 
         public static void EditPresetOption(DataGridViewRow row, DataGridViewRow oldRow) {
-            foreach (VideoSettings vs in allSettings) {
-                if (vs == null || vs.myDetached == null)
-                    continue;
+            try {
+                foreach (VideoSettings vs in allSettings) {
+                    if (vs == null || vs.myDetached == null)
+                        continue;
 
-                ComboBox cb = (ComboBox)FindControl(vs.tP_Main, MainForm.m.mainPlayer.settings.cB_PlayerD_CamType);
+                    ComboBox cb = (ComboBox)FindControl(vs.tP_Main, MainForm.m.mainPlayer.settings.cB_PlayerD_CamType);
 
-                int index = -1;
-                if (cb.Items.Contains(oldRow.Cells[0].Value))
-                    index = cb.Items.IndexOf(oldRow.Cells[0].Value);
+                    int index = -1;
+                    if (cb.Items.Contains(oldRow.Cells[0].Value))
+                        index = cb.Items.IndexOf(oldRow.Cells[0].Value);
 
-                if (index == -1)
-                    cb.Items.Add(row.Cells[0].Value);
-                else
-                    cb.Items[index] = row.Cells[0].Value;
+                    if (index == -1)
+                        cb.Items.Add(row.Cells[0].Value);
+                    else
+                        cb.Items[index] = row.Cells[0].Value;
+                }
+            }catch(Exception e) {
+                MessageBox.Show("EDITPRESET\n" + e.ToString());
             }
         }
 
@@ -392,7 +396,7 @@ namespace SSUtility2 {
             CameraCBType(this, tP_Main);
             if (isMainPlayer)
                 MainForm.m.setPage.UpdateID(cB_PlayerD_CamType);
-            else
+            else if (myLinkedMainPage != null)
                 UpdateField((Control)sender, this, myLinkedMainPage);
         }
 
@@ -495,10 +499,18 @@ namespace SSUtility2 {
                 nameVal = name;
 
             tP_Main.Text = nameVal;
-            myLinkedMainPage.Text = nameVal;
 
-            if (!isMainPlayer)
-                UpdateField((Control)sender, this, myLinkedMainPage);
+            if (!isMainPlayer) {
+                if (myLinkedMainPage == null) {
+                    myDetached.Text = nameVal;
+                    return;
+                }
+
+                myLinkedMainPage.Text = nameVal;
+
+                if (!isMainPlayer)
+                    UpdateField((Control)sender, this, myLinkedMainPage);
+            }
         }
 
         void UpdateCustomFull(object sender) {

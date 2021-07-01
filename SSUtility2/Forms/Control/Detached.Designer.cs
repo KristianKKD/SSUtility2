@@ -102,7 +102,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MenuBar;
             this.Name = "Detached";
-            this.Text = "Player";
+            this.Text = "Detached Player";
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();

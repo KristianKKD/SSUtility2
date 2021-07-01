@@ -67,27 +67,20 @@ namespace SSUtility2 {
             }
         }
 
-        public void ToggleCustomVisible() {
-            if (isVisible)
-                HideButtons();
-            else
-                ShowButtons();
-        }
-
         public void HideButtons() {
             foreach (Button b in buttonList) {
                 b.Hide();
             }
-            MainForm.m.Menu_Settings_Custom.Text = "Enable Custom Panel";
+            MainForm.m.Menu_Settings_Panels_Custom.Text = "Custom Panel";
             isVisible = false;
         }
 
-        void ShowButtons() {
+        public void ShowButtons() {
             foreach (Button b in buttonList) {
                 b.Show();
                 b.BringToFront();
             }
-            MainForm.m.Menu_Settings_Custom.Text = "Disable Custom Panel";
+            MainForm.m.Menu_Settings_Panels_Custom.Text = "Hide Custom Panel";
             isVisible = true;
         }
 

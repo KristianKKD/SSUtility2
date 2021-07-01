@@ -334,10 +334,10 @@
     <Compile Include="Forms\Control\Detached.Designer.cs">
       <DependentUpon>Detached.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Control\Final.cs">
+    <Compile Include="Forms\Other\Final.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Control\Final.Designer.cs">
+    <Compile Include="Forms\Other\Final.Designer.cs">
       <DependentUpon>Final.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Control\MainForm.cs">
@@ -436,7 +436,7 @@
     <EmbeddedResource Include="Forms\Scripting\ResponseLog.resx">
       <DependentUpon>ResponseLog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Control\Final.resx">
+    <EmbeddedResource Include="Forms\Other\Final.resx">
       <DependentUpon>Final.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Other\FirmwareUpgrade.resx">

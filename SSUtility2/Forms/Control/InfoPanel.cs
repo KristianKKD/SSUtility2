@@ -66,7 +66,7 @@ namespace SSUtility2 {
                 if (isActive) {
                     HideAll();
                     isActive = false;
-                    MainForm.m.Menu_Settings_Info.Text = "Enable Info Panel";
+                    MainForm.m.Menu_Settings_Panels_IP.Text = "Info Panel";
                     return;
                 }
 
@@ -74,7 +74,7 @@ namespace SSUtility2 {
 
                 isActive = true;
                 UpdateNext();
-                MainForm.m.Menu_Settings_Info.Text = "Disable Info Panel";
+                MainForm.m.Menu_Settings_Panels_IP.Text = "Hide Info Panel";
                 ShowAll();
             } catch (Exception e) {
                 Tools.ShowPopup("Error in updating info panel!\nShow more?", "Failed to update info panel!", e.ToString());
