@@ -34,7 +34,6 @@
             this.l_IPCon_Connected = new System.Windows.Forms.Label();
             this.b_PD_Stop = new System.Windows.Forms.Button();
             this.b_PD_RL = new System.Windows.Forms.Button();
-            this.check_PD_Perfect = new System.Windows.Forms.CheckBox();
             this.tt_CommandFormat = new System.Windows.Forms.ToolTip(this.components);
             this.b_PD_ComList = new System.Windows.Forms.Button();
             this.cB_Mode = new System.Windows.Forms.ComboBox();
@@ -132,20 +131,6 @@
             this.b_PD_RL.UseVisualStyleBackColor = false;
             this.b_PD_RL.Click += new System.EventHandler(this.b_PD_RL_Click);
             // 
-            // check_PD_Perfect
-            // 
-            this.check_PD_Perfect.AccessibleDescription = "E.g. \"0021 0002 0153 0004\"";
-            this.check_PD_Perfect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.check_PD_Perfect.AutoSize = true;
-            this.check_PD_Perfect.Location = new System.Drawing.Point(349, 162);
-            this.check_PD_Perfect.Name = "check_PD_Perfect";
-            this.check_PD_Perfect.Size = new System.Drawing.Size(95, 17);
-            this.check_PD_Perfect.TabIndex = 92;
-            this.check_PD_Perfect.Text = "Perfect Format";
-            this.tt_CommandFormat.SetToolTip(this.check_PD_Perfect, "Perfect Format disabled example: 00 53 00 00");
-            this.check_PD_Perfect.UseVisualStyleBackColor = true;
-            this.check_PD_Perfect.CheckedChanged += new System.EventHandler(this.check_PD_Perfect_CheckedChanged);
-            // 
             // b_PD_ComList
             // 
             this.b_PD_ComList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -162,6 +147,7 @@
             // cB_Mode
             // 
             this.cB_Mode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cB_Mode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cB_Mode.FormattingEnabled = true;
             this.cB_Mode.Items.AddRange(new object[] {
             "IP",
@@ -170,7 +156,6 @@
             this.cB_Mode.Name = "cB_Mode";
             this.cB_Mode.Size = new System.Drawing.Size(111, 21);
             this.cB_Mode.TabIndex = 95;
-            this.cB_Mode.Text = "IP";
             this.cB_Mode.SelectedIndexChanged += new System.EventHandler(this.cB_Mode_SelectedIndexChanged);
             // 
             // l_Mode
@@ -205,7 +190,7 @@
             this.p_Serial.Controls.Add(this.l_Port);
             this.p_Serial.Controls.Add(this.tB_Serial_Baud);
             this.p_Serial.Controls.Add(this.tB_Serial_Port);
-            this.p_Serial.Location = new System.Drawing.Point(345, 182);
+            this.p_Serial.Location = new System.Drawing.Point(348, 162);
             this.p_Serial.Name = "p_Serial";
             this.p_Serial.Size = new System.Drawing.Size(125, 123);
             this.p_Serial.TabIndex = 98;
@@ -254,7 +239,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(470, 450);
-            this.Controls.Add(this.check_PD_Perfect);
             this.Controls.Add(this.tB_Commands);
             this.Controls.Add(this.cB_Mode);
             this.Controls.Add(this.l_Mode);
@@ -269,7 +253,7 @@
             this.Controls.Add(this.p_Serial);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PelcoD";
-            this.Text = "PelcoD";
+            this.Text = "PelcoD Scripting";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PelcoD_FormClosing);
             this.p_Serial.ResumeLayout(false);
             this.p_Serial.PerformLayout();
@@ -287,7 +271,6 @@
         public System.Windows.Forms.Label l_IPCon_Connected;
         private System.Windows.Forms.Button b_PD_Stop;
         private System.Windows.Forms.Button b_PD_RL;
-        private System.Windows.Forms.CheckBox check_PD_Perfect;
         private System.Windows.Forms.ToolTip tt_CommandFormat;
         private System.Windows.Forms.Button b_PD_ComList;
         public System.Windows.Forms.ComboBox cB_Mode;

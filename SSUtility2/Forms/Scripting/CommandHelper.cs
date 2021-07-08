@@ -169,7 +169,7 @@ namespace SSUtility2 {
                 if (!addedRows.Contains(row.Index))
                     addedRows.Add(row.Index);
 
-                if (row.Cells[0].Value == null || row.Cells[1].Value == null)
+                if (!CheckCellValid(row, 0) || !CheckCellValid(row, 1))
                     return;
 
                 ScriptCommand newsc = CreateCommand(row);
@@ -190,16 +190,25 @@ namespace SSUtility2 {
             return returnVal;
         }
 
+        void DisableCustomCommand(DataGridViewRow row) {
+            Console.WriteLine("disable");
+            if (row.IsNewRow)
+                return;
+
+            DestroyCustomCommand(row); //temporary
+
+            //WRITE THIS, need to remove from useraddedcommands in customscriptcommands
+        }
+
         async Task DestroyCustomCommand(DataGridViewRow row) { //ctrl+x bug
             try {
-                await Task.Delay(150);
                 Console.WriteLine("destroy");
+                await Task.Delay(150);
 
                 if (row.IsNewRow)
                     return;
 
                 destroyRow = row;
-
 
                 if (addedRows.Contains(row.Index))
                     addedRows.Remove(row.Index);
@@ -335,18 +344,32 @@ namespace SSUtility2 {
         private void dgv_Coms_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
             try {
                 DataGridViewRow row = dgv_Coms.Rows[e.RowIndex];
-                var val = row.Cells[e.ColumnIndex].Value;
-                if (val == null || val.ToString().Length == 0)
-                    DestroyCustomCommand(row);
-                else if (addedRows.Contains(e.RowIndex))
-                    EditCustomCommand(row);
-                else if (e.RowIndex == dgv_Coms.Rows.Count - 2)
+
+                bool[] validRows = new bool[3];
+                for (int i = 0; i < 3; i++)
+                    validRows[i] = CheckCellValid(row, i);
+
+                bool isUsable = validRows[0] && validRows[1];
+
+                if (e.RowIndex == dgv_Coms.Rows.Count - 2 && isUsable && !addedRows.Contains(e.RowIndex))
                     AddCustomCommand(row);
-            }catch(Exception err) {
+                else if (addedRows.Contains(e.RowIndex) && isUsable) //broken
+                    EditCustomCommand(row);
+                else if (!validRows[0] || !validRows[1]) {
+                    if (!validRows[0] && !validRows[1] && !validRows[2])
+                        DestroyCustomCommand(row);
+                    else
+                        DisableCustomCommand(row);
+                }
+
+            } catch(Exception err) {
                 MessageBox.Show("CELLENDEDIT\n" + err.ToString());
             }
 
         }
 
+        bool CheckCellValid(DataGridViewRow row, int index) {
+            return !(row.Cells[index].Value == null || row.Cells[index].Value.ToString().Trim().Length == 0);
+        }
     }
 }

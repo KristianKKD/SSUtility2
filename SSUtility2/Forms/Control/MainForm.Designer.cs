@@ -53,16 +53,15 @@ namespace SSUtility2 {
             this.Menu_Window_Response = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Osiris = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Presets = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Window_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Open = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_Keyboard = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Panels = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Panels_QF = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Panels_IP = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Panels_Custom = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Panels_CP = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Settings_Keyboard = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Config = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Config_Import = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Config_Export = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,8 +123,7 @@ namespace SSUtility2 {
             this.Menu_Window_PelcoD,
             this.Menu_Window_Response,
             this.Menu_Window_Osiris,
-            this.Menu_Window_Presets,
-            this.Menu_Window_Settings});
+            this.Menu_Window_Presets});
             this.Menu_Window.Name = "Menu_Window";
             this.Menu_Window.Size = new System.Drawing.Size(63, 20);
             this.Menu_Window.Text = "Window";
@@ -133,44 +131,37 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Osiris
             // 
             this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Osiris.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Osiris.Text = "Osiris Control";
             this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Presets.Text = "Preset Panel";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
-            // 
-            // Menu_Window_Settings
-            // 
-            this.Menu_Window_Settings.Name = "Menu_Window_Settings";
-            this.Menu_Window_Settings.Size = new System.Drawing.Size(168, 22);
-            this.Menu_Window_Settings.Text = "Open Settings";
-            this.Menu_Window_Settings.Click += new System.EventHandler(this.Menu_Window_Settings_Click);
             // 
             // Menu_Settings
             // 
@@ -191,6 +182,20 @@ namespace SSUtility2 {
             this.Menu_Settings_Open.Text = "Open Settings";
             this.Menu_Settings_Open.Click += new System.EventHandler(this.Menu_Settings_Open_Click);
             // 
+            // Menu_Settings_Lite
+            // 
+            this.Menu_Settings_Lite.Name = "Menu_Settings_Lite";
+            this.Menu_Settings_Lite.Size = new System.Drawing.Size(193, 22);
+            this.Menu_Settings_Lite.Text = "Lite Mode";
+            this.Menu_Settings_Lite.Click += new System.EventHandler(this.Menu_Settings_Lite_Click);
+            // 
+            // Menu_Settings_Keyboard
+            // 
+            this.Menu_Settings_Keyboard.Name = "Menu_Settings_Keyboard";
+            this.Menu_Settings_Keyboard.Size = new System.Drawing.Size(193, 22);
+            this.Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
+            this.Menu_Settings_Keyboard.Click += new System.EventHandler(this.Menu_Settings_Keyboard_Click);
+            // 
             // Menu_Settings_Panels
             // 
             this.Menu_Settings_Panels.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -205,44 +210,30 @@ namespace SSUtility2 {
             // Menu_Settings_Panels_QF
             // 
             this.Menu_Settings_Panels_QF.Name = "Menu_Settings_Panels_QF";
-            this.Menu_Settings_Panels_QF.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Settings_Panels_QF.Size = new System.Drawing.Size(173, 22);
             this.Menu_Settings_Panels_QF.Text = "Quick Functions";
             this.Menu_Settings_Panels_QF.Click += new System.EventHandler(this.Menu_Settings_Panels_QF_Click);
             // 
             // Menu_Settings_Panels_IP
             // 
             this.Menu_Settings_Panels_IP.Name = "Menu_Settings_Panels_IP";
-            this.Menu_Settings_Panels_IP.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Settings_Panels_IP.Size = new System.Drawing.Size(173, 22);
             this.Menu_Settings_Panels_IP.Text = "Info Panel";
             this.Menu_Settings_Panels_IP.Click += new System.EventHandler(this.Menu_Settings_Panels_IP_Click);
             // 
             // Menu_Settings_Panels_Custom
             // 
             this.Menu_Settings_Panels_Custom.Name = "Menu_Settings_Panels_Custom";
-            this.Menu_Settings_Panels_Custom.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Settings_Panels_Custom.Size = new System.Drawing.Size(173, 22);
             this.Menu_Settings_Panels_Custom.Text = "Custom Panel";
             this.Menu_Settings_Panels_Custom.Click += new System.EventHandler(this.Menu_Settings_Panels_Custom_Click);
             // 
             // Menu_Settings_Panels_CP
             // 
             this.Menu_Settings_Panels_CP.Name = "Menu_Settings_Panels_CP";
-            this.Menu_Settings_Panels_CP.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Settings_Panels_CP.Size = new System.Drawing.Size(173, 22);
             this.Menu_Settings_Panels_CP.Text = "PTZ Control Panel";
             this.Menu_Settings_Panels_CP.Click += new System.EventHandler(this.Menu_Settings_Panels_CP_Click);
-            // 
-            // Menu_Settings_Lite
-            // 
-            this.Menu_Settings_Lite.Name = "Menu_Settings_Lite";
-            this.Menu_Settings_Lite.Size = new System.Drawing.Size(193, 22);
-            this.Menu_Settings_Lite.Text = "Lite Mode";
-            this.Menu_Settings_Lite.Click += new System.EventHandler(this.Menu_Settings_Lite_Click);
-            // 
-            // Menu_Settings_Keyboard
-            // 
-            this.Menu_Settings_Keyboard.Name = "Menu_Settings_Keyboard";
-            this.Menu_Settings_Keyboard.Size = new System.Drawing.Size(193, 22);
-            this.Menu_Settings_Keyboard.Text = "Enable PTZ Keyboard";
-            this.Menu_Settings_Keyboard.Click += new System.EventHandler(this.Menu_Settings_Keyboard_Click);
             // 
             // Menu_Settings_Config
             // 
@@ -630,7 +621,6 @@ namespace SSUtility2 {
         public Button b_PTZ_FocusPos;
         public Button b_PTZ_ZoomPos;
         public ToolStripMenuItem Menu_Settings_Keyboard;
-        public ToolStripMenuItem Menu_Window_Settings;
         public ToolStripMenuItem Menu_Settings_Lite;
         public ToolStripMenuItem Menu_QC_Custom;
         public Button b_PTZ_Daylight;

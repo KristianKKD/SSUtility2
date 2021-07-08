@@ -115,12 +115,13 @@ namespace SSUtility2
             this.cB_PlayerD_CamType.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cB_PlayerD_CamType.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_PlayerD_CamType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cB_PlayerD_CamType.FormattingEnabled = true;
             this.cB_PlayerD_CamType.Location = new System.Drawing.Point(94, 75);
             this.cB_PlayerD_CamType.Name = "cB_PlayerD_CamType";
             this.cB_PlayerD_CamType.Size = new System.Drawing.Size(349, 21);
             this.cB_PlayerD_CamType.TabIndex = 5;
-            this.cB_PlayerD_CamType.Text = "IONodes - Daylight";
             this.cB_PlayerD_CamType.SelectedIndexChanged += new System.EventHandler(this.cB_PlayerD_CamType_SelectedIndexChanged);
             this.cB_PlayerD_CamType.KeyUp += new System.Windows.Forms.KeyEventHandler(this.AddressField_KeyUp);
             this.cB_PlayerD_CamType.MouseClick += new System.Windows.Forms.MouseEventHandler(this.Fields_Any_Click);
@@ -360,7 +361,7 @@ namespace SSUtility2
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "VideoSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "VideoSettings";
+            this.Text = "Video Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VideoSettings_FormClosing);
             this.VisibleChanged += new System.EventHandler(this.VideoSettings_VisibleChanged);
             this.tC_PlayerSettings.ResumeLayout(false);

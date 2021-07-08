@@ -704,7 +704,7 @@ namespace SSUtility2
             this.Controls.Add(this.l_Presets_Default);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PresetPanel";
-            this.Text = "PresetPanel";
+            this.Text = "Preset Panel";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PresetPanel_FormClosing);
             this.tC_Presets_Default.ResumeLayout(false);
             this.adminPage.ResumeLayout(false);

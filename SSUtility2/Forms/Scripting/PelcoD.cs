@@ -25,13 +25,19 @@ namespace SSUtility2 {
         int loopAmount = 0;
         bool loopNow = false;
 
-        public PelcoD() {
-            InitializeComponent();
+        public enum FireType {
+            IP,
+            Serial
         }
 
-        async Task Fire() {
+        public PelcoD() {
+            InitializeComponent();
+            cB_Mode.SelectedIndex = 0;
+        }
+
+        async Task Fire(FireType type) {
             try {
-                if (cB_Mode.Text == "IP") {
+                if (type == FireType.IP) {
                     if (!await AsyncCamCom.TryConnect(false).ConfigureAwait(false)) {
                         if (Tools.ShowPopup("Failed to connect to camera!\nIP: " + ConfigControl.savedIP.stringVal
                             + "\nPort: " + ConfigControl.savedPort.stringVal + "\nCancel script execution?", "Failed to Connect!", null, false)){
@@ -52,7 +58,7 @@ namespace SSUtility2 {
 
                     string l = tB_Commands.Lines[i];
                     if (!stop) {
-                        await CheckLine(l, i);
+                        await CheckLine(l, i, type);
                     } else {
                         stop = false;
                         break;
@@ -84,16 +90,15 @@ namespace SSUtility2 {
             });
         }
 
-        public async Task CheckLine(string line, int linePos) {
+        public async Task CheckLine(string line, int linePos, FireType type) {
             try {
                 if (line != "" && !line.StartsWith("//")) {
-                    line = line.Replace(",", "");
+                    line = line.Replace(",", "").Trim();
                     line = line.ToLower().Replace("x", "0");
 
                     ScriptCommand sendCom = new ScriptCommand(null, new byte[] { 0, 0, 0, 0 }, null, 0);
-                    if (check_PD_Perfect.Checked) {
+                    if (line.Length == 20) {
                         sendCom = new ScriptCommand(new string[] { "" }, Tools.ConvertMsgToByte(line), "", 0);
-
                     } else {
                         uint adr = 0;
                         Invoke((MethodInvoker)delegate {
@@ -127,7 +132,7 @@ namespace SSUtility2 {
                         return;
                     }
 
-                    if (cB_Mode.Text == "IP") {
+                    if (type == FireType.IP) {
                         await IPSend(sendCom, line);
                     } else {
                         //SerialSend(send, line);
@@ -178,7 +183,8 @@ namespace SSUtility2 {
         private void b_PD_Fire_Click(object sender, EventArgs e) {
             stop = false;
             CustomScriptCommands.stopScript = false;
-            Fire();
+            FireType type =  FireType.IP; //implement changing this later
+            Fire(type);
         }
 
         private void b_PD_Load_Click(object sender, EventArgs e) {
@@ -214,14 +220,6 @@ namespace SSUtility2 {
 
         private void b_PD_ComList_Click(object sender, EventArgs e) {
             MainForm.m.clw.ShowWindow();
-        }
-
-        private void check_PD_Perfect_CheckedChanged(object sender, EventArgs e) {
-            if (check_PD_Perfect.Checked) {
-                tt_CommandFormat.SetToolTip(check_PD_Perfect, "Perfect Format enabled example: FF 01 00 53 00 00 54");
-            } else {
-                tt_CommandFormat.SetToolTip(check_PD_Perfect, "Perfect Format disabled example: 00 53 00 00");
-            }
         }
 
         private void PelcoD_FormClosing(object sender, FormClosingEventArgs e) {

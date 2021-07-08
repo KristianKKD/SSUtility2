@@ -110,7 +110,7 @@ namespace SSUtility2
             this.Controls.Add(this.dgv_Coms);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CommandListWindow";
-            this.Text = "Command List Window";
+            this.Text = "Command List";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandListWindow_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Coms)).EndInit();
             this.ResumeLayout(false);

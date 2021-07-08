@@ -155,6 +155,11 @@ namespace SSUtility2 {
         }
         
         private void dgv_Presets_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
+            if (dgv_Presets.Rows[e.RowIndex].Cells[0].Value == null)
+                dgv_Presets.Rows[e.RowIndex].Cells[0].Value = "-";
+            if (dgv_Presets.Rows[e.RowIndex].Cells[1].Value == null)
+                dgv_Presets.Rows[e.RowIndex].Cells[1].Value = "1";
+
             if (rowIndex == -2 && !Tools.RowIsNull(dgv_Presets.Rows[e.RowIndex]))
                 AddToOptions(dgv_Presets.Rows[e.RowIndex]);
 

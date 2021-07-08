@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.5.8";
+        public const string version = "v2.7.5.9";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -745,10 +745,6 @@ namespace SSUtility2 {
 
         private void Menu_Settings_Panels_CP_Click(object sender, EventArgs e) {
             OpenCloseCP();
-        }
-
-        private void Menu_Window_Settings_Click(object sender, EventArgs e) {
-            OpenSettings();
         }
 
         private void MainForm_ResizeEnd(object sender, EventArgs e) {

@@ -532,7 +532,6 @@ namespace SSUtility2 {
                 cB_ipCon_CamType.Items[index] = row.Cells[0].Value;
         }
 
-
         public void AddCustomButton(string line) {
             try {
                 string[] sets = Tools.GetRowValueArray(dgv_Custom_Buttons, line);

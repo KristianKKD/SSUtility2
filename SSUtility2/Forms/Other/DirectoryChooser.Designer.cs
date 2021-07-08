@@ -106,7 +106,7 @@ namespace SSUtility2
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DirectoryChooser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DirectoryChooser";
+            this.Text = "Directory Chooser";
             this.ResumeLayout(false);
             this.PerformLayout();
 

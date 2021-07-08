@@ -170,7 +170,7 @@
             this.Controls.Add(this.b_RL_Clear);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ResponseLog";
-            this.Text = "ResponseLog";
+            this.Text = "Response Log";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ResponseLog_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();

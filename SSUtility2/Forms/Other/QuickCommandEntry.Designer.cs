@@ -90,7 +90,7 @@
             this.MaximumSize = new System.Drawing.Size(320, 115);
             this.MinimumSize = new System.Drawing.Size(320, 115);
             this.Name = "QuickCommandEntry";
-            this.Text = "QuickCommandEntry";
+            this.Text = "Quick Command Entry";
             this.ResumeLayout(false);
             this.PerformLayout();
 

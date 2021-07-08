@@ -102,7 +102,7 @@ namespace SSUtility2
             this.Controls.Add(this.dgv_Config);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ChooseConfig";
-            this.Text = "ConfigChooser";
+            this.Text = "Config Chooser";
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Config)).EndInit();
             this.ResumeLayout(false);
 

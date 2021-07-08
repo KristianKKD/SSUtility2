@@ -131,7 +131,7 @@ namespace SSUtility2 {
             this.Controls.Add(this.dgv_Presets);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UserPresets";
-            this.Text = "UserPresets";
+            this.Text = "User Presets";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UserPresets_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Presets)).EndInit();
             this.ResumeLayout(false);
