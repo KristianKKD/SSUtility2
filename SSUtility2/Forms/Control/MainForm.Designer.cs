@@ -160,7 +160,7 @@ namespace SSUtility2 {
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
             this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
-            this.Menu_Window_Presets.Text = "Preset Panel";
+            this.Menu_Window_Presets.Text = "Quick Functions";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
             // Menu_Settings
@@ -577,7 +577,7 @@ namespace SSUtility2 {
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SSUtility V2.0";
+            this.Text = "SSUtility2.0";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.ResizeBegin += new System.EventHandler(this.MainForm_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);

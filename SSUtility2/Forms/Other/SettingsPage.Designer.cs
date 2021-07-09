@@ -667,6 +667,7 @@ namespace SSUtility2
             this.dgv_Custom_Buttons.RowHeadersVisible = false;
             this.dgv_Custom_Buttons.Size = new System.Drawing.Size(364, 213);
             this.dgv_Custom_Buttons.TabIndex = 0;
+            this.dgv_Custom_Buttons.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgv_Custom_Buttons_CellValidating);
             this.dgv_Custom_Buttons.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_Custom_Buttons_CellValueChanged);
             this.dgv_Custom_Buttons.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgv_Custom_Buttons_EditingControlShowing);
             this.dgv_Custom_Buttons.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgv_Custom_Buttons_RowsAdded);

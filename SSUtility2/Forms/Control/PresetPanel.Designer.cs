@@ -72,33 +72,35 @@ namespace SSUtility2
             this.b_Presets_Peak_ZoomIn = new System.Windows.Forms.Button();
             this.b_Presets_Peak_LampOff = new System.Windows.Forms.Button();
             this.b_Presets_Peak_StrobeLamp = new System.Windows.Forms.Button();
-            this.l_Presets_Default = new System.Windows.Forms.Label();
             this.tB_Presets_Number = new System.Windows.Forms.TextBox();
             this.l_Presets_Number = new System.Windows.Forms.Label();
-            this.l_Presets = new System.Windows.Forms.Label();
             this.b_Presets_Learn = new System.Windows.Forms.Button();
             this.b_Presets_GoTo = new System.Windows.Forms.Button();
+            this.presetsPage = new System.Windows.Forms.TabPage();
             this.tC_Presets_Default.SuspendLayout();
             this.adminPage.SuspendLayout();
             this.daylightPage.SuspendLayout();
             this.thermalPage.SuspendLayout();
             this.slgPage.SuspendLayout();
             this.peakbeamPage.SuspendLayout();
+            this.presetsPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tC_Presets_Default
             // 
             this.tC_Presets_Default.Controls.Add(this.adminPage);
+            this.tC_Presets_Default.Controls.Add(this.presetsPage);
             this.tC_Presets_Default.Controls.Add(this.daylightPage);
             this.tC_Presets_Default.Controls.Add(this.thermalPage);
             this.tC_Presets_Default.Controls.Add(this.slgPage);
             this.tC_Presets_Default.Controls.Add(this.peakbeamPage);
+            this.tC_Presets_Default.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tC_Presets_Default.ItemSize = new System.Drawing.Size(40, 18);
-            this.tC_Presets_Default.Location = new System.Drawing.Point(12, 140);
+            this.tC_Presets_Default.Location = new System.Drawing.Point(0, 0);
             this.tC_Presets_Default.Name = "tC_Presets_Default";
             this.tC_Presets_Default.Padding = new System.Drawing.Point(0, 0);
             this.tC_Presets_Default.SelectedIndex = 0;
-            this.tC_Presets_Default.Size = new System.Drawing.Size(239, 252);
+            this.tC_Presets_Default.Size = new System.Drawing.Size(229, 256);
             this.tC_Presets_Default.TabIndex = 77;
             // 
             // adminPage
@@ -109,7 +111,7 @@ namespace SSUtility2
             this.adminPage.Controls.Add(this.b_Presets_Admin_SetupMen);
             this.adminPage.Location = new System.Drawing.Point(4, 22);
             this.adminPage.Name = "adminPage";
-            this.adminPage.Size = new System.Drawing.Size(231, 226);
+            this.adminPage.Size = new System.Drawing.Size(221, 230);
             this.adminPage.TabIndex = 3;
             this.adminPage.Text = "Admin";
             this.adminPage.UseVisualStyleBackColor = true;
@@ -118,9 +120,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Admin_DefaultMen.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Admin_DefaultMen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Admin_DefaultMen.Location = new System.Drawing.Point(7, 78);
+            this.b_Presets_Admin_DefaultMen.Location = new System.Drawing.Point(8, 72);
             this.b_Presets_Admin_DefaultMen.Name = "b_Presets_Admin_DefaultMen";
-            this.b_Presets_Admin_DefaultMen.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Admin_DefaultMen.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Admin_DefaultMen.TabIndex = 10;
             this.b_Presets_Admin_DefaultMen.Text = "Default Menu";
             this.b_Presets_Admin_DefaultMen.UseVisualStyleBackColor = false;
@@ -130,9 +132,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Admin_DebugToggle.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Admin_DebugToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Admin_DebugToggle.Location = new System.Drawing.Point(7, 111);
+            this.b_Presets_Admin_DebugToggle.Location = new System.Drawing.Point(8, 105);
             this.b_Presets_Admin_DebugToggle.Name = "b_Presets_Admin_DebugToggle";
-            this.b_Presets_Admin_DebugToggle.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Admin_DebugToggle.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Admin_DebugToggle.TabIndex = 10;
             this.b_Presets_Admin_DebugToggle.Text = "Debug Toggle";
             this.b_Presets_Admin_DebugToggle.UseVisualStyleBackColor = false;
@@ -142,9 +144,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Admin_MechMen.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Admin_MechMen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Admin_MechMen.Location = new System.Drawing.Point(7, 12);
+            this.b_Presets_Admin_MechMen.Location = new System.Drawing.Point(9, 6);
             this.b_Presets_Admin_MechMen.Name = "b_Presets_Admin_MechMen";
-            this.b_Presets_Admin_MechMen.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Admin_MechMen.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Admin_MechMen.TabIndex = 9;
             this.b_Presets_Admin_MechMen.Text = "Mechanical Menu";
             this.b_Presets_Admin_MechMen.UseVisualStyleBackColor = false;
@@ -154,9 +156,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Admin_SetupMen.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Admin_SetupMen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Admin_SetupMen.Location = new System.Drawing.Point(7, 45);
+            this.b_Presets_Admin_SetupMen.Location = new System.Drawing.Point(8, 39);
             this.b_Presets_Admin_SetupMen.Name = "b_Presets_Admin_SetupMen";
-            this.b_Presets_Admin_SetupMen.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Admin_SetupMen.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Admin_SetupMen.TabIndex = 9;
             this.b_Presets_Admin_SetupMen.Text = "Setup Menu";
             this.b_Presets_Admin_SetupMen.UseVisualStyleBackColor = false;
@@ -173,7 +175,7 @@ namespace SSUtility2
             this.daylightPage.Location = new System.Drawing.Point(4, 22);
             this.daylightPage.Name = "daylightPage";
             this.daylightPage.Padding = new System.Windows.Forms.Padding(3);
-            this.daylightPage.Size = new System.Drawing.Size(231, 226);
+            this.daylightPage.Size = new System.Drawing.Size(221, 230);
             this.daylightPage.TabIndex = 0;
             this.daylightPage.Text = "Daylight";
             this.daylightPage.UseVisualStyleBackColor = true;
@@ -182,9 +184,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Daylight_Extender.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Daylight_Extender.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Daylight_Extender.Location = new System.Drawing.Point(7, 166);
+            this.b_Presets_Daylight_Extender.Location = new System.Drawing.Point(8, 168);
             this.b_Presets_Daylight_Extender.Name = "b_Presets_Daylight_Extender";
-            this.b_Presets_Daylight_Extender.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Daylight_Extender.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Daylight_Extender.TabIndex = 7;
             this.b_Presets_Daylight_Extender.Text = "Extender";
             this.b_Presets_Daylight_Extender.UseVisualStyleBackColor = false;
@@ -194,9 +196,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Daylight_Stabilizer.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Daylight_Stabilizer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Daylight_Stabilizer.Location = new System.Drawing.Point(7, 133);
+            this.b_Presets_Daylight_Stabilizer.Location = new System.Drawing.Point(8, 135);
             this.b_Presets_Daylight_Stabilizer.Name = "b_Presets_Daylight_Stabilizer";
-            this.b_Presets_Daylight_Stabilizer.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Daylight_Stabilizer.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Daylight_Stabilizer.TabIndex = 6;
             this.b_Presets_Daylight_Stabilizer.Text = "Toggle Stabiliser";
             this.b_Presets_Daylight_Stabilizer.UseVisualStyleBackColor = false;
@@ -206,9 +208,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Daylight_WDR.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Daylight_WDR.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Daylight_WDR.Location = new System.Drawing.Point(7, 100);
+            this.b_Presets_Daylight_WDR.Location = new System.Drawing.Point(8, 102);
             this.b_Presets_Daylight_WDR.Name = "b_Presets_Daylight_WDR";
-            this.b_Presets_Daylight_WDR.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Daylight_WDR.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Daylight_WDR.TabIndex = 6;
             this.b_Presets_Daylight_WDR.Text = "WDR On / Off (Sony Only)";
             this.b_Presets_Daylight_WDR.UseVisualStyleBackColor = false;
@@ -218,9 +220,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Daylight_Wiper.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Daylight_Wiper.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Daylight_Wiper.Location = new System.Drawing.Point(7, 69);
+            this.b_Presets_Daylight_Wiper.Location = new System.Drawing.Point(8, 71);
             this.b_Presets_Daylight_Wiper.Name = "b_Presets_Daylight_Wiper";
-            this.b_Presets_Daylight_Wiper.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Daylight_Wiper.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Daylight_Wiper.TabIndex = 6;
             this.b_Presets_Daylight_Wiper.Text = "Wiper";
             this.b_Presets_Daylight_Wiper.UseVisualStyleBackColor = false;
@@ -230,9 +232,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Daylight_AF.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Daylight_AF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Daylight_AF.Location = new System.Drawing.Point(7, 4);
+            this.b_Presets_Daylight_AF.Location = new System.Drawing.Point(8, 6);
             this.b_Presets_Daylight_AF.Name = "b_Presets_Daylight_AF";
-            this.b_Presets_Daylight_AF.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Daylight_AF.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Daylight_AF.TabIndex = 6;
             this.b_Presets_Daylight_AF.Text = "AutoFocus ";
             this.b_Presets_Daylight_AF.UseVisualStyleBackColor = false;
@@ -242,9 +244,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Daylight_ColMono.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Daylight_ColMono.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Daylight_ColMono.Location = new System.Drawing.Point(7, 37);
+            this.b_Presets_Daylight_ColMono.Location = new System.Drawing.Point(8, 39);
             this.b_Presets_Daylight_ColMono.Name = "b_Presets_Daylight_ColMono";
-            this.b_Presets_Daylight_ColMono.Size = new System.Drawing.Size(214, 27);
+            this.b_Presets_Daylight_ColMono.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Daylight_ColMono.TabIndex = 6;
             this.b_Presets_Daylight_ColMono.Text = "Colour / Mono";
             this.b_Presets_Daylight_ColMono.UseVisualStyleBackColor = false;
@@ -269,7 +271,7 @@ namespace SSUtility2
             this.thermalPage.Location = new System.Drawing.Point(4, 22);
             this.thermalPage.Name = "thermalPage";
             this.thermalPage.Padding = new System.Windows.Forms.Padding(3);
-            this.thermalPage.Size = new System.Drawing.Size(231, 226);
+            this.thermalPage.Size = new System.Drawing.Size(221, 230);
             this.thermalPage.TabIndex = 1;
             this.thermalPage.Text = "Thermal";
             this.thermalPage.UseVisualStyleBackColor = true;
@@ -278,9 +280,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Thermal_Cycle.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Thermal_Cycle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Thermal_Cycle.Location = new System.Drawing.Point(118, 72);
+            this.b_Presets_Thermal_Cycle.Location = new System.Drawing.Point(112, 72);
             this.b_Presets_Thermal_Cycle.Name = "b_Presets_Thermal_Cycle";
-            this.b_Presets_Thermal_Cycle.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_Cycle.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_Thermal_Cycle.TabIndex = 10;
             this.b_Presets_Thermal_Cycle.Text = "Cycle Palettes";
             this.b_Presets_Thermal_Cycle.UseVisualStyleBackColor = false;
@@ -302,9 +304,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Thermal_DigiNeg.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Thermal_DigiNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Thermal_DigiNeg.Location = new System.Drawing.Point(117, 105);
+            this.b_Presets_Thermal_DigiNeg.Location = new System.Drawing.Point(112, 105);
             this.b_Presets_Thermal_DigiNeg.Name = "b_Presets_Thermal_DigiNeg";
-            this.b_Presets_Thermal_DigiNeg.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_DigiNeg.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_Thermal_DigiNeg.TabIndex = 8;
             this.b_Presets_Thermal_DigiNeg.Text = "Digital Zoom Out";
             this.b_Presets_Thermal_DigiNeg.UseVisualStyleBackColor = false;
@@ -326,9 +328,9 @@ namespace SSUtility2
             // 
             this.b_Presets_ContrastPos.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_ContrastPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_ContrastPos.Location = new System.Drawing.Point(118, 198);
+            this.b_Presets_ContrastPos.Location = new System.Drawing.Point(112, 198);
             this.b_Presets_ContrastPos.Name = "b_Presets_ContrastPos";
-            this.b_Presets_ContrastPos.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_ContrastPos.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_ContrastPos.TabIndex = 6;
             this.b_Presets_ContrastPos.Text = "Contrast +";
             this.b_Presets_ContrastPos.UseVisualStyleBackColor = false;
@@ -350,9 +352,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Thermal_BrightPos.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Thermal_BrightPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Thermal_BrightPos.Location = new System.Drawing.Point(118, 168);
+            this.b_Presets_Thermal_BrightPos.Location = new System.Drawing.Point(112, 165);
             this.b_Presets_Thermal_BrightPos.Name = "b_Presets_Thermal_BrightPos";
-            this.b_Presets_Thermal_BrightPos.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_BrightPos.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_Thermal_BrightPos.TabIndex = 6;
             this.b_Presets_Thermal_BrightPos.Text = "Brightness +";
             this.b_Presets_Thermal_BrightPos.UseVisualStyleBackColor = false;
@@ -374,9 +376,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Thermal_ICEPos.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Thermal_ICEPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Thermal_ICEPos.Location = new System.Drawing.Point(118, 135);
+            this.b_Presets_Thermal_ICEPos.Location = new System.Drawing.Point(112, 135);
             this.b_Presets_Thermal_ICEPos.Name = "b_Presets_Thermal_ICEPos";
-            this.b_Presets_Thermal_ICEPos.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_ICEPos.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_Thermal_ICEPos.TabIndex = 6;
             this.b_Presets_Thermal_ICEPos.Text = "ICE / CLAHE +";
             this.b_Presets_Thermal_ICEPos.UseVisualStyleBackColor = false;
@@ -398,9 +400,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Thermal_ICE.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Thermal_ICE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Thermal_ICE.Location = new System.Drawing.Point(118, 39);
+            this.b_Presets_Thermal_ICE.Location = new System.Drawing.Point(112, 39);
             this.b_Presets_Thermal_ICE.Name = "b_Presets_Thermal_ICE";
-            this.b_Presets_Thermal_ICE.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Thermal_ICE.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_Thermal_ICE.TabIndex = 6;
             this.b_Presets_Thermal_ICE.Text = "ICE / CLAHE";
             this.b_Presets_Thermal_ICE.UseVisualStyleBackColor = false;
@@ -422,9 +424,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Thermal_NUC.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Thermal_NUC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Thermal_NUC.Location = new System.Drawing.Point(117, 6);
+            this.b_Presets_Thermal_NUC.Location = new System.Drawing.Point(111, 6);
             this.b_Presets_Thermal_NUC.Name = "b_Presets_Thermal_NUC";
-            this.b_Presets_Thermal_NUC.Size = new System.Drawing.Size(101, 27);
+            this.b_Presets_Thermal_NUC.Size = new System.Drawing.Size(102, 27);
             this.b_Presets_Thermal_NUC.TabIndex = 6;
             this.b_Presets_Thermal_NUC.Text = "Do NUC";
             this.b_Presets_Thermal_NUC.UseVisualStyleBackColor = false;
@@ -453,7 +455,7 @@ namespace SSUtility2
             this.slgPage.Controls.Add(this.b_Presets_SLG_FlashingGreen);
             this.slgPage.Location = new System.Drawing.Point(4, 22);
             this.slgPage.Name = "slgPage";
-            this.slgPage.Size = new System.Drawing.Size(231, 226);
+            this.slgPage.Size = new System.Drawing.Size(221, 230);
             this.slgPage.TabIndex = 2;
             this.slgPage.Text = "SLG";
             this.slgPage.UseVisualStyleBackColor = true;
@@ -462,9 +464,9 @@ namespace SSUtility2
             // 
             this.b_Presets_SLG_AllLightsOff.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_SLG_AllLightsOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_SLG_AllLightsOff.Location = new System.Drawing.Point(7, 149);
+            this.b_Presets_SLG_AllLightsOff.Location = new System.Drawing.Point(8, 138);
             this.b_Presets_SLG_AllLightsOff.Name = "b_Presets_SLG_AllLightsOff";
-            this.b_Presets_SLG_AllLightsOff.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_SLG_AllLightsOff.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_SLG_AllLightsOff.TabIndex = 12;
             this.b_Presets_SLG_AllLightsOff.Text = "All Lights Off";
             this.b_Presets_SLG_AllLightsOff.UseVisualStyleBackColor = false;
@@ -474,7 +476,7 @@ namespace SSUtility2
             // 
             this.b_Presets_SLG_SteadyGreen.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_SLG_SteadyGreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_SLG_SteadyGreen.Location = new System.Drawing.Point(7, 12);
+            this.b_Presets_SLG_SteadyGreen.Location = new System.Drawing.Point(8, 6);
             this.b_Presets_SLG_SteadyGreen.Name = "b_Presets_SLG_SteadyGreen";
             this.b_Presets_SLG_SteadyGreen.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_SLG_SteadyGreen.TabIndex = 8;
@@ -486,9 +488,9 @@ namespace SSUtility2
             // 
             this.b_Presets_SLG_FlashingRG.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_SLG_FlashingRG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_SLG_FlashingRG.Location = new System.Drawing.Point(6, 83);
+            this.b_Presets_SLG_FlashingRG.Location = new System.Drawing.Point(7, 72);
             this.b_Presets_SLG_FlashingRG.Name = "b_Presets_SLG_FlashingRG";
-            this.b_Presets_SLG_FlashingRG.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_SLG_FlashingRG.Size = new System.Drawing.Size(206, 27);
             this.b_Presets_SLG_FlashingRG.TabIndex = 7;
             this.b_Presets_SLG_FlashingRG.Text = "Flashing Red / Green";
             this.b_Presets_SLG_FlashingRG.UseVisualStyleBackColor = false;
@@ -498,9 +500,9 @@ namespace SSUtility2
             // 
             this.b_Presets_SLG_FlashingWhite.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_SLG_FlashingWhite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_SLG_FlashingWhite.Location = new System.Drawing.Point(6, 116);
+            this.b_Presets_SLG_FlashingWhite.Location = new System.Drawing.Point(7, 105);
             this.b_Presets_SLG_FlashingWhite.Name = "b_Presets_SLG_FlashingWhite";
-            this.b_Presets_SLG_FlashingWhite.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_SLG_FlashingWhite.Size = new System.Drawing.Size(206, 27);
             this.b_Presets_SLG_FlashingWhite.TabIndex = 7;
             this.b_Presets_SLG_FlashingWhite.Text = "Flashing White On";
             this.b_Presets_SLG_FlashingWhite.UseVisualStyleBackColor = false;
@@ -510,7 +512,7 @@ namespace SSUtility2
             // 
             this.b_Presets_SLG_FlashingRed.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_SLG_FlashingRed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_SLG_FlashingRed.Location = new System.Drawing.Point(118, 44);
+            this.b_Presets_SLG_FlashingRed.Location = new System.Drawing.Point(113, 39);
             this.b_Presets_SLG_FlashingRed.Name = "b_Presets_SLG_FlashingRed";
             this.b_Presets_SLG_FlashingRed.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_SLG_FlashingRed.TabIndex = 7;
@@ -522,7 +524,7 @@ namespace SSUtility2
             // 
             this.b_Presets_SLG_SteadyRed.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_SLG_SteadyRed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_SLG_SteadyRed.Location = new System.Drawing.Point(117, 12);
+            this.b_Presets_SLG_SteadyRed.Location = new System.Drawing.Point(113, 6);
             this.b_Presets_SLG_SteadyRed.Name = "b_Presets_SLG_SteadyRed";
             this.b_Presets_SLG_SteadyRed.Size = new System.Drawing.Size(101, 27);
             this.b_Presets_SLG_SteadyRed.TabIndex = 7;
@@ -534,7 +536,7 @@ namespace SSUtility2
             // 
             this.b_Presets_SLG_FlashingGreen.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_SLG_FlashingGreen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_SLG_FlashingGreen.Location = new System.Drawing.Point(7, 46);
+            this.b_Presets_SLG_FlashingGreen.Location = new System.Drawing.Point(8, 40);
             this.b_Presets_SLG_FlashingGreen.Name = "b_Presets_SLG_FlashingGreen";
             this.b_Presets_SLG_FlashingGreen.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_SLG_FlashingGreen.TabIndex = 7;
@@ -552,7 +554,7 @@ namespace SSUtility2
             this.peakbeamPage.Controls.Add(this.b_Presets_Peak_StrobeLamp);
             this.peakbeamPage.Location = new System.Drawing.Point(4, 22);
             this.peakbeamPage.Name = "peakbeamPage";
-            this.peakbeamPage.Size = new System.Drawing.Size(231, 226);
+            this.peakbeamPage.Size = new System.Drawing.Size(221, 230);
             this.peakbeamPage.TabIndex = 4;
             this.peakbeamPage.Text = "Peak Beam";
             this.peakbeamPage.UseVisualStyleBackColor = true;
@@ -561,7 +563,7 @@ namespace SSUtility2
             // 
             this.b_Presets_Peak_SteadyLamp.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Peak_SteadyLamp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Peak_SteadyLamp.Location = new System.Drawing.Point(119, 23);
+            this.b_Presets_Peak_SteadyLamp.Location = new System.Drawing.Point(113, 6);
             this.b_Presets_Peak_SteadyLamp.Name = "b_Presets_Peak_SteadyLamp";
             this.b_Presets_Peak_SteadyLamp.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_SteadyLamp.TabIndex = 14;
@@ -573,9 +575,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Peak_StopZoom.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Peak_StopZoom.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Peak_StopZoom.Location = new System.Drawing.Point(7, 142);
+            this.b_Presets_Peak_StopZoom.Location = new System.Drawing.Point(8, 118);
             this.b_Presets_Peak_StopZoom.Name = "b_Presets_Peak_StopZoom";
-            this.b_Presets_Peak_StopZoom.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Peak_StopZoom.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Peak_StopZoom.TabIndex = 9;
             this.b_Presets_Peak_StopZoom.Text = "Stop Zooming";
             this.b_Presets_Peak_StopZoom.UseVisualStyleBackColor = false;
@@ -585,7 +587,7 @@ namespace SSUtility2
             // 
             this.b_Presets_Peak_ZoomOut.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Peak_ZoomOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Peak_ZoomOut.Location = new System.Drawing.Point(7, 109);
+            this.b_Presets_Peak_ZoomOut.Location = new System.Drawing.Point(8, 85);
             this.b_Presets_Peak_ZoomOut.Name = "b_Presets_Peak_ZoomOut";
             this.b_Presets_Peak_ZoomOut.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_ZoomOut.TabIndex = 10;
@@ -597,9 +599,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Peak_ZoomIn.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Peak_ZoomIn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Peak_ZoomIn.Location = new System.Drawing.Point(119, 109);
+            this.b_Presets_Peak_ZoomIn.Location = new System.Drawing.Point(114, 85);
             this.b_Presets_Peak_ZoomIn.Name = "b_Presets_Peak_ZoomIn";
-            this.b_Presets_Peak_ZoomIn.Size = new System.Drawing.Size(100, 27);
+            this.b_Presets_Peak_ZoomIn.Size = new System.Drawing.Size(99, 27);
             this.b_Presets_Peak_ZoomIn.TabIndex = 11;
             this.b_Presets_Peak_ZoomIn.Text = "Start Zoom In";
             this.b_Presets_Peak_ZoomIn.UseVisualStyleBackColor = false;
@@ -609,9 +611,9 @@ namespace SSUtility2
             // 
             this.b_Presets_Peak_LampOff.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Peak_LampOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Peak_LampOff.Location = new System.Drawing.Point(7, 56);
+            this.b_Presets_Peak_LampOff.Location = new System.Drawing.Point(8, 39);
             this.b_Presets_Peak_LampOff.Name = "b_Presets_Peak_LampOff";
-            this.b_Presets_Peak_LampOff.Size = new System.Drawing.Size(212, 27);
+            this.b_Presets_Peak_LampOff.Size = new System.Drawing.Size(205, 27);
             this.b_Presets_Peak_LampOff.TabIndex = 12;
             this.b_Presets_Peak_LampOff.Text = "Lamp Off";
             this.b_Presets_Peak_LampOff.UseVisualStyleBackColor = false;
@@ -621,7 +623,7 @@ namespace SSUtility2
             // 
             this.b_Presets_Peak_StrobeLamp.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Peak_StrobeLamp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Peak_StrobeLamp.Location = new System.Drawing.Point(7, 23);
+            this.b_Presets_Peak_StrobeLamp.Location = new System.Drawing.Point(8, 6);
             this.b_Presets_Peak_StrobeLamp.Name = "b_Presets_Peak_StrobeLamp";
             this.b_Presets_Peak_StrobeLamp.Size = new System.Drawing.Size(100, 27);
             this.b_Presets_Peak_StrobeLamp.TabIndex = 13;
@@ -629,47 +631,27 @@ namespace SSUtility2
             this.b_Presets_Peak_StrobeLamp.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_StrobeLamp.Click += new System.EventHandler(this.b_Presets_Peak_StrobeLamp_Click);
             // 
-            // l_Presets_Default
-            // 
-            this.l_Presets_Default.AutoSize = true;
-            this.l_Presets_Default.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Presets_Default.Location = new System.Drawing.Point(12, 108);
-            this.l_Presets_Default.Name = "l_Presets_Default";
-            this.l_Presets_Default.Size = new System.Drawing.Size(138, 20);
-            this.l_Presets_Default.TabIndex = 76;
-            this.l_Presets_Default.Text = "Quick Functions";
-            // 
             // tB_Presets_Number
             // 
-            this.tB_Presets_Number.Location = new System.Drawing.Point(110, 35);
+            this.tB_Presets_Number.Location = new System.Drawing.Point(61, 9);
             this.tB_Presets_Number.Name = "tB_Presets_Number";
-            this.tB_Presets_Number.Size = new System.Drawing.Size(123, 20);
+            this.tB_Presets_Number.Size = new System.Drawing.Size(152, 20);
             this.tB_Presets_Number.TabIndex = 82;
             // 
             // l_Presets_Number
             // 
             this.l_Presets_Number.AutoSize = true;
-            this.l_Presets_Number.Location = new System.Drawing.Point(12, 38);
+            this.l_Presets_Number.Location = new System.Drawing.Point(8, 12);
             this.l_Presets_Number.Name = "l_Presets_Number";
             this.l_Presets_Number.Size = new System.Drawing.Size(47, 13);
             this.l_Presets_Number.TabIndex = 81;
             this.l_Presets_Number.Text = "Number:";
             // 
-            // l_Presets
-            // 
-            this.l_Presets.AutoSize = true;
-            this.l_Presets.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Presets.Location = new System.Drawing.Point(12, 9);
-            this.l_Presets.Name = "l_Presets";
-            this.l_Presets.Size = new System.Drawing.Size(70, 20);
-            this.l_Presets.TabIndex = 80;
-            this.l_Presets.Text = "Presets";
-            // 
             // b_Presets_Learn
             // 
             this.b_Presets_Learn.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_Learn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Learn.Location = new System.Drawing.Point(139, 67);
+            this.b_Presets_Learn.Location = new System.Drawing.Point(119, 35);
             this.b_Presets_Learn.Name = "b_Presets_Learn";
             this.b_Presets_Learn.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_Learn.TabIndex = 79;
@@ -681,7 +663,7 @@ namespace SSUtility2
             // 
             this.b_Presets_GoTo.BackColor = System.Drawing.SystemColors.Control;
             this.b_Presets_GoTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_GoTo.Location = new System.Drawing.Point(15, 68);
+            this.b_Presets_GoTo.Location = new System.Drawing.Point(11, 35);
             this.b_Presets_GoTo.Name = "b_Presets_GoTo";
             this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 22);
             this.b_Presets_GoTo.TabIndex = 78;
@@ -689,20 +671,30 @@ namespace SSUtility2
             this.b_Presets_GoTo.UseVisualStyleBackColor = false;
             this.b_Presets_GoTo.Click += new System.EventHandler(this.b_Presets_GoTo_Click);
             // 
+            // presetsPage
+            // 
+            this.presetsPage.Controls.Add(this.tB_Presets_Number);
+            this.presetsPage.Controls.Add(this.l_Presets_Number);
+            this.presetsPage.Controls.Add(this.b_Presets_GoTo);
+            this.presetsPage.Controls.Add(this.b_Presets_Learn);
+            this.presetsPage.Location = new System.Drawing.Point(4, 22);
+            this.presetsPage.Name = "presetsPage";
+            this.presetsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.presetsPage.Size = new System.Drawing.Size(221, 230);
+            this.presetsPage.TabIndex = 5;
+            this.presetsPage.Text = "Presets";
+            this.presetsPage.UseVisualStyleBackColor = true;
+            // 
             // PresetPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(254, 405);
-            this.Controls.Add(this.tB_Presets_Number);
-            this.Controls.Add(this.l_Presets_Number);
-            this.Controls.Add(this.l_Presets);
-            this.Controls.Add(this.b_Presets_Learn);
-            this.Controls.Add(this.b_Presets_GoTo);
+            this.ClientSize = new System.Drawing.Size(229, 256);
             this.Controls.Add(this.tC_Presets_Default);
-            this.Controls.Add(this.l_Presets_Default);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(245, 295);
+            this.MinimumSize = new System.Drawing.Size(245, 295);
             this.Name = "PresetPanel";
             this.Text = "Preset Panel";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PresetPanel_FormClosing);
@@ -712,8 +704,9 @@ namespace SSUtility2
             this.thermalPage.ResumeLayout(false);
             this.slgPage.ResumeLayout(false);
             this.peakbeamPage.ResumeLayout(false);
+            this.presetsPage.ResumeLayout(false);
+            this.presetsPage.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -756,7 +749,6 @@ namespace SSUtility2
         public System.Windows.Forms.Button b_Presets_Peak_ZoomIn;
         public System.Windows.Forms.Button b_Presets_Peak_LampOff;
         public System.Windows.Forms.Button b_Presets_Peak_StrobeLamp;
-        public System.Windows.Forms.Label l_Presets_Default;
         public System.Windows.Forms.Button b_Presets_SLG_AllLightsOff;
         public System.Windows.Forms.Button b_Presets_Daylight_Extender;
         public System.Windows.Forms.Button b_Presets_Thermal_DigiNeg;
@@ -765,8 +757,8 @@ namespace SSUtility2
         public System.Windows.Forms.Button b_Presets_Thermal_Stabi;
         public System.Windows.Forms.TextBox tB_Presets_Number;
         public System.Windows.Forms.Label l_Presets_Number;
-        public System.Windows.Forms.Label l_Presets;
         public System.Windows.Forms.Button b_Presets_Learn;
         public System.Windows.Forms.Button b_Presets_GoTo;
+        private System.Windows.Forms.TabPage presetsPage;
     }
 }

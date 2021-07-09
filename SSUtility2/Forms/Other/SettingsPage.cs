@@ -482,7 +482,7 @@ namespace SSUtility2 {
 
         public void UpdateRatioLabel() {
             l_Other_Ratio.Visible = ConfigControl.maintainAspectRatio.boolVal;
-            l_Other_Ratio.Text = "(" + Math.Round(MainForm.m.currentAspectRatio,3).ToString() + ":1)";
+            l_Other_Ratio.Text = "(" + MainForm.m.currentAspectRatio.ToString() + ":" + MainForm.m.currentAspectRatioSecondary.ToString() + ")";
         }
 
         public void UpdateCamConfig(OtherCamCom.CamConfig type) {
@@ -616,5 +616,13 @@ namespace SSUtility2 {
             MainForm.m.custom.AddButton(val);
         }
 
+        private void dgv_Custom_Buttons_CellValidating(object sender, DataGridViewCellValidatingEventArgs e) {
+            if (e.ColumnIndex == ButtonsCommand.DisplayIndex) { //save cell value
+                if (!ButtonsCommand.Items.Contains(e.FormattedValue) && e.FormattedValue.ToString() != "") {
+                    ButtonsCommand.Items.Add(e.FormattedValue);
+                    dgv_Custom_Buttons.Rows[e.RowIndex].SetValues(dgv_Custom_Buttons.Rows[e.RowIndex].Cells[0].Value, e.FormattedValue);
+                }
+            }
+        }
     }
 }

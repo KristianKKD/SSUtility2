@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.5.9";
+        public const string version = "v2.7.5.10";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -44,7 +44,8 @@ namespace SSUtility2 {
         private Timer RatioTimer;
         private Point currentDragPos;
         private bool resizing = false;
-        public float currentAspectRatio;
+        public int currentAspectRatio;
+        public int currentAspectRatioSecondary;
         private Direction resizeDir;
 
         public List<List<ConfigVar>> playerConfigList;
@@ -220,7 +221,7 @@ namespace SSUtility2 {
                 Controls.Add(attachedpp);
 
                 attachedpp.Size = hiddenpanel.tC_Presets_Default.Size;
-                attachedpp.Location = new Point(0, Height - attachedpp.Height - 40);
+                attachedpp.Location = new Point(0, Height - hiddenpanel.Height);
                 attachedpp.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
                 attachedpp.Hide();
             } catch (Exception e) {
@@ -827,10 +828,30 @@ namespace SSUtility2 {
 
             RatioTimer.Stop();
         }
-
+        
+        int minWidth = 0;
+        int minHeight = 0;
         public void StartRatioTimer() {
-            currentAspectRatio = (float)Width / (float)Height;
+            float initialRatio = (float)Width / (float)Height;
+            for (int i = 1; true; i++) {
+                float val = i * initialRatio;
+                if (val - Math.Floor(val) < 0.1) {
+                    currentAspectRatio = (int)Math.Floor(val);
+                    currentAspectRatioSecondary = i;
+                    break;
+                }
+            }
+
             setPage.UpdateRatioLabel();
+            Console.WriteLine(currentAspectRatio + ":" + currentAspectRatioSecondary);
+
+            for (int i = 1; minWidth < 800; i++)
+                minWidth = i * currentAspectRatio;
+
+            for (int i = 1; minHeight < 600; i++)
+                minHeight = i * currentAspectRatioSecondary;
+
+            Console.WriteLine(minWidth.ToString() + "x" + minHeight.ToString());
 
             MinimumSize = Size;
             MaximumSize = Size;
@@ -879,23 +900,26 @@ namespace SSUtility2 {
 
                     currentDragPos = pos;
 
-                    if ((s.Width > 0 || s.Height > 0) && s.Width >= 800 && s.Height >= 600) {
+                    if ((s.Width > 0 || s.Height > 0) && s.Width >= minWidth && s.Height >= minWidth) {
+                        float ratio = (float)currentAspectRatio / (float)currentAspectRatioSecondary;
+
                         if (s.Width != Width) {
-                            int hVal = (int)Math.Round(MinimumSize.Width / currentAspectRatio);
-                            if (hVal < 600)
-                                hVal = 600;
+                            int hVal = (int)Math.Round(MinimumSize.Width / ratio);
+                            if (hVal < minHeight)
+                                hVal = minHeight;
 
                             s = new Size(s.Width, hVal);
                         } else if (s.Height != Height) {
-                            int wVal = (int)Math.Round(MinimumSize.Height * currentAspectRatio);
-                            if (wVal < 800)
-                                wVal = 800;
+                            int wVal = (int)Math.Round(MinimumSize.Height * ratio);
+                            if (wVal < minWidth)
+                                wVal = minWidth;
 
                             s = new Size(wVal, s.Height);
                         }
 
                         MinimumSize = s;
                         MaximumSize = s;
+                        //MaximumSize = new Size(99999,99999);
                     }
 
                 }
