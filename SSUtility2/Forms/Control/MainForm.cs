@@ -8,8 +8,10 @@ using System.Windows.Forms;
 using Kaiser;
 using static Kaiser.SizeablePanel;
 
-namespace SSUtility2 {
-    public partial class MainForm : Form {
+namespace SSUtility2
+{
+    public partial class MainForm : Form
+    {
 
         public const string version = "v2.7.5.12";
         private bool startLiteVersion = false; //only for launch
@@ -827,7 +829,7 @@ namespace SSUtility2 {
 
             RatioTimer.Stop();
         }
-        
+
         int minWidth = 0;
         int minHeight = 0;
         public void StartRatioTimer() {
@@ -844,11 +846,31 @@ namespace SSUtility2 {
             setPage.UpdateRatioLabel();
             Console.WriteLine(currentAspectRatio + ":" + currentAspectRatioSecondary);
 
-            for (int i = 1; minWidth < 800; i++)
-                minWidth = i * currentAspectRatio;
+            minWidth = 0;
+            minHeight = 0;
+            for (int o = 1; o * currentAspectRatioSecondary < Width + currentAspectRatio; o++) {
+                int heightVal = o * currentAspectRatioSecondary;
+                if (heightVal >= 600) {
+                    for (int i = 1; i * currentAspectRatio <= Width + currentAspectRatio; i++) {
+                        int widthVal = i * currentAspectRatio;
 
-            for (int i = 1; minHeight < 600; i++)
-                minHeight = i * currentAspectRatioSecondary;
+                        if ((int)Math.Round(widthVal / initialRatio) == heightVal && widthVal >= 800) {
+                            Console.WriteLine("------FOUND " + widthVal + "x" + heightVal);
+                            minWidth = widthVal;
+                            minHeight = heightVal;
+                            break;
+                        }
+                    }
+                }
+
+                if (minWidth != 0)
+                    break;
+            }
+
+            if (minWidth == 0) {
+                minWidth = 800;
+                minHeight = 600;
+            }
 
             Console.WriteLine(minWidth.ToString() + "x" + minHeight.ToString());
 
@@ -901,7 +923,7 @@ namespace SSUtility2 {
 
                     if ((s.Width > 0 || s.Height > 0)) {
                         float ratio = (float)currentAspectRatio / (float)currentAspectRatioSecondary;
-                        
+
                         int wVal = s.Width;
                         int hVal = s.Height;
                         if (s.Width != Width)
@@ -1089,7 +1111,7 @@ namespace SSUtility2 {
                     Console.WriteLine(scaled.ToString() + " " + pos.ToString());
                     CustomScriptCommands.QuickCommand("abspan " + pos.ToString(), true);
                 }
-            }catch(Exception er) {
+            } catch (Exception er) {
                 MessageBox.Show("PANOMOUSECLICK\n" + er.ToString());
             }
 
