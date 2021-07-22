@@ -844,12 +844,32 @@ namespace SSUtility2 {
 
             setPage.UpdateRatioLabel();
             Console.WriteLine(currentAspectRatio + ":" + currentAspectRatioSecondary);
+            
+            minWidth = 0;
+            minHeight = 0;
+            for (int o = 1; o * currentAspectRatioSecondary <= Width; o++) {
+                int heightVal = o * currentAspectRatioSecondary;
+                if (heightVal >= 600) {
+                    for (int i = 1; i * currentAspectRatio <= Width; i++) {
+                        int widthVal = i * currentAspectRatio;
 
-            for (int i = 1; minWidth < 800; i++)
-                minWidth = i * currentAspectRatio;
+                        if ((int)Math.Round(widthVal / initialRatio) == heightVal && widthVal >= 800) {
+                            Console.WriteLine("------FOUND " + widthVal + "x" + heightVal);
+                            minWidth = widthVal;
+                            minHeight = heightVal;
+                            break;
+                        }
+                    }
+                }
 
-            for (int i = 1; minHeight < 600; i++)
-                minHeight = i * currentAspectRatioSecondary;
+                if (minWidth != 0)
+                    break;
+            }
+
+            if (minWidth == 0) {
+                minWidth = 800;
+                minHeight = 600;
+            }
 
             Console.WriteLine(minWidth.ToString() + "x" + minHeight.ToString());
 
@@ -900,26 +920,25 @@ namespace SSUtility2 {
 
                     currentDragPos = pos;
 
-                    if ((s.Width > 0 || s.Height > 0) && s.Width >= minWidth && s.Height >= minWidth) {
+                    if ((s.Width > 0 || s.Height > 0)) {
                         float ratio = (float)currentAspectRatio / (float)currentAspectRatioSecondary;
+                        
+                        int wVal = s.Width;
+                        int hVal = s.Height;
+                        if (s.Width != Width)
+                            hVal = (int)Math.Round(s.Width / ratio);
+                        else if (s.Height != Height)
+                            wVal = (int)Math.Round(s.Height * ratio);
 
-                        if (s.Width != Width) {
-                            int hVal = (int)Math.Round(MinimumSize.Width / ratio);
-                            if (hVal < minHeight)
-                                hVal = minHeight;
+                        if (hVal < minHeight)
+                            hVal = minHeight;
+                        if (wVal < minWidth)
+                            wVal = minWidth;
 
-                            s = new Size(s.Width, hVal);
-                        } else if (s.Height != Height) {
-                            int wVal = (int)Math.Round(MinimumSize.Height * ratio);
-                            if (wVal < minWidth)
-                                wVal = minWidth;
-
-                            s = new Size(wVal, s.Height);
-                        }
+                        s = new Size(wVal, hVal);
 
                         MinimumSize = s;
                         MaximumSize = s;
-                        //MaximumSize = new Size(99999,99999);
                     }
 
                 }

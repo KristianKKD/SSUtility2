@@ -309,6 +309,7 @@ namespace SSUtility2 {
         private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
             ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
             UpdatePresetCB();
+            DoConnectTimer();
         }
 
         private void b_Custom_CommandList_Click(object sender, EventArgs e) {
@@ -623,6 +624,8 @@ namespace SSUtility2 {
                     dgv_Custom_Buttons.Rows[e.RowIndex].SetValues(dgv_Custom_Buttons.Rows[e.RowIndex].Cells[0].Value, e.FormattedValue);
                 }
             }
+
+            MainForm.m.custom.UpdateTip(e.RowIndex);
         }
     }
 }
