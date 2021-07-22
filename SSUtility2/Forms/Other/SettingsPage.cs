@@ -9,6 +9,7 @@ namespace SSUtility2 {
 
         Timer connectTimer;
         Timer pelcoIdTimer;
+        Timer resolutionTimer;
 
         public SettingsPage() {
             InitializeComponent();
@@ -22,6 +23,10 @@ namespace SSUtility2 {
             pelcoIdTimer = new Timer();
             pelcoIdTimer.Interval = 500;
             pelcoIdTimer.Tick += new EventHandler(PelcoIDTimerCallback);
+
+            resolutionTimer = new Timer();
+            resolutionTimer.Interval = 1500;
+            resolutionTimer.Tick += new EventHandler(ResolutionTimerCallback);
 
             ButtonsCommand.Items.Add(" ");
 
@@ -340,34 +345,47 @@ namespace SSUtility2 {
                     MainForm.m.b_PTZ_Thermal.Visible = false;
                 }
             }
-
-            //if (play && AsyncCamCom.sock.Connected && !MainForm.m.lite) { //cb is changed
-            //    MainForm.m.mainPlayer.settings.UpdateSettingsMode();
-            //}
         }
 
-        private void tB_Other_ResolutionWidth_TextChanged(object sender, EventArgs e) {
-            if (!int.TryParse(tB_Other_ResolutionWidth.Text, out int w)) {
-                tB_Other_ResolutionWidth.Text = ConfigControl.startupWidth.stringVal;
-                return;
-            }
-            if (w > Screen.PrimaryScreen.Bounds.Width || w < 800) {
-                tB_Other_ResolutionWidth.Text = w.ToString();
-            } else {
-                ConfigControl.startupWidth.UpdateValue(tB_Other_ResolutionWidth.Text);
-            }
+
+        private void tB_Other_Resolution_KeyUp(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                resolutionTimer.Stop();
+                ResolutionTimerCallback(sender, e);
+            } else
+                DoResTimer();
         }
 
-        private void tB_Other_ResolutionHeight_TextChanged(object sender, EventArgs e) {
-            if (!int.TryParse(tB_Other_ResolutionHeight.Text, out int h)) {
-                tB_Other_ResolutionHeight.Text = ConfigControl.startupHeight.stringVal;
-                return;
-            }
-            if (h > Screen.PrimaryScreen.Bounds.Height || h < 600) {
-                tB_Other_ResolutionHeight.Text = h.ToString();
-            } else {
-                ConfigControl.startupHeight.UpdateValue(tB_Other_ResolutionHeight.Text);
-            }
+        void DoResTimer() {
+            if (resolutionTimer.Enabled)
+                resolutionTimer.Stop();
+
+            resolutionTimer.Start();
+        }
+
+        void ResolutionTimerCallback(object sender, EventArgs e) {
+            resolutionTimer.Stop();
+
+            if (!int.TryParse(tB_Other_ResolutionHeight.Text, out int h) || h < 600)
+                h = 600;
+
+            if (!int.TryParse(tB_Other_ResolutionWidth.Text, out int w) || w < 800)
+                w = 800;
+
+            tB_Other_ResolutionHeight.Text = h.ToString();
+            tB_Other_ResolutionWidth.Text = w.ToString();
+
+            ConfigControl.startupWidth.UpdateValue(tB_Other_ResolutionWidth.Text);
+            ConfigControl.startupHeight.UpdateValue(tB_Other_ResolutionHeight.Text);
+
+            Console.WriteLine(w + " " + h);
+            System.Drawing.Size s = new System.Drawing.Size(w, h);
+            MainForm.m.MinimumSize = s;
+            MainForm.m.MaximumSize = s;
+
+            l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
+            this.BringToFront();
+            check_Other_Aspect_CheckedChanged(sender, e);
         }
 
         private void check_AddressInvalid_CheckedChanged(object sender, EventArgs e) {

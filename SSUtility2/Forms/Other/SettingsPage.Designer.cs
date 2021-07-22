@@ -792,7 +792,7 @@ namespace SSUtility2
             this.tB_Other_ResolutionHeight.Size = new System.Drawing.Size(114, 20);
             this.tB_Other_ResolutionHeight.TabIndex = 35;
             this.toolTips.SetToolTip(this.tB_Other_ResolutionHeight, "Launches the program with this height (does not change current resolution).");
-            this.tB_Other_ResolutionHeight.TextChanged += new System.EventHandler(this.tB_Other_ResolutionHeight_TextChanged);
+            this.tB_Other_ResolutionHeight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Other_Resolution_KeyUp);
             // 
             // l_Other_ResolutionHeight
             // 
@@ -813,7 +813,7 @@ namespace SSUtility2
             this.tB_Other_ResolutionWidth.Size = new System.Drawing.Size(114, 20);
             this.tB_Other_ResolutionWidth.TabIndex = 33;
             this.toolTips.SetToolTip(this.tB_Other_ResolutionWidth, "Launches the program with this width (does not change current resolution).");
-            this.tB_Other_ResolutionWidth.TextChanged += new System.EventHandler(this.tB_Other_ResolutionWidth_TextChanged);
+            this.tB_Other_ResolutionWidth.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Other_Resolution_KeyUp);
             // 
             // l_Other_ResolutionWidth
             // 

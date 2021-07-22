@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Kaiser;
@@ -12,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.5.10";
+        public const string version = "v2.7.5.12";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -847,14 +846,14 @@ namespace SSUtility2 {
             
             minWidth = 0;
             minHeight = 0;
-            for (int o = 1; o * currentAspectRatioSecondary <= Width; o++) {
+            for (int o = 1; o * currentAspectRatioSecondary < Width + currentAspectRatio; o++) {
                 int heightVal = o * currentAspectRatioSecondary;
                 if (heightVal >= 600) {
-                    for (int i = 1; i * currentAspectRatio <= Width; i++) {
+                    for (int i = 1; i * currentAspectRatio <= Width + currentAspectRatio; i++) {
                         int widthVal = i * currentAspectRatio;
 
                         if ((int)Math.Round(widthVal / initialRatio) == heightVal && widthVal >= 800) {
-                            Console.WriteLine("------FOUND " + widthVal + "x" + heightVal);
+                            Console.WriteLine("------FOUND(" + i + ") " + widthVal + "x" + heightVal);
                             minWidth = widthVal;
                             minHeight = heightVal;
                             break;
