@@ -11,8 +11,10 @@ namespace SSUtility2 {
 
         public CustomButtons() {
             buttonList = new List<Button>();
+            tips = new ToolTip();
         }
 
+        ToolTip tips;
         public List<Button> buttonList;
 
         public bool isVisible = false;
@@ -22,7 +24,8 @@ namespace SSUtility2 {
                 Button b = new Button();
                 buttonList.Add(b);
 
-                b.Size = new Size(70, 30);
+                b.AutoSize = true;
+                b.Size = new Size(70, 23);
                 b.Text = name;
                 b.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
                 b.FlatStyle = FlatStyle.Flat;
@@ -33,7 +36,11 @@ namespace SSUtility2 {
                     DoCommand(buttonList.IndexOf(b));
                 };
 
-                MainForm.m.mainPlayer.p_Player.Controls.Add(b);
+
+                if (b.Text.Length > 0) {
+                    UpdateTip(buttonList.IndexOf(b));
+                    MainForm.m.mainPlayer.p_Player.Controls.Add(b);
+                }
             } catch (Exception e) {
                 MessageBox.Show("ADD BUTTON\n" + e.ToString());
             }
@@ -59,9 +66,15 @@ namespace SSUtility2 {
 
         void Reorder() {
             try {
+                int cumuWidth = 0;
                 for (int i = 0; i < buttonList.Count; i++)
-                    buttonList[i].Location = new Point(MainForm.m.mainPlayer.p_Player.Width - ((buttonList.Count - i) * 70),
-                        MainForm.m.mainPlayer.p_Player.Height - 32);
+                    cumuWidth += buttonList[i].Width;
+
+                for (int i = buttonList.Count - 1; i > -1; i--) {
+                    buttonList[i].Location = new Point(MainForm.m.mainPlayer.p_Player.Width - cumuWidth,
+                        MainForm.m.mainPlayer.p_Player.Height - 25);
+                    cumuWidth -= buttonList[i].Width;
+                }
             } catch (Exception e) {
                 MessageBox.Show("REORDER\n" + e.ToString());
             }
@@ -97,6 +110,22 @@ namespace SSUtility2 {
             }
 
             Reorder();
+        }
+
+        public void UpdateTip(int buttonIndex) {
+            try {
+                if (buttonIndex > buttonList.Count - 1)
+                    return;
+
+                string val = "";
+                DataGridViewCell cell = MainForm.m.setPage.dgv_Custom_Buttons.Rows[buttonIndex].Cells[1];
+                if (cell != null && cell.Value != null)
+                    val = cell.Value.ToString();
+
+                tips.SetToolTip(buttonList[buttonIndex], val);
+            }catch(Exception e) {
+                MessageBox.Show("TIP\n" + e.ToString());
+            }
         }
 
         public void DoCommand(int index) {

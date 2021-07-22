@@ -35,6 +35,11 @@ namespace SSUtility2
             this.b_Presets_Admin_DebugToggle = new System.Windows.Forms.Button();
             this.b_Presets_Admin_MechMen = new System.Windows.Forms.Button();
             this.b_Presets_Admin_SetupMen = new System.Windows.Forms.Button();
+            this.presetsPage = new System.Windows.Forms.TabPage();
+            this.tB_Presets_Number = new System.Windows.Forms.TextBox();
+            this.l_Presets_Number = new System.Windows.Forms.Label();
+            this.b_Presets_GoTo = new System.Windows.Forms.Button();
+            this.b_Presets_Learn = new System.Windows.Forms.Button();
             this.daylightPage = new System.Windows.Forms.TabPage();
             this.b_Presets_Daylight_Extender = new System.Windows.Forms.Button();
             this.b_Presets_Daylight_Stabilizer = new System.Windows.Forms.Button();
@@ -72,18 +77,13 @@ namespace SSUtility2
             this.b_Presets_Peak_ZoomIn = new System.Windows.Forms.Button();
             this.b_Presets_Peak_LampOff = new System.Windows.Forms.Button();
             this.b_Presets_Peak_StrobeLamp = new System.Windows.Forms.Button();
-            this.tB_Presets_Number = new System.Windows.Forms.TextBox();
-            this.l_Presets_Number = new System.Windows.Forms.Label();
-            this.b_Presets_Learn = new System.Windows.Forms.Button();
-            this.b_Presets_GoTo = new System.Windows.Forms.Button();
-            this.presetsPage = new System.Windows.Forms.TabPage();
             this.tC_Presets_Default.SuspendLayout();
             this.adminPage.SuspendLayout();
+            this.presetsPage.SuspendLayout();
             this.daylightPage.SuspendLayout();
             this.thermalPage.SuspendLayout();
             this.slgPage.SuspendLayout();
             this.peakbeamPage.SuspendLayout();
-            this.presetsPage.SuspendLayout();
             this.SuspendLayout();
             // 
             // tC_Presets_Default
@@ -163,6 +163,60 @@ namespace SSUtility2
             this.b_Presets_Admin_SetupMen.Text = "Setup Menu";
             this.b_Presets_Admin_SetupMen.UseVisualStyleBackColor = false;
             this.b_Presets_Admin_SetupMen.Click += new System.EventHandler(this.b_Presets_Admin_SetupMen_Click);
+            // 
+            // presetsPage
+            // 
+            this.presetsPage.Controls.Add(this.tB_Presets_Number);
+            this.presetsPage.Controls.Add(this.l_Presets_Number);
+            this.presetsPage.Controls.Add(this.b_Presets_GoTo);
+            this.presetsPage.Controls.Add(this.b_Presets_Learn);
+            this.presetsPage.Location = new System.Drawing.Point(4, 22);
+            this.presetsPage.Name = "presetsPage";
+            this.presetsPage.Padding = new System.Windows.Forms.Padding(3);
+            this.presetsPage.Size = new System.Drawing.Size(221, 230);
+            this.presetsPage.TabIndex = 5;
+            this.presetsPage.Text = "Presets";
+            this.presetsPage.UseVisualStyleBackColor = true;
+            // 
+            // tB_Presets_Number
+            // 
+            this.tB_Presets_Number.Location = new System.Drawing.Point(61, 9);
+            this.tB_Presets_Number.Name = "tB_Presets_Number";
+            this.tB_Presets_Number.Size = new System.Drawing.Size(152, 20);
+            this.tB_Presets_Number.TabIndex = 82;
+            // 
+            // l_Presets_Number
+            // 
+            this.l_Presets_Number.AutoSize = true;
+            this.l_Presets_Number.Location = new System.Drawing.Point(8, 12);
+            this.l_Presets_Number.Name = "l_Presets_Number";
+            this.l_Presets_Number.Size = new System.Drawing.Size(47, 13);
+            this.l_Presets_Number.TabIndex = 81;
+            this.l_Presets_Number.Text = "Number:";
+            // 
+            // b_Presets_GoTo
+            // 
+            this.b_Presets_GoTo.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_GoTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Presets_GoTo.Location = new System.Drawing.Point(11, 35);
+            this.b_Presets_GoTo.Name = "b_Presets_GoTo";
+            this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 22);
+            this.b_Presets_GoTo.TabIndex = 78;
+            this.b_Presets_GoTo.Text = "Go To";
+            this.b_Presets_GoTo.UseVisualStyleBackColor = false;
+            this.b_Presets_GoTo.Click += new System.EventHandler(this.b_Presets_GoTo_Click);
+            // 
+            // b_Presets_Learn
+            // 
+            this.b_Presets_Learn.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Learn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Presets_Learn.Location = new System.Drawing.Point(119, 35);
+            this.b_Presets_Learn.Name = "b_Presets_Learn";
+            this.b_Presets_Learn.Size = new System.Drawing.Size(94, 22);
+            this.b_Presets_Learn.TabIndex = 79;
+            this.b_Presets_Learn.Text = "Learn";
+            this.b_Presets_Learn.UseVisualStyleBackColor = false;
+            this.b_Presets_Learn.Click += new System.EventHandler(this.b_Presets_Learn_Click);
             // 
             // daylightPage
             // 
@@ -631,60 +685,6 @@ namespace SSUtility2
             this.b_Presets_Peak_StrobeLamp.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_StrobeLamp.Click += new System.EventHandler(this.b_Presets_Peak_StrobeLamp_Click);
             // 
-            // tB_Presets_Number
-            // 
-            this.tB_Presets_Number.Location = new System.Drawing.Point(61, 9);
-            this.tB_Presets_Number.Name = "tB_Presets_Number";
-            this.tB_Presets_Number.Size = new System.Drawing.Size(152, 20);
-            this.tB_Presets_Number.TabIndex = 82;
-            // 
-            // l_Presets_Number
-            // 
-            this.l_Presets_Number.AutoSize = true;
-            this.l_Presets_Number.Location = new System.Drawing.Point(8, 12);
-            this.l_Presets_Number.Name = "l_Presets_Number";
-            this.l_Presets_Number.Size = new System.Drawing.Size(47, 13);
-            this.l_Presets_Number.TabIndex = 81;
-            this.l_Presets_Number.Text = "Number:";
-            // 
-            // b_Presets_Learn
-            // 
-            this.b_Presets_Learn.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Presets_Learn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_Learn.Location = new System.Drawing.Point(119, 35);
-            this.b_Presets_Learn.Name = "b_Presets_Learn";
-            this.b_Presets_Learn.Size = new System.Drawing.Size(94, 22);
-            this.b_Presets_Learn.TabIndex = 79;
-            this.b_Presets_Learn.Text = "Learn";
-            this.b_Presets_Learn.UseVisualStyleBackColor = false;
-            this.b_Presets_Learn.Click += new System.EventHandler(this.b_Presets_Learn_Click);
-            // 
-            // b_Presets_GoTo
-            // 
-            this.b_Presets_GoTo.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Presets_GoTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Presets_GoTo.Location = new System.Drawing.Point(11, 35);
-            this.b_Presets_GoTo.Name = "b_Presets_GoTo";
-            this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 22);
-            this.b_Presets_GoTo.TabIndex = 78;
-            this.b_Presets_GoTo.Text = "Go To";
-            this.b_Presets_GoTo.UseVisualStyleBackColor = false;
-            this.b_Presets_GoTo.Click += new System.EventHandler(this.b_Presets_GoTo_Click);
-            // 
-            // presetsPage
-            // 
-            this.presetsPage.Controls.Add(this.tB_Presets_Number);
-            this.presetsPage.Controls.Add(this.l_Presets_Number);
-            this.presetsPage.Controls.Add(this.b_Presets_GoTo);
-            this.presetsPage.Controls.Add(this.b_Presets_Learn);
-            this.presetsPage.Location = new System.Drawing.Point(4, 22);
-            this.presetsPage.Name = "presetsPage";
-            this.presetsPage.Padding = new System.Windows.Forms.Padding(3);
-            this.presetsPage.Size = new System.Drawing.Size(221, 230);
-            this.presetsPage.TabIndex = 5;
-            this.presetsPage.Text = "Presets";
-            this.presetsPage.UseVisualStyleBackColor = true;
-            // 
             // PresetPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -696,16 +696,16 @@ namespace SSUtility2
             this.MaximumSize = new System.Drawing.Size(245, 295);
             this.MinimumSize = new System.Drawing.Size(245, 295);
             this.Name = "PresetPanel";
-            this.Text = "Preset Panel";
+            this.Text = "Quick Functions";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PresetPanel_FormClosing);
             this.tC_Presets_Default.ResumeLayout(false);
             this.adminPage.ResumeLayout(false);
+            this.presetsPage.ResumeLayout(false);
+            this.presetsPage.PerformLayout();
             this.daylightPage.ResumeLayout(false);
             this.thermalPage.ResumeLayout(false);
             this.slgPage.ResumeLayout(false);
             this.peakbeamPage.ResumeLayout(false);
-            this.presetsPage.ResumeLayout(false);
-            this.presetsPage.PerformLayout();
             this.ResumeLayout(false);
 
         }
