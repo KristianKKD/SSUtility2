@@ -843,32 +843,12 @@ namespace SSUtility2 {
 
             setPage.UpdateRatioLabel();
             Console.WriteLine(currentAspectRatio + ":" + currentAspectRatioSecondary);
-            
-            minWidth = 0;
-            minHeight = 0;
-            for (int o = 1; o * currentAspectRatioSecondary < Width + currentAspectRatio; o++) {
-                int heightVal = o * currentAspectRatioSecondary;
-                if (heightVal >= 600) {
-                    for (int i = 1; i * currentAspectRatio <= Width + currentAspectRatio; i++) {
-                        int widthVal = i * currentAspectRatio;
 
-                        if ((int)Math.Round(widthVal / initialRatio) == heightVal && widthVal >= 800) {
-                            Console.WriteLine("------FOUND(" + i + ") " + widthVal + "x" + heightVal);
-                            minWidth = widthVal;
-                            minHeight = heightVal;
-                            break;
-                        }
-                    }
-                }
+            for (int i = 1; minWidth < 800; i++)
+                minWidth = i * currentAspectRatio;
 
-                if (minWidth != 0)
-                    break;
-            }
-
-            if (minWidth == 0) {
-                minWidth = 800;
-                minHeight = 600;
-            }
+            for (int i = 1; minHeight < 600; i++)
+                minHeight = i * currentAspectRatioSecondary;
 
             Console.WriteLine(minWidth.ToString() + "x" + minHeight.ToString());
 
