@@ -15,11 +15,13 @@ namespace SSUtility2 {
         public int defaultCommandCount;
 
         List<int> addedRows;
+        List<int> addedCommandsIndex;
         DataGridViewRow destroyRow;
 
         public CommandListWindow() {
             InitializeComponent();
             addedRows = new List<int>();
+            addedCommandsIndex = new List<int>();
 
             LoadContents();
         }
@@ -119,16 +121,16 @@ namespace SSUtility2 {
 
         private void dgv_Coms_CellClick(object sender, DataGridViewCellEventArgs e) {
             try {
-                DataGridViewRow curRow = dgv_Coms.Rows[e.RowIndex];
+                DataGridViewCell cell = dgv_Coms.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
                 if (e.RowIndex < defaultCommandCount)
                     return;
 
-                if (destroyRow != null && destroyRow.Cells.Contains(curRow.Cells[e.ColumnIndex]))
+                if (destroyRow != null && destroyRow.Cells.Contains(cell))
                     return;
 
-                dgv_Coms.Rows[e.RowIndex].Cells[e.ColumnIndex].ReadOnly = false;
-            }catch(Exception err) {
+                cell.ReadOnly = false;
+            } catch(Exception err) {
                 MessageBox.Show("CELLCLICK\n" + err.ToString());
             }
         }
@@ -165,18 +167,20 @@ namespace SSUtility2 {
         void AddCustomCommand(DataGridViewRow row) {
             try {
                 Console.WriteLine("adding");
-
-                if (!addedRows.Contains(row.Index))
-                    addedRows.Add(row.Index);
-
+                
                 if (!CheckCellValid(row, 0) || !CheckCellValid(row, 1))
                     return;
+
+                if (!addedRows.Contains(row.Index)) // I MOVED THIS UNDER THE RETURN, MAYBE BREAKS SOMETHING?
+                    addedRows.Add(row.Index);
 
                 ScriptCommand newsc = CreateCommand(row);
 
                 if (!IsNullSC(newsc))
                     CustomScriptCommands.userAddedCommands.Add(newsc);
 
+                Console.WriteLine(CustomScriptCommands.userAddedCommands.IndexOf(newsc));
+                addedCommandsIndex.Add(CustomScriptCommands.userAddedCommands.IndexOf(newsc));
             } catch (Exception e) {
                 MessageBox.Show("ADD\n" + e.ToString());
             }
@@ -191,13 +195,28 @@ namespace SSUtility2 {
         }
 
         void DisableCustomCommand(DataGridViewRow row) {
-            Console.WriteLine("disable");
-            if (row.IsNewRow)
-                return;
+            try {
+                Console.WriteLine("disable");
+                if (row.IsNewRow)
+                    return;
 
-            DestroyCustomCommand(row); //temporary
+                int index = -1;
+                for (int i = 0; i < addedCommandsIndex.Count; i++) {
+                    if (row.Index == addedRows[i]) {
+                        index = addedCommandsIndex[i];
+                        break;
+                    }
+                }
 
-            //WRITE THIS, need to remove from useraddedcommands in customscriptcommands
+                if (index > -1) {
+                    CustomScriptCommands.userAddedCommands.RemoveAt(addedCommandsIndex[index]);
+                    addedCommandsIndex.Remove(index);
+                } else {
+                    Console.WriteLine("no i");
+                }
+            } catch(Exception e) {
+                MessageBox.Show("DISABLE\n" + e.ToString());
+            }
         }
 
         async Task DestroyCustomCommand(DataGridViewRow row) { //ctrl+x bug
@@ -210,8 +229,10 @@ namespace SSUtility2 {
 
                 destroyRow = row;
 
-                if (addedRows.Contains(row.Index))
+                if (addedRows.Contains(row.Index)) {
                     addedRows.Remove(row.Index);
+                    addedCommandsIndex.Remove(row.Index);
+                }
 
                 if (dgv_Coms.Rows.Contains(row))
                     dgv_Coms.Rows.Remove(row);
@@ -281,7 +302,6 @@ namespace SSUtility2 {
             }
 
             return "";
-
         }
 
         string[] GenNames(DataGridViewRow row) {
@@ -350,7 +370,6 @@ namespace SSUtility2 {
                     validRows[i] = CheckCellValid(row, i);
 
                 bool isUsable = validRows[0] && validRows[1];
-
                 if (e.RowIndex == dgv_Coms.Rows.Count - 2 && isUsable && !addedRows.Contains(e.RowIndex))
                     AddCustomCommand(row);
                 else if (addedRows.Contains(e.RowIndex) && isUsable) //broken
