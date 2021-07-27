@@ -35,7 +35,8 @@ namespace SSUtility2 {
         readonly static ScriptCommand reconfig = new ScriptCommand(new string[] { "reconfig" }, PelcoD.reconfig, "Query for camera config and apply it to settings", 0, true, true);
         readonly static ScriptCommand mainplayerconnect = new ScriptCommand(new string[] { "play", "mainplayerplay" }, PelcoD.mainplay, "Play given X RTSP address on the mainplayer", 1, false, true);//
         readonly static ScriptCommand swapToPreset = new ScriptCommand(new string[] { "swapto", "campreset", "usecampreset" }, PelcoD.swapPreset, "Select given User Preset (can give index or name)", 1, false, true);//
-        
+        readonly static ScriptCommand execScript = new ScriptCommand(new string[] { "exec", "script" }, PelcoD.execScript, "Execute the script found in the given absolute path, example path: \"" + @"C:\Users\SilentSentinel\Documents\SSUtility\script.txt" + "\"", 1, false, true);
+
         readonly static ScriptCommand stop = new ScriptCommand(new string[] { "stop" }, new byte[] { 0x00, 0x00, 0x00, 0x00 }, "Stops whatever the camera is doing", 0);
         readonly static ScriptCommand mono = new ScriptCommand(new string[] { "mono", "monocolour", "monocolor" }, new byte[] { 0x00, 0x07, 0x00, 0x03 }, "Camera video toggles between color and black/white pallete", 0);
         readonly static ScriptCommand panzero = new ScriptCommand(new string[] { "panzero", "zeropan", "azimuth" }, new byte[] { 0x00, 0x49, 0x00, 0x00 }, "The camera's zero pan is set to the current rotation", 0);
@@ -81,6 +82,7 @@ namespace SSUtility2 {
             reconfig,
             mainplayerconnect,
             swapToPreset,
+            execScript,
         };
 
         public readonly static ScriptCommand[] queryCommands = new ScriptCommand[] {

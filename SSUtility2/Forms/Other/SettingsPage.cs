@@ -93,7 +93,7 @@ namespace SSUtility2 {
             if (d == DialogResult.Yes) {
                 ConfigControl.SetToDefaults();
                 PopulateSettingText();
-                MainForm.m.mainPlayer.DetachAll(true);
+                MainForm.m.mainPlayer.DestroyAll();
             }
         }
 

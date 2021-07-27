@@ -23,8 +23,6 @@ namespace SSUtility2 {
 
         DataGridViewRow[] defaults;
 
-        //Name;PelcoID;IP;Port;RTSP;Username;Password;
-
         void StartupDefaults() {
             try {
                 dayRow = (DataGridViewRow)dgv_Presets.Rows[0].Clone();
@@ -129,54 +127,6 @@ namespace SSUtility2 {
         void EditInOptions() {
             MainForm.m.setPage.EditPresetOption(dgv_Presets.Rows[rowIndex], editRow);
             VideoSettings.EditPresetOption(dgv_Presets.Rows[rowIndex], editRow);
-        }
-
-        private void UserPresets_FormClosing(object sender, FormClosingEventArgs e) {
-            if (e.CloseReason == CloseReason.UserClosing) {
-                e.Cancel = true;
-                Hide();
-            }
-        }
-
-        DataGridViewRow editRow;
-        int rowIndex = -1;
-
-        private void dgv_Presets_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e) {
-            rowIndex = e.RowIndex;
-            editRow = (DataGridViewRow)dgv_Presets.Rows[0].Clone();
-
-            if (dgv_Presets.Rows[rowIndex].IsNewRow) {
-                rowIndex = -2;
-            } else {
-                for (int i = 0; i < dgv_Presets.Columns.Count; i++)
-                    editRow.Cells[i].Value = dgv_Presets.Rows[rowIndex].Cells[i].Value;
-            }
-
-        }
-        
-        private void dgv_Presets_CellEndEdit(object sender, DataGridViewCellEventArgs e) {
-            if (dgv_Presets.Rows[e.RowIndex].Cells[0].Value == null)
-                dgv_Presets.Rows[e.RowIndex].Cells[0].Value = "-";
-            if (dgv_Presets.Rows[e.RowIndex].Cells[1].Value == null)
-                dgv_Presets.Rows[e.RowIndex].Cells[1].Value = "1";
-
-            if (rowIndex == -2 && !Tools.RowIsNull(dgv_Presets.Rows[e.RowIndex]))
-                AddToOptions(dgv_Presets.Rows[e.RowIndex]);
-
-            rowIndex = -1;
-        }
-
-        private void dgv_Presets_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
-            if (rowIndex == -1)
-                return;
-            else if (rowIndex > 0)
-                EditInOptions();
-        }
-
-        private void dgv_Presets_CellContentClick(object sender, DataGridViewCellEventArgs e) {
-            if (e.ColumnIndex == dgv_Presets.Columns.Count - 1 && !dgv_Presets.Rows[e.RowIndex].IsNewRow)
-                if(Tools.ShowPopup("Are you sure you want to delete preset: " + dgv_Presets.Rows[e.RowIndex].Cells[0].Value.ToString() + "?", "Confirmation", null, false))
-                    RemoveFromOptions(dgv_Presets.Rows[e.RowIndex]);
         }
 
     }

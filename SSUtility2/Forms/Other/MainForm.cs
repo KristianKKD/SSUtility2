@@ -12,7 +12,7 @@ namespace SSUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.7.5.13";
+        public const string version = "v2.8.0.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -33,7 +33,6 @@ namespace SSUtility2
         public PresetPanel pp;
         public TabControl attachedpp;
         public Detached mainPlayer;
-        public UserPresets up;
         public CommandListWindow clw;
         private Recorder screenRec;
 
@@ -69,8 +68,6 @@ namespace SSUtility2
                 mainPlayer = new Detached(true);
                 AttachInfoPanel();
                 AttachPresetPanel();
-
-                up = new UserPresets();
 
                 controlPanel = new List<Control>() {
                     b_PTZ_Up,
@@ -161,8 +158,8 @@ namespace SSUtility2
                         second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
                     }
 
-                    if (playerConfigList.Count >= 1 && playerConfigList[0] != null)
-                        secondPlayer.settings.LoadConfig(playerConfigList[0]);
+                    //if (playerConfigList.Count >= 1 && playerConfigList[0] != null)
+                    //    secondPlayer.settings.LoadConfig(playerConfigList[0]);
 
                 } else if (playercount < 2 && mainPlayer.attachedPlayers.Contains(secondPlayer)) {
                     mainPlayer.Detach(secondPlayer, true);
@@ -178,8 +175,8 @@ namespace SSUtility2
                         third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
                     }
 
-                    if (playerConfigList.Count >= 2 && playerConfigList[1] != null)
-                        thirdPlayer.settings.LoadConfig(playerConfigList[1]);
+                    //if (playerConfigList.Count >= 2 && playerConfigList[1] != null)
+                    //    thirdPlayer.settings.LoadConfig(playerConfigList[1]);
 
                 } else if (playercount < 3 && mainPlayer.attachedPlayers.Contains(thirdPlayer)) {
                     mainPlayer.Detach(thirdPlayer, true);
@@ -274,7 +271,7 @@ namespace SSUtility2
                     Menu_Video.Dispose();
                     b_Open.Dispose();
 
-                    mainPlayer.DetachAll(true);
+                    mainPlayer.DestroyAll();
 
                     mainPlayer.StopPlaying();
                     JoyBack.Joystick.UpdateJoystickCentre();

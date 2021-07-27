@@ -279,10 +279,11 @@
     <Compile Include="Forms\Other\DebugWindow.Designer.cs">
       <DependentUpon>DebugWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Other\UserPresets.cs">
+    <Compile Include="Forms\RTSP\RTSPPresets.cs" />
+    <Compile Include="Forms\RTSP\UserPresets.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\UserPresets.Designer.cs">
+    <Compile Include="Forms\RTSP\UserPresets.Designer.cs">
       <DependentUpon>UserPresets.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\Other Scripts\CustomButtons.cs" />
@@ -299,10 +300,10 @@
     <Compile Include="Forms\Other\DirectoryChooser.Designer.cs">
       <DependentUpon>DirectoryChooser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Control\InfoPanel.cs">
+    <Compile Include="Forms\Panels\InfoPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Control\InfoPanel.Designer.cs">
+    <Compile Include="Forms\Panels\InfoPanel.Designer.cs">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Scripting\CommandHelper.cs">
@@ -311,10 +312,10 @@
     <Compile Include="Forms\Scripting\CommandHelper.Designer.cs">
       <DependentUpon>CommandHelper.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Other\QuickCommandEntry.cs">
+    <Compile Include="Forms\Scripting\QuickCommandEntry.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\QuickCommandEntry.Designer.cs">
+    <Compile Include="Forms\Scripting\QuickCommandEntry.Designer.cs">
       <DependentUpon>QuickCommandEntry.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Other\Osiris.cs">
@@ -328,10 +329,10 @@
     <Compile Include="Other\Other Scripts\ConfigControl.cs" />
     <Compile Include="Forms\Scripting\CustomScriptCommands.cs" />
     <Compile Include="Other\Other Scripts\D.cs" />
-    <Compile Include="Forms\Control\Detached.cs">
+    <Compile Include="Forms\RTSP\Detached.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Control\Detached.Designer.cs">
+    <Compile Include="Forms\RTSP\Detached.Designer.cs">
       <DependentUpon>Detached.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Other\Final.cs">
@@ -340,10 +341,10 @@
     <Compile Include="Forms\Other\Final.Designer.cs">
       <DependentUpon>Final.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Control\MainForm.cs">
+    <Compile Include="Forms\Other\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Control\MainForm.Designer.cs">
+    <Compile Include="Forms\Other\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Scripting\PelcoD.cs">
@@ -352,10 +353,10 @@
     <Compile Include="Forms\Scripting\PelcoD.Designer.cs">
       <DependentUpon>PelcoD.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Control\PresetPanel.cs">
+    <Compile Include="Forms\Panels\PresetPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Control\PresetPanel.Designer.cs">
+    <Compile Include="Forms\Panels\PresetPanel.Designer.cs">
       <DependentUpon>PresetPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Other\FirmwareUpgrade.cs">
@@ -386,10 +387,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Other\VideoSettings.cs">
+    <Compile Include="Forms\RTSP\VideoSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\VideoSettings.Designer.cs">
+    <Compile Include="Forms\RTSP\VideoSettings.Designer.cs">
       <DependentUpon>VideoSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\Other Scripts\Tools.cs" />
@@ -398,18 +399,24 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RTSP\RTSPWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RTSP\RTSPWizard.Designer.cs">
+      <DependentUpon>RTSPWizard.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\Other\ChooseConfig.resx">
       <DependentUpon>ChooseConfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Control\Detached.resx">
+    <EmbeddedResource Include="Forms\RTSP\Detached.resx">
       <DependentUpon>Detached.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Control\InfoPanel.resx">
+    <EmbeddedResource Include="Forms\Panels\InfoPanel.resx">
       <DependentUpon>InfoPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Control\MainForm.resx">
+    <EmbeddedResource Include="Forms\Other\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Other\DebugWindow.resx">
@@ -418,19 +425,19 @@
     <EmbeddedResource Include="Forms\Other\DirectoryChooser.resx">
       <DependentUpon>DirectoryChooser.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\UserPresets.resx">
+    <EmbeddedResource Include="Forms\RTSP\UserPresets.resx">
       <DependentUpon>UserPresets.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Scripting\CommandHelper.resx">
       <DependentUpon>CommandHelper.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\QuickCommandEntry.resx">
+    <EmbeddedResource Include="Forms\Scripting\QuickCommandEntry.resx">
       <DependentUpon>QuickCommandEntry.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Scripting\PelcoD.resx">
       <DependentUpon>PelcoD.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Control\PresetPanel.resx">
+    <EmbeddedResource Include="Forms\Panels\PresetPanel.resx">
       <DependentUpon>PresetPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Scripting\ResponseLog.resx">
@@ -453,8 +460,11 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\VideoSettings.resx">
+    <EmbeddedResource Include="Forms\RTSP\VideoSettings.resx">
       <DependentUpon>VideoSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RTSP\RTSPWizard.resx">
+      <DependentUpon>RTSPWizard.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

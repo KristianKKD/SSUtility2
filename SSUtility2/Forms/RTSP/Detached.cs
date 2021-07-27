@@ -72,18 +72,18 @@ namespace SSUtility2 {
                     return;
                 }
 
-                if (!settings.AdrValid(showErrors))
-                    return;
-
                 if (InvokeRequired) {
                     Invoke((MethodInvoker)delegate {
-                        Play(showErrors);
+                        Play(showErrors, updateValues);
                     });
                     return;
                 }
 
-                Uri combinedUrl = new Uri(settings.tB_PlayerD_SimpleAdr.Text);
-                //rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov
+                string fullAdr = settings.myWiz.GetCombined();
+
+                Uri combinedUrl = ConfirmAdr(showErrors,fullAdr);
+                if (combinedUrl == null)
+                    return;
 
                 Console.WriteLine("playing " + combinedUrl.ToString());
 
@@ -103,8 +103,8 @@ namespace SSUtility2 {
                 }
 
                 if (updateValues && settings.isMainPlayer) {
-                    if (ConfigControl.autoReconnect.boolVal && !settings.customFull) {
-                        MainForm.m.setPage.tB_IPCon_Adr.Text = settings.tB_PlayerD_Adr.Text;
+                    if (ConfigControl.autoReconnect.boolVal) {
+                        MainForm.m.setPage.tB_IPCon_Adr.Text = fullAdr;
                         ConfigControl.savedIP.UpdateValue(MainForm.m.setPage.tB_IPCon_Adr.Text);
                     }
                     AsyncCamCom.TryConnect(false, null, true);
@@ -115,6 +115,38 @@ namespace SSUtility2 {
                 Console.WriteLine(e.ToString());
                 StopPlaying();
                 return;
+            }
+        }
+
+        public Uri ConfirmAdr(bool showErrors, string fullAdr) {
+            try {
+                Uri newUri = null;
+                string errorMsg = "";
+
+                try {
+                    newUri = new Uri(fullAdr);
+                } catch {
+                    errorMsg = "Address was invalid!\n";
+                }
+
+                if (newUri != null && !ConfigControl.ignoreAddress.boolVal
+                    && settings.isMainPlayer) {
+                    if (!OtherCamCom.PingAdr(newUri.Host).Result) {
+                        errorMsg += "Address had no RTSP stream attached!\n";
+                    }
+                }
+
+                if (errorMsg != "") {
+                    if (showErrors)
+                        MessageBox.Show(errorMsg);
+                    return null;
+                }
+
+                return newUri;
+            } catch (Exception e) {
+                if (showErrors)
+                    Tools.ShowPopup("Failed to parse address!\nShow more?", "Error Occurred!", e.ToString());
+                return null;
             }
         }
 
@@ -142,14 +174,13 @@ namespace SSUtility2 {
                     MainForm.m.SwapSettings(secondPlayer);
                 };
 
-                VideoSettings.CopySettings(secondPlayer.settings, MainForm.m.mainPlayer.settings, VideoSettings.CopyType.NoCopy);
+                //VideoSettings.CopySettings(secondPlayer.settings, MainForm.m.mainPlayer.settings, VideoSettings.CopyType.NoCopy);
                 
                 if(playOnLaunch)
                     secondPlayer.Play(false, updateVals);
 
                 string name = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
                 secondPlayer.settings.tP_Main.Text = name;
-                secondPlayer.settings.originalName = name;
 
                 return sP_Secondary;
             } catch (Exception e) {
@@ -158,7 +189,7 @@ namespace SSUtility2 {
             }
         }
 
-        public void DetachAll(bool destroy) {
+        public void DestroyAll() {
             List<Detached> dList = new List<Detached>();
             foreach (Detached d in attachedPlayers)
                 dList.Add(d);
@@ -208,7 +239,7 @@ namespace SSUtility2 {
 
         private void Menu_Record_Click(object sender, EventArgs e) {
             try {
-                string location = ConfigControl.vFolder.stringVal + MainForm.m.mainPlayer.settings.tB_PlayerD_Name.Text + @"\";
+                string location = ConfigControl.vFolder.stringVal + MainForm.m.mainPlayer.settings.myWiz.tB_Name.Text + @"\";
 
                 if (Menu_Record.Text == "Start Recording") {
                     Menu_Record.Text = "Stop Recording";
