@@ -59,6 +59,7 @@ namespace SSUtility2
             this.b_Play.TabIndex = 59;
             this.b_Play.Text = "▶";
             this.b_Play.UseVisualStyleBackColor = false;
+            this.b_Play.Visible = false;
             this.b_Play.Click += new System.EventHandler(this.b_Play_Click);
             // 
             // b_Stop
@@ -72,6 +73,7 @@ namespace SSUtility2
             this.b_Stop.TabIndex = 61;
             this.b_Stop.Text = "⬛";
             this.b_Stop.UseVisualStyleBackColor = false;
+            this.b_Stop.Visible = false;
             this.b_Stop.Click += new System.EventHandler(this.b_Stop_Click);
             // 
             // tC_PlayerSettings
@@ -208,6 +210,7 @@ namespace SSUtility2
             this.b_Edit.TabIndex = 66;
             this.b_Edit.Text = "⛭";
             this.b_Edit.UseVisualStyleBackColor = false;
+            this.b_Edit.Visible = false;
             this.b_Edit.Click += new System.EventHandler(this.b_Edit_Click);
             // 
             // l_RTSP
@@ -224,11 +227,17 @@ namespace SSUtility2
             // 
             this.cB_RTSP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cB_RTSP.AutoCompleteCustomSource.AddRange(new string[] {
+            "Add New..."});
+            this.cB_RTSP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cB_RTSP.FormattingEnabled = true;
+            this.cB_RTSP.Items.AddRange(new object[] {
+            "Add New..."});
             this.cB_RTSP.Location = new System.Drawing.Point(10, 26);
             this.cB_RTSP.Name = "cB_RTSP";
             this.cB_RTSP.Size = new System.Drawing.Size(273, 21);
             this.cB_RTSP.TabIndex = 64;
+            this.cB_RTSP.SelectedIndexChanged += new System.EventHandler(this.cB_RTSP_SelectedIndexChanged);
             // 
             // VideoSettings
             // 

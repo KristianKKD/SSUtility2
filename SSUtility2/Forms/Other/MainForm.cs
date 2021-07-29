@@ -12,7 +12,7 @@ namespace SSUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.1";
+        public const string version = "v2.8.0.2";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -53,8 +53,7 @@ namespace SSUtility2
             try {
                 CreateHandle();
                 m = this;
-                RTSPPresets presets = new RTSPPresets();
-                presets.Init();
+                VideoSettings.allSettings = new List<VideoSettings>();
                 CustomScriptCommands.userAddedCommands = new List<ScriptCommand>();
                 setPage = new SettingsPage();
                 rl = new ResponseLog();

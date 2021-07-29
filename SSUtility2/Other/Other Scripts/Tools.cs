@@ -625,12 +625,17 @@ namespace SSUtility2 {
         }
 
         public static Control GetFocusedControl() {
-            Control focusedControl = null;
-            IntPtr focusedHandle = Program.GetFocus();
-            if (focusedHandle != IntPtr.Zero)
-                focusedControl = Control.FromHandle(focusedHandle);
-
-            return focusedControl;
+            try {
+                IntPtr focusedHandle = Program.GetFocus();
+                if (focusedHandle != IntPtr.Zero) {
+                    Control c = Control.FromHandle(focusedHandle);
+                    if (c.GetType() != typeof(TextBox))
+                        return c;
+                }
+            } catch (Exception e) {
+                Console.WriteLine(e.ToString());
+            }
+            return null;
         }
 
         public static string ShowScriptCommandInfo(ScriptCommand sc, bool show) {

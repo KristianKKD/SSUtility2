@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SSUtility2 {
 
-    public class RTSPPresets {
+    public static class RTSPPresets {
 
-        public static RTSPPresets presets;
-
-        public void Init() {
-            presets = this;
+        public enum PresetColumn {
+            Name,
+            FullAdr,
+            RTSPIP,
+            RTSPPort,
+            RTSP,
+            Username,
+            Password,
+            ManualEnabled,
+            PelcoID,
+            ControlIP,
+            ControlPort
         }
 
         //Name;FullAdr;RTSPIP;RTSPPort;RTSP;Username;Password;ManualEnabled;PelcoID;ControlIP;ControlPort;
-        const int columns = 11;
-        public string[,] allPresets = new string[columns, 99];
-        public int currentPresetCount = 0;
+        static int columns = 11;
+        public static string[,] allPresets = new string[columns, 99];
+        public static int currentPresetCount = 0;
 
-        public List<string> GetAll() {
+        public static List<string> GetAll() {
             List<string> all = new List<string>();
             for (int y = 0; y < currentPresetCount; y++) {
                 string currentLine = "";
@@ -32,7 +41,7 @@ namespace SSUtility2 {
             return all;
         }
 
-        public void LoadPreset(string line) {
+        public static void LoadPreset(string line) {
             line = line.Trim();
 
             int nextPos = 0;
@@ -44,27 +53,47 @@ namespace SSUtility2 {
 
             if (allPresets[columns - 1, currentPresetCount] != null)
                 currentPresetCount++;
+
+            ReloadAll();
         }
 
-        void FullToParts(string full) {
-            int usernamePos = full.IndexOf(":") + 1; //should be the first one
-            if (full[6] != '/' && usernamePos <= 0) //if fullAdr isn't completed in the expected way
-                return;
+        static void ReloadAll() {
+            //Reloads all settings every time this is updated, make a way so it reloads after it finishes loading later
+            List<string> all = new List<string>();
 
-            int atPos = full.IndexOf("@") + 1;
-            int secondColonPos = full.IndexOf(":", usernamePos); // + secondColonPos?
-
-            string username = full.Substring(7, usernamePos - 7); //7 = rtsp://
-            string password = full.Substring(usernamePos, atPos - usernamePos);
-            string ipaddress = full.Substring(atPos, secondColonPos - atPos);
-            string port = full.Substring(secondColonPos, full.IndexOf("/", 7) - secondColonPos);
-            string url = full.Substring(secondColonPos + port.Length + 1);
-
-            Console.WriteLine("rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url);
-        }
-
-        public void WizardFull(string fullAdr) {
+            for (int i = 0; i < currentPresetCount; i++)
+                all.Add(allPresets[0, i]);
             
+            VideoSettings.UpdateAllPresetBoxes(all);
+        }
+
+        static RTSPWizard wiz;
+        public static void OpenPreset(string presetName) {
+            if (wiz != null)
+                wiz.Dispose();
+
+            string returnedVal = GetValue(PresetColumn.FullAdr, presetName);
+            if (returnedVal == "") {
+                MessageBox.Show("Failed to find preset:\n" + presetName);
+                return;
+            }
+
+            wiz = new RTSPWizard(returnedVal);
+            wiz.Show();
+        }
+
+        public static string GetValue(PresetColumn targetValue, string identifierValue, PresetColumn identifierType = PresetColumn.Name) {
+            for (int i = 0; i < currentPresetCount; i++) {
+                if (allPresets[(int)identifierType, i] == identifierValue)
+                    return allPresets[1, i];
+            }
+
+            return "";
+        }
+
+        public static void CreateNew() {
+            RTSPWizard wiz = new RTSPWizard(null);
+            wiz.Show();
         }
 
     }

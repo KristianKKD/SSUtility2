@@ -28,6 +28,7 @@ namespace SSUtility2 {
                 p_Player.Dispose();
             } catch { }
             try {
+                VideoSettings.allSettings.Remove(settings);
                 settings.Dispose();
             } catch { }
             try {
@@ -36,9 +37,8 @@ namespace SSUtility2 {
         }
 
         public void HideAttached() {
-            foreach (Detached d in attachedPlayers) {
+            foreach (Detached d in attachedPlayers)
                 d.p_Player.Hide();
-            }
         }
 
         public void ShowAttached() {

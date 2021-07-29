@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static SSUtility2.RTSPPresets;
 
 namespace SSUtility2 {
     public partial class VideoSettings : Form {
+
+        public static List<VideoSettings> allSettings;
 
         public Detached myDetached;
         public TabPage myLinkedMainPage;
@@ -16,8 +19,6 @@ namespace SSUtility2 {
         public bool isMainPlayer;
         public bool isAttached = false;
 
-        RTSPWizard myWiz;
-
         public VideoSettings(Detached d, bool isMain) {
             InitializeComponent();
 
@@ -27,7 +28,7 @@ namespace SSUtility2 {
             if (!isMain)
                 tP_Main.Text = "Detached Player";
 
-            myWiz = new RTSPWizard(this);
+            allSettings.Add(this);
         }
 
         public static void SwapSettings(VideoSettings second) {
@@ -213,8 +214,22 @@ namespace SSUtility2 {
             return null;
         }
 
-        private void b_Edit_Click(object sender, EventArgs e) {
+        public static void UpdateAllPresetBoxes(List<string> presetNames) {
+            foreach (VideoSettings vs in allSettings) {
+                vs.cB_RTSP.Items.Clear();
+                foreach (string s in presetNames)
+                    vs.cB_RTSP.Items.Add(s);
 
+                vs.cB_RTSP.Items.Add("Add New...");
+            }
+        }
+
+        private void b_Edit_Click(object sender, EventArgs e) {
+            string rtspName = cB_RTSP.Text;
+            if (rtspName.Length > 0 && rtspName.Trim().Length > 0) {
+                RTSPPresets.OpenPreset(cB_RTSP.Text);
+                return;
+            }
         }
 
         private void b_Play_Click(object sender, EventArgs e) {
@@ -237,6 +252,15 @@ namespace SSUtility2 {
                 Tools.ShowPopup("Updating player field failed!\nShow more?", "Error Occurred!", e.ToString());
             }
         }
+
+        private void cB_RTSP_SelectedIndexChanged(object sender, EventArgs e) {
+            if (cB_RTSP.SelectedIndex == cB_RTSP.Items.Count - 1)
+                RTSPPresets.CreateNew();
+            else {
+                //Use new settings
+            }
+        }
+
         private void VideoSettings_VisibleChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
@@ -257,11 +281,11 @@ namespace SSUtility2 {
         }
 
         public string GetRTSPIP() {
-            return myWiz.tB_Adr.Text;
+            return RTSPPresets.GetValue(PresetColumn.RTSPIP, cB_RTSP.Text);
         }
 
         public string GetCombined() {
-            return myWiz.GetCombined();
+            return RTSPPresets.GetValue(PresetColumn.FullAdr, cB_RTSP.Text);
         }
 
     }

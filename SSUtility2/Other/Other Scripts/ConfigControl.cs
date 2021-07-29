@@ -111,8 +111,8 @@ namespace SSUtility2 {
                     //}
                 }
 
-                List<string> rtspPresets = RTSPPresets.presets.GetAll();
-                ConfigLine(path, "RTSPPresets", RTSPPresets.presets.currentPresetCount.ToString(), rtspPresetPrefix);
+                List<string> rtspPresets = RTSPPresets.GetAll();
+                ConfigLine(path, "RTSPPresets", RTSPPresets.currentPresetCount.ToString(), rtspPresetPrefix);
                 foreach (string line in rtspPresets)
                     File.AppendAllText(path, subPrefix + line + "\n");
 
@@ -195,7 +195,7 @@ namespace SSUtility2 {
 
                             for (int o = 0; o < val; o++)
                                 if (lines.Length - 1 >= i + o)
-                                    RTSPPresets.presets.LoadPreset(lines[i+o]);
+                                    RTSPPresets.LoadPreset(lines[i+o]);
 
                             i += val - 1;
                         }
