@@ -11,11 +11,9 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class RTSPWizard : Form {
 
-        VideoSettings mySets;
 
         public RTSPWizard(VideoSettings sets) {
             InitializeComponent();
-            mySets = sets;
         }
 
         private void b_Confirm_Click(object sender, EventArgs e) {
@@ -25,7 +23,6 @@ namespace SSUtility2 {
         private void b_Cancel_Click(object sender, EventArgs e) {
             Close();
         }
-
 
         public string GetCombined() {
             try {
@@ -42,9 +39,6 @@ namespace SSUtility2 {
 
             return null;
         }
-
-      
-
 
     }
 }

@@ -45,8 +45,6 @@ namespace SSUtility2
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
             this.l_IPCon_Subnet = new System.Windows.Forms.Label();
-            this.b_IPCon_EditCamType = new System.Windows.Forms.Button();
-            this.l_IPCon_PelcoID = new System.Windows.Forms.Label();
             this.b_IPCon_Recheck = new System.Windows.Forms.Button();
             this.l_IPCon_Percent = new System.Windows.Forms.Label();
             this.tB_IPCon_CamSpeed = new System.Windows.Forms.TextBox();
@@ -54,8 +52,6 @@ namespace SSUtility2
             this.l_IPCon_ForceMode = new System.Windows.Forms.Label();
             this.cB_IPCon_ForceMode = new System.Windows.Forms.ComboBox();
             this.check_IPCon_ForceCam = new System.Windows.Forms.CheckBox();
-            this.cB_ipCon_CamType = new System.Windows.Forms.ComboBox();
-            this.l_ipCon_Selected = new System.Windows.Forms.Label();
             this.tB_IPCon_Port = new System.Windows.Forms.TextBox();
             this.tB_IPCon_Adr = new System.Windows.Forms.TextBox();
             this.l_IPCon_Connected = new System.Windows.Forms.Label();
@@ -88,6 +84,8 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
+            this.l_MainPlayerPreset = new System.Windows.Forms.Label();
+            this.cB_MainPlayerPreset = new System.Windows.Forms.ComboBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -323,9 +321,9 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
+            this.tP_Control.Controls.Add(this.l_MainPlayerPreset);
+            this.tP_Control.Controls.Add(this.cB_MainPlayerPreset);
             this.tP_Control.Controls.Add(this.l_IPCon_Subnet);
-            this.tP_Control.Controls.Add(this.b_IPCon_EditCamType);
-            this.tP_Control.Controls.Add(this.l_IPCon_PelcoID);
             this.tP_Control.Controls.Add(this.b_IPCon_Recheck);
             this.tP_Control.Controls.Add(this.l_IPCon_Percent);
             this.tP_Control.Controls.Add(this.tB_IPCon_CamSpeed);
@@ -333,8 +331,6 @@ namespace SSUtility2
             this.tP_Control.Controls.Add(this.l_IPCon_ForceMode);
             this.tP_Control.Controls.Add(this.cB_IPCon_ForceMode);
             this.tP_Control.Controls.Add(this.check_IPCon_ForceCam);
-            this.tP_Control.Controls.Add(this.cB_ipCon_CamType);
-            this.tP_Control.Controls.Add(this.l_ipCon_Selected);
             this.tP_Control.Controls.Add(this.tB_IPCon_Port);
             this.tP_Control.Controls.Add(this.tB_IPCon_Adr);
             this.tP_Control.Controls.Add(this.l_IPCon_Connected);
@@ -360,25 +356,6 @@ namespace SSUtility2
             this.l_IPCon_Subnet.Size = new System.Drawing.Size(0, 13);
             this.l_IPCon_Subnet.TabIndex = 96;
             // 
-            // b_IPCon_EditCamType
-            // 
-            this.b_IPCon_EditCamType.Location = new System.Drawing.Point(316, 85);
-            this.b_IPCon_EditCamType.Name = "b_IPCon_EditCamType";
-            this.b_IPCon_EditCamType.Size = new System.Drawing.Size(43, 21);
-            this.b_IPCon_EditCamType.TabIndex = 95;
-            this.b_IPCon_EditCamType.Text = "Edit...";
-            this.b_IPCon_EditCamType.UseVisualStyleBackColor = true;
-            this.b_IPCon_EditCamType.Click += new System.EventHandler(this.b_IPCon_EditCamType_Click);
-            // 
-            // l_IPCon_PelcoID
-            // 
-            this.l_IPCon_PelcoID.AutoSize = true;
-            this.l_IPCon_PelcoID.Location = new System.Drawing.Point(244, 88);
-            this.l_IPCon_PelcoID.Name = "l_IPCon_PelcoID";
-            this.l_IPCon_PelcoID.Size = new System.Drawing.Size(66, 13);
-            this.l_IPCon_PelcoID.TabIndex = 94;
-            this.l_IPCon_PelcoID.Text = "(Pelco ID: 1)";
-            // 
             // b_IPCon_Recheck
             // 
             this.b_IPCon_Recheck.Location = new System.Drawing.Point(257, 192);
@@ -392,7 +369,7 @@ namespace SSUtility2
             // l_IPCon_Percent
             // 
             this.l_IPCon_Percent.AutoSize = true;
-            this.l_IPCon_Percent.Location = new System.Drawing.Point(281, 121);
+            this.l_IPCon_Percent.Location = new System.Drawing.Point(283, 127);
             this.l_IPCon_Percent.Name = "l_IPCon_Percent";
             this.l_IPCon_Percent.Size = new System.Drawing.Size(15, 13);
             this.l_IPCon_Percent.TabIndex = 92;
@@ -400,7 +377,7 @@ namespace SSUtility2
             // 
             // tB_IPCon_CamSpeed
             // 
-            this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(245, 118);
+            this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(247, 124);
             this.tB_IPCon_CamSpeed.Name = "tB_IPCon_CamSpeed";
             this.tB_IPCon_CamSpeed.Size = new System.Drawing.Size(34, 20);
             this.tB_IPCon_CamSpeed.TabIndex = 91;
@@ -410,7 +387,7 @@ namespace SSUtility2
             // l_IPCon_TrackBar
             // 
             this.l_IPCon_TrackBar.AutoSize = true;
-            this.l_IPCon_TrackBar.Location = new System.Drawing.Point(6, 120);
+            this.l_IPCon_TrackBar.Location = new System.Drawing.Point(8, 126);
             this.l_IPCon_TrackBar.Name = "l_IPCon_TrackBar";
             this.l_IPCon_TrackBar.Size = new System.Drawing.Size(98, 13);
             this.l_IPCon_TrackBar.TabIndex = 90;
@@ -455,27 +432,6 @@ namespace SSUtility2
             this.toolTips.SetToolTip(this.check_IPCon_ForceCam, "SSUtility is forced to see the connect device as a camera");
             this.check_IPCon_ForceCam.UseVisualStyleBackColor = true;
             this.check_IPCon_ForceCam.CheckedChanged += new System.EventHandler(this.check_IPCon_ForceCam_CheckedChanged);
-            // 
-            // cB_ipCon_CamType
-            // 
-            this.cB_ipCon_CamType.FormattingEnabled = true;
-            this.cB_ipCon_CamType.Location = new System.Drawing.Point(115, 85);
-            this.cB_ipCon_CamType.Name = "cB_ipCon_CamType";
-            this.cB_ipCon_CamType.Size = new System.Drawing.Size(123, 21);
-            this.cB_ipCon_CamType.TabIndex = 83;
-            this.toolTips.SetToolTip(this.cB_ipCon_CamType, "Commands are sent to this Pelco ID in the camera");
-            this.cB_ipCon_CamType.SelectedIndexChanged += new System.EventHandler(this.cB_ipCon_CamType_SelectedIndexChanged);
-            this.cB_ipCon_CamType.KeyUp += new System.Windows.Forms.KeyEventHandler(this.cB_ipCon_CamType_KeyUp);
-            // 
-            // l_ipCon_Selected
-            // 
-            this.l_ipCon_Selected.AutoSize = true;
-            this.l_ipCon_Selected.Location = new System.Drawing.Point(6, 88);
-            this.l_ipCon_Selected.Name = "l_ipCon_Selected";
-            this.l_ipCon_Selected.Size = new System.Drawing.Size(93, 13);
-            this.l_ipCon_Selected.TabIndex = 82;
-            this.l_ipCon_Selected.Text = "Selected Pelco ID";
-            this.toolTips.SetToolTip(this.l_ipCon_Selected, "Commands are sent to this Pelco ID in the camera");
             // 
             // tB_IPCon_Port
             // 
@@ -551,7 +507,7 @@ namespace SSUtility2
             // slider_IPCon_ControlMultiplier
             // 
             this.slider_IPCon_ControlMultiplier.BackColor = System.Drawing.SystemColors.Window;
-            this.slider_IPCon_ControlMultiplier.Location = new System.Drawing.Point(109, 116);
+            this.slider_IPCon_ControlMultiplier.Location = new System.Drawing.Point(111, 122);
             this.slider_IPCon_ControlMultiplier.Maximum = 200;
             this.slider_IPCon_ControlMultiplier.Minimum = 1;
             this.slider_IPCon_ControlMultiplier.Name = "slider_IPCon_ControlMultiplier";
@@ -861,6 +817,29 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
+            // l_MainPlayerPreset
+            // 
+            this.l_MainPlayerPreset.AutoSize = true;
+            this.l_MainPlayerPreset.Location = new System.Drawing.Point(6, 88);
+            this.l_MainPlayerPreset.Name = "l_MainPlayerPreset";
+            this.l_MainPlayerPreset.Size = new System.Drawing.Size(95, 13);
+            this.l_MainPlayerPreset.TabIndex = 98;
+            this.l_MainPlayerPreset.Text = "Main Player Preset";
+            // 
+            // cB_MainPlayerPreset
+            // 
+            this.cB_MainPlayerPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_MainPlayerPreset.FormattingEnabled = true;
+            this.cB_MainPlayerPreset.Items.AddRange(new object[] {
+            "SSTraditional",
+            "Strict",
+            "RevTilt",
+            "Legacy"});
+            this.cB_MainPlayerPreset.Location = new System.Drawing.Point(115, 85);
+            this.cB_MainPlayerPreset.Name = "cB_MainPlayerPreset";
+            this.cB_MainPlayerPreset.Size = new System.Drawing.Size(123, 21);
+            this.cB_MainPlayerPreset.TabIndex = 97;
+            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -929,8 +908,6 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_IPCon_Adr;
         public System.Windows.Forms.TabPage tP_Customs;
         private System.ComponentModel.IContainer components;
-        public System.Windows.Forms.ComboBox cB_ipCon_CamType;
-        public System.Windows.Forms.Label l_ipCon_Selected;
         public System.Windows.Forms.Label l_Version;
         private System.Windows.Forms.Button b_Custom_CommandList;
         public System.Windows.Forms.CheckBox check_Other_AutoReconnect;
@@ -958,8 +935,8 @@ namespace SSUtility2
         private System.Windows.Forms.Button b_IPCon_Recheck;
         private System.Windows.Forms.Label l_Other_PlayerCount;
         private System.Windows.Forms.ComboBox cB_Other_PlayerCount;
-        private System.Windows.Forms.Label l_IPCon_PelcoID;
-        private System.Windows.Forms.Button b_IPCon_EditCamType;
         public System.Windows.Forms.Label l_IPCon_Subnet;
+        public System.Windows.Forms.Label l_MainPlayerPreset;
+        private System.Windows.Forms.ComboBox cB_MainPlayerPreset;
     }
 }

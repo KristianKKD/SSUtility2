@@ -208,6 +208,7 @@ namespace SSUtility2
             this.b_Edit.TabIndex = 66;
             this.b_Edit.Text = "⛭";
             this.b_Edit.UseVisualStyleBackColor = false;
+            this.b_Edit.Click += new System.EventHandler(this.b_Edit_Click);
             // 
             // l_RTSP
             // 

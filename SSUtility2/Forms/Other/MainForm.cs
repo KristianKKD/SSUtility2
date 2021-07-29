@@ -12,7 +12,7 @@ namespace SSUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.0";
+        public const string version = "v2.8.0.1";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -53,7 +53,8 @@ namespace SSUtility2
             try {
                 CreateHandle();
                 m = this;
-                VideoSettings.allSettings = new List<VideoSettings>();
+                RTSPPresets presets = new RTSPPresets();
+                presets.Init();
                 CustomScriptCommands.userAddedCommands = new List<ScriptCommand>();
                 setPage = new SettingsPage();
                 rl = new ResponseLog();
@@ -780,12 +781,12 @@ namespace SSUtility2
         }
 
         private void b_PTZ_Daylight_Click(object sender, EventArgs e) {
-            ConfigControl.pelcoID.UpdateValue("1");
+            //ConfigControl.pelcoID.UpdateValue("1");
             setPage.UpdateSelectedCam(true);
         }
 
         private void b_PTZ_Thermal_Click(object sender, EventArgs e) {
-            ConfigControl.pelcoID.UpdateValue("2");
+            //ConfigControl.pelcoID.UpdateValue("2");
             setPage.UpdateSelectedCam(true);
         }
 

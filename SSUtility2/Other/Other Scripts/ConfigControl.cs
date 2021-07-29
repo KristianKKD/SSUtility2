@@ -18,9 +18,9 @@ namespace SSUtility2 {
 
         private const string configVarPrefix = "v"; //What the prefix of the actual value is ([varPrefix]ScreenshotFolder:bin/obj/)
         private const string playerPrefix = "p"; 
-        private const string presetTypePrefix = "t";
         private const string customButtonsPrefix = "c";
         private const string userAddedComPrefix = "u";
+        private const string rtspPresetPrefix = "r";
         private const string subPrefix = " ";
         
         public static ConfigSetting scFolder = new ConfigSetting(savedFolder, "SnapshotFolder", ConfigSetting.VarType.strings);
@@ -46,8 +46,6 @@ namespace SSUtility2 {
         public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
         public static ConfigSetting maintainAspectRatio = new ConfigSetting("false", "MaintainAspectRatio", ConfigSetting.VarType.boolean);
         public static ConfigSetting playerCount = new ConfigSetting("1", "PlayerCount", ConfigSetting.VarType.integer);
-        public static ConfigSetting pelcoID = new ConfigSetting("1", "SelectedPelcoID", ConfigSetting.VarType.integer);
-        public static ConfigSetting selectedPresetName = new ConfigSetting("IONodes - Daylight", "SelectedPresetName", ConfigSetting.VarType.strings);
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -72,8 +70,6 @@ namespace SSUtility2 {
             startupHeight,
             playerCount,
             maintainAspectRatio,
-            pelcoID,
-            selectedPresetName,
         };
 
         public static async Task SetToDefaults() {
@@ -104,18 +100,22 @@ namespace SSUtility2 {
                     if (i != -1)
                         d = MainForm.m.mainPlayer.attachedPlayers[i];
 
-                    List<(string, string)> setList = d.settings.SaveToConfig();
-                    for (int o = 0; o < setList.Count; o++) {
-                        (string, string) s = setList[o];
+                    //List<(string, string)> setList = d.settings.SaveToConfig();
+                    //for (int o = 0; o < setList.Count; o++) {
+                    //    (string, string) s = setList[o];
 
-                        if(o == 0)
-                            ConfigLine(path, s.Item1, s.Item2, playerPrefix);
-                        else
-                            ConfigLine(path, s.Item1, s.Item2, subPrefix);
-                    }
+                    //    if(o == 0)
+                    //        ConfigLine(path, s.Item1, s.Item2, playerPrefix);
+                    //    else
+                    //        ConfigLine(path, s.Item1, s.Item2, subPrefix);
+                    //}
                 }
 
-                SaveDGV(path, MainForm.m.up.dgv_Presets, "Presets", presetTypePrefix);
+                List<string> rtspPresets = RTSPPresets.presets.GetAll();
+                ConfigLine(path, "RTSPPresets", RTSPPresets.presets.currentPresetCount.ToString(), rtspPresetPrefix);
+                foreach (string line in rtspPresets)
+                    File.AppendAllText(path, subPrefix + line + "\n");
+
                 SaveDGV(path, MainForm.m.setPage.dgv_Custom_Buttons, "CustomButtons", customButtonsPrefix);
 
                 CommandListWindow clw = MainForm.m.clw;
@@ -174,14 +174,6 @@ namespace SSUtility2 {
 
                             playersFound.Add(config);
                             i += val;
-                        } else if (line.StartsWith(presetTypePrefix)) {
-                            i++;
-
-                            for (int o = 0; o < val; o++)
-                                if (lines.Length - 1 >= i + o)
-                                    MainForm.m.up.AddPreset(lines[i + o]);
-
-                            i += val - 1;
                         } else if (line.StartsWith(customButtonsPrefix)) {
                             i++;
 
@@ -198,6 +190,14 @@ namespace SSUtility2 {
                                     MainForm.m.clw.LoadCommand(lines[i + o]);
 
                             i += val - 1;
+                        } else if (line.StartsWith(rtspPresetPrefix)) {
+                            i++;
+
+                            for (int o = 0; o < val; o++)
+                                if (lines.Length - 1 >= i + o)
+                                    RTSPPresets.presets.LoadPreset(lines[i+o]);
+
+                            i += val - 1;
                         }
                     }
 
@@ -211,7 +211,7 @@ namespace SSUtility2 {
                 }
 
                 if (playersFound.Count > 0) {
-                    MainForm.m.mainPlayer.settings.LoadConfig(playersFound[0]);
+                    //MainForm.m.mainPlayer.settings.LoadConfig(playersFound[0]);
 
                     for (int o = 1; o < playersFound.Count; o++)
                         MainForm.m.playerConfigList.Add(playersFound[o]);

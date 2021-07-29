@@ -69,16 +69,17 @@ namespace SSUtility2 {
         }
 
         public static uint MakeAdr() {
-            string settingsVal = ConfigControl.pelcoID.stringVal;
+            //string settingsVal = ConfigControl.pelcoID.stringVal;
 
-            if (settingsVal.Contains("daylight") && !MainForm.m.lite) //temp stuff
-                return 1;
-            else if (settingsVal.Contains("thermal") || settingsVal.Contains("vivotek") && !MainForm.m.lite)
-                return 2;
-            else {
-                int val = ConfigControl.pelcoID.intVal;
-                return Convert.ToUInt32(val);
-            }
+            //if (settingsVal.Contains("daylight") && !MainForm.m.lite) //temp stuff
+            //    return 1;
+            //else if (settingsVal.Contains("thermal") || settingsVal.Contains("vivotek") && !MainForm.m.lite)
+            //    return 2;
+            //else {
+            //    int val = ConfigControl.pelcoID.intVal;
+            //    return Convert.ToUInt32(val);
+            //}
+            return 0;
         }
 
         public static uint GetCheckSum(byte[] code, uint adr) {
@@ -298,7 +299,7 @@ namespace SSUtility2 {
             string fullTemp = NameNoOverwrite(orgFolder + orgName + extension);
             string name = fullTemp.Substring(fullTemp.LastIndexOf(@"\") + 1);
 
-            string playerName = player.tB_PlayerD_Name.Text;
+            string playerName = player.GetName();
 
             if (playerName != "") {
                 playerName += @"\";

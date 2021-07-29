@@ -79,7 +79,7 @@ namespace SSUtility2 {
                     return;
                 }
 
-                string fullAdr = settings.myWiz.GetCombined();
+                string fullAdr = settings.GetCombined();
 
                 Uri combinedUrl = ConfirmAdr(showErrors,fullAdr);
                 if (combinedUrl == null)
@@ -239,7 +239,7 @@ namespace SSUtility2 {
 
         private void Menu_Record_Click(object sender, EventArgs e) {
             try {
-                string location = ConfigControl.vFolder.stringVal + MainForm.m.mainPlayer.settings.myWiz.tB_Name.Text + @"\";
+                string location = ConfigControl.vFolder.stringVal + MainForm.m.mainPlayer.settings.GetName() + @"\";
 
                 if (Menu_Record.Text == "Start Recording") {
                     Menu_Record.Text = "Stop Recording";

@@ -154,13 +154,13 @@ namespace SSUtility2 {
 
                 OtherCamCom.CheckIsSameSubnet(ep.Address.ToString());
 
-                if (ConfigControl.autoReconnect.boolVal && !isPlayer) {
-                    VideoSettings vs = MainForm.m.mainPlayer.settings;
+                //if (ConfigControl.autoReconnect.boolVal && !isPlayer) {
+                //    VideoSettings vs = MainForm.m.mainPlayer.settings;
 
-                    vs.tB_PlayerD_Adr.Text = ConfigControl.savedIP.stringVal;
-                    vs.tB_PlayerD_SimpleAdr.Text = vs.GetCombined();
-                    MainForm.m.mainPlayer.Play(false, false);
-                }
+                //    vs.tB_PlayerD_Adr.Text = ConfigControl.savedIP.stringVal;
+                //    vs.tB_PlayerD_SimpleAdr.Text = vs.GetCombined();
+                //    MainForm.m.mainPlayer.Play(false, false);
+                //}
 
                 connecting = sock.BeginConnect(end, ConnectCallback, null);
 

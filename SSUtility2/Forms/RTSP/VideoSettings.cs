@@ -16,7 +16,7 @@ namespace SSUtility2 {
         public bool isMainPlayer;
         public bool isAttached = false;
 
-        public RTSPWizard myWiz;
+        RTSPWizard myWiz;
 
         public VideoSettings(Detached d, bool isMain) {
             InitializeComponent();
@@ -213,6 +213,10 @@ namespace SSUtility2 {
             return null;
         }
 
+        private void b_Edit_Click(object sender, EventArgs e) {
+
+        }
+
         private void b_Play_Click(object sender, EventArgs e) {
             myDetached.Play(true, isMainPlayer);
         }
@@ -247,6 +251,19 @@ namespace SSUtility2 {
                 Hide();
             }
         }
+
+        public string GetName() {
+            return myLinkedMainPage.Name;
+        }
+
+        public string GetRTSPIP() {
+            return myWiz.tB_Adr.Text;
+        }
+
+        public string GetCombined() {
+            return myWiz.GetCombined();
+        }
+
     }
 }
 

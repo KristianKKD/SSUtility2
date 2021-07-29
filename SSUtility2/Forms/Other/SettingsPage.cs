@@ -8,7 +8,6 @@ namespace SSUtility2 {
     public partial class SettingsPage : Form {
 
         Timer connectTimer;
-        Timer pelcoIdTimer;
         Timer resolutionTimer;
 
         public SettingsPage() {
@@ -19,10 +18,6 @@ namespace SSUtility2 {
             connectTimer = new Timer();
             connectTimer.Interval = 1000;
             connectTimer.Tick += new EventHandler(ConnectTimerCallback);
-
-            pelcoIdTimer = new Timer();
-            pelcoIdTimer.Interval = 500;
-            pelcoIdTimer.Tick += new EventHandler(PelcoIDTimerCallback);
 
             resolutionTimer = new Timer();
             resolutionTimer.Interval = 1500;
@@ -71,8 +66,6 @@ namespace SSUtility2 {
                 MainForm.m.Height = ConfigControl.startupHeight.intVal;
                 l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
                 l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
-
-                l_IPCon_PelcoID.Text = "Pelco ID: " + ConfigControl.pelcoID.stringVal;
 
                 UpdateSelectedCam(false);
                 MainForm.m.custom.UpdateButtonNames();
@@ -259,41 +252,6 @@ namespace SSUtility2 {
             }
         }
 
-        private void cB_ipCon_CamType_SelectedIndexChanged(object sender, EventArgs e) {
-            UpdateID(cB_ipCon_CamType);
-        }
-
-        private void cB_ipCon_CamType_KeyUp(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) {
-                UpdateID(cB_ipCon_CamType);
-                connectTimer.Stop();
-            } else
-                DoIDTimer();
-        }
-
-        void DoIDTimer() {
-            if (pelcoIdTimer.Enabled)
-                pelcoIdTimer.Stop();
-
-            pelcoIdTimer.Start();
-        }
-
-        void PelcoIDTimerCallback(object sender, EventArgs e) {
-            pelcoIdTimer.Stop();
-            UpdateID(cB_ipCon_CamType);
-        }
-
-        public void UpdateID(ComboBox cb) {
-            ConfigControl.pelcoID.UpdateValue(UserPresets.GetPelcoID(cb.Text).ToString());
-            ConfigControl.selectedPresetName.UpdateValue(cb.Text.ToString());
-            if (cb == cB_ipCon_CamType)
-                MainForm.m.mainPlayer.settings.UpdateMode();
-            else
-                cB_ipCon_CamType.Text = ConfigControl.selectedPresetName.stringVal;
-
-            l_IPCon_PelcoID.Text = "Pelco ID: " + ConfigControl.pelcoID.stringVal;
-        }
-
         async Task ConnectToCamera(bool showErrors) {
             connectTimer.Stop();
 
@@ -328,22 +286,20 @@ namespace SSUtility2 {
         }
 
         public async Task UpdateSelectedCam(bool play) {
-            cB_ipCon_CamType.Text = ConfigControl.selectedPresetName.stringVal;
-
             if (MainForm.m.lite) {
                 MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
                 MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
                 MainForm.m.b_PTZ_Daylight.Visible = true;
                 MainForm.m.b_PTZ_Thermal.Visible = true;
 
-                if (ConfigControl.pelcoID.intVal == 1)
-                    MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.LightGreen;
-                else if (ConfigControl.pelcoID.intVal == 2)
-                    MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.LightGreen;
-                else {
-                    MainForm.m.b_PTZ_Daylight.Visible = false;
-                    MainForm.m.b_PTZ_Thermal.Visible = false;
-                }
+                //if (ConfigControl.pelcoID.intVal == 1)
+                //    MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.LightGreen;
+                //else if (ConfigControl.pelcoID.intVal == 2)
+                //    MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.LightGreen;
+                //else {
+                //    MainForm.m.b_PTZ_Daylight.Visible = false;
+                //    MainForm.m.b_PTZ_Thermal.Visible = false;
+                //}
             }
         }
 
@@ -525,30 +481,6 @@ namespace SSUtility2 {
 
             ConfigControl.playerCount.UpdateValue(cB_Other_PlayerCount.Text);
             MainForm.m.AttachPlayers();
-        }
-
-        private void b_IPCon_EditCamType_Click(object sender, EventArgs e) {
-            MainForm.m.up.Show();
-        }
-
-        public void AddPresetOption(DataGridViewRow row) {
-            cB_ipCon_CamType.Items.Add(row.Cells[0].Value);
-        }
-
-        public void RemovePresetOption(DataGridViewRow row) {
-            if(cB_ipCon_CamType.Items.Contains(row.Cells[0].Value))
-                cB_ipCon_CamType.Items.Remove(row.Cells[0].Value);
-        }
-
-        public void EditPresetOption(DataGridViewRow row, DataGridViewRow oldRow) {
-            int index = -1;
-            if (cB_ipCon_CamType.Items.Contains(oldRow.Cells[0].Value))
-                index = cB_ipCon_CamType.Items.IndexOf(oldRow.Cells[0].Value);
-
-            if (index == -1)
-                cB_ipCon_CamType.Items.Add(row.Cells[0].Value);
-            else
-                cB_ipCon_CamType.Items[index] = row.Cells[0].Value;
         }
 
         public void AddCustomButton(string line) {

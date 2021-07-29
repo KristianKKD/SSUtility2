@@ -330,37 +330,35 @@ namespace SSUtility2 {
                     if (marker <= 0)
                         marker = line.IndexOf(":");
 
-                    MainForm.m.mainPlayer.settings.customFull = true;
-                    MainForm.m.mainPlayer.settings.tB_PlayerD_SimpleAdr.Text = line.Substring(marker + 1).Trim();
                     MainForm.m.mainPlayer.Play(false, false);
                 } else if (com.codeContent == PelcoD.swapPreset) {
-                    ComboBox cb = MainForm.m.setPage.cB_ipCon_CamType;
-                    string oldVal = cb.Text;
+                    //ComboBox cb = MainForm.m.setPage.cB_ipCon_CamType;
+                    //string oldVal = cb.Text;
 
-                    int marker = line.IndexOf(" ");
-                    if (marker <= 0)
-                        marker = line.IndexOf(":");
+                    //int marker = line.IndexOf(" ");
+                    //if (marker <= 0)
+                    //    marker = line.IndexOf(":");
 
-                    string val = line.Substring(marker + 1).Trim().ToLower();
-                    int foundInt;
+                    //string val = line.Substring(marker + 1).Trim().ToLower();
+                    //int foundInt;
 
-                    if (int.TryParse(val, out foundInt) && cb.Items[foundInt - 1] != null) //index of preset
-                        cb.SelectedIndex = foundInt - 1;
-                    else {
-                        foreach (DataGridViewRow row in MainForm.m.up.dgv_Presets.Rows) {
-                            if (row.Cells[0].Value != null) {
-                                if (row.Cells[0].Value.ToString().ToLower().Trim().Contains(val)) { //set it to the preset found
-                                    cb.Text = row.Cells[0].Value.ToString();
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    //if (int.TryParse(val, out foundInt) && cb.Items[foundInt - 1] != null) //index of preset
+                    //    cb.SelectedIndex = foundInt - 1;
+                    //else {
+                    //    foreach (DataGridViewRow row in MainForm.m.up.dgv_Presets.Rows) {
+                    //        if (row.Cells[0].Value != null) {
+                    //            if (row.Cells[0].Value.ToString().ToLower().Trim().Contains(val)) { //set it to the preset found
+                    //                cb.Text = row.Cells[0].Value.ToString();
+                    //                break;
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
-                    if (cb.Text != oldVal)
-                        MainForm.m.setPage.UpdateID(cb);
-                    else
-                        MainForm.m.WriteToResponses("Failed to find user preset: " + val, false);
+                    //if (cb.Text != oldVal)
+                    //    MainForm.m.setPage.UpdateID(cb);
+                    //else
+                    //    MainForm.m.WriteToResponses("Failed to find user preset: " + val, false);
                 }
 
 
