@@ -222,7 +222,7 @@
             this.tB_Serial_Baud.Location = new System.Drawing.Point(4, 21);
             this.tB_Serial_Baud.Name = "tB_Serial_Baud";
             this.tB_Serial_Baud.Size = new System.Drawing.Size(111, 20);
-            this.tB_Serial_Baud.TabIndex = 84;
+            this.tB_Serial_Baud.TabIndex = 1;
             this.tB_Serial_Baud.Text = "9600";
             // 
             // tB_Serial_Port
@@ -231,7 +231,7 @@
             this.tB_Serial_Port.Location = new System.Drawing.Point(4, 60);
             this.tB_Serial_Port.Name = "tB_Serial_Port";
             this.tB_Serial_Port.Size = new System.Drawing.Size(111, 20);
-            this.tB_Serial_Port.TabIndex = 85;
+            this.tB_Serial_Port.TabIndex = 2;
             // 
             // PelcoD
             // 

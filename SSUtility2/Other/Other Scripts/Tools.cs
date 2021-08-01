@@ -612,10 +612,6 @@ namespace SSUtility2 {
                 if ((currentControl == m.mainPlayer || currentControl == m.MenuBar || currentControl == m))
                     return true;
 
-                foreach (Button b in m.custom.buttonList)
-                    if (currentControl == b)
-                        return true;
-
                 foreach (Button b in MainForm.controlPanel)
                     if (currentControl == b)
                         return true;
@@ -629,12 +625,13 @@ namespace SSUtility2 {
                 IntPtr focusedHandle = Program.GetFocus();
                 if (focusedHandle != IntPtr.Zero) {
                     Control c = Control.FromHandle(focusedHandle);
-                    if (c.GetType() != typeof(TextBox))
+                    if (c.GetType() == typeof(Form) || c.GetType() == typeof(PictureBox) || c.GetType() == typeof(Menu))
                         return c;
                 }
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
             }
+
             return null;
         }
 

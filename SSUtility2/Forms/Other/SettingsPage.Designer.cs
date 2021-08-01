@@ -44,6 +44,8 @@ namespace SSUtility2
             this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
+            this.l_MainPlayerPreset = new System.Windows.Forms.Label();
+            this.cB_MainPlayerPreset = new System.Windows.Forms.ComboBox();
             this.l_IPCon_Subnet = new System.Windows.Forms.Label();
             this.b_IPCon_Recheck = new System.Windows.Forms.Button();
             this.l_IPCon_Percent = new System.Windows.Forms.Label();
@@ -84,8 +86,6 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.l_MainPlayerPreset = new System.Windows.Forms.Label();
-            this.cB_MainPlayerPreset = new System.Windows.Forms.ComboBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -116,7 +116,7 @@ namespace SSUtility2
             this.tB_Rec_scFileN.Location = new System.Drawing.Point(133, 90);
             this.tB_Rec_scFileN.Name = "tB_Rec_scFileN";
             this.tB_Rec_scFileN.Size = new System.Drawing.Size(188, 20);
-            this.tB_Rec_scFileN.TabIndex = 24;
+            this.tB_Rec_scFileN.TabIndex = 4;
             this.tB_Rec_scFileN.TextChanged += new System.EventHandler(this.tB_Rec_scFileN_TextChanged);
             // 
             // l_Rec_sCFileN
@@ -142,7 +142,7 @@ namespace SSUtility2
             this.cB_Rec_FPS.Location = new System.Drawing.Point(133, 6);
             this.cB_Rec_FPS.Name = "cB_Rec_FPS";
             this.cB_Rec_FPS.Size = new System.Drawing.Size(114, 21);
-            this.cB_Rec_FPS.TabIndex = 16;
+            this.cB_Rec_FPS.TabIndex = 1;
             this.toolTips.SetToolTip(this.cB_Rec_FPS, "Video capture framerate, lower to reduce latency, increase to improve smoothness " +
         "of output video.");
             this.cB_Rec_FPS.TextChanged += new System.EventHandler(this.cB_Rec_FPS_TextChanged);
@@ -155,7 +155,7 @@ namespace SSUtility2
             this.tB_Rec_vFileN.Location = new System.Drawing.Point(133, 64);
             this.tB_Rec_vFileN.Name = "tB_Rec_vFileN";
             this.tB_Rec_vFileN.Size = new System.Drawing.Size(188, 20);
-            this.tB_Rec_vFileN.TabIndex = 22;
+            this.tB_Rec_vFileN.TabIndex = 3;
             this.tB_Rec_vFileN.TextChanged += new System.EventHandler(this.tB_Rec_vFileN_TextChanged);
             // 
             // l_Rec_vFileN
@@ -196,7 +196,7 @@ namespace SSUtility2
             this.b_Paths_sCBrowse.Location = new System.Drawing.Point(337, 31);
             this.b_Paths_sCBrowse.Name = "b_Paths_sCBrowse";
             this.b_Paths_sCBrowse.Size = new System.Drawing.Size(27, 22);
-            this.b_Paths_sCBrowse.TabIndex = 13;
+            this.b_Paths_sCBrowse.TabIndex = 2;
             this.b_Paths_sCBrowse.Text = "...";
             this.b_Paths_sCBrowse.UseVisualStyleBackColor = false;
             this.b_Paths_sCBrowse.Click += new System.EventHandler(this.b_Paths_sCBrowse_Click);
@@ -210,7 +210,7 @@ namespace SSUtility2
             this.tB_Paths_sCFolder.Location = new System.Drawing.Point(112, 33);
             this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
             this.tB_Paths_sCFolder.Size = new System.Drawing.Size(219, 20);
-            this.tB_Paths_sCFolder.TabIndex = 16;
+            this.tB_Paths_sCFolder.TabIndex = 1;
             this.tB_Paths_sCFolder.TextChanged += new System.EventHandler(this.tB_Paths_sCFolder_TextChanged);
             // 
             // l_Paths_vFolder
@@ -231,7 +231,7 @@ namespace SSUtility2
             this.tB_Paths_vFolder.Location = new System.Drawing.Point(112, 66);
             this.tB_Paths_vFolder.Name = "tB_Paths_vFolder";
             this.tB_Paths_vFolder.Size = new System.Drawing.Size(219, 20);
-            this.tB_Paths_vFolder.TabIndex = 18;
+            this.tB_Paths_vFolder.TabIndex = 3;
             this.tB_Paths_vFolder.TextChanged += new System.EventHandler(this.tB_Paths_vFolder_TextChanged);
             // 
             // b_Paths_vBrowse
@@ -243,7 +243,7 @@ namespace SSUtility2
             this.b_Paths_vBrowse.Location = new System.Drawing.Point(337, 64);
             this.b_Paths_vBrowse.Name = "b_Paths_vBrowse";
             this.b_Paths_vBrowse.Size = new System.Drawing.Size(26, 22);
-            this.b_Paths_vBrowse.TabIndex = 19;
+            this.b_Paths_vBrowse.TabIndex = 4;
             this.b_Paths_vBrowse.Text = "...";
             this.b_Paths_vBrowse.UseVisualStyleBackColor = false;
             this.b_Paths_vBrowse.Click += new System.EventHandler(this.b_Paths_vBrowse_Click);
@@ -272,7 +272,7 @@ namespace SSUtility2
             this.check_Paths_Manual.Name = "check_Paths_Manual";
             this.check_Paths_Manual.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_Paths_Manual.Size = new System.Drawing.Size(119, 21);
-            this.check_Paths_Manual.TabIndex = 32;
+            this.check_Paths_Manual.TabIndex = 0;
             this.check_Paths_Manual.Text = "Automatic Paths";
             this.check_Paths_Manual.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTips.SetToolTip(this.check_Paths_Manual, "Automatic paths are Documents\\SSUtility\\Saved\\[CAMERA NAME]");
@@ -285,7 +285,7 @@ namespace SSUtility2
             this.check_Other_AutoPlay.Name = "check_Other_AutoPlay";
             this.check_Other_AutoPlay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_Other_AutoPlay.Size = new System.Drawing.Size(174, 17);
-            this.check_Other_AutoPlay.TabIndex = 30;
+            this.check_Other_AutoPlay.TabIndex = 1;
             this.check_Other_AutoPlay.Text = "Autoplay Videos on Launch";
             this.check_Other_AutoPlay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTips.SetToolTip(this.check_Other_AutoPlay, "Play videos upon launch of the program if any have been entered previously.");
@@ -347,6 +347,29 @@ namespace SSUtility2
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
             // 
+            // l_MainPlayerPreset
+            // 
+            this.l_MainPlayerPreset.AutoSize = true;
+            this.l_MainPlayerPreset.Location = new System.Drawing.Point(6, 88);
+            this.l_MainPlayerPreset.Name = "l_MainPlayerPreset";
+            this.l_MainPlayerPreset.Size = new System.Drawing.Size(95, 13);
+            this.l_MainPlayerPreset.TabIndex = 98;
+            this.l_MainPlayerPreset.Text = "Main Player Preset";
+            // 
+            // cB_MainPlayerPreset
+            // 
+            this.cB_MainPlayerPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_MainPlayerPreset.FormattingEnabled = true;
+            this.cB_MainPlayerPreset.Items.AddRange(new object[] {
+            "SSTraditional",
+            "Strict",
+            "RevTilt",
+            "Legacy"});
+            this.cB_MainPlayerPreset.Location = new System.Drawing.Point(115, 85);
+            this.cB_MainPlayerPreset.Name = "cB_MainPlayerPreset";
+            this.cB_MainPlayerPreset.Size = new System.Drawing.Size(123, 21);
+            this.cB_MainPlayerPreset.TabIndex = 4;
+            // 
             // l_IPCon_Subnet
             // 
             this.l_IPCon_Subnet.AutoSize = true;
@@ -380,7 +403,7 @@ namespace SSUtility2
             this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(247, 124);
             this.tB_IPCon_CamSpeed.Name = "tB_IPCon_CamSpeed";
             this.tB_IPCon_CamSpeed.Size = new System.Drawing.Size(34, 20);
-            this.tB_IPCon_CamSpeed.TabIndex = 91;
+            this.tB_IPCon_CamSpeed.TabIndex = 6;
             this.tB_IPCon_CamSpeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_IPCon_CamSpeed_KeyPress);
             this.tB_IPCon_CamSpeed.Leave += new System.EventHandler(this.tB_IPCon_CamSpeed_Leave);
             // 
@@ -416,7 +439,7 @@ namespace SSUtility2
             this.cB_IPCon_ForceMode.Location = new System.Drawing.Point(115, 192);
             this.cB_IPCon_ForceMode.Name = "cB_IPCon_ForceMode";
             this.cB_IPCon_ForceMode.Size = new System.Drawing.Size(123, 21);
-            this.cB_IPCon_ForceMode.TabIndex = 87;
+            this.cB_IPCon_ForceMode.TabIndex = 8;
             this.toolTips.SetToolTip(this.cB_IPCon_ForceMode, "Affects the processing of received commands");
             this.cB_IPCon_ForceMode.SelectedIndexChanged += new System.EventHandler(this.cB_IPCon_ForceMode_SelectedIndexChanged);
             // 
@@ -426,7 +449,7 @@ namespace SSUtility2
             this.check_IPCon_ForceCam.Name = "check_IPCon_ForceCam";
             this.check_IPCon_ForceCam.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_IPCon_ForceCam.Size = new System.Drawing.Size(125, 24);
-            this.check_IPCon_ForceCam.TabIndex = 86;
+            this.check_IPCon_ForceCam.TabIndex = 7;
             this.check_IPCon_ForceCam.Text = "Force Camera Mode";
             this.check_IPCon_ForceCam.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTips.SetToolTip(this.check_IPCon_ForceCam, "SSUtility is forced to see the connect device as a camera");
@@ -438,7 +461,7 @@ namespace SSUtility2
             this.tB_IPCon_Port.Location = new System.Drawing.Point(115, 59);
             this.tB_IPCon_Port.Name = "tB_IPCon_Port";
             this.tB_IPCon_Port.Size = new System.Drawing.Size(123, 20);
-            this.tB_IPCon_Port.TabIndex = 78;
+            this.tB_IPCon_Port.TabIndex = 3;
             this.toolTips.SetToolTip(this.tB_IPCon_Port, "Port of the camera");
             this.tB_IPCon_Port.TextChanged += new System.EventHandler(this.tB_IPCon_Port_TextChanged);
             this.tB_IPCon_Port.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyUp);
@@ -448,7 +471,7 @@ namespace SSUtility2
             this.tB_IPCon_Adr.Location = new System.Drawing.Point(115, 33);
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
-            this.tB_IPCon_Adr.TabIndex = 77;
+            this.tB_IPCon_Adr.TabIndex = 2;
             this.toolTips.SetToolTip(this.tB_IPCon_Adr, "IP Address of the camera");
             this.tB_IPCon_Adr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyUp);
             // 
@@ -470,7 +493,7 @@ namespace SSUtility2
             this.cB_IPCon_PresetType.Location = new System.Drawing.Point(115, 6);
             this.cB_IPCon_PresetType.Name = "cB_IPCon_PresetType";
             this.cB_IPCon_PresetType.Size = new System.Drawing.Size(123, 21);
-            this.cB_IPCon_PresetType.TabIndex = 80;
+            this.cB_IPCon_PresetType.TabIndex = 1;
             this.toolTips.SetToolTip(this.cB_IPCon_PresetType, "Defaults IP Address and Port fields to preset values");
             this.cB_IPCon_PresetType.SelectedIndexChanged += new System.EventHandler(this.cB_IPCon_Type_SelectedIndexChanged);
             // 
@@ -512,7 +535,7 @@ namespace SSUtility2
             this.slider_IPCon_ControlMultiplier.Minimum = 1;
             this.slider_IPCon_ControlMultiplier.Name = "slider_IPCon_ControlMultiplier";
             this.slider_IPCon_ControlMultiplier.Size = new System.Drawing.Size(134, 45);
-            this.slider_IPCon_ControlMultiplier.TabIndex = 89;
+            this.slider_IPCon_ControlMultiplier.TabIndex = 5;
             this.slider_IPCon_ControlMultiplier.TickStyle = System.Windows.Forms.TickStyle.None;
             this.toolTips.SetToolTip(this.slider_IPCon_ControlMultiplier, "Multiplier of PTZ commands sent to the camera");
             this.slider_IPCon_ControlMultiplier.Value = 100;
@@ -581,7 +604,7 @@ namespace SSUtility2
             this.cB_Rec_Quality.Location = new System.Drawing.Point(133, 33);
             this.cB_Rec_Quality.Name = "cB_Rec_Quality";
             this.cB_Rec_Quality.Size = new System.Drawing.Size(114, 21);
-            this.cB_Rec_Quality.TabIndex = 26;
+            this.cB_Rec_Quality.TabIndex = 2;
             this.toolTips.SetToolTip(this.cB_Rec_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
         "formance during capture, increase to improve output file quality.");
             this.cB_Rec_Quality.TextChanged += new System.EventHandler(this.cB_Rec_Quality_TextChanged);
@@ -688,7 +711,7 @@ namespace SSUtility2
             this.cB_Other_PlayerCount.Location = new System.Drawing.Point(165, 52);
             this.cB_Other_PlayerCount.Name = "cB_Other_PlayerCount";
             this.cB_Other_PlayerCount.Size = new System.Drawing.Size(114, 21);
-            this.cB_Other_PlayerCount.TabIndex = 40;
+            this.cB_Other_PlayerCount.TabIndex = 4;
             this.toolTips.SetToolTip(this.cB_Other_PlayerCount, "Number of players (including the MainPlayer) spawned on launch");
             this.cB_Other_PlayerCount.SelectedIndexChanged += new System.EventHandler(this.cB_Other_PlayerCount_SelectedIndexChanged);
             // 
@@ -709,7 +732,7 @@ namespace SSUtility2
             this.check_Other_Aspect.Name = "check_Other_Aspect";
             this.check_Other_Aspect.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_Other_Aspect.Size = new System.Drawing.Size(175, 24);
-            this.check_Other_Aspect.TabIndex = 38;
+            this.check_Other_Aspect.TabIndex = 7;
             this.check_Other_Aspect.Text = "Maintain Current Aspect Ratio";
             this.check_Other_Aspect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTips.SetToolTip(this.check_Other_Aspect, "Resize the MainPlayer to maintain the given aspect ratio");
@@ -722,7 +745,7 @@ namespace SSUtility2
             this.check_AddressInvalid.Name = "check_AddressInvalid";
             this.check_AddressInvalid.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_AddressInvalid.Size = new System.Drawing.Size(174, 17);
-            this.check_AddressInvalid.TabIndex = 37;
+            this.check_AddressInvalid.TabIndex = 3;
             this.check_AddressInvalid.Text = "Hide Address Invalid Error";
             this.check_AddressInvalid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTips.SetToolTip(this.check_AddressInvalid, "Ignores errors to do with given player addresses being invalid");
@@ -746,7 +769,7 @@ namespace SSUtility2
             this.tB_Other_ResolutionHeight.Location = new System.Drawing.Point(165, 140);
             this.tB_Other_ResolutionHeight.Name = "tB_Other_ResolutionHeight";
             this.tB_Other_ResolutionHeight.Size = new System.Drawing.Size(114, 20);
-            this.tB_Other_ResolutionHeight.TabIndex = 35;
+            this.tB_Other_ResolutionHeight.TabIndex = 6;
             this.toolTips.SetToolTip(this.tB_Other_ResolutionHeight, "Launches the program with this height (does not change current resolution).");
             this.tB_Other_ResolutionHeight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Other_Resolution_KeyUp);
             // 
@@ -767,7 +790,7 @@ namespace SSUtility2
             this.tB_Other_ResolutionWidth.Location = new System.Drawing.Point(165, 115);
             this.tB_Other_ResolutionWidth.Name = "tB_Other_ResolutionWidth";
             this.tB_Other_ResolutionWidth.Size = new System.Drawing.Size(114, 20);
-            this.tB_Other_ResolutionWidth.TabIndex = 33;
+            this.tB_Other_ResolutionWidth.TabIndex = 5;
             this.toolTips.SetToolTip(this.tB_Other_ResolutionWidth, "Launches the program with this width (does not change current resolution).");
             this.tB_Other_ResolutionWidth.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Other_Resolution_KeyUp);
             // 
@@ -787,7 +810,7 @@ namespace SSUtility2
             this.check_Other_AutoReconnect.Name = "check_Other_AutoReconnect";
             this.check_Other_AutoReconnect.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_Other_AutoReconnect.Size = new System.Drawing.Size(174, 17);
-            this.check_Other_AutoReconnect.TabIndex = 31;
+            this.check_Other_AutoReconnect.TabIndex = 2;
             this.check_Other_AutoReconnect.Text = "Reconnect on Player Connect";
             this.check_Other_AutoReconnect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTips.SetToolTip(this.check_Other_AutoReconnect, "Reconnect upon entering a new IP in the IP Control section.");
@@ -816,29 +839,6 @@ namespace SSUtility2
             this.l_Version.Size = new System.Drawing.Size(102, 13);
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
-            // 
-            // l_MainPlayerPreset
-            // 
-            this.l_MainPlayerPreset.AutoSize = true;
-            this.l_MainPlayerPreset.Location = new System.Drawing.Point(6, 88);
-            this.l_MainPlayerPreset.Name = "l_MainPlayerPreset";
-            this.l_MainPlayerPreset.Size = new System.Drawing.Size(95, 13);
-            this.l_MainPlayerPreset.TabIndex = 98;
-            this.l_MainPlayerPreset.Text = "Main Player Preset";
-            // 
-            // cB_MainPlayerPreset
-            // 
-            this.cB_MainPlayerPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cB_MainPlayerPreset.FormattingEnabled = true;
-            this.cB_MainPlayerPreset.Items.AddRange(new object[] {
-            "SSTraditional",
-            "Strict",
-            "RevTilt",
-            "Legacy"});
-            this.cB_MainPlayerPreset.Location = new System.Drawing.Point(115, 85);
-            this.cB_MainPlayerPreset.Name = "cB_MainPlayerPreset";
-            this.cB_MainPlayerPreset.Size = new System.Drawing.Size(123, 21);
-            this.cB_MainPlayerPreset.TabIndex = 97;
             // 
             // SettingsPage
             // 

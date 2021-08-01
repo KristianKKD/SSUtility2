@@ -56,7 +56,7 @@ namespace SSUtility2
             this.b_Play.Location = new System.Drawing.Point(347, 25);
             this.b_Play.Name = "b_Play";
             this.b_Play.Size = new System.Drawing.Size(23, 23);
-            this.b_Play.TabIndex = 59;
+            this.b_Play.TabIndex = 10;
             this.b_Play.Text = "▶";
             this.b_Play.UseVisualStyleBackColor = false;
             this.b_Play.Visible = false;
@@ -70,7 +70,7 @@ namespace SSUtility2
             this.b_Stop.Location = new System.Drawing.Point(318, 25);
             this.b_Stop.Name = "b_Stop";
             this.b_Stop.Size = new System.Drawing.Size(23, 23);
-            this.b_Stop.TabIndex = 61;
+            this.b_Stop.TabIndex = 9;
             this.b_Stop.Text = "⬛";
             this.b_Stop.UseVisualStyleBackColor = false;
             this.b_Stop.Visible = false;
@@ -138,7 +138,7 @@ namespace SSUtility2
             this.tB_Port.Location = new System.Drawing.Point(79, 50);
             this.tB_Port.Name = "tB_Port";
             this.tB_Port.Size = new System.Drawing.Size(212, 20);
-            this.tB_Port.TabIndex = 73;
+            this.tB_Port.TabIndex = 4;
             // 
             // tB_IP
             // 
@@ -147,7 +147,7 @@ namespace SSUtility2
             this.tB_IP.Location = new System.Drawing.Point(79, 28);
             this.tB_IP.Name = "tB_IP";
             this.tB_IP.Size = new System.Drawing.Size(212, 20);
-            this.tB_IP.TabIndex = 71;
+            this.tB_IP.TabIndex = 3;
             // 
             // l_IP
             // 
@@ -175,7 +175,7 @@ namespace SSUtility2
             this.cB_ID.Location = new System.Drawing.Point(79, 4);
             this.cB_ID.Name = "cB_ID";
             this.cB_ID.Size = new System.Drawing.Size(120, 21);
-            this.cB_ID.TabIndex = 68;
+            this.cB_ID.TabIndex = 2;
             // 
             // check_Manual
             // 
@@ -185,7 +185,7 @@ namespace SSUtility2
             this.check_Manual.Location = new System.Drawing.Point(10, 110);
             this.check_Manual.Name = "check_Manual";
             this.check_Manual.Size = new System.Drawing.Size(58, 17);
-            this.check_Manual.TabIndex = 63;
+            this.check_Manual.TabIndex = 5;
             this.check_Manual.Text = "Manual";
             this.check_Manual.UseVisualStyleBackColor = true;
             // 
@@ -207,7 +207,7 @@ namespace SSUtility2
             this.b_Edit.Location = new System.Drawing.Point(289, 25);
             this.b_Edit.Name = "b_Edit";
             this.b_Edit.Size = new System.Drawing.Size(23, 23);
-            this.b_Edit.TabIndex = 66;
+            this.b_Edit.TabIndex = 8;
             this.b_Edit.Text = "⛭";
             this.b_Edit.UseVisualStyleBackColor = false;
             this.b_Edit.Visible = false;
@@ -236,7 +236,7 @@ namespace SSUtility2
             this.cB_RTSP.Location = new System.Drawing.Point(10, 26);
             this.cB_RTSP.Name = "cB_RTSP";
             this.cB_RTSP.Size = new System.Drawing.Size(273, 21);
-            this.cB_RTSP.TabIndex = 64;
+            this.cB_RTSP.TabIndex = 1;
             this.cB_RTSP.SelectedIndexChanged += new System.EventHandler(this.cB_RTSP_SelectedIndexChanged);
             // 
             // VideoSettings

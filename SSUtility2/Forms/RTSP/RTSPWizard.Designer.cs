@@ -35,7 +35,7 @@
             this.tB_Username = new System.Windows.Forms.TextBox();
             this.tB_RTSPPort = new System.Windows.Forms.TextBox();
             this.tB_RTSPString = new System.Windows.Forms.TextBox();
-            this.tB_RTSPAdr = new System.Windows.Forms.TextBox();
+            this.tB_RTSPIP = new System.Windows.Forms.TextBox();
             this.l_Port = new System.Windows.Forms.Label();
             this.l_Adr = new System.Windows.Forms.Label();
             this.l_Title = new System.Windows.Forms.Label();
@@ -76,7 +76,7 @@
             this.tB_Password.Location = new System.Drawing.Point(84, 145);
             this.tB_Password.Name = "tB_Password";
             this.tB_Password.Size = new System.Drawing.Size(302, 20);
-            this.tB_Password.TabIndex = 65;
+            this.tB_Password.TabIndex = 5;
             this.tB_Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
             // l_Password
@@ -100,7 +100,7 @@
             this.tB_FullAdr.Location = new System.Drawing.Point(85, 320);
             this.tB_FullAdr.Name = "tB_FullAdr";
             this.tB_FullAdr.Size = new System.Drawing.Size(301, 20);
-            this.tB_FullAdr.TabIndex = 72;
+            this.tB_FullAdr.TabIndex = 10;
             // 
             // l_Username
             // 
@@ -136,7 +136,7 @@
             this.tB_Username.Location = new System.Drawing.Point(85, 119);
             this.tB_Username.Name = "tB_Username";
             this.tB_Username.Size = new System.Drawing.Size(301, 20);
-            this.tB_Username.TabIndex = 66;
+            this.tB_Username.TabIndex = 4;
             this.tB_Username.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
             // tB_RTSPPort
@@ -147,7 +147,7 @@
             this.tB_RTSPPort.Location = new System.Drawing.Point(84, 67);
             this.tB_RTSPPort.Name = "tB_RTSPPort";
             this.tB_RTSPPort.Size = new System.Drawing.Size(302, 20);
-            this.tB_RTSPPort.TabIndex = 67;
+            this.tB_RTSPPort.TabIndex = 2;
             this.tB_RTSPPort.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
             // tB_RTSPString
@@ -158,19 +158,19 @@
             this.tB_RTSPString.Location = new System.Drawing.Point(85, 93);
             this.tB_RTSPString.Name = "tB_RTSPString";
             this.tB_RTSPString.Size = new System.Drawing.Size(301, 20);
-            this.tB_RTSPString.TabIndex = 68;
+            this.tB_RTSPString.TabIndex = 3;
             this.tB_RTSPString.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
-            // tB_RTSPAdr
+            // tB_RTSPIP
             // 
-            this.tB_RTSPAdr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tB_RTSPIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_RTSPAdr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tB_RTSPAdr.Location = new System.Drawing.Point(84, 40);
-            this.tB_RTSPAdr.Name = "tB_RTSPAdr";
-            this.tB_RTSPAdr.Size = new System.Drawing.Size(302, 20);
-            this.tB_RTSPAdr.TabIndex = 69;
-            this.tB_RTSPAdr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
+            this.tB_RTSPIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tB_RTSPIP.Location = new System.Drawing.Point(84, 40);
+            this.tB_RTSPIP.Name = "tB_RTSPIP";
+            this.tB_RTSPIP.Size = new System.Drawing.Size(302, 20);
+            this.tB_RTSPIP.TabIndex = 1;
+            this.tB_RTSPIP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
             // l_Port
             // 
@@ -220,7 +220,7 @@
             this.b_Confirm.Location = new System.Drawing.Point(322, 346);
             this.b_Confirm.Name = "b_Confirm";
             this.b_Confirm.Size = new System.Drawing.Size(64, 23);
-            this.b_Confirm.TabIndex = 74;
+            this.b_Confirm.TabIndex = 12;
             this.b_Confirm.Text = "Confirm";
             this.b_Confirm.UseVisualStyleBackColor = false;
             this.b_Confirm.Click += new System.EventHandler(this.b_Confirm_Click);
@@ -234,7 +234,7 @@
             this.b_Cancel.Location = new System.Drawing.Point(252, 346);
             this.b_Cancel.Name = "b_Cancel";
             this.b_Cancel.Size = new System.Drawing.Size(64, 23);
-            this.b_Cancel.TabIndex = 75;
+            this.b_Cancel.TabIndex = 11;
             this.b_Cancel.Text = "Cancel";
             this.b_Cancel.UseVisualStyleBackColor = false;
             this.b_Cancel.Click += new System.EventHandler(this.b_Cancel_Click);
@@ -251,6 +251,8 @@
             this.b_Forget.TabIndex = 76;
             this.b_Forget.Text = "Forget";
             this.b_Forget.UseVisualStyleBackColor = false;
+            this.b_Forget.Visible = false;
+            this.b_Forget.Click += new System.EventHandler(this.b_Forget_Click);
             // 
             // b_Clone
             // 
@@ -273,7 +275,8 @@
             this.tB_Name.Location = new System.Drawing.Point(84, 294);
             this.tB_Name.Name = "tB_Name";
             this.tB_Name.Size = new System.Drawing.Size(301, 20);
-            this.tB_Name.TabIndex = 79;
+            this.tB_Name.TabIndex = 9;
+            this.tB_Name.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Name_KeyUp);
             // 
             // label1
             // 
@@ -335,7 +338,7 @@
             this.tB_ControlPort.Location = new System.Drawing.Point(84, 218);
             this.tB_ControlPort.Name = "tB_ControlPort";
             this.tB_ControlPort.Size = new System.Drawing.Size(302, 20);
-            this.tB_ControlPort.TabIndex = 85;
+            this.tB_ControlPort.TabIndex = 7;
             // 
             // tB_PelcoID
             // 
@@ -345,7 +348,7 @@
             this.tB_PelcoID.Location = new System.Drawing.Point(85, 244);
             this.tB_PelcoID.Name = "tB_PelcoID";
             this.tB_PelcoID.Size = new System.Drawing.Size(301, 20);
-            this.tB_PelcoID.TabIndex = 86;
+            this.tB_PelcoID.TabIndex = 8;
             // 
             // tB_ControlIP
             // 
@@ -355,7 +358,7 @@
             this.tB_ControlIP.Location = new System.Drawing.Point(84, 191);
             this.tB_ControlIP.Name = "tB_ControlIP";
             this.tB_ControlIP.Size = new System.Drawing.Size(302, 20);
-            this.tB_ControlIP.TabIndex = 87;
+            this.tB_ControlIP.TabIndex = 6;
             // 
             // label4
             // 
@@ -413,7 +416,7 @@
             this.Controls.Add(this.tB_Username);
             this.Controls.Add(this.tB_RTSPPort);
             this.Controls.Add(this.tB_RTSPString);
-            this.Controls.Add(this.tB_RTSPAdr);
+            this.Controls.Add(this.tB_RTSPIP);
             this.Controls.Add(this.l_Port);
             this.Controls.Add(this.l_Adr);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -437,7 +440,7 @@
         public System.Windows.Forms.TextBox tB_Username;
         public System.Windows.Forms.TextBox tB_RTSPPort;
         public System.Windows.Forms.TextBox tB_RTSPString;
-        public System.Windows.Forms.TextBox tB_RTSPAdr;
+        public System.Windows.Forms.TextBox tB_RTSPIP;
         public System.Windows.Forms.Label l_Port;
         public System.Windows.Forms.Label l_Adr;
         public System.Windows.Forms.Label l_Title;
