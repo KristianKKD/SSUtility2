@@ -45,30 +45,21 @@ namespace SSUtility2 {
             line = line.Trim();
 
             int loadPos = currentPresetCount;
-            if (loadIndex != -1) {
+            if (loadIndex != -1)
                 loadPos = loadIndex;
-                Console.WriteLine("using this");
-            }
-
-            Console.WriteLine(loadPos);
 
             int nextPos = 0;
             for (int i = 0; i < columns; i++) {
                 int lastPos = nextPos;
                 nextPos = line.Substring(nextPos).IndexOf(";") + 1 + lastPos;
-                if (lastPos - nextPos - lastPos - 1 > 0)
+                if (nextPos - lastPos > 0)
                     allPresets[i, loadPos] = line.Substring(lastPos, nextPos - lastPos - 1);
                 else
                     allPresets[i, loadPos] = "";
             }
 
-            for (int i = 0; i < columns; i++)
-                Console.WriteLine((PresetColumn)i + ":" + allPresets[i, loadPos]);
-
             if(loadPos == currentPresetCount)
                 currentPresetCount++;
-
-            Console.WriteLine("added");
 
             ReloadAll();
         }
@@ -81,7 +72,7 @@ namespace SSUtility2 {
             //Reloads all settings every time this is updated, make a way so it reloads after it finishes loading later
             List<string> all = new List<string>();
 
-            for (int i = 0; i < currentPresetCount + 1; i++)
+            for (int i = 0; i < currentPresetCount; i++)
                 all.Add(allPresets[0, i]);
 
             VideoSettings.UpdateAllPresetBoxes(all);

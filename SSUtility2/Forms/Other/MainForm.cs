@@ -12,7 +12,7 @@ namespace SSUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.3";
+        public const string version = "v2.8.0.4";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;

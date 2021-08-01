@@ -23,6 +23,8 @@ namespace SSUtility2 {
 
                 FullToParts(fullAdr);
                 b_Forget.Visible = true;
+                if (editIndex != -1)
+                    tB_Name.Text = RTSPPresets.GetValue(RTSPPresets.PresetColumn.Name, fullAdr, RTSPPresets.PresetColumn.FullAdr);
             }
 
             //Inititate cloning immediately
@@ -50,8 +52,9 @@ namespace SSUtility2 {
             string full = name + ";" + fullAdr + ";" + ipaddress + ";" + port + ";" + url + ";" + username
                 + ";" + password + ";" + pelco + ";" + controlip + ";" + controlport + ";";
             
-            if (full.Length <= 0 || tB_FullAdr.Text.Length <= 0 || tB_Name.Text.Length <= 0) {
-                MessageBox.Show("Invalid values!");
+            if (name.Length <= 0 || fullAdr.Length <= 0 || ipaddress.Length <= 0 || port.Length <= 0
+                || url.Length <= 0) {
+                MessageBox.Show("Invalid RTSP values!");
                 return;
             }
 
@@ -78,19 +81,31 @@ namespace SSUtility2 {
             CloseWindow(); 
         }
 
-        static void FullToParts(string full) {
-            int usernamePos = full.IndexOf(":") + 1; //should be the first one
+        void FullToParts(string full) {
+            Console.WriteLine(full);
+
+            int usernamePos = full.IndexOf(":", 7) + 1; //should be the first one
+
+            Console.WriteLine(usernamePos);
             if (full[6] != '/' && usernamePos <= 0) //if fullAdr isn't completed in the expected way
                 return;
 
             int atPos = full.IndexOf("@") + 1;
             int secondColonPos = full.IndexOf(":", usernamePos); // + secondColonPos?
 
-            string username = full.Substring(7, usernamePos - 7); //7 = rtsp://
-            string password = full.Substring(usernamePos, atPos - usernamePos);
+            string username = full.Substring(7, usernamePos - 8); //7 = rtsp://
+            string password = full.Substring(usernamePos, atPos - usernamePos - 1);
             string ipaddress = full.Substring(atPos, secondColonPos - atPos);
-            string port = full.Substring(secondColonPos, full.IndexOf("/", 7) - secondColonPos);
-            string url = full.Substring(secondColonPos + port.Length + 1);
+            string port = full.Substring(secondColonPos + 1, full.IndexOf("/", 7) - secondColonPos - 1);
+            string url = full.Substring(secondColonPos + port.Length + 2);
+
+            tB_Username.Text = username;
+            tB_Password.Text = password;
+            tB_RTSPIP.Text = ipaddress;
+            tB_RTSPPort.Text = port;
+            tB_RTSPString.Text = url;
+
+            tB_FullAdr.Text = GetCombined();
 
             Console.WriteLine("rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url);
         }
@@ -103,7 +118,11 @@ namespace SSUtility2 {
                 string username = tB_Username.Text;
                 string password = tB_Password.Text;
 
-                return "rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url;
+                string userPass = username + ":" + password + "@";
+                if (username.Length <= 0 && password.Length <= 0)
+                    userPass = "";
+
+                return "rtsp://" + userPass + ipaddress + ":" + port + "/" + url;
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
             };

@@ -254,10 +254,13 @@ namespace SSUtility2 {
         }
 
         private void cB_RTSP_SelectedIndexChanged(object sender, EventArgs e) {
+            b_Edit.Visible = false;
+
             if (cB_RTSP.SelectedIndex == cB_RTSP.Items.Count - 1)
                 RTSPPresets.CreateNew();
             else {
                 //Use new settings
+                b_Edit.Visible = true;
             }
         }
 
