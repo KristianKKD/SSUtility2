@@ -19,8 +19,14 @@ namespace SSUtility2 {
         public bool isMainPlayer;
         public bool isAttached = false;
 
+        Timer updateControl;
+
         public VideoSettings(Detached d, bool isMain) {
             InitializeComponent();
+
+            updateControl = new Timer();
+            updateControl.Interval = 1000;
+            updateControl.Tick += new EventHandler(UpdateControlCallback);
 
             myDetached = d;
             isMainPlayer = isMain;
@@ -259,22 +265,56 @@ namespace SSUtility2 {
         }
 
         private void cB_RTSP_SelectedIndexChanged(object sender, EventArgs e) {
-            if (cB_RTSP.Text == "")
+            if (cB_RTSP.Text == "") {
+                toolTip1.SetToolTip(cB_RTSP, "Select a camera preset");
                 return;
+            }
 
-            b_Edit.Visible = false;
-            b_Play.Visible = false;
-            b_Stop.Visible = false;
-
-            if (cB_RTSP.SelectedIndex == cB_RTSP.Items.Count - 1)
+            if (cB_RTSP.SelectedIndex == cB_RTSP.Items.Count - 1) {
                 RTSPPresets.CreateNew(this);
-            else {
+                b_Edit.Visible = false;
+                b_Play.Visible = false;
+                b_Stop.Visible = false;
+            } else {
                 //Use new settings
                 b_Edit.Visible = true;
                 b_Play.Visible = true;
                 b_Stop.Visible = true;
                 myDetached.Play(false);
+
+                CompleteControlValues();
             }
+
+            ConfigControl.mainPlayerPreset.UpdateValue(cB_RTSP.Text);
+
+            string fullAdr = RTSPPresets.GetValue(PresetColumn.FullAdr, cB_RTSP.Text);
+            toolTip1.SetToolTip(cB_RTSP, fullAdr);
+        }
+
+        void CompleteControlValues() {
+            string presetName = cB_RTSP.Text;
+            string id = "";
+            string ip = "";
+            string port = "";
+
+            if (presetName.Length > 0) {
+                id = RTSPPresets.GetValue(PresetColumn.PelcoID, presetName);
+                ip = RTSPPresets.GetValue(PresetColumn.ControlIP, presetName);
+                port = RTSPPresets.GetValue(PresetColumn.ControlPort, presetName);
+            }
+
+            if (id == "")
+                id = "0";
+
+            if (ip == "")
+                ip = MainForm.m.setPage.tB_IPCon_Adr.Text;
+
+            if (port == "")
+                port = MainForm.m.setPage.tB_IPCon_Port.Text;
+
+            cB_ID.Text = id;
+            tB_IP.Text = ip;
+            tB_Port.Text = port;
         }
 
         private void VideoSettings_VisibleChanged(object sender, EventArgs e) {
@@ -283,6 +323,9 @@ namespace SSUtility2 {
 
             if (isMainPlayer)
                 AddPages();
+
+            CompleteControlValues();
+            auto = true;
         }
 
         private void VideoSettings_FormClosing(object sender, FormClosingEventArgs e) {
@@ -306,12 +349,61 @@ namespace SSUtility2 {
 
         public int GetPelcoID() {
             string val = RTSPPresets.GetValue(PresetColumn.PelcoID, cB_RTSP.Text);
-            int returnVal = -1;
-            int.TryParse(val, out returnVal);
+            int returnVal;
+            if (!int.TryParse(val, out returnVal))
+                returnVal = -1;
 
             return returnVal;
         }
 
+        private void tB_ControlFields_TextChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            if (updateControl.Enabled)
+                updateControl.Stop();
+
+            callbackCount = 0;
+            updateControl.Start();
+        }
+
+        int callbackCount = 0;
+        bool auto = false;
+
+        private async void UpdateControlCallback(object sender, EventArgs e) {
+            updateControl.Stop();
+            auto = false;
+            return;
+
+            callbackCount++;
+
+            MainForm.m.setPage.tB_IPCon_Adr.Text = tB_IP.Text;
+            MainForm.m.setPage.tB_IPCon_Port.Text = tB_Port.Text;
+
+            if (auto || AsyncCamCom.TryConnect(false).Result) {
+                updateControl.Stop();
+                auto = false;
+                return;
+            }
+
+            if (callbackCount >= 2) {
+                AsyncCamCom.TryConnect(true);
+                updateControl.Stop();
+            }
+        }
+
+        private void check_Manual_CheckedChanged(object sender, EventArgs e) {
+            bool enabled = check_Manual.Checked;
+
+            l_PelcoID.Enabled = enabled;
+            cB_ID.Enabled = enabled;
+
+            l_IP.Enabled = enabled;
+            tB_IP.Enabled = enabled;
+
+            l_Port.Enabled = enabled;
+            tB_Port.Enabled = enabled;
+        }
     }
 }
 

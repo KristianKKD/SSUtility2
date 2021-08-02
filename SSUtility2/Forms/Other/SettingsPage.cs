@@ -58,6 +58,8 @@ namespace SSUtility2 {
                 cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
                 cB_Other_PlayerCount.Text = ConfigControl.playerCount.stringVal;
 
+                MainForm.m.mainPlayer.settings.cB_RTSP.Text = ConfigControl.mainPlayerPreset.stringVal;
+
                 Tools.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
                 Tools.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
 
@@ -301,15 +303,12 @@ namespace SSUtility2 {
             if (e.KeyCode == Keys.Enter) {
                 resolutionTimer.Stop();
                 ResolutionTimerCallback(sender, e);
-            } else
-                DoResTimer();
-        }
+            } else {
+                if (resolutionTimer.Enabled)
+                    resolutionTimer.Stop();
 
-        void DoResTimer() {
-            if (resolutionTimer.Enabled)
-                resolutionTimer.Stop();
-
-            resolutionTimer.Start();
+                resolutionTimer.Start();
+            }
         }
 
         void ResolutionTimerCallback(object sender, EventArgs e) {

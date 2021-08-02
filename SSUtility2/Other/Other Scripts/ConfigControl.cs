@@ -46,6 +46,7 @@ namespace SSUtility2 {
         public static ConfigSetting maintainAspectRatio = new ConfigSetting("false", "MaintainAspectRatio", ConfigSetting.VarType.boolean);
         public static ConfigSetting playerCount = new ConfigSetting("1", "PlayerCount", ConfigSetting.VarType.integer);
         public static ConfigSetting pelcoOverrideID = new ConfigSetting("1", "PelcoOverrideID", ConfigSetting.VarType.integer);
+        public static ConfigSetting mainPlayerPreset = new ConfigSetting("", "MainPlayerPresetName", ConfigSetting.VarType.strings);
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -70,6 +71,7 @@ namespace SSUtility2 {
             playerCount,
             maintainAspectRatio,
             pelcoOverrideID,
+            mainPlayerPreset,
         };
 
         public static async Task SetToDefaults() {

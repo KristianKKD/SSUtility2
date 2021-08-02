@@ -85,14 +85,22 @@ namespace SSUtility2 {
             if (wiz != null)
                 wiz.Dispose();
 
-            string returnedVal = GetValue(PresetColumn.FullAdr, presetName);
-            if (returnedVal == "") {
-                MessageBox.Show("Failed to find preset:\n" + presetName);
-                return;
+            wiz = new RTSPWizard(GetPreset(presetName), sets);
+            wiz.Show();
+        }
+
+        static string[] GetPreset(string identifierName) {
+            string[] returnPreset = new string[10];
+
+            for (int i = 0; i < currentPresetCount; i++) {
+                if (allPresets[0, i] == identifierName) {
+                    for (int o = 0; o < columns; o++) {
+                        returnPreset[o] = allPresets[o, i];
+                    }
+                }
             }
 
-            wiz = new RTSPWizard(returnedVal, sets);
-            wiz.Show();
+            return returnPreset;
         }
 
         public static string GetValue(PresetColumn targetValue, string identifierValue, PresetColumn identifierType = PresetColumn.Name) {

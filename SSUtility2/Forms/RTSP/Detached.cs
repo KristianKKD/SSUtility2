@@ -123,9 +123,8 @@ namespace SSUtility2 {
 
                 if (newUri != null && !ConfigControl.ignoreAddress.boolVal
                     && settings.isMainPlayer) {
-                    if (!OtherCamCom.PingAdr(newUri.Host).Result) {
+                    if (!OtherCamCom.PingAdr(newUri.Host).Result)
                         errorMsg += "Address had no RTSP stream attached!\n";
-                    }
                 }
 
                 if (errorMsg != "") {

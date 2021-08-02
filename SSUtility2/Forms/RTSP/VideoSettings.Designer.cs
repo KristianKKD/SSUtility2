@@ -26,6 +26,7 @@ namespace SSUtility2
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VideoSettings));
             this.b_Play = new System.Windows.Forms.Button();
             this.b_Stop = new System.Windows.Forms.Button();
@@ -33,15 +34,16 @@ namespace SSUtility2
             this.tP_Main = new System.Windows.Forms.TabPage();
             this.l_Port = new System.Windows.Forms.Label();
             this.tB_Port = new System.Windows.Forms.TextBox();
+            this.check_Manual = new System.Windows.Forms.CheckBox();
             this.tB_IP = new System.Windows.Forms.TextBox();
+            this.l_Control = new System.Windows.Forms.Label();
             this.l_IP = new System.Windows.Forms.Label();
+            this.b_Edit = new System.Windows.Forms.Button();
             this.l_PelcoID = new System.Windows.Forms.Label();
             this.cB_ID = new System.Windows.Forms.ComboBox();
-            this.check_Manual = new System.Windows.Forms.CheckBox();
-            this.l_Control = new System.Windows.Forms.Label();
-            this.b_Edit = new System.Windows.Forms.Button();
             this.l_RTSP = new System.Windows.Forms.Label();
             this.cB_RTSP = new System.Windows.Forms.ComboBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.tC_PlayerSettings.SuspendLayout();
             this.tP_Main.SuspendLayout();
             this.SuspendLayout();
@@ -127,6 +129,20 @@ namespace SSUtility2
             this.tB_Port.Name = "tB_Port";
             this.tB_Port.Size = new System.Drawing.Size(212, 20);
             this.tB_Port.TabIndex = 4;
+            this.tB_Port.TextChanged += new System.EventHandler(this.tB_ControlFields_TextChanged);
+            // 
+            // check_Manual
+            // 
+            this.check_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.check_Manual.AutoSize = true;
+            this.check_Manual.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.check_Manual.Location = new System.Drawing.Point(10, 110);
+            this.check_Manual.Name = "check_Manual";
+            this.check_Manual.Size = new System.Drawing.Size(63, 17);
+            this.check_Manual.TabIndex = 5;
+            this.check_Manual.Text = "Override";
+            this.check_Manual.UseVisualStyleBackColor = true;
+            this.check_Manual.CheckedChanged += new System.EventHandler(this.check_Manual_CheckedChanged);
             // 
             // tB_IP
             // 
@@ -137,6 +153,17 @@ namespace SSUtility2
             this.tB_IP.Name = "tB_IP";
             this.tB_IP.Size = new System.Drawing.Size(212, 20);
             this.tB_IP.TabIndex = 3;
+            this.tB_IP.TextChanged += new System.EventHandler(this.tB_ControlFields_TextChanged);
+            // 
+            // l_Control
+            // 
+            this.l_Control.AutoSize = true;
+            this.l_Control.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Control.Location = new System.Drawing.Point(6, 59);
+            this.l_Control.Name = "l_Control";
+            this.l_Control.Size = new System.Drawing.Size(67, 20);
+            this.l_Control.TabIndex = 67;
+            this.l_Control.Text = "Control";
             // 
             // l_IP
             // 
@@ -147,6 +174,20 @@ namespace SSUtility2
             this.l_IP.Size = new System.Drawing.Size(61, 13);
             this.l_IP.TabIndex = 70;
             this.l_IP.Text = "IP Address:";
+            // 
+            // b_Edit
+            // 
+            this.b_Edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Edit.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Edit.Location = new System.Drawing.Point(289, 25);
+            this.b_Edit.Name = "b_Edit";
+            this.b_Edit.Size = new System.Drawing.Size(23, 23);
+            this.b_Edit.TabIndex = 8;
+            this.b_Edit.Text = "⛭";
+            this.b_Edit.UseVisualStyleBackColor = false;
+            this.b_Edit.Visible = false;
+            this.b_Edit.Click += new System.EventHandler(this.b_Edit_Click);
             // 
             // l_PelcoID
             // 
@@ -164,46 +205,17 @@ namespace SSUtility2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cB_ID.Enabled = false;
             this.cB_ID.FormattingEnabled = true;
+            this.cB_ID.Items.AddRange(new object[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
             this.cB_ID.Location = new System.Drawing.Point(155, 61);
             this.cB_ID.Name = "cB_ID";
             this.cB_ID.Size = new System.Drawing.Size(120, 21);
             this.cB_ID.TabIndex = 2;
-            // 
-            // check_Manual
-            // 
-            this.check_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.check_Manual.AutoSize = true;
-            this.check_Manual.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.check_Manual.Location = new System.Drawing.Point(10, 110);
-            this.check_Manual.Name = "check_Manual";
-            this.check_Manual.Size = new System.Drawing.Size(58, 17);
-            this.check_Manual.TabIndex = 5;
-            this.check_Manual.Text = "Manual";
-            this.check_Manual.UseVisualStyleBackColor = true;
-            // 
-            // l_Control
-            // 
-            this.l_Control.AutoSize = true;
-            this.l_Control.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_Control.Location = new System.Drawing.Point(6, 59);
-            this.l_Control.Name = "l_Control";
-            this.l_Control.Size = new System.Drawing.Size(67, 20);
-            this.l_Control.TabIndex = 67;
-            this.l_Control.Text = "Control";
-            // 
-            // b_Edit
-            // 
-            this.b_Edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Edit.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Edit.Location = new System.Drawing.Point(289, 25);
-            this.b_Edit.Name = "b_Edit";
-            this.b_Edit.Size = new System.Drawing.Size(23, 23);
-            this.b_Edit.TabIndex = 8;
-            this.b_Edit.Text = "⛭";
-            this.b_Edit.UseVisualStyleBackColor = false;
-            this.b_Edit.Visible = false;
-            this.b_Edit.Click += new System.EventHandler(this.b_Edit_Click);
             // 
             // l_RTSP
             // 
@@ -267,5 +279,6 @@ namespace SSUtility2
         private System.Windows.Forms.Label l_PelcoID;
         private System.Windows.Forms.ComboBox cB_ID;
         private System.Windows.Forms.CheckBox check_Manual;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }

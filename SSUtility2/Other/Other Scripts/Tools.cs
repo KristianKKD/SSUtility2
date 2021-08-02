@@ -69,17 +69,15 @@ namespace SSUtility2 {
         }
 
         public static uint MakeAdr() {
-            //string settingsVal = ConfigControl.pelcoID.stringVal;
+            int id = MainForm.m.mainPlayer.settings.GetPelcoID();
 
-            //if (settingsVal.Contains("daylight") && !MainForm.m.lite) //temp stuff
-            //    return 1;
-            //else if (settingsVal.Contains("thermal") || settingsVal.Contains("vivotek") && !MainForm.m.lite)
-            //    return 2;
-            //else {
-            //    int val = ConfigControl.pelcoID.intVal;
-            //    return Convert.ToUInt32(val);
-            //}
-            return 0;
+            if (MainForm.m.lite)
+                id = ConfigControl.pelcoOverrideID.intVal;
+
+            if (id == -1)
+                id = 0;
+
+            return Convert.ToUInt32(id);
         }
 
         public static uint GetCheckSum(byte[] code, uint adr) {

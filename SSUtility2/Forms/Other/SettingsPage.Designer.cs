@@ -44,8 +44,6 @@ namespace SSUtility2
             this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
-            this.l_MainPlayerPreset = new System.Windows.Forms.Label();
-            this.cB_MainPlayerPreset = new System.Windows.Forms.ComboBox();
             this.l_IPCon_Subnet = new System.Windows.Forms.Label();
             this.b_IPCon_Recheck = new System.Windows.Forms.Button();
             this.l_IPCon_Percent = new System.Windows.Forms.Label();
@@ -320,8 +318,6 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
-            this.tP_Control.Controls.Add(this.l_MainPlayerPreset);
-            this.tP_Control.Controls.Add(this.cB_MainPlayerPreset);
             this.tP_Control.Controls.Add(this.l_IPCon_Subnet);
             this.tP_Control.Controls.Add(this.b_IPCon_Recheck);
             this.tP_Control.Controls.Add(this.l_IPCon_Percent);
@@ -346,29 +342,6 @@ namespace SSUtility2
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
             // 
-            // l_MainPlayerPreset
-            // 
-            this.l_MainPlayerPreset.AutoSize = true;
-            this.l_MainPlayerPreset.Location = new System.Drawing.Point(6, 88);
-            this.l_MainPlayerPreset.Name = "l_MainPlayerPreset";
-            this.l_MainPlayerPreset.Size = new System.Drawing.Size(95, 13);
-            this.l_MainPlayerPreset.TabIndex = 98;
-            this.l_MainPlayerPreset.Text = "Main Player Preset";
-            // 
-            // cB_MainPlayerPreset
-            // 
-            this.cB_MainPlayerPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cB_MainPlayerPreset.FormattingEnabled = true;
-            this.cB_MainPlayerPreset.Items.AddRange(new object[] {
-            "SSTraditional",
-            "Strict",
-            "RevTilt",
-            "Legacy"});
-            this.cB_MainPlayerPreset.Location = new System.Drawing.Point(115, 85);
-            this.cB_MainPlayerPreset.Name = "cB_MainPlayerPreset";
-            this.cB_MainPlayerPreset.Size = new System.Drawing.Size(183, 21);
-            this.cB_MainPlayerPreset.TabIndex = 4;
-            // 
             // l_IPCon_Subnet
             // 
             this.l_IPCon_Subnet.AutoSize = true;
@@ -391,7 +364,7 @@ namespace SSUtility2
             // l_IPCon_Percent
             // 
             this.l_IPCon_Percent.AutoSize = true;
-            this.l_IPCon_Percent.Location = new System.Drawing.Point(283, 127);
+            this.l_IPCon_Percent.Location = new System.Drawing.Point(281, 102);
             this.l_IPCon_Percent.Name = "l_IPCon_Percent";
             this.l_IPCon_Percent.Size = new System.Drawing.Size(15, 13);
             this.l_IPCon_Percent.TabIndex = 92;
@@ -399,7 +372,7 @@ namespace SSUtility2
             // 
             // tB_IPCon_CamSpeed
             // 
-            this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(247, 124);
+            this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(245, 99);
             this.tB_IPCon_CamSpeed.Name = "tB_IPCon_CamSpeed";
             this.tB_IPCon_CamSpeed.Size = new System.Drawing.Size(34, 20);
             this.tB_IPCon_CamSpeed.TabIndex = 6;
@@ -409,7 +382,7 @@ namespace SSUtility2
             // l_IPCon_TrackBar
             // 
             this.l_IPCon_TrackBar.AutoSize = true;
-            this.l_IPCon_TrackBar.Location = new System.Drawing.Point(8, 126);
+            this.l_IPCon_TrackBar.Location = new System.Drawing.Point(6, 101);
             this.l_IPCon_TrackBar.Name = "l_IPCon_TrackBar";
             this.l_IPCon_TrackBar.Size = new System.Drawing.Size(98, 13);
             this.l_IPCon_TrackBar.TabIndex = 90;
@@ -528,7 +501,7 @@ namespace SSUtility2
             // slider_IPCon_ControlMultiplier
             // 
             this.slider_IPCon_ControlMultiplier.BackColor = System.Drawing.SystemColors.Window;
-            this.slider_IPCon_ControlMultiplier.Location = new System.Drawing.Point(111, 122);
+            this.slider_IPCon_ControlMultiplier.Location = new System.Drawing.Point(109, 97);
             this.slider_IPCon_ControlMultiplier.Maximum = 200;
             this.slider_IPCon_ControlMultiplier.Minimum = 1;
             this.slider_IPCon_ControlMultiplier.Name = "slider_IPCon_ControlMultiplier";
@@ -919,7 +892,5 @@ namespace SSUtility2
         private System.Windows.Forms.Label l_Other_PlayerCount;
         private System.Windows.Forms.ComboBox cB_Other_PlayerCount;
         public System.Windows.Forms.Label l_IPCon_Subnet;
-        public System.Windows.Forms.Label l_MainPlayerPreset;
-        private System.Windows.Forms.ComboBox cB_MainPlayerPreset;
     }
 }

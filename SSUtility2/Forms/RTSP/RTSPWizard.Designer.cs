@@ -51,8 +51,10 @@
             this.tB_ControlPort = new System.Windows.Forms.TextBox();
             this.tB_PelcoID = new System.Windows.Forms.TextBox();
             this.tB_ControlIP = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.l_ControlPort = new System.Windows.Forms.Label();
             this.l_ControlIP = new System.Windows.Forms.Label();
+            this.check_Manual = new System.Windows.Forms.CheckBox();
+            this.l_PresetDetails = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // l_RTSP
@@ -124,9 +126,9 @@
             this.l_FullAdr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_FullAdr.Location = new System.Drawing.Point(10, 324);
             this.l_FullAdr.Name = "l_FullAdr";
-            this.l_FullAdr.Size = new System.Drawing.Size(67, 13);
+            this.l_FullAdr.Size = new System.Drawing.Size(71, 13);
             this.l_FullAdr.TabIndex = 71;
-            this.l_FullAdr.Text = "Full Address:";
+            this.l_FullAdr.Text = "Full Address*:";
             // 
             // tB_Username
             // 
@@ -288,9 +290,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(9, 298);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 13);
+            this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 78;
-            this.label1.Text = "Preset Name:";
+            this.label1.Text = "Preset Name*:";
             // 
             // b_Scan
             // 
@@ -325,19 +327,21 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.l_PelcoID.AutoSize = true;
+            this.l_PelcoID.Enabled = false;
             this.l_PelcoID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_PelcoID.Location = new System.Drawing.Point(10, 247);
+            this.l_PelcoID.Location = new System.Drawing.Point(10, 198);
             this.l_PelcoID.Name = "l_PelcoID";
-            this.l_PelcoID.Size = new System.Drawing.Size(51, 13);
+            this.l_PelcoID.Size = new System.Drawing.Size(55, 13);
             this.l_PelcoID.TabIndex = 82;
-            this.l_PelcoID.Text = "Pelco ID:";
+            this.l_PelcoID.Text = "Pelco ID*:";
             // 
             // tB_ControlPort
             // 
             this.tB_ControlPort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_ControlPort.Enabled = false;
             this.tB_ControlPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tB_ControlPort.Location = new System.Drawing.Point(84, 218);
+            this.tB_ControlPort.Location = new System.Drawing.Point(84, 248);
             this.tB_ControlPort.Name = "tB_ControlPort";
             this.tB_ControlPort.Size = new System.Drawing.Size(302, 20);
             this.tB_ControlPort.TabIndex = 7;
@@ -346,34 +350,38 @@
             // 
             this.tB_PelcoID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_PelcoID.Enabled = false;
             this.tB_PelcoID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tB_PelcoID.Location = new System.Drawing.Point(85, 244);
+            this.tB_PelcoID.Location = new System.Drawing.Point(85, 195);
             this.tB_PelcoID.Name = "tB_PelcoID";
             this.tB_PelcoID.Size = new System.Drawing.Size(301, 20);
             this.tB_PelcoID.TabIndex = 8;
+            this.tB_PelcoID.Text = "0";
             // 
             // tB_ControlIP
             // 
             this.tB_ControlIP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_ControlIP.Enabled = false;
             this.tB_ControlIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tB_ControlIP.Location = new System.Drawing.Point(84, 191);
+            this.tB_ControlIP.Location = new System.Drawing.Point(84, 221);
             this.tB_ControlIP.Name = "tB_ControlIP";
             this.tB_ControlIP.Size = new System.Drawing.Size(302, 20);
             this.tB_ControlIP.TabIndex = 6;
             // 
-            // label4
+            // l_ControlPort
             // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.l_ControlPort.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(10, 221);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 13);
-            this.label4.TabIndex = 83;
-            this.label4.Text = "Control Port:";
+            this.l_ControlPort.AutoSize = true;
+            this.l_ControlPort.Enabled = false;
+            this.l_ControlPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_ControlPort.Location = new System.Drawing.Point(10, 251);
+            this.l_ControlPort.Name = "l_ControlPort";
+            this.l_ControlPort.Size = new System.Drawing.Size(65, 13);
+            this.l_ControlPort.TabIndex = 83;
+            this.l_ControlPort.Text = "Control Port:";
             // 
             // l_ControlIP
             // 
@@ -381,12 +389,38 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.l_ControlIP.AutoSize = true;
+            this.l_ControlIP.Enabled = false;
             this.l_ControlIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.l_ControlIP.Location = new System.Drawing.Point(10, 194);
+            this.l_ControlIP.Location = new System.Drawing.Point(10, 224);
             this.l_ControlIP.Name = "l_ControlIP";
             this.l_ControlIP.Size = new System.Drawing.Size(56, 13);
             this.l_ControlIP.TabIndex = 84;
             this.l_ControlIP.Text = "Control IP:";
+            // 
+            // check_Manual
+            // 
+            this.check_Manual.AutoSize = true;
+            this.check_Manual.Location = new System.Drawing.Point(325, 172);
+            this.check_Manual.Name = "check_Manual";
+            this.check_Manual.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Manual.Size = new System.Drawing.Size(61, 17);
+            this.check_Manual.TabIndex = 85;
+            this.check_Manual.Text = "Manual";
+            this.check_Manual.UseVisualStyleBackColor = true;
+            this.check_Manual.CheckedChanged += new System.EventHandler(this.check_Manual_CheckedChanged);
+            // 
+            // l_PresetDetails
+            // 
+            this.l_PresetDetails.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.l_PresetDetails.AutoSize = true;
+            this.l_PresetDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_PresetDetails.Location = new System.Drawing.Point(9, 271);
+            this.l_PresetDetails.Name = "l_PresetDetails";
+            this.l_PresetDetails.Size = new System.Drawing.Size(122, 20);
+            this.l_PresetDetails.TabIndex = 86;
+            this.l_PresetDetails.Text = "Preset Details";
             // 
             // RTSPWizard
             // 
@@ -394,11 +428,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(394, 381);
+            this.Controls.Add(this.l_PresetDetails);
+            this.Controls.Add(this.check_Manual);
             this.Controls.Add(this.l_PelcoID);
             this.Controls.Add(this.tB_ControlPort);
             this.Controls.Add(this.tB_PelcoID);
             this.Controls.Add(this.tB_ControlIP);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.l_ControlPort);
             this.Controls.Add(this.l_ControlIP);
             this.Controls.Add(this.l_Control);
             this.Controls.Add(this.b_Scan);
@@ -458,7 +494,9 @@
         public System.Windows.Forms.TextBox tB_ControlPort;
         public System.Windows.Forms.TextBox tB_PelcoID;
         public System.Windows.Forms.TextBox tB_ControlIP;
-        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Label l_ControlPort;
         public System.Windows.Forms.Label l_ControlIP;
+        private System.Windows.Forms.CheckBox check_Manual;
+        public System.Windows.Forms.Label l_PresetDetails;
     }
 }

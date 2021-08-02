@@ -15,18 +15,17 @@ namespace SSUtility2 {
         bool nameChanged = false;
         VideoSettings mySets;
 
-        public RTSPWizard(string fullAdr, VideoSettings sets) {
+        public RTSPWizard(string[] preset, VideoSettings sets) {
             InitializeComponent();
             mySets = sets;
-            if (fullAdr != null) {
-                string retVal = RTSPPresets.GetValue(RTSPPresets.PresetColumn.Index, fullAdr, RTSPPresets.PresetColumn.FullAdr);
+            if (preset != null) {
+                string retVal = RTSPPresets.GetValue(RTSPPresets.PresetColumn.Index, preset[0], RTSPPresets.PresetColumn.Name);
                 if (retVal != "")
                     editIndex = int.Parse(retVal);
 
-                FullToParts(fullAdr);
                 b_Forget.Visible = true;
                 if (editIndex != -1)
-                    tB_Name.Text = RTSPPresets.GetValue(RTSPPresets.PresetColumn.Name, fullAdr, RTSPPresets.PresetColumn.FullAdr);
+                    LoadPreset(preset);
             }
 
             //Inititate cloning immediately
@@ -35,6 +34,21 @@ namespace SSUtility2 {
         void CloseWindow() {
             Close();
             Dispose();
+        }
+
+        void LoadPreset(string[] preset) {
+            tB_Name.Text = preset[0];
+            tB_FullAdr.Text = preset[1];
+
+            tB_RTSPIP.Text = preset[2];
+            tB_RTSPPort.Text = preset[3];
+            tB_RTSPString.Text = preset[4];
+            tB_Username.Text = preset[5];
+            tB_Password.Text = preset[6];
+
+            tB_PelcoID.Text = preset[7];
+            tB_ControlIP.Text = preset[8];
+            tB_ControlPort.Text = preset[9];
         }
 
         private void b_Confirm_Click(object sender, EventArgs e) {
@@ -54,8 +68,8 @@ namespace SSUtility2 {
             string full = name + ";" + fullAdr + ";" + ipaddress + ";" + port + ";" + url + ";" + username
                 + ";" + password + ";" + pelco + ";" + controlip + ";" + controlport + ";";
             
-            if (name.Length <= 0 || fullAdr.Length <= 0 || ipaddress.Length <= 0 || port.Length <= 0) {
-                MessageBox.Show("Invalid RTSP values!\nPreset Name, RTSP IP and RTSP Port must be completed!");
+            if (name.Length <= 0 || fullAdr.Length <= 0 || pelco.Length <= 0) {
+                MessageBox.Show("Invalid RTSP values!\nPreset Name, Full Address, and Pelco ID must be completed!");
                 return;
             }
 
@@ -156,6 +170,19 @@ namespace SSUtility2 {
             string text = tB_Name.Text;
 
             nameChanged = !(text.Trim().Length <= 0 || text == tB_RTSPIP.Text);
+        }
+
+        private void check_Manual_CheckedChanged(object sender, EventArgs e) {
+            bool enabled = check_Manual.Checked;
+
+            l_PelcoID.Enabled = enabled;
+            tB_PelcoID.Enabled = enabled;
+
+            l_ControlIP.Enabled = enabled;
+            tB_ControlIP.Enabled = enabled;
+
+            l_ControlPort.Enabled = enabled;
+            tB_ControlPort.Enabled = enabled;
         }
     }
 }
