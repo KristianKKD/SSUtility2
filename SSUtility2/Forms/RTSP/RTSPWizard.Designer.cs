@@ -266,6 +266,7 @@
             this.b_Clone.TabIndex = 77;
             this.b_Clone.Text = "Clone...";
             this.b_Clone.UseVisualStyleBackColor = false;
+            this.b_Clone.Visible = false;
             // 
             // tB_Name
             // 
@@ -303,6 +304,7 @@
             this.b_Scan.TabIndex = 80;
             this.b_Scan.Text = "Scan";
             this.b_Scan.UseVisualStyleBackColor = false;
+            this.b_Scan.Visible = false;
             // 
             // l_Control
             // 

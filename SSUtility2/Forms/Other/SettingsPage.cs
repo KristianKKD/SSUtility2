@@ -50,7 +50,6 @@ namespace SSUtility2 {
                 cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
                 check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
-                check_Other_AutoReconnect.Checked = ConfigControl.autoReconnect.boolVal;
                 check_AddressInvalid.Checked = ConfigControl.ignoreAddress.boolVal;
                 check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
                 cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
@@ -279,12 +278,6 @@ namespace SSUtility2 {
             MainForm.m.clw.ShowWindow();
         }
 
-        private void check_Other_AutoReconnect_CheckedChanged(object sender, EventArgs e) {
-            if (!MainForm.m.finishedLoading)
-                return;
-            ConfigControl.autoReconnect.UpdateValue(check_Other_AutoReconnect.Checked.ToString());
-        }
-
         public async Task UpdateSelectedCam(bool play) {
             if (MainForm.m.lite) {
                 MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
@@ -292,14 +285,14 @@ namespace SSUtility2 {
                 MainForm.m.b_PTZ_Daylight.Visible = true;
                 MainForm.m.b_PTZ_Thermal.Visible = true;
 
-                //if (ConfigControl.pelcoID.intVal == 1)
-                //    MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.LightGreen;
-                //else if (ConfigControl.pelcoID.intVal == 2)
-                //    MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.LightGreen;
-                //else {
-                //    MainForm.m.b_PTZ_Daylight.Visible = false;
-                //    MainForm.m.b_PTZ_Thermal.Visible = false;
-                //}
+                if (ConfigControl.pelcoOverrideID.intVal == 1)
+                    MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.LightGreen;
+                else if (ConfigControl.pelcoOverrideID.intVal == 2)
+                    MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.LightGreen;
+                else {
+                    MainForm.m.b_PTZ_Daylight.Visible = false;
+                    MainForm.m.b_PTZ_Thermal.Visible = false;
+                }
             }
         }
 

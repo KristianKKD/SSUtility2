@@ -119,8 +119,10 @@ namespace SSUtility2 {
 
                         copyC = copyCB;
                         copyCB.SelectedIndexChanged += (s, e) => { 
-                            originalSets.UpdateField(copyC, originalSets, originalSets.tP_Main);
+                            originalSets.UpdateField(copyC, originalSets.tP_Main);
                         };
+
+                        copyCB.DropDownStyle = cb.DropDownStyle;
                     } else if (c.GetType() == typeof(Button)) {
                         Button b = new Button();
                         Button copyB = new Button();
@@ -137,10 +139,13 @@ namespace SSUtility2 {
                         copyC.Visible = c.Visible;
                         copyC.Name = c.Name;
                         copyC.BackColor = c.BackColor;
+                        copyC.Font = c.Font;
+                        copyC.Enabled = c.Enabled;
+                        copyC.Visible = c.Visible;
 
                         if (copyC.GetType() == typeof(ComboBox) || copyC.GetType() == typeof(TextBox)) {
                             copyC.KeyUp += (s, e) => {
-                                originalSets.UpdateField(copyC, originalSets, originalSets.tP_Main);
+                                originalSets.UpdateField(copyC, originalSets.tP_Main);
                             };
                         } else if (copyC.GetType() != typeof(ComboBox))
                             copyC.Text = c.Text;
@@ -161,7 +166,7 @@ namespace SSUtility2 {
                 }
 
                 FindControl(tp, mainSettings.b_Play).Click += (s, e) => {
-                    originalSets.myDetached.Play(true, originalSets.isMainPlayer);
+                    originalSets.myDetached.Play(true);
                 };
                 FindControl(tp, mainSettings.b_Stop).Click += (s, e) => {
                     originalSets.myDetached.StopPlaying();
@@ -227,20 +232,20 @@ namespace SSUtility2 {
         private void b_Edit_Click(object sender, EventArgs e) {
             string rtspName = cB_RTSP.Text;
             if (rtspName.Length > 0 && rtspName.Trim().Length > 0) {
-                RTSPPresets.OpenPreset(cB_RTSP.Text);
+                RTSPPresets.OpenPreset(cB_RTSP.Text, this);
                 return;
             }
         }
 
         private void b_Play_Click(object sender, EventArgs e) {
-            myDetached.Play(true, isMainPlayer);
+            myDetached.Play(true);
         }
 
         private void b_Stop_Click(object sender, EventArgs e) {
             myDetached.StopPlaying();
         }
 
-        public void UpdateField(Control senderControl, VideoSettings sets, TabPage tp, bool noUpdate = false) {
+        public void UpdateField(Control senderControl, TabPage tp) {
             try {
                 foreach (Control tabPageControl in tp.Controls) {
                     if (tabPageControl.Name == senderControl.Name) {
@@ -254,13 +259,21 @@ namespace SSUtility2 {
         }
 
         private void cB_RTSP_SelectedIndexChanged(object sender, EventArgs e) {
+            if (cB_RTSP.Text == "")
+                return;
+
             b_Edit.Visible = false;
+            b_Play.Visible = false;
+            b_Stop.Visible = false;
 
             if (cB_RTSP.SelectedIndex == cB_RTSP.Items.Count - 1)
-                RTSPPresets.CreateNew();
+                RTSPPresets.CreateNew(this);
             else {
                 //Use new settings
                 b_Edit.Visible = true;
+                b_Play.Visible = true;
+                b_Stop.Visible = true;
+                myDetached.Play(false);
             }
         }
 
@@ -289,6 +302,14 @@ namespace SSUtility2 {
 
         public string GetCombined() {
             return RTSPPresets.GetValue(PresetColumn.FullAdr, cB_RTSP.Text);
+        }
+
+        public int GetPelcoID() {
+            string val = RTSPPresets.GetValue(PresetColumn.PelcoID, cB_RTSP.Text);
+            int returnVal = -1;
+            int.TryParse(val, out returnVal);
+
+            return returnVal;
         }
 
     }

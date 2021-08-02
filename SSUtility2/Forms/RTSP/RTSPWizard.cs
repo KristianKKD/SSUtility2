@@ -13,9 +13,11 @@ namespace SSUtility2 {
 
         int editIndex = -1;
         bool nameChanged = false;
+        VideoSettings mySets;
 
-        public RTSPWizard(string fullAdr) {
+        public RTSPWizard(string fullAdr, VideoSettings sets) {
             InitializeComponent();
+            mySets = sets;
             if (fullAdr != null) {
                 string retVal = RTSPPresets.GetValue(RTSPPresets.PresetColumn.Index, fullAdr, RTSPPresets.PresetColumn.FullAdr);
                 if (retVal != "")
@@ -52,9 +54,8 @@ namespace SSUtility2 {
             string full = name + ";" + fullAdr + ";" + ipaddress + ";" + port + ";" + url + ";" + username
                 + ";" + password + ";" + pelco + ";" + controlip + ";" + controlport + ";";
             
-            if (name.Length <= 0 || fullAdr.Length <= 0 || ipaddress.Length <= 0 || port.Length <= 0
-                || url.Length <= 0) {
-                MessageBox.Show("Invalid RTSP values!");
+            if (name.Length <= 0 || fullAdr.Length <= 0 || ipaddress.Length <= 0 || port.Length <= 0) {
+                MessageBox.Show("Invalid RTSP values!\nPreset Name, RTSP IP and RTSP Port must be completed!");
                 return;
             }
 
@@ -65,39 +66,42 @@ namespace SSUtility2 {
 
             if (checkIndex == editIndex && editIndex >= 0) { //existing
                 Console.WriteLine("EDITING");
-                RTSPPresets.LoadPreset(full, editIndex);
+                mySets.cB_RTSP.SelectedIndex = RTSPPresets.LoadPreset(full, editIndex);
             } else if (checkIndex != -1) { //duplicate
                 MessageBox.Show("Duplicate name!");
                 return;
             } else { //new
                 Console.WriteLine("NEW");
-                RTSPPresets.LoadPreset(full);
+                mySets.cB_RTSP.SelectedIndex = RTSPPresets.LoadPreset(full);
             }
 
             CloseWindow();
         }
 
         private void b_Cancel_Click(object sender, EventArgs e) {
-            CloseWindow(); 
+            CloseWindow();
         }
 
         void FullToParts(string full) {
-            Console.WriteLine(full);
-
             int usernamePos = full.IndexOf(":", 7) + 1; //should be the first one
 
-            Console.WriteLine(usernamePos);
             if (full[6] != '/' && usernamePos <= 0) //if fullAdr isn't completed in the expected way
                 return;
 
             int atPos = full.IndexOf("@") + 1;
-            int secondColonPos = full.IndexOf(":", usernamePos); // + secondColonPos?
+            int secondColonPos = full.IndexOf(":", usernamePos);
 
-            string username = full.Substring(7, usernamePos - 8); //7 = rtsp://
-            string password = full.Substring(usernamePos, atPos - usernamePos - 1);
+            string username = "";
+            string password = "";
+
             string ipaddress = full.Substring(atPos, secondColonPos - atPos);
             string port = full.Substring(secondColonPos + 1, full.IndexOf("/", 7) - secondColonPos - 1);
-            string url = full.Substring(secondColonPos + port.Length + 2);
+            string url = full.Substring(secondColonPos + port.Length + 2); //cant be null because it doesnt use length
+           
+            if (usernamePos > 8) {
+                username = full.Substring(7, usernamePos - 8); //7 = rtsp://
+                password = full.Substring(usernamePos, atPos - usernamePos - 1);
+            }
 
             tB_Username.Text = username;
             tB_Password.Text = password;
@@ -106,8 +110,6 @@ namespace SSUtility2 {
             tB_RTSPString.Text = url;
 
             tB_FullAdr.Text = GetCombined();
-
-            Console.WriteLine("rtsp://" + username + ":" + password + "@" + ipaddress + ":" + port + "/" + url);
         }
 
         public string GetCombined() {
@@ -143,6 +145,11 @@ namespace SSUtility2 {
         private void b_Forget_Click(object sender, EventArgs e) {
             RTSPPresets.ForgetPreset(editIndex);
             CloseWindow();
+            int index = mySets.cB_RTSP.SelectedIndex;
+            if (index > 0)
+                mySets.cB_RTSP.SelectedIndex = index - 1;
+            else
+                mySets.Text = "";
         }
 
         private void tB_Name_KeyUp(object sender, KeyEventArgs e) {

@@ -41,7 +41,7 @@ namespace SSUtility2 {
             return all;
         }
 
-        public static void LoadPreset(string line, int loadIndex = -1) {
+        public static int LoadPreset(string line, int loadIndex = -1) {
             line = line.Trim();
 
             int loadPos = currentPresetCount;
@@ -62,6 +62,8 @@ namespace SSUtility2 {
                 currentPresetCount++;
 
             ReloadAll();
+
+            return loadPos;
         }
 
         public static bool PresetIsValid(string presetName) {
@@ -79,7 +81,7 @@ namespace SSUtility2 {
         }
 
         static RTSPWizard wiz;
-        public static void OpenPreset(string presetName) {
+        public static void OpenPreset(string presetName, VideoSettings sets) {
             if (wiz != null)
                 wiz.Dispose();
 
@@ -89,7 +91,7 @@ namespace SSUtility2 {
                 return;
             }
 
-            wiz = new RTSPWizard(returnedVal);
+            wiz = new RTSPWizard(returnedVal, sets);
             wiz.Show();
         }
 
@@ -106,8 +108,8 @@ namespace SSUtility2 {
             return "";
         }
 
-        public static void CreateNew() {
-            RTSPWizard wiz = new RTSPWizard(null);
+        public static void CreateNew(VideoSettings sets) {
+            RTSPWizard wiz = new RTSPWizard(null, sets);
             wiz.Show();
         }
 

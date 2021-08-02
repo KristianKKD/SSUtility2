@@ -82,7 +82,6 @@ namespace SSUtility2
             this.l_Other_ResolutionHeight = new System.Windows.Forms.Label();
             this.tB_Other_ResolutionWidth = new System.Windows.Forms.TextBox();
             this.l_Other_ResolutionWidth = new System.Windows.Forms.Label();
-            this.check_Other_AutoReconnect = new System.Windows.Forms.CheckBox();
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
@@ -367,14 +366,14 @@ namespace SSUtility2
             "Legacy"});
             this.cB_MainPlayerPreset.Location = new System.Drawing.Point(115, 85);
             this.cB_MainPlayerPreset.Name = "cB_MainPlayerPreset";
-            this.cB_MainPlayerPreset.Size = new System.Drawing.Size(123, 21);
+            this.cB_MainPlayerPreset.Size = new System.Drawing.Size(183, 21);
             this.cB_MainPlayerPreset.TabIndex = 4;
             // 
             // l_IPCon_Subnet
             // 
             this.l_IPCon_Subnet.AutoSize = true;
             this.l_IPCon_Subnet.ForeColor = System.Drawing.Color.DimGray;
-            this.l_IPCon_Subnet.Location = new System.Drawing.Point(272, 36);
+            this.l_IPCon_Subnet.Location = new System.Drawing.Point(332, 36);
             this.l_IPCon_Subnet.Name = "l_IPCon_Subnet";
             this.l_IPCon_Subnet.Size = new System.Drawing.Size(0, 13);
             this.l_IPCon_Subnet.TabIndex = 96;
@@ -460,7 +459,7 @@ namespace SSUtility2
             // 
             this.tB_IPCon_Port.Location = new System.Drawing.Point(115, 59);
             this.tB_IPCon_Port.Name = "tB_IPCon_Port";
-            this.tB_IPCon_Port.Size = new System.Drawing.Size(123, 20);
+            this.tB_IPCon_Port.Size = new System.Drawing.Size(183, 20);
             this.tB_IPCon_Port.TabIndex = 3;
             this.toolTips.SetToolTip(this.tB_IPCon_Port, "Port of the camera");
             this.tB_IPCon_Port.TextChanged += new System.EventHandler(this.tB_IPCon_Port_TextChanged);
@@ -470,7 +469,7 @@ namespace SSUtility2
             // 
             this.tB_IPCon_Adr.Location = new System.Drawing.Point(115, 33);
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
-            this.tB_IPCon_Adr.Size = new System.Drawing.Size(123, 20);
+            this.tB_IPCon_Adr.Size = new System.Drawing.Size(183, 20);
             this.tB_IPCon_Adr.TabIndex = 2;
             this.toolTips.SetToolTip(this.tB_IPCon_Adr, "IP Address of the camera");
             this.tB_IPCon_Adr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyUp);
@@ -478,11 +477,10 @@ namespace SSUtility2
             // l_IPCon_Connected
             // 
             this.l_IPCon_Connected.AutoSize = true;
-            this.l_IPCon_Connected.Location = new System.Drawing.Point(244, 36);
+            this.l_IPCon_Connected.Location = new System.Drawing.Point(304, 36);
             this.l_IPCon_Connected.Name = "l_IPCon_Connected";
-            this.l_IPCon_Connected.Size = new System.Drawing.Size(14, 13);
+            this.l_IPCon_Connected.Size = new System.Drawing.Size(0, 13);
             this.l_IPCon_Connected.TabIndex = 81;
-            this.l_IPCon_Connected.Text = "X";
             // 
             // cB_IPCon_PresetType
             // 
@@ -492,7 +490,7 @@ namespace SSUtility2
             "MOXA nPort"});
             this.cB_IPCon_PresetType.Location = new System.Drawing.Point(115, 6);
             this.cB_IPCon_PresetType.Name = "cB_IPCon_PresetType";
-            this.cB_IPCon_PresetType.Size = new System.Drawing.Size(123, 21);
+            this.cB_IPCon_PresetType.Size = new System.Drawing.Size(183, 21);
             this.cB_IPCon_PresetType.TabIndex = 1;
             this.toolTips.SetToolTip(this.cB_IPCon_PresetType, "Defaults IP Address and Port fields to preset values");
             this.cB_IPCon_PresetType.SelectedIndexChanged += new System.EventHandler(this.cB_IPCon_Type_SelectedIndexChanged);
@@ -680,7 +678,6 @@ namespace SSUtility2
             this.tP_Other.Controls.Add(this.l_Other_ResolutionHeight);
             this.tP_Other.Controls.Add(this.tB_Other_ResolutionWidth);
             this.tP_Other.Controls.Add(this.l_Other_ResolutionWidth);
-            this.tP_Other.Controls.Add(this.check_Other_AutoReconnect);
             this.tP_Other.Controls.Add(this.check_Other_AutoPlay);
             this.tP_Other.Location = new System.Drawing.Point(4, 22);
             this.tP_Other.Name = "tP_Other";
@@ -804,19 +801,6 @@ namespace SSUtility2
             this.l_Other_ResolutionWidth.Text = "Startup MainForm Width";
             this.toolTips.SetToolTip(this.l_Other_ResolutionWidth, "Launches the program with this width (does not change current resolution).");
             // 
-            // check_Other_AutoReconnect
-            // 
-            this.check_Other_AutoReconnect.Location = new System.Drawing.Point(189, 6);
-            this.check_Other_AutoReconnect.Name = "check_Other_AutoReconnect";
-            this.check_Other_AutoReconnect.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Other_AutoReconnect.Size = new System.Drawing.Size(174, 17);
-            this.check_Other_AutoReconnect.TabIndex = 2;
-            this.check_Other_AutoReconnect.Text = "Reconnect on Player Connect";
-            this.check_Other_AutoReconnect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_Other_AutoReconnect, "Reconnect upon entering a new IP in the IP Control section.");
-            this.check_Other_AutoReconnect.UseVisualStyleBackColor = true;
-            this.check_Other_AutoReconnect.CheckedChanged += new System.EventHandler(this.check_Other_AutoReconnect_CheckedChanged);
-            // 
             // b_Custom_CommandList
             // 
             this.b_Custom_CommandList.BackColor = System.Drawing.SystemColors.Control;
@@ -910,7 +894,6 @@ namespace SSUtility2
         private System.ComponentModel.IContainer components;
         public System.Windows.Forms.Label l_Version;
         private System.Windows.Forms.Button b_Custom_CommandList;
-        public System.Windows.Forms.CheckBox check_Other_AutoReconnect;
         public System.Windows.Forms.Label l_Other_CurrentResolution;
         public System.Windows.Forms.TextBox tB_Other_ResolutionHeight;
         public System.Windows.Forms.Label l_Other_ResolutionHeight;

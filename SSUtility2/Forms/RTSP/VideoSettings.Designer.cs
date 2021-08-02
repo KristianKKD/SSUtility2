@@ -31,7 +31,6 @@ namespace SSUtility2
             this.b_Stop = new System.Windows.Forms.Button();
             this.tC_PlayerSettings = new System.Windows.Forms.TabControl();
             this.tP_Main = new System.Windows.Forms.TabPage();
-            this.p_Control = new System.Windows.Forms.Panel();
             this.l_Port = new System.Windows.Forms.Label();
             this.tB_Port = new System.Windows.Forms.TextBox();
             this.tB_IP = new System.Windows.Forms.TextBox();
@@ -45,7 +44,6 @@ namespace SSUtility2
             this.cB_RTSP = new System.Windows.Forms.ComboBox();
             this.tC_PlayerSettings.SuspendLayout();
             this.tP_Main.SuspendLayout();
-            this.p_Control.SuspendLayout();
             this.SuspendLayout();
             // 
             // b_Play
@@ -90,10 +88,15 @@ namespace SSUtility2
             // tP_Main
             // 
             this.tP_Main.BackColor = System.Drawing.Color.White;
-            this.tP_Main.Controls.Add(this.p_Control);
+            this.tP_Main.Controls.Add(this.l_Port);
+            this.tP_Main.Controls.Add(this.tB_Port);
             this.tP_Main.Controls.Add(this.check_Manual);
+            this.tP_Main.Controls.Add(this.tB_IP);
             this.tP_Main.Controls.Add(this.l_Control);
+            this.tP_Main.Controls.Add(this.l_IP);
             this.tP_Main.Controls.Add(this.b_Edit);
+            this.tP_Main.Controls.Add(this.l_PelcoID);
+            this.tP_Main.Controls.Add(this.cB_ID);
             this.tP_Main.Controls.Add(this.l_RTSP);
             this.tP_Main.Controls.Add(this.cB_RTSP);
             this.tP_Main.Controls.Add(this.b_Play);
@@ -105,27 +108,11 @@ namespace SSUtility2
             this.tP_Main.TabIndex = 0;
             this.tP_Main.Text = "Main Player";
             // 
-            // p_Control
-            // 
-            this.p_Control.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.p_Control.Controls.Add(this.l_Port);
-            this.p_Control.Controls.Add(this.tB_Port);
-            this.p_Control.Controls.Add(this.tB_IP);
-            this.p_Control.Controls.Add(this.l_IP);
-            this.p_Control.Controls.Add(this.l_PelcoID);
-            this.p_Control.Controls.Add(this.cB_ID);
-            this.p_Control.Enabled = false;
-            this.p_Control.Location = new System.Drawing.Point(79, 57);
-            this.p_Control.Name = "p_Control";
-            this.p_Control.Size = new System.Drawing.Size(297, 336);
-            this.p_Control.TabIndex = 69;
-            // 
             // l_Port
             // 
             this.l_Port.AutoSize = true;
-            this.l_Port.Location = new System.Drawing.Point(3, 53);
+            this.l_Port.Enabled = false;
+            this.l_Port.Location = new System.Drawing.Point(79, 110);
             this.l_Port.Name = "l_Port";
             this.l_Port.Size = new System.Drawing.Size(70, 13);
             this.l_Port.TabIndex = 72;
@@ -135,7 +122,8 @@ namespace SSUtility2
             // 
             this.tB_Port.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Port.Location = new System.Drawing.Point(79, 50);
+            this.tB_Port.Enabled = false;
+            this.tB_Port.Location = new System.Drawing.Point(155, 107);
             this.tB_Port.Name = "tB_Port";
             this.tB_Port.Size = new System.Drawing.Size(212, 20);
             this.tB_Port.TabIndex = 4;
@@ -144,7 +132,8 @@ namespace SSUtility2
             // 
             this.tB_IP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_IP.Location = new System.Drawing.Point(79, 28);
+            this.tB_IP.Enabled = false;
+            this.tB_IP.Location = new System.Drawing.Point(155, 85);
             this.tB_IP.Name = "tB_IP";
             this.tB_IP.Size = new System.Drawing.Size(212, 20);
             this.tB_IP.TabIndex = 3;
@@ -152,7 +141,8 @@ namespace SSUtility2
             // l_IP
             // 
             this.l_IP.AutoSize = true;
-            this.l_IP.Location = new System.Drawing.Point(3, 31);
+            this.l_IP.Enabled = false;
+            this.l_IP.Location = new System.Drawing.Point(79, 88);
             this.l_IP.Name = "l_IP";
             this.l_IP.Size = new System.Drawing.Size(61, 13);
             this.l_IP.TabIndex = 70;
@@ -161,7 +151,8 @@ namespace SSUtility2
             // l_PelcoID
             // 
             this.l_PelcoID.AutoSize = true;
-            this.l_PelcoID.Location = new System.Drawing.Point(3, 7);
+            this.l_PelcoID.Enabled = false;
+            this.l_PelcoID.Location = new System.Drawing.Point(79, 64);
             this.l_PelcoID.Name = "l_PelcoID";
             this.l_PelcoID.Size = new System.Drawing.Size(51, 13);
             this.l_PelcoID.TabIndex = 69;
@@ -171,8 +162,9 @@ namespace SSUtility2
             // 
             this.cB_ID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cB_ID.Enabled = false;
             this.cB_ID.FormattingEnabled = true;
-            this.cB_ID.Location = new System.Drawing.Point(79, 4);
+            this.cB_ID.Location = new System.Drawing.Point(155, 61);
             this.cB_ID.Name = "cB_ID";
             this.cB_ID.Size = new System.Drawing.Size(120, 21);
             this.cB_ID.TabIndex = 2;
@@ -255,8 +247,6 @@ namespace SSUtility2
             this.tC_PlayerSettings.ResumeLayout(false);
             this.tP_Main.ResumeLayout(false);
             this.tP_Main.PerformLayout();
-            this.p_Control.ResumeLayout(false);
-            this.p_Control.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -268,9 +258,8 @@ namespace SSUtility2
         public System.Windows.Forms.TabPage tP_Main;
         public System.Windows.Forms.Button b_Edit;
         private System.Windows.Forms.Label l_RTSP;
-        private System.Windows.Forms.ComboBox cB_RTSP;
+        public System.Windows.Forms.ComboBox cB_RTSP;
         private System.Windows.Forms.Label l_Control;
-        private System.Windows.Forms.Panel p_Control;
         private System.Windows.Forms.Label l_Port;
         private System.Windows.Forms.TextBox tB_Port;
         private System.Windows.Forms.TextBox tB_IP;

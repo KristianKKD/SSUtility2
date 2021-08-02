@@ -65,7 +65,7 @@ namespace SSUtility2 {
             }
         }
 
-        public async Task Play(bool showErrors, bool updateValues = true) {
+        public async Task Play(bool showErrors) {
             try {
                 if (MainForm.m.lite && settings.isMainPlayer) {
                     settings.channelID = 1;
@@ -74,7 +74,7 @@ namespace SSUtility2 {
 
                 if (InvokeRequired) {
                     Invoke((MethodInvoker)delegate {
-                        Play(showErrors, updateValues);
+                        Play(showErrors);
                     });
                     return;
                 }
@@ -100,14 +100,6 @@ namespace SSUtility2 {
                     if(showErrors)
                         MessageBox.Show("Failed to attach to channel!");
                     StopPlaying();
-                }
-
-                if (updateValues && settings.isMainPlayer) {
-                    if (ConfigControl.autoReconnect.boolVal) {
-                        MainForm.m.setPage.tB_IPCon_Adr.Text = fullAdr;
-                        ConfigControl.savedIP.UpdateValue(MainForm.m.setPage.tB_IPCon_Adr.Text);
-                    }
-                    AsyncCamCom.TryConnect(false, null, true);
                 }
             } catch (Exception e) {
                 if(showErrors)
@@ -150,7 +142,7 @@ namespace SSUtility2 {
             }
         }
 
-        public SizeablePanel AttachPlayerToThis(Detached secondPlayer, Point pos, bool updateVals = true, bool playOnLaunch = true) {
+        public SizeablePanel AttachPlayerToThis(Detached secondPlayer, Point pos, bool playOnLaunch = true) {
             try {
                 attachedPlayers.Add(secondPlayer);
                 secondPlayer.settings.isAttached = true;
@@ -177,7 +169,7 @@ namespace SSUtility2 {
                 //VideoSettings.CopySettings(secondPlayer.settings, MainForm.m.mainPlayer.settings, VideoSettings.CopyType.NoCopy);
                 
                 if(playOnLaunch)
-                    secondPlayer.Play(false, updateVals);
+                    secondPlayer.Play(false);
 
                 string name = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
                 secondPlayer.settings.tP_Main.Text = name;
@@ -222,7 +214,7 @@ namespace SSUtility2 {
             detachable.Show();
 
             if (wasPlaying)
-                detachable.Play(false, false);
+                detachable.Play(false);
         }
 
         private void Menu_Settings_Click(object sender, EventArgs e) {

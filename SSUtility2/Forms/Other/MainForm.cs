@@ -12,7 +12,7 @@ namespace SSUtility2
 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.4";
+        public const string version = "v2.8.0.5";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -153,7 +153,7 @@ namespace SSUtility2
                     if (secondPlayer == null) {
                         secondPlayer = new Detached(false);
                         SizeablePanel second = mainPlayer.AttachPlayerToThis(secondPlayer,
-                            new Point(mainPlayer.p_Player.Width - 350, 50), false, autoPlay);
+                            new Point(mainPlayer.p_Player.Width - 350, 50), autoPlay);
 
                         second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
                     }
@@ -170,7 +170,7 @@ namespace SSUtility2
                     if (thirdPlayer == null) {
                         thirdPlayer = new Detached(false);
                         SizeablePanel third = mainPlayer.AttachPlayerToThis(thirdPlayer,
-                            new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250), false, autoPlay);
+                            new Point(mainPlayer.p_Player.Width - 350, mainPlayer.p_Player.Height - 250), autoPlay);
 
                         third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
                     }
@@ -265,6 +265,12 @@ namespace SSUtility2
                         c.Show();
                         c.Top -= 50;
                     }
+
+                    int id = MainForm.m.mainPlayer.settings.GetPelcoID();
+                    if (id == -1)
+                        id = 0;
+
+                    ConfigControl.pelcoOverrideID.UpdateValue(id.ToString());
 
                     Menu_Settings_Panels_IP.Dispose();
                     Menu_Settings_Panels_CP.Dispose();

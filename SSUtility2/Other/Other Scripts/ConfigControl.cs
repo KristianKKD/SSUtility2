@@ -41,11 +41,11 @@ namespace SSUtility2 {
         public static ConfigSetting savedPort = new ConfigSetting("6791", "SavedPort", ConfigSetting.VarType.strings);
         public static ConfigSetting cameraSpeedMultiplier = new ConfigSetting("100", "CameraSpeedMultiplier", ConfigSetting.VarType.integer);
         public static ConfigSetting forceType = new ConfigSetting("Strict", "ForcedCameraType", ConfigSetting.VarType.strings);
-        public static ConfigSetting autoReconnect = new ConfigSetting("true", "AutoReconnect", ConfigSetting.VarType.boolean);
         public static ConfigSetting startupWidth = new ConfigSetting("1280", "StartupWidth", ConfigSetting.VarType.integer);
         public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
         public static ConfigSetting maintainAspectRatio = new ConfigSetting("false", "MaintainAspectRatio", ConfigSetting.VarType.boolean);
         public static ConfigSetting playerCount = new ConfigSetting("1", "PlayerCount", ConfigSetting.VarType.integer);
+        public static ConfigSetting pelcoOverrideID = new ConfigSetting("1", "PelcoOverrideID", ConfigSetting.VarType.integer);
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -65,11 +65,11 @@ namespace SSUtility2 {
             savedPort,
             cameraSpeedMultiplier,
             forceType,
-            autoReconnect,
             startupWidth,
             startupHeight,
             playerCount,
             maintainAspectRatio,
+            pelcoOverrideID,
         };
 
         public static async Task SetToDefaults() {
