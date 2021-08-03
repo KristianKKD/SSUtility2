@@ -93,22 +93,16 @@ namespace SSUtility2 {
         }
 
         public static async Task<bool> PingAdr(string address) {
-            IPAddress dontUseIP;
-            if (address == null)
+            if (address == null || address == "")
                 return false;
-
-            int timeoutTries = 2;
-
-            if (!IPAddress.TryParse(address, out dontUseIP))
-                timeoutTries = 1;
 
             Ping pinger = null;
             bool success = false;
 
-            for (int i = 0; i < timeoutTries; i++) {
+            for (int i = 0; i < 2; i++) {
                 try {
                     pinger = new Ping();
-                    PingReply reply = pinger.Send(address);
+                    PingReply reply = pinger.Send(address, 1);
                     if (reply.Status == IPStatus.Success) {
                         success = true;
                         break;

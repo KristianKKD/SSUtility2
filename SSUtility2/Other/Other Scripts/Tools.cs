@@ -297,7 +297,7 @@ namespace SSUtility2 {
             string fullTemp = NameNoOverwrite(orgFolder + orgName + extension);
             string name = fullTemp.Substring(fullTemp.LastIndexOf(@"\") + 1);
 
-            string playerName = player.GetName();
+            string playerName = player.GetTabName();
 
             if (playerName != "") {
                 playerName += @"\";

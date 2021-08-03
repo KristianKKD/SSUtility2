@@ -330,7 +330,7 @@ namespace SSUtility2 {
                     if (marker <= 0)
                         marker = line.IndexOf(":");
 
-                    MainForm.m.mainPlayer.Play(false);
+                    MainForm.m.mainPlayer.Play(false, false);
                 } else if (com.codeContent == PelcoD.swapPreset) {
                     //ComboBox cb = MainForm.m.setPage.cB_ipCon_CamType;
                     //string oldVal = cb.Text;

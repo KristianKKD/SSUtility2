@@ -30,15 +30,18 @@ namespace SSUtility2 {
 
         public static List<string> GetAll() {
             List<string> all = new List<string>();
-            for (int y = 0; y < currentPresetCount; y++) {
-                string currentLine = "";
-                for (int x = 0; x < columns; x++)
-                    currentLine += allPresets[x, y] + ";";
-
-                all.Add(currentLine);
-            }
+            for (int y = 0; y < currentPresetCount; y++)
+                all.Add(UnpackPresetToLine(y));
 
             return all;
+        }
+
+        public static string UnpackPresetToLine(int y) {
+            string currentLine = "";
+            for (int x = 0; x < columns; x++)
+                currentLine += allPresets[x, y] + ";";
+
+            return currentLine;
         }
 
         public static int LoadPreset(string line, int loadIndex = -1) {
@@ -72,12 +75,17 @@ namespace SSUtility2 {
 
         static void ReloadAll() {
             //Reloads all settings every time this is updated, make a way so it reloads after it finishes loading later
+
+            VideoSettings.UpdateAllPresetBoxes();
+        }
+
+        public static List<string> GetPresetList() {
             List<string> all = new List<string>();
 
             for (int i = 0; i < currentPresetCount; i++)
                 all.Add(allPresets[0, i]);
 
-            VideoSettings.UpdateAllPresetBoxes(all);
+            return all;
         }
 
         static RTSPWizard wiz;
@@ -89,7 +97,7 @@ namespace SSUtility2 {
             wiz.Show();
         }
 
-        static string[] GetPreset(string identifierName) {
+        public static string[] GetPreset(string identifierName) {
             string[] returnPreset = new string[10];
 
             for (int i = 0; i < currentPresetCount; i++) {

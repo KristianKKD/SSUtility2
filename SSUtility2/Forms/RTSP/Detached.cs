@@ -65,7 +65,7 @@ namespace SSUtility2 {
             }
         }
 
-        public async Task Play(bool showErrors) {
+        public async Task Play(bool showErrors, bool doPing = true) {
             try {
                 if (MainForm.m.lite && settings.isMainPlayer) {
                     settings.channelID = 1;
@@ -74,14 +74,14 @@ namespace SSUtility2 {
 
                 if (InvokeRequired) {
                     Invoke((MethodInvoker)delegate {
-                        Play(showErrors);
+                        Play(showErrors, doPing);
                     });
                     return;
                 }
 
                 string fullAdr = settings.GetCombined();
 
-                Uri combinedUrl = ConfirmAdr(showErrors,fullAdr);
+                Uri combinedUrl = ConfirmAdr(showErrors, fullAdr, doPing);
                 if (combinedUrl == null)
                     return;
 
@@ -110,7 +110,7 @@ namespace SSUtility2 {
             }
         }
 
-        public Uri ConfirmAdr(bool showErrors, string fullAdr) {
+        public Uri ConfirmAdr(bool showErrors, string fullAdr, bool doPing) {
             try {
                 Uri newUri = null;
                 string errorMsg = "";
@@ -122,7 +122,7 @@ namespace SSUtility2 {
                 }
 
                 if (newUri != null && !ConfigControl.ignoreAddress.boolVal
-                    && settings.isMainPlayer) {
+                    && settings.isMainPlayer && doPing) {
                     if (!OtherCamCom.PingAdr(newUri.Host).Result)
                         errorMsg += "Address had no RTSP stream attached!\n";
                 }
@@ -165,13 +165,15 @@ namespace SSUtility2 {
                     MainForm.m.SwapSettings(secondPlayer);
                 };
 
-                //VideoSettings.CopySettings(secondPlayer.settings, MainForm.m.mainPlayer.settings, VideoSettings.CopyType.NoCopy);
-                
                 if(playOnLaunch)
-                    secondPlayer.Play(false);
+                    secondPlayer.Play(false, false);
 
                 string name = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
                 secondPlayer.settings.tP_Main.Text = name;
+
+                secondPlayer.settings.cB_RTSP.SelectedIndex = attachedPlayers.IndexOf(secondPlayer) + 1;
+
+                settings.AddPage(secondPlayer);
 
                 return sP_Secondary;
             } catch (Exception e) {
@@ -213,7 +215,7 @@ namespace SSUtility2 {
             detachable.Show();
 
             if (wasPlaying)
-                detachable.Play(false);
+                detachable.Play(false, false);
         }
 
         private void Menu_Settings_Click(object sender, EventArgs e) {
@@ -230,7 +232,7 @@ namespace SSUtility2 {
 
         private void Menu_Record_Click(object sender, EventArgs e) {
             try {
-                string location = ConfigControl.vFolder.stringVal + MainForm.m.mainPlayer.settings.GetName() + @"\";
+                string location = ConfigControl.vFolder.stringVal + MainForm.m.mainPlayer.settings.GetTabName() + @"\";
 
                 if (Menu_Record.Text == "Start Recording") {
                     Menu_Record.Text = "Stop Recording";

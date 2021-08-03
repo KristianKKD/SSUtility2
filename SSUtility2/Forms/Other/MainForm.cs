@@ -8,11 +8,10 @@ using System.Windows.Forms;
 using Kaiser;
 using static Kaiser.SizeablePanel;
 
-namespace SSUtility2
-{
+namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.6";
+        public const string version = "v2.8.0.7";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;

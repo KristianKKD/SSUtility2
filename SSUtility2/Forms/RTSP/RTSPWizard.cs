@@ -146,14 +146,14 @@ namespace SSUtility2 {
             return "";
         }
 
-        void FillFull() {
+        void ChangeFullAndName() {
             tB_FullAdr.Text = GetCombined();
+            if (editIndex == -1 && !nameChanged)
+                tB_Name.Text = tB_RTSPIP.Text;
         }
 
         private void tB_Any_Keyup(object sender, KeyEventArgs e) {
-            FillFull();
-            if (editIndex == -1 && !nameChanged)
-                tB_Name.Text = tB_RTSPIP.Text;
+            ChangeFullAndName();
         }
 
         private void b_Forget_Click(object sender, EventArgs e) {
@@ -183,6 +183,22 @@ namespace SSUtility2 {
 
             l_ControlPort.Enabled = enabled;
             tB_ControlPort.Enabled = enabled;
+        }
+
+        bool isSelected = false;
+        private void tB_FullAdr_TextChanged(object sender, EventArgs e) {
+            if (isSelected) {
+                FullToParts(tB_FullAdr.Text);
+                ChangeFullAndName();
+            }
+        }
+
+        private void tB_FullAdr_Enter(object sender, EventArgs e) {
+            isSelected = true;
+        }
+
+        private void tB_FullAdr_Leave(object sender, EventArgs e) {
+            isSelected = false;
         }
     }
 }

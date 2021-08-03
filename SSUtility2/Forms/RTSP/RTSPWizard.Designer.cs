@@ -103,6 +103,9 @@
             this.tB_FullAdr.Name = "tB_FullAdr";
             this.tB_FullAdr.Size = new System.Drawing.Size(301, 20);
             this.tB_FullAdr.TabIndex = 10;
+            this.tB_FullAdr.TextChanged += new System.EventHandler(this.tB_FullAdr_TextChanged);
+            this.tB_FullAdr.Enter += new System.EventHandler(this.tB_FullAdr_Enter);
+            this.tB_FullAdr.Leave += new System.EventHandler(this.tB_FullAdr_Leave);
             // 
             // l_Username
             // 
