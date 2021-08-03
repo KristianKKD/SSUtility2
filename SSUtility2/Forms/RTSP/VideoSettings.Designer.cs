@@ -44,6 +44,7 @@ namespace SSUtility2
             this.l_PelcoID = new System.Windows.Forms.Label();
             this.cB_ID = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.b_Detach = new System.Windows.Forms.Button();
             this.tC_PlayerSettings.SuspendLayout();
             this.tP_Main.SuspendLayout();
             this.SuspendLayout();
@@ -141,6 +142,7 @@ namespace SSUtility2
             this.cB_RTSP.Size = new System.Drawing.Size(273, 21);
             this.cB_RTSP.TabIndex = 1;
             this.cB_RTSP.SelectedIndexChanged += new System.EventHandler(this.cB_RTSP_SelectedIndexChanged);
+            this.cB_RTSP.TextChanged += new System.EventHandler(this.cB_RTSP_TextChanged);
             // 
             // l_Port
             // 
@@ -148,9 +150,9 @@ namespace SSUtility2
             this.l_Port.Enabled = false;
             this.l_Port.Location = new System.Drawing.Point(12, 135);
             this.l_Port.Name = "l_Port";
-            this.l_Port.Size = new System.Drawing.Size(70, 13);
+            this.l_Port.Size = new System.Drawing.Size(67, 13);
             this.l_Port.TabIndex = 72;
-            this.l_Port.Text = "Address Port:";
+            this.l_Port.Text = "Address Port";
             // 
             // tB_Port
             // 
@@ -202,9 +204,9 @@ namespace SSUtility2
             this.l_IP.Enabled = false;
             this.l_IP.Location = new System.Drawing.Point(11, 113);
             this.l_IP.Name = "l_IP";
-            this.l_IP.Size = new System.Drawing.Size(61, 13);
+            this.l_IP.Size = new System.Drawing.Size(58, 13);
             this.l_IP.TabIndex = 70;
-            this.l_IP.Text = "IP Address:";
+            this.l_IP.Text = "IP Address";
             // 
             // l_PelcoID
             // 
@@ -212,9 +214,9 @@ namespace SSUtility2
             this.l_PelcoID.Enabled = false;
             this.l_PelcoID.Location = new System.Drawing.Point(261, 135);
             this.l_PelcoID.Name = "l_PelcoID";
-            this.l_PelcoID.Size = new System.Drawing.Size(51, 13);
+            this.l_PelcoID.Size = new System.Drawing.Size(48, 13);
             this.l_PelcoID.TabIndex = 69;
-            this.l_PelcoID.Text = "Pelco ID:";
+            this.l_PelcoID.Text = "Pelco ID";
             // 
             // cB_ID
             // 
@@ -235,12 +237,26 @@ namespace SSUtility2
             this.cB_ID.TabIndex = 2;
             this.cB_ID.TextChanged += new System.EventHandler(this.tB_ControlFields_TextChanged);
             // 
+            // b_Detach
+            // 
+            this.b_Detach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Detach.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Detach.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Detach.Location = new System.Drawing.Point(293, 13);
+            this.b_Detach.Name = "b_Detach";
+            this.b_Detach.Size = new System.Drawing.Size(81, 28);
+            this.b_Detach.TabIndex = 66;
+            this.b_Detach.Text = "Detach";
+            this.b_Detach.UseVisualStyleBackColor = false;
+            this.b_Detach.Click += new System.EventHandler(this.b_Detach_Click);
+            // 
             // VideoSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(384, 156);
+            this.Controls.Add(this.b_Detach);
             this.Controls.Add(this.l_Port);
             this.Controls.Add(this.tC_PlayerSettings);
             this.Controls.Add(this.tB_Port);
@@ -283,5 +299,6 @@ namespace SSUtility2
         private System.Windows.Forms.ComboBox cB_ID;
         private System.Windows.Forms.CheckBox check_Manual;
         private System.Windows.Forms.ToolTip toolTip1;
+        public System.Windows.Forms.Button b_Detach;
     }
 }

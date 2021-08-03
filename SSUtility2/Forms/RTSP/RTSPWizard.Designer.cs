@@ -66,9 +66,9 @@
             this.l_RTSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_RTSP.Location = new System.Drawing.Point(10, 96);
             this.l_RTSP.Name = "l_RTSP";
-            this.l_RTSP.Size = new System.Drawing.Size(69, 13);
+            this.l_RTSP.Size = new System.Drawing.Size(66, 13);
             this.l_RTSP.TabIndex = 59;
-            this.l_RTSP.Text = "RTSP String:";
+            this.l_RTSP.Text = "RTSP String";
             // 
             // tB_Password
             // 
@@ -90,9 +90,9 @@
             this.l_Password.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_Password.Location = new System.Drawing.Point(10, 148);
             this.l_Password.Name = "l_Password";
-            this.l_Password.Size = new System.Drawing.Size(56, 13);
+            this.l_Password.Size = new System.Drawing.Size(53, 13);
             this.l_Password.TabIndex = 61;
-            this.l_Password.Text = "Password:";
+            this.l_Password.Text = "Password";
             // 
             // tB_FullAdr
             // 
@@ -116,9 +116,9 @@
             this.l_Username.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_Username.Location = new System.Drawing.Point(10, 122);
             this.l_Username.Name = "l_Username";
-            this.l_Username.Size = new System.Drawing.Size(58, 13);
+            this.l_Username.Size = new System.Drawing.Size(55, 13);
             this.l_Username.TabIndex = 62;
-            this.l_Username.Text = "Username:";
+            this.l_Username.Text = "Username";
             // 
             // l_FullAdr
             // 
@@ -129,9 +129,9 @@
             this.l_FullAdr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_FullAdr.Location = new System.Drawing.Point(10, 324);
             this.l_FullAdr.Name = "l_FullAdr";
-            this.l_FullAdr.Size = new System.Drawing.Size(71, 13);
+            this.l_FullAdr.Size = new System.Drawing.Size(68, 13);
             this.l_FullAdr.TabIndex = 71;
-            this.l_FullAdr.Text = "Full Address*:";
+            this.l_FullAdr.Text = "Full Address*";
             // 
             // tB_Username
             // 
@@ -186,9 +186,9 @@
             this.l_Port.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_Port.Location = new System.Drawing.Point(10, 70);
             this.l_Port.Name = "l_Port";
-            this.l_Port.Size = new System.Drawing.Size(61, 13);
+            this.l_Port.Size = new System.Drawing.Size(58, 13);
             this.l_Port.TabIndex = 63;
-            this.l_Port.Text = "RTSP Port:";
+            this.l_Port.Text = "RTSP Port";
             // 
             // l_Adr
             // 
@@ -199,9 +199,9 @@
             this.l_Adr.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_Adr.Location = new System.Drawing.Point(10, 43);
             this.l_Adr.Name = "l_Adr";
-            this.l_Adr.Size = new System.Drawing.Size(52, 13);
+            this.l_Adr.Size = new System.Drawing.Size(49, 13);
             this.l_Adr.TabIndex = 64;
-            this.l_Adr.Text = "RTSP IP:";
+            this.l_Adr.Text = "RTSP IP";
             // 
             // l_Title
             // 
@@ -293,9 +293,9 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(9, 298);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 13);
+            this.label1.Size = new System.Drawing.Size(72, 13);
             this.label1.TabIndex = 78;
-            this.label1.Text = "Preset Name*:";
+            this.label1.Text = "Preset Name*";
             // 
             // b_Scan
             // 
@@ -334,9 +334,9 @@
             this.l_PelcoID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_PelcoID.Location = new System.Drawing.Point(10, 198);
             this.l_PelcoID.Name = "l_PelcoID";
-            this.l_PelcoID.Size = new System.Drawing.Size(55, 13);
+            this.l_PelcoID.Size = new System.Drawing.Size(52, 13);
             this.l_PelcoID.TabIndex = 82;
-            this.l_PelcoID.Text = "Pelco ID*:";
+            this.l_PelcoID.Text = "Pelco ID*";
             // 
             // tB_ControlPort
             // 
@@ -359,7 +359,7 @@
             this.tB_PelcoID.Name = "tB_PelcoID";
             this.tB_PelcoID.Size = new System.Drawing.Size(301, 20);
             this.tB_PelcoID.TabIndex = 8;
-            this.tB_PelcoID.Text = "0";
+            this.tB_PelcoID.Text = "1";
             // 
             // tB_ControlIP
             // 
@@ -382,9 +382,9 @@
             this.l_ControlPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_ControlPort.Location = new System.Drawing.Point(10, 251);
             this.l_ControlPort.Name = "l_ControlPort";
-            this.l_ControlPort.Size = new System.Drawing.Size(65, 13);
+            this.l_ControlPort.Size = new System.Drawing.Size(62, 13);
             this.l_ControlPort.TabIndex = 83;
-            this.l_ControlPort.Text = "Control Port:";
+            this.l_ControlPort.Text = "Control Port";
             // 
             // l_ControlIP
             // 
@@ -396,9 +396,9 @@
             this.l_ControlIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.l_ControlIP.Location = new System.Drawing.Point(10, 224);
             this.l_ControlIP.Name = "l_ControlIP";
-            this.l_ControlIP.Size = new System.Drawing.Size(56, 13);
+            this.l_ControlIP.Size = new System.Drawing.Size(53, 13);
             this.l_ControlIP.TabIndex = 84;
-            this.l_ControlIP.Text = "Control IP:";
+            this.l_ControlIP.Text = "Control IP";
             // 
             // check_Manual
             // 

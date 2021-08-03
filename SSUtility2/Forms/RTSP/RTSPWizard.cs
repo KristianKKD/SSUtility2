@@ -78,7 +78,7 @@ namespace SSUtility2 {
             if (stringCheckIndex != "")
                 checkIndex = int.Parse(stringCheckIndex);
 
-            if (checkIndex == editIndex && editIndex >= 0) { //existing
+            if (editIndex >= 0) { //existing
                 Console.WriteLine("EDITING");
                 mySets.cB_RTSP.SelectedIndex = RTSPPresets.LoadPreset(full, editIndex);
             } else if (checkIndex != -1) { //duplicate

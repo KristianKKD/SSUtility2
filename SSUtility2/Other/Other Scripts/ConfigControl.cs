@@ -47,6 +47,8 @@ namespace SSUtility2 {
         public static ConfigSetting playerCount = new ConfigSetting("1", "PlayerCount", ConfigSetting.VarType.integer);
         public static ConfigSetting pelcoOverrideID = new ConfigSetting("1", "PelcoOverrideID", ConfigSetting.VarType.integer);
         public static ConfigSetting mainPlayerPreset = new ConfigSetting("", "MainPlayerPresetName", ConfigSetting.VarType.strings);
+        public static ConfigSetting player2Preset = new ConfigSetting("", "SecondaryPresetName", ConfigSetting.VarType.strings);
+        public static ConfigSetting player3Preset = new ConfigSetting("", "TertiaryPresetName", ConfigSetting.VarType.strings);
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -72,6 +74,8 @@ namespace SSUtility2 {
             maintainAspectRatio,
             pelcoOverrideID,
             mainPlayerPreset,
+            player2Preset,
+            player3Preset,
         };
 
         public static async Task SetToDefaults() {
@@ -95,22 +99,6 @@ namespace SSUtility2 {
                         continue;
 
                     ConfigLine(path, setting.settingName, setting.stringVal, configVarPrefix);
-                }
-
-                for (int i = -1; i < MainForm.m.mainPlayer.attachedPlayers.Count; i++) {
-                    Detached d = MainForm.m.mainPlayer;
-                    if (i != -1)
-                        d = MainForm.m.mainPlayer.attachedPlayers[i];
-
-                    //List<(string, string)> setList = d.settings.SaveToConfig();
-                    //for (int o = 0; o < setList.Count; o++) {
-                    //    (string, string) s = setList[o];
-
-                    //    if(o == 0)
-                    //        ConfigLine(path, s.Item1, s.Item2, playerPrefix);
-                    //    else
-                    //        ConfigLine(path, s.Item1, s.Item2, subPrefix);
-                    //}
                 }
 
                 List<string> rtspPresets = RTSPPresets.GetAll();

@@ -11,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.7";
+        public const string version = "v2.8.0.8";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -157,8 +157,7 @@ namespace SSUtility2 {
                         second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
                     }
 
-                    //if (playerConfigList.Count >= 1 && playerConfigList[0] != null)
-                    //    secondPlayer.settings.LoadConfig(playerConfigList[0]);
+                    secondPlayer.settings.LoadSecondary(ConfigControl.player2Preset.stringVal);
 
                 } else if (playercount < 2 && mainPlayer.attachedPlayers.Contains(secondPlayer)) {
                     mainPlayer.Detach(secondPlayer, true);
@@ -174,8 +173,7 @@ namespace SSUtility2 {
                         third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
                     }
 
-                    //if (playerConfigList.Count >= 2 && playerConfigList[1] != null)
-                    //    thirdPlayer.settings.LoadConfig(playerConfigList[1]);
+                    thirdPlayer.settings.LoadSecondary(ConfigControl.player3Preset.stringVal);
 
                 } else if (playercount < 3 && mainPlayer.attachedPlayers.Contains(thirdPlayer)) {
                     mainPlayer.Detach(thirdPlayer, true);
@@ -267,9 +265,11 @@ namespace SSUtility2 {
 
                     int id = MainForm.m.mainPlayer.settings.GetPelcoID();
                     if (id == -1)
-                        id = 0;
+                        id = 1;
 
                     ConfigControl.pelcoOverrideID.UpdateValue(id.ToString());
+
+                    setPage.LiteButtonSelect();
 
                     Menu_Settings_Panels_IP.Dispose();
                     Menu_Settings_Panels_CP.Dispose();
@@ -785,13 +785,13 @@ namespace SSUtility2 {
         }
 
         private void b_PTZ_Daylight_Click(object sender, EventArgs e) {
-            //ConfigControl.pelcoID.UpdateValue("1");
-            setPage.UpdateSelectedCam(true);
+            ConfigControl.pelcoOverrideID.UpdateValue("1");
+            setPage.LiteButtonSelect();
         }
 
         private void b_PTZ_Thermal_Click(object sender, EventArgs e) {
-            //ConfigControl.pelcoID.UpdateValue("2");
-            setPage.UpdateSelectedCam(true);
+            ConfigControl.pelcoOverrideID.UpdateValue("2");
+            setPage.LiteButtonSelect();
         }
 
         private void p_PlayerPanel_MouseMove(object sender, MouseEventArgs e) {

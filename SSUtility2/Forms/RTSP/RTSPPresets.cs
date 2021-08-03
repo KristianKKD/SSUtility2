@@ -24,7 +24,7 @@ namespace SSUtility2 {
         }
 
         //Name;FullAdr;RTSPIP;RTSPPort;RTSP;Username;Password;PelcoID;ControlIP;ControlPort;
-        static int columns = 10;
+        readonly static int columns = 10;
         public static string[,] allPresets = new string[columns, 99];
         public static int currentPresetCount = 0;
 

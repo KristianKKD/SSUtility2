@@ -36,9 +36,11 @@ namespace SSUtility2 {
 
             allSettings.Add(this);
             if (!isMainPlayer) {
-                UpdateSinglePresetBox(this);
+                UpdateSinglePresetBox(cB_RTSP);
                 MinimumSize = new Size(Width, 120);
                 MaximumSize = new Size(Width, 120);
+            } else {
+                b_Detach.Visible = false;
             }
         }
 
@@ -92,10 +94,13 @@ namespace SSUtility2 {
                         copyCB.SelectedIndexChanged += (s, e) => {
                             originalSets.cB_RTSP.SelectedIndex = copyCB.SelectedIndex;
                         };
+                        copyCB.TextChanged += (s, e) => {
+                            originalSets.CBTextChanged();
+                        };
 
                         copyCB.FlatStyle = cb.FlatStyle;
                         copyCB.DropDownStyle = cb.DropDownStyle;
-                        copyCB.SelectedIndex = cb.SelectedIndex;
+                        //copyCB.SelectedIndex = cb.SelectedIndex;
                     } else if (c.GetType() == typeof(Button)) {
                         Button b = new Button();
                         Button copyB = new Button();
@@ -114,7 +119,10 @@ namespace SSUtility2 {
                         copyC.Font = c.Font;
                         copyC.Visible = true;
 
-                       if (copyC.GetType() != typeof(ComboBox))
+                        if(copyC.GetType() == typeof(Button))
+                            copyC.Visible = false;
+
+                        if (copyC.GetType() != typeof(ComboBox))
                             copyC.Text = c.Text;
 
                         tp.Controls.Add(copyC);
@@ -136,34 +144,20 @@ namespace SSUtility2 {
             return tp;
         }
 
-        //public static void CopySettings(VideoSettings target, VideoSettings source, CopyType type) {
-        //    try {
-        //        VideoSettings mainSets = MainForm.m.mainPlayer.settings;
+        public void LoadSecondary(string presetName) {
+            string indexVal = RTSPPresets.GetValue(PresetColumn.Index, presetName);
+            int presetIndex = 0;
+            if (indexVal != "")
+                presetIndex = int.Parse(indexVal);
 
-        //        //string sourceCB = FindControl(source.tP_Main, mainSets.cB_PlayerD_CamType).Text;
-
-        //        switch (type) {
-        //            case CopyType.CopyFull:
-        //                //target.cB_PlayerD_CamType.Text = sourceCB;
-        //                break;
-        //            case CopyType.NoCopy:
-        //                return;
-        //        }
-
-        //        foreach (TextBox targetTB in Tools.GetAllType(target.tP_Main, typeof(TextBox))) {
-        //            foreach (TextBox sourceTB in Tools.GetAllType(source.tP_Main, typeof(TextBox))) {
-        //                if (targetTB.Name == sourceTB.Name) {
-        //                    targetTB.Text = sourceTB.Text;
-        //                    break;
-        //                }
-        //            }
-        //        }
-
-        //        //target.GetCombined();
-        //    } catch (Exception e) {
-        //        MessageBox.Show(e.ToString());
-        //    };
-        //}
+            if (presetIndex >= RTSPPresets.currentPresetCount) {
+                presetIndex = MainForm.m.mainPlayer.attachedPlayers.IndexOf(myDetached) + 1;
+                if (presetIndex >= RTSPPresets.currentPresetCount)
+                    return;
+            }
+            
+            cB_RTSP.SelectedIndex = presetIndex;
+        }
 
         static Control FindControl(TabPage tp, object reference) {
             foreach (Control c in Tools.GetAllType(tp, reference.GetType())){
@@ -176,28 +170,41 @@ namespace SSUtility2 {
             return null;
         }
 
-        static void UpdateSinglePresetBox(VideoSettings vs) {
-            int oldVal = vs.cB_RTSP.SelectedIndex;
+        static void UpdateSinglePresetBox(ComboBox box) {
+            int oldVal = box.SelectedIndex;
 
-            vs.cB_RTSP.Items.Clear();
+            box.Items.Clear();
             foreach (string s in RTSPPresets.GetPresetList())
-                vs.cB_RTSP.Items.Add(s);
+                box.Items.Add(s);
 
-            vs.cB_RTSP.Items.Add("Add New...");
+            box.Items.Add("Add New...");
 
-            if (oldVal <= vs.cB_RTSP.Items.Count - 2)
-                vs.cB_RTSP.SelectedIndex = oldVal;
+            if (oldVal <= box.Items.Count - 2)
+                box.SelectedIndex = oldVal;
         }
 
         public static void UpdateAllPresetBoxes() {
             foreach (VideoSettings vs in allSettings)
-                UpdateSinglePresetBox(vs);
+                UpdateSinglePresetBox(vs.cB_RTSP);
+
+            foreach (TabPage tp in MainForm.m.mainPlayer.settings.tC_PlayerSettings.TabPages) {
+                if (tp == MainForm.m.mainPlayer.settings.tP_Main)
+                    continue;
+
+                UpdateSinglePresetBox((ComboBox)FindControl(tp, MainForm.m.mainPlayer.settings.cB_RTSP));
+            }
+
+            UpdateSinglePresetBox(MainForm.m.setPage.cB_IPCon_MainPlayerPreset);
         }
 
         private void b_Edit_Click(object sender, EventArgs e) {
-            string rtspName = cB_RTSP.Text;
+            OpenEdit(this);
+        }
+
+        public static void OpenEdit(VideoSettings sets) {
+            string rtspName = sets.cB_RTSP.Text;
             if (rtspName.Length > 0 && rtspName.Trim().Length > 0) {
-                RTSPPresets.OpenPreset(cB_RTSP.Text, this);
+                RTSPPresets.OpenPreset(sets.cB_RTSP.Text, sets);
                 return;
             }
         }
@@ -210,7 +217,13 @@ namespace SSUtility2 {
             myDetached.StopPlaying();
         }
 
+        int previousIndex = -1;
         private void cB_RTSP_SelectedIndexChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            previousIndex = cB_RTSP.SelectedIndex;
+
             if (cB_RTSP.Text == "") {
                 toolTip1.SetToolTip(cB_RTSP, "Select a camera preset");
                 return;
@@ -219,36 +232,56 @@ namespace SSUtility2 {
             bool visibleBool = false;
 
             if (cB_RTSP.SelectedIndex == cB_RTSP.Items.Count - 1) {
-                cB_RTSP.Text = "";
-                RTSPPresets.CreateNew(this);
+                if(previousIndex != -1 || isMainPlayer)
+                    RTSPPresets.CreateNew(this);
             } else {
                 //Use new settings
-                visibleBool = true;
-                myDetached.Play(false, false);
+                if (cB_RTSP.Text != "") {
+                    visibleBool = true;
+                    myDetached.Play(false, false);
+                }
+
+                if (isMainPlayer)
+                    MainForm.m.setPage.cB_IPCon_MainPlayerPreset.SelectedIndex = cB_RTSP.SelectedIndex;
 
                 CompleteControlValues();
             }
+            
+            UpdateButtonVisibility(visibleBool);
 
-            b_Edit.Visible = visibleBool;
-            b_Play.Visible = visibleBool;
-            b_Stop.Visible = visibleBool;
-
-            if (isMainPlayer)
-                ConfigControl.mainPlayerPreset.UpdateValue(cB_RTSP.Text);
-            else if (myLinkedPage != null) {
-                foreach (Control c in myLinkedPage.Controls) {
-                    if (c.GetType() == typeof(Button))
-                        c.Visible = visibleBool;
-                    else if (c.GetType() == typeof(ComboBox)) {
-                        ComboBox cb = (ComboBox)c;
-                        cb.SelectedIndex = cB_RTSP.SelectedIndex;
-                    }
-
-                }
+            string rtspText = cB_RTSP.Text;
+            if (isMainPlayer) {
+                ConfigControl.mainPlayerPreset.UpdateValue(rtspText);
+                MainForm.m.setPage.b_IPCon_Edit.Visible = visibleBool;
+            } else if (myLinkedPage != null) {
+                int pageIndex = MainForm.m.mainPlayer.settings.tC_PlayerSettings.TabPages.IndexOf(myLinkedPage);
+                if (pageIndex == 1)
+                    ConfigControl.player2Preset.UpdateValue(rtspText);
+                else if (pageIndex == 2)
+                    ConfigControl.player3Preset.UpdateValue(rtspText);
             }
 
             string fullAdr = RTSPPresets.GetValue(PresetColumn.FullAdr, cB_RTSP.Text);
             toolTip1.SetToolTip(cB_RTSP, fullAdr);
+        }
+
+        void UpdateButtonVisibility(bool visible) {
+            b_Edit.Visible = visible;
+            b_Play.Visible = visible;
+            b_Stop.Visible = visible;
+
+            if (myLinkedPage == null)
+                return;
+
+            foreach (Control c in myLinkedPage.Controls) {
+                if (c.GetType() == typeof(Button))
+                    c.Visible = visible;
+                else if (c.GetType() == typeof(ComboBox)) {
+                    ComboBox cb = (ComboBox)c;
+                    if (cb.SelectedIndex < cB_RTSP.Items.Count)
+                        cb.SelectedIndex = cB_RTSP.SelectedIndex;
+                }
+            }
         }
 
         void CompleteControlValues() {
@@ -353,6 +386,24 @@ namespace SSUtility2 {
             tB_Port.Enabled = enabled;
         }
 
+        private void b_Detach_Click(object sender, EventArgs e) {
+            if (isAttached)
+                MainForm.m.mainPlayer.Detach(myDetached, false);
+            else {
+                Detached main = MainForm.m.mainPlayer;
+                main.AttachPlayerToThis(myDetached, new Point((int)Math.Round(main.Width / 2f),
+                    (int)Math.Round(main.Height / 2f)));
+            }
+        }
+
+        private void cB_RTSP_TextChanged(object sender, EventArgs e) {
+            CBTextChanged();
+        }
+
+        void CBTextChanged() {
+            string text = cB_RTSP.Text.ToLower();
+            UpdateButtonVisibility(text != "" && text != "add new...");
+        }
     }
 }
 

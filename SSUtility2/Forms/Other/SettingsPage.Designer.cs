@@ -44,6 +44,8 @@ namespace SSUtility2
             this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
+            this.cB_IPCon_MainPlayerPreset = new System.Windows.Forms.ComboBox();
+            this.l_IPCon_MainPlayerPreset = new System.Windows.Forms.Label();
             this.l_IPCon_Subnet = new System.Windows.Forms.Label();
             this.b_IPCon_Recheck = new System.Windows.Forms.Button();
             this.l_IPCon_Percent = new System.Windows.Forms.Label();
@@ -83,6 +85,7 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
+            this.b_IPCon_Edit = new System.Windows.Forms.Button();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -318,6 +321,9 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
+            this.tP_Control.Controls.Add(this.b_IPCon_Edit);
+            this.tP_Control.Controls.Add(this.cB_IPCon_MainPlayerPreset);
+            this.tP_Control.Controls.Add(this.l_IPCon_MainPlayerPreset);
             this.tP_Control.Controls.Add(this.l_IPCon_Subnet);
             this.tP_Control.Controls.Add(this.b_IPCon_Recheck);
             this.tP_Control.Controls.Add(this.l_IPCon_Percent);
@@ -342,6 +348,29 @@ namespace SSUtility2
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
             // 
+            // cB_IPCon_MainPlayerPreset
+            // 
+            this.cB_IPCon_MainPlayerPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_IPCon_MainPlayerPreset.FormattingEnabled = true;
+            this.cB_IPCon_MainPlayerPreset.Items.AddRange(new object[] {
+            "Add New..."});
+            this.cB_IPCon_MainPlayerPreset.Location = new System.Drawing.Point(115, 87);
+            this.cB_IPCon_MainPlayerPreset.Name = "cB_IPCon_MainPlayerPreset";
+            this.cB_IPCon_MainPlayerPreset.Size = new System.Drawing.Size(183, 21);
+            this.cB_IPCon_MainPlayerPreset.TabIndex = 97;
+            this.toolTips.SetToolTip(this.cB_IPCon_MainPlayerPreset, "Defaults IP Address and Port fields to preset values");
+            this.cB_IPCon_MainPlayerPreset.SelectedIndexChanged += new System.EventHandler(this.cB_IPCon_MainPlayerPreset_SelectedIndexChanged);
+            // 
+            // l_IPCon_MainPlayerPreset
+            // 
+            this.l_IPCon_MainPlayerPreset.AutoSize = true;
+            this.l_IPCon_MainPlayerPreset.Location = new System.Drawing.Point(6, 90);
+            this.l_IPCon_MainPlayerPreset.Name = "l_IPCon_MainPlayerPreset";
+            this.l_IPCon_MainPlayerPreset.Size = new System.Drawing.Size(95, 13);
+            this.l_IPCon_MainPlayerPreset.TabIndex = 98;
+            this.l_IPCon_MainPlayerPreset.Text = "Main Player Preset";
+            this.toolTips.SetToolTip(this.l_IPCon_MainPlayerPreset, "Change the Main Player\'s Preset");
+            // 
             // l_IPCon_Subnet
             // 
             this.l_IPCon_Subnet.AutoSize = true;
@@ -353,7 +382,7 @@ namespace SSUtility2
             // 
             // b_IPCon_Recheck
             // 
-            this.b_IPCon_Recheck.Location = new System.Drawing.Point(257, 192);
+            this.b_IPCon_Recheck.Location = new System.Drawing.Point(250, 191);
             this.b_IPCon_Recheck.Name = "b_IPCon_Recheck";
             this.b_IPCon_Recheck.Size = new System.Drawing.Size(90, 21);
             this.b_IPCon_Recheck.TabIndex = 93;
@@ -364,7 +393,7 @@ namespace SSUtility2
             // l_IPCon_Percent
             // 
             this.l_IPCon_Percent.AutoSize = true;
-            this.l_IPCon_Percent.Location = new System.Drawing.Point(281, 102);
+            this.l_IPCon_Percent.Location = new System.Drawing.Point(286, 122);
             this.l_IPCon_Percent.Name = "l_IPCon_Percent";
             this.l_IPCon_Percent.Size = new System.Drawing.Size(15, 13);
             this.l_IPCon_Percent.TabIndex = 92;
@@ -372,7 +401,7 @@ namespace SSUtility2
             // 
             // tB_IPCon_CamSpeed
             // 
-            this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(245, 99);
+            this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(250, 119);
             this.tB_IPCon_CamSpeed.Name = "tB_IPCon_CamSpeed";
             this.tB_IPCon_CamSpeed.Size = new System.Drawing.Size(34, 20);
             this.tB_IPCon_CamSpeed.TabIndex = 6;
@@ -382,7 +411,7 @@ namespace SSUtility2
             // l_IPCon_TrackBar
             // 
             this.l_IPCon_TrackBar.AutoSize = true;
-            this.l_IPCon_TrackBar.Location = new System.Drawing.Point(6, 101);
+            this.l_IPCon_TrackBar.Location = new System.Drawing.Point(6, 119);
             this.l_IPCon_TrackBar.Name = "l_IPCon_TrackBar";
             this.l_IPCon_TrackBar.Size = new System.Drawing.Size(98, 13);
             this.l_IPCon_TrackBar.TabIndex = 90;
@@ -501,7 +530,7 @@ namespace SSUtility2
             // slider_IPCon_ControlMultiplier
             // 
             this.slider_IPCon_ControlMultiplier.BackColor = System.Drawing.SystemColors.Window;
-            this.slider_IPCon_ControlMultiplier.Location = new System.Drawing.Point(109, 97);
+            this.slider_IPCon_ControlMultiplier.Location = new System.Drawing.Point(110, 114);
             this.slider_IPCon_ControlMultiplier.Maximum = 200;
             this.slider_IPCon_ControlMultiplier.Minimum = 1;
             this.slider_IPCon_ControlMultiplier.Name = "slider_IPCon_ControlMultiplier";
@@ -797,6 +826,20 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
+            // b_IPCon_Edit
+            // 
+            this.b_IPCon_Edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_IPCon_Edit.BackColor = System.Drawing.SystemColors.Control;
+            this.b_IPCon_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_IPCon_Edit.Location = new System.Drawing.Point(304, 86);
+            this.b_IPCon_Edit.Name = "b_IPCon_Edit";
+            this.b_IPCon_Edit.Size = new System.Drawing.Size(23, 23);
+            this.b_IPCon_Edit.TabIndex = 100;
+            this.b_IPCon_Edit.Text = "⛭";
+            this.b_IPCon_Edit.UseVisualStyleBackColor = false;
+            this.b_IPCon_Edit.Visible = false;
+            this.b_IPCon_Edit.Click += new System.EventHandler(this.b_IPCon_Edit_Click);
+            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -892,5 +935,8 @@ namespace SSUtility2
         private System.Windows.Forms.Label l_Other_PlayerCount;
         private System.Windows.Forms.ComboBox cB_Other_PlayerCount;
         public System.Windows.Forms.Label l_IPCon_Subnet;
+        public System.Windows.Forms.ComboBox cB_IPCon_MainPlayerPreset;
+        public System.Windows.Forms.Label l_IPCon_MainPlayerPreset;
+        public System.Windows.Forms.Button b_IPCon_Edit;
     }
 }

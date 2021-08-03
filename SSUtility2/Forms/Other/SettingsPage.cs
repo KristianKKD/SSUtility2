@@ -68,7 +68,6 @@ namespace SSUtility2 {
                 l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
                 l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
 
-                UpdateSelectedCam(false);
                 MainForm.m.custom.UpdateButtonNames();
                 UpdateCamType();
                 UpdateRatioLabel();
@@ -280,12 +279,14 @@ namespace SSUtility2 {
             MainForm.m.clw.ShowWindow();
         }
 
-        public async Task UpdateSelectedCam(bool play) {
+        public async Task LiteButtonSelect() {
             if (MainForm.m.lite) {
                 MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
                 MainForm.m.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
                 MainForm.m.b_PTZ_Daylight.Visible = true;
                 MainForm.m.b_PTZ_Thermal.Visible = true;
+
+                Console.WriteLine(ConfigControl.pelcoOverrideID.intVal);
 
                 if (ConfigControl.pelcoOverrideID.intVal == 1)
                     MainForm.m.b_PTZ_Daylight.BackColor = System.Drawing.Color.LightGreen;
@@ -568,6 +569,21 @@ namespace SSUtility2 {
             }
 
             MainForm.m.custom.UpdateTip(e.RowIndex);
+        }
+
+        private void b_IPCon_Edit_Click(object sender, EventArgs e) {
+            VideoSettings.OpenEdit(MainForm.m.mainPlayer.settings);
+        }
+
+        private void cB_IPCon_MainPlayerPreset_SelectedIndexChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            if (cB_IPCon_MainPlayerPreset.SelectedIndex == cB_IPCon_MainPlayerPreset.Items.Count - 1
+                && RTSPPresets.currentPresetCount == 0) //if no presets exist and the user clicks Add New...
+                RTSPPresets.CreateNew(MainForm.m.mainPlayer.settings);
+            else
+                MainForm.m.mainPlayer.settings.cB_RTSP.SelectedIndex = cB_IPCon_MainPlayerPreset.SelectedIndex;
         }
     }
 }

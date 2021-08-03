@@ -212,9 +212,9 @@
             this.l_Port.AutoSize = true;
             this.l_Port.Location = new System.Drawing.Point(0, 44);
             this.l_Port.Name = "l_Port";
-            this.l_Port.Size = new System.Drawing.Size(29, 13);
+            this.l_Port.Size = new System.Drawing.Size(26, 13);
             this.l_Port.TabIndex = 82;
-            this.l_Port.Text = "Port:";
+            this.l_Port.Text = "Port";
             // 
             // tB_Serial_Baud
             // 

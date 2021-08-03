@@ -143,6 +143,7 @@ namespace SSUtility2 {
 
         public SizeablePanel AttachPlayerToThis(Detached secondPlayer, Point pos, bool playOnLaunch = true) {
             try {
+                secondPlayer.Hide();
                 attachedPlayers.Add(secondPlayer);
                 secondPlayer.settings.isAttached = true;
 
@@ -171,9 +172,8 @@ namespace SSUtility2 {
                 string name = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
                 secondPlayer.settings.tP_Main.Text = name;
 
-                secondPlayer.settings.cB_RTSP.SelectedIndex = attachedPlayers.IndexOf(secondPlayer) + 1;
-
                 settings.AddPage(secondPlayer);
+                secondPlayer.settings.b_Detach.Text = "Detach";
 
                 return sP_Secondary;
             } catch (Exception e) {
@@ -194,6 +194,10 @@ namespace SSUtility2 {
         }
 
         public void Detach(Detached detachable, bool destroy) {
+            TabPage tp = detachable.settings.myLinkedPage;
+            if (tp != null && settings.tC_PlayerSettings.TabPages.Contains(tp))
+                settings.tC_PlayerSettings.TabPages.Remove(tp);
+            
             attachedPlayers.Remove(detachable);
 
             if (destroy) {
@@ -201,6 +205,7 @@ namespace SSUtility2 {
                 return;
             }
 
+            detachable.settings.myLinkedPage = null;
             detachable.settings.isAttached = false;
 
             bool wasPlaying = false;
@@ -208,6 +213,7 @@ namespace SSUtility2 {
                 wasPlaying = true;
 
             detachable.StopPlaying();
+            detachable.settings.b_Detach.Text = "Attach";
 
             detachable.p_Player.Dispose();
 
