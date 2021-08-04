@@ -44,6 +44,7 @@ namespace SSUtility2
             this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
+            this.b_IPCon_Edit = new System.Windows.Forms.Button();
             this.cB_IPCon_MainPlayerPreset = new System.Windows.Forms.ComboBox();
             this.l_IPCon_MainPlayerPreset = new System.Windows.Forms.Label();
             this.l_IPCon_Subnet = new System.Windows.Forms.Label();
@@ -85,7 +86,6 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.b_IPCon_Edit = new System.Windows.Forms.Button();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -348,6 +348,20 @@ namespace SSUtility2
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
             // 
+            // b_IPCon_Edit
+            // 
+            this.b_IPCon_Edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_IPCon_Edit.BackColor = System.Drawing.SystemColors.Control;
+            this.b_IPCon_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_IPCon_Edit.Location = new System.Drawing.Point(304, 86);
+            this.b_IPCon_Edit.Name = "b_IPCon_Edit";
+            this.b_IPCon_Edit.Size = new System.Drawing.Size(23, 23);
+            this.b_IPCon_Edit.TabIndex = 100;
+            this.b_IPCon_Edit.Text = "⛭";
+            this.b_IPCon_Edit.UseVisualStyleBackColor = false;
+            this.b_IPCon_Edit.Visible = false;
+            this.b_IPCon_Edit.Click += new System.EventHandler(this.b_IPCon_Edit_Click);
+            // 
             // cB_IPCon_MainPlayerPreset
             // 
             this.cB_IPCon_MainPlayerPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -375,7 +389,7 @@ namespace SSUtility2
             // 
             this.l_IPCon_Subnet.AutoSize = true;
             this.l_IPCon_Subnet.ForeColor = System.Drawing.Color.DimGray;
-            this.l_IPCon_Subnet.Location = new System.Drawing.Point(332, 36);
+            this.l_IPCon_Subnet.Location = new System.Drawing.Point(320, 36);
             this.l_IPCon_Subnet.Name = "l_IPCon_Subnet";
             this.l_IPCon_Subnet.Size = new System.Drawing.Size(0, 13);
             this.l_IPCon_Subnet.TabIndex = 96;
@@ -825,20 +839,6 @@ namespace SSUtility2
             this.l_Version.Size = new System.Drawing.Size(102, 13);
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
-            // 
-            // b_IPCon_Edit
-            // 
-            this.b_IPCon_Edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_IPCon_Edit.BackColor = System.Drawing.SystemColors.Control;
-            this.b_IPCon_Edit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_IPCon_Edit.Location = new System.Drawing.Point(304, 86);
-            this.b_IPCon_Edit.Name = "b_IPCon_Edit";
-            this.b_IPCon_Edit.Size = new System.Drawing.Size(23, 23);
-            this.b_IPCon_Edit.TabIndex = 100;
-            this.b_IPCon_Edit.Text = "⛭";
-            this.b_IPCon_Edit.UseVisualStyleBackColor = false;
-            this.b_IPCon_Edit.Visible = false;
-            this.b_IPCon_Edit.Click += new System.EventHandler(this.b_IPCon_Edit_Click);
             // 
             // SettingsPage
             // 

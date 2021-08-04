@@ -623,6 +623,9 @@ namespace SSUtility2 {
                 IntPtr focusedHandle = Program.GetFocus();
                 if (focusedHandle != IntPtr.Zero) {
                     Control c = Control.FromHandle(focusedHandle);
+                    if (c == null)
+                        return null;
+
                     if (c.GetType() == typeof(Form) || c.GetType() == typeof(PictureBox) || c.GetType() == typeof(Menu))
                         return c;
                 }

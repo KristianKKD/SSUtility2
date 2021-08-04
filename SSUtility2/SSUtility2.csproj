@@ -7,7 +7,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>WinExe</OutputType>
     <RootNamespace>SSUtility2</RootNamespace>
-    <AssemblyName>SSUtility2</AssemblyName>
+    <AssemblyName>SSUtility2.0</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -108,7 +108,7 @@
       <HintPath>..\packages\Costura.Fody.5.3.0\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
     <Reference Include="EasyPlayer-RTSP.NetSDK">
-      <HintPath>..\..\EasyPlayerNetSDK\obj\Debug\EasyPlayer-RTSP.NetSDK.dll</HintPath>
+      <HintPath>..\..\EasyPlayerNetSDK\obj\Release\EasyPlayer-RTSP.NetSDK.dll</HintPath>
     </Reference>
     <Reference Include="KaiserControls">
       <HintPath>..\..\KaiserControls\KaiserControls\bin\Release\KaiserControls.dll</HintPath>

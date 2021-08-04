@@ -90,14 +90,14 @@ namespace SSUtility2 {
                 if (IsPlaying())
                     StopPlaying();
 
-                settings.channelID = PlayerSdk.EasyPlayer_OpenStream(combinedUrl.ToString(),
+                Console.WriteLine("PLAY SUCCESS: " + (settings.channelID = PlayerSdk.EasyPlayer_OpenStream(combinedUrl.ToString(),
                     p_Player.Handle, PlayerSdk.RENDER_FORMAT.DISPLAY_FORMAT_RGB24_GDI,
-                        1, "", "", null, IntPtr.Zero, false);
+                        1, "", "", null, IntPtr.Zero, false)).ToString());
 
                 if (IsPlaying())
                     PlayerSdk.EasyPlayer_SetFrameCache(settings.channelID, 3);
                 else {
-                    if(showErrors)
+                    if (showErrors)
                         MessageBox.Show("Failed to attach to channel!");
                     StopPlaying();
                 }

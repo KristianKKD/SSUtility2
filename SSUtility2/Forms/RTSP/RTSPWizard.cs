@@ -97,33 +97,82 @@ namespace SSUtility2 {
         }
 
         void FullToParts(string full) {
-            int usernamePos = full.IndexOf(":", 7) + 1; //should be the first one
+            try {
+                tB_RTSPIP.Text = "";
+                tB_RTSPPort.Text = "";
+                tB_RTSPString.Text = "";
+                tB_Username.Text = "";
+                tB_Password.Text = "";
 
-            if (full[6] != '/' && usernamePos <= 0) //if fullAdr isn't completed in the expected way
-                return;
+                int rtspLength = 7; //should be pos of username or ip in expected format
 
-            int atPos = full.IndexOf("@") + 1;
-            int secondColonPos = full.IndexOf(":", usernamePos);
+                if (full.Length < rtspLength + 1)
+                    return;
 
-            string username = "";
-            string password = "";
+                if (full.Substring(0, rtspLength) != "rtsp://") //if fullAdr isn't completed in any expected way
+                    return;
 
-            string ipaddress = full.Substring(atPos, secondColonPos - atPos);
-            string port = full.Substring(secondColonPos + 1, full.IndexOf("/", 7) - secondColonPos - 1);
-            string url = full.Substring(secondColonPos + port.Length + 2); //cant be null because it doesnt use length
-           
-            if (usernamePos > 8) {
-                username = full.Substring(7, usernamePos - 8); //7 = rtsp://
-                password = full.Substring(usernamePos, atPos - usernamePos - 1);
+                full = full.Substring(rtspLength);
+
+                int atPos = full.IndexOf("@");
+                
+                int portColonPos = full.IndexOf(":");
+
+                int passwordPos = full.IndexOf(":", 0);
+                if (passwordPos > 0 && passwordPos < atPos) //password exists
+                    portColonPos = full.IndexOf(":", passwordPos + 1);
+                else if (passwordPos > atPos)
+                    passwordPos = 0;
+
+                int usernameLength = 0;
+               
+                if (atPos > 1) { //rtsp url has username
+                    int usernameEnd = full.IndexOf(":");
+                    if (atPos < usernameEnd)
+                        usernameEnd = atPos; //no password
+
+                    if (usernameEnd > 0)
+                        usernameLength = TryFillField(full, 0, usernameEnd, tB_Username) - 1;
+                }
+
+                int portFinisher = full.IndexOf("/", atPos + 1); //can be 0 to signify the end of the string
+
+                int ipStart = atPos + 1;
+                int ipLength = portColonPos - ipStart;
+
+                //if (portFinisher < firstFoundColon) // maybe no port? implement later 
+                //    ipEnd = portFinisher + 1;
+
+                TryFillField(full, ipStart, ipLength, tB_RTSPIP);
+
+                int portPos = ipStart + ipLength + 1;
+                if (full.Length > portPos && full[portPos - 1] == ':')
+                    TryFillField(full, portPos, portFinisher - portPos, tB_RTSPPort);
+
+                TryFillField(full, full.IndexOf('/') + 1, -1, tB_RTSPString);
+
+                if (usernameLength > 0 && passwordPos > 0 && atPos - usernameLength > 2)
+                    TryFillField(full, passwordPos + 1, atPos - usernameLength - 2, tB_Password);
+
+            } catch (Exception e) {
+                Console.WriteLine("Failed to extract values from full address\n" + e.ToString());
             }
+        }
 
-            tB_Username.Text = username;
-            tB_Password.Text = password;
-            tB_RTSPIP.Text = ipaddress;
-            tB_RTSPPort.Text = port;
-            tB_RTSPString.Text = url;
+        int TryFillField(string full, int startPos, int length, TextBox tb) {
+            try {
+                string val = "";
+                if (length > 0)
+                    val = full.Substring(startPos, length);
+                else
+                    val = full.Substring(startPos);
 
-            tB_FullAdr.Text = GetCombined();
+                tb.Text = val;
+
+                return val.Length;
+            } catch (Exception e){ }
+
+            return 0;
         }
 
         public string GetCombined() {
@@ -138,7 +187,11 @@ namespace SSUtility2 {
                 if (username.Length <= 0 && password.Length <= 0)
                     userPass = "";
 
-                return "rtsp://" + userPass + ipaddress + ":" + port + "/" + url;
+                string colonPort = ":" + port;
+                if (port.Length <= 0)
+                    colonPort = "";
+
+                return "rtsp://" + userPass + ipaddress + colonPort + "/" + url;
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
             };
@@ -146,14 +199,14 @@ namespace SSUtility2 {
             return "";
         }
 
-        void ChangeFullAndName() {
-            tB_FullAdr.Text = GetCombined();
+        void ChangeName() {
             if (editIndex == -1 && !nameChanged)
                 tB_Name.Text = tB_RTSPIP.Text;
         }
 
         private void tB_Any_Keyup(object sender, KeyEventArgs e) {
-            ChangeFullAndName();
+            tB_FullAdr.Text = GetCombined();
+            ChangeName();
         }
 
         private void b_Forget_Click(object sender, EventArgs e) {
@@ -188,8 +241,10 @@ namespace SSUtility2 {
         bool isSelected = false;
         private void tB_FullAdr_TextChanged(object sender, EventArgs e) {
             if (isSelected) {
+                isSelected = false;
                 FullToParts(tB_FullAdr.Text);
-                ChangeFullAndName();
+                ChangeName();
+                isSelected = true;
             }
         }
 

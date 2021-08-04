@@ -42,7 +42,7 @@ namespace SSUtility2 {
                 Int32.TryParse(newSub, out int other);
 
                 if (mine != other) {
-                    l.Text = "Different subnet!";
+                    l.Text = "Different\nsubnet!";
                     tp.SetToolTip(l, "Local IP subnet is not the same as the camera subnet!"
                         + "\nYour IP: " + rawIp + "\nGiven IP: " + rawIp.Replace(mySub, newSub));
                 } else {

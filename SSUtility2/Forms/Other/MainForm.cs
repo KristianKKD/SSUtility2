@@ -11,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.8";
+        public const string version = "v2.8.0.9";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -62,7 +62,7 @@ namespace SSUtility2 {
                 clw = new CommandListWindow();
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
-                EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init();
+                Console.WriteLine("ACTIVATION: " + EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init().ToString());
 
                 mainPlayer = new Detached(true);
                 AttachInfoPanel();
@@ -372,6 +372,7 @@ namespace SSUtility2 {
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             closing = true;
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
+            EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Release();
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
