@@ -7,17 +7,15 @@ using System.Windows.Forms;
 namespace SSUtility2 {
     public partial class SettingsPage : Form {
 
-        Timer connectTimer;
         Timer resolutionTimer;
+
+        public bool overridePreset;
 
         public SettingsPage() {
             InitializeComponent();
             CreateHandle();
             l_Version.Text = l_Version.Text + MainForm.version;
-            UpdatePresetCB();
-            connectTimer = new Timer();
-            connectTimer.Interval = 1000;
-            connectTimer.Tick += new EventHandler(ConnectTimerCallback);
+            UpdateEncoderFromPortValue();
 
             resolutionTimer = new Timer();
             resolutionTimer.Interval = 1500;
@@ -212,54 +210,30 @@ namespace SSUtility2 {
 
         private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
             string port = "";
-
-            if (cB_IPCon_PresetType.Text == "Encoder") {
+            string currentText = cB_IPCon_PresetType.Text;
+            if (currentText == "Encoder")
                 port = "6791";
-            } else if (cB_IPCon_PresetType.Text == "MOXA nPort") {
+            else if (currentText == "MOXA nPort")
                 port = "4001";
-            }
-
+            
             tB_IPCon_Port.Text = port;
         }
 
-        private void tB_IPCon_Adr_KeyUp(object sender, KeyEventArgs e) {
-            if (e.KeyCode == Keys.Enter) { //bug with using arrow keys + enter to close error
-                ConnectToCamera(true);
-                connectTimer.Stop();
-            } else
-                DoConnectTimer();
+        public void ToggleOverridePreset(bool enabled) {
+            overridePreset = enabled;
+            MainForm.m.mainPlayer.settings.ToggleOverride(enabled);
         }
 
-        void DoConnectTimer() {
-            if (connectTimer.Enabled)
-                connectTimer.Stop();
-
-            connectTimer.Start();
-        }
-
-        void ConnectTimerCallback(object sender, EventArgs e) {
-            try {
-                connectTimer.Stop();
-
-                IPAddress parsed;
-                if (IPAddress.TryParse(tB_IPCon_Adr.Text, out parsed)) {
-                    ConnectToCamera(false);
-                } else {
-                    OtherCamCom.LabelDisplay(false);
-                }
-            } catch {
-                OtherCamCom.LabelDisplay(false);
-            }
-        }
-
-        async Task ConnectToCamera(bool showErrors) {
-            connectTimer.Stop();
+        async Task ConnectToCamera() {
+            if (!MainForm.m.finishedLoading)
+                return;
 
             ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
-            AsyncCamCom.TryConnect(showErrors).ConfigureAwait(false);
+            ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
+            AsyncCamCom.TryConnect(false).ConfigureAwait(false);
         }
 
-        void UpdatePresetCB() {
+        void UpdateEncoderFromPortValue() {
             if (tB_IPCon_Port.Text == "6791") {
                 cB_IPCon_PresetType.Text = "Encoder";
             } else if (tB_IPCon_Port.Text == "4001") {
@@ -270,9 +244,8 @@ namespace SSUtility2 {
         }
 
         private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
-            ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
-            UpdatePresetCB();
-            DoConnectTimer();
+            UpdateEncoderFromPortValue();
+            ConnectToCamera();
         }
 
         private void b_Custom_CommandList_Click(object sender, EventArgs e) {
@@ -584,6 +557,19 @@ namespace SSUtility2 {
                 RTSPPresets.CreateNew(MainForm.m.mainPlayer.settings);
             else
                 MainForm.m.mainPlayer.settings.cB_RTSP.SelectedIndex = cB_IPCon_MainPlayerPreset.SelectedIndex;
+        }
+
+        private void tB_IPCon_Adr_TextChanged(object sender, EventArgs e) {
+            try {
+                IPAddress parsed;
+                if (IPAddress.TryParse(tB_IPCon_Adr.Text, out parsed)) {
+                    ConnectToCamera();
+                } else {
+                    OtherCamCom.LabelDisplay(false);
+                }
+            } catch {
+                OtherCamCom.LabelDisplay(false);
+            }
         }
     }
 }

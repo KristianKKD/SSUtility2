@@ -473,22 +473,23 @@ namespace SSUtility2
             // 
             // tB_IPCon_Port
             // 
+            this.tB_IPCon_Port.Enabled = false;
             this.tB_IPCon_Port.Location = new System.Drawing.Point(115, 59);
             this.tB_IPCon_Port.Name = "tB_IPCon_Port";
             this.tB_IPCon_Port.Size = new System.Drawing.Size(183, 20);
             this.tB_IPCon_Port.TabIndex = 3;
             this.toolTips.SetToolTip(this.tB_IPCon_Port, "Port of the camera");
             this.tB_IPCon_Port.TextChanged += new System.EventHandler(this.tB_IPCon_Port_TextChanged);
-            this.tB_IPCon_Port.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyUp);
             // 
             // tB_IPCon_Adr
             // 
+            this.tB_IPCon_Adr.Enabled = false;
             this.tB_IPCon_Adr.Location = new System.Drawing.Point(115, 33);
             this.tB_IPCon_Adr.Name = "tB_IPCon_Adr";
             this.tB_IPCon_Adr.Size = new System.Drawing.Size(183, 20);
             this.tB_IPCon_Adr.TabIndex = 2;
             this.toolTips.SetToolTip(this.tB_IPCon_Adr, "IP Address of the camera");
-            this.tB_IPCon_Adr.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyUp);
+            this.tB_IPCon_Adr.TextChanged += new System.EventHandler(this.tB_IPCon_Adr_TextChanged);
             // 
             // l_IPCon_Connected
             // 

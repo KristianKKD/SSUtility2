@@ -11,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.9";
+        public const string version = "v2.8.0.10";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -62,6 +62,7 @@ namespace SSUtility2 {
                 clw = new CommandListWindow();
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
+
                 Console.WriteLine("ACTIVATION: " + EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init().ToString());
 
                 mainPlayer = new Detached(true);
@@ -146,18 +147,21 @@ namespace SSUtility2 {
             try {
                 bool autoPlay = ConfigControl.autoPlay.boolVal;
 
+                if (autoPlay)
+                    mainPlayer.Play(false, false);
+
                 int playercount = ConfigControl.playerCount.intVal;
 
                 if (playercount >= 2 && mainPlayer.attachedPlayers.Count < 1) {
                     if (secondPlayer == null) {
                         secondPlayer = new Detached(false);
                         SizeablePanel second = mainPlayer.AttachPlayerToThis(secondPlayer,
-                            new Point(mainPlayer.p_Player.Width - 350, 50), autoPlay);
+                            new Point(mainPlayer.p_Player.Width - 350, 50));
 
                         second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
                     }
 
-                    secondPlayer.settings.LoadSecondary(ConfigControl.player2Preset.stringVal);
+                    secondPlayer.settings.LoadSecondary(ConfigControl.player2Preset.stringVal, autoPlay);
 
                 } else if (playercount < 2 && mainPlayer.attachedPlayers.Contains(secondPlayer)) {
                     mainPlayer.Detach(secondPlayer, true);
@@ -173,7 +177,7 @@ namespace SSUtility2 {
                         third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
                     }
 
-                    thirdPlayer.settings.LoadSecondary(ConfigControl.player3Preset.stringVal);
+                    thirdPlayer.settings.LoadSecondary(ConfigControl.player3Preset.stringVal, autoPlay);
 
                 } else if (playercount < 3 && mainPlayer.attachedPlayers.Contains(thirdPlayer)) {
                     mainPlayer.Detach(thirdPlayer, true);

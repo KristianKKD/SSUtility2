@@ -100,7 +100,6 @@ namespace SSUtility2 {
 
                         copyCB.FlatStyle = cb.FlatStyle;
                         copyCB.DropDownStyle = cb.DropDownStyle;
-                        //copyCB.SelectedIndex = cb.SelectedIndex;
                     } else if (c.GetType() == typeof(Button)) {
                         Button b = new Button();
                         Button copyB = new Button();
@@ -130,6 +129,9 @@ namespace SSUtility2 {
 
                 }
 
+                FindControl(tp, mainSettings.b_Edit).Click += (s, e) => {
+                    originalSets.b_Edit_Click(s, e);
+                };
                 FindControl(tp, mainSettings.b_Play).Click += (s, e) => {
                     originalSets.myDetached.Play(true, false);
                 };
@@ -144,7 +146,7 @@ namespace SSUtility2 {
             return tp;
         }
 
-        public void LoadSecondary(string presetName) {
+        public void LoadSecondary(string presetName, bool autoPlay) {
             string indexVal = RTSPPresets.GetValue(PresetColumn.Index, presetName);
             int presetIndex = 0;
             if (indexVal != "")
@@ -157,6 +159,9 @@ namespace SSUtility2 {
             }
             
             cB_RTSP.SelectedIndex = presetIndex;
+
+            if(autoPlay)
+                myDetached.Play(false, false);
         }
 
         static Control FindControl(TabPage tp, object reference) {
@@ -384,6 +389,8 @@ namespace SSUtility2 {
 
             l_Port.Enabled = enabled;
             tB_Port.Enabled = enabled;
+
+            MainForm.m.setPage.ToggleOverridePreset(enabled);
         }
 
         private void b_Detach_Click(object sender, EventArgs e) {
@@ -403,6 +410,10 @@ namespace SSUtility2 {
         void CBTextChanged() {
             string text = cB_RTSP.Text.ToLower();
             UpdateButtonVisibility(text != "" && text != "add new...");
+        }
+
+        public void ToggleOverride(bool enabled) {
+            check_Manual.Checked = enabled;
         }
     }
 }

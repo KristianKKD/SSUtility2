@@ -90,9 +90,9 @@ namespace SSUtility2 {
                 if (IsPlaying())
                     StopPlaying();
 
-                Console.WriteLine("PLAY SUCCESS: " + (settings.channelID = PlayerSdk.EasyPlayer_OpenStream(combinedUrl.ToString(),
+                settings.channelID = PlayerSdk.EasyPlayer_OpenStream(combinedUrl.ToString(),
                     p_Player.Handle, PlayerSdk.RENDER_FORMAT.DISPLAY_FORMAT_RGB24_GDI,
-                        1, "", "", null, IntPtr.Zero, false)).ToString());
+                        1, "", "", null, IntPtr.Zero, false);
 
                 if (IsPlaying())
                     PlayerSdk.EasyPlayer_SetFrameCache(settings.channelID, 3);
@@ -165,9 +165,6 @@ namespace SSUtility2 {
                 sP_Secondary.DoubleClick += (s, e) => {
                     MainForm.m.SwapSettings(secondPlayer);
                 };
-
-                if(playOnLaunch)
-                    secondPlayer.Play(false, false);
 
                 string name = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
                 secondPlayer.settings.tP_Main.Text = name;
