@@ -15,7 +15,6 @@ namespace SSUtility2 {
             InitializeComponent();
             CreateHandle();
             l_Version.Text = l_Version.Text + MainForm.version;
-            UpdateEncoderFromPortValue();
 
             resolutionTimer = new Timer();
             resolutionTimer.Interval = 1500;
@@ -210,17 +209,6 @@ namespace SSUtility2 {
             }
 
             l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
-        }
-
-        private void cB_IPCon_Type_SelectedIndexChanged(object sender, EventArgs e) {
-            string port = "";
-            string currentText = cB_IPCon_PresetType.Text;
-            if (currentText == "Encoder")
-                port = "6791";
-            else if (currentText == "MOXA nPort")
-                port = "4001";
-            
-            tB_IPCon_Port.Text = port;
         }
 
         public void ToggleOverridePreset(bool enabled) {
@@ -546,34 +534,6 @@ namespace SSUtility2 {
             else
                 MainForm.m.mainPlayer.settings.cB_RTSP.SelectedIndex = cB_IPCon_MainPlayerPreset.SelectedIndex;
         }
-
-        void UpdateEncoderFromPortValue() {
-            if (tB_IPCon_Port.Text == "6791") {
-                cB_IPCon_PresetType.Text = "Encoder";
-            } else if (tB_IPCon_Port.Text == "4001") {
-                cB_IPCon_PresetType.Text = "MOXA nPort";
-            } else {
-                cB_IPCon_PresetType.Text = "Custom";
-            }
-        }
-
-        private void tB_IPCon_Adr_TextChanged(object sender, EventArgs e) {
-            try {
-                IPAddress parsed;
-                if (IPAddress.TryParse(tB_IPCon_Adr.Text, out parsed)) {
-                    ConnectToCamera();
-                } else {
-                    OtherCamCom.LabelDisplay(false);
-                }
-            } catch {
-                OtherCamCom.LabelDisplay(false);
-            }
-        }
-      
-        private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
-            UpdateEncoderFromPortValue();
-            ConnectToCamera();
-        }
-
+       
     }
 }

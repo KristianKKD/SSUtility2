@@ -26,6 +26,11 @@ namespace SSUtility2 {
                 b_Forget.Visible = true;
                 if (editIndex != -1)
                     LoadPreset(preset);
+
+                if (preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.ControlIP)] != ""
+                    || preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.ControlPort)] != ""
+                    || preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.PelcoID)] != "1")
+                    check_Manual.Checked = true;
             }
 
             //Inititate cloning immediately
@@ -48,7 +53,7 @@ namespace SSUtility2 {
 
             tB_PelcoID.Text = preset[7];
             tB_ControlIP.Text = preset[8];
-            tB_ControlPort.Text = preset[9];
+            cB_ControlPort.Text = preset[9];
         }
 
         private void b_Confirm_Click(object sender, EventArgs e) {
@@ -63,7 +68,7 @@ namespace SSUtility2 {
             string password = tB_Password.Text;
             string pelco = tB_PelcoID.Text;
             string controlip = tB_ControlIP.Text;
-            string controlport = tB_ControlPort.Text;
+            string controlport = cB_ControlPort.Text;
 
             string full = name + ";" + fullAdr + ";" + ipaddress + ";" + port + ";" + url + ";" + username
                 + ";" + password + ";" + pelco + ";" + controlip + ";" + controlport + ";";
@@ -235,7 +240,7 @@ namespace SSUtility2 {
             tB_ControlIP.Enabled = enabled;
 
             l_ControlPort.Enabled = enabled;
-            tB_ControlPort.Enabled = enabled;
+            cB_ControlPort.Enabled = enabled;
         }
 
         bool isSelected = false;
@@ -255,5 +260,27 @@ namespace SSUtility2 {
         private void tB_FullAdr_Leave(object sender, EventArgs e) {
             isSelected = false;
         }
+
+        private void tB_RTSPString_TextChanged(object sender, EventArgs e) {
+            string val = tB_RTSPString.Text;
+            if (val.StartsWith("/"))
+                val = val.Substring(1);
+
+            tB_RTSPString.Text = val;
+        }
+
+        private void cB_ControlPort_SelectedIndexChanged(object sender, EventArgs e) {
+            string val = cB_ControlPort.Text;
+            string result = "";
+
+            if (val == "Encoder")
+                result = "6791";
+            else if (val == "MOXA nPort")
+                result = "4001";
+
+            if (result != "")
+                cB_ControlPort.Text = result;
+        }
+
     }
 }

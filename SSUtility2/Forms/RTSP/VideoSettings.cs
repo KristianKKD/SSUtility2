@@ -371,6 +371,7 @@ namespace SSUtility2 {
 
             MainForm.m.setPage.tB_IPCon_Adr.Text = tB_IP.Text; //changing these triggers settings page timer
             MainForm.m.setPage.tB_IPCon_Port.Text = tB_Port.Text;
+            MainForm.m.setPage.cB_PelcoDID.Text = cB_ID.Text;
 
             updateControl.Stop();
         }
@@ -388,6 +389,14 @@ namespace SSUtility2 {
             tB_Port.Enabled = enabled;
 
             MainForm.m.setPage.ToggleOverridePreset(enabled);
+
+            if (!enabled) {
+                string[] preset = RTSPPresets.GetPreset(ConfigControl.mainPlayerPreset.stringVal);
+
+                tB_IP.Text = preset[TableValue(PresetColumn.ControlIP)];
+                tB_Port.Text = preset[TableValue(PresetColumn.ControlPort)];
+                cB_ID.Text = preset[TableValue(PresetColumn.PelcoID)];
+            }
         }
 
         private void b_Detach_Click(object sender, EventArgs e) {

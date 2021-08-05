@@ -11,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.11";
+        public const string version = "v2.8.0.12";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;

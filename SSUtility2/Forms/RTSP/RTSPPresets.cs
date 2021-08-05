@@ -106,7 +106,7 @@ namespace SSUtility2 {
             string[] returnPreset = new string[10];
 
             for (int i = 0; i < currentPresetCount; i++) {
-                if (allPresets[0, i] == identifierName) {
+                if (allPresets[TableValue(PresetColumn.Name), i] == identifierName) {
                     for (int o = 0; o < columns; o++) {
                         returnPreset[o] = allPresets[o, i];
                     }
@@ -141,6 +141,10 @@ namespace SSUtility2 {
                     allPresets[x, y] = allPresets[x, y + 1]; //shift all values back by one, ignoring the ones before the changed one
 
             ReloadAll();
+        }
+
+        public static int TableValue(PresetColumn column) {
+            return (int)column;
         }
 
     }

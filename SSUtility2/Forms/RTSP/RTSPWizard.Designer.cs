@@ -48,13 +48,13 @@
             this.b_Scan = new System.Windows.Forms.Button();
             this.l_Control = new System.Windows.Forms.Label();
             this.l_PelcoID = new System.Windows.Forms.Label();
-            this.tB_ControlPort = new System.Windows.Forms.TextBox();
             this.tB_PelcoID = new System.Windows.Forms.TextBox();
             this.tB_ControlIP = new System.Windows.Forms.TextBox();
             this.l_ControlPort = new System.Windows.Forms.Label();
             this.l_ControlIP = new System.Windows.Forms.Label();
             this.check_Manual = new System.Windows.Forms.CheckBox();
             this.l_PresetDetails = new System.Windows.Forms.Label();
+            this.cB_ControlPort = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // l_RTSP
@@ -164,6 +164,7 @@
             this.tB_RTSPString.Name = "tB_RTSPString";
             this.tB_RTSPString.Size = new System.Drawing.Size(301, 20);
             this.tB_RTSPString.TabIndex = 3;
+            this.tB_RTSPString.TextChanged += new System.EventHandler(this.tB_RTSPString_TextChanged);
             this.tB_RTSPString.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
             // tB_RTSPIP
@@ -222,7 +223,7 @@
             this.b_Confirm.BackColor = System.Drawing.SystemColors.Control;
             this.b_Confirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Confirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.b_Confirm.Location = new System.Drawing.Point(322, 346);
+            this.b_Confirm.Location = new System.Drawing.Point(321, 346);
             this.b_Confirm.Name = "b_Confirm";
             this.b_Confirm.Size = new System.Drawing.Size(64, 23);
             this.b_Confirm.TabIndex = 12;
@@ -236,7 +237,7 @@
             this.b_Cancel.BackColor = System.Drawing.SystemColors.Control;
             this.b_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Cancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.b_Cancel.Location = new System.Drawing.Point(252, 346);
+            this.b_Cancel.Location = new System.Drawing.Point(251, 346);
             this.b_Cancel.Name = "b_Cancel";
             this.b_Cancel.Size = new System.Drawing.Size(64, 23);
             this.b_Cancel.TabIndex = 11;
@@ -338,17 +339,6 @@
             this.l_PelcoID.TabIndex = 82;
             this.l_PelcoID.Text = "Pelco ID*";
             // 
-            // tB_ControlPort
-            // 
-            this.tB_ControlPort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_ControlPort.Enabled = false;
-            this.tB_ControlPort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tB_ControlPort.Location = new System.Drawing.Point(84, 248);
-            this.tB_ControlPort.Name = "tB_ControlPort";
-            this.tB_ControlPort.Size = new System.Drawing.Size(302, 20);
-            this.tB_ControlPort.TabIndex = 7;
-            // 
             // tB_PelcoID
             // 
             this.tB_PelcoID.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -425,16 +415,28 @@
             this.l_PresetDetails.TabIndex = 86;
             this.l_PresetDetails.Text = "Preset Details";
             // 
+            // cB_ControlPort
+            // 
+            this.cB_ControlPort.FormattingEnabled = true;
+            this.cB_ControlPort.Items.AddRange(new object[] {
+            "Encoder",
+            "MOXA nPort"});
+            this.cB_ControlPort.Location = new System.Drawing.Point(85, 248);
+            this.cB_ControlPort.Name = "cB_ControlPort";
+            this.cB_ControlPort.Size = new System.Drawing.Size(300, 21);
+            this.cB_ControlPort.TabIndex = 87;
+            this.cB_ControlPort.SelectedIndexChanged += new System.EventHandler(this.cB_ControlPort_SelectedIndexChanged);
+            // 
             // RTSPWizard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(394, 381);
+            this.Controls.Add(this.cB_ControlPort);
             this.Controls.Add(this.l_PresetDetails);
             this.Controls.Add(this.check_Manual);
             this.Controls.Add(this.l_PelcoID);
-            this.Controls.Add(this.tB_ControlPort);
             this.Controls.Add(this.tB_PelcoID);
             this.Controls.Add(this.tB_ControlIP);
             this.Controls.Add(this.l_ControlPort);
@@ -494,12 +496,12 @@
         private System.Windows.Forms.Button b_Scan;
         public System.Windows.Forms.Label l_Control;
         public System.Windows.Forms.Label l_PelcoID;
-        public System.Windows.Forms.TextBox tB_ControlPort;
         public System.Windows.Forms.TextBox tB_PelcoID;
         public System.Windows.Forms.TextBox tB_ControlIP;
         public System.Windows.Forms.Label l_ControlPort;
         public System.Windows.Forms.Label l_ControlIP;
         private System.Windows.Forms.CheckBox check_Manual;
         public System.Windows.Forms.Label l_PresetDetails;
+        private System.Windows.Forms.ComboBox cB_ControlPort;
     }
 }
