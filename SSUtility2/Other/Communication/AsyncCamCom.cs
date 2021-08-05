@@ -50,6 +50,7 @@ namespace SSUtility2 {
 
             connectingAlready = false;
             OtherCamCom.LabelDisplay(result);
+            VideoSettings.UpdateControlFields();
             return result;
         }
 
@@ -198,8 +199,9 @@ namespace SSUtility2 {
 
                 string oldAdr = null;
                 try {
-                    oldAdr = sock.RemoteEndPoint.ToString();
-                } catch { }
+                    if(sock.RemoteEndPoint != null)
+                        oldAdr = sock.RemoteEndPoint.ToString();
+                } catch (Exception e) { }
 
                 OtherCamCom.LabelDisplay(false);
 

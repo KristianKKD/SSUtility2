@@ -78,14 +78,23 @@ namespace SSUtility2 {
                     await Task.Delay(1000).ConfigureAwait(false);
 
                 MainForm.m.Invoke((MethodInvoker)delegate {
-                    Label l = MainForm.m.setPage.l_IPCon_Connected;
+                    string text;
+                    Color col;
+                    Label l1 = MainForm.m.setPage.l_IPCon_Connected;
+                    Label l2 = MainForm.m.mainPlayer.settings.l_Connected;
                     if (connected) {
-                        l.Text = "✓";
-                        l.ForeColor = Color.Green;
+                        text = "✓";
+                        col = Color.Green;
                     } else {
-                        l.Text = "❌";
-                        l.ForeColor = Color.Red;
+                        text = "❌";
+                        col = Color.Red;
                     }
+
+                    l1.Text = text;
+                    l2.Text = text;
+
+                    l1.ForeColor = col;
+                    l2.ForeColor = col;
                 });
             } catch (Exception e) { 
                 Console.WriteLine("LABEL DISPLAY\n" + e.ToString());

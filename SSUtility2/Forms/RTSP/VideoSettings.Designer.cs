@@ -45,6 +45,7 @@ namespace SSUtility2
             this.cB_ID = new System.Windows.Forms.ComboBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.b_Detach = new System.Windows.Forms.Button();
+            this.l_Connected = new System.Windows.Forms.Label();
             this.tC_PlayerSettings.SuspendLayout();
             this.tP_Main.SuspendLayout();
             this.SuspendLayout();
@@ -250,12 +251,21 @@ namespace SSUtility2
             this.b_Detach.UseVisualStyleBackColor = false;
             this.b_Detach.Click += new System.EventHandler(this.b_Detach_Click);
             // 
+            // l_Connected
+            // 
+            this.l_Connected.AutoSize = true;
+            this.l_Connected.Location = new System.Drawing.Point(261, 113);
+            this.l_Connected.Name = "l_Connected";
+            this.l_Connected.Size = new System.Drawing.Size(0, 13);
+            this.l_Connected.TabIndex = 82;
+            // 
             // VideoSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(384, 156);
+            this.Controls.Add(this.l_Connected);
             this.Controls.Add(this.b_Detach);
             this.Controls.Add(this.l_Port);
             this.Controls.Add(this.tC_PlayerSettings);
@@ -300,5 +310,6 @@ namespace SSUtility2
         private System.Windows.Forms.CheckBox check_Manual;
         private System.Windows.Forms.ToolTip toolTip1;
         public System.Windows.Forms.Button b_Detach;
+        public System.Windows.Forms.Label l_Connected;
     }
 }

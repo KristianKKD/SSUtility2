@@ -241,10 +241,8 @@ namespace SSUtility2 {
                     RTSPPresets.CreateNew(this);
             } else {
                 //Use new settings
-                if (cB_RTSP.Text != "") {
+                if (cB_RTSP.Text != "")
                     visibleBool = true;
-                    myDetached.Play(false, false);
-                }
 
                 if (isMainPlayer)
                     MainForm.m.setPage.cB_IPCon_MainPlayerPreset.SelectedIndex = cB_RTSP.SelectedIndex;
@@ -268,6 +266,7 @@ namespace SSUtility2 {
 
             string fullAdr = RTSPPresets.GetValue(PresetColumn.FullAdr, cB_RTSP.Text);
             toolTip1.SetToolTip(cB_RTSP, fullAdr);
+            myDetached.Play(false, false);
         }
 
         void UpdateButtonVisibility(bool visible) {
@@ -347,7 +346,7 @@ namespace SSUtility2 {
         }
 
         public int GetPelcoID() {
-            string val = RTSPPresets.GetValue(PresetColumn.PelcoID, cB_RTSP.Text);
+            string val = RTSPPresets.GetValue(PresetColumn.PelcoID, ConfigControl.mainPlayerPreset.stringVal);
             int returnVal;
             if (!int.TryParse(val, out returnVal))
                 returnVal = -1;
@@ -370,10 +369,8 @@ namespace SSUtility2 {
             if (int.TryParse(cB_ID.Text, out parsedVal))
                 ConfigControl.pelcoOverrideID.intVal = parsedVal;
 
-            MainForm.m.setPage.tB_IPCon_Adr.Text = tB_IP.Text; //changing these triggers settings page timer, needs fix
+            MainForm.m.setPage.tB_IPCon_Adr.Text = tB_IP.Text; //changing these triggers settings page timer
             MainForm.m.setPage.tB_IPCon_Port.Text = tB_Port.Text;
-
-            AsyncCamCom.TryConnect(false);
 
             updateControl.Stop();
         }
@@ -414,6 +411,13 @@ namespace SSUtility2 {
 
         public void ToggleOverride(bool enabled) {
             check_Manual.Checked = enabled;
+        }
+
+        public static void UpdateControlFields() {
+            VideoSettings vs = MainForm.m.mainPlayer.settings;
+            vs.tB_IP.Text = ConfigControl.savedIP.stringVal;
+            vs.tB_Port.Text = ConfigControl.savedPort.stringVal;
+            vs.cB_ID.Text = Tools.MakeAdr().ToString();
         }
     }
 }

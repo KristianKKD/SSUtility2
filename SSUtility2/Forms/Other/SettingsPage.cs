@@ -56,8 +56,6 @@ namespace SSUtility2 {
                 cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
                 cB_Other_PlayerCount.Text = ConfigControl.playerCount.stringVal;
 
-                MainForm.m.mainPlayer.settings.cB_RTSP.Text = ConfigControl.mainPlayerPreset.stringVal;
-
                 Tools.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
                 Tools.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
 
@@ -69,7 +67,13 @@ namespace SSUtility2 {
                 MainForm.m.custom.UpdateButtonNames();
                 UpdateCamType();
                 UpdateRatioLabel();
-            }catch (Exception e) {
+
+                int index;
+                if (int.TryParse(RTSPPresets.GetValue(RTSPPresets.PresetColumn.Index, ConfigControl.mainPlayerPreset.stringVal), out index)) {
+                    MainForm.m.mainPlayer.settings.cB_RTSP.SelectedIndex = index;
+                    cB_IPCon_MainPlayerPreset.SelectedIndex = index;
+                }
+            } catch (Exception e) {
                 Tools.ShowPopup("Failed to update settings!\nShow more?", "Error Occurred!", e.ToString());
             }
         }
@@ -233,21 +237,6 @@ namespace SSUtility2 {
             AsyncCamCom.TryConnect(false).ConfigureAwait(false);
         }
 
-        void UpdateEncoderFromPortValue() {
-            if (tB_IPCon_Port.Text == "6791") {
-                cB_IPCon_PresetType.Text = "Encoder";
-            } else if (tB_IPCon_Port.Text == "4001") {
-                cB_IPCon_PresetType.Text = "MOXA nPort";
-            } else {
-                cB_IPCon_PresetType.Text = "Custom";
-            }
-        }
-
-        private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
-            UpdateEncoderFromPortValue();
-            ConnectToCamera();
-        }
-
         private void b_Custom_CommandList_Click(object sender, EventArgs e) {
             MainForm.m.clw.ShowWindow();
         }
@@ -271,7 +260,6 @@ namespace SSUtility2 {
                 }
             }
         }
-
 
         private void tB_Other_Resolution_KeyUp(object sender, KeyEventArgs e) {
             if (e.KeyCode == Keys.Enter) {
@@ -559,6 +547,16 @@ namespace SSUtility2 {
                 MainForm.m.mainPlayer.settings.cB_RTSP.SelectedIndex = cB_IPCon_MainPlayerPreset.SelectedIndex;
         }
 
+        void UpdateEncoderFromPortValue() {
+            if (tB_IPCon_Port.Text == "6791") {
+                cB_IPCon_PresetType.Text = "Encoder";
+            } else if (tB_IPCon_Port.Text == "4001") {
+                cB_IPCon_PresetType.Text = "MOXA nPort";
+            } else {
+                cB_IPCon_PresetType.Text = "Custom";
+            }
+        }
+
         private void tB_IPCon_Adr_TextChanged(object sender, EventArgs e) {
             try {
                 IPAddress parsed;
@@ -571,5 +569,11 @@ namespace SSUtility2 {
                 OtherCamCom.LabelDisplay(false);
             }
         }
+      
+        private void tB_IPCon_Port_TextChanged(object sender, EventArgs e) {
+            UpdateEncoderFromPortValue();
+            ConnectToCamera();
+        }
+
     }
 }

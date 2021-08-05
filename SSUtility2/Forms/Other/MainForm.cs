@@ -11,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.10";
+        public const string version = "v2.8.0.11";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -52,6 +52,7 @@ namespace SSUtility2 {
             try {
                 CreateHandle();
                 m = this;
+                RTSPPresets.Reload();
                 VideoSettings.allSettings = new List<VideoSettings>();
                 CustomScriptCommands.userAddedCommands = new List<ScriptCommand>();
                 setPage = new SettingsPage();
@@ -160,9 +161,6 @@ namespace SSUtility2 {
 
                         second.Anchor = AnchorStyles.Top | AnchorStyles.Right;
                     }
-
-                    secondPlayer.settings.LoadSecondary(ConfigControl.player2Preset.stringVal, autoPlay);
-
                 } else if (playercount < 2 && mainPlayer.attachedPlayers.Contains(secondPlayer)) {
                     mainPlayer.Detach(secondPlayer, true);
                     secondPlayer = null;
@@ -176,13 +174,15 @@ namespace SSUtility2 {
 
                         third.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
                     }
-
-                    thirdPlayer.settings.LoadSecondary(ConfigControl.player3Preset.stringVal, autoPlay);
-
                 } else if (playercount < 3 && mainPlayer.attachedPlayers.Contains(thirdPlayer)) {
                     mainPlayer.Detach(thirdPlayer, true);
                     thirdPlayer = null;
                 }
+
+                if (secondPlayer != null)
+                    secondPlayer.settings.LoadSecondary(ConfigControl.player2Preset.stringVal, autoPlay);
+                if (thirdPlayer != null)
+                    thirdPlayer.settings.LoadSecondary(ConfigControl.player3Preset.stringVal, autoPlay);
 
             } catch (Exception e) {
                 MessageBox.Show("ATTACH\n" + e.ToString());

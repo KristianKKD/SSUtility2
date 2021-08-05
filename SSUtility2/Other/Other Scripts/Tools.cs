@@ -69,10 +69,12 @@ namespace SSUtility2 {
         }
 
         public static uint MakeAdr() {
-            int id = MainForm.m.mainPlayer.settings.GetPelcoID();
+            int id = 0;
 
-            if (MainForm.m.lite || id == -1)
+            if (MainForm.m.setPage.overridePreset || MainForm.m.lite)
                 id = ConfigControl.pelcoOverrideID.intVal;
+            else
+                id = MainForm.m.mainPlayer.settings.GetPelcoID();
 
             if (id == -1)
                 id = 0;
@@ -403,15 +405,14 @@ namespace SSUtility2 {
                         return;
                     }
 
-                    foreach (string line in lines) {
+                    foreach (string line in lines)
                         File.AppendAllText(configFile, line + "\n");
-                    }
 
+                    RTSPPresets.Reload();
                     ConfigControl.SetToDefaults();
                     await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
                     MainForm.m.setPage.PopulateSettingText();
                     MessageBox.Show("Updated config file!\n(" + configFile + ")");
-
                     MainForm.m.AttachPlayers();
                 } else {
                     if (name == configFile)
