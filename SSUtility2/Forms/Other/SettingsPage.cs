@@ -8,6 +8,7 @@ namespace SSUtility2 {
     public partial class SettingsPage : Form {
 
         Timer resolutionTimer;
+        Timer updateControl;
 
         public bool overridePreset;
 
@@ -20,6 +21,10 @@ namespace SSUtility2 {
             resolutionTimer.Interval = 1500;
             resolutionTimer.Tick += new EventHandler(ResolutionTimerCallback);
 
+            updateControl = new Timer();
+            updateControl.Interval = 1000;
+            updateControl.Tick += new EventHandler(UpdateControlCallback);
+
             ButtonsCommand.Items.Add(" ");
 
             for (int i = 0; i < 200; i++)
@@ -30,7 +35,7 @@ namespace SSUtility2 {
         public async Task PopulateSettingText() {
             try {
                 tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
-                tB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
+                cB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
                 slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
                 tB_IPCon_CamSpeed.Text = ConfigControl.cameraSpeedMultiplier.intVal.ToString();
 
@@ -214,14 +219,19 @@ namespace SSUtility2 {
         public void ToggleOverridePreset(bool enabled) {
             overridePreset = enabled;
             MainForm.m.mainPlayer.settings.ToggleOverride(enabled);
+            check_IPCon_Override.Checked = enabled;
         }
 
-        async Task ConnectToCamera() {
+        public async Task ConnectToCamera() {
             if (!MainForm.m.finishedLoading)
                 return;
 
             ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
-            ConfigControl.savedPort.UpdateValue(tB_IPCon_Port.Text);
+
+            int parsed;
+            if(int.TryParse(cB_IPCon_Port.Text, out parsed))
+                ConfigControl.savedPort.UpdateValue(parsed.ToString());
+
             AsyncCamCom.TryConnect(false).ConfigureAwait(false);
         }
 
@@ -399,7 +409,7 @@ namespace SSUtility2 {
 
         public void UpdateRatioLabel() {
             l_Other_Ratio.Visible = ConfigControl.maintainAspectRatio.boolVal;
-            l_Other_Ratio.Text = "(" + MainForm.m.currentAspectRatio.ToString() + ":" + MainForm.m.currentAspectRatioSecondary.ToString() + ")";
+            l_Other_Ratio.Text = MainForm.m.GetRatio();
         }
 
         public void UpdateCamConfig(OtherCamCom.CamConfig type) {
@@ -534,6 +544,49 @@ namespace SSUtility2 {
             else
                 MainForm.m.mainPlayer.settings.cB_RTSP.SelectedIndex = cB_IPCon_MainPlayerPreset.SelectedIndex;
         }
-       
+
+        private void check_IPCon_Override_CheckedChanged(object sender, EventArgs e) {
+            bool check = check_IPCon_Override.Checked;
+            MainForm.m.mainPlayer.settings.UpdateCheckOverride(check);
+
+            tB_IPCon_Adr.Enabled = check;
+            cB_IPCon_Port.Enabled = check;
+            cB_IPCon_PelcoDID.Enabled = check;
+        }
+
+
+        private void tB_IPCon_ControlFields_TextChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            if (updateControl.Enabled)
+                updateControl.Stop();
+
+            updateControl.Start();
+        }
+
+        private async void UpdateControlCallback(object sender, EventArgs e) {
+            int parsedVal;
+            if (int.TryParse(cB_IPCon_PelcoDID.Text, out parsedVal))
+                ConfigControl.pelcoOverrideID.intVal = parsedVal;
+
+            //video setting controls get updated in asynccamcom
+
+            ConnectToCamera();
+            updateControl.Stop();
+        }
+
+        private void cB_IPCon_Port_SelectedIndexChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            DelayedIndex();
+        }
+
+        async Task DelayedIndex() {
+            await Task.Delay(100);
+            cB_IPCon_Port.Text = Tools.GetPortValueFromEncoder(cB_IPCon_Port);
+        }
+
     }
 }

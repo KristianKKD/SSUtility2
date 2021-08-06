@@ -247,7 +247,8 @@ namespace SSUtility2 {
                 if (isMainPlayer)
                     MainForm.m.setPage.cB_IPCon_MainPlayerPreset.SelectedIndex = cB_RTSP.SelectedIndex;
 
-                CompleteControlValues();
+                if(!check_Manual.Checked)
+                    CompleteControlValues();
             }
             
             UpdateButtonVisibility(visibleBool);
@@ -307,11 +308,11 @@ namespace SSUtility2 {
                 ip = MainForm.m.setPage.tB_IPCon_Adr.Text;
 
             if (port == "")
-                port = MainForm.m.setPage.tB_IPCon_Port.Text;
+                port = MainForm.m.setPage.cB_IPCon_Port.Text;
 
             cB_ID.Text = id;
             tB_IP.Text = ip;
-            tB_Port.Text = port;
+            cB_Port.Text = port;
         }
 
         private void VideoSettings_VisibleChanged(object sender, EventArgs e) {
@@ -354,6 +355,7 @@ namespace SSUtility2 {
             return returnVal;
         }
 
+
         private void tB_ControlFields_TextChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
@@ -369,9 +371,11 @@ namespace SSUtility2 {
             if (int.TryParse(cB_ID.Text, out parsedVal))
                 ConfigControl.pelcoOverrideID.intVal = parsedVal;
 
-            MainForm.m.setPage.tB_IPCon_Adr.Text = tB_IP.Text; //changing these triggers settings page timer
-            MainForm.m.setPage.tB_IPCon_Port.Text = tB_Port.Text;
-            MainForm.m.setPage.cB_PelcoDID.Text = cB_ID.Text;
+            SettingsPage sp = MainForm.m.setPage;
+
+            sp.tB_IPCon_Adr.Text = tB_IP.Text; //changing these triggers settings page timer
+            sp.cB_IPCon_Port.Text = cB_Port.Text;
+            sp.cB_IPCon_PelcoDID.Text = cB_ID.Text;
 
             updateControl.Stop();
         }
@@ -386,7 +390,7 @@ namespace SSUtility2 {
             tB_IP.Enabled = enabled;
 
             l_Port.Enabled = enabled;
-            tB_Port.Enabled = enabled;
+            cB_Port.Enabled = enabled;
 
             MainForm.m.setPage.ToggleOverridePreset(enabled);
 
@@ -394,7 +398,7 @@ namespace SSUtility2 {
                 string[] preset = RTSPPresets.GetPreset(ConfigControl.mainPlayerPreset.stringVal);
 
                 tB_IP.Text = preset[TableValue(PresetColumn.ControlIP)];
-                tB_Port.Text = preset[TableValue(PresetColumn.ControlPort)];
+                cB_Port.Text = preset[TableValue(PresetColumn.ControlPort)];
                 cB_ID.Text = preset[TableValue(PresetColumn.PelcoID)];
             }
         }
@@ -425,8 +429,24 @@ namespace SSUtility2 {
         public static void UpdateControlFields() {
             VideoSettings vs = MainForm.m.mainPlayer.settings;
             vs.tB_IP.Text = ConfigControl.savedIP.stringVal;
-            vs.tB_Port.Text = ConfigControl.savedPort.stringVal;
+            vs.cB_Port.Text = ConfigControl.savedPort.stringVal;
             vs.cB_ID.Text = Tools.MakeAdr().ToString();
+        }
+
+        public void UpdateCheckOverride(bool check) {
+            check_Manual.Checked = check;
+        }
+        
+        private void cB_Port_SelectedIndexChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            DelayedIndex();
+        }
+
+        async Task DelayedIndex() {
+            await Task.Delay(100);
+            cB_Port.Text = Tools.GetPortValueFromEncoder(cB_Port);
         }
     }
 }

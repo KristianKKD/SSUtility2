@@ -315,7 +315,7 @@ namespace SSUtility2 {
 
             CheckCreateFile(null, folder);
 
-            string full = folder + @"\" + name;
+            string full = folder + @"\" + name + extension;
             return full;
         }
 
@@ -627,7 +627,7 @@ namespace SSUtility2 {
                     if (c == null)
                         return null;
 
-                    if (c.GetType() == typeof(Form) || c.GetType() == typeof(PictureBox) || c.GetType() == typeof(Menu))
+                    if (c.GetType() == typeof(Form) || c.GetType() == typeof(PictureBox) || c.GetType() == typeof(Menu) || c.GetType() == typeof(MainForm))
                         return c;
                 }
             } catch (Exception e) {
@@ -658,6 +658,21 @@ namespace SSUtility2 {
                 MessageBox.Show(fullMsg);
 
             return fullMsg;
+        }
+
+        public static string GetPortValueFromEncoder(ComboBox cb) {
+            string val = cb.Text.Trim();
+            string result = "";
+
+            if (val == "Encoder")
+                result = "6791";
+            else if (val == "MOXA nPort")
+                result = "4001";
+
+            if (result == "")
+                result = val;
+
+            return result;
         }
 
     }

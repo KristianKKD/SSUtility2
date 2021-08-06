@@ -270,16 +270,12 @@ namespace SSUtility2 {
         }
 
         private void cB_ControlPort_SelectedIndexChanged(object sender, EventArgs e) {
-            string val = cB_ControlPort.Text;
-            string result = "";
+            DelayedIndex();
+        }
 
-            if (val == "Encoder")
-                result = "6791";
-            else if (val == "MOXA nPort")
-                result = "4001";
-
-            if (result != "")
-                cB_ControlPort.Text = result;
+        async Task DelayedIndex() {
+            await Task.Delay(100);
+            cB_ControlPort.Text = Tools.GetPortValueFromEncoder(cB_ControlPort);
         }
 
     }

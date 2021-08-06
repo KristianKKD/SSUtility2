@@ -36,7 +36,6 @@ namespace SSUtility2
             this.l_RTSP = new System.Windows.Forms.Label();
             this.cB_RTSP = new System.Windows.Forms.ComboBox();
             this.l_Port = new System.Windows.Forms.Label();
-            this.tB_Port = new System.Windows.Forms.TextBox();
             this.check_Manual = new System.Windows.Forms.CheckBox();
             this.tB_IP = new System.Windows.Forms.TextBox();
             this.l_Control = new System.Windows.Forms.Label();
@@ -46,6 +45,7 @@ namespace SSUtility2
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.b_Detach = new System.Windows.Forms.Button();
             this.l_Connected = new System.Windows.Forms.Label();
+            this.cB_Port = new System.Windows.Forms.ComboBox();
             this.tC_PlayerSettings.SuspendLayout();
             this.tP_Main.SuspendLayout();
             this.SuspendLayout();
@@ -58,7 +58,7 @@ namespace SSUtility2
             this.b_Play.Location = new System.Drawing.Point(347, 25);
             this.b_Play.Name = "b_Play";
             this.b_Play.Size = new System.Drawing.Size(23, 23);
-            this.b_Play.TabIndex = 10;
+            this.b_Play.TabIndex = 4;
             this.b_Play.Text = "▶";
             this.b_Play.UseVisualStyleBackColor = false;
             this.b_Play.Visible = false;
@@ -72,7 +72,7 @@ namespace SSUtility2
             this.b_Stop.Location = new System.Drawing.Point(318, 25);
             this.b_Stop.Name = "b_Stop";
             this.b_Stop.Size = new System.Drawing.Size(23, 23);
-            this.b_Stop.TabIndex = 9;
+            this.b_Stop.TabIndex = 3;
             this.b_Stop.Text = "⬛";
             this.b_Stop.UseVisualStyleBackColor = false;
             this.b_Stop.Visible = false;
@@ -112,7 +112,7 @@ namespace SSUtility2
             this.b_Edit.Location = new System.Drawing.Point(289, 25);
             this.b_Edit.Name = "b_Edit";
             this.b_Edit.Size = new System.Drawing.Size(23, 23);
-            this.b_Edit.TabIndex = 8;
+            this.b_Edit.TabIndex = 2;
             this.b_Edit.Text = "⛭";
             this.b_Edit.UseVisualStyleBackColor = false;
             this.b_Edit.Visible = false;
@@ -155,17 +155,6 @@ namespace SSUtility2
             this.l_Port.TabIndex = 72;
             this.l_Port.Text = "Address Port";
             // 
-            // tB_Port
-            // 
-            this.tB_Port.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Port.Enabled = false;
-            this.tB_Port.Location = new System.Drawing.Point(88, 132);
-            this.tB_Port.Name = "tB_Port";
-            this.tB_Port.Size = new System.Drawing.Size(167, 20);
-            this.tB_Port.TabIndex = 4;
-            this.tB_Port.TextChanged += new System.EventHandler(this.tB_ControlFields_TextChanged);
-            // 
             // check_Manual
             // 
             this.check_Manual.AutoSize = true;
@@ -173,7 +162,7 @@ namespace SSUtility2
             this.check_Manual.Location = new System.Drawing.Point(88, 87);
             this.check_Manual.Name = "check_Manual";
             this.check_Manual.Size = new System.Drawing.Size(63, 17);
-            this.check_Manual.TabIndex = 5;
+            this.check_Manual.TabIndex = 6;
             this.check_Manual.Text = "Override";
             this.check_Manual.UseVisualStyleBackColor = true;
             this.check_Manual.CheckedChanged += new System.EventHandler(this.check_Manual_CheckedChanged);
@@ -186,7 +175,7 @@ namespace SSUtility2
             this.tB_IP.Location = new System.Drawing.Point(88, 110);
             this.tB_IP.Name = "tB_IP";
             this.tB_IP.Size = new System.Drawing.Size(167, 20);
-            this.tB_IP.TabIndex = 3;
+            this.tB_IP.TabIndex = 7;
             this.tB_IP.TextChanged += new System.EventHandler(this.tB_ControlFields_TextChanged);
             // 
             // l_Control
@@ -235,7 +224,7 @@ namespace SSUtility2
             this.cB_ID.Location = new System.Drawing.Point(318, 131);
             this.cB_ID.Name = "cB_ID";
             this.cB_ID.Size = new System.Drawing.Size(62, 21);
-            this.cB_ID.TabIndex = 2;
+            this.cB_ID.TabIndex = 9;
             this.cB_ID.TextChanged += new System.EventHandler(this.tB_ControlFields_TextChanged);
             // 
             // b_Detach
@@ -246,7 +235,7 @@ namespace SSUtility2
             this.b_Detach.Location = new System.Drawing.Point(293, 13);
             this.b_Detach.Name = "b_Detach";
             this.b_Detach.Size = new System.Drawing.Size(81, 28);
-            this.b_Detach.TabIndex = 66;
+            this.b_Detach.TabIndex = 5;
             this.b_Detach.Text = "Detach";
             this.b_Detach.UseVisualStyleBackColor = false;
             this.b_Detach.Click += new System.EventHandler(this.b_Detach_Click);
@@ -259,17 +248,31 @@ namespace SSUtility2
             this.l_Connected.Size = new System.Drawing.Size(0, 13);
             this.l_Connected.TabIndex = 82;
             // 
+            // cB_Port
+            // 
+            this.cB_Port.Enabled = false;
+            this.cB_Port.FormattingEnabled = true;
+            this.cB_Port.Items.AddRange(new object[] {
+            "Encoder",
+            "MOXA nPort"});
+            this.cB_Port.Location = new System.Drawing.Point(88, 132);
+            this.cB_Port.Name = "cB_Port";
+            this.cB_Port.Size = new System.Drawing.Size(167, 21);
+            this.cB_Port.TabIndex = 83;
+            this.cB_Port.SelectedIndexChanged += new System.EventHandler(this.cB_Port_SelectedIndexChanged);
+            this.cB_Port.TextChanged += new System.EventHandler(this.tB_ControlFields_TextChanged);
+            // 
             // VideoSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(384, 156);
+            this.Controls.Add(this.cB_Port);
             this.Controls.Add(this.l_Connected);
             this.Controls.Add(this.b_Detach);
             this.Controls.Add(this.l_Port);
             this.Controls.Add(this.tC_PlayerSettings);
-            this.Controls.Add(this.tB_Port);
             this.Controls.Add(this.l_Control);
             this.Controls.Add(this.check_Manual);
             this.Controls.Add(this.cB_ID);
@@ -302,14 +305,14 @@ namespace SSUtility2
         public System.Windows.Forms.ComboBox cB_RTSP;
         private System.Windows.Forms.Label l_Control;
         private System.Windows.Forms.Label l_Port;
-        private System.Windows.Forms.TextBox tB_Port;
-        private System.Windows.Forms.TextBox tB_IP;
+        public System.Windows.Forms.TextBox tB_IP;
         private System.Windows.Forms.Label l_IP;
         private System.Windows.Forms.Label l_PelcoID;
-        private System.Windows.Forms.ComboBox cB_ID;
+        public System.Windows.Forms.ComboBox cB_ID;
         private System.Windows.Forms.CheckBox check_Manual;
         private System.Windows.Forms.ToolTip toolTip1;
         public System.Windows.Forms.Button b_Detach;
         public System.Windows.Forms.Label l_Connected;
+        public System.Windows.Forms.ComboBox cB_Port;
     }
 }

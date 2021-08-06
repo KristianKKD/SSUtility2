@@ -11,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.12";
+        public const string version = "v2.8.0.13";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -887,6 +887,10 @@ namespace SSUtility2 {
             RatioTimer.Interval = 1;
             RatioTimer.Tick += new EventHandler(MaintainRatio);
             RatioTimer.Start();
+        }
+
+        public string GetRatio() {
+            return "(" + currentAspectRatio.ToString() + ":" + currentAspectRatioSecondary.ToString() + ")";
         }
 
         void MaintainRatio(object sender, EventArgs e) {
