@@ -279,8 +279,15 @@
     <Compile Include="Forms\Other\DebugWindow.Designer.cs">
       <DependentUpon>DebugWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Other\MediaCollection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Other\MediaCollection.Designer.cs">
+      <DependentUpon>MediaCollection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RTSP\RTSPPresets.cs" />
-    <Compile Include="Other\Other Scripts\CustomButtons.cs" />
+    <Compile Include="Forms\Panels\CustomButtons.cs" />
+    <Compile Include="Other\Other Scripts\FFMPEGRecord.cs" />
     <Compile Include="Other\Other Scripts\FileStuff.cs" />
     <Compile Include="Forms\Other\ChooseConfig.cs">
       <SubType>Form</SubType>
@@ -403,6 +410,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\Other\ChooseConfig.resx">
       <DependentUpon>ChooseConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Other\MediaCollection.resx">
+      <DependentUpon>MediaCollection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTSP\Detached.resx">
       <DependentUpon>Detached.cs</DependentUpon>

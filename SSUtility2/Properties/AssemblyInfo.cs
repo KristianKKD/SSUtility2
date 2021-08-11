@@ -8,12 +8,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SSLUtility2")]
+[assembly: AssemblyTitle("SSUtility2.0")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SSLUtility2")]
-[assembly: AssemblyCopyright("Copyright 2018")]
+[assembly: AssemblyCompany("Silent Sentinel")]
+[assembly: AssemblyProduct("SSUtility2.0")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

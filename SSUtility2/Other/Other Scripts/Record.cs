@@ -14,12 +14,15 @@ using SharpAvi.Output;
 
 namespace SSUtility2 {
 
+    //https://stackoverflow.com/questions/67393857/how-to-record-video-playing-on-a-picturebox
+
     public class Record {
 
-        public Record(string filename, int FrameRate, FourCC Encoder, int Quality, Panel player) {
+        public Record(string filename, int FrameRate, int Quality, Panel player) {
             FileName = filename;
             FramesPerSecond = FrameRate;
-            Codec = Encoder;
+
+            Codec = SharpAvi.KnownFourCCs.Codecs.MotionJpeg;
             this.Quality = Quality;
 
             if (player != null) {
@@ -66,12 +69,8 @@ namespace SSUtility2 {
                 return writer.AddMotionJpegVideoStream(Width, Height, Quality);
             else {
                 return writer.AddMpeg4VideoStream(Width, Height, (double)writer.FramesPerSecond,
-                    // It seems that all tested MPEG-4 VfW codecs ignore the quality affecting parameters passed through VfW API
-                    // They only respect the settings from their own configuration dialogs, and Mpeg4VideoEncoder currently has no support for this
                     quality: Quality,
                     codec: Codec,
-                    // Most of VfW codecs expect single-threaded use, so we wrap this encoder to special wrapper
-                    // Thus all calls to the encoder (including its instantiation) will be invoked on a single thread although encoding (and writing) is performed asynchronously
                     forceSingleThreadedAccess: true);
             }
         }

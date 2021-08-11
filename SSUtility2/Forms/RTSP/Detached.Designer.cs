@@ -22,11 +22,13 @@
         public void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Detached));
             this.MenuBar = new System.Windows.Forms.MenuStrip();
-            this.videoStreamToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_VideoStream = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Record = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Attach = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_StopRecording = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Video = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Player = new System.Windows.Forms.Panel();
             this.MenuBar.SuspendLayout();
             this.SuspendLayout();
@@ -35,23 +37,22 @@
             // 
             this.MenuBar.BackColor = System.Drawing.Color.White;
             this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.videoStreamToolStripMenuItem});
+            this.Menu_VideoStream,
+            this.Menu_Recording});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
             this.MenuBar.Size = new System.Drawing.Size(772, 24);
             this.MenuBar.TabIndex = 42;
             this.MenuBar.Text = "Menu";
             // 
-            // videoStreamToolStripMenuItem
+            // Menu_VideoStream
             // 
-            this.videoStreamToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_VideoStream.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Settings,
-            this.Menu_Snapshot,
-            this.Menu_Record,
             this.Menu_Attach});
-            this.videoStreamToolStripMenuItem.Name = "videoStreamToolStripMenuItem";
-            this.videoStreamToolStripMenuItem.Size = new System.Drawing.Size(89, 20);
-            this.videoStreamToolStripMenuItem.Text = "Video Stream";
+            this.Menu_VideoStream.Name = "Menu_VideoStream";
+            this.Menu_VideoStream.Size = new System.Drawing.Size(89, 20);
+            this.Menu_VideoStream.Text = "Video Stream";
             // 
             // Menu_Settings
             // 
@@ -60,26 +61,44 @@
             this.Menu_Settings.Text = "Connection Settings";
             this.Menu_Settings.Click += new System.EventHandler(this.Menu_Settings_Click);
             // 
-            // Menu_Snapshot
-            // 
-            this.Menu_Snapshot.Name = "Menu_Snapshot";
-            this.Menu_Snapshot.Size = new System.Drawing.Size(181, 22);
-            this.Menu_Snapshot.Text = "Save Snapshot";
-            this.Menu_Snapshot.Click += new System.EventHandler(this.Menu_Snapshot_Click);
-            // 
-            // Menu_Record
-            // 
-            this.Menu_Record.Name = "Menu_Record";
-            this.Menu_Record.Size = new System.Drawing.Size(181, 22);
-            this.Menu_Record.Text = "Start Recording";
-            this.Menu_Record.Click += new System.EventHandler(this.Menu_Record_Click);
-            // 
             // Menu_Attach
             // 
             this.Menu_Attach.Name = "Menu_Attach";
             this.Menu_Attach.Size = new System.Drawing.Size(181, 22);
             this.Menu_Attach.Text = "Attach To Main";
             this.Menu_Attach.Click += new System.EventHandler(this.Menu_Attach_Click);
+            // 
+            // Menu_Recording
+            // 
+            this.Menu_Recording.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Recording_StopRecording,
+            this.Menu_Recording_Video,
+            this.Menu_Recording_Snapshot});
+            this.Menu_Recording.Name = "Menu_Recording";
+            this.Menu_Recording.Size = new System.Drawing.Size(73, 20);
+            this.Menu_Recording.Text = "Recording";
+            // 
+            // Menu_Recording_StopRecording
+            // 
+            this.Menu_Recording_StopRecording.Name = "Menu_Recording_StopRecording";
+            this.Menu_Recording_StopRecording.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_StopRecording.Text = "Stop Recording";
+            this.Menu_Recording_StopRecording.Visible = false;
+            this.Menu_Recording_StopRecording.Click += new System.EventHandler(this.Menu_Recording_StopRecording_Click);
+            // 
+            // Menu_Recording_Video
+            // 
+            this.Menu_Recording_Video.Name = "Menu_Recording_Video";
+            this.Menu_Recording_Video.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video.Text = "Video";
+            this.Menu_Recording_Video.Click += new System.EventHandler(this.Menu_Recording_Video_Click);
+            // 
+            // Menu_Recording_Snapshot
+            // 
+            this.Menu_Recording_Snapshot.Name = "Menu_Recording_Snapshot";
+            this.Menu_Recording_Snapshot.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Snapshot.Text = "Snapshot";
+            this.Menu_Recording_Snapshot.Click += new System.EventHandler(this.Menu_Recording_Snapshot_Click);
             // 
             // p_Player
             // 
@@ -113,12 +132,14 @@
 
         #endregion
         public System.Windows.Forms.MenuStrip MenuBar;
-        public System.Windows.Forms.ToolStripMenuItem videoStreamToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem Menu_VideoStream;
         public System.ComponentModel.IContainer components;
         public System.Windows.Forms.ToolStripMenuItem Menu_Settings;
-        public System.Windows.Forms.ToolStripMenuItem Menu_Snapshot;
-        public System.Windows.Forms.ToolStripMenuItem Menu_Record;
         public System.Windows.Forms.Panel p_Player;
         private System.Windows.Forms.ToolStripMenuItem Menu_Attach;
+        private System.Windows.Forms.ToolStripMenuItem Menu_Recording;
+        private System.Windows.Forms.ToolStripMenuItem Menu_Recording_Video;
+        private System.Windows.Forms.ToolStripMenuItem Menu_Recording_Snapshot;
+        private System.Windows.Forms.ToolStripMenuItem Menu_Recording_StopRecording;
     }
 }

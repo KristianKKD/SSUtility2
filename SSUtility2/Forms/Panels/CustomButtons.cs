@@ -38,7 +38,7 @@ namespace SSUtility2 {
 
 
                 if (b.Text.Length > 0) {
-                    UpdateTip(buttonList.IndexOf(b));
+                    //UpdateTip(buttonList.IndexOf(b));
                     MainForm.m.mainPlayer.p_Player.Controls.Add(b);
                 }
             } catch (Exception e) {
@@ -67,6 +67,7 @@ namespace SSUtility2 {
         void Reorder() {
             try {
                 int cumuWidth = 0;
+
                 for (int i = 0; i < buttonList.Count; i++)
                     cumuWidth += buttonList[i].Width;
 
@@ -97,7 +98,10 @@ namespace SSUtility2 {
             isVisible = true;
         }
 
-        public void UpdateButtonNames() {
+        public async Task UpdateButtonNames() {
+            await Task.Delay(100);
+            Console.WriteLine("change");
+
             DataGridView dgv = MainForm.m.setPage.dgv_Custom_Buttons;
             List<int> validRows = Tools.GetValidRows(dgv, 0);
 
@@ -114,7 +118,7 @@ namespace SSUtility2 {
 
         public void UpdateTip(int buttonIndex) {
             try {
-                if (buttonIndex > buttonList.Count - 1)
+                if (buttonIndex > buttonList.Count - 1 || buttonIndex < 0)
                     return;
 
                 string val = "";

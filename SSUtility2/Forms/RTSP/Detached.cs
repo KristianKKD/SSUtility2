@@ -15,12 +15,14 @@ namespace SSUtility2 {
         public VideoSettings settings;
         public List<Detached> attachedPlayers = new List<Detached>();
 
-        public Detached(bool isMain) {
+        public Detached(bool isMain, bool autoPlay = false) {
             InitializeComponent();
             settings = new VideoSettings(this, isMain);
             CreateHandle();
-            if (isMain) 
+            if (isMain)
                 p_Player = MainForm.m.p_PlayerPanel;
+            else if (autoPlay && settings.cB_RTSP.Items.Count > 1)
+                settings.cB_RTSP.SelectedIndex = 0;
         }
 
         public void DestroyPlayer() {
@@ -225,42 +227,7 @@ namespace SSUtility2 {
             settings.Show();
         }
 
-        private void Menu_StartStop_Click(object sender, EventArgs e) {
-            ToggleStopStart();
-        }
-
-        private void Menu_Snapshot_Click(object sender, EventArgs e) {
-            Tools.SaveSnap(this);
-        }
-
-        private void Menu_Record_Click(object sender, EventArgs e) {
-            try {
-                string location = ConfigControl.vFolder.stringVal + MainForm.m.mainPlayer.settings.GetTabName() + @"\";
-
-                if (Menu_Record.Text == "Start Recording") {
-                    Menu_Record.Text = "Stop Recording";
-                    PlayerSdk.EasyPlayer_StartManuRecording(settings.channelID, location);
-                } else {
-                    Menu_Record.Text = "Start Recording";
-                    PlayerSdk.EasyPlayer_StopManuRecording(settings.channelID);
-
-                    if (MainForm.m.finalMode) {
-                        SaveFileDialog fdg = Tools.SaveFile(ConfigControl.screencapFileName.stringVal, ".avi", MainForm.m.finalDest);
-                        DialogResult result = fdg.ShowDialog();
-                        if (result == DialogResult.OK) {
-                            Tools.CopySingleFile(fdg.FileName, location);
-                            MessageBox.Show("Saved recording to: " + location +
-                            "\nFinal saved: " + fdg.FileName);
-                        }
-                    } else {
-                        MessageBox.Show("Saved recording to: " + location);
-                    }
-                }
-            }catch(Exception err) {
-                MessageBox.Show(err.ToString());
-            }
-        }
-
+        FFMPEGRecord playerRec;
         private void Menu_Attach_Click(object sender, EventArgs e) {
             Hide();
 
@@ -278,6 +245,18 @@ namespace SSUtility2 {
 
         public bool IsPlaying() {
             return settings.channelID > 0;
+        }
+
+        private void Menu_Recording_Snapshot_Click(object sender, EventArgs e) {
+            Tools.SaveSnap(this);
+        }
+
+        private void Menu_Recording_Video_Click(object sender, EventArgs e) {
+            playerRec = Tools.ToggleRecord(playerRec, Menu_Recording_Video, Menu_Recording_StopRecording, this);
+        }
+
+        private void Menu_Recording_StopRecording_Click(object sender, EventArgs e) {
+            playerRec = Tools.ToggleRecord(playerRec, Menu_Recording_Video, Menu_Recording_StopRecording, this);
         }
     }
 

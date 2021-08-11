@@ -213,12 +213,11 @@ namespace SSUtility2 {
             return msg;
         }
 
-        public static void SaveSnap(Detached player) {
-            string fullImagePath = GivePath(ConfigControl.scFolder.stringVal,
-                ConfigControl.scFileName.stringVal, player.settings, "Snapshots", ".jpg");
+        public static void SaveSnap(Detached player, bool showConfirmation = true, string customPath = "") {
+            string fullImagePath = GivePath(PathType.Snapshot, player, customPath);
 
             Screenshot(player, fullImagePath);
-            FinalScreenshot(fullImagePath);
+            FinalScreenshot(fullImagePath, showConfirmation);
         }
 
         private static void Screenshot(Detached d, string path) {
@@ -235,17 +234,19 @@ namespace SSUtility2 {
             }
         }
 
-        public static void FinalScreenshot(string fullImagePath) {
+        public static void FinalScreenshot(string fullImagePath, bool showConfirmation = true) {
             if (MainForm.m.finalMode) {
                 SaveFileDialog fdg = SaveFile(ConfigControl.scFileName.stringVal, ".jpg", MainForm.m.finalDest);
                 DialogResult result = fdg.ShowDialog();
                 if (result == DialogResult.OK) {
                     CopySingleFile(fdg.FileName, fullImagePath);
                 }
-                MessageBox.Show("Image saved : " + fullImagePath +
+                if (showConfirmation)
+                    MessageBox.Show("Image saved : " + fullImagePath +
                         "\nFinal saved: " + fdg.FileName);
             } else {
-                MessageBox.Show("Image saved : " + fullImagePath);
+                if(showConfirmation)
+                    MessageBox.Show("Image saved : " + fullImagePath);
             }
         }
 
@@ -258,9 +259,8 @@ namespace SSUtility2 {
 
             int numAdd = 0;
 
-            while (File.Exists(fullPath)) {
+            while (File.Exists(fullPath))
                 fullPath = path + name + "(" + (++numAdd).ToString() + ")" + extension;
-            }
 
             return fullPath;
         }
@@ -276,12 +276,6 @@ namespace SSUtility2 {
             return false;
         }
 
-        public static Recorder Record(string path, Panel player) {
-            Recorder rec = new Recorder(new Record(path, ConfigControl.recFPS.intVal,
-                    SharpAvi.KnownFourCCs.Codecs.MotionJpeg, ConfigControl.recQual.intVal, player));
-            return rec;
-        }
-
         public static SaveFileDialog SaveFile(string name, string extension, string startDir) {
             SaveFileDialog fileDlg = new SaveFileDialog();
             fileDlg.InitialDirectory = startDir;
@@ -294,30 +288,126 @@ namespace SSUtility2 {
             return fileDlg;
         }
 
-        public static string GivePath(string orgFolder, string orgName, VideoSettings player, string folderType, string extension) {
-            string folder = orgFolder;
-            string fullTemp = NameNoOverwrite(orgFolder + orgName + extension);
-            string name = fullTemp.Substring(fullTemp.LastIndexOf(@"\") + 1);
+        public enum PathType {
+            Snapshot,
+            Video,
+            Panoramic,
+            Folder,
+        }
 
-            string playerName = player.GetTabName();
+        public static string GivePath(PathType pt, Detached player, string customPath = "") {
+            string defaultName, folder, name, full, folderType, extension;
 
-            if (playerName != "") {
-                playerName += @"\";
-            } else {
-                folderType = "";
+            switch (pt) {
+                case PathType.Snapshot:
+                    defaultName = ConfigControl.scFileName.stringVal;
+                    folder = ConfigControl.scFolder.stringVal;
+                    folderType = "Snapshots";
+                    extension = ".jpg";
+                    break;
+                case PathType.Video:
+                    defaultName = ConfigControl.vFileName.stringVal;
+                    folder = ConfigControl.vFolder.stringVal;
+                    folderType = "Recordings";
+                    extension = ".mp4";
+                    break;
+                case PathType.Panoramic:
+                    defaultName = "Panoramic";
+                    folder = ConfigControl.scFolder.stringVal;
+                    folderType = "Panoramic";
+                    extension = ".jpg";
+                    break;
+                default: //folder type
+                    defaultName = "";
+                    folder = "";
+                    folderType = "";
+                    extension = "";
+                    break;
             }
 
-            if (ConfigControl.automaticPaths.boolVal) {
-                folder = ConfigControl.savedFolder + playerName + folderType;
-                string timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
-                name = orgName + " " + timeText;
+            if (customPath != "")
+                folder = customPath;
+
+            if (pt != PathType.Folder)
+                folder += @"\";
+
+            if (ConfigControl.automaticPaths.boolVal && customPath == "") {
+                string playerName = "";
+
+                if (player != null)
+                    playerName = player.settings.GetPresetName();
+
+                if (playerName != "")
+                    playerName += @"\";
+                else
+                    folderType = "";
+
+                folder = ConfigControl.savedFolder + playerName + folderType + @"/";
+
+                string timeText = "";
+                if (pt != PathType.Folder)
+                    timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
+
+                name = timeText;
+
+                if (defaultName != "")
+                    name = defaultName + " " + timeText;
+
+                full = folder + name + timeText + extension;
+            } else
+                full = folder + defaultName + extension;
+
+            if (pt != PathType.Folder) {
+                if (customPath == "")
+                    CheckCreateFile(null, folder);
+
+                full = NameNoOverwrite(full);
             }
 
-            CheckCreateFile(null, folder);
+            Console.WriteLine(full);
 
-            string full = folder + @"\" + name + extension;
             return full;
         }
+
+
+        public static FFMPEGRecord ToggleRecord(FFMPEGRecord recorder, ToolStripMenuItem startRecord, ToolStripMenuItem stopRecord, Detached player) {
+            FFMPEGRecord.RecordType type = FFMPEGRecord.RecordType.SSUtility;
+
+            if (player != null)
+                type = FFMPEGRecord.RecordType.Player;
+
+            if (recorder == null) {
+                recorder = new FFMPEGRecord(type, player);
+
+                if (!recorder.recording)
+                    recorder = null;
+                else {
+                    stopRecord.Text = "Stop Recording";
+                    stopRecord.Visible = true;
+                    startRecord.Visible = false;
+                }
+
+            } else {
+                if (MainForm.m.finalMode) {
+                    SaveFileDialog fdg = Tools.SaveFile("Recording", ".mp4", MainForm.m.finalDest);
+                    DialogResult result = fdg.ShowDialog();
+                    if (result == DialogResult.OK)
+                        Tools.CopySingleFile(fdg.FileName, recorder.outPath);
+
+                    MessageBox.Show("Saved recording to: " + recorder.outPath +
+                        "\nFinal saved: " + fdg.FileName);
+                } else
+                    MessageBox.Show("Saved recording to: " + recorder.outPath);
+
+                recorder.StopRecording();
+                recorder = null;
+                stopRecord.Visible = false;
+                startRecord.Visible = true;
+            }
+
+            return recorder;
+        }
+
 
         public static void CopySingleFile(string destination, string sourceFile, bool copyingDirectory = false) {
             string curFile = string.Empty;

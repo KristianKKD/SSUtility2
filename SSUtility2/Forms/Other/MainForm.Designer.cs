@@ -54,6 +54,7 @@ namespace SSUtility2 {
             this.Menu_Window_Osiris = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Presets = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Settings_ConnectionSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Lite = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Keyboard = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,12 +66,16 @@ namespace SSUtility2 {
             this.Menu_Settings_Config = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Config_Import = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_Config_Export = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video_Settings = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video_Snap_Single = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video_Snap_Panoramic = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Video_Record = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_StopRecording = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Video = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Video_MainPlayer = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Video_Current = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Snapshot_Single = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Snapshot_Panoramic = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Snapshot_All = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Collection = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_Custom = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_QC_PanZero = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,7 +111,7 @@ namespace SSUtility2 {
             this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Menu_Window,
             this.Menu_Settings,
-            this.Menu_Video,
+            this.Menu_Recording,
             this.Menu_QC,
             this.Menu_Final});
             this.MenuBar.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
@@ -131,41 +136,42 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Osiris
             // 
             this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Osiris.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Osiris.Text = "Osiris Control";
             this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Presets.Text = "Quick Functions";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
             // Menu_Settings
             // 
             this.Menu_Settings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Settings_ConnectionSettings,
             this.Menu_Settings_Open,
             this.Menu_Settings_Lite,
             this.Menu_Settings_Keyboard,
@@ -175,11 +181,18 @@ namespace SSUtility2 {
             this.Menu_Settings.Size = new System.Drawing.Size(63, 20);
             this.Menu_Settings.Text = "Settings";
             // 
+            // Menu_Settings_ConnectionSettings
+            // 
+            this.Menu_Settings_ConnectionSettings.Name = "Menu_Settings_ConnectionSettings";
+            this.Menu_Settings_ConnectionSettings.Size = new System.Drawing.Size(193, 22);
+            this.Menu_Settings_ConnectionSettings.Text = "Connection Settings";
+            this.Menu_Settings_ConnectionSettings.Click += new System.EventHandler(this.Menu_Settings_ConnectionSettings_Click);
+            // 
             // Menu_Settings_Open
             // 
             this.Menu_Settings_Open.Name = "Menu_Settings_Open";
             this.Menu_Settings_Open.Size = new System.Drawing.Size(193, 22);
-            this.Menu_Settings_Open.Text = "Open Settings";
+            this.Menu_Settings_Open.Text = "SSUtility Settings";
             this.Menu_Settings_Open.Click += new System.EventHandler(this.Menu_Settings_Open_Click);
             // 
             // Menu_Settings_Lite
@@ -258,52 +271,85 @@ namespace SSUtility2 {
             this.Menu_Settings_Config_Export.Text = "Export...";
             this.Menu_Settings_Config_Export.Click += new System.EventHandler(this.Menu_Settings_Config_Export_Click);
             // 
-            // Menu_Video
+            // Menu_Recording
             // 
-            this.Menu_Video.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Menu_Video_Settings,
-            this.Menu_Video_Snapshot,
-            this.Menu_Video_Record});
-            this.Menu_Video.Name = "Menu_Video";
-            this.Menu_Video.Size = new System.Drawing.Size(93, 20);
-            this.Menu_Video.Text = "Video Stream";
+            this.Menu_Recording.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Recording_StopRecording,
+            this.Menu_Recording_Video,
+            this.Menu_Recording_Snapshot,
+            this.Menu_Recording_Collection});
+            this.Menu_Recording.Name = "Menu_Recording";
+            this.Menu_Recording.Size = new System.Drawing.Size(76, 20);
+            this.Menu_Recording.Text = "Recording";
             // 
-            // Menu_Video_Settings
+            // Menu_Recording_StopRecording
             // 
-            this.Menu_Video_Settings.Name = "Menu_Video_Settings";
-            this.Menu_Video_Settings.Size = new System.Drawing.Size(183, 22);
-            this.Menu_Video_Settings.Text = "Connection Settings";
-            this.Menu_Video_Settings.Click += new System.EventHandler(this.Menu_Video_Settings_Click);
+            this.Menu_Recording_StopRecording.Name = "Menu_Recording_StopRecording";
+            this.Menu_Recording_StopRecording.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_StopRecording.Text = "Stop Recording";
+            this.Menu_Recording_StopRecording.Visible = false;
+            this.Menu_Recording_StopRecording.Click += new System.EventHandler(this.Menu_Recording_StopRecording_Click);
             // 
-            // Menu_Video_Snapshot
+            // Menu_Recording_Video
             // 
-            this.Menu_Video_Snapshot.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Menu_Video_Snap_Single,
-            this.Menu_Video_Snap_Panoramic});
-            this.Menu_Video_Snapshot.Name = "Menu_Video_Snapshot";
-            this.Menu_Video_Snapshot.Size = new System.Drawing.Size(183, 22);
-            this.Menu_Video_Snapshot.Text = "Save Snapshot";
+            this.Menu_Recording_Video.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Recording_Video_MainPlayer,
+            this.Menu_Recording_Video_Current});
+            this.Menu_Recording_Video.Name = "Menu_Recording_Video";
+            this.Menu_Recording_Video.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video.Text = "Video";
             // 
-            // Menu_Video_Snap_Single
+            // Menu_Recording_Video_MainPlayer
             // 
-            this.Menu_Video_Snap_Single.Name = "Menu_Video_Snap_Single";
-            this.Menu_Video_Snap_Single.Size = new System.Drawing.Size(134, 22);
-            this.Menu_Video_Snap_Single.Text = "Single";
-            this.Menu_Video_Snap_Single.Click += new System.EventHandler(this.Menu_Video_Snap_Single_Click);
+            this.Menu_Recording_Video_MainPlayer.Name = "Menu_Recording_Video_MainPlayer";
+            this.Menu_Recording_Video_MainPlayer.Size = new System.Drawing.Size(166, 22);
+            this.Menu_Recording_Video_MainPlayer.Text = "SSUtility";
+            this.Menu_Recording_Video_MainPlayer.Click += new System.EventHandler(this.Menu_Recording_Video_MainPlayer_Click);
             // 
-            // Menu_Video_Snap_Panoramic
+            // Menu_Recording_Video_Current
             // 
-            this.Menu_Video_Snap_Panoramic.Name = "Menu_Video_Snap_Panoramic";
-            this.Menu_Video_Snap_Panoramic.Size = new System.Drawing.Size(134, 22);
-            this.Menu_Video_Snap_Panoramic.Text = "Panoramic";
-            this.Menu_Video_Snap_Panoramic.Click += new System.EventHandler(this.Menu_Video_Snap_Panoramic_Click);
+            this.Menu_Recording_Video_Current.Name = "Menu_Recording_Video_Current";
+            this.Menu_Recording_Video_Current.Size = new System.Drawing.Size(166, 22);
+            this.Menu_Recording_Video_Current.Text = "Main Player Only";
+            this.Menu_Recording_Video_Current.Click += new System.EventHandler(this.Menu_Recording_Video_Current_Click);
             // 
-            // Menu_Video_Record
+            // Menu_Recording_Snapshot
             // 
-            this.Menu_Video_Record.Name = "Menu_Video_Record";
-            this.Menu_Video_Record.Size = new System.Drawing.Size(183, 22);
-            this.Menu_Video_Record.Text = "Start Recording";
-            this.Menu_Video_Record.Click += new System.EventHandler(this.Menu_Video_Record_Click);
+            this.Menu_Recording_Snapshot.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Recording_Snapshot_Single,
+            this.Menu_Recording_Snapshot_Panoramic,
+            this.Menu_Recording_Snapshot_All});
+            this.Menu_Recording_Snapshot.Name = "Menu_Recording_Snapshot";
+            this.Menu_Recording_Snapshot.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Snapshot.Text = "Snapshot";
+            // 
+            // Menu_Recording_Snapshot_Single
+            // 
+            this.Menu_Recording_Snapshot_Single.Name = "Menu_Recording_Snapshot_Single";
+            this.Menu_Recording_Snapshot_Single.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Snapshot_Single.Text = "Full Single";
+            this.Menu_Recording_Snapshot_Single.Click += new System.EventHandler(this.Menu_Recording_Snapshot_Single_Click);
+            // 
+            // Menu_Recording_Snapshot_Panoramic
+            // 
+            this.Menu_Recording_Snapshot_Panoramic.Name = "Menu_Recording_Snapshot_Panoramic";
+            this.Menu_Recording_Snapshot_Panoramic.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Snapshot_Panoramic.Text = "Panoramic";
+            this.Menu_Recording_Snapshot_Panoramic.Click += new System.EventHandler(this.Menu_Recording_Snapshot_Panoramic_Click);
+            // 
+            // Menu_Recording_Snapshot_All
+            // 
+            this.Menu_Recording_Snapshot_All.Name = "Menu_Recording_Snapshot_All";
+            this.Menu_Recording_Snapshot_All.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Snapshot_All.Text = "All Attached Players";
+            this.Menu_Recording_Snapshot_All.Click += new System.EventHandler(this.Menu_Recording_Snapshot_All_Click);
+            // 
+            // Menu_Recording_Collection
+            // 
+            this.Menu_Recording_Collection.Name = "Menu_Recording_Collection";
+            this.Menu_Recording_Collection.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Collection.Text = "Collection...";
+            this.Menu_Recording_Collection.Click += new System.EventHandler(this.Menu_Recording_Collection_Click);
             // 
             // Menu_QC
             // 
@@ -604,10 +650,6 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_QC_Pan;
         public ToolStripMenuItem Menu_QC_Tilt;
         public ToolStripMenuItem Menu_Window_Osiris;
-        public ToolStripMenuItem Menu_Video;
-        public ToolStripMenuItem Menu_Video_Settings;
-        public ToolStripMenuItem Menu_Video_Snapshot;
-        public ToolStripMenuItem Menu_Video_Record;
         public ToolStripMenuItem Menu_Window_Presets;
         public Button b_Open;
         public ToolStripMenuItem Menu_Settings;
@@ -625,8 +667,6 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_QC_Custom;
         public Button b_PTZ_Daylight;
         public Button b_PTZ_Thermal;
-        public ToolStripMenuItem Menu_Video_Snap_Single;
-        public ToolStripMenuItem Menu_Video_Snap_Panoramic;
         public Kaiser.JoyBack JoyBack;
         public PictureBox pB_Panoramic;
         private ToolStripMenuItem Menu_QC_Zoom;
@@ -638,5 +678,16 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Settings_Panels_IP;
         public ToolStripMenuItem Menu_Settings_Panels_Custom;
         public ToolStripMenuItem Menu_Settings_Panels_CP;
+        private ToolStripMenuItem Menu_Recording;
+        private ToolStripMenuItem Menu_Recording_Video;
+        private ToolStripMenuItem Menu_Recording_Video_MainPlayer;
+        private ToolStripMenuItem Menu_Recording_Video_Current;
+        private ToolStripMenuItem Menu_Recording_Snapshot;
+        private ToolStripMenuItem Menu_Recording_Snapshot_Single;
+        private ToolStripMenuItem Menu_Recording_Snapshot_Panoramic;
+        private ToolStripMenuItem Menu_Recording_Collection;
+        private ToolStripMenuItem Menu_Recording_StopRecording;
+        private ToolStripMenuItem Menu_Settings_ConnectionSettings;
+        private ToolStripMenuItem Menu_Recording_Snapshot_All;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

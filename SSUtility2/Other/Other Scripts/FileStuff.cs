@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SSUtility2 {
     public class FileStuff {
@@ -41,9 +42,9 @@ namespace SSUtility2 {
                 foreach (string line in lines) {
                     string currentLine = line.Trim();
                     if (currentLine.Contains(@":\")) {
-                        if (Tools.CheckIfNameValid(currentLine)) {
+                        if (Tools.CheckIfNameValid(currentLine))
                             Tools.CheckCreateFile(null, currentLine);
-                        }
+
                         return currentLine;
                     }
                 }
@@ -129,9 +130,8 @@ namespace SSUtility2 {
             List<string> configs = new List<string>();
             foreach (string f in arr) {
                 string firstLine = File.ReadLines(f).First();
-                if (firstLine.ToLower().Contains("ssutility") && firstLine.ToLower().Contains("config")) {
+                if (firstLine.ToLower().Contains("ssutility") && firstLine.ToLower().Contains("config"))
                     configs.Add(f);
-                }
             }
 
             return configs;
@@ -140,6 +140,11 @@ namespace SSUtility2 {
         public static void CreateConfigFiles() {
             Tools.CheckCreateFile(ConfigControl.config, ConfigControl.appFolder);
             Tools.CheckCreateFile(null, ConfigControl.savedFolder);
+        }
+
+        public static void CheckForLibs() {
+            if (!Directory.Exists(@"Lib"))
+                MessageBox.Show("Lib folder missing!\nThis is required to run this software properly!\nErrors are to be expected!");
         }
     }
 }

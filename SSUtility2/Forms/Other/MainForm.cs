@@ -11,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.0.13";
+        public const string version = "v2.8.1.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -33,14 +33,14 @@ namespace SSUtility2 {
         public TabControl attachedpp;
         public Detached mainPlayer;
         public CommandListWindow clw;
-        private Recorder screenRec;
+        private FFMPEGRecord screenRec;
+        private MediaCollection coll;
 
-        private string inUseVideoPath;
-        private string screenRecordName;
         public string finalDest;
 
         private Timer RatioTimer;
         private Point currentDragPos;
+        
         private bool resizing = false;
         public int currentAspectRatio;
         public int currentAspectRatioSecondary;
@@ -61,8 +61,11 @@ namespace SSUtility2 {
                 pp = new PresetPanel();
                 custom = new CustomButtons();
                 clw = new CommandListWindow();
+                coll = new MediaCollection();
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
+
+                FileStuff.CheckForLibs();
 
                 Console.WriteLine("ACTIVATION: " + EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init().ToString());
 
@@ -108,37 +111,6 @@ namespace SSUtility2 {
                 AsyncCamCom.TryConnect(false);
             } catch (Exception e) {
                 Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
-            }
-        }
-
-        public (bool, Recorder) StopStartRec(bool isPlaying, Detached player, Recorder r) {
-            if (isPlaying) {
-                isPlaying = false;
-
-                r.Dispose();
-
-                if (MainForm.m.finalMode) {
-                    SaveFileDialog fdg = Tools.SaveFile(ConfigControl.vFileName.stringVal, ".avi", MainForm.m.finalDest);
-                    DialogResult result = fdg.ShowDialog();
-                    if (result == DialogResult.OK) {
-                        Tools.CopySingleFile(fdg.FileName, inUseVideoPath);
-                    }
-                    MessageBox.Show("Saved recording to: " + inUseVideoPath +
-                        "\nFinal saved: " + fdg.FileName);
-                } else {
-                    MessageBox.Show("Saved recording to: " + inUseVideoPath);
-                }
-
-                return (isPlaying, null);
-            } else {
-                string fullVideoPath = Tools.GivePath(ConfigControl.vFolder.stringVal,
-                    ConfigControl.vFileName.stringVal, player.settings, "Recordings", ".avi");
-                inUseVideoPath = fullVideoPath;
-                isPlaying = true;
-
-                Recorder rec = Tools.Record(fullVideoPath, player.p_Player);
-
-                return (isPlaying, rec);
             }
         }
 
@@ -277,7 +249,8 @@ namespace SSUtility2 {
 
                     Menu_Settings_Panels_IP.Dispose();
                     Menu_Settings_Panels_CP.Dispose();
-                    Menu_Video.Dispose();
+                    Menu_Settings_ConnectionSettings.Dispose();
+                    Menu_Recording.Dispose();
                     b_Open.Dispose();
 
                     mainPlayer.DestroyAll();
@@ -380,7 +353,7 @@ namespace SSUtility2 {
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
-            Detached d = new Detached(false);
+            Detached d = new Detached(false, true);
             d.Show();
         }
 
@@ -426,37 +399,16 @@ namespace SSUtility2 {
             new QuickCommandEntry("abszoom", "Enter zoom pos value");
         }
 
-        private void Menu_Video_Settings_Click(object sender, EventArgs e) {
-            mainPlayer.settings.Show();
-            mainPlayer.settings.BringToFront();
-            mainPlayer.settings.Location = Location;
+        private void Menu_Recording_Video_MainPlayer_Click(object sender, EventArgs e) {
+            screenRec = Tools.ToggleRecord(screenRec, Menu_Recording_Video, Menu_Recording_StopRecording, null);
         }
 
-        private void Menu_Video_Record_Click(object sender, EventArgs e) {
-            if (screenRec != null) {
-                screenRec.Dispose();
-                screenRec = null;
-                Menu_Video_Record.Text = "Start Recording";
+        private void Menu_Recording_StopRecording_Click(object sender, EventArgs e) {
+            screenRec = Tools.ToggleRecord(screenRec, Menu_Recording_Video, Menu_Recording_StopRecording, null);
+        }
 
-                if (finalMode) {
-                    SaveFileDialog fdg = Tools.SaveFile(ConfigControl.screencapFileName.stringVal, ".avi", finalDest);
-                    DialogResult result = fdg.ShowDialog();
-                    if (result == DialogResult.OK) {
-                        Tools.CopySingleFile(fdg.FileName, screenRecordName);
-                    }
-                    MessageBox.Show("Saved recording to: " + screenRecordName +
-                        "\nFinal saved: " + fdg.FileName);
-                } else {
-                    MessageBox.Show("Saved recording to: " + screenRecordName);
-                }
-
-            } else {
-                Tools.CheckCreateFile(null, ConfigControl.vFolder.stringVal + @"\SSUtility2\");
-                string folder = ConfigControl.vFolder.stringVal + @"\SSUtility2\";
-                screenRecordName = folder + ConfigControl.screencapFileName.stringVal + (Directory.GetFiles(folder).Length + 1).ToString() + ".avi";
-                screenRec = Tools.Record(screenRecordName, null);
-                Menu_Video_Record.Text = "Stop Recording";
-            }
+        private void Menu_Recording_Video_Current_Click(object sender, EventArgs e) {
+            screenRec = Tools.ToggleRecord(screenRec, Menu_Recording_Video, Menu_Recording_StopRecording, mainPlayer);
         }
 
         private void Menu_Window_Presets_Click(object sender, EventArgs e) {
@@ -471,6 +423,12 @@ namespace SSUtility2 {
 
         private void Menu_Settings_Open_Click(object sender, EventArgs e) {
             OpenSettings();
+        }
+
+        private void Menu_Settings_ConnectionSettings_Click(object sender, EventArgs e) {
+            mainPlayer.settings.Show();
+            mainPlayer.settings.BringToFront();
+            mainPlayer.settings.Location = Location;
         }
 
         public void SwapSettings(Detached player) {
@@ -993,28 +951,30 @@ namespace SSUtility2 {
             } catch { }
         }
 
-        private void Menu_Video_Snap_Single_Click(object sender, EventArgs e) {
-            Tools.SaveSnap(mainPlayer);
-        }
-
+       
         bool displayingPano = false;
         bool stopPano = false;
         int panoFOV = 40;
-        private void Menu_Video_Snap_Panoramic_Click(object sender, EventArgs e) {
+
+        private void Menu_Recording_Snapshot_Single_Click(object sender, EventArgs e) {
+            Tools.SaveSnap(mainPlayer);
+        }
+
+        private void Menu_Recording_Snapshot_Panoramic_Click(object sender, EventArgs e) {
             panoFOV = 40;
             string stop = "Stop Panoramic";
 
             if (displayingPano) {
                 pB_Panoramic.Hide();
                 displayingPano = false;
-                Menu_Video_Snap_Panoramic.Text = "Panoramic";
+                Menu_Recording_Snapshot_Panoramic.Text = "Panoramic";
                 return;
             }
 
-            if (Menu_Video_Snap_Panoramic.Text == stop) {
+            if (Menu_Recording_Snapshot_Panoramic.Text == stop) {
                 stopPano = true;
             } else {
-                Menu_Video_Snap_Panoramic.Text = stop;
+                Menu_Recording_Snapshot_Panoramic.Text = stop;
                 Panoramic();
             }
         }
@@ -1082,8 +1042,7 @@ namespace SSUtility2 {
                 }
 
                 if (!stopPano) {
-                    string fullImagePath = Tools.GivePath(ConfigControl.scFolder.stringVal,
-                    "Panoramic", mainPlayer.settings, "Snapshots", ".jpg");
+                    string fullImagePath = Tools.GivePath(Tools.PathType.Panoramic, mainPlayer);
 
                     fullScreenshot.Save(fullImagePath, System.Drawing.Imaging.ImageFormat.Jpeg);
                     Tools.FinalScreenshot(fullImagePath);
@@ -1096,7 +1055,7 @@ namespace SSUtility2 {
                     pB_Panoramic.Image = fullScreenshot;
 
                     displayingPano = true;
-                    Menu_Video_Snap_Panoramic.Text = "Hide Panoramic";
+                    Menu_Recording_Snapshot_Panoramic.Text = "Hide Panoramic";
                 }
 
                 //if (Directory.Exists(tempStorage))
@@ -1110,7 +1069,7 @@ namespace SSUtility2 {
             stopPano = false;
 
             if (!displayingPano)
-                Menu_Video_Snap_Panoramic.Text = "Panoramic";
+                Menu_Recording_Snapshot_Panoramic.Text = "Panoramic";
         }
 
         private void pB_Panoramic_MouseClick(object sender, MouseEventArgs e) {
@@ -1125,7 +1084,80 @@ namespace SSUtility2 {
                 MessageBox.Show("PANOMOUSECLICK\n" + er.ToString());
             }
 
-            //pB_Panoramic.Hide();
+            pB_Panoramic.Hide();
+        }
+
+        private void Menu_Recording_Collection_Click(object sender, EventArgs e) {
+            coll.Show();
+        }
+
+        private void Menu_Recording_Snapshot_All_Click(object sender, EventArgs e) {
+            SnapshotAll();
+        }
+
+        async Task SnapshotAll() {
+            try {
+                List<Control> enabledPanels = new List<Control>();
+
+                if (InfoPanel.i.myPanel.Visible)
+                    enabledPanels.Add(InfoPanel.i.myPanel);
+
+                if (custom.isVisible)
+                    foreach (Button b in custom.buttonList)
+                        enabledPanels.Add(b);
+
+                if (attachedpp.Visible)
+                    enabledPanels.Add(attachedpp);
+
+                foreach (Detached d in mainPlayer.attachedPlayers) {
+                    d.p_Player.Hide();
+                    enabledPanels.Add(d.p_Player);
+                }
+
+                if (JoyBack.Visible)
+                    foreach (Control c in controlPanel)
+                        enabledPanels.Add(c);
+
+                foreach (Control c in enabledPanels)
+                    c.Hide();
+
+                string timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
+                string customPath = Tools.GivePath(Tools.PathType.Folder, mainPlayer) + @"Snapshots/" + timeText + @"/";
+                Tools.CheckCreateFile(null, customPath);
+                Console.WriteLine(customPath);
+
+                for (int i = -1; i < mainPlayer.attachedPlayers.Count; i++) {
+                    Detached d;
+                    if (i == -1)
+                        d = mainPlayer;
+                    else
+                        d = mainPlayer.attachedPlayers[i];
+
+
+                    Panel sp = d.p_Player;
+
+                    sp.Show();
+
+                    sp.Dock = DockStyle.Fill;
+
+                    sp.BringToFront();
+                    await Task.Delay(100);
+                    Tools.SaveSnap(d, i == mainPlayer.attachedPlayers.Count, customPath);
+                    await Task.Delay(100);
+
+                    if (i > -1)
+                        sp.Dock = DockStyle.None;
+                }
+
+
+                foreach (Control c in enabledPanels) {
+                    c.Show();
+                    c.BringToFront();
+                }
+
+            } catch(Exception e) {
+                Console.WriteLine(e.ToString());
+            }
         }
 
     } // end of class MainForm

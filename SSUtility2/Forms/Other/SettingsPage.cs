@@ -492,12 +492,13 @@ namespace SSUtility2 {
 
                 string val = row.Cells[e.ColumnIndex].Value.ToString().Trim();
 
-                if (e.ColumnIndex == 0)
-                    custom.UpdateButtonNames();
-                else if (e.ColumnIndex == 1) {
+                if (e.ColumnIndex == 1 && val.Length > 0) {
                     AddToOptions(val);
                     row.SetValues(row.Cells[0].Value, val);
                 }
+
+                if (custom.buttonList.Count > 0)
+                    custom.UpdateButtonNames();
             } catch (Exception er) {
                 MessageBox.Show("DGV VAL CHANGED\n" + er.ToString());
             }
@@ -512,7 +513,7 @@ namespace SSUtility2 {
             if (e.RowIndex == 1)
                 pos = 1;
 
-            string val = "";
+            string val = "-";
             if (dgv_Custom_Buttons.Rows[pos].Cells[0].Value != null)
                 val = dgv_Custom_Buttons.Rows[pos].Cells[0].Value.ToString();
 

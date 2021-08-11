@@ -328,7 +328,7 @@ namespace SSUtility2 {
         }
 
         public string GetTabName() {
-            if (isMainPlayer)
+            if (myLinkedPage == null)
                 return tP_Main.Text;
 
             return myLinkedPage.Text;
