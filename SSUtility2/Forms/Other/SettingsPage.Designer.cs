@@ -25,23 +25,6 @@ namespace SSUtility2
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsPage));
             this.b_Settings_Default = new System.Windows.Forms.Button();
-            this.tB_Rec_scFileN = new System.Windows.Forms.TextBox();
-            this.l_Rec_sCFileN = new System.Windows.Forms.Label();
-            this.cB_Rec_FPS = new System.Windows.Forms.ComboBox();
-            this.tB_Rec_vFileN = new System.Windows.Forms.TextBox();
-            this.l_Rec_vFileN = new System.Windows.Forms.Label();
-            this.l_Rec_FPS = new System.Windows.Forms.Label();
-            this.l_Paths_sCFolder = new System.Windows.Forms.Label();
-            this.b_Paths_sCBrowse = new System.Windows.Forms.Button();
-            this.tB_Paths_sCFolder = new System.Windows.Forms.TextBox();
-            this.l_Paths_vFolder = new System.Windows.Forms.Label();
-            this.tB_Paths_vFolder = new System.Windows.Forms.TextBox();
-            this.b_Paths_vBrowse = new System.Windows.Forms.Button();
-            this.l_Paths_vCheck = new System.Windows.Forms.Label();
-            this.l_Paths_sCCheck = new System.Windows.Forms.Label();
-            this.check_Paths_Manual = new System.Windows.Forms.CheckBox();
-            this.check_Other_AutoPlay = new System.Windows.Forms.CheckBox();
-            this.b_ChangeDir = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
             this.check_IPCon_Override = new System.Windows.Forms.CheckBox();
@@ -64,36 +47,59 @@ namespace SSUtility2
             this.l_IPCon_Port = new System.Windows.Forms.Label();
             this.l_IPCon_Adr = new System.Windows.Forms.Label();
             this.slider_IPCon_ControlMultiplier = new System.Windows.Forms.TrackBar();
-            this.tP_Paths = new System.Windows.Forms.TabPage();
-            this.l_Paths_Dir = new System.Windows.Forms.Label();
             this.tP_Recording = new System.Windows.Forms.TabPage();
-            this.cB_Rec_Quality = new System.Windows.Forms.ComboBox();
-            this.l_Rec_Quality = new System.Windows.Forms.Label();
+            this.l_Recording_vCheck = new System.Windows.Forms.Label();
+            this.l_Recording_sCCheck = new System.Windows.Forms.Label();
+            this.cB_Recording_Quality = new System.Windows.Forms.ComboBox();
+            this.l_Recording_Quality = new System.Windows.Forms.Label();
+            this.l_Recording_FPS = new System.Windows.Forms.Label();
+            this.tB_Recording_scFileN = new System.Windows.Forms.TextBox();
+            this.l_Recording_vFileN = new System.Windows.Forms.Label();
+            this.l_Recording_sCFileN = new System.Windows.Forms.Label();
+            this.tB_Recording_vFileN = new System.Windows.Forms.TextBox();
+            this.cB_Recording_FPS = new System.Windows.Forms.ComboBox();
+            this.check_Recording_Manual = new System.Windows.Forms.CheckBox();
+            this.l_Recording_sCFolder = new System.Windows.Forms.Label();
+            this.b_Recording_sCBrowse = new System.Windows.Forms.Button();
+            this.tB_Recording_sCFolder = new System.Windows.Forms.TextBox();
+            this.b_Recording_vBrowse = new System.Windows.Forms.Button();
+            this.l_Paths_vFolder = new System.Windows.Forms.Label();
+            this.tB_Recording_vFolder = new System.Windows.Forms.TextBox();
             this.tP_Customs = new System.Windows.Forms.TabPage();
             this.dgv_Custom_Buttons = new System.Windows.Forms.DataGridView();
             this.ButtonName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ButtonsCommand = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.tP_Startup = new System.Windows.Forms.TabPage();
+            this.l_Startup_Panels = new System.Windows.Forms.Label();
+            this.check_Startup_ControlPanel = new System.Windows.Forms.CheckBox();
+            this.check_Startup_QuickFunctions = new System.Windows.Forms.CheckBox();
+            this.check_Startup_CustomPanel = new System.Windows.Forms.CheckBox();
+            this.check_Startup_InfoPanel = new System.Windows.Forms.CheckBox();
+            this.l_Startup_PlayerCount = new System.Windows.Forms.Label();
+            this.cB_Startup_PlayerCount = new System.Windows.Forms.ComboBox();
+            this.check_Startup_AutoPlay = new System.Windows.Forms.CheckBox();
             this.tP_Other = new System.Windows.Forms.TabPage();
-            this.l_Other_PlayerCount = new System.Windows.Forms.Label();
-            this.cB_Other_PlayerCount = new System.Windows.Forms.ComboBox();
-            this.l_Other_Ratio = new System.Windows.Forms.Label();
-            this.check_Other_Aspect = new System.Windows.Forms.CheckBox();
-            this.check_AddressInvalid = new System.Windows.Forms.CheckBox();
             this.l_Other_CurrentResolution = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.tB_Other_ResolutionHeight = new System.Windows.Forms.TextBox();
-            this.l_Other_ResolutionHeight = new System.Windows.Forms.Label();
             this.tB_Other_ResolutionWidth = new System.Windows.Forms.TextBox();
             this.l_Other_ResolutionWidth = new System.Windows.Forms.Label();
+            this.l_Other_Dir = new System.Windows.Forms.Label();
+            this.b_ChangeDir = new System.Windows.Forms.Button();
+            this.l_Other_Ratio = new System.Windows.Forms.Label();
+            this.check_Other_Aspect = new System.Windows.Forms.CheckBox();
+            this.check_Other_AddressInvalid = new System.Windows.Forms.CheckBox();
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
+            this.check_Other_FullToParts = new System.Windows.Forms.CheckBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
-            this.tP_Paths.SuspendLayout();
             this.tP_Recording.SuspendLayout();
             this.tP_Customs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Custom_Buttons)).BeginInit();
+            this.tP_Startup.SuspendLayout();
             this.tP_Other.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -109,209 +115,12 @@ namespace SSUtility2
             this.b_Settings_Default.UseVisualStyleBackColor = false;
             this.b_Settings_Default.Click += new System.EventHandler(this.b_Settings_Default_Click);
             // 
-            // tB_Rec_scFileN
-            // 
-            this.tB_Rec_scFileN.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Rec_scFileN.Enabled = false;
-            this.tB_Rec_scFileN.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Rec_scFileN.Location = new System.Drawing.Point(133, 90);
-            this.tB_Rec_scFileN.Name = "tB_Rec_scFileN";
-            this.tB_Rec_scFileN.Size = new System.Drawing.Size(188, 20);
-            this.tB_Rec_scFileN.TabIndex = 4;
-            this.tB_Rec_scFileN.TextChanged += new System.EventHandler(this.tB_Rec_scFileN_TextChanged);
-            // 
-            // l_Rec_sCFileN
-            // 
-            this.l_Rec_sCFileN.AutoSize = true;
-            this.l_Rec_sCFileN.Location = new System.Drawing.Point(7, 94);
-            this.l_Rec_sCFileN.Name = "l_Rec_sCFileN";
-            this.l_Rec_sCFileN.Size = new System.Drawing.Size(102, 13);
-            this.l_Rec_sCFileN.TabIndex = 23;
-            this.l_Rec_sCFileN.Text = "Snapshot File Name";
-            // 
-            // cB_Rec_FPS
-            // 
-            this.cB_Rec_FPS.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_Rec_FPS.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.cB_Rec_FPS.FormattingEnabled = true;
-            this.cB_Rec_FPS.Items.AddRange(new object[] {
-            "15",
-            "24",
-            "30",
-            "45",
-            "60"});
-            this.cB_Rec_FPS.Location = new System.Drawing.Point(133, 6);
-            this.cB_Rec_FPS.Name = "cB_Rec_FPS";
-            this.cB_Rec_FPS.Size = new System.Drawing.Size(114, 21);
-            this.cB_Rec_FPS.TabIndex = 1;
-            this.toolTips.SetToolTip(this.cB_Rec_FPS, "Video capture framerate, lower to reduce latency, increase to improve smoothness " +
-        "of output video.");
-            this.cB_Rec_FPS.TextChanged += new System.EventHandler(this.cB_Rec_FPS_TextChanged);
-            // 
-            // tB_Rec_vFileN
-            // 
-            this.tB_Rec_vFileN.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Rec_vFileN.Enabled = false;
-            this.tB_Rec_vFileN.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Rec_vFileN.Location = new System.Drawing.Point(133, 64);
-            this.tB_Rec_vFileN.Name = "tB_Rec_vFileN";
-            this.tB_Rec_vFileN.Size = new System.Drawing.Size(188, 20);
-            this.tB_Rec_vFileN.TabIndex = 3;
-            this.tB_Rec_vFileN.TextChanged += new System.EventHandler(this.tB_Rec_vFileN_TextChanged);
-            // 
-            // l_Rec_vFileN
-            // 
-            this.l_Rec_vFileN.AutoSize = true;
-            this.l_Rec_vFileN.Location = new System.Drawing.Point(7, 67);
-            this.l_Rec_vFileN.Name = "l_Rec_vFileN";
-            this.l_Rec_vFileN.Size = new System.Drawing.Size(84, 13);
-            this.l_Rec_vFileN.TabIndex = 21;
-            this.l_Rec_vFileN.Text = "Video File Name";
-            // 
-            // l_Rec_FPS
-            // 
-            this.l_Rec_FPS.AutoSize = true;
-            this.l_Rec_FPS.Location = new System.Drawing.Point(7, 6);
-            this.l_Rec_FPS.Name = "l_Rec_FPS";
-            this.l_Rec_FPS.Size = new System.Drawing.Size(87, 13);
-            this.l_Rec_FPS.TabIndex = 2;
-            this.l_Rec_FPS.Text = "Video Frame rate";
-            this.toolTips.SetToolTip(this.l_Rec_FPS, "Video capture framerate, lower to reduce latency, increase to improve smoothness " +
-        "of output video.");
-            // 
-            // l_Paths_sCFolder
-            // 
-            this.l_Paths_sCFolder.AutoSize = true;
-            this.l_Paths_sCFolder.Location = new System.Drawing.Point(5, 36);
-            this.l_Paths_sCFolder.Name = "l_Paths_sCFolder";
-            this.l_Paths_sCFolder.Size = new System.Drawing.Size(84, 13);
-            this.l_Paths_sCFolder.TabIndex = 2;
-            this.l_Paths_sCFolder.Text = "Snapshot Folder";
-            // 
-            // b_Paths_sCBrowse
-            // 
-            this.b_Paths_sCBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Paths_sCBrowse.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Paths_sCBrowse.Enabled = false;
-            this.b_Paths_sCBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Paths_sCBrowse.Location = new System.Drawing.Point(337, 31);
-            this.b_Paths_sCBrowse.Name = "b_Paths_sCBrowse";
-            this.b_Paths_sCBrowse.Size = new System.Drawing.Size(27, 22);
-            this.b_Paths_sCBrowse.TabIndex = 2;
-            this.b_Paths_sCBrowse.Text = "...";
-            this.b_Paths_sCBrowse.UseVisualStyleBackColor = false;
-            this.b_Paths_sCBrowse.Click += new System.EventHandler(this.b_Paths_sCBrowse_Click);
-            // 
-            // tB_Paths_sCFolder
-            // 
-            this.tB_Paths_sCFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Paths_sCFolder.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Paths_sCFolder.Enabled = false;
-            this.tB_Paths_sCFolder.Location = new System.Drawing.Point(112, 33);
-            this.tB_Paths_sCFolder.Name = "tB_Paths_sCFolder";
-            this.tB_Paths_sCFolder.Size = new System.Drawing.Size(219, 20);
-            this.tB_Paths_sCFolder.TabIndex = 1;
-            this.tB_Paths_sCFolder.TextChanged += new System.EventHandler(this.tB_Paths_sCFolder_TextChanged);
-            // 
-            // l_Paths_vFolder
-            // 
-            this.l_Paths_vFolder.AutoSize = true;
-            this.l_Paths_vFolder.Location = new System.Drawing.Point(5, 69);
-            this.l_Paths_vFolder.Name = "l_Paths_vFolder";
-            this.l_Paths_vFolder.Size = new System.Drawing.Size(101, 13);
-            this.l_Paths_vFolder.TabIndex = 17;
-            this.l_Paths_vFolder.Text = "Video Output Folder";
-            // 
-            // tB_Paths_vFolder
-            // 
-            this.tB_Paths_vFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Paths_vFolder.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Paths_vFolder.Enabled = false;
-            this.tB_Paths_vFolder.Location = new System.Drawing.Point(112, 66);
-            this.tB_Paths_vFolder.Name = "tB_Paths_vFolder";
-            this.tB_Paths_vFolder.Size = new System.Drawing.Size(219, 20);
-            this.tB_Paths_vFolder.TabIndex = 3;
-            this.tB_Paths_vFolder.TextChanged += new System.EventHandler(this.tB_Paths_vFolder_TextChanged);
-            // 
-            // b_Paths_vBrowse
-            // 
-            this.b_Paths_vBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Paths_vBrowse.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Paths_vBrowse.Enabled = false;
-            this.b_Paths_vBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Paths_vBrowse.Location = new System.Drawing.Point(337, 64);
-            this.b_Paths_vBrowse.Name = "b_Paths_vBrowse";
-            this.b_Paths_vBrowse.Size = new System.Drawing.Size(26, 22);
-            this.b_Paths_vBrowse.TabIndex = 4;
-            this.b_Paths_vBrowse.Text = "...";
-            this.b_Paths_vBrowse.UseVisualStyleBackColor = false;
-            this.b_Paths_vBrowse.Click += new System.EventHandler(this.b_Paths_vBrowse_Click);
-            // 
-            // l_Paths_vCheck
-            // 
-            this.l_Paths_vCheck.AutoSize = true;
-            this.l_Paths_vCheck.Location = new System.Drawing.Point(373, 77);
-            this.l_Paths_vCheck.Name = "l_Paths_vCheck";
-            this.l_Paths_vCheck.Size = new System.Drawing.Size(0, 13);
-            this.l_Paths_vCheck.TabIndex = 20;
-            // 
-            // l_Paths_sCCheck
-            // 
-            this.l_Paths_sCCheck.AutoSize = true;
-            this.l_Paths_sCCheck.Location = new System.Drawing.Point(373, 44);
-            this.l_Paths_sCCheck.Name = "l_Paths_sCCheck";
-            this.l_Paths_sCCheck.Size = new System.Drawing.Size(0, 13);
-            this.l_Paths_sCCheck.TabIndex = 16;
-            // 
-            // check_Paths_Manual
-            // 
-            this.check_Paths_Manual.Checked = true;
-            this.check_Paths_Manual.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.check_Paths_Manual.Location = new System.Drawing.Point(6, 6);
-            this.check_Paths_Manual.Name = "check_Paths_Manual";
-            this.check_Paths_Manual.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Paths_Manual.Size = new System.Drawing.Size(119, 21);
-            this.check_Paths_Manual.TabIndex = 0;
-            this.check_Paths_Manual.Text = "Automatic Paths";
-            this.check_Paths_Manual.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_Paths_Manual, "Automatic paths are Documents\\SSUtility\\Saved\\[CAMERA NAME]");
-            this.check_Paths_Manual.UseVisualStyleBackColor = true;
-            this.check_Paths_Manual.CheckedChanged += new System.EventHandler(this.check_Paths_Manual_CheckedChanged);
-            // 
-            // check_Other_AutoPlay
-            // 
-            this.check_Other_AutoPlay.Location = new System.Drawing.Point(9, 6);
-            this.check_Other_AutoPlay.Name = "check_Other_AutoPlay";
-            this.check_Other_AutoPlay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Other_AutoPlay.Size = new System.Drawing.Size(174, 17);
-            this.check_Other_AutoPlay.TabIndex = 1;
-            this.check_Other_AutoPlay.Text = "Autoplay Videos on Launch";
-            this.check_Other_AutoPlay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_Other_AutoPlay, "Play videos upon launch of the program if any have been entered previously.");
-            this.check_Other_AutoPlay.UseVisualStyleBackColor = true;
-            this.check_Other_AutoPlay.CheckedChanged += new System.EventHandler(this.check_Other_AutoPlay_CheckedChanged);
-            // 
-            // b_ChangeDir
-            // 
-            this.b_ChangeDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.b_ChangeDir.BackColor = System.Drawing.SystemColors.Control;
-            this.b_ChangeDir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_ChangeDir.Location = new System.Drawing.Point(8, 190);
-            this.b_ChangeDir.Name = "b_ChangeDir";
-            this.b_ChangeDir.Size = new System.Drawing.Size(113, 23);
-            this.b_ChangeDir.TabIndex = 30;
-            this.b_ChangeDir.Text = "Change Directory";
-            this.b_ChangeDir.UseVisualStyleBackColor = false;
-            this.b_ChangeDir.Click += new System.EventHandler(this.b_ChangeDir_Click);
-            // 
             // tC_Settings
             // 
             this.tC_Settings.Controls.Add(this.tP_Control);
-            this.tC_Settings.Controls.Add(this.tP_Paths);
             this.tC_Settings.Controls.Add(this.tP_Recording);
             this.tC_Settings.Controls.Add(this.tP_Customs);
+            this.tC_Settings.Controls.Add(this.tP_Startup);
             this.tC_Settings.Controls.Add(this.tP_Other);
             this.tC_Settings.Location = new System.Drawing.Point(3, 2);
             this.tC_Settings.Name = "tC_Settings";
@@ -395,7 +204,7 @@ namespace SSUtility2
             // l_PelcoDID
             // 
             this.l_PelcoDID.AutoSize = true;
-            this.l_PelcoDID.Location = new System.Drawing.Point(6, 61);
+            this.l_PelcoDID.Location = new System.Drawing.Point(4, 61);
             this.l_PelcoDID.Name = "l_PelcoDID";
             this.l_PelcoDID.Size = new System.Drawing.Size(48, 13);
             this.l_PelcoDID.TabIndex = 102;
@@ -432,7 +241,7 @@ namespace SSUtility2
             // l_IPCon_MainPlayerPreset
             // 
             this.l_IPCon_MainPlayerPreset.AutoSize = true;
-            this.l_IPCon_MainPlayerPreset.Location = new System.Drawing.Point(6, 88);
+            this.l_IPCon_MainPlayerPreset.Location = new System.Drawing.Point(4, 88);
             this.l_IPCon_MainPlayerPreset.Name = "l_IPCon_MainPlayerPreset";
             this.l_IPCon_MainPlayerPreset.Size = new System.Drawing.Size(95, 13);
             this.l_IPCon_MainPlayerPreset.TabIndex = 98;
@@ -546,7 +355,7 @@ namespace SSUtility2
             // l_IPCon_Port
             // 
             this.l_IPCon_Port.AutoSize = true;
-            this.l_IPCon_Port.Location = new System.Drawing.Point(6, 35);
+            this.l_IPCon_Port.Location = new System.Drawing.Point(4, 35);
             this.l_IPCon_Port.Name = "l_IPCon_Port";
             this.l_IPCon_Port.Size = new System.Drawing.Size(67, 13);
             this.l_IPCon_Port.TabIndex = 75;
@@ -556,7 +365,7 @@ namespace SSUtility2
             // l_IPCon_Adr
             // 
             this.l_IPCon_Adr.AutoSize = true;
-            this.l_IPCon_Adr.Location = new System.Drawing.Point(6, 9);
+            this.l_IPCon_Adr.Location = new System.Drawing.Point(4, 9);
             this.l_IPCon_Adr.Name = "l_IPCon_Adr";
             this.l_IPCon_Adr.Size = new System.Drawing.Size(58, 13);
             this.l_IPCon_Adr.TabIndex = 73;
@@ -579,47 +388,25 @@ namespace SSUtility2
             this.slider_IPCon_ControlMultiplier.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_ControlMultiplier_MouseDown);
             this.slider_IPCon_ControlMultiplier.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_ControlMultiplier_MouseUp);
             // 
-            // tP_Paths
-            // 
-            this.tP_Paths.Controls.Add(this.l_Paths_Dir);
-            this.tP_Paths.Controls.Add(this.b_ChangeDir);
-            this.tP_Paths.Controls.Add(this.check_Paths_Manual);
-            this.tP_Paths.Controls.Add(this.l_Paths_sCFolder);
-            this.tP_Paths.Controls.Add(this.l_Paths_sCCheck);
-            this.tP_Paths.Controls.Add(this.b_Paths_sCBrowse);
-            this.tP_Paths.Controls.Add(this.l_Paths_vCheck);
-            this.tP_Paths.Controls.Add(this.tB_Paths_sCFolder);
-            this.tP_Paths.Controls.Add(this.b_Paths_vBrowse);
-            this.tP_Paths.Controls.Add(this.l_Paths_vFolder);
-            this.tP_Paths.Controls.Add(this.tB_Paths_vFolder);
-            this.tP_Paths.Location = new System.Drawing.Point(4, 22);
-            this.tP_Paths.Name = "tP_Paths";
-            this.tP_Paths.Padding = new System.Windows.Forms.Padding(3);
-            this.tP_Paths.Size = new System.Drawing.Size(370, 219);
-            this.tP_Paths.TabIndex = 0;
-            this.tP_Paths.Text = "Paths";
-            this.tP_Paths.UseVisualStyleBackColor = true;
-            // 
-            // l_Paths_Dir
-            // 
-            this.l_Paths_Dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.l_Paths_Dir.AutoSize = true;
-            this.l_Paths_Dir.Location = new System.Drawing.Point(6, 165);
-            this.l_Paths_Dir.Name = "l_Paths_Dir";
-            this.l_Paths_Dir.Size = new System.Drawing.Size(89, 13);
-            this.l_Paths_Dir.TabIndex = 34;
-            this.l_Paths_Dir.Text = "Current Directory:";
-            // 
             // tP_Recording
             // 
-            this.tP_Recording.Controls.Add(this.cB_Rec_Quality);
-            this.tP_Recording.Controls.Add(this.l_Rec_Quality);
-            this.tP_Recording.Controls.Add(this.l_Rec_FPS);
-            this.tP_Recording.Controls.Add(this.tB_Rec_scFileN);
-            this.tP_Recording.Controls.Add(this.l_Rec_vFileN);
-            this.tP_Recording.Controls.Add(this.l_Rec_sCFileN);
-            this.tP_Recording.Controls.Add(this.tB_Rec_vFileN);
-            this.tP_Recording.Controls.Add(this.cB_Rec_FPS);
+            this.tP_Recording.Controls.Add(this.l_Recording_vCheck);
+            this.tP_Recording.Controls.Add(this.l_Recording_sCCheck);
+            this.tP_Recording.Controls.Add(this.cB_Recording_Quality);
+            this.tP_Recording.Controls.Add(this.l_Recording_Quality);
+            this.tP_Recording.Controls.Add(this.l_Recording_FPS);
+            this.tP_Recording.Controls.Add(this.tB_Recording_scFileN);
+            this.tP_Recording.Controls.Add(this.l_Recording_vFileN);
+            this.tP_Recording.Controls.Add(this.l_Recording_sCFileN);
+            this.tP_Recording.Controls.Add(this.tB_Recording_vFileN);
+            this.tP_Recording.Controls.Add(this.cB_Recording_FPS);
+            this.tP_Recording.Controls.Add(this.check_Recording_Manual);
+            this.tP_Recording.Controls.Add(this.l_Recording_sCFolder);
+            this.tP_Recording.Controls.Add(this.b_Recording_sCBrowse);
+            this.tP_Recording.Controls.Add(this.tB_Recording_sCFolder);
+            this.tP_Recording.Controls.Add(this.b_Recording_vBrowse);
+            this.tP_Recording.Controls.Add(this.l_Paths_vFolder);
+            this.tP_Recording.Controls.Add(this.tB_Recording_vFolder);
             this.tP_Recording.Location = new System.Drawing.Point(4, 22);
             this.tP_Recording.Name = "tP_Recording";
             this.tP_Recording.Padding = new System.Windows.Forms.Padding(3);
@@ -628,33 +415,208 @@ namespace SSUtility2
             this.tP_Recording.Text = "Recording";
             this.tP_Recording.UseVisualStyleBackColor = true;
             // 
-            // cB_Rec_Quality
+            // l_Recording_vCheck
             // 
-            this.cB_Rec_Quality.BackColor = System.Drawing.SystemColors.Window;
-            this.cB_Rec_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.cB_Rec_Quality.FormattingEnabled = true;
-            this.cB_Rec_Quality.Items.AddRange(new object[] {
+            this.l_Recording_vCheck.AutoSize = true;
+            this.l_Recording_vCheck.Location = new System.Drawing.Point(345, 68);
+            this.l_Recording_vCheck.Name = "l_Recording_vCheck";
+            this.l_Recording_vCheck.Size = new System.Drawing.Size(14, 13);
+            this.l_Recording_vCheck.TabIndex = 50;
+            this.l_Recording_vCheck.Text = "X";
+            // 
+            // l_Recording_sCCheck
+            // 
+            this.l_Recording_sCCheck.AutoSize = true;
+            this.l_Recording_sCCheck.Location = new System.Drawing.Point(345, 42);
+            this.l_Recording_sCCheck.Name = "l_Recording_sCCheck";
+            this.l_Recording_sCCheck.Size = new System.Drawing.Size(14, 13);
+            this.l_Recording_sCCheck.TabIndex = 49;
+            this.l_Recording_sCCheck.Text = "X";
+            // 
+            // cB_Recording_Quality
+            // 
+            this.cB_Recording_Quality.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_Recording_Quality.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.cB_Recording_Quality.FormattingEnabled = true;
+            this.cB_Recording_Quality.Items.AddRange(new object[] {
             "50",
             "70",
             "100"});
-            this.cB_Rec_Quality.Location = new System.Drawing.Point(133, 33);
-            this.cB_Rec_Quality.Name = "cB_Rec_Quality";
-            this.cB_Rec_Quality.Size = new System.Drawing.Size(114, 21);
-            this.cB_Rec_Quality.TabIndex = 2;
-            this.toolTips.SetToolTip(this.cB_Rec_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
+            this.cB_Recording_Quality.Location = new System.Drawing.Point(113, 169);
+            this.cB_Recording_Quality.Name = "cB_Recording_Quality";
+            this.cB_Recording_Quality.Size = new System.Drawing.Size(119, 21);
+            this.cB_Recording_Quality.TabIndex = 42;
+            this.toolTips.SetToolTip(this.cB_Recording_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
         "formance during capture, increase to improve output file quality.");
-            this.cB_Rec_Quality.TextChanged += new System.EventHandler(this.cB_Rec_Quality_TextChanged);
+            this.cB_Recording_Quality.TextChanged += new System.EventHandler(this.cB_Recording_Quality_TextChanged);
             // 
-            // l_Rec_Quality
+            // l_Recording_Quality
             // 
-            this.l_Rec_Quality.AutoSize = true;
-            this.l_Rec_Quality.Location = new System.Drawing.Point(7, 36);
-            this.l_Rec_Quality.Name = "l_Rec_Quality";
-            this.l_Rec_Quality.Size = new System.Drawing.Size(105, 13);
-            this.l_Rec_Quality.TabIndex = 25;
-            this.l_Rec_Quality.Text = "Video Quality (1-100)";
-            this.toolTips.SetToolTip(this.l_Rec_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
+            this.l_Recording_Quality.AutoSize = true;
+            this.l_Recording_Quality.Location = new System.Drawing.Point(4, 172);
+            this.l_Recording_Quality.Name = "l_Recording_Quality";
+            this.l_Recording_Quality.Size = new System.Drawing.Size(105, 13);
+            this.l_Recording_Quality.TabIndex = 48;
+            this.l_Recording_Quality.Text = "Video Quality (1-100)";
+            this.toolTips.SetToolTip(this.l_Recording_Quality, "Video capture output quality, lower to reduce output file size and to improve per" +
         "formance during capture, increase to improve output file quality.");
+            // 
+            // l_Recording_FPS
+            // 
+            this.l_Recording_FPS.AutoSize = true;
+            this.l_Recording_FPS.Location = new System.Drawing.Point(4, 145);
+            this.l_Recording_FPS.Name = "l_Recording_FPS";
+            this.l_Recording_FPS.Size = new System.Drawing.Size(97, 13);
+            this.l_Recording_FPS.TabIndex = 43;
+            this.l_Recording_FPS.Text = "Video Capture FPS";
+            this.toolTips.SetToolTip(this.l_Recording_FPS, "Video capture framerate, lower to reduce latency, increase to improve smoothness " +
+        "of output video.");
+            // 
+            // tB_Recording_scFileN
+            // 
+            this.tB_Recording_scFileN.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Recording_scFileN.Enabled = false;
+            this.tB_Recording_scFileN.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Recording_scFileN.Location = new System.Drawing.Point(113, 116);
+            this.tB_Recording_scFileN.Name = "tB_Recording_scFileN";
+            this.tB_Recording_scFileN.Size = new System.Drawing.Size(200, 20);
+            this.tB_Recording_scFileN.TabIndex = 45;
+            this.tB_Recording_scFileN.TextChanged += new System.EventHandler(this.tB_Recording_scFileN_TextChanged);
+            // 
+            // l_Recording_vFileN
+            // 
+            this.l_Recording_vFileN.AutoSize = true;
+            this.l_Recording_vFileN.Location = new System.Drawing.Point(4, 93);
+            this.l_Recording_vFileN.Name = "l_Recording_vFileN";
+            this.l_Recording_vFileN.Size = new System.Drawing.Size(84, 13);
+            this.l_Recording_vFileN.TabIndex = 46;
+            this.l_Recording_vFileN.Text = "Video File Name";
+            // 
+            // l_Recording_sCFileN
+            // 
+            this.l_Recording_sCFileN.AutoSize = true;
+            this.l_Recording_sCFileN.Location = new System.Drawing.Point(4, 119);
+            this.l_Recording_sCFileN.Name = "l_Recording_sCFileN";
+            this.l_Recording_sCFileN.Size = new System.Drawing.Size(102, 13);
+            this.l_Recording_sCFileN.TabIndex = 47;
+            this.l_Recording_sCFileN.Text = "Snapshot File Name";
+            // 
+            // tB_Recording_vFileN
+            // 
+            this.tB_Recording_vFileN.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Recording_vFileN.Enabled = false;
+            this.tB_Recording_vFileN.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Recording_vFileN.Location = new System.Drawing.Point(113, 90);
+            this.tB_Recording_vFileN.Name = "tB_Recording_vFileN";
+            this.tB_Recording_vFileN.Size = new System.Drawing.Size(200, 20);
+            this.tB_Recording_vFileN.TabIndex = 44;
+            this.tB_Recording_vFileN.TextChanged += new System.EventHandler(this.tB_Recording_vFileN_TextChanged);
+            // 
+            // cB_Recording_FPS
+            // 
+            this.cB_Recording_FPS.BackColor = System.Drawing.SystemColors.Window;
+            this.cB_Recording_FPS.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.cB_Recording_FPS.FormattingEnabled = true;
+            this.cB_Recording_FPS.Items.AddRange(new object[] {
+            "15",
+            "24",
+            "30",
+            "45",
+            "60"});
+            this.cB_Recording_FPS.Location = new System.Drawing.Point(113, 142);
+            this.cB_Recording_FPS.Name = "cB_Recording_FPS";
+            this.cB_Recording_FPS.Size = new System.Drawing.Size(119, 21);
+            this.cB_Recording_FPS.TabIndex = 41;
+            this.toolTips.SetToolTip(this.cB_Recording_FPS, "Video capture framerate, lower to reduce latency, increase to improve smoothness " +
+        "of output video.");
+            this.cB_Recording_FPS.TextChanged += new System.EventHandler(this.cB_Recording_FPS_TextChanged);
+            // 
+            // check_Recording_Manual
+            // 
+            this.check_Recording_Manual.Checked = true;
+            this.check_Recording_Manual.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.check_Recording_Manual.Location = new System.Drawing.Point(4, 11);
+            this.check_Recording_Manual.Name = "check_Recording_Manual";
+            this.check_Recording_Manual.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Recording_Manual.Size = new System.Drawing.Size(124, 21);
+            this.check_Recording_Manual.TabIndex = 34;
+            this.check_Recording_Manual.Text = "Automatic Paths";
+            this.check_Recording_Manual.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Recording_Manual, "Automatic paths are Documents\\SSUtility\\Saved\\[CAMERA NAME]");
+            this.check_Recording_Manual.UseVisualStyleBackColor = true;
+            this.check_Recording_Manual.CheckedChanged += new System.EventHandler(this.check_Recording_Manual_CheckedChanged);
+            // 
+            // l_Recording_sCFolder
+            // 
+            this.l_Recording_sCFolder.AutoSize = true;
+            this.l_Recording_sCFolder.Location = new System.Drawing.Point(4, 41);
+            this.l_Recording_sCFolder.Name = "l_Recording_sCFolder";
+            this.l_Recording_sCFolder.Size = new System.Drawing.Size(84, 13);
+            this.l_Recording_sCFolder.TabIndex = 36;
+            this.l_Recording_sCFolder.Text = "Snapshot Folder";
+            // 
+            // b_Recording_sCBrowse
+            // 
+            this.b_Recording_sCBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Recording_sCBrowse.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Recording_sCBrowse.Enabled = false;
+            this.b_Recording_sCBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Recording_sCBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
+            this.b_Recording_sCBrowse.Location = new System.Drawing.Point(312, 38);
+            this.b_Recording_sCBrowse.Name = "b_Recording_sCBrowse";
+            this.b_Recording_sCBrowse.Size = new System.Drawing.Size(27, 20);
+            this.b_Recording_sCBrowse.TabIndex = 37;
+            this.b_Recording_sCBrowse.Text = "...";
+            this.b_Recording_sCBrowse.UseVisualStyleBackColor = false;
+            this.b_Recording_sCBrowse.Click += new System.EventHandler(this.b_Recording_sCBrowse_Click);
+            // 
+            // tB_Recording_sCFolder
+            // 
+            this.tB_Recording_sCFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Recording_sCFolder.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Recording_sCFolder.Enabled = false;
+            this.tB_Recording_sCFolder.Location = new System.Drawing.Point(113, 38);
+            this.tB_Recording_sCFolder.Name = "tB_Recording_sCFolder";
+            this.tB_Recording_sCFolder.Size = new System.Drawing.Size(200, 20);
+            this.tB_Recording_sCFolder.TabIndex = 35;
+            this.tB_Recording_sCFolder.TextChanged += new System.EventHandler(this.tB_Recording_sCFolder_TextChanged);
+            // 
+            // b_Recording_vBrowse
+            // 
+            this.b_Recording_vBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Recording_vBrowse.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Recording_vBrowse.Enabled = false;
+            this.b_Recording_vBrowse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Recording_vBrowse.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
+            this.b_Recording_vBrowse.Location = new System.Drawing.Point(312, 64);
+            this.b_Recording_vBrowse.Name = "b_Recording_vBrowse";
+            this.b_Recording_vBrowse.Size = new System.Drawing.Size(26, 20);
+            this.b_Recording_vBrowse.TabIndex = 39;
+            this.b_Recording_vBrowse.Text = "...";
+            this.b_Recording_vBrowse.UseVisualStyleBackColor = false;
+            this.b_Recording_vBrowse.Click += new System.EventHandler(this.b_Recording_vBrowse_Click);
+            // 
+            // l_Paths_vFolder
+            // 
+            this.l_Paths_vFolder.AutoSize = true;
+            this.l_Paths_vFolder.Location = new System.Drawing.Point(4, 67);
+            this.l_Paths_vFolder.Name = "l_Paths_vFolder";
+            this.l_Paths_vFolder.Size = new System.Drawing.Size(106, 13);
+            this.l_Paths_vFolder.TabIndex = 40;
+            this.l_Paths_vFolder.Text = "Video Capture Folder";
+            // 
+            // tB_Recording_vFolder
+            // 
+            this.tB_Recording_vFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Recording_vFolder.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Recording_vFolder.Enabled = false;
+            this.tB_Recording_vFolder.Location = new System.Drawing.Point(113, 64);
+            this.tB_Recording_vFolder.Name = "tB_Recording_vFolder";
+            this.tB_Recording_vFolder.Size = new System.Drawing.Size(200, 20);
+            this.tB_Recording_vFolder.TabIndex = 38;
+            this.tB_Recording_vFolder.TextChanged += new System.EventHandler(this.tB_Recording_vFolder_TextChanged);
             // 
             // tP_Customs
             // 
@@ -704,19 +666,136 @@ namespace SSUtility2
             this.ButtonsCommand.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ButtonsCommand.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
+            // tP_Startup
+            // 
+            this.tP_Startup.Controls.Add(this.l_Startup_Panels);
+            this.tP_Startup.Controls.Add(this.check_Startup_ControlPanel);
+            this.tP_Startup.Controls.Add(this.check_Startup_QuickFunctions);
+            this.tP_Startup.Controls.Add(this.check_Startup_CustomPanel);
+            this.tP_Startup.Controls.Add(this.check_Startup_InfoPanel);
+            this.tP_Startup.Controls.Add(this.l_Startup_PlayerCount);
+            this.tP_Startup.Controls.Add(this.cB_Startup_PlayerCount);
+            this.tP_Startup.Controls.Add(this.check_Startup_AutoPlay);
+            this.tP_Startup.Location = new System.Drawing.Point(4, 22);
+            this.tP_Startup.Name = "tP_Startup";
+            this.tP_Startup.Padding = new System.Windows.Forms.Padding(3);
+            this.tP_Startup.Size = new System.Drawing.Size(370, 219);
+            this.tP_Startup.TabIndex = 5;
+            this.tP_Startup.Text = "Startup";
+            this.tP_Startup.UseVisualStyleBackColor = true;
+            // 
+            // l_Startup_Panels
+            // 
+            this.l_Startup_Panels.AutoSize = true;
+            this.l_Startup_Panels.Location = new System.Drawing.Point(4, 72);
+            this.l_Startup_Panels.Name = "l_Startup_Panels";
+            this.l_Startup_Panels.Size = new System.Drawing.Size(102, 13);
+            this.l_Startup_Panels.TabIndex = 56;
+            this.l_Startup_Panels.Text = "On Launch, Enable:";
+            // 
+            // check_Startup_ControlPanel
+            // 
+            this.check_Startup_ControlPanel.Location = new System.Drawing.Point(3, 137);
+            this.check_Startup_ControlPanel.Name = "check_Startup_ControlPanel";
+            this.check_Startup_ControlPanel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Startup_ControlPanel.Size = new System.Drawing.Size(107, 17);
+            this.check_Startup_ControlPanel.TabIndex = 55;
+            this.check_Startup_ControlPanel.Text = "Control Panel";
+            this.check_Startup_ControlPanel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Startup_ControlPanel, "Play videos upon launch of the program if any have been entered previously.");
+            this.check_Startup_ControlPanel.UseVisualStyleBackColor = true;
+            this.check_Startup_ControlPanel.CheckedChanged += new System.EventHandler(this.check_Startup_ControlPanel_CheckedChanged);
+            // 
+            // check_Startup_QuickFunctions
+            // 
+            this.check_Startup_QuickFunctions.Location = new System.Drawing.Point(3, 91);
+            this.check_Startup_QuickFunctions.Name = "check_Startup_QuickFunctions";
+            this.check_Startup_QuickFunctions.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Startup_QuickFunctions.Size = new System.Drawing.Size(107, 17);
+            this.check_Startup_QuickFunctions.TabIndex = 54;
+            this.check_Startup_QuickFunctions.Text = "Quick Functions";
+            this.check_Startup_QuickFunctions.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Startup_QuickFunctions, "Play videos upon launch of the program if any have been entered previously.");
+            this.check_Startup_QuickFunctions.UseVisualStyleBackColor = true;
+            this.check_Startup_QuickFunctions.CheckedChanged += new System.EventHandler(this.check_Startup_QuickFunctions_CheckedChanged);
+            // 
+            // check_Startup_CustomPanel
+            // 
+            this.check_Startup_CustomPanel.Location = new System.Drawing.Point(3, 160);
+            this.check_Startup_CustomPanel.Name = "check_Startup_CustomPanel";
+            this.check_Startup_CustomPanel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Startup_CustomPanel.Size = new System.Drawing.Size(107, 17);
+            this.check_Startup_CustomPanel.TabIndex = 53;
+            this.check_Startup_CustomPanel.Text = "Custom Panel";
+            this.check_Startup_CustomPanel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Startup_CustomPanel, "Play videos upon launch of the program if any have been entered previously.");
+            this.check_Startup_CustomPanel.UseVisualStyleBackColor = true;
+            this.check_Startup_CustomPanel.CheckedChanged += new System.EventHandler(this.check_Startup_CustomPanel_CheckedChanged);
+            // 
+            // check_Startup_InfoPanel
+            // 
+            this.check_Startup_InfoPanel.Location = new System.Drawing.Point(3, 114);
+            this.check_Startup_InfoPanel.Name = "check_Startup_InfoPanel";
+            this.check_Startup_InfoPanel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Startup_InfoPanel.Size = new System.Drawing.Size(107, 17);
+            this.check_Startup_InfoPanel.TabIndex = 52;
+            this.check_Startup_InfoPanel.Text = "Info Panel";
+            this.check_Startup_InfoPanel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Startup_InfoPanel, "Play videos upon launch of the program if any have been entered previously.");
+            this.check_Startup_InfoPanel.UseVisualStyleBackColor = true;
+            this.check_Startup_InfoPanel.CheckedChanged += new System.EventHandler(this.check_Startup_InfoPanel_CheckedChanged);
+            // 
+            // l_Startup_PlayerCount
+            // 
+            this.l_Startup_PlayerCount.AutoSize = true;
+            this.l_Startup_PlayerCount.Location = new System.Drawing.Point(4, 36);
+            this.l_Startup_PlayerCount.Name = "l_Startup_PlayerCount";
+            this.l_Startup_PlayerCount.Size = new System.Drawing.Size(147, 13);
+            this.l_Startup_PlayerCount.TabIndex = 49;
+            this.l_Startup_PlayerCount.Text = "Number of Players on Launch";
+            this.toolTips.SetToolTip(this.l_Startup_PlayerCount, "Number of players (including the MainPlayer) spawned");
+            // 
+            // cB_Startup_PlayerCount
+            // 
+            this.cB_Startup_PlayerCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Startup_PlayerCount.FormattingEnabled = true;
+            this.cB_Startup_PlayerCount.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3"});
+            this.cB_Startup_PlayerCount.Location = new System.Drawing.Point(163, 33);
+            this.cB_Startup_PlayerCount.Name = "cB_Startup_PlayerCount";
+            this.cB_Startup_PlayerCount.Size = new System.Drawing.Size(114, 21);
+            this.cB_Startup_PlayerCount.TabIndex = 45;
+            this.toolTips.SetToolTip(this.cB_Startup_PlayerCount, "Number of players (including the Main Player) spawned on launch");
+            this.cB_Startup_PlayerCount.SelectedIndexChanged += new System.EventHandler(this.cB_Startup_PlayerCount_SelectedIndexChanged);
+            // 
+            // check_Startup_AutoPlay
+            // 
+            this.check_Startup_AutoPlay.Location = new System.Drawing.Point(4, 10);
+            this.check_Startup_AutoPlay.Name = "check_Startup_AutoPlay";
+            this.check_Startup_AutoPlay.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Startup_AutoPlay.Size = new System.Drawing.Size(174, 17);
+            this.check_Startup_AutoPlay.TabIndex = 2;
+            this.check_Startup_AutoPlay.Text = "Autoplay Videos on Launch";
+            this.check_Startup_AutoPlay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Startup_AutoPlay, "Play videos upon launch of the program if any have been entered previously.");
+            this.check_Startup_AutoPlay.UseVisualStyleBackColor = true;
+            this.check_Startup_AutoPlay.CheckedChanged += new System.EventHandler(this.check_Startup_AutoPlay_CheckedChanged);
+            // 
             // tP_Other
             // 
-            this.tP_Other.Controls.Add(this.l_Other_PlayerCount);
-            this.tP_Other.Controls.Add(this.cB_Other_PlayerCount);
-            this.tP_Other.Controls.Add(this.l_Other_Ratio);
-            this.tP_Other.Controls.Add(this.check_Other_Aspect);
-            this.tP_Other.Controls.Add(this.check_AddressInvalid);
+            this.tP_Other.Controls.Add(this.check_Other_FullToParts);
             this.tP_Other.Controls.Add(this.l_Other_CurrentResolution);
+            this.tP_Other.Controls.Add(this.label1);
             this.tP_Other.Controls.Add(this.tB_Other_ResolutionHeight);
-            this.tP_Other.Controls.Add(this.l_Other_ResolutionHeight);
             this.tP_Other.Controls.Add(this.tB_Other_ResolutionWidth);
             this.tP_Other.Controls.Add(this.l_Other_ResolutionWidth);
-            this.tP_Other.Controls.Add(this.check_Other_AutoPlay);
+            this.tP_Other.Controls.Add(this.l_Other_Dir);
+            this.tP_Other.Controls.Add(this.b_ChangeDir);
+            this.tP_Other.Controls.Add(this.l_Other_Ratio);
+            this.tP_Other.Controls.Add(this.check_Other_Aspect);
+            this.tP_Other.Controls.Add(this.check_Other_AddressInvalid);
             this.tP_Other.Location = new System.Drawing.Point(4, 22);
             this.tP_Other.Name = "tP_Other";
             this.tP_Other.Padding = new System.Windows.Forms.Padding(3);
@@ -725,35 +804,88 @@ namespace SSUtility2
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
             // 
-            // l_Other_PlayerCount
+            // l_Other_CurrentResolution
             // 
-            this.l_Other_PlayerCount.AutoSize = true;
-            this.l_Other_PlayerCount.Location = new System.Drawing.Point(6, 55);
-            this.l_Other_PlayerCount.Name = "l_Other_PlayerCount";
-            this.l_Other_PlayerCount.Size = new System.Drawing.Size(147, 13);
-            this.l_Other_PlayerCount.TabIndex = 41;
-            this.l_Other_PlayerCount.Text = "Number of Players on Launch";
-            this.toolTips.SetToolTip(this.l_Other_PlayerCount, "Number of players (including the MainPlayer) spawned");
+            this.l_Other_CurrentResolution.AutoSize = true;
+            this.l_Other_CurrentResolution.Location = new System.Drawing.Point(4, 143);
+            this.l_Other_CurrentResolution.Name = "l_Other_CurrentResolution";
+            this.l_Other_CurrentResolution.Size = new System.Drawing.Size(116, 13);
+            this.l_Other_CurrentResolution.TabIndex = 55;
+            this.l_Other_CurrentResolution.Text = "Current MainForm Size:";
+            this.toolTips.SetToolTip(this.l_Other_CurrentResolution, "Width x Height");
             // 
-            // cB_Other_PlayerCount
+            // label1
             // 
-            this.cB_Other_PlayerCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cB_Other_PlayerCount.FormattingEnabled = true;
-            this.cB_Other_PlayerCount.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3"});
-            this.cB_Other_PlayerCount.Location = new System.Drawing.Point(165, 52);
-            this.cB_Other_PlayerCount.Name = "cB_Other_PlayerCount";
-            this.cB_Other_PlayerCount.Size = new System.Drawing.Size(114, 21);
-            this.cB_Other_PlayerCount.TabIndex = 4;
-            this.toolTips.SetToolTip(this.cB_Other_PlayerCount, "Number of players (including the MainPlayer) spawned on launch");
-            this.cB_Other_PlayerCount.SelectedIndexChanged += new System.EventHandler(this.cB_Other_PlayerCount_SelectedIndexChanged);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(248, 120);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(12, 13);
+            this.label1.TabIndex = 54;
+            this.label1.Text = "x";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.Visible = false;
+            // 
+            // tB_Other_ResolutionHeight
+            // 
+            this.tB_Other_ResolutionHeight.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Other_ResolutionHeight.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Other_ResolutionHeight.Location = new System.Drawing.Point(266, 117);
+            this.tB_Other_ResolutionHeight.Name = "tB_Other_ResolutionHeight";
+            this.tB_Other_ResolutionHeight.Size = new System.Drawing.Size(75, 20);
+            this.tB_Other_ResolutionHeight.TabIndex = 52;
+            this.toolTips.SetToolTip(this.tB_Other_ResolutionHeight, "Launches the program with this height (does not change current resolution).");
+            this.tB_Other_ResolutionHeight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Other_Resolution_KeyUp);
+            // 
+            // tB_Other_ResolutionWidth
+            // 
+            this.tB_Other_ResolutionWidth.BackColor = System.Drawing.SystemColors.Window;
+            this.tB_Other_ResolutionWidth.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.tB_Other_ResolutionWidth.Location = new System.Drawing.Point(165, 117);
+            this.tB_Other_ResolutionWidth.Name = "tB_Other_ResolutionWidth";
+            this.tB_Other_ResolutionWidth.Size = new System.Drawing.Size(75, 20);
+            this.tB_Other_ResolutionWidth.TabIndex = 51;
+            this.toolTips.SetToolTip(this.tB_Other_ResolutionWidth, "Launches the program with this width (does not change current resolution).");
+            this.tB_Other_ResolutionWidth.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Other_Resolution_KeyUp);
+            // 
+            // l_Other_ResolutionWidth
+            // 
+            this.l_Other_ResolutionWidth.AutoSize = true;
+            this.l_Other_ResolutionWidth.Location = new System.Drawing.Point(4, 120);
+            this.l_Other_ResolutionWidth.Name = "l_Other_ResolutionWidth";
+            this.l_Other_ResolutionWidth.Size = new System.Drawing.Size(109, 13);
+            this.l_Other_ResolutionWidth.TabIndex = 53;
+            this.l_Other_ResolutionWidth.Text = "Main Form Resolution";
+            this.toolTips.SetToolTip(this.l_Other_ResolutionWidth, "Launches the program with this Width x Height (does not update on manual resizing" +
+        ").");
+            // 
+            // l_Other_Dir
+            // 
+            this.l_Other_Dir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.l_Other_Dir.AutoSize = true;
+            this.l_Other_Dir.Location = new System.Drawing.Point(4, 165);
+            this.l_Other_Dir.Name = "l_Other_Dir";
+            this.l_Other_Dir.Size = new System.Drawing.Size(89, 13);
+            this.l_Other_Dir.TabIndex = 43;
+            this.l_Other_Dir.Text = "Current Directory:";
+            // 
+            // b_ChangeDir
+            // 
+            this.b_ChangeDir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.b_ChangeDir.BackColor = System.Drawing.SystemColors.Control;
+            this.b_ChangeDir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_ChangeDir.Location = new System.Drawing.Point(4, 190);
+            this.b_ChangeDir.Name = "b_ChangeDir";
+            this.b_ChangeDir.Size = new System.Drawing.Size(113, 23);
+            this.b_ChangeDir.TabIndex = 42;
+            this.b_ChangeDir.Text = "Change Directory";
+            this.toolTips.SetToolTip(this.b_ChangeDir, "Change the program\'s base directory");
+            this.b_ChangeDir.UseVisualStyleBackColor = false;
+            this.b_ChangeDir.Click += new System.EventHandler(this.b_Other_ChangeDir_Click);
             // 
             // l_Other_Ratio
             // 
             this.l_Other_Ratio.AutoSize = true;
-            this.l_Other_Ratio.Location = new System.Drawing.Point(186, 171);
+            this.l_Other_Ratio.Location = new System.Drawing.Point(186, 98);
             this.l_Other_Ratio.Name = "l_Other_Ratio";
             this.l_Other_Ratio.Size = new System.Drawing.Size(22, 13);
             this.l_Other_Ratio.TabIndex = 39;
@@ -763,81 +895,29 @@ namespace SSUtility2
             // 
             // check_Other_Aspect
             // 
-            this.check_Other_Aspect.Location = new System.Drawing.Point(5, 166);
+            this.check_Other_Aspect.Location = new System.Drawing.Point(4, 93);
             this.check_Other_Aspect.Name = "check_Other_Aspect";
             this.check_Other_Aspect.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_Other_Aspect.Size = new System.Drawing.Size(175, 24);
             this.check_Other_Aspect.TabIndex = 7;
             this.check_Other_Aspect.Text = "Maintain Current Aspect Ratio";
             this.check_Other_Aspect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_Other_Aspect, "Resize the MainPlayer to maintain the given aspect ratio");
+            this.toolTips.SetToolTip(this.check_Other_Aspect, "Resize the Main Player to maintain the shown aspect ratio");
             this.check_Other_Aspect.UseVisualStyleBackColor = true;
             this.check_Other_Aspect.CheckedChanged += new System.EventHandler(this.check_Other_Aspect_CheckedChanged);
             // 
-            // check_AddressInvalid
+            // check_Other_AddressInvalid
             // 
-            this.check_AddressInvalid.Location = new System.Drawing.Point(9, 29);
-            this.check_AddressInvalid.Name = "check_AddressInvalid";
-            this.check_AddressInvalid.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_AddressInvalid.Size = new System.Drawing.Size(174, 17);
-            this.check_AddressInvalid.TabIndex = 3;
-            this.check_AddressInvalid.Text = "Hide Address Invalid Error";
-            this.check_AddressInvalid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_AddressInvalid, "Ignores errors to do with given player addresses being invalid");
-            this.check_AddressInvalid.UseVisualStyleBackColor = true;
-            this.check_AddressInvalid.CheckedChanged += new System.EventHandler(this.check_AddressInvalid_CheckedChanged);
-            // 
-            // l_Other_CurrentResolution
-            // 
-            this.l_Other_CurrentResolution.AutoSize = true;
-            this.l_Other_CurrentResolution.Location = new System.Drawing.Point(5, 193);
-            this.l_Other_CurrentResolution.Name = "l_Other_CurrentResolution";
-            this.l_Other_CurrentResolution.Size = new System.Drawing.Size(116, 13);
-            this.l_Other_CurrentResolution.TabIndex = 36;
-            this.l_Other_CurrentResolution.Text = "Current MainForm Size:";
-            this.toolTips.SetToolTip(this.l_Other_CurrentResolution, "Launches the program with this width (does not change current resolution)");
-            // 
-            // tB_Other_ResolutionHeight
-            // 
-            this.tB_Other_ResolutionHeight.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Other_ResolutionHeight.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Other_ResolutionHeight.Location = new System.Drawing.Point(165, 140);
-            this.tB_Other_ResolutionHeight.Name = "tB_Other_ResolutionHeight";
-            this.tB_Other_ResolutionHeight.Size = new System.Drawing.Size(114, 20);
-            this.tB_Other_ResolutionHeight.TabIndex = 6;
-            this.toolTips.SetToolTip(this.tB_Other_ResolutionHeight, "Launches the program with this height (does not change current resolution).");
-            this.tB_Other_ResolutionHeight.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Other_Resolution_KeyUp);
-            // 
-            // l_Other_ResolutionHeight
-            // 
-            this.l_Other_ResolutionHeight.AutoSize = true;
-            this.l_Other_ResolutionHeight.Location = new System.Drawing.Point(6, 144);
-            this.l_Other_ResolutionHeight.Name = "l_Other_ResolutionHeight";
-            this.l_Other_ResolutionHeight.Size = new System.Drawing.Size(124, 13);
-            this.l_Other_ResolutionHeight.TabIndex = 34;
-            this.l_Other_ResolutionHeight.Text = "Startup MainForm Height";
-            this.toolTips.SetToolTip(this.l_Other_ResolutionHeight, "Launches the program with this height (does not change current resolution).");
-            // 
-            // tB_Other_ResolutionWidth
-            // 
-            this.tB_Other_ResolutionWidth.BackColor = System.Drawing.SystemColors.Window;
-            this.tB_Other_ResolutionWidth.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.tB_Other_ResolutionWidth.Location = new System.Drawing.Point(165, 115);
-            this.tB_Other_ResolutionWidth.Name = "tB_Other_ResolutionWidth";
-            this.tB_Other_ResolutionWidth.Size = new System.Drawing.Size(114, 20);
-            this.tB_Other_ResolutionWidth.TabIndex = 5;
-            this.toolTips.SetToolTip(this.tB_Other_ResolutionWidth, "Launches the program with this width (does not change current resolution).");
-            this.tB_Other_ResolutionWidth.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Other_Resolution_KeyUp);
-            // 
-            // l_Other_ResolutionWidth
-            // 
-            this.l_Other_ResolutionWidth.AutoSize = true;
-            this.l_Other_ResolutionWidth.Location = new System.Drawing.Point(6, 118);
-            this.l_Other_ResolutionWidth.Name = "l_Other_ResolutionWidth";
-            this.l_Other_ResolutionWidth.Size = new System.Drawing.Size(121, 13);
-            this.l_Other_ResolutionWidth.TabIndex = 32;
-            this.l_Other_ResolutionWidth.Text = "Startup MainForm Width";
-            this.toolTips.SetToolTip(this.l_Other_ResolutionWidth, "Launches the program with this width (does not change current resolution).");
+            this.check_Other_AddressInvalid.Location = new System.Drawing.Point(4, 6);
+            this.check_Other_AddressInvalid.Name = "check_Other_AddressInvalid";
+            this.check_Other_AddressInvalid.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_AddressInvalid.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_AddressInvalid.TabIndex = 3;
+            this.check_Other_AddressInvalid.Text = "Hide Address Invalid Error";
+            this.check_Other_AddressInvalid.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Other_AddressInvalid, "Ignores errors to do with given player addresses being invalid");
+            this.check_Other_AddressInvalid.UseVisualStyleBackColor = true;
+            this.check_Other_AddressInvalid.CheckedChanged += new System.EventHandler(this.check_Other_AddressInvalid_CheckedChanged);
             // 
             // b_Custom_CommandList
             // 
@@ -862,6 +942,21 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
+            // check_Other_FullToParts
+            // 
+            this.check_Other_FullToParts.Location = new System.Drawing.Point(4, 29);
+            this.check_Other_FullToParts.Name = "check_Other_FullToParts";
+            this.check_Other_FullToParts.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_FullToParts.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_FullToParts.TabIndex = 56;
+            this.check_Other_FullToParts.Text = "Full Address RTSP Breakdown";
+            this.check_Other_FullToParts.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Other_FullToParts, "Toggles the software from automatically trying to break down custom full addresse" +
+        "s (copy/pasting a full address into the full address field) into the other compo" +
+        "nent fields within the RTSP Wizard");
+            this.check_Other_FullToParts.UseVisualStyleBackColor = true;
+            this.check_Other_FullToParts.CheckedChanged += new System.EventHandler(this.check_Other_FullToParts_CheckedChanged);
+            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -882,12 +977,12 @@ namespace SSUtility2
             this.tP_Control.ResumeLayout(false);
             this.tP_Control.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).EndInit();
-            this.tP_Paths.ResumeLayout(false);
-            this.tP_Paths.PerformLayout();
             this.tP_Recording.ResumeLayout(false);
             this.tP_Recording.PerformLayout();
             this.tP_Customs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Custom_Buttons)).EndInit();
+            this.tP_Startup.ResumeLayout(false);
+            this.tP_Startup.PerformLayout();
             this.tP_Other.ResumeLayout(false);
             this.tP_Other.PerformLayout();
             this.ResumeLayout(false);
@@ -898,25 +993,7 @@ namespace SSUtility2
         #endregion
 
         public System.Windows.Forms.Button b_Settings_Default;
-        public System.Windows.Forms.TextBox tB_Rec_scFileN;
-        public System.Windows.Forms.Label l_Rec_sCFileN;
-        public System.Windows.Forms.ComboBox cB_Rec_FPS;
-        public System.Windows.Forms.TextBox tB_Rec_vFileN;
-        public System.Windows.Forms.Label l_Rec_vFileN;
-        public System.Windows.Forms.Label l_Rec_FPS;
-        public System.Windows.Forms.Label l_Paths_sCFolder;
-        public System.Windows.Forms.Button b_Paths_sCBrowse;
-        public System.Windows.Forms.TextBox tB_Paths_sCFolder;
-        public System.Windows.Forms.Label l_Paths_vFolder;
-        public System.Windows.Forms.TextBox tB_Paths_vFolder;
-        public System.Windows.Forms.Button b_Paths_vBrowse;
-        public System.Windows.Forms.Label l_Paths_vCheck;
-        public System.Windows.Forms.Label l_Paths_sCCheck;
-        public System.Windows.Forms.CheckBox check_Paths_Manual;
-        public System.Windows.Forms.CheckBox check_Other_AutoPlay;
-        public System.Windows.Forms.Button b_ChangeDir;
         public System.Windows.Forms.TabControl tC_Settings;
-        public System.Windows.Forms.TabPage tP_Paths;
         public System.Windows.Forms.TabPage tP_Recording;
         public System.Windows.Forms.TabPage tP_Other;
         public System.Windows.Forms.ToolTip toolTips;
@@ -929,21 +1006,13 @@ namespace SSUtility2
         private System.ComponentModel.IContainer components;
         public System.Windows.Forms.Label l_Version;
         private System.Windows.Forms.Button b_Custom_CommandList;
-        public System.Windows.Forms.Label l_Other_CurrentResolution;
-        public System.Windows.Forms.TextBox tB_Other_ResolutionHeight;
-        public System.Windows.Forms.Label l_Other_ResolutionHeight;
-        public System.Windows.Forms.TextBox tB_Other_ResolutionWidth;
-        public System.Windows.Forms.Label l_Other_ResolutionWidth;
-        public System.Windows.Forms.ComboBox cB_Rec_Quality;
-        public System.Windows.Forms.Label l_Rec_Quality;
-        public System.Windows.Forms.CheckBox check_AddressInvalid;
+        public System.Windows.Forms.CheckBox check_Other_AddressInvalid;
         public System.Windows.Forms.DataGridView dgv_Custom_Buttons;
         private System.Windows.Forms.DataGridViewTextBoxColumn ButtonName;
         private System.Windows.Forms.DataGridViewComboBoxColumn ButtonsCommand;
         public System.Windows.Forms.Label l_IPCon_ForceMode;
         private System.Windows.Forms.ComboBox cB_IPCon_ForceMode;
         public System.Windows.Forms.CheckBox check_IPCon_ForceCam;
-        public System.Windows.Forms.Label l_Paths_Dir;
         public System.Windows.Forms.TextBox tB_IPCon_CamSpeed;
         public System.Windows.Forms.Label l_IPCon_TrackBar;
         private System.Windows.Forms.TrackBar slider_IPCon_ControlMultiplier;
@@ -951,8 +1020,6 @@ namespace SSUtility2
         public System.Windows.Forms.CheckBox check_Other_Aspect;
         private System.Windows.Forms.Label l_Other_Ratio;
         private System.Windows.Forms.Button b_IPCon_Recheck;
-        private System.Windows.Forms.Label l_Other_PlayerCount;
-        private System.Windows.Forms.ComboBox cB_Other_PlayerCount;
         public System.Windows.Forms.Label l_IPCon_Subnet;
         public System.Windows.Forms.ComboBox cB_IPCon_MainPlayerPreset;
         public System.Windows.Forms.Label l_IPCon_MainPlayerPreset;
@@ -961,5 +1028,39 @@ namespace SSUtility2
         public System.Windows.Forms.Label l_PelcoDID;
         public System.Windows.Forms.ComboBox cB_IPCon_Port;
         private System.Windows.Forms.CheckBox check_IPCon_Override;
+        private System.Windows.Forms.TabPage tP_Startup;
+        private System.Windows.Forms.Label l_Startup_PlayerCount;
+        private System.Windows.Forms.ComboBox cB_Startup_PlayerCount;
+        public System.Windows.Forms.CheckBox check_Startup_AutoPlay;
+        public System.Windows.Forms.Label l_Other_Dir;
+        public System.Windows.Forms.Button b_ChangeDir;
+        public System.Windows.Forms.ComboBox cB_Recording_Quality;
+        public System.Windows.Forms.Label l_Recording_Quality;
+        public System.Windows.Forms.Label l_Recording_FPS;
+        public System.Windows.Forms.TextBox tB_Recording_scFileN;
+        public System.Windows.Forms.Label l_Recording_vFileN;
+        public System.Windows.Forms.Label l_Recording_sCFileN;
+        public System.Windows.Forms.TextBox tB_Recording_vFileN;
+        public System.Windows.Forms.ComboBox cB_Recording_FPS;
+        public System.Windows.Forms.CheckBox check_Recording_Manual;
+        public System.Windows.Forms.Label l_Recording_sCFolder;
+        public System.Windows.Forms.Button b_Recording_sCBrowse;
+        public System.Windows.Forms.TextBox tB_Recording_sCFolder;
+        public System.Windows.Forms.Button b_Recording_vBrowse;
+        public System.Windows.Forms.Label l_Paths_vFolder;
+        public System.Windows.Forms.TextBox tB_Recording_vFolder;
+        public System.Windows.Forms.CheckBox check_Startup_ControlPanel;
+        public System.Windows.Forms.CheckBox check_Startup_QuickFunctions;
+        public System.Windows.Forms.CheckBox check_Startup_CustomPanel;
+        public System.Windows.Forms.CheckBox check_Startup_InfoPanel;
+        public System.Windows.Forms.Label l_Other_CurrentResolution;
+        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.TextBox tB_Other_ResolutionHeight;
+        public System.Windows.Forms.TextBox tB_Other_ResolutionWidth;
+        public System.Windows.Forms.Label l_Other_ResolutionWidth;
+        private System.Windows.Forms.Label l_Recording_vCheck;
+        private System.Windows.Forms.Label l_Recording_sCCheck;
+        private System.Windows.Forms.Label l_Startup_Panels;
+        public System.Windows.Forms.CheckBox check_Other_FullToParts;
     }
 }

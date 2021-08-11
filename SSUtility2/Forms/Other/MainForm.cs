@@ -11,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.1.1";
+        public const string version = "v2.8.1.2";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -29,8 +29,8 @@ namespace SSUtility2 {
         public SettingsPage setPage;
         public PelcoD pd;
         public ResponseLog rl;
-        public PresetPanel pp;
-        public TabControl attachedpp;
+        public QuickFunctions pp;
+        public TabControl attachedqf;
         public Detached mainPlayer;
         public CommandListWindow clw;
         private FFMPEGRecord screenRec;
@@ -58,7 +58,7 @@ namespace SSUtility2 {
                 setPage = new SettingsPage();
                 rl = new ResponseLog();
                 pd = new PelcoD();
-                pp = new PresetPanel();
+                pp = new QuickFunctions();
                 custom = new CustomButtons();
                 clw = new CommandListWindow();
                 coll = new MediaCollection();
@@ -109,9 +109,22 @@ namespace SSUtility2 {
                     StartRatioTimer();
 
                 AsyncCamCom.TryConnect(false);
+
+                ActivatePanels();
             } catch (Exception e) {
                 Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
             }
+        }
+
+        void ActivatePanels() {
+            if (ConfigControl.launchQuickFunctions.boolVal)
+                ToggleQF();
+            if (ConfigControl.launchInfoPanel.boolVal)
+                InfoPanel.i.StartStopTicking();
+            if (ConfigControl.launchControlPanel.boolVal)
+                OpenCloseCP();
+            if (ConfigControl.launchCustomPanel.boolVal)
+                ToggleCustomPanel();
         }
 
         Detached secondPlayer;
@@ -185,15 +198,15 @@ namespace SSUtility2 {
 
         void AttachPresetPanel() {
             try {
-                PresetPanel hiddenpanel = new PresetPanel();
-                attachedpp = hiddenpanel.tC_Presets_Default;
+                QuickFunctions hiddenpanel = new QuickFunctions();
+                attachedqf = hiddenpanel.tC_Presets_Default;
 
-                Controls.Add(attachedpp);
+                Controls.Add(attachedqf);
 
-                attachedpp.Size = hiddenpanel.tC_Presets_Default.Size;
-                attachedpp.Location = new Point(0, Height - hiddenpanel.Height);
-                attachedpp.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
-                attachedpp.Hide();
+                attachedqf.Size = hiddenpanel.tC_Presets_Default.Size;
+                attachedqf.Location = new Point(0, Height - hiddenpanel.Height);
+                attachedqf.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
+                attachedqf.Hide();
             } catch (Exception e) {
                 MessageBox.Show("ATTACH PRESET\n" + e.ToString());
             }
@@ -688,12 +701,16 @@ namespace SSUtility2 {
         }
 
         private void Menu_Settings_Panels_QF_Click(object sender, EventArgs e) {
-            if (attachedpp.Visible) {
-                attachedpp.Hide();
+            ToggleQF();
+        }
+
+        void ToggleQF() {
+            if (attachedqf.Visible) {
+                attachedqf.Hide();
                 Menu_Settings_Panels_QF.Text = "Quick Functions";
             } else {
-                attachedpp.Show();
-                attachedpp.BringToFront();
+                attachedqf.Show();
+                attachedqf.BringToFront();
                 Menu_Settings_Panels_QF.Text = "Hide Quick Functions";
             }
         }
@@ -703,6 +720,10 @@ namespace SSUtility2 {
         }
 
         private void Menu_Settings_Panels_Custom_Click(object sender, EventArgs e) {
+            ToggleCustomPanel();
+        }
+
+        void ToggleCustomPanel() {
             if (custom.isVisible)
                 custom.HideButtons();
             else
@@ -1106,8 +1127,8 @@ namespace SSUtility2 {
                     foreach (Button b in custom.buttonList)
                         enabledPanels.Add(b);
 
-                if (attachedpp.Visible)
-                    enabledPanels.Add(attachedpp);
+                if (attachedqf.Visible)
+                    enabledPanels.Add(attachedqf);
 
                 foreach (Detached d in mainPlayer.attachedPlayers) {
                     d.p_Player.Hide();

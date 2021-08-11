@@ -46,6 +46,7 @@ namespace SSUtility2
             this.b_Detach = new System.Windows.Forms.Button();
             this.l_Connected = new System.Windows.Forms.Label();
             this.cB_Port = new System.Windows.Forms.ComboBox();
+            this.tB_SecretNameTB = new System.Windows.Forms.TextBox();
             this.tC_PlayerSettings.SuspendLayout();
             this.tP_Main.SuspendLayout();
             this.SuspendLayout();
@@ -88,6 +89,8 @@ namespace SSUtility2
             this.tC_PlayerSettings.SelectedIndex = 0;
             this.tC_PlayerSettings.Size = new System.Drawing.Size(384, 82);
             this.tC_PlayerSettings.TabIndex = 62;
+            this.tC_PlayerSettings.SelectedIndexChanged += new System.EventHandler(this.tC_PlayerSettings_SelectedIndexChanged);
+            this.tC_PlayerSettings.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tC_PlayerSettings_MouseDoubleClick);
             // 
             // tP_Main
             // 
@@ -262,12 +265,24 @@ namespace SSUtility2
             this.cB_Port.SelectedIndexChanged += new System.EventHandler(this.cB_Port_SelectedIndexChanged);
             this.cB_Port.TextChanged += new System.EventHandler(this.tB_ControlFields_TextChanged);
             // 
+            // tB_SecretNameTB
+            // 
+            this.tB_SecretNameTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_SecretNameTB.Location = new System.Drawing.Point(402, 84);
+            this.tB_SecretNameTB.Name = "tB_SecretNameTB";
+            this.tB_SecretNameTB.Size = new System.Drawing.Size(10, 20);
+            this.tB_SecretNameTB.TabIndex = 84;
+            this.tB_SecretNameTB.TextChanged += new System.EventHandler(this.tB_SecretNameTB_TextChanged);
+            this.tB_SecretNameTB.Leave += new System.EventHandler(this.tB_SecretNameTB_Leave);
+            // 
             // VideoSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(384, 156);
+            this.Controls.Add(this.tB_SecretNameTB);
             this.Controls.Add(this.cB_Port);
             this.Controls.Add(this.l_Connected);
             this.Controls.Add(this.b_Detach);
@@ -314,5 +329,6 @@ namespace SSUtility2
         public System.Windows.Forms.Button b_Detach;
         public System.Windows.Forms.Label l_Connected;
         public System.Windows.Forms.ComboBox cB_Port;
+        public System.Windows.Forms.TextBox tB_SecretNameTB;
     }
 }

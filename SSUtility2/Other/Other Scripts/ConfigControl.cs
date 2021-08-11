@@ -48,6 +48,11 @@ namespace SSUtility2 {
         public static ConfigSetting mainPlayerPreset = new ConfigSetting("", "MainPlayerPresetName", ConfigSetting.VarType.strings);
         public static ConfigSetting player2Preset = new ConfigSetting("", "SecondaryPresetName", ConfigSetting.VarType.strings);
         public static ConfigSetting player3Preset = new ConfigSetting("", "TertiaryPresetName", ConfigSetting.VarType.strings);
+        public static ConfigSetting launchQuickFunctions = new ConfigSetting("false", "EnableQuickFunctionsOnLaunch", ConfigSetting.VarType.boolean);
+        public static ConfigSetting launchInfoPanel = new ConfigSetting("false", "EnableInfoPanelOnLaunch", ConfigSetting.VarType.boolean);
+        public static ConfigSetting launchControlPanel = new ConfigSetting("false", "EnableControlPanelOnLaunch", ConfigSetting.VarType.boolean);
+        public static ConfigSetting launchCustomPanel = new ConfigSetting("false", "EnableCustomPanelOnLaunch", ConfigSetting.VarType.boolean);
+        public static ConfigSetting enableFullToParts = new ConfigSetting("true", "EnableFullToParts", ConfigSetting.VarType.boolean);
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -75,6 +80,11 @@ namespace SSUtility2 {
             mainPlayerPreset,
             player2Preset,
             player3Preset,
+            launchQuickFunctions,
+            launchInfoPanel,
+            launchControlPanel,
+            launchCustomPanel,
+            enableFullToParts,
         };
 
         public static async Task SetToDefaults() {

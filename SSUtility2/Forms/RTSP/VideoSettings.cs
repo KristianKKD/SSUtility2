@@ -6,7 +6,8 @@ using System.Windows.Forms;
 using static SSUtility2.RTSPPresets;
 
 namespace SSUtility2 {
-    public partial class VideoSettings : Form {
+    public partial class VideoSettings : Form
+    {
 
         public static List<VideoSettings> allSettings;
 
@@ -41,6 +42,7 @@ namespace SSUtility2 {
                 MaximumSize = new Size(Width, 120);
             } else {
                 b_Detach.Visible = false;
+                tC_PlayerSettings.SelectedIndex = 0;
             }
         }
 
@@ -82,7 +84,8 @@ namespace SSUtility2 {
 
                         copyL.AutoSize = true;
                         copyC = copyL;
-                    } if (c.GetType() == typeof(ComboBox)) {
+                    }
+                    if (c.GetType() == typeof(ComboBox)) {
                         ComboBox cb = new ComboBox();
                         ComboBox copyCB = new ComboBox();
                         cb = (ComboBox)c;
@@ -118,7 +121,7 @@ namespace SSUtility2 {
                         copyC.Font = c.Font;
                         copyC.Visible = true;
 
-                        if(copyC.GetType() == typeof(Button))
+                        if (copyC.GetType() == typeof(Button))
                             copyC.Visible = false;
 
                         if (copyC.GetType() != typeof(ComboBox))
@@ -157,15 +160,15 @@ namespace SSUtility2 {
                 if (presetIndex >= RTSPPresets.currentPresetCount)
                     return;
             }
-            
+
             cB_RTSP.SelectedIndex = presetIndex;
 
-            if(autoPlay)
+            if (autoPlay)
                 myDetached.Play(false, false);
         }
 
         static Control FindControl(TabPage tp, object reference) {
-            foreach (Control c in Tools.GetAllType(tp, reference.GetType())){
+            foreach (Control c in Tools.GetAllType(tp, reference.GetType())) {
                 Control refCopy = (Control)reference;
                 if (c.Name == refCopy.Name) {
                     return c;
@@ -237,7 +240,7 @@ namespace SSUtility2 {
             bool visibleBool = false;
 
             if (cB_RTSP.SelectedIndex == cB_RTSP.Items.Count - 1) {
-                if(previousIndex != -1 || isMainPlayer)
+                if (previousIndex != -1 || isMainPlayer)
                     RTSPPresets.CreateNew(this);
             } else {
                 //Use new settings
@@ -247,10 +250,10 @@ namespace SSUtility2 {
                 if (isMainPlayer)
                     MainForm.m.setPage.cB_IPCon_MainPlayerPreset.SelectedIndex = cB_RTSP.SelectedIndex;
 
-                if(!check_Manual.Checked)
+                if (!check_Manual.Checked)
                     CompleteControlValues();
             }
-            
+
             UpdateButtonVisibility(visibleBool);
 
             string rtspText = cB_RTSP.Text;
@@ -436,7 +439,7 @@ namespace SSUtility2 {
         public void UpdateCheckOverride(bool check) {
             check_Manual.Checked = check;
         }
-        
+
         private void cB_Port_SelectedIndexChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
@@ -448,6 +451,36 @@ namespace SSUtility2 {
             await Task.Delay(100);
             cB_Port.Text = Tools.GetPortValueFromEncoder(cB_Port);
         }
+
+        int selectedPage = -1;
+        Font oldFont;
+        private void tC_PlayerSettings_MouseDoubleClick(object sender, MouseEventArgs e) {
+            selectedPage = tC_PlayerSettings.SelectedIndex;
+            TabPage tp = tC_PlayerSettings.TabPages[selectedPage];
+            tB_SecretNameTB.Text = "";
+            tp.Text = "";
+            tB_SecretNameTB.Focus();
+            //oldFont = tp.Font;
+            //tp.Font = new Font(oldFont, FontStyle.Bold | FontStyle.Italic);
+        }
+
+        private void tC_PlayerSettings_SelectedIndexChanged(object sender, EventArgs e) {
+            //tC_PlayerSettings.TabPages[selectedPage].Font = oldFont;
+            selectedPage = -1;
+        }
+
+        private void tB_SecretNameTB_Leave(object sender, EventArgs e) {
+            //tC_PlayerSettings.TabPages[selectedPage].Font = oldFont;
+            selectedPage = -1;
+        }
+
+        private void tB_SecretNameTB_TextChanged(object sender, EventArgs e) {
+            if (selectedPage == -1)
+                return;
+
+            tC_PlayerSettings.TabPages[selectedPage].Text = tB_SecretNameTB.Text;
+        }
+
     }
 }
 

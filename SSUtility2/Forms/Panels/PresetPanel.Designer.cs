@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace SSUtility2
 {
-    partial class PresetPanel
+    partial class QuickFunctions
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace SSUtility2
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PresetPanel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QuickFunctions));
             this.tC_Presets_Default = new System.Windows.Forms.TabControl();
             this.adminPage = new System.Windows.Forms.TabPage();
             this.b_Presets_Admin_DefaultMen = new System.Windows.Forms.Button();

@@ -34,39 +34,43 @@ namespace SSUtility2 {
 
         public async Task PopulateSettingText() {
             try {
-                tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
-                cB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
                 slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
+
+                tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
                 tB_IPCon_CamSpeed.Text = ConfigControl.cameraSpeedMultiplier.intVal.ToString();
-
-                tB_Paths_sCFolder.Text = ConfigControl.scFolder.stringVal;
-                tB_Paths_vFolder.Text = ConfigControl.vFolder.stringVal;
-
-                tB_Rec_vFileN.Text = ConfigControl.vFileName.stringVal;
-                tB_Rec_scFileN.Text = ConfigControl.scFileName.stringVal;
-
+                tB_Recording_sCFolder.Text = ConfigControl.scFolder.stringVal;
+                tB_Recording_vFolder.Text = ConfigControl.vFolder.stringVal;
+                tB_Recording_vFileN.Text = ConfigControl.vFileName.stringVal;
+                tB_Recording_scFileN.Text = ConfigControl.scFileName.stringVal;
                 tB_Other_ResolutionWidth.Text = ConfigControl.startupWidth.stringVal;
                 tB_Other_ResolutionHeight.Text = ConfigControl.startupHeight.stringVal;
 
-                cB_Rec_Quality.Text = ConfigControl.recQual.stringVal;
-                cB_Rec_FPS.Text = ConfigControl.recFPS.stringVal;
 
-                check_Other_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
-                check_AddressInvalid.Checked = ConfigControl.ignoreAddress.boolVal;
-                check_Paths_Manual.Checked = ConfigControl.automaticPaths.boolVal;
+                cB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
                 cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
-                check_IPCon_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
-                check_Other_Aspect.Checked = ConfigControl.maintainAspectRatio.boolVal;
                 cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
-                cB_Other_PlayerCount.Text = ConfigControl.playerCount.stringVal;
+                cB_Recording_Quality.Text = ConfigControl.recQual.stringVal;
+                cB_Recording_FPS.Text = ConfigControl.recFPS.stringVal;
+                cB_Startup_PlayerCount.Text = ConfigControl.playerCount.stringVal;
 
-                Tools.CheckIfExists(tB_Paths_sCFolder, l_Paths_sCCheck);
-                Tools.CheckIfExists(tB_Paths_vFolder, l_Paths_vCheck);
+                check_IPCon_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
+                check_Recording_Manual.Checked = ConfigControl.automaticPaths.boolVal;
+                check_Startup_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
+                check_Startup_QuickFunctions.Checked = ConfigControl.launchQuickFunctions.boolVal;
+                check_Startup_InfoPanel.Checked = ConfigControl.launchInfoPanel.boolVal;
+                check_Startup_ControlPanel.Checked = ConfigControl.launchControlPanel.boolVal;
+                check_Startup_CustomPanel.Checked = ConfigControl.launchCustomPanel.boolVal;
+                check_Other_AddressInvalid.Checked = ConfigControl.ignoreAddress.boolVal;
+                check_Other_Aspect.Checked = ConfigControl.maintainAspectRatio.boolVal;
+                check_Other_FullToParts.Checked = ConfigControl.enableFullToParts.boolVal;
+
+                Tools.CheckIfExists(tB_Recording_sCFolder, l_Recording_sCCheck);
+                Tools.CheckIfExists(tB_Recording_vFolder, l_Recording_vCheck);
 
                 MainForm.m.Width = ConfigControl.startupWidth.intVal;
                 MainForm.m.Height = ConfigControl.startupHeight.intVal;
                 l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
-                l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
+                l_Other_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
 
                 MainForm.m.custom.UpdateButtonNames();
                 UpdateCamType();
@@ -96,91 +100,91 @@ namespace SSUtility2 {
             }
         }
 
-        private void check_Other_AutoPlay_CheckedChanged(object sender, EventArgs e) {
+        private void check_Startup_AutoPlay_CheckedChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
-            ConfigControl.autoPlay.UpdateValue(check_Other_AutoPlay.Checked.ToString());
+            ConfigControl.autoPlay.UpdateValue(check_Startup_AutoPlay.Checked.ToString());
         }
 
-        private void check_Paths_Manual_CheckedChanged(object sender, EventArgs e) {
+        private void check_Recording_Manual_CheckedChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
 
-            bool auto = !check_Paths_Manual.Checked;
+            bool auto = !check_Recording_Manual.Checked;
 
             ConfigControl.automaticPaths.UpdateValue((!auto).ToString());
 
-            tB_Paths_sCFolder.Enabled = auto;
-            tB_Paths_vFolder.Enabled = auto;
+            tB_Recording_sCFolder.Enabled = auto;
+            tB_Recording_vFolder.Enabled = auto;
 
-            tB_Rec_vFileN.Enabled = auto;
-            tB_Rec_scFileN.Enabled = auto;
+            tB_Recording_vFileN.Enabled = auto;
+            tB_Recording_scFileN.Enabled = auto;
 
-            b_Paths_sCBrowse.Enabled = auto;
-            b_Paths_vBrowse.Enabled = auto;
+            b_Recording_sCBrowse.Enabled = auto;
+            b_Recording_vBrowse.Enabled = auto;
         }
 
-        private void b_Paths_sCBrowse_Click(object sender, EventArgs e) {
-            Tools.BrowseFolderButton(tB_Paths_sCFolder);
+        private void b_Recording_sCBrowse_Click(object sender, EventArgs e) {
+            Tools.BrowseFolderButton(tB_Recording_sCFolder);
         }
 
-        private void b_Paths_vBrowse_Click(object sender, EventArgs e) {
-            Tools.BrowseFolderButton(tB_Paths_vFolder);
+        private void b_Recording_vBrowse_Click(object sender, EventArgs e) {
+            Tools.BrowseFolderButton(tB_Recording_vFolder);
         }
 
-        private void tB_Paths_sCFolder_TextChanged(object sender, EventArgs e) {
-            if (Tools.CheckFinishedTypingPath(tB_Paths_sCFolder, l_Paths_sCCheck).Result) {
-                ConfigControl.scFolder.UpdateValue(tB_Paths_sCFolder.Text);
+        private void tB_Recording_sCFolder_TextChanged(object sender, EventArgs e) {
+            if (Tools.CheckFinishedTypingPath(tB_Recording_sCFolder, l_Recording_sCCheck).Result) {
+                ConfigControl.scFolder.UpdateValue(tB_Recording_sCFolder.Text);
             }
         }
 
-        private void tB_Paths_vFolder_TextChanged(object sender, EventArgs e) {
-            if (Tools.CheckFinishedTypingPath(tB_Paths_vFolder, l_Paths_vCheck).Result) {
-                ConfigControl.vFolder.UpdateValue(tB_Paths_vFolder.Text);
+        private void tB_Recording_vFolder_TextChanged(object sender, EventArgs e) {
+            if (Tools.CheckFinishedTypingPath(tB_Recording_vFolder, l_Recording_vCheck).Result) {
+                ConfigControl.vFolder.UpdateValue(tB_Recording_vFolder.Text);
             }
         }
 
-        private void cB_Rec_FPS_TextChanged(object sender, EventArgs e) {
-            if (!int.TryParse(cB_Rec_FPS.Text, out int fps)) {
-                cB_Rec_FPS.Text = fps.ToString();
+        private void cB_Recording_FPS_TextChanged(object sender, EventArgs e) {
+            if (!int.TryParse(cB_Recording_FPS.Text, out int fps)) {
+                cB_Recording_FPS.Text = fps.ToString();
                 return;
             }
             if (fps < 1) {
-                cB_Rec_FPS.Text = "1";
+                cB_Recording_FPS.Text = "1";
             } else if (fps > 200) {
-                cB_Rec_FPS.Text = "200";
+                cB_Recording_FPS.Text = "200";
             }
 
-            ConfigControl.recFPS.UpdateValue(cB_Rec_FPS.Text);
+            ConfigControl.recFPS.UpdateValue(cB_Recording_FPS.Text);
         }
 
-        private void cB_Rec_Quality_TextChanged(object sender, EventArgs e) {
-            if (!int.TryParse(cB_Rec_Quality.Text, out int q)) {
-                cB_Rec_Quality.Text = q.ToString();
+        private void cB_Recording_Quality_TextChanged(object sender, EventArgs e) {
+            if (!int.TryParse(cB_Recording_Quality.Text, out int q)) {
+                cB_Recording_Quality.Text = q.ToString();
                 return;
             }
             if (q > 100) {
-                cB_Rec_Quality.Text = "100";
+                cB_Recording_Quality.Text = "100";
             } else if (q < 1) {
-                cB_Rec_Quality.Text = "1";
+                cB_Recording_Quality.Text = "1";
             }
 
-            ConfigControl.recQual.UpdateValue(cB_Rec_Quality.Text);
+            ConfigControl.recQual.UpdateValue(cB_Recording_Quality.Text);
         }
 
-        private void tB_Rec_vFileN_TextChanged(object sender, EventArgs e) {
-            if (Tools.CheckIfNameValid(tB_Rec_vFileN.Text)) {
-                ConfigControl.vFileName.UpdateValue(tB_Rec_vFileN.Text);
+        private void tB_Recording_vFileN_TextChanged(object sender, EventArgs e) {
+            if (Tools.CheckIfNameValid(tB_Recording_vFileN.Text)) {
+                ConfigControl.vFileName.UpdateValue(tB_Recording_vFileN.Text);
             } else {
-                tB_Rec_vFileN.Text = ConfigControl.vFileName.stringVal;
+                tB_Recording_vFileN.Text = ConfigControl.vFileName.stringVal;
             }
         }
 
-        private void tB_Rec_scFileN_TextChanged(object sender, EventArgs e) {
-            if (Tools.CheckIfNameValid(tB_Rec_scFileN.Text)) {
-                ConfigControl.scFileName.UpdateValue(tB_Rec_scFileN.Text);
+        private void tB_Recording_scFileN_TextChanged(object sender, EventArgs e) {
+            if (Tools.CheckIfNameValid(tB_Recording_scFileN.Text)) {
+                ConfigControl.scFileName.UpdateValue(tB_Recording_scFileN.Text);
             } else {
-                tB_Rec_vFileN.Text = ConfigControl.scFileName.stringVal;
+                tB_Recording_vFileN.Text = ConfigControl.scFileName.stringVal;
             }
         }
 
@@ -192,7 +196,7 @@ namespace SSUtility2 {
             }
         }
 
-        private void b_ChangeDir_Click(object sender, EventArgs e) {
+        private void b_Other_ChangeDir_Click(object sender, EventArgs e) {
             bool confirm = Tools.ShowPopup("Moving the directory will reset app configuration AND WILL ALSO DELETE ALL FILES WITHIN THE OLD APP FOLDER!\nYou will have the option to save these files.\nAre you sure you want to continue?", "Warning", null, false);
             
             if (confirm) {
@@ -213,7 +217,7 @@ namespace SSUtility2 {
                 MessageBox.Show("Finished changing directories!");
             }
 
-            l_Paths_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
+            l_Other_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
         }
 
         public void ToggleOverridePreset(bool enabled) {
@@ -296,10 +300,10 @@ namespace SSUtility2 {
             check_Other_Aspect_CheckedChanged(sender, e);
         }
 
-        private void check_AddressInvalid_CheckedChanged(object sender, EventArgs e) {
+        private void check_Other_AddressInvalid_CheckedChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
-            ConfigControl.ignoreAddress.UpdateValue(check_AddressInvalid.Checked.ToString());
+            ConfigControl.ignoreAddress.UpdateValue(check_Other_AddressInvalid.Checked.ToString());
         }
 
         private void tC_Settings_SelectedIndexChanged(object sender, EventArgs e) {
@@ -427,11 +431,11 @@ namespace SSUtility2 {
             UpdateCamConfig(await OtherCamCom.CheckConfiguration());
         }
 
-        private void cB_Other_PlayerCount_SelectedIndexChanged(object sender, EventArgs e) {
+        private void cB_Startup_PlayerCount_SelectedIndexChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
 
-            ConfigControl.playerCount.UpdateValue(cB_Other_PlayerCount.Text);
+            ConfigControl.playerCount.UpdateValue(cB_Startup_PlayerCount.Text);
             MainForm.m.AttachPlayers();
         }
 
@@ -589,5 +593,34 @@ namespace SSUtility2 {
             cB_IPCon_Port.Text = Tools.GetPortValueFromEncoder(cB_IPCon_Port);
         }
 
+        private void check_Startup_QuickFunctions_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+            ConfigControl.launchQuickFunctions.UpdateValue(check_Startup_QuickFunctions.Checked.ToString());
+        }
+
+        private void check_Startup_InfoPanel_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+            ConfigControl.launchInfoPanel.UpdateValue(check_Startup_InfoPanel.Checked.ToString());
+        }
+
+        private void check_Startup_ControlPanel_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+            ConfigControl.launchControlPanel.UpdateValue(check_Startup_ControlPanel.Checked.ToString());
+        }
+
+        private void check_Startup_CustomPanel_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+            ConfigControl.launchCustomPanel.UpdateValue(check_Startup_CustomPanel.Checked.ToString());
+        }
+
+        private void check_Other_FullToParts_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+            ConfigControl.enableFullToParts.UpdateValue(check_Other_FullToParts.Checked.ToString());
+        }
     }
 }

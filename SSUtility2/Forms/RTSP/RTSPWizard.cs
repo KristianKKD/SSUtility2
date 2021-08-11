@@ -102,6 +102,9 @@ namespace SSUtility2 {
         }
 
         void FullToParts(string full) {
+            if (!ConfigControl.enableFullToParts.boolVal)
+                return;
+
             try {
                 tB_RTSPIP.Text = "";
                 tB_RTSPPort.Text = "";

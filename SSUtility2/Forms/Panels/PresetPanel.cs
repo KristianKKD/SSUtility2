@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace SSUtility2 {
 
-    public partial class PresetPanel : Form {
+    public partial class QuickFunctions : Form {
 
-        public PresetPanel() {
+        public QuickFunctions() {
             InitializeComponent();
         }
 
