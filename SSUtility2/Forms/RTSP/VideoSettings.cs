@@ -455,11 +455,11 @@ namespace SSUtility2 {
         int selectedPage = -1;
         Font oldFont;
         private void tC_PlayerSettings_MouseDoubleClick(object sender, MouseEventArgs e) {
-            selectedPage = tC_PlayerSettings.SelectedIndex;
-            TabPage tp = tC_PlayerSettings.TabPages[selectedPage];
-            tB_SecretNameTB.Text = "";
-            tp.Text = "";
-            tB_SecretNameTB.Focus();
+            //selectedPage = tC_PlayerSettings.SelectedIndex;
+            //TabPage tp = tC_PlayerSettings.TabPages[selectedPage];
+            //tB_SecretNameTB.Text = "";
+            //tp.Text = "";
+            //tB_SecretNameTB.Focus();
             //oldFont = tp.Font;
             //tp.Font = new Font(oldFont, FontStyle.Bold | FontStyle.Italic);
         }
@@ -475,10 +475,10 @@ namespace SSUtility2 {
         }
 
         private void tB_SecretNameTB_TextChanged(object sender, EventArgs e) {
-            if (selectedPage == -1)
-                return;
+            //if (selectedPage == -1)
+            //    return;
 
-            tC_PlayerSettings.TabPages[selectedPage].Text = tB_SecretNameTB.Text;
+            //tC_PlayerSettings.TabPages[selectedPage].Text = tB_SecretNameTB.Text;
         }
 
     }

@@ -298,73 +298,78 @@ namespace SSUtility2 {
         public static string GivePath(PathType pt, Detached player, string customPath = "") {
             string defaultName, folder, name, full, folderType, extension;
 
-            switch (pt) {
-                case PathType.Snapshot:
-                    defaultName = ConfigControl.scFileName.stringVal;
-                    folder = ConfigControl.scFolder.stringVal;
-                    folderType = "Snapshots";
-                    extension = ".jpg";
-                    break;
-                case PathType.Video:
-                    defaultName = ConfigControl.vFileName.stringVal;
-                    folder = ConfigControl.vFolder.stringVal;
-                    folderType = "Recordings";
-                    extension = ".mp4";
-                    break;
-                case PathType.Panoramic:
-                    defaultName = "Panoramic";
-                    folder = ConfigControl.scFolder.stringVal;
-                    folderType = "Panoramic";
-                    extension = ".jpg";
-                    break;
-                default: //folder type
-                    defaultName = "";
-                    folder = "";
-                    folderType = "";
-                    extension = "";
-                    break;
+            try {
+                switch (pt) {
+                    case PathType.Snapshot:
+                        defaultName = ConfigControl.scFileName.stringVal;
+                        folder = ConfigControl.scFolder.stringVal;
+                        folderType = "Snapshots";
+                        extension = ".jpg";
+                        break;
+                    case PathType.Video:
+                        defaultName = ConfigControl.vFileName.stringVal;
+                        folder = ConfigControl.vFolder.stringVal;
+                        folderType = "Recordings";
+                        extension = ".mp4";
+                        break;
+                    case PathType.Panoramic:
+                        defaultName = "Panoramic";
+                        folder = ConfigControl.scFolder.stringVal;
+                        folderType = "Panoramic";
+                        extension = ".jpg";
+                        break;
+                    default: //folder type
+                        defaultName = "";
+                        folder = "";
+                        folderType = "";
+                        extension = "";
+                        break;
+                }
+
+                if (ConfigControl.automaticPaths.boolVal && customPath == "") {
+                    string playerName = "";
+
+                    if (player != null)
+                        playerName = player.settings.GetPresetName();
+
+                    if (playerName != "" && playerName[playerName.Length - 1] != '\\')
+                        playerName += @"\";
+                    else if (playerName == "")
+                        folderType = "";
+
+                    folder = ConfigControl.savedFolder + playerName + folderType + @"\";
+
+                    string timeText = "";
+                    if (pt != PathType.Folder)
+                        timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
+
+                    name = timeText;
+
+                    if (defaultName != "")
+                        name = defaultName + " " + timeText;
+
+                    full = folder + name + timeText + extension;
+                } else {
+                    if (pt != PathType.Folder && folder[folder.Length - 1] != '\\')
+                        folder += @"\";
+                    else if (customPath != "")
+                        folder = customPath;
+
+                    full = folder + defaultName + extension;
+                }
+
+                if (pt != PathType.Folder) {
+                    if (customPath == "")
+                        CheckCreateFile(null, folder);
+
+                    full = NameNoOverwrite(full);
+                }
+
+                Console.WriteLine(full);
+            }catch(Exception e) {
+                Console.WriteLine("GIVEPATH\n" + e.ToString());
+                full = "";
             }
-
-            if (customPath != "")
-                folder = customPath;
-
-            if (pt != PathType.Folder)
-                folder += @"\";
-
-            if (ConfigControl.automaticPaths.boolVal && customPath == "") {
-                string playerName = "";
-
-                if (player != null)
-                    playerName = player.settings.GetPresetName();
-
-                if (playerName != "")
-                    playerName += @"\";
-                else
-                    folderType = "";
-
-                folder = ConfigControl.savedFolder + playerName + folderType + @"/";
-
-                string timeText = "";
-                if (pt != PathType.Folder)
-                    timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
-
-                name = timeText;
-
-                if (defaultName != "")
-                    name = defaultName + " " + timeText;
-
-                full = folder + name + timeText + extension;
-            } else
-                full = folder + defaultName + extension;
-
-            if (pt != PathType.Folder) {
-                if (customPath == "")
-                    CheckCreateFile(null, folder);
-
-                full = NameNoOverwrite(full);
-            }
-
-            Console.WriteLine(full);
 
             return full;
         }

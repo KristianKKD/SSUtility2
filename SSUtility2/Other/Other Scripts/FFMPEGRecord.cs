@@ -56,10 +56,10 @@ namespace SSUtility2 {
                 }
 
                 outPath = Tools.GivePath(Tools.PathType.Video, givenPlayer);
-                outPath = outPath.Replace(" ", "_");
 
                 string arguments = gdigrab + " -i " + input
-                    + " -framerate " + ConfigControl.recFPS.stringVal + " -b:v " + (ConfigControl.recQual.intVal * 30) + "k " + outPath;
+                    + " -framerate " + ConfigControl.recFPS.stringVal + " -b:v " + (ConfigControl.recQual.intVal * 30) + "k "
+                    + "\"" + outPath + "\"";
 
                 Console.WriteLine("args-------------------" + arguments);
 
@@ -70,15 +70,19 @@ namespace SSUtility2 {
                 p.StartInfo.RedirectStandardOutput = true;
                 p.StartInfo.FileName = libPath;
                 p.StartInfo.Arguments = arguments;
-                p.Start();
 
+                p.Start();
                 recording = true;
             } catch (Exception e) {
+                Console.WriteLine("RECORD\n" + e.ToString());
                 recording = false;
             }
         }
 
         public void StopRecording() {
+            if (p == null || p.HasExited)
+                return;
+
             p.StandardInput.Write("q");
             p.WaitForExit();
             p.Close();
