@@ -6,8 +6,7 @@ using System.Windows.Forms;
 using static SSUtility2.RTSPPresets;
 
 namespace SSUtility2 {
-    public partial class VideoSettings : Form
-    {
+    public partial class VideoSettings : Form {
 
         public static List<VideoSettings> allSettings;
 
@@ -21,6 +20,7 @@ namespace SSUtility2 {
         public bool isAttached = false;
 
         Timer updateControl;
+        Timer cursorTimer;
 
         public VideoSettings(Detached d, bool isMain) {
             InitializeComponent();
@@ -29,6 +29,10 @@ namespace SSUtility2 {
             updateControl.Interval = 1000;
             updateControl.Tick += new EventHandler(UpdateControlCallback);
 
+            cursorTimer = new Timer();
+            cursorTimer.Interval = 500;
+            cursorTimer.Tick += new EventHandler(CursorTimerCallback);
+
             myDetached = d;
             isMainPlayer = isMain;
 
@@ -36,6 +40,7 @@ namespace SSUtility2 {
                 tP_Main.Text = "Detached Player";
 
             allSettings.Add(this);
+
             if (!isMainPlayer) {
                 UpdateSinglePresetBox(cB_RTSP);
                 MinimumSize = new Size(Width, 120);
@@ -44,6 +49,31 @@ namespace SSUtility2 {
                 b_Detach.Visible = false;
                 tC_PlayerSettings.SelectedIndex = 0;
             }
+        }
+
+        public void LoadTabName() {
+            if (myLinkedPage != null) {
+                int pageIndex = MainForm.m.mainPlayer.settings.tC_PlayerSettings.TabPages.IndexOf(myLinkedPage);
+                string text = "";
+                if (pageIndex == 1)
+                    text = ConfigControl.player2TabName.stringVal;
+                else if (pageIndex == 2)
+                    text = ConfigControl.player3TabName.stringVal;
+
+                if (text == "")
+                    text = "Attached Player";
+
+                tP_Main.Text = text;
+                myLinkedPage.Text = text;
+            } else if (isMainPlayer) {
+                tP_Main.Text = ConfigControl.mainPlayerTabName.stringVal;
+
+                foreach (Detached d in myDetached.attachedPlayers)
+                    d.settings.LoadTabName();
+            }
+
+            this.Text = tP_Main.Text + " Settings";
+            myDetached.Text = tP_Main.Text;
         }
 
         public static void SwapSettings(VideoSettings second) {
@@ -60,7 +90,6 @@ namespace SSUtility2 {
 
         public void AddPage(Detached d) {
             TabPage tp = CopyPage(d.settings);
-            tp.Text = d.settings.tP_Main.Text;
             tC_PlayerSettings.TabPages.Add(tp);
             d.settings.myLinkedPage = tp;
         }
@@ -358,7 +387,6 @@ namespace SSUtility2 {
             return returnVal;
         }
 
-
         private void tB_ControlFields_TextChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
@@ -452,33 +480,92 @@ namespace SSUtility2 {
             cB_Port.Text = Tools.GetPortValueFromEncoder(cB_Port);
         }
 
-        int selectedPage = -1;
-        Font oldFont;
+        TabPage selectedPage;
+        string cursor = "";
         private void tC_PlayerSettings_MouseDoubleClick(object sender, MouseEventArgs e) {
-            //selectedPage = tC_PlayerSettings.SelectedIndex;
-            //TabPage tp = tC_PlayerSettings.TabPages[selectedPage];
-            //tB_SecretNameTB.Text = "";
-            //tp.Text = "";
-            //tB_SecretNameTB.Focus();
-            //oldFont = tp.Font;
-            //tp.Font = new Font(oldFont, FontStyle.Bold | FontStyle.Italic);
+            selectedPage = tC_PlayerSettings.SelectedTab;
+            tB_SecretNameTB.Text = "";
+            selectedPage.Text = "";
+            tB_SecretNameTB.Focus();
+            cursorTimer.Start();
         }
 
         private void tC_PlayerSettings_SelectedIndexChanged(object sender, EventArgs e) {
-            //tC_PlayerSettings.TabPages[selectedPage].Font = oldFont;
-            selectedPage = -1;
+            StopTyping();
         }
 
         private void tB_SecretNameTB_Leave(object sender, EventArgs e) {
-            //tC_PlayerSettings.TabPages[selectedPage].Font = oldFont;
-            selectedPage = -1;
+            StopTyping();
         }
 
         private void tB_SecretNameTB_TextChanged(object sender, EventArgs e) {
-            //if (selectedPage == -1)
-            //    return;
+            if (selectedPage == null)
+                return;
 
-            //tC_PlayerSettings.TabPages[selectedPage].Text = tB_SecretNameTB.Text;
+            cursor = "|";
+            cursorTimer.Start();
+
+            selectedPage.Text = tB_SecretNameTB.Text + cursor;
+        }
+
+        void StopTyping() {
+            cursor = "";
+            cursorTimer.Stop();
+
+            if (selectedPage != null) {
+                selectedPage.Text = tB_SecretNameTB.Text;
+                string currentText = selectedPage.Text;
+
+                if (currentText != "") {
+                    int pageIndex = -1;
+
+                    if (myLinkedPage != null)
+                        pageIndex = MainForm.m.mainPlayer.settings.tC_PlayerSettings.TabPages.IndexOf(myLinkedPage);
+                    else if (isMainPlayer)
+                        pageIndex = tC_PlayerSettings.SelectedIndex;
+
+                    if (pageIndex == 0)
+                        ConfigControl.mainPlayerTabName.UpdateValue(currentText);
+                    else if (pageIndex == 1)
+                        ConfigControl.player2TabName.UpdateValue(currentText);
+                    else if (pageIndex == 2)
+                        ConfigControl.player3TabName.UpdateValue(currentText);
+                }
+
+                LoadTabName();
+
+                selectedPage = null;
+            }
+        }
+
+        void CursorTimerCallback(object sender, EventArgs e) {
+            if (cursor == "")
+                cursor = "|";
+            else
+                cursor = "";
+
+            selectedPage.Text = tB_SecretNameTB.Text + cursor;
+        }
+
+        private void tB_SecretNameTB_KeyUp(object sender, KeyEventArgs e) {
+            if ((e.KeyCode == Keys.Enter || e.KeyCode == Keys.Escape))
+                StopTyping();
+        }
+
+        private void VideoSettings_MouseClick(object sender, MouseEventArgs e) {
+            StopTyping();
+        }
+
+        private void tP_Main_Click(object sender, EventArgs e) {
+            StopTyping();
+        }
+
+        private void l_RTSP_Click(object sender, EventArgs e) {
+            StopTyping();
+        }
+
+        private void tC_PlayerSettings_MouseClick(object sender, MouseEventArgs e) {
+            StopTyping();
         }
 
     }

@@ -90,6 +90,7 @@ namespace SSUtility2
             this.tC_PlayerSettings.Size = new System.Drawing.Size(384, 82);
             this.tC_PlayerSettings.TabIndex = 62;
             this.tC_PlayerSettings.SelectedIndexChanged += new System.EventHandler(this.tC_PlayerSettings_SelectedIndexChanged);
+            this.tC_PlayerSettings.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tC_PlayerSettings_MouseClick);
             this.tC_PlayerSettings.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tC_PlayerSettings_MouseDoubleClick);
             // 
             // tP_Main
@@ -106,6 +107,7 @@ namespace SSUtility2
             this.tP_Main.Size = new System.Drawing.Size(376, 56);
             this.tP_Main.TabIndex = 0;
             this.tP_Main.Text = "Main Player";
+            this.tP_Main.Click += new System.EventHandler(this.tP_Main_Click);
             // 
             // b_Edit
             // 
@@ -130,6 +132,7 @@ namespace SSUtility2
             this.l_RTSP.Size = new System.Drawing.Size(118, 20);
             this.l_RTSP.TabIndex = 65;
             this.l_RTSP.Text = "RTSP Stream";
+            this.l_RTSP.Click += new System.EventHandler(this.l_RTSP_Click);
             // 
             // cB_RTSP
             // 
@@ -274,6 +277,7 @@ namespace SSUtility2
             this.tB_SecretNameTB.Size = new System.Drawing.Size(10, 20);
             this.tB_SecretNameTB.TabIndex = 84;
             this.tB_SecretNameTB.TextChanged += new System.EventHandler(this.tB_SecretNameTB_TextChanged);
+            this.tB_SecretNameTB.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_SecretNameTB_KeyUp);
             this.tB_SecretNameTB.Leave += new System.EventHandler(this.tB_SecretNameTB_Leave);
             // 
             // VideoSettings
@@ -302,6 +306,7 @@ namespace SSUtility2
             this.Text = "Video Settings";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VideoSettings_FormClosing);
             this.VisibleChanged += new System.EventHandler(this.VideoSettings_VisibleChanged);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.VideoSettings_MouseClick);
             this.tC_PlayerSettings.ResumeLayout(false);
             this.tP_Main.ResumeLayout(false);
             this.tP_Main.PerformLayout();

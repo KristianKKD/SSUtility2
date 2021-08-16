@@ -32,7 +32,7 @@ namespace SSUtility2 {
 
         }
 
-        public async Task PopulateSettingText() {
+        public async Task LoadSettings() {
             try {
                 slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
 
@@ -81,6 +81,8 @@ namespace SSUtility2 {
                     MainForm.m.mainPlayer.settings.cB_RTSP.SelectedIndex = index;
                     cB_IPCon_MainPlayerPreset.SelectedIndex = index;
                 }
+
+                MainForm.m.mainPlayer.settings.LoadTabName();
             } catch (Exception e) {
                 Tools.ShowPopup("Failed to update settings!\nShow more?", "Error Occurred!", e.ToString());
             }
@@ -95,7 +97,7 @@ namespace SSUtility2 {
                 "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (d == DialogResult.Yes) {
                 ConfigControl.SetToDefaults();
-                PopulateSettingText();
+                LoadSettings();
                 MainForm.m.mainPlayer.DestroyAll();
             }
         }

@@ -168,11 +168,13 @@ namespace SSUtility2 {
                     MainForm.m.SwapSettings(secondPlayer);
                 };
 
-                string name = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
-                secondPlayer.settings.tP_Main.Text = name;
+                //string name = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
+                //secondPlayer.settings.tP_Main.Text = name;
 
                 settings.AddPage(secondPlayer);
                 secondPlayer.settings.b_Detach.Text = "Detach";
+
+                secondPlayer.settings.LoadTabName();
 
                 return sP_Secondary;
             } catch (Exception e) {

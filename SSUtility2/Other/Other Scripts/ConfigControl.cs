@@ -48,6 +48,9 @@ namespace SSUtility2 {
         public static ConfigSetting mainPlayerPreset = new ConfigSetting("", "MainPlayerPresetName", ConfigSetting.VarType.strings);
         public static ConfigSetting player2Preset = new ConfigSetting("", "SecondaryPresetName", ConfigSetting.VarType.strings);
         public static ConfigSetting player3Preset = new ConfigSetting("", "TertiaryPresetName", ConfigSetting.VarType.strings);
+        public static ConfigSetting mainPlayerTabName = new ConfigSetting("Main Player", "MainPlayerTabName", ConfigSetting.VarType.strings);
+        public static ConfigSetting player2TabName = new ConfigSetting("Player 2", "SecondaryTabName", ConfigSetting.VarType.strings);
+        public static ConfigSetting player3TabName = new ConfigSetting("Player 3", "TertiaryTabName", ConfigSetting.VarType.strings);
         public static ConfigSetting launchQuickFunctions = new ConfigSetting("false", "EnableQuickFunctionsOnLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting launchInfoPanel = new ConfigSetting("false", "EnableInfoPanelOnLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting launchControlPanel = new ConfigSetting("false", "EnableControlPanelOnLaunch", ConfigSetting.VarType.boolean);
@@ -80,6 +83,9 @@ namespace SSUtility2 {
             mainPlayerPreset,
             player2Preset,
             player3Preset,
+            mainPlayerTabName,
+            player2TabName,
+            player3TabName,
             launchQuickFunctions,
             launchInfoPanel,
             launchControlPanel,
@@ -210,8 +216,6 @@ namespace SSUtility2 {
                 }
 
                 if (playersFound.Count > 0) {
-                    //MainForm.m.mainPlayer.settings.LoadConfig(playersFound[0]);
-
                     for (int o = 1; o < playersFound.Count; o++)
                         MainForm.m.playerConfigList.Add(playersFound[o]);
                 }

@@ -506,7 +506,7 @@ namespace SSUtility2 {
                     RTSPPresets.Reload();
                     ConfigControl.SetToDefaults();
                     await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
-                    MainForm.m.setPage.PopulateSettingText();
+                    MainForm.m.setPage.LoadSettings();
                     MessageBox.Show("Updated config file!\n(" + configFile + ")");
                     MainForm.m.AttachPlayers();
                 } else {
