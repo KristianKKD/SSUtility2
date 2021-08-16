@@ -11,7 +11,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.1.3";
+        public const string version = "v2.8.1.4";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -779,8 +779,11 @@ namespace SSUtility2 {
         }
 
         private void p_PlayerPanel_MouseMove(object sender, MouseEventArgs e) {
-            if (!AsyncCamCom.sock.Connected || lite)
+            if ((!AsyncCamCom.sock.Connected || lite) && !JoyBack.Visible) {
+                b_Open.Visible = false;
                 return;
+            }
+
             if (Cursor.Position.X - Location.X < 70) {
                 b_Open.Visible = true;
                 b_Open.BringToFront();
