@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,6 @@ namespace SSUtility2 {
         public Process p;
         public bool recording;
         public string outPath;
-
-        //press recording->video->global
-        //all open detached + attached + main player + SSUtility are recorded
-        //press same button stops recording
-        //dialogue opens to ask for location
 
         public static FFMPEGRecord ssutilRecorder = null;
 
@@ -75,7 +71,11 @@ namespace SSUtility2 {
 
                         MessageBox.Show("Saved recordings to: " + fdg.SelectedPath);
 
-                        Tools.DeleteDirectory(customTempFolder);
+                        foreach (string path in outPaths)
+                            File.Delete(path);
+
+                        if (Directory.GetFiles(customTempFolder).Length == 0)
+                            Directory.Delete(customTempFolder);
                     } else {
                         MessageBox.Show("Saved recordings to: " + customTempFolder);
                     }
