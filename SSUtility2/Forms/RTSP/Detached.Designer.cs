@@ -81,7 +81,7 @@
             // Menu_Recording_StopRecording
             // 
             this.Menu_Recording_StopRecording.Name = "Menu_Recording_StopRecording";
-            this.Menu_Recording_StopRecording.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_StopRecording.Size = new System.Drawing.Size(155, 22);
             this.Menu_Recording_StopRecording.Text = "Stop Recording";
             this.Menu_Recording_StopRecording.Visible = false;
             this.Menu_Recording_StopRecording.Click += new System.EventHandler(this.Menu_Recording_StopRecording_Click);
@@ -89,14 +89,14 @@
             // Menu_Recording_Video
             // 
             this.Menu_Recording_Video.Name = "Menu_Recording_Video";
-            this.Menu_Recording_Video.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video.Size = new System.Drawing.Size(155, 22);
             this.Menu_Recording_Video.Text = "Video";
             this.Menu_Recording_Video.Click += new System.EventHandler(this.Menu_Recording_Video_Click);
             // 
             // Menu_Recording_Snapshot
             // 
             this.Menu_Recording_Snapshot.Name = "Menu_Recording_Snapshot";
-            this.Menu_Recording_Snapshot.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Snapshot.Size = new System.Drawing.Size(155, 22);
             this.Menu_Recording_Snapshot.Text = "Snapshot";
             this.Menu_Recording_Snapshot.Click += new System.EventHandler(this.Menu_Recording_Snapshot_Click);
             // 
@@ -123,6 +123,7 @@
             this.Name = "Detached";
             this.Text = "Detached Player";
             this.TransparencyKey = System.Drawing.Color.Fuchsia;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Detached_FormClosing);
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.ResumeLayout(false);

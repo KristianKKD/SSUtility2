@@ -142,9 +142,13 @@ namespace SSUtility2 {
             Tools.CheckCreateFile(null, ConfigControl.savedFolder);
         }
 
-        public static void CheckForLibs() {
-            if (!Directory.Exists(@"Lib"))
-                MessageBox.Show("Lib folder missing!\nThis is required to run this software properly!\nErrors are to be expected!");
+        public static bool CheckForLibs() {
+            if (!Directory.Exists(@"Lib")) {
+                MessageBox.Show("Lib folder missing!\nThis is required to run this software properly!\nErrors are to be expected!\n");
+                return false;
+            }
+
+            return true;
         }
     }
 }

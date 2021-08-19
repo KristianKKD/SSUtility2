@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.1.4";
+        public const string version = "v2.8.1.5";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -24,6 +25,8 @@ namespace SSUtility2 {
         public static MainForm m;
 
         public static List<Control> controlPanel;
+        public List<Detached> detachedList;
+        public List<Process> recorderProcessList;
 
         public CustomButtons custom;
         public SettingsPage setPage;
@@ -33,7 +36,6 @@ namespace SSUtility2 {
         public TabControl attachedqf;
         public Detached mainPlayer;
         public CommandListWindow clw;
-        private FFMPEGRecord screenRec;
         private MediaCollection coll;
 
         public string finalDest;
@@ -53,6 +55,8 @@ namespace SSUtility2 {
                 CreateHandle();
                 m = this;
                 RTSPPresets.Reload();
+                detachedList = new List<Detached>();
+                recorderProcessList = new List<Process>();
                 VideoSettings.allSettings = new List<VideoSettings>();
                 CustomScriptCommands.userAddedCommands = new List<ScriptCommand>();
                 setPage = new SettingsPage();
@@ -65,9 +69,10 @@ namespace SSUtility2 {
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
 
-                FileStuff.CheckForLibs();
-
-                Console.WriteLine("ACTIVATION: " + EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init().ToString());
+                if (!startLiteVersion) {
+                    if(FileStuff.CheckForLibs())
+                        Console.WriteLine("ACTIVATION: " + EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init().ToString());
+                }
 
                 mainPlayer = new Detached(true);
                 AttachInfoPanel();
@@ -363,6 +368,7 @@ namespace SSUtility2 {
             closing = true;
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
             EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Release();
+            FFMPEGRecord.StopAll();
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
@@ -412,16 +418,37 @@ namespace SSUtility2 {
             new QuickCommandEntry("abszoom", "Enter zoom pos value");
         }
 
+        public FFMPEGRecord.RecordType currentType;
+
+        private void Menu_Recording_Video_SSUtility_Click(object sender, EventArgs e) {
+            currentType = FFMPEGRecord.RecordType.SSUtility;
+            FFMPEGRecord.ssutilRecorder = Tools.ToggleRecord(null, Menu_Recording_Video, Menu_Recording_StopRecording);
+        }
+
         private void Menu_Recording_Video_MainPlayer_Click(object sender, EventArgs e) {
-            screenRec = Tools.ToggleRecord(screenRec, Menu_Recording_Video, Menu_Recording_StopRecording, null);
+            currentType = FFMPEGRecord.RecordType.Player;
+            mainPlayer.recorder = Tools.ToggleRecord(mainPlayer, Menu_Recording_Video, Menu_Recording_StopRecording);
+        }
+
+        private void Menu_Recording_Global_Click(object sender, EventArgs e) {
+            currentType = FFMPEGRecord.RecordType.Global;
+            FFMPEGRecord.GlobalRecord();
         }
 
         private void Menu_Recording_StopRecording_Click(object sender, EventArgs e) {
-            screenRec = Tools.ToggleRecord(screenRec, Menu_Recording_Video, Menu_Recording_StopRecording, null);
-        }
+            switch (currentType) {
+                case FFMPEGRecord.RecordType.Player:
+                    mainPlayer.recorder = Tools.ToggleRecord(mainPlayer, Menu_Recording_Video, Menu_Recording_StopRecording);
+                    break;
+                case FFMPEGRecord.RecordType.SSUtility:
+                    FFMPEGRecord.ssutilRecorder = Tools.ToggleRecord(null, Menu_Recording_Video, Menu_Recording_StopRecording);
+                    break;
+                case FFMPEGRecord.RecordType.Global:
+                    FFMPEGRecord.GlobalRecord();
+                    break;
+            }
 
-        private void Menu_Recording_Video_Current_Click(object sender, EventArgs e) {
-            screenRec = Tools.ToggleRecord(screenRec, Menu_Recording_Video, Menu_Recording_StopRecording, mainPlayer);
+            currentType = FFMPEGRecord.RecordType.Global;
         }
 
         private void Menu_Window_Presets_Click(object sender, EventArgs e) {
@@ -822,6 +849,12 @@ namespace SSUtility2 {
         int minHeight = 0;
         public void StartRatioTimer() {
             float initialRatio = (float)Width / (float)Height;
+
+            //TO DO:
+            //grab initial frame as reference (remove resizing restrictions of main player maybe)
+            //find out ratio of the frame
+            //find nearest resolution using that ratio
+
             for (int i = 1; true; i++) {
                 float val = i * initialRatio;
                 if (val - Math.Floor(val) < 0.1) {

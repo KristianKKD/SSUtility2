@@ -250,21 +250,28 @@ namespace SSUtility2 {
             }
         }
 
-        public static string NameNoOverwrite(string originalPath) {
-            string path = originalPath.Substring(0, originalPath.LastIndexOf(@"\") + 1);
-            string name = originalPath.Substring(path.Length);
-            string extension = name.Substring(name.IndexOf("."));
-            name = name.Substring(0, name.Length - extension.Length);
-            string fullPath = path + name + extension;
+        public static string PathNoOverwrite(string originalPath) {
+            try {
+                string path = originalPath.Substring(0, originalPath.LastIndexOf(@"\") + 1);
+                string name = originalPath.Substring(path.Length);
+                string extension = name.Substring(name.IndexOf("."));
+                name = name.Substring(0, name.Length - extension.Length);
 
-            int numAdd = 0;
+                string fullPath = path + name + extension;
 
-            while (File.Exists(fullPath))
-                fullPath = path + name + "(" + (++numAdd).ToString() + ")" + extension;
+                int numAdd = 0;
 
-            return fullPath;
+                while (File.Exists(fullPath))
+                    fullPath = path + name + "(" + (++numAdd).ToString() + ")" + extension;
+
+                return fullPath;
+            } catch (Exception e) {
+                MessageBox.Show("PATHNOOVERWRITE\n" + e.ToString());
+                return "";
+            }
         }
-
+ 
+        
         public static async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
             if (tb.Text.Length < 1) {
                 tb.Text = ConfigControl.appFolder;
@@ -331,6 +338,8 @@ namespace SSUtility2 {
 
                     if (player != null)
                         playerName = player.settings.GetPresetName();
+                    else
+                        playerName = "SSUtility";
 
                     if (playerName != "" && playerName[playerName.Length - 1] != '\\')
                         playerName += @"\";
@@ -341,7 +350,7 @@ namespace SSUtility2 {
 
                     string timeText = "";
                     if (pt != PathType.Folder)
-                        timeText = DateTime.Now.ToString().Replace("/", "-").Replace(":", ";");
+                        timeText = GetTimeText();
 
                     name = timeText;
 
@@ -362,7 +371,7 @@ namespace SSUtility2 {
                     if (customPath == "")
                         CheckCreateFile(null, folder);
 
-                    full = NameNoOverwrite(full);
+                    full = PathNoOverwrite(full);
                 }
 
                 Console.WriteLine(full);
@@ -374,24 +383,34 @@ namespace SSUtility2 {
             return full;
         }
 
+        public static string GetTimeText() {
+            return DateTime.Now.ToString().Replace("/", "-").Replace(":", ";"); ;
+        }
 
-        public static FFMPEGRecord ToggleRecord(FFMPEGRecord recorder, ToolStripMenuItem startRecord, ToolStripMenuItem stopRecord, Detached player) {
+
+        public static FFMPEGRecord ToggleRecord(Detached player, ToolStripMenuItem startRecord, ToolStripMenuItem stopRecord,
+            bool showFinish = true, string customPath = "") {
             FFMPEGRecord.RecordType type = FFMPEGRecord.RecordType.SSUtility;
 
-            if (player != null)
+            FFMPEGRecord recorder;
+
+            if (player != null) {
                 type = FFMPEGRecord.RecordType.Player;
+                recorder = player.recorder;
+            } else {
+                recorder = FFMPEGRecord.ssutilRecorder;
+            }
 
             if (recorder == null) {
-                recorder = new FFMPEGRecord(type, player);
+                recorder = new FFMPEGRecord(type, player, customPath);
 
                 if (!recorder.recording)
                     recorder = null;
-                else {
+                else if (startRecord != null) { //global gives null
                     stopRecord.Text = "Stop Recording";
                     stopRecord.Visible = true;
                     startRecord.Visible = false;
                 }
-
             } else {
                 if (MainForm.m.finalMode) {
                     SaveFileDialog fdg = Tools.SaveFile("Recording", ".mp4", MainForm.m.finalDest);
@@ -401,13 +420,18 @@ namespace SSUtility2 {
 
                     MessageBox.Show("Saved recording to: " + recorder.outPath +
                         "\nFinal saved: " + fdg.FileName);
-                } else
-                    MessageBox.Show("Saved recording to: " + recorder.outPath);
+                } else {
+                    if (showFinish)
+                        MessageBox.Show("Saved recording to: " + recorder.outPath);
+                }
 
-                recorder.StopRecording();
+                FFMPEGRecord.StopRecording(recorder.p);
                 recorder = null;
-                stopRecord.Visible = false;
-                startRecord.Visible = true;
+
+                if (startRecord != null) {
+                    stopRecord.Visible = false;
+                    startRecord.Visible = true;
+                }
             }
 
             return recorder;
@@ -423,7 +447,9 @@ namespace SSUtility2 {
                 newLocation = destination + name;
 
                 if (copyingDirectory) {
-                    destination += @"\";
+                    if(!destination.EndsWith(@"\"))
+                        destination += @"\";
+
                     string tempFile = destination + @"CopiedFile";
 
                     if (!File.Exists(newLocation)) {

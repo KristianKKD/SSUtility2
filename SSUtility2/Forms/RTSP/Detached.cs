@@ -15,6 +15,8 @@ namespace SSUtility2 {
         public VideoSettings settings;
         public List<Detached> attachedPlayers = new List<Detached>();
 
+        public FFMPEGRecord recorder;
+
         public Detached(bool isMain, bool autoPlay = false) {
             InitializeComponent();
             settings = new VideoSettings(this, isMain);
@@ -23,6 +25,8 @@ namespace SSUtility2 {
                 p_Player = MainForm.m.p_PlayerPanel;
             else if (autoPlay && settings.cB_RTSP.Items.Count > 1)
                 settings.cB_RTSP.SelectedIndex = 0;
+
+            MainForm.m.detachedList.Add(this);
         }
 
         public void DestroyPlayer() {
@@ -57,14 +61,6 @@ namespace SSUtility2 {
 
             p_Player.BackColor = Color.Black;
             p_Player.Refresh();
-        }
-
-        public void ToggleStopStart() {
-            if (IsPlaying()) {
-                StopPlaying();
-            } else {
-                Play(true);
-            }
         }
 
         public async Task Play(bool showErrors, bool doPing = true) {
@@ -189,6 +185,7 @@ namespace SSUtility2 {
                 dList.Add(d);
 
             foreach (Detached d in dList) {
+                d.RemoveSelfFromList();
                 attachedPlayers.Remove(d);
                 d.DestroyPlayer();
             }
@@ -198,7 +195,9 @@ namespace SSUtility2 {
             TabPage tp = detachable.settings.myLinkedPage;
             if (tp != null && settings.tC_PlayerSettings.TabPages.Contains(tp))
                 settings.tC_PlayerSettings.TabPages.Remove(tp);
-            
+
+            detachable.RemoveSelfFromList();
+
             attachedPlayers.Remove(detachable);
 
             if (destroy) {
@@ -229,7 +228,6 @@ namespace SSUtility2 {
             settings.Show();
         }
 
-        FFMPEGRecord playerRec;
         private void Menu_Attach_Click(object sender, EventArgs e) {
             Hide();
 
@@ -254,11 +252,20 @@ namespace SSUtility2 {
         }
 
         private void Menu_Recording_Video_Click(object sender, EventArgs e) {
-            playerRec = Tools.ToggleRecord(playerRec, Menu_Recording_Video, Menu_Recording_StopRecording, this);
+            recorder = Tools.ToggleRecord(this, Menu_Recording_Video, Menu_Recording_StopRecording);
         }
 
         private void Menu_Recording_StopRecording_Click(object sender, EventArgs e) {
-            playerRec = Tools.ToggleRecord(playerRec, Menu_Recording_Video, Menu_Recording_StopRecording, this);
+            recorder = Tools.ToggleRecord(this, Menu_Recording_Video, Menu_Recording_StopRecording);
+        }
+
+        private void Detached_FormClosing(object sender, FormClosingEventArgs e) {
+            RemoveSelfFromList();
+        }
+
+        public void RemoveSelfFromList() {
+            FFMPEGRecord.StopSingleInGlobal(this);
+            MainForm.m.detachedList.Remove(this);
         }
     }
 

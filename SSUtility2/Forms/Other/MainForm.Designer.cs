@@ -69,8 +69,8 @@ namespace SSUtility2 {
             this.Menu_Recording = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Recording_StopRecording = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Recording_Video = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_Recording_Video_SSUtility = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Recording_Video_MainPlayer = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Recording_Video_Current = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Recording_Snapshot = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Recording_Snapshot_Single = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Recording_Snapshot_Panoramic = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,7 +85,6 @@ namespace SSUtility2 {
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.p_PlayerPanel = new System.Windows.Forms.Panel();
-            this.pB_Panoramic = new System.Windows.Forms.PictureBox();
             this.JoyBack = new Kaiser.JoyBack();
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
             this.b_Open = new System.Windows.Forms.Button();
@@ -98,10 +97,12 @@ namespace SSUtility2 {
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
+            this.pB_Panoramic = new System.Windows.Forms.PictureBox();
+            this.Menu_Recording_Video_Global = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuBar.SuspendLayout();
             this.p_PlayerPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -293,25 +294,26 @@ namespace SSUtility2 {
             // Menu_Recording_Video
             // 
             this.Menu_Recording_Video.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Recording_Video_SSUtility,
             this.Menu_Recording_Video_MainPlayer,
-            this.Menu_Recording_Video_Current});
+            this.Menu_Recording_Video_Global});
             this.Menu_Recording_Video.Name = "Menu_Recording_Video";
             this.Menu_Recording_Video.Size = new System.Drawing.Size(180, 22);
             this.Menu_Recording_Video.Text = "Video";
             // 
             // Menu_Recording_Video_MainPlayer
             // 
-            this.Menu_Recording_Video_MainPlayer.Name = "Menu_Recording_Video_MainPlayer";
-            this.Menu_Recording_Video_MainPlayer.Size = new System.Drawing.Size(166, 22);
-            this.Menu_Recording_Video_MainPlayer.Text = "SSUtility";
-            this.Menu_Recording_Video_MainPlayer.Click += new System.EventHandler(this.Menu_Recording_Video_MainPlayer_Click);
+            this.Menu_Recording_Video_SSUtility.Name = "Menu_Recording_Video_MainPlayer";
+            this.Menu_Recording_Video_SSUtility.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video_SSUtility.Text = "SSUtility";
+            this.Menu_Recording_Video_SSUtility.Click += new System.EventHandler(this.Menu_Recording_Video_SSUtility_Click);
             // 
             // Menu_Recording_Video_Current
             // 
-            this.Menu_Recording_Video_Current.Name = "Menu_Recording_Video_Current";
-            this.Menu_Recording_Video_Current.Size = new System.Drawing.Size(166, 22);
-            this.Menu_Recording_Video_Current.Text = "Main Player Only";
-            this.Menu_Recording_Video_Current.Click += new System.EventHandler(this.Menu_Recording_Video_Current_Click);
+            this.Menu_Recording_Video_MainPlayer.Name = "Menu_Recording_Video_Current";
+            this.Menu_Recording_Video_MainPlayer.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video_MainPlayer.Text = "Main Player Only";
+            this.Menu_Recording_Video_MainPlayer.Click += new System.EventHandler(this.Menu_Recording_Video_MainPlayer_Click);
             // 
             // Menu_Recording_Snapshot
             // 
@@ -439,19 +441,6 @@ namespace SSUtility2 {
             this.p_PlayerPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragDrop);
             this.p_PlayerPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragOver);
             this.p_PlayerPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.p_PlayerPanel_MouseMove);
-            // 
-            // pB_Panoramic
-            // 
-            this.pB_Panoramic.BackColor = System.Drawing.Color.Transparent;
-            this.pB_Panoramic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pB_Panoramic.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pB_Panoramic.Location = new System.Drawing.Point(0, 645);
-            this.pB_Panoramic.Name = "pB_Panoramic";
-            this.pB_Panoramic.Size = new System.Drawing.Size(1262, 10);
-            this.pB_Panoramic.TabIndex = 100;
-            this.pB_Panoramic.TabStop = false;
-            this.pB_Panoramic.Visible = false;
-            this.pB_Panoramic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pB_Panoramic_MouseClick);
             // 
             // JoyBack
             // 
@@ -610,6 +599,26 @@ namespace SSUtility2 {
             this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
             this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
+            // pB_Panoramic
+            // 
+            this.pB_Panoramic.BackColor = System.Drawing.Color.Transparent;
+            this.pB_Panoramic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pB_Panoramic.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pB_Panoramic.Location = new System.Drawing.Point(0, 645);
+            this.pB_Panoramic.Name = "pB_Panoramic";
+            this.pB_Panoramic.Size = new System.Drawing.Size(1262, 10);
+            this.pB_Panoramic.TabIndex = 100;
+            this.pB_Panoramic.TabStop = false;
+            this.pB_Panoramic.Visible = false;
+            this.pB_Panoramic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pB_Panoramic_MouseClick);
+            // 
+            // Menu_Recording_Global
+            // 
+            this.Menu_Recording_Video_Global.Name = "Menu_Recording_Global";
+            this.Menu_Recording_Video_Global.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video_Global.Text = "Global";
+            this.Menu_Recording_Video_Global.Click += new System.EventHandler(this.Menu_Recording_Global_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -630,8 +639,8 @@ namespace SSUtility2 {
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_PlayerPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -668,7 +677,6 @@ namespace SSUtility2 {
         public Button b_PTZ_Daylight;
         public Button b_PTZ_Thermal;
         public Kaiser.JoyBack JoyBack;
-        public PictureBox pB_Panoramic;
         private ToolStripMenuItem Menu_QC_Zoom;
         public ToolStripMenuItem Menu_Settings_Config;
         public ToolStripMenuItem Menu_Settings_Config_Import;
@@ -679,15 +687,17 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Settings_Panels_Custom;
         public ToolStripMenuItem Menu_Settings_Panels_CP;
         private ToolStripMenuItem Menu_Recording;
-        private ToolStripMenuItem Menu_Recording_Video;
+        public ToolStripMenuItem Menu_Recording_Video;
+        private ToolStripMenuItem Menu_Recording_Video_SSUtility;
         private ToolStripMenuItem Menu_Recording_Video_MainPlayer;
-        private ToolStripMenuItem Menu_Recording_Video_Current;
         private ToolStripMenuItem Menu_Recording_Snapshot;
         private ToolStripMenuItem Menu_Recording_Snapshot_Single;
         private ToolStripMenuItem Menu_Recording_Snapshot_Panoramic;
         private ToolStripMenuItem Menu_Recording_Collection;
-        private ToolStripMenuItem Menu_Recording_StopRecording;
+        public ToolStripMenuItem Menu_Recording_StopRecording;
         private ToolStripMenuItem Menu_Settings_ConnectionSettings;
         private ToolStripMenuItem Menu_Recording_Snapshot_All;
+        public PictureBox pB_Panoramic;
+        public ToolStripMenuItem Menu_Recording_Video_Global;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
