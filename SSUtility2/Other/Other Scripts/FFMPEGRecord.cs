@@ -37,9 +37,12 @@ namespace SSUtility2 {
                     Tools.CheckCreateFile(null, customTempFolder);
 
                     foreach (Detached d in MainForm.m.detachedList) {
+                        if (d.settings == null || !d.IsPlaying())
+                            continue;
+
                         string presetName = d.settings.GetPresetName();
 
-                        if (presetName == "" || !d.IsPlaying() || listOfRecordingPresets.Contains(presetName))
+                        if (presetName == "" || listOfRecordingPresets.Contains(presetName))
                             continue;
 
                         d.recorder = null;
@@ -48,6 +51,11 @@ namespace SSUtility2 {
                     }
 
                     ssutilRecorder = Tools.ToggleRecord(null, MainForm.m.Menu_Recording_Video, MainForm.m.Menu_Recording_StopRecording, false, customTempFolder + "SSUtility.mp4");
+
+                    MainForm.m.Menu_Recording_StopRecording.Enabled = false;
+                    await Task.Delay(5000);
+                    MainForm.m.Menu_Recording_StopRecording.Enabled = true;
+
                 } else {
                     List<string> outPaths = new List<string>();
                     foreach (Detached d in MainForm.m.detachedList) {
@@ -62,8 +70,8 @@ namespace SSUtility2 {
                     MainForm.m.Menu_Recording_StopRecording.Visible = false;
 
                     FolderBrowserDialog fdg = new FolderBrowserDialog();
-                    fdg.SelectedPath = ConfigControl.savedFolder;
                     fdg.ShowNewFolderButton = true;
+                    fdg.SelectedPath = ConfigControl.savedFolder;
                     DialogResult result = fdg.ShowDialog();
                     if (result == DialogResult.OK) {
                         foreach (string path in outPaths)
