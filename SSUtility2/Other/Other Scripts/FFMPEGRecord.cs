@@ -69,15 +69,22 @@ namespace SSUtility2 {
                     StopAll();
                     MainForm.m.Menu_Recording_StopRecording.Visible = false;
 
-                    FolderBrowserDialog fdg = new FolderBrowserDialog();
-                    fdg.ShowNewFolderButton = true;
-                    fdg.SelectedPath = ConfigControl.savedFolder;
-                    DialogResult result = fdg.ShowDialog();
-                    if (result == DialogResult.OK) {
-                        foreach (string path in outPaths)
-                            Tools.CopySingleFile(fdg.SelectedPath + path.Substring(path.LastIndexOf(@"\")), path);
+                    SaveFileDialog sfd = new SaveFileDialog();
+                    sfd.FileName = "-";
+                    sfd.CheckFileExists = false;
+                    sfd.Filter = "Directory | directory";
+                    sfd.InitialDirectory = ConfigControl.savedFolder;
+                    sfd.Title = "Select a directory to save the recordings to";
+                    DialogResult result = sfd.ShowDialog();
 
-                        MessageBox.Show("Saved recordings to: " + fdg.SelectedPath);
+                    if (result == DialogResult.OK) {
+                        if (!sfd.CheckFileExists)
+                            sfd.FileName = sfd.FileName.Substring(0, sfd.FileName.LastIndexOf(@"\")) + @"\";
+
+                        foreach (string path in outPaths)
+                            Tools.CopySingleFile(sfd.FileName + path.Substring(path.LastIndexOf(@"\")), path);
+
+                        MessageBox.Show("Saved recordings to: " + sfd.FileName);
 
                         foreach (string path in outPaths)
                             File.Delete(path);
