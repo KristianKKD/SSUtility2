@@ -25,6 +25,34 @@ namespace SSUtility2 {
 
         public static FFMPEGRecord ssutilRecorder = null;
 
+        static Timer indicatorTimer;
+
+        static void InitIndicatorTimer() {
+            indicatorTimer = new Timer();
+            indicatorTimer.Interval = 1000;
+            indicatorTimer.Tick += new EventHandler(IndicatorTimerCallback);
+            MainForm.m.Menu_RecordIndicator.Visible = true;
+            MainForm.m.Menu_RecordIndicator.Enabled = false;
+            MainForm.m.Menu_Recording_StopRecording.Enabled = false;
+            ShowIndicator();
+            indicatorTimer.Start();
+        }
+
+        private static void IndicatorTimerCallback(object sender, EventArgs e) {
+            if (MainForm.m.Menu_RecordIndicator.Text == "⚪")
+                ShowIndicator();
+            else
+                HideIndicator();
+        }
+
+        static void HideIndicator() {
+            MainForm.m.Menu_RecordIndicator.Text = "⚪";
+        }
+
+        static void ShowIndicator() {
+            MainForm.m.Menu_RecordIndicator.Text = "🔴";
+        }
+
         public static async Task GlobalRecord() {
             string customTempFolder = ConfigControl.savedFolder + @"temp\";
 
@@ -46,15 +74,17 @@ namespace SSUtility2 {
                             continue;
 
                         d.recorder = null;
-                        d.recorder = Tools.ToggleRecord(d, null, null, true, customTempFolder + presetName + ".mp4");
+                        d.recorder = Tools.ToggleRecord(d, null, null, true, Tools.PathNoOverwrite(customTempFolder + presetName + ".mp4"));
                         listOfRecordingPresets.Add(presetName);
                     }
 
-                    ssutilRecorder = Tools.ToggleRecord(null, MainForm.m.Menu_Recording_Video, MainForm.m.Menu_Recording_StopRecording, false, customTempFolder + "SSUtility.mp4");
+                    ssutilRecorder = Tools.ToggleRecord(null, MainForm.m.Menu_Recording_Video, MainForm.m.Menu_Recording_StopRecording, false, Tools.PathNoOverwrite(customTempFolder + "SSUtility.mp4"));
 
-                    MainForm.m.Menu_Recording_StopRecording.Enabled = false;
+                    InitIndicatorTimer();
+
                     await Task.Delay(5000);
                     MainForm.m.Menu_Recording_StopRecording.Enabled = true;
+                    MainForm.m.Menu_RecordIndicator.Enabled = true;
 
                 } else {
                     List<string> outPaths = new List<string>();
@@ -68,6 +98,11 @@ namespace SSUtility2 {
 
                     StopAll();
                     MainForm.m.Menu_Recording_StopRecording.Visible = false;
+
+
+                    indicatorTimer.Stop();
+                    HideIndicator();
+                    MainForm.m.Menu_RecordIndicator.Visible = false;
 
                     SaveFileDialog sfd = new SaveFileDialog();
                     sfd.FileName = "-";
@@ -86,6 +121,8 @@ namespace SSUtility2 {
 
                         MessageBox.Show("Saved recordings to: " + sfd.FileName);
 
+                        MainForm.m.col.AddToSavedLocations(sfd.FileName);
+
                         foreach (string path in outPaths)
                             File.Delete(path);
 
@@ -95,11 +132,10 @@ namespace SSUtility2 {
                         MessageBox.Show("Saved recordings to: " + customTempFolder);
                     }
 
-
                     MainForm.m.Menu_Recording_Video.Visible = true;
                     MainForm.m.Menu_Recording_StopRecording.Visible = false;
                 }
-            }catch(Exception e) {
+            } catch(Exception e) {
                 MessageBox.Show("GLOBALRECORDING\n" + e.ToString());
             }
         }
@@ -139,7 +175,10 @@ namespace SSUtility2 {
                 string libPath = programPath + "Lib/ffmpeg/ffmpeg.exe";
 
                 string input = "";
-                string gdigrab = "-f gdigrab -draw_mouse 0";
+                string gdigrab = "-f gdigrab -draw_mouse 0 -video_size "
+                    + MainForm.m.mainPlayer.p_Player.Width + "x"
+                    + (MainForm.m.mainPlayer.p_Player.Height - MainForm.m.MenuBar.Height).ToString()
+                    + " -offset_y " + MainForm.m.MenuBar.Height;
 
                 switch (type) {
                     case RecordType.Player:
@@ -164,7 +203,7 @@ namespace SSUtility2 {
                 string arguments = gdigrab + " -i " + input
                     + " -framerate " + ConfigControl.recFPS.stringVal + " -b:v " + (ConfigControl.recQual.intVal * 30) + "k "
                     + "\"" + outPath + "\"";
-
+                    
                 Console.WriteLine("args-------------------" + arguments);
 
                 p = new Process();

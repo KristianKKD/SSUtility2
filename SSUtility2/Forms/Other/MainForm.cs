@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.1.8";
+        public const string version = "v2.8.1.9";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -36,7 +36,7 @@ namespace SSUtility2 {
         public TabControl attachedqf;
         public Detached mainPlayer;
         public CommandListWindow clw;
-        private MediaCollection coll;
+        public MediaCollection col;
 
         public string finalDest;
 
@@ -65,7 +65,7 @@ namespace SSUtility2 {
                 pp = new QuickFunctions();
                 custom = new CustomButtons();
                 clw = new CommandListWindow();
-                coll = new MediaCollection();
+                col = new MediaCollection();
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
 
@@ -116,6 +116,7 @@ namespace SSUtility2 {
                 AsyncCamCom.TryConnect(false);
 
                 ActivatePanels();
+                col.AddDefaultSavedLocations();
             } catch (Exception e) {
                 Tools.ShowPopup("Init failed!\nShow more?", "Error Occurred!", e.ToString());
             }
@@ -334,7 +335,9 @@ namespace SSUtility2 {
                 finalMode = true;
                 Menu_Final_Open.Text = "Stop File Recording";
             }
+
             finalDest = destination;
+            MainForm.m.col.AddToSavedLocations(destination);
         }
 
         public void WriteToResponses(string text, bool hide, bool isSpam = false) {
@@ -431,6 +434,12 @@ namespace SSUtility2 {
         }
 
         private void Menu_Recording_Global_Click(object sender, EventArgs e) {
+            currentType = FFMPEGRecord.RecordType.Global;
+            FFMPEGRecord.GlobalRecord();
+        }
+
+
+        private void Menu_RecordIndicator_Click(object sender, EventArgs e) {
             currentType = FFMPEGRecord.RecordType.Global;
             FFMPEGRecord.GlobalRecord();
         }
@@ -1145,7 +1154,8 @@ namespace SSUtility2 {
         }
 
         private void Menu_Recording_Collection_Click(object sender, EventArgs e) {
-            coll.Show();
+            col.Show();
+            col.UpdateAll();
         }
 
         private void Menu_Recording_Snapshot_All_Click(object sender, EventArgs e) {

@@ -136,13 +136,18 @@ namespace SSUtility2 {
 
         private void tB_Recording_sCFolder_TextChanged(object sender, EventArgs e) {
             if (Tools.CheckFinishedTypingPath(tB_Recording_sCFolder, l_Recording_sCCheck).Result) {
+                MainForm.m.col.recentSavedLocations.Remove(ConfigControl.scFolder.stringVal);
                 ConfigControl.scFolder.UpdateValue(tB_Recording_sCFolder.Text);
+                MainForm.m.col.recentSavedLocations.Add(ConfigControl.scFolder.stringVal);
             }
         }
 
         private void tB_Recording_vFolder_TextChanged(object sender, EventArgs e) {
             if (Tools.CheckFinishedTypingPath(tB_Recording_vFolder, l_Recording_vCheck).Result) {
+                MainForm.m.col.recentSavedLocations.Remove(ConfigControl.vFolder.stringVal);
                 ConfigControl.vFolder.UpdateValue(tB_Recording_vFolder.Text);
+                MainForm.m.col.recentSavedLocations.Add(ConfigControl.vFolder.stringVal);
+
             }
         }
 
@@ -220,6 +225,8 @@ namespace SSUtility2 {
             }
 
             l_Other_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
+            MainForm.m.col.recentSavedLocations.Clear();
+            MainForm.m.col.AddDefaultSavedLocations();
         }
 
         public void ToggleOverridePreset(bool enabled) {

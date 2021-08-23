@@ -240,7 +240,9 @@ namespace SSUtility2 {
                 DialogResult result = fdg.ShowDialog();
                 if (result == DialogResult.OK) {
                     CopySingleFile(fdg.FileName, fullImagePath);
+                    MainForm.m.col.AddToSavedLocations(fdg.FileName);
                 }
+
                 if (showConfirmation)
                     MessageBox.Show("Image saved : " + fullImagePath +
                         "\nFinal saved: " + fdg.FileName);
@@ -415,8 +417,10 @@ namespace SSUtility2 {
                 if (MainForm.m.finalMode) {
                     SaveFileDialog fdg = Tools.SaveFile("Recording", ".mp4", MainForm.m.finalDest);
                     DialogResult result = fdg.ShowDialog();
-                    if (result == DialogResult.OK)
+                    if (result == DialogResult.OK) {
                         Tools.CopySingleFile(fdg.FileName, recorder.outPath);
+                        MainForm.m.col.AddToSavedLocations(fdg.FileName);
+                    }
 
                     MessageBox.Show("Saved recording to: " + recorder.outPath +
                         "\nFinal saved: " + fdg.FileName);
@@ -464,7 +468,7 @@ namespace SSUtility2 {
                     }
 
                 } else {
-                    File.Copy(sourceFile, destination, true);
+                    File.Copy(sourceFile, PathNoOverwrite(destination), true);
                 }
             } catch (Exception e) {
                 ShowPopup("Couldn't copy individual file to new directory!\nShow more info?",
