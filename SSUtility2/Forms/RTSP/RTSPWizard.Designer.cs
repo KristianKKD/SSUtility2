@@ -42,7 +42,6 @@
             this.b_Confirm = new System.Windows.Forms.Button();
             this.b_Cancel = new System.Windows.Forms.Button();
             this.b_Forget = new System.Windows.Forms.Button();
-            this.b_Clone = new System.Windows.Forms.Button();
             this.tB_Name = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.b_Scan = new System.Windows.Forms.Button();
@@ -55,6 +54,7 @@
             this.check_Manual = new System.Windows.Forms.CheckBox();
             this.l_PresetDetails = new System.Windows.Forms.Label();
             this.cB_ControlPort = new System.Windows.Forms.ComboBox();
+            this.cB_Clone = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // l_RTSP
@@ -69,6 +69,7 @@
             this.l_RTSP.Size = new System.Drawing.Size(66, 13);
             this.l_RTSP.TabIndex = 59;
             this.l_RTSP.Text = "RTSP String";
+            this.l_RTSP.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // tB_Password
             // 
@@ -79,6 +80,7 @@
             this.tB_Password.Name = "tB_Password";
             this.tB_Password.Size = new System.Drawing.Size(302, 20);
             this.tB_Password.TabIndex = 5;
+            this.tB_Password.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             this.tB_Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
             // l_Password
@@ -93,6 +95,7 @@
             this.l_Password.Size = new System.Drawing.Size(53, 13);
             this.l_Password.TabIndex = 61;
             this.l_Password.Text = "Password";
+            this.l_Password.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // tB_FullAdr
             // 
@@ -103,6 +106,7 @@
             this.tB_FullAdr.Name = "tB_FullAdr";
             this.tB_FullAdr.Size = new System.Drawing.Size(301, 20);
             this.tB_FullAdr.TabIndex = 10;
+            this.tB_FullAdr.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             this.tB_FullAdr.TextChanged += new System.EventHandler(this.tB_FullAdr_TextChanged);
             this.tB_FullAdr.Enter += new System.EventHandler(this.tB_FullAdr_Enter);
             this.tB_FullAdr.Leave += new System.EventHandler(this.tB_FullAdr_Leave);
@@ -119,6 +123,7 @@
             this.l_Username.Size = new System.Drawing.Size(55, 13);
             this.l_Username.TabIndex = 62;
             this.l_Username.Text = "Username";
+            this.l_Username.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // l_FullAdr
             // 
@@ -132,6 +137,7 @@
             this.l_FullAdr.Size = new System.Drawing.Size(68, 13);
             this.l_FullAdr.TabIndex = 71;
             this.l_FullAdr.Text = "Full Address*";
+            this.l_FullAdr.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // tB_Username
             // 
@@ -142,6 +148,7 @@
             this.tB_Username.Name = "tB_Username";
             this.tB_Username.Size = new System.Drawing.Size(301, 20);
             this.tB_Username.TabIndex = 4;
+            this.tB_Username.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             this.tB_Username.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
             // tB_RTSPPort
@@ -153,6 +160,7 @@
             this.tB_RTSPPort.Name = "tB_RTSPPort";
             this.tB_RTSPPort.Size = new System.Drawing.Size(302, 20);
             this.tB_RTSPPort.TabIndex = 2;
+            this.tB_RTSPPort.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             this.tB_RTSPPort.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
             // tB_RTSPString
@@ -164,6 +172,7 @@
             this.tB_RTSPString.Name = "tB_RTSPString";
             this.tB_RTSPString.Size = new System.Drawing.Size(301, 20);
             this.tB_RTSPString.TabIndex = 3;
+            this.tB_RTSPString.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             this.tB_RTSPString.TextChanged += new System.EventHandler(this.tB_RTSPString_TextChanged);
             this.tB_RTSPString.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
@@ -176,6 +185,7 @@
             this.tB_RTSPIP.Name = "tB_RTSPIP";
             this.tB_RTSPIP.Size = new System.Drawing.Size(302, 20);
             this.tB_RTSPIP.TabIndex = 1;
+            this.tB_RTSPIP.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             this.tB_RTSPIP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Any_Keyup);
             // 
             // l_Port
@@ -190,6 +200,7 @@
             this.l_Port.Size = new System.Drawing.Size(58, 13);
             this.l_Port.TabIndex = 63;
             this.l_Port.Text = "RTSP Port";
+            this.l_Port.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // l_Adr
             // 
@@ -203,6 +214,7 @@
             this.l_Adr.Size = new System.Drawing.Size(49, 13);
             this.l_Adr.TabIndex = 64;
             this.l_Adr.Text = "RTSP IP";
+            this.l_Adr.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // l_Title
             // 
@@ -216,6 +228,7 @@
             this.l_Title.Size = new System.Drawing.Size(179, 20);
             this.l_Title.TabIndex = 73;
             this.l_Title.Text = "RTSP Stream Details";
+            this.l_Title.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // b_Confirm
             // 
@@ -260,20 +273,6 @@
             this.b_Forget.Visible = false;
             this.b_Forget.Click += new System.EventHandler(this.b_Forget_Click);
             // 
-            // b_Clone
-            // 
-            this.b_Clone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Clone.BackColor = System.Drawing.SystemColors.Control;
-            this.b_Clone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Clone.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.b_Clone.Location = new System.Drawing.Point(322, 11);
-            this.b_Clone.Name = "b_Clone";
-            this.b_Clone.Size = new System.Drawing.Size(64, 23);
-            this.b_Clone.TabIndex = 77;
-            this.b_Clone.Text = "Clone...";
-            this.b_Clone.UseVisualStyleBackColor = false;
-            this.b_Clone.Visible = false;
-            // 
             // tB_Name
             // 
             this.tB_Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -283,6 +282,7 @@
             this.tB_Name.Name = "tB_Name";
             this.tB_Name.Size = new System.Drawing.Size(301, 20);
             this.tB_Name.TabIndex = 9;
+            this.tB_Name.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             this.tB_Name.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Name_KeyUp);
             // 
             // label1
@@ -297,6 +297,7 @@
             this.label1.Size = new System.Drawing.Size(72, 13);
             this.label1.TabIndex = 78;
             this.label1.Text = "Preset Name*";
+            this.label1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // b_Scan
             // 
@@ -304,7 +305,7 @@
             this.b_Scan.BackColor = System.Drawing.SystemColors.Control;
             this.b_Scan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Scan.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.b_Scan.Location = new System.Drawing.Point(252, 12);
+            this.b_Scan.Location = new System.Drawing.Point(221, 11);
             this.b_Scan.Name = "b_Scan";
             this.b_Scan.Size = new System.Drawing.Size(64, 23);
             this.b_Scan.TabIndex = 80;
@@ -324,6 +325,7 @@
             this.l_Control.Size = new System.Drawing.Size(195, 20);
             this.l_Control.TabIndex = 81;
             this.l_Control.Text = "Camera Control Details";
+            this.l_Control.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // l_PelcoID
             // 
@@ -338,6 +340,7 @@
             this.l_PelcoID.Size = new System.Drawing.Size(52, 13);
             this.l_PelcoID.TabIndex = 82;
             this.l_PelcoID.Text = "Pelco ID*";
+            this.l_PelcoID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // tB_PelcoID
             // 
@@ -350,6 +353,7 @@
             this.tB_PelcoID.Size = new System.Drawing.Size(301, 20);
             this.tB_PelcoID.TabIndex = 8;
             this.tB_PelcoID.Text = "1";
+            this.tB_PelcoID.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // tB_ControlIP
             // 
@@ -361,6 +365,7 @@
             this.tB_ControlIP.Name = "tB_ControlIP";
             this.tB_ControlIP.Size = new System.Drawing.Size(302, 20);
             this.tB_ControlIP.TabIndex = 6;
+            this.tB_ControlIP.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // l_ControlPort
             // 
@@ -375,6 +380,7 @@
             this.l_ControlPort.Size = new System.Drawing.Size(62, 13);
             this.l_ControlPort.TabIndex = 83;
             this.l_ControlPort.Text = "Control Port";
+            this.l_ControlPort.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // l_ControlIP
             // 
@@ -389,6 +395,7 @@
             this.l_ControlIP.Size = new System.Drawing.Size(53, 13);
             this.l_ControlIP.TabIndex = 84;
             this.l_ControlIP.Text = "Control IP";
+            this.l_ControlIP.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // check_Manual
             // 
@@ -414,6 +421,7 @@
             this.l_PresetDetails.Size = new System.Drawing.Size(122, 20);
             this.l_PresetDetails.TabIndex = 86;
             this.l_PresetDetails.Text = "Preset Details";
+            this.l_PresetDetails.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // cB_ControlPort
             // 
@@ -426,6 +434,21 @@
             this.cB_ControlPort.Size = new System.Drawing.Size(300, 21);
             this.cB_ControlPort.TabIndex = 87;
             this.cB_ControlPort.SelectedIndexChanged += new System.EventHandler(this.cB_ControlPort_SelectedIndexChanged);
+            this.cB_ControlPort.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
+            // 
+            // cB_Clone
+            // 
+            this.cB_Clone.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Clone.FormattingEnabled = true;
+            this.cB_Clone.Items.AddRange(new object[] {
+            "Clone..."});
+            this.cB_Clone.Location = new System.Drawing.Point(291, 13);
+            this.cB_Clone.Name = "cB_Clone";
+            this.cB_Clone.Size = new System.Drawing.Size(95, 21);
+            this.cB_Clone.TabIndex = 88;
+            this.cB_Clone.DropDown += new System.EventHandler(this.cB_Clone_DropDown);
+            this.cB_Clone.DropDownClosed += new System.EventHandler(this.cB_Clone_DropDownClosed);
+            this.cB_Clone.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             // 
             // RTSPWizard
             // 
@@ -433,6 +456,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(394, 381);
+            this.Controls.Add(this.cB_Clone);
             this.Controls.Add(this.cB_ControlPort);
             this.Controls.Add(this.l_PresetDetails);
             this.Controls.Add(this.check_Manual);
@@ -445,7 +469,6 @@
             this.Controls.Add(this.b_Scan);
             this.Controls.Add(this.tB_Name);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.b_Clone);
             this.Controls.Add(this.b_Forget);
             this.Controls.Add(this.b_Cancel);
             this.Controls.Add(this.b_Confirm);
@@ -467,6 +490,8 @@
             this.MinimumSize = new System.Drawing.Size(410, 420);
             this.Name = "RTSPWizard";
             this.Text = "RTSP Wizard";
+            this.Deactivate += new System.EventHandler(this.RTSPWizard_Deactivate);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -490,7 +515,6 @@
         private System.Windows.Forms.Button b_Confirm;
         private System.Windows.Forms.Button b_Cancel;
         private System.Windows.Forms.Button b_Forget;
-        private System.Windows.Forms.Button b_Clone;
         public System.Windows.Forms.TextBox tB_Name;
         public System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button b_Scan;
@@ -503,5 +527,6 @@
         private System.Windows.Forms.CheckBox check_Manual;
         public System.Windows.Forms.Label l_PresetDetails;
         private System.Windows.Forms.ComboBox cB_ControlPort;
+        private System.Windows.Forms.ComboBox cB_Clone;
     }
 }

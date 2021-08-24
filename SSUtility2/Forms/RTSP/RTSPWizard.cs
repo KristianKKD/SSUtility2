@@ -18,6 +18,13 @@ namespace SSUtility2 {
         public RTSPWizard(string[] preset, VideoSettings sets) {
             InitializeComponent();
             mySets = sets;
+            OpenPreset(preset);
+
+            UpdateAll();
+            //Inititate cloning immediately
+        }
+
+        void OpenPreset(string[] preset) {
             if (preset != null) {
                 string retVal = RTSPPresets.GetValue(RTSPPresets.PresetColumn.Index, preset[0], RTSPPresets.PresetColumn.Name);
                 if (retVal != "")
@@ -27,13 +34,10 @@ namespace SSUtility2 {
                 if (editIndex != -1)
                     LoadPreset(preset);
 
-                if (preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.ControlIP)] != ""
+                check_Manual.Checked = (preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.ControlIP)] != ""
                     || preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.ControlPort)] != ""
-                    || preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.PelcoID)] != "1")
-                    check_Manual.Checked = true;
+                    || preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.PelcoID)] != "1");
             }
-
-            //Inititate cloning immediately
         }
 
         void CloseWindow() {
@@ -84,13 +88,11 @@ namespace SSUtility2 {
                 checkIndex = int.Parse(stringCheckIndex);
 
             if (editIndex >= 0) { //existing
-                Console.WriteLine("EDITING");
                 mySets.cB_RTSP.SelectedIndex = RTSPPresets.LoadPreset(full, editIndex);
             } else if (checkIndex != -1) { //duplicate
-                MessageBox.Show("Duplicate name!");
+                MessageBox.Show("Duplicate preset name!");
                 return;
             } else { //new
-                Console.WriteLine("NEW");
                 mySets.cB_RTSP.SelectedIndex = RTSPPresets.LoadPreset(full);
             }
 
@@ -281,5 +283,52 @@ namespace SSUtility2 {
             cB_ControlPort.Text = Tools.GetPortValueFromEncoder(cB_ControlPort);
         }
 
+        private void cB_Clone_DropDown(object sender, EventArgs e) {
+            if (cB_Clone.Items.Contains("Clone..."))
+                cB_Clone.Items.Remove("Clone...");
+        }
+
+        private void cB_Clone_DropDownClosed(object sender, EventArgs e) {
+            if (!cB_Clone.Items.Contains("Clone..."))
+                cB_Clone.Items.Add("Clone...");
+
+            if (cB_Clone.Items.Count > 0 && cB_Clone.SelectedIndex >= 0 && cB_Clone.Items[cB_Clone.SelectedIndex].ToString() != "Clone...") {
+                OpenPreset(RTSPPresets.GetPreset(cB_Clone.Text));
+                editIndex = -1;
+            }
+
+            cB_Clone.SelectedIndex = cB_Clone.FindStringExact("Clone...");
+        }
+
+        bool refresh = false;
+
+        void UpdateAll() {
+            if (RTSPPresets.currentPresetCount == 0)
+                cB_Clone.Hide();
+            else
+                cB_Clone.Show();
+
+            cB_Clone.Items.Clear();
+
+            cB_Clone.Items.Clear();
+            foreach (string s in RTSPPresets.GetPresetList())
+                cB_Clone.Items.Add(s);
+
+            if (!cB_Clone.Items.Contains("Clone...") && !refresh)
+                cB_Clone.Items.Add("Clone...");
+
+            cB_Clone.Text = "Clone...";
+        }
+
+        private void RTSPWizard_Deactivate(object sender, EventArgs e) {
+            refresh = true;
+        }
+
+        private void ClickOnForm_Click(object sender, MouseEventArgs e) {
+            if (refresh)
+                UpdateAll();
+
+            refresh = false;
+        }
     }
 }

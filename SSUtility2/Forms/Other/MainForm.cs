@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.1.10";
+        public const string version = "v2.8.1.11";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -103,9 +103,9 @@ namespace SSUtility2 {
 
                 CommandQueue.Init();
 
-                if (startLiteVersion) {
+                if (startLiteVersion)
                     LiteToggle();
-                } else
+                else
                     await AttachPlayers();
 
                 finishedLoading = true;
