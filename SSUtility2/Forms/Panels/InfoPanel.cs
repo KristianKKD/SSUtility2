@@ -172,9 +172,12 @@ namespace SSUtility2 {
                         tilt = OtherCamCom.CalculateTilt(result);
                         break;
                     case "5D": //fov
-                        if (InfoPanel.i.commandPos == 3) {
+                        if (InfoPanel.i.commandPos == 2) {
                             fov = OtherCamCom.ReturnedHexValToFloat(result);
+                            Console.WriteLine("BBB " + result);
+
                         } else {
+                            Console.WriteLine("AAA " + result);
                             tfov = OtherCamCom.ReturnedHexValToFloat(result);
                         }
                         break;
