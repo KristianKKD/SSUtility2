@@ -14,14 +14,15 @@ namespace SSUtility2 {
         int editIndex = -1;
         bool nameChanged = false;
         VideoSettings mySets;
+        FirstTime first;
 
-        public RTSPWizard(string[] preset, VideoSettings sets) {
+        public RTSPWizard(string[] preset, VideoSettings sets, FirstTime firstWindow = null) {
             InitializeComponent();
+            first = firstWindow;
             mySets = sets;
             OpenPreset(preset);
 
             UpdateAll();
-            //Inititate cloning immediately
         }
 
         void OpenPreset(string[] preset) {
@@ -41,6 +42,9 @@ namespace SSUtility2 {
         }
 
         void CloseWindow() {
+            if (first != null)
+                first.Close();
+
             Close();
             Dispose();
         }

@@ -102,7 +102,7 @@ namespace SSUtility2 {
             } catch (Exception e) {
                 if(showErrors)
                     Tools.ShowPopup("Failed to init player stream!\nShow more?", "Error Occurred!", e.ToString());
-                Console.WriteLine(e.ToString());
+                Console.WriteLine("PLAY " + e.ToString());
                 StopPlaying();
                 return;
             }

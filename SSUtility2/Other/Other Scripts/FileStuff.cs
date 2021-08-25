@@ -12,7 +12,8 @@ namespace SSUtility2 {
 
         public static async Task<bool> FileWork() {
             try {
-                if (!CheckForNewDir())
+                bool firstTime = CheckForNewDir();
+                if (!firstTime)
                     CheckForMultipleConfigs();
 
                 ConfigControl.SetToDefaults();
@@ -28,11 +29,19 @@ namespace SSUtility2 {
                 if (AppDomain.CurrentDomain.FriendlyName.ToLower().Contains("lite"))
                     return true;
 
+                if (firstTime)
+                    FirstTimeSetup();
+
                 return false;
             } catch (Exception e) {
                 Tools.ShowPopup("File work error occurred!\nShow more?", "Error Occurred!", e.ToString());
                 return false;
             }
+        }
+
+        static void FirstTimeSetup() {
+            FirstTime ft = new FirstTime();
+            ft.ShowDialog();
         }
 
         static string CheckFileForDir() {
