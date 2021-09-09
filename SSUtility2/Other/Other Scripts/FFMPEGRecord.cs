@@ -75,10 +75,21 @@ namespace SSUtility2 {
 
                         d.recorder = null;
                         d.recorder = Tools.ToggleRecord(d, null, null, true, Tools.PathNoOverwrite(customTempFolder + presetName + ".mp4"));
+                        if (d.recorder == null) {
+                            MessageBox.Show("Error occurred whilst trying to start global recorder!");
+                            StopAll();
+                            return;
+                        }
+
                         listOfRecordingPresets.Add(presetName);
                     }
 
                     ssutilRecorder = Tools.ToggleRecord(null, MainForm.m.Menu_Recording_Video, MainForm.m.Menu_Recording_StopRecording, false, Tools.PathNoOverwrite(customTempFolder + "SSUtility.mp4"));
+                    if (ssutilRecorder == null) {
+                        MessageBox.Show("Error occurred whilst trying to start global recorder!");
+                        StopAll();
+                        return;
+                    }
 
                     InitIndicatorTimer();
 
@@ -98,7 +109,6 @@ namespace SSUtility2 {
 
                     StopAll();
                     MainForm.m.Menu_Recording_StopRecording.Visible = false;
-
 
                     indicatorTimer.Stop();
                     HideIndicator();
@@ -151,6 +161,9 @@ namespace SSUtility2 {
                 ssutilRecorder = null;
 
                 MainForm.m.recorderProcessList.Clear();
+
+                HideIndicator();
+                MainForm.m.Menu_Recording_StopRecording.Visible = false;
             } catch (Exception e) {
                 MessageBox.Show("STOPALL\n" + e.ToString());
             }
@@ -169,10 +182,14 @@ namespace SSUtility2 {
             Record(customPath);
         }
 
-        void Record(string customPath) {
+        bool Record(string customPath) {
             try {
                 string programPath = Application.ExecutablePath.Replace("SSUtility2.0.exe", "");
                 string libPath = programPath + "Lib/ffmpeg/ffmpeg.exe";
+                if (!File.Exists(libPath)) {
+                    MessageBox.Show("Failed to find ffmpeg.exe!\nMissing File:\n" + libPath);
+                    return false;
+                }
 
                 string input = "";
                 string gdigrab = "-f gdigrab -draw_mouse 0 -video_size "
@@ -184,7 +201,7 @@ namespace SSUtility2 {
                     case RecordType.Player:
                         if (givenPlayer == null) {
                             MessageBox.Show("No player given for player recording!");
-                            return;
+                            return false;
                         }
                         input = givenPlayer.settings.GetCombined();
                         gdigrab = "";
@@ -217,10 +234,13 @@ namespace SSUtility2 {
                 p.Start();
                 recording = true;
                 MainForm.m.recorderProcessList.Add(p);
+                return true;
             } catch (Exception e) {
                 Console.WriteLine("RECORD\n" + e.ToString());
                 recording = false;
             }
+
+            return false;
         }
 
         public static void StopRecording(Process proc, bool remove = true) {

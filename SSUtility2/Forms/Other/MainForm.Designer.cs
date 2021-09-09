@@ -139,35 +139,35 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Osiris
             // 
             this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Osiris.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Osiris.Text = "Osiris Control";
             this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Presets.Text = "Quick Functions";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
@@ -420,7 +420,7 @@ namespace SSUtility2 {
             // Menu_Final_Open
             // 
             this.Menu_Final_Open.Name = "Menu_Final_Open";
-            this.Menu_Final_Open.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Final_Open.Size = new System.Drawing.Size(113, 22);
             this.Menu_Final_Open.Text = "Open...";
             this.Menu_Final_Open.Click += new System.EventHandler(this.Menu_Final_Open_Click);
             // 
@@ -557,7 +557,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
             this.b_PTZ_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(12, 56);
+            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(224, 248);
             this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
             this.b_PTZ_FocusPos.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_FocusPos.TabIndex = 87;
@@ -583,7 +583,7 @@ namespace SSUtility2 {
             // 
             this.b_PTZ_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.b_PTZ_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(224, 248);
+            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(12, 56);
             this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
             this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(50, 30);
             this.b_PTZ_ZoomNeg.TabIndex = 88;
