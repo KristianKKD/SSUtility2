@@ -38,19 +38,20 @@ namespace SSUtility2 {
             indicatorTimer.Start();
         }
 
+        static string prefixText = "";
         private static void IndicatorTimerCallback(object sender, EventArgs e) {
-            if (MainForm.m.Menu_RecordIndicator.Text == "⚪")
+            if (MainForm.m.Menu_RecordIndicator.Text.Contains("⚪"))
                 ShowIndicator();
             else
                 HideIndicator();
         }
 
         static void HideIndicator() {
-            MainForm.m.Menu_RecordIndicator.Text = "⚪";
+            MainForm.m.Menu_RecordIndicator.Text = prefixText + "⚪";
         }
 
         static void ShowIndicator() {
-            MainForm.m.Menu_RecordIndicator.Text = "🔴";
+            MainForm.m.Menu_RecordIndicator.Text = prefixText + "🔴";
         }
 
         public static async Task GlobalRecord() {
@@ -91,13 +92,19 @@ namespace SSUtility2 {
                         return;
                     }
 
+                    prefixText = "Starting up... ";
                     InitIndicatorTimer();
 
                     await Task.Delay(5000);
                     MainForm.m.Menu_Recording_StopRecording.Enabled = true;
                     MainForm.m.Menu_RecordIndicator.Enabled = true;
+                    prefixText = "";
 
                 } else {
+                    indicatorTimer.Stop();
+                    MainForm.m.Menu_RecordIndicator.Text = "Waiting for FFMPEG... ";
+                    await Task.Delay(500);
+
                     List<string> outPaths = new List<string>();
                     foreach (Detached d in MainForm.m.detachedList) {
                         if (d.recorder != null && d.recorder.recording)
@@ -110,7 +117,6 @@ namespace SSUtility2 {
                     StopAll();
                     MainForm.m.Menu_Recording_StopRecording.Visible = false;
 
-                    indicatorTimer.Stop();
                     HideIndicator();
                     MainForm.m.Menu_RecordIndicator.Visible = false;
 
@@ -123,15 +129,23 @@ namespace SSUtility2 {
                     DialogResult result = sfd.ShowDialog();
 
                     if (result == DialogResult.OK) {
-                        if (!sfd.CheckFileExists)
-                            sfd.FileName = sfd.FileName.Substring(0, sfd.FileName.LastIndexOf(@"\")) + @"\";
+                        string fullPath = sfd.FileName;
+
+                        if (Tools.CheckIfNameValid(fullPath) && !fullPath.EndsWith("-")) {
+                            if (!Directory.Exists(fullPath))
+                                Directory.CreateDirectory(fullPath);
+                        } else
+                            fullPath = fullPath.Substring(0, fullPath.LastIndexOf(@"\"));
+
+                        if (fullPath.EndsWith(@"\"))
+                            fullPath += @"\";
 
                         foreach (string path in outPaths)
-                            Tools.CopySingleFile(sfd.FileName + path.Substring(path.LastIndexOf(@"\")), path);
+                            Tools.CopySingleFile(fullPath + path.Substring(path.LastIndexOf(@"\")), path);
 
-                        MessageBox.Show("Saved recordings to: " + sfd.FileName);
+                        MessageBox.Show("Saved recordings to: " + fullPath);
 
-                        MainForm.m.col.AddToSavedLocations(sfd.FileName);
+                        MainForm.m.col.AddToSavedLocations(fullPath);
 
                         foreach (string path in outPaths)
                             File.Delete(path);
@@ -144,6 +158,7 @@ namespace SSUtility2 {
 
                     MainForm.m.Menu_Recording_Video.Visible = true;
                     MainForm.m.Menu_Recording_StopRecording.Visible = false;
+                    prefixText = "";
                 }
             } catch(Exception e) {
                 MessageBox.Show("GLOBALRECORDING\n" + e.ToString());
