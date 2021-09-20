@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.1.15";
+        public const string version = "v2.8.1.16";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -299,17 +299,10 @@ namespace SSUtility2 {
         }
 
         void OpenFinal() {
-            Final fin = new Final();
+            Hidden.Final fin = new Hidden.Final();
             fin.Show();
             fin.BringToFront();
             fin.Location = Location;
-        }
-
-        public void OpenOsiris() {
-            Osiris o = new Osiris();
-            o.Show();
-            o.BringToFront();
-            o.Location = Location;
         }
 
         void OpenCloseCP() {
@@ -349,28 +342,28 @@ namespace SSUtility2 {
                     WriteToResponses(text, hide, isSpam);
                 });
             } else {
-                string finalText = text;
-
-                if (rl.tB_Log.Text.Length > 2000000000) {
-                    rl.tB_Log.Clear();
-                }
-                string sender = AsyncCamCom.GetSockEndpoint();
-                if (hide && !isSpam) {
-                    sender = "CLIENT";
-                }
-                if (isSpam && !rl.check_Spam.Checked) {
+                if (isSpam && !rl.check_Spam.Checked)
                     return;
-                }
-                if (!hide || rl.check_Hide.Checked) {
+
+                string finalText = text;
+                string sender = AsyncCamCom.GetSockEndpoint();
+
+                if (rl.tB_Log.Text.Length > 2000000000)
+                    rl.tB_Log.Clear();
+                if (hide && !isSpam)
+                    sender = "CLIENT";
+                if (!hide || rl.check_Hide.Checked)
                     rl.AddText(finalText, sender);
-                }
             }
         }
 
         private async void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
             closing = true;
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
-            EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Release();
+
+            if(!startLiteVersion)
+                EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Release();
+
             FFMPEGRecord.StopAll();
         }
 
@@ -399,10 +392,6 @@ namespace SSUtility2 {
             rl.Show();
             rl.BringToFront();
             rl.Location = Location;
-        }
-
-        private void Menu_Window_Osiris_Click(object sender, EventArgs e) {
-            OpenOsiris();
         }
 
         private void Menu_QC_PanZero_Click(object sender, EventArgs e) {
@@ -499,6 +488,14 @@ namespace SSUtility2 {
                     DebugWindow dg = new DebugWindow();
                     dg.Show();
                     dg.BringToFront();
+                    return;
+                }
+
+                if ((oldK == Keys.LControlKey && k == Keys.U) ||
+                    (k == Keys.LControlKey && oldK == Keys.U)) {
+                    Hidden.UPControl uc = new Hidden.UPControl();
+                    uc.Show();
+                    uc.BringToFront();
                     return;
                 }
 

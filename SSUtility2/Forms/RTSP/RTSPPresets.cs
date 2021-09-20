@@ -129,7 +129,7 @@ namespace SSUtility2 {
             return "";
         }
 
-        public static void CreateNew(VideoSettings sets, FirstTime firstWindow = null) {
+        public static void CreateNew(VideoSettings sets, Hidden.FirstTime firstWindow = null) {
             RTSPWizard wiz = new RTSPWizard(null, sets, firstWindow);
             if (firstWindow != null) {
                 firstWindow.Hide();

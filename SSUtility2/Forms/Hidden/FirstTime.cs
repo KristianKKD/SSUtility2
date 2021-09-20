@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSUtility2
+namespace SSUtility2.Hidden
 {
     public partial class FirstTime : Form
     {

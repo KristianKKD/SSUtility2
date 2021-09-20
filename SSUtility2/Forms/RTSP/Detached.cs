@@ -21,6 +21,7 @@ namespace SSUtility2 {
             InitializeComponent();
             settings = new VideoSettings(this, isMain);
             CreateHandle();
+
             if (isMain)
                 p_Player = MainForm.m.p_PlayerPanel;
             else if (autoPlay && settings.cB_RTSP.Items.Count > 1)
@@ -29,7 +30,7 @@ namespace SSUtility2 {
             MainForm.m.detachedList.Add(this);
         }
 
-        public void DestroyPlayer() {
+        public void DestroyPlayer() { //A lot of try/catch because if it can't succeed in one, it should at least try to do the others
             try {
                 p_Player.Dispose();
             } catch { }

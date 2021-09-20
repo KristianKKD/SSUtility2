@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-namespace SSUtility2 {
+namespace SSUtility2.Hidden {
     public partial class Final : Form {
         public Final() {
             InitializeComponent();

@@ -13,9 +13,9 @@ namespace SSUtility2 {
 
         public static Command currentCom;
 
-        public static async Task<bool> TryConnect(bool showErrors = false, IPEndPoint customep = null,
-            bool noPlayerReplay = false) {
-            bool result = true;
+        public static async Task<bool> TryConnect(bool showErrors = false, IPEndPoint customep = null) { //Return true or false if Connect worked
+            bool result = false; //changed recently from true, might break something
+
             try {
                 if (connectingAlready)
                     return false;
@@ -28,16 +28,14 @@ namespace SSUtility2 {
                 }
 
                 IPEndPoint ep;
-                if (customep == null) {
+                if (customep == null)
                     ep = new IPEndPoint(IPAddress.Parse(ConfigControl.savedIP.stringVal),
                         int.Parse(ConfigControl.savedPort.stringVal));
-                } else {
+                else
                     ep = customep;
-                }
 
-                if (result) {
-                    result = Connect(ep, showErrors, noPlayerReplay);
-                }
+                if (result)
+                    result = Connect(ep, showErrors);
 
             } catch (Exception e){
                 if (showErrors)
@@ -54,7 +52,7 @@ namespace SSUtility2 {
             return result;
         }
 
-        public static void SendNonAsync(byte[] code) {
+        public static void SendNonAsync(byte[] code) { //For commands that need immediate action such as PTZ stuff
             if (!sock.Connected) {
                 MessageBox.Show("Not connected!");
                 return;
@@ -66,7 +64,7 @@ namespace SSUtility2 {
         }
 
         public static Command SendScriptCommand(ScriptCommand com) {
-            Command sendCommand = new Command(com.codeContent, false, false, com.isQuery, com.names[0]);
+            Command sendCommand = new Command(com.codeContent, false, false, com.isQuery, com.names[0]); //Creating a command will immediately queue it
             return sendCommand;
         }
 
@@ -85,7 +83,7 @@ namespace SSUtility2 {
             return await WaitForResponse(sendCommand);
         }
 
-        public static async Task<string> QueueRepeatingCommand(int id) {
+        public static async Task<string> QueueRepeatingCommand(int id) { //For info panel
             try {
                 Command oldCom = CommandQueue.FindCommandByID(id);
                 Command com = new Command(oldCom.content, true, true, true, oldCom.name);
@@ -109,7 +107,7 @@ namespace SSUtility2 {
             return OtherCamCom.defaultResult;
         }
 
-        private static bool Connect(IPEndPoint ep, bool showErrors, bool isPlayer) {
+        private static bool Connect(IPEndPoint ep, bool showErrors) { //Connects to the socket
             try {
                 if (sock == null || ep == null || ep.Address == null || ep.Port == 0 || ep.Address.ToString().Length == 0) {
                     return false;
@@ -149,9 +147,8 @@ namespace SSUtility2 {
 
                 IPEndPoint end = new IPEndPoint(ip, port);
 
-                if (end == null) {
+                if (end == null)
                     return false;
-                }
 
                 OtherCamCom.CheckIsSameSubnet(ep.Address.ToString());
 
@@ -168,6 +165,7 @@ namespace SSUtility2 {
                     MessageBox.Show("An error occured whilst connecting to camera!\n" + e.ToString());
                 Console.WriteLine("CONNECT\n" + e.ToString());
             }
+
             return false;
         }
 

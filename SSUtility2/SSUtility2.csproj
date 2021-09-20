@@ -108,7 +108,7 @@
       <HintPath>..\packages\Costura.Fody.5.3.0\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
     <Reference Include="EasyPlayer-RTSP.NetSDK">
-      <HintPath>..\..\EasyPlayerNetSDK\obj\Debug\EasyPlayer-RTSP.NetSDK.dll</HintPath>
+      <HintPath>..\..\EasyPlayerNetSDK\obj\Release\EasyPlayer-RTSP.NetSDK.dll</HintPath>
     </Reference>
     <Reference Include="KaiserControls">
       <HintPath>..\..\KaiserControls\KaiserControls\bin\Release\KaiserControls.dll</HintPath>
@@ -273,16 +273,16 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Other\FirstTime.cs">
+    <Compile Include="Forms\Hidden\FirstTime.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\FirstTime.Designer.cs">
+    <Compile Include="Forms\Hidden\FirstTime.Designer.cs">
       <DependentUpon>FirstTime.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Other\DebugWindow.cs">
+    <Compile Include="Forms\Hidden\DebugWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\DebugWindow.Designer.cs">
+    <Compile Include="Forms\Hidden\DebugWindow.Designer.cs">
       <DependentUpon>DebugWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Other\MediaCollection.cs">
@@ -295,16 +295,16 @@
     <Compile Include="Forms\Panels\CustomButtons.cs" />
     <Compile Include="Other\Other Scripts\FFMPEGRecord.cs" />
     <Compile Include="Other\Other Scripts\FileStuff.cs" />
-    <Compile Include="Forms\Other\ChooseConfig.cs">
+    <Compile Include="Forms\Hidden\ChooseConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\ChooseConfig.Designer.cs">
+    <Compile Include="Forms\Hidden\ChooseConfig.Designer.cs">
       <DependentUpon>ChooseConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Other\DirectoryChooser.cs">
+    <Compile Include="Forms\Hidden\DirectoryChooser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\DirectoryChooser.Designer.cs">
+    <Compile Include="Forms\Hidden\DirectoryChooser.Designer.cs">
       <DependentUpon>DirectoryChooser.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Panels\InfoPanel.cs">
@@ -325,10 +325,10 @@
     <Compile Include="Forms\Scripting\QuickCommandEntry.Designer.cs">
       <DependentUpon>QuickCommandEntry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Other\Osiris.cs">
+    <Compile Include="Forms\Hidden\Osiris.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\Osiris.Designer.cs">
+    <Compile Include="Forms\Hidden\Osiris.Designer.cs">
       <DependentUpon>Osiris.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\Communication\AsyncCamCom.cs" />
@@ -342,10 +342,10 @@
     <Compile Include="Forms\RTSP\Detached.Designer.cs">
       <DependentUpon>Detached.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Other\Final.cs">
+    <Compile Include="Forms\Hidden\Final.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\Final.Designer.cs">
+    <Compile Include="Forms\Hidden\Final.Designer.cs">
       <DependentUpon>Final.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Other\MainForm.cs">
@@ -366,10 +366,10 @@
     <Compile Include="Forms\Panels\PresetPanel.Designer.cs">
       <DependentUpon>PresetPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Other\FirmwareUpgrade.cs">
+    <Compile Include="Forms\Hidden\FirmwareUpgrade.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Other\FirmwareUpgrade.Designer.cs">
+    <Compile Include="Forms\Hidden\FirmwareUpgrade.Designer.cs">
       <DependentUpon>FirmwareUpgrade.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\Communication\OtherCamCom.cs" />
@@ -411,12 +411,18 @@
     <Compile Include="Forms\RTSP\RTSPWizard.Designer.cs">
       <DependentUpon>RTSPWizard.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Hidden\UPControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Hidden\UPControl.Designer.cs">
+      <DependentUpon>UPControl.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\Other\ChooseConfig.resx">
+    <EmbeddedResource Include="Forms\Hidden\ChooseConfig.resx">
       <DependentUpon>ChooseConfig.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\FirstTime.resx">
+    <EmbeddedResource Include="Forms\Hidden\FirstTime.resx">
       <DependentUpon>FirstTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Other\MediaCollection.resx">
@@ -431,10 +437,10 @@
     <EmbeddedResource Include="Forms\Other\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\DebugWindow.resx">
+    <EmbeddedResource Include="Forms\Hidden\DebugWindow.resx">
       <DependentUpon>DebugWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\DirectoryChooser.resx">
+    <EmbeddedResource Include="Forms\Hidden\DirectoryChooser.resx">
       <DependentUpon>DirectoryChooser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Scripting\CommandHelper.resx">
@@ -452,16 +458,16 @@
     <EmbeddedResource Include="Forms\Scripting\ResponseLog.resx">
       <DependentUpon>ResponseLog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\Final.resx">
+    <EmbeddedResource Include="Forms\Hidden\Final.resx">
       <DependentUpon>Final.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\FirmwareUpgrade.resx">
+    <EmbeddedResource Include="Forms\Hidden\FirmwareUpgrade.resx">
       <DependentUpon>FirmwareUpgrade.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Other\SettingsPage.resx">
       <DependentUpon>SettingsPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Other\Osiris.resx">
+    <EmbeddedResource Include="Forms\Hidden\Osiris.resx">
       <DependentUpon>Osiris.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -474,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTSP\RTSPWizard.resx">
       <DependentUpon>RTSPWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Hidden\UPControl.resx">
+      <DependentUpon>UPControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

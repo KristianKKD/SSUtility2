@@ -51,7 +51,6 @@ namespace SSUtility2 {
             this.Menu_Window_Detached = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_PelcoD = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Response = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Window_Osiris = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Window_Presets = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Settings_ConnectionSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,7 +129,6 @@ namespace SSUtility2 {
             this.Menu_Window_Detached,
             this.Menu_Window_PelcoD,
             this.Menu_Window_Response,
-            this.Menu_Window_Osiris,
             this.Menu_Window_Presets});
             this.Menu_Window.Name = "Menu_Window";
             this.Menu_Window.Size = new System.Drawing.Size(63, 20);
@@ -156,13 +154,6 @@ namespace SSUtility2 {
             this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
-            // 
-            // Menu_Window_Osiris
-            // 
-            this.Menu_Window_Osiris.Name = "Menu_Window_Osiris";
-            this.Menu_Window_Osiris.Size = new System.Drawing.Size(180, 22);
-            this.Menu_Window_Osiris.Text = "Osiris Control";
-            this.Menu_Window_Osiris.Click += new System.EventHandler(this.Menu_Window_Osiris_Click);
             // 
             // Menu_Window_Presets
             // 
@@ -670,7 +661,6 @@ namespace SSUtility2 {
         public Panel p_PlayerPanel;
         public ToolStripMenuItem Menu_QC_Pan;
         public ToolStripMenuItem Menu_QC_Tilt;
-        public ToolStripMenuItem Menu_Window_Osiris;
         public ToolStripMenuItem Menu_Window_Presets;
         public Button b_Open;
         public ToolStripMenuItem Menu_Settings;

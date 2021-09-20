@@ -321,7 +321,7 @@ namespace SSUtility2 {
                     IPAddress parsed;
                     int port;
                     if (IPAddress.TryParse(line.Substring(ipmarker + 1, portmarker - ipmarker - 1), out parsed) && int.TryParse(line.Substring(portmarker + 1), out port)) {
-                        await AsyncCamCom.TryConnect(false, new IPEndPoint(parsed, port), true);
+                        await AsyncCamCom.TryConnect(false, new IPEndPoint(parsed, port));
                     }
                 } else if (com.codeContent == PelcoD.reconfig) {
                     InfoPanel.i.CheckForCamera();

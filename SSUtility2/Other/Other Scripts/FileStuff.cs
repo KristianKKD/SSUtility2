@@ -40,7 +40,7 @@ namespace SSUtility2 {
         }
 
         static void FirstTimeSetup() {
-            FirstTime ft = new FirstTime();
+            Hidden.FirstTime ft = new Hidden.FirstTime();
             ft.ShowDialog();
         }
 
@@ -83,7 +83,7 @@ namespace SSUtility2 {
         public static void ChooseNewDirectory() {
             bool choose = Tools.ShowPopup("Would you like to change your default directory?\nCurrent app folder: " + ConfigControl.appFolder, "Choose your directory", null, false);
             if (choose) {
-                DirectoryChooser dc = new DirectoryChooser();
+                Hidden.DirectoryChooser dc = new Hidden.DirectoryChooser();
                 dc.ShowDialog();
             }
             Tools.ResetFile(ConfigControl.dirLocationFile);
@@ -118,7 +118,7 @@ namespace SSUtility2 {
                 configArray = UpdateConfigArray(configArray, configsCurDir);
                 configArray = UpdateConfigArray(configArray, configsNormalDir);
 
-                ChooseConfig chooser = new ChooseConfig(configArray);
+                Hidden.ChooseConfig chooser = new Hidden.ChooseConfig(configArray);
                 chooser.ShowDialog();
             } catch { }
         }

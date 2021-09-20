@@ -213,6 +213,10 @@ namespace SSUtility2 {
             return msg;
         }
 
+        public static int HexToInt(string hex) {
+            return Convert.ToInt32(hex, 16);
+        }
+
         public static void SaveSnap(Detached player, bool showConfirmation = true, string customPath = "") {
             string fullImagePath = GivePath(PathType.Snapshot, player, customPath);
 

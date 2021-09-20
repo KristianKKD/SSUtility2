@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace SSUtility2 {
+namespace SSUtility2.Hidden {
     public partial class ChooseConfig : Form {
 
         public ChooseConfig((string, string)[] dirs) {

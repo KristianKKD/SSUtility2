@@ -1,5 +1,5 @@
 ﻿
-namespace SSUtility2
+namespace SSUtility2.Hidden
 {
     partial class DirectoryChooser
     {

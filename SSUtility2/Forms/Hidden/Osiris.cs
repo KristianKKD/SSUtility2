@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSUtility2 {
+namespace SSUtility2.Hidden {
 
     public partial class Osiris : Form {
         public Osiris() {

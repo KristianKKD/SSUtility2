@@ -14,9 +14,9 @@ namespace SSUtility2 {
         int editIndex = -1;
         bool nameChanged = false;
         VideoSettings mySets;
-        FirstTime first;
+        Hidden.FirstTime first;
 
-        public RTSPWizard(string[] preset, VideoSettings sets, FirstTime firstWindow = null) {
+        public RTSPWizard(string[] preset, VideoSettings sets, Hidden.FirstTime firstWindow = null) {
             InitializeComponent();
             first = firstWindow;
             mySets = sets;
