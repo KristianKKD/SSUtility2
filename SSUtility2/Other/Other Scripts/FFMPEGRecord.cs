@@ -166,6 +166,13 @@ namespace SSUtility2 {
         }
 
         public static void StopAll() {
+            System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(ThreadedRecordersAllStop));
+            t.Start();
+            HideIndicator();
+            MainForm.m.Menu_Recording_StopRecording.Visible = false;
+        }
+
+        static void ThreadedRecordersAllStop() {
             try {
                 foreach (Process pr in MainForm.m.recorderProcessList)
                     StopRecording(pr, false);
@@ -176,9 +183,6 @@ namespace SSUtility2 {
                 ssutilRecorder = null;
 
                 MainForm.m.recorderProcessList.Clear();
-
-                HideIndicator();
-                MainForm.m.Menu_Recording_StopRecording.Visible = false;
             } catch (Exception e) {
                 MessageBox.Show("STOPALL\n" + e.ToString());
             }
@@ -197,13 +201,13 @@ namespace SSUtility2 {
             Record(customPath);
         }
 
-        bool Record(string customPath) {
+        void Record(string customPath) {
             try {
                 string programPath = Application.ExecutablePath.Replace("SSUtility2.0.exe", "");
                 string libPath = programPath + "Lib/ffmpeg/ffmpeg.exe";
                 if (!File.Exists(libPath)) {
                     MessageBox.Show("Failed to find ffmpeg.exe!\nMissing File:\n" + libPath);
-                    return false;
+                    return;
                 }
 
                 string input = "";
@@ -216,7 +220,7 @@ namespace SSUtility2 {
                     case RecordType.Player:
                         if (givenPlayer == null) {
                             MessageBox.Show("No player given for player recording!");
-                            return false;
+                            return;
                         }
                         input = givenPlayer.settings.GetCombined();
                         gdigrab = "";
@@ -237,7 +241,6 @@ namespace SSUtility2 {
                     + "\"" + outPath + "\"";
                     
                 Console.WriteLine("args-------------------" + arguments);
-
                 p = new Process();
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.CreateNoWindow = true;
@@ -249,13 +252,13 @@ namespace SSUtility2 {
                 p.Start();
                 recording = true;
                 MainForm.m.recorderProcessList.Add(p);
-                return true;
+                return;
             } catch (Exception e) {
                 Console.WriteLine("RECORD\n" + e.ToString());
                 recording = false;
             }
 
-            return false;
+            return;
         }
 
         public static void StopRecording(Process proc, bool remove = true) {

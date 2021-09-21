@@ -56,6 +56,7 @@ namespace SSUtility2 {
         public static ConfigSetting launchControlPanel = new ConfigSetting("false", "EnableControlPanelOnLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting launchCustomPanel = new ConfigSetting("false", "EnableCustomPanelOnLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting enableFullToParts = new ConfigSetting("true", "EnableFullToParts", ConfigSetting.VarType.boolean);
+        public static ConfigSetting startInMaximised = new ConfigSetting("false", "StartInMaximised", ConfigSetting.VarType.boolean);
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -91,6 +92,7 @@ namespace SSUtility2 {
             launchControlPanel,
             launchCustomPanel,
             enableFullToParts,
+            startInMaximised,
         };
 
         public static async Task SetToDefaults() {
@@ -98,9 +100,8 @@ namespace SSUtility2 {
             scFolder.ChangeDefault(savedFolder);
             vFolder.ChangeDefault(savedFolder);
 
-            foreach (ConfigSetting setting in configArray) {
+            foreach (ConfigSetting setting in configArray)
                 setting.UpdateValue(setting.defaultVal);
-            }
         }
 
         public static void CreateConfig(string path) {

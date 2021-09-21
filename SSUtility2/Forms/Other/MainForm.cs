@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.1.16";
+        public const string version = "v2.8.1.17";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -854,60 +854,64 @@ namespace SSUtility2 {
         int minWidth = 0;
         int minHeight = 0;
         public void StartRatioTimer() {
-            float initialRatio = (float)Width / (float)Height;
+            try {
+                float initialRatio = (float)Width / (float)Height;
 
-            //TO DO:
-            //grab initial frame as reference (remove resizing restrictions of main player maybe)
-            //find out ratio of the frame
-            //find nearest resolution using that ratio
+                //TO DO:
+                //grab initial frame as reference (remove resizing restrictions of main player maybe)
+                //find out ratio of the frame
+                //find nearest resolution using that ratio
 
-            for (int i = 1; true; i++) {
-                float val = i * initialRatio;
-                if (val - Math.Floor(val) < 0.1) {
-                    currentAspectRatio = (int)Math.Floor(val);
-                    currentAspectRatioSecondary = i;
-                    break;
-                }
-            }
-
-            setPage.UpdateRatioLabel();
-            Console.WriteLine(currentAspectRatio + ":" + currentAspectRatioSecondary);
-
-            minWidth = 0;
-            minHeight = 0;
-            for (int o = 1; o * currentAspectRatioSecondary < Width + currentAspectRatio; o++) {
-                int heightVal = o * currentAspectRatioSecondary;
-                if (heightVal >= 600) {
-                    for (int i = 1; i * currentAspectRatio <= Width + currentAspectRatio; i++) {
-                        int widthVal = i * currentAspectRatio;
-
-                        if ((int)Math.Round(widthVal / initialRatio) == heightVal && widthVal >= 800) {
-                            Console.WriteLine("------FOUND " + widthVal + "x" + heightVal);
-                            minWidth = widthVal;
-                            minHeight = heightVal;
-                            break;
-                        }
+                for (int i = 1; true; i++) {
+                    float val = i * initialRatio;
+                    if (val - Math.Floor(val) < 0.1) {
+                        currentAspectRatio = (int)Math.Floor(val);
+                        currentAspectRatioSecondary = i;
+                        break;
                     }
                 }
 
-                if (minWidth != 0)
-                    break;
+                setPage.UpdateRatioLabel();
+                Console.WriteLine(currentAspectRatio + ":" + currentAspectRatioSecondary);
+
+                minWidth = 0;
+                minHeight = 0;
+                for (int o = 1; o * currentAspectRatioSecondary < Width + currentAspectRatio; o++) {
+                    int heightVal = o * currentAspectRatioSecondary;
+                    if (heightVal >= 600) {
+                        for (int i = 1; i * currentAspectRatio <= Width + currentAspectRatio; i++) {
+                            int widthVal = i * currentAspectRatio;
+
+                            if ((int)Math.Round(widthVal / initialRatio) == heightVal && widthVal >= 800) {
+                                Console.WriteLine("------FOUND " + widthVal + "x" + heightVal);
+                                minWidth = widthVal;
+                                minHeight = heightVal;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (minWidth != 0)
+                        break;
+                }
+
+                if (minWidth == 0) {
+                    minWidth = 800;
+                    minHeight = 600;
+                }
+
+                Console.WriteLine(minWidth.ToString() + "x" + minHeight.ToString());
+
+                MinimumSize = Size;
+                MaximumSize = Size;
+
+                RatioTimer = new Timer();
+                RatioTimer.Interval = 1;
+                RatioTimer.Tick += new EventHandler(MaintainRatio);
+                RatioTimer.Start();
+            } catch (Exception e) {
+                MessageBox.Show("RATIOTIMER\n" + e.ToString());
             }
-
-            if (minWidth == 0) {
-                minWidth = 800;
-                minHeight = 600;
-            }
-
-            Console.WriteLine(minWidth.ToString() + "x" + minHeight.ToString());
-
-            MinimumSize = Size;
-            MaximumSize = Size;
-
-            RatioTimer = new Timer();
-            RatioTimer.Interval = 1;
-            RatioTimer.Tick += new EventHandler(MaintainRatio);
-            RatioTimer.Start();
         }
 
         public string GetRatio() {

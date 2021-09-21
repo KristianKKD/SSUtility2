@@ -63,16 +63,17 @@ namespace SSUtility2 {
                 check_Other_AddressInvalid.Checked = ConfigControl.ignoreAddress.boolVal;
                 check_Other_Aspect.Checked = ConfigControl.maintainAspectRatio.boolVal;
                 check_Other_FullToParts.Checked = ConfigControl.enableFullToParts.boolVal;
+                check_Other_Maximised.Checked = ConfigControl.startInMaximised.boolVal;
 
                 Tools.CheckIfExists(tB_Recording_sCFolder, l_Recording_sCCheck);
                 Tools.CheckIfExists(tB_Recording_vFolder, l_Recording_vCheck);
 
                 MainForm.m.Width = ConfigControl.startupWidth.intVal;
                 MainForm.m.Height = ConfigControl.startupHeight.intVal;
-                l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
                 l_Other_Dir.Text = "Current Directory: " + ConfigControl.appFolder;
 
                 MainForm.m.custom.UpdateButtonNames();
+                UpdateResolutionLabel();
                 UpdateCamType();
                 UpdateRatioLabel();
 
@@ -285,28 +286,32 @@ namespace SSUtility2 {
         }
 
         void ResolutionTimerCallback(object sender, EventArgs e) {
-            resolutionTimer.Stop();
+            try {
+                resolutionTimer.Stop();
 
-            if (!int.TryParse(tB_Other_ResolutionHeight.Text, out int h) || h < 600)
-                h = 600;
+                if (!int.TryParse(tB_Other_ResolutionWidth.Text, out int w) || w < 800)
+                    w = 800;
 
-            if (!int.TryParse(tB_Other_ResolutionWidth.Text, out int w) || w < 800)
-                w = 800;
+                if (!int.TryParse(tB_Other_ResolutionHeight.Text, out int h) || h < 600)
+                    h = 600;
 
-            tB_Other_ResolutionHeight.Text = h.ToString();
-            tB_Other_ResolutionWidth.Text = w.ToString();
+                tB_Other_ResolutionHeight.Text = h.ToString();
+                tB_Other_ResolutionWidth.Text = w.ToString();
 
-            ConfigControl.startupWidth.UpdateValue(tB_Other_ResolutionWidth.Text);
-            ConfigControl.startupHeight.UpdateValue(tB_Other_ResolutionHeight.Text);
+                ConfigControl.startupWidth.UpdateValue(tB_Other_ResolutionWidth.Text);
+                ConfigControl.startupHeight.UpdateValue(tB_Other_ResolutionHeight.Text);
 
-            Console.WriteLine(w + " " + h);
-            System.Drawing.Size s = new System.Drawing.Size(w, h);
-            MainForm.m.MinimumSize = s;
-            MainForm.m.MaximumSize = s;
+                Console.WriteLine(w + " " + h);
+                System.Drawing.Size s = new System.Drawing.Size(w, h);
+                MainForm.m.MinimumSize = new System.Drawing.Size(800, 600);
+                MainForm.m.MaximumSize = s;
 
-            l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
-            this.BringToFront();
-            check_Other_Aspect_CheckedChanged(sender, e);
+                l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
+                this.BringToFront();
+                //AspectChecked();
+            } catch (Exception err) {
+                MessageBox.Show("RESOLUTIONTIMER\n" + err.ToString());
+            }
         }
 
         private void check_Other_AddressInvalid_CheckedChanged(object sender, EventArgs e) {
@@ -403,6 +408,10 @@ namespace SSUtility2 {
         }
 
         private void check_Other_Aspect_CheckedChanged(object sender, EventArgs e) {
+            AspectChecked();
+        }
+
+        void AspectChecked() {
             if (!MainForm.m.finishedLoading)
                 return;
 
@@ -631,5 +640,52 @@ namespace SSUtility2 {
                 return;
             ConfigControl.enableFullToParts.UpdateValue(check_Other_FullToParts.Checked.ToString());
         }
+
+        int oldStartupWidth = 0;
+        int oldStartupHeight = 0;
+        private void check_Other_Maximised_CheckedChanged(object sender, EventArgs e) {
+            bool check = check_Other_Maximised.Checked;
+
+            if (check) {
+                oldStartupWidth = ConfigControl.startupWidth.intVal;
+                oldStartupHeight = ConfigControl.startupHeight.intVal;
+
+                tB_Other_ResolutionWidth.Text = Screen.PrimaryScreen.Bounds.Width.ToString();
+                tB_Other_ResolutionHeight.Text = Screen.PrimaryScreen.Bounds.Height.ToString();
+
+                tB_Other_ResolutionWidth.Enabled = false;
+                tB_Other_ResolutionHeight.Enabled = false;
+
+                ResolutionTimerCallback(sender, e);
+
+                MainForm.m.WindowState = FormWindowState.Maximized;
+            } else {
+                tB_Other_ResolutionWidth.Enabled = true;
+                tB_Other_ResolutionHeight.Enabled = true;
+
+                if (oldStartupWidth > 0) {
+                    tB_Other_ResolutionWidth.Text = oldStartupWidth.ToString();
+                    tB_Other_ResolutionHeight.Text = oldStartupHeight.ToString();
+                }
+
+                ResolutionTimerCallback(sender, e);
+
+                MainForm.m.WindowState = FormWindowState.Normal;
+            }
+
+            UpdateResolutionLabel();
+
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            ConfigControl.startInMaximised.UpdateValue(check.ToString());
+            Location = MainForm.m.Location;
+            BringToFront();
+        }
+
+        void UpdateResolutionLabel() {
+            l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
+        }
+
     }
 }

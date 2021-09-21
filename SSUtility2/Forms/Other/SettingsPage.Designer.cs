@@ -79,6 +79,7 @@ namespace SSUtility2
             this.cB_Startup_PlayerCount = new System.Windows.Forms.ComboBox();
             this.check_Startup_AutoPlay = new System.Windows.Forms.CheckBox();
             this.tP_Other = new System.Windows.Forms.TabPage();
+            this.check_Other_FullToParts = new System.Windows.Forms.CheckBox();
             this.l_Other_CurrentResolution = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tB_Other_ResolutionHeight = new System.Windows.Forms.TextBox();
@@ -92,7 +93,7 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.check_Other_FullToParts = new System.Windows.Forms.CheckBox();
+            this.check_Other_Maximised = new System.Windows.Forms.CheckBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
@@ -785,6 +786,7 @@ namespace SSUtility2
             // 
             // tP_Other
             // 
+            this.tP_Other.Controls.Add(this.check_Other_Maximised);
             this.tP_Other.Controls.Add(this.check_Other_FullToParts);
             this.tP_Other.Controls.Add(this.l_Other_CurrentResolution);
             this.tP_Other.Controls.Add(this.label1);
@@ -803,6 +805,21 @@ namespace SSUtility2
             this.tP_Other.TabIndex = 2;
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
+            // 
+            // check_Other_FullToParts
+            // 
+            this.check_Other_FullToParts.Location = new System.Drawing.Point(4, 29);
+            this.check_Other_FullToParts.Name = "check_Other_FullToParts";
+            this.check_Other_FullToParts.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_FullToParts.Size = new System.Drawing.Size(174, 17);
+            this.check_Other_FullToParts.TabIndex = 56;
+            this.check_Other_FullToParts.Text = "Full Address RTSP Breakdown";
+            this.check_Other_FullToParts.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Other_FullToParts, "Toggles the software from automatically trying to break down custom full addresse" +
+        "s (copy/pasting a full address into the full address field) into the other compo" +
+        "nent fields within the RTSP Wizard");
+            this.check_Other_FullToParts.UseVisualStyleBackColor = true;
+            this.check_Other_FullToParts.CheckedChanged += new System.EventHandler(this.check_Other_FullToParts_CheckedChanged);
             // 
             // l_Other_CurrentResolution
             // 
@@ -885,7 +902,7 @@ namespace SSUtility2
             // l_Other_Ratio
             // 
             this.l_Other_Ratio.AutoSize = true;
-            this.l_Other_Ratio.Location = new System.Drawing.Point(186, 98);
+            this.l_Other_Ratio.Location = new System.Drawing.Point(192, 94);
             this.l_Other_Ratio.Name = "l_Other_Ratio";
             this.l_Other_Ratio.Size = new System.Drawing.Size(22, 13);
             this.l_Other_Ratio.TabIndex = 39;
@@ -895,7 +912,7 @@ namespace SSUtility2
             // 
             // check_Other_Aspect
             // 
-            this.check_Other_Aspect.Location = new System.Drawing.Point(4, 93);
+            this.check_Other_Aspect.Location = new System.Drawing.Point(4, 89);
             this.check_Other_Aspect.Name = "check_Other_Aspect";
             this.check_Other_Aspect.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.check_Other_Aspect.Size = new System.Drawing.Size(175, 24);
@@ -942,20 +959,18 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
-            // check_Other_FullToParts
+            // check_Other_Maximised
             // 
-            this.check_Other_FullToParts.Location = new System.Drawing.Point(4, 29);
-            this.check_Other_FullToParts.Name = "check_Other_FullToParts";
-            this.check_Other_FullToParts.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Other_FullToParts.Size = new System.Drawing.Size(174, 17);
-            this.check_Other_FullToParts.TabIndex = 56;
-            this.check_Other_FullToParts.Text = "Full Address RTSP Breakdown";
-            this.check_Other_FullToParts.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_Other_FullToParts, "Toggles the software from automatically trying to break down custom full addresse" +
-        "s (copy/pasting a full address into the full address field) into the other compo" +
-        "nent fields within the RTSP Wizard");
-            this.check_Other_FullToParts.UseVisualStyleBackColor = true;
-            this.check_Other_FullToParts.CheckedChanged += new System.EventHandler(this.check_Other_FullToParts_CheckedChanged);
+            this.check_Other_Maximised.Location = new System.Drawing.Point(4, 66);
+            this.check_Other_Maximised.Name = "check_Other_Maximised";
+            this.check_Other_Maximised.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_Maximised.Size = new System.Drawing.Size(175, 24);
+            this.check_Other_Maximised.TabIndex = 57;
+            this.check_Other_Maximised.Text = "Launch Maximised";
+            this.check_Other_Maximised.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Other_Maximised, "Resize the Main Player to maintain the shown aspect ratio");
+            this.check_Other_Maximised.UseVisualStyleBackColor = true;
+            this.check_Other_Maximised.CheckedChanged += new System.EventHandler(this.check_Other_Maximised_CheckedChanged);
             // 
             // SettingsPage
             // 
@@ -1062,5 +1077,6 @@ namespace SSUtility2
         private System.Windows.Forms.Label l_Recording_sCCheck;
         private System.Windows.Forms.Label l_Startup_Panels;
         public System.Windows.Forms.CheckBox check_Other_FullToParts;
+        public System.Windows.Forms.CheckBox check_Other_Maximised;
     }
 }
