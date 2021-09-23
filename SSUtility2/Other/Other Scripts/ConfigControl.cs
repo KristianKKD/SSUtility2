@@ -38,7 +38,9 @@ namespace SSUtility2 {
         public static ConfigSetting finalDestination = new ConfigSetting(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "FinalModeDestinationFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting savedIP = new ConfigSetting("192.168.1.71", "SavedIP", ConfigSetting.VarType.strings);
         public static ConfigSetting savedPort = new ConfigSetting("6791", "SavedPort", ConfigSetting.VarType.strings);
-        public static ConfigSetting cameraSpeedMultiplier = new ConfigSetting("100", "CameraSpeedMultiplier", ConfigSetting.VarType.integer);
+        public static ConfigSetting cameraPTSpeedMultiplier = new ConfigSetting("100", "CameraPanTiltSpeedMultiplier", ConfigSetting.VarType.integer);
+        public static ConfigSetting cameraZoomSpeedMultiplier = new ConfigSetting("2", "CameraZoomSpeedMultiplier", ConfigSetting.VarType.integer);
+        public static ConfigSetting cameraFocusSpeedMultiplier = new ConfigSetting("2", "CameraFocusSpeedMultiplier", ConfigSetting.VarType.integer);
         public static ConfigSetting forceType = new ConfigSetting("Strict", "ForcedCameraType", ConfigSetting.VarType.strings);
         public static ConfigSetting startupWidth = new ConfigSetting("1280", "StartupWidth", ConfigSetting.VarType.integer);
         public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
@@ -74,7 +76,9 @@ namespace SSUtility2 {
             finalDestination,
             savedIP,
             savedPort,
-            cameraSpeedMultiplier,
+            cameraPTSpeedMultiplier,
+            cameraZoomSpeedMultiplier,
+            cameraFocusSpeedMultiplier,
             forceType,
             startupWidth,
             startupHeight,

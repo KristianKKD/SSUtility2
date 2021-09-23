@@ -14,7 +14,7 @@ namespace SSUtility2 {
         public static Command currentCom;
 
         public static async Task<bool> TryConnect(bool showErrors = false, IPEndPoint customep = null) { //Return true or false if Connect worked
-            bool result = false; //changed recently from true, might break something
+            bool result = true; //needs to be on true
 
             try {
                 if (connectingAlready)

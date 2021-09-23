@@ -36,9 +36,10 @@ namespace SSUtility2 {
             return all;
         }
 
-        public static void Reload() {
+        public static void Reload(bool force) {
             allPresets = new string[columns, 99];
             currentPresetCount = 0;
+            VideoSettings.UpdateAllPresetBoxes(force);
         }
 
         public static string UnpackPresetToLine(int y) {

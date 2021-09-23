@@ -98,6 +98,8 @@ namespace SSUtility2 {
                 else {
                     if (showErrors)
                         MessageBox.Show("Failed to attach to channel!");
+
+                    Console.WriteLine("FAILED TO ATTACH");
                     StopPlaying();
                 }
             } catch (Exception e) {

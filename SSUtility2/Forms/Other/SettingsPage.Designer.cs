@@ -27,6 +27,14 @@ namespace SSUtility2
             this.b_Settings_Default = new System.Windows.Forms.Button();
             this.tC_Settings = new System.Windows.Forms.TabControl();
             this.tP_Control = new System.Windows.Forms.TabPage();
+            this.l_IPCon_FocusPercent = new System.Windows.Forms.Label();
+            this.tB_IPCon_FocusSpeed = new System.Windows.Forms.TextBox();
+            this.l_IPCon_FocusSpeed = new System.Windows.Forms.Label();
+            this.slider_IPCon_FocusSpeed = new System.Windows.Forms.TrackBar();
+            this.l_IPCon_ZoomPercent = new System.Windows.Forms.Label();
+            this.tB_IPCon_ZoomSpeed = new System.Windows.Forms.TextBox();
+            this.l_IPCon_ZoomSpeed = new System.Windows.Forms.Label();
+            this.slider_IPCon_ZoomSpeed = new System.Windows.Forms.TrackBar();
             this.check_IPCon_Override = new System.Windows.Forms.CheckBox();
             this.cB_IPCon_Port = new System.Windows.Forms.ComboBox();
             this.cB_IPCon_PelcoDID = new System.Windows.Forms.ComboBox();
@@ -35,18 +43,14 @@ namespace SSUtility2
             this.cB_IPCon_MainPlayerPreset = new System.Windows.Forms.ComboBox();
             this.l_IPCon_MainPlayerPreset = new System.Windows.Forms.Label();
             this.l_IPCon_Subnet = new System.Windows.Forms.Label();
-            this.b_IPCon_Recheck = new System.Windows.Forms.Button();
-            this.l_IPCon_Percent = new System.Windows.Forms.Label();
-            this.tB_IPCon_CamSpeed = new System.Windows.Forms.TextBox();
-            this.l_IPCon_TrackBar = new System.Windows.Forms.Label();
-            this.l_IPCon_ForceMode = new System.Windows.Forms.Label();
-            this.cB_IPCon_ForceMode = new System.Windows.Forms.ComboBox();
-            this.check_IPCon_ForceCam = new System.Windows.Forms.CheckBox();
+            this.l_IPCon_PTPercent = new System.Windows.Forms.Label();
+            this.tB_IPCon_PTSpeed = new System.Windows.Forms.TextBox();
+            this.l_IPCon_PTSpeed = new System.Windows.Forms.Label();
             this.tB_IPCon_Adr = new System.Windows.Forms.TextBox();
             this.l_IPCon_Connected = new System.Windows.Forms.Label();
             this.l_IPCon_Port = new System.Windows.Forms.Label();
             this.l_IPCon_Adr = new System.Windows.Forms.Label();
-            this.slider_IPCon_ControlMultiplier = new System.Windows.Forms.TrackBar();
+            this.slider_IPCon_PTSpeed = new System.Windows.Forms.TrackBar();
             this.tP_Recording = new System.Windows.Forms.TabPage();
             this.l_Recording_vCheck = new System.Windows.Forms.Label();
             this.l_Recording_sCCheck = new System.Windows.Forms.Label();
@@ -79,6 +83,11 @@ namespace SSUtility2
             this.cB_Startup_PlayerCount = new System.Windows.Forms.ComboBox();
             this.check_Startup_AutoPlay = new System.Windows.Forms.CheckBox();
             this.tP_Other = new System.Windows.Forms.TabPage();
+            this.l_Other_ForceCamMode = new System.Windows.Forms.Label();
+            this.cB_Other_ForceMode = new System.Windows.Forms.ComboBox();
+            this.check_Other_ForceCam = new System.Windows.Forms.CheckBox();
+            this.b_Other_Recheck = new System.Windows.Forms.Button();
+            this.check_Other_Maximised = new System.Windows.Forms.CheckBox();
             this.check_Other_FullToParts = new System.Windows.Forms.CheckBox();
             this.l_Other_CurrentResolution = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -93,10 +102,11 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.check_Other_Maximised = new System.Windows.Forms.CheckBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_FocusSpeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ZoomSpeed)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_PTSpeed)).BeginInit();
             this.tP_Recording.SuspendLayout();
             this.tP_Customs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Custom_Buttons)).BeginInit();
@@ -132,6 +142,14 @@ namespace SSUtility2
             // 
             // tP_Control
             // 
+            this.tP_Control.Controls.Add(this.l_IPCon_FocusPercent);
+            this.tP_Control.Controls.Add(this.tB_IPCon_FocusSpeed);
+            this.tP_Control.Controls.Add(this.l_IPCon_FocusSpeed);
+            this.tP_Control.Controls.Add(this.slider_IPCon_FocusSpeed);
+            this.tP_Control.Controls.Add(this.l_IPCon_ZoomPercent);
+            this.tP_Control.Controls.Add(this.tB_IPCon_ZoomSpeed);
+            this.tP_Control.Controls.Add(this.l_IPCon_ZoomSpeed);
+            this.tP_Control.Controls.Add(this.slider_IPCon_ZoomSpeed);
             this.tP_Control.Controls.Add(this.check_IPCon_Override);
             this.tP_Control.Controls.Add(this.cB_IPCon_Port);
             this.tP_Control.Controls.Add(this.cB_IPCon_PelcoDID);
@@ -140,18 +158,14 @@ namespace SSUtility2
             this.tP_Control.Controls.Add(this.cB_IPCon_MainPlayerPreset);
             this.tP_Control.Controls.Add(this.l_IPCon_MainPlayerPreset);
             this.tP_Control.Controls.Add(this.l_IPCon_Subnet);
-            this.tP_Control.Controls.Add(this.b_IPCon_Recheck);
-            this.tP_Control.Controls.Add(this.l_IPCon_Percent);
-            this.tP_Control.Controls.Add(this.tB_IPCon_CamSpeed);
-            this.tP_Control.Controls.Add(this.l_IPCon_TrackBar);
-            this.tP_Control.Controls.Add(this.l_IPCon_ForceMode);
-            this.tP_Control.Controls.Add(this.cB_IPCon_ForceMode);
-            this.tP_Control.Controls.Add(this.check_IPCon_ForceCam);
+            this.tP_Control.Controls.Add(this.l_IPCon_PTPercent);
+            this.tP_Control.Controls.Add(this.tB_IPCon_PTSpeed);
+            this.tP_Control.Controls.Add(this.l_IPCon_PTSpeed);
             this.tP_Control.Controls.Add(this.tB_IPCon_Adr);
             this.tP_Control.Controls.Add(this.l_IPCon_Connected);
             this.tP_Control.Controls.Add(this.l_IPCon_Port);
             this.tP_Control.Controls.Add(this.l_IPCon_Adr);
-            this.tP_Control.Controls.Add(this.slider_IPCon_ControlMultiplier);
+            this.tP_Control.Controls.Add(this.slider_IPCon_PTSpeed);
             this.tP_Control.Location = new System.Drawing.Point(4, 22);
             this.tP_Control.Name = "tP_Control";
             this.tP_Control.Padding = new System.Windows.Forms.Padding(3);
@@ -159,6 +173,92 @@ namespace SSUtility2
             this.tP_Control.TabIndex = 3;
             this.tP_Control.Text = "IP Control";
             this.tP_Control.UseVisualStyleBackColor = true;
+            // 
+            // l_IPCon_FocusPercent
+            // 
+            this.l_IPCon_FocusPercent.AutoSize = true;
+            this.l_IPCon_FocusPercent.Location = new System.Drawing.Point(291, 196);
+            this.l_IPCon_FocusPercent.Name = "l_IPCon_FocusPercent";
+            this.l_IPCon_FocusPercent.Size = new System.Drawing.Size(15, 13);
+            this.l_IPCon_FocusPercent.TabIndex = 110;
+            this.l_IPCon_FocusPercent.Text = "%";
+            // 
+            // tB_IPCon_FocusSpeed
+            // 
+            this.tB_IPCon_FocusSpeed.Location = new System.Drawing.Point(255, 193);
+            this.tB_IPCon_FocusSpeed.Name = "tB_IPCon_FocusSpeed";
+            this.tB_IPCon_FocusSpeed.Size = new System.Drawing.Size(34, 20);
+            this.tB_IPCon_FocusSpeed.TabIndex = 108;
+            this.tB_IPCon_FocusSpeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_IPCon_FocusSpeed_KeyPress);
+            // 
+            // l_IPCon_FocusSpeed
+            // 
+            this.l_IPCon_FocusSpeed.AutoSize = true;
+            this.l_IPCon_FocusSpeed.Location = new System.Drawing.Point(6, 193);
+            this.l_IPCon_FocusSpeed.Name = "l_IPCon_FocusSpeed";
+            this.l_IPCon_FocusSpeed.Size = new System.Drawing.Size(106, 13);
+            this.l_IPCon_FocusSpeed.TabIndex = 109;
+            this.l_IPCon_FocusSpeed.Text = "Focus Control Speed";
+            this.toolTips.SetToolTip(this.l_IPCon_FocusSpeed, "Multiplier of PTZ commands sent to the camera");
+            // 
+            // slider_IPCon_FocusSpeed
+            // 
+            this.slider_IPCon_FocusSpeed.BackColor = System.Drawing.SystemColors.Window;
+            this.slider_IPCon_FocusSpeed.Location = new System.Drawing.Point(115, 188);
+            this.slider_IPCon_FocusSpeed.Maximum = 4;
+            this.slider_IPCon_FocusSpeed.Name = "slider_IPCon_FocusSpeed";
+            this.slider_IPCon_FocusSpeed.Size = new System.Drawing.Size(134, 45);
+            this.slider_IPCon_FocusSpeed.TabIndex = 107;
+            this.slider_IPCon_FocusSpeed.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.toolTips.SetToolTip(this.slider_IPCon_FocusSpeed, "Multiplier of PTZ commands sent to the camera");
+            this.slider_IPCon_FocusSpeed.Value = 2;
+            this.slider_IPCon_FocusSpeed.Scroll += new System.EventHandler(this.slider_IPCon_FocusSpeed_Scroll);
+            this.slider_IPCon_FocusSpeed.Leave += new System.EventHandler(this.slider_IPCon_FocusSpeed_Leave);
+            this.slider_IPCon_FocusSpeed.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_FocusSpeed_MouseDown);
+            this.slider_IPCon_FocusSpeed.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_FocusSpeed_MouseUp);
+            // 
+            // l_IPCon_ZoomPercent
+            // 
+            this.l_IPCon_ZoomPercent.AutoSize = true;
+            this.l_IPCon_ZoomPercent.Location = new System.Drawing.Point(291, 158);
+            this.l_IPCon_ZoomPercent.Name = "l_IPCon_ZoomPercent";
+            this.l_IPCon_ZoomPercent.Size = new System.Drawing.Size(15, 13);
+            this.l_IPCon_ZoomPercent.TabIndex = 106;
+            this.l_IPCon_ZoomPercent.Text = "%";
+            // 
+            // tB_IPCon_ZoomSpeed
+            // 
+            this.tB_IPCon_ZoomSpeed.Location = new System.Drawing.Point(255, 155);
+            this.tB_IPCon_ZoomSpeed.Name = "tB_IPCon_ZoomSpeed";
+            this.tB_IPCon_ZoomSpeed.Size = new System.Drawing.Size(34, 20);
+            this.tB_IPCon_ZoomSpeed.TabIndex = 104;
+            this.tB_IPCon_ZoomSpeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_IPCon_ZoomSpeed_KeyPress);
+            this.tB_IPCon_ZoomSpeed.Leave += new System.EventHandler(this.tB_IPCon_ZoomSpeed_Leave);
+            // 
+            // l_IPCon_ZoomSpeed
+            // 
+            this.l_IPCon_ZoomSpeed.AutoSize = true;
+            this.l_IPCon_ZoomSpeed.Location = new System.Drawing.Point(6, 155);
+            this.l_IPCon_ZoomSpeed.Name = "l_IPCon_ZoomSpeed";
+            this.l_IPCon_ZoomSpeed.Size = new System.Drawing.Size(104, 13);
+            this.l_IPCon_ZoomSpeed.TabIndex = 105;
+            this.l_IPCon_ZoomSpeed.Text = "Zoom Control Speed";
+            this.toolTips.SetToolTip(this.l_IPCon_ZoomSpeed, "Multiplier of PTZ commands sent to the camera");
+            // 
+            // slider_IPCon_ZoomSpeed
+            // 
+            this.slider_IPCon_ZoomSpeed.BackColor = System.Drawing.SystemColors.Window;
+            this.slider_IPCon_ZoomSpeed.Location = new System.Drawing.Point(115, 150);
+            this.slider_IPCon_ZoomSpeed.Maximum = 4;
+            this.slider_IPCon_ZoomSpeed.Name = "slider_IPCon_ZoomSpeed";
+            this.slider_IPCon_ZoomSpeed.Size = new System.Drawing.Size(134, 45);
+            this.slider_IPCon_ZoomSpeed.TabIndex = 103;
+            this.slider_IPCon_ZoomSpeed.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.toolTips.SetToolTip(this.slider_IPCon_ZoomSpeed, "Multiplier of PTZ commands sent to the camera");
+            this.slider_IPCon_ZoomSpeed.Value = 2;
+            this.slider_IPCon_ZoomSpeed.Scroll += new System.EventHandler(this.slider_IPCon_ZoomSpeed_Scroll);
+            this.slider_IPCon_ZoomSpeed.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_ZoomSpeed_MouseDown);
+            this.slider_IPCon_ZoomSpeed.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_ZoomSpeed_MouseUp);
             // 
             // check_IPCon_Override
             // 
@@ -258,82 +358,33 @@ namespace SSUtility2
             this.l_IPCon_Subnet.Size = new System.Drawing.Size(0, 13);
             this.l_IPCon_Subnet.TabIndex = 96;
             // 
-            // b_IPCon_Recheck
+            // l_IPCon_PTPercent
             // 
-            this.b_IPCon_Recheck.Location = new System.Drawing.Point(250, 191);
-            this.b_IPCon_Recheck.Name = "b_IPCon_Recheck";
-            this.b_IPCon_Recheck.Size = new System.Drawing.Size(90, 21);
-            this.b_IPCon_Recheck.TabIndex = 11;
-            this.b_IPCon_Recheck.Text = "Recheck Mode";
-            this.b_IPCon_Recheck.UseVisualStyleBackColor = true;
-            this.b_IPCon_Recheck.Click += new System.EventHandler(this.b_IPCon_Recheck_Click);
+            this.l_IPCon_PTPercent.AutoSize = true;
+            this.l_IPCon_PTPercent.Location = new System.Drawing.Point(291, 122);
+            this.l_IPCon_PTPercent.Name = "l_IPCon_PTPercent";
+            this.l_IPCon_PTPercent.Size = new System.Drawing.Size(15, 13);
+            this.l_IPCon_PTPercent.TabIndex = 92;
+            this.l_IPCon_PTPercent.Text = "%";
             // 
-            // l_IPCon_Percent
+            // tB_IPCon_PTSpeed
             // 
-            this.l_IPCon_Percent.AutoSize = true;
-            this.l_IPCon_Percent.Location = new System.Drawing.Point(291, 127);
-            this.l_IPCon_Percent.Name = "l_IPCon_Percent";
-            this.l_IPCon_Percent.Size = new System.Drawing.Size(15, 13);
-            this.l_IPCon_Percent.TabIndex = 92;
-            this.l_IPCon_Percent.Text = "%";
+            this.tB_IPCon_PTSpeed.Location = new System.Drawing.Point(255, 119);
+            this.tB_IPCon_PTSpeed.Name = "tB_IPCon_PTSpeed";
+            this.tB_IPCon_PTSpeed.Size = new System.Drawing.Size(34, 20);
+            this.tB_IPCon_PTSpeed.TabIndex = 8;
+            this.tB_IPCon_PTSpeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_IPCon_PTSpeed_KeyPress);
+            this.tB_IPCon_PTSpeed.Leave += new System.EventHandler(this.tB_IPCon_PTSpeed_Leave);
             // 
-            // tB_IPCon_CamSpeed
+            // l_IPCon_PTSpeed
             // 
-            this.tB_IPCon_CamSpeed.Location = new System.Drawing.Point(255, 124);
-            this.tB_IPCon_CamSpeed.Name = "tB_IPCon_CamSpeed";
-            this.tB_IPCon_CamSpeed.Size = new System.Drawing.Size(34, 20);
-            this.tB_IPCon_CamSpeed.TabIndex = 8;
-            this.tB_IPCon_CamSpeed.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_IPCon_CamSpeed_KeyPress);
-            this.tB_IPCon_CamSpeed.Leave += new System.EventHandler(this.tB_IPCon_CamSpeed_Leave);
-            // 
-            // l_IPCon_TrackBar
-            // 
-            this.l_IPCon_TrackBar.AutoSize = true;
-            this.l_IPCon_TrackBar.Location = new System.Drawing.Point(6, 124);
-            this.l_IPCon_TrackBar.Name = "l_IPCon_TrackBar";
-            this.l_IPCon_TrackBar.Size = new System.Drawing.Size(98, 13);
-            this.l_IPCon_TrackBar.TabIndex = 90;
-            this.l_IPCon_TrackBar.Text = "PTZ Control Speed";
-            this.toolTips.SetToolTip(this.l_IPCon_TrackBar, "Multiplier of PTZ commands sent to the camera");
-            // 
-            // l_IPCon_ForceMode
-            // 
-            this.l_IPCon_ForceMode.AutoSize = true;
-            this.l_IPCon_ForceMode.Location = new System.Drawing.Point(6, 195);
-            this.l_IPCon_ForceMode.Name = "l_IPCon_ForceMode";
-            this.l_IPCon_ForceMode.Size = new System.Drawing.Size(73, 13);
-            this.l_IPCon_ForceMode.TabIndex = 88;
-            this.l_IPCon_ForceMode.Text = "Camera Mode";
-            this.toolTips.SetToolTip(this.l_IPCon_ForceMode, "Affects the processing of received commands");
-            // 
-            // cB_IPCon_ForceMode
-            // 
-            this.cB_IPCon_ForceMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cB_IPCon_ForceMode.FormattingEnabled = true;
-            this.cB_IPCon_ForceMode.Items.AddRange(new object[] {
-            "SSTraditional",
-            "Strict",
-            "RevTilt",
-            "Legacy"});
-            this.cB_IPCon_ForceMode.Location = new System.Drawing.Point(115, 192);
-            this.cB_IPCon_ForceMode.Name = "cB_IPCon_ForceMode";
-            this.cB_IPCon_ForceMode.Size = new System.Drawing.Size(123, 21);
-            this.cB_IPCon_ForceMode.TabIndex = 10;
-            this.toolTips.SetToolTip(this.cB_IPCon_ForceMode, "Affects the processing of received commands");
-            this.cB_IPCon_ForceMode.SelectedIndexChanged += new System.EventHandler(this.cB_IPCon_ForceMode_SelectedIndexChanged);
-            // 
-            // check_IPCon_ForceCam
-            // 
-            this.check_IPCon_ForceCam.Location = new System.Drawing.Point(5, 165);
-            this.check_IPCon_ForceCam.Name = "check_IPCon_ForceCam";
-            this.check_IPCon_ForceCam.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_IPCon_ForceCam.Size = new System.Drawing.Size(125, 24);
-            this.check_IPCon_ForceCam.TabIndex = 9;
-            this.check_IPCon_ForceCam.Text = "Force Camera Mode";
-            this.check_IPCon_ForceCam.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_IPCon_ForceCam, "SSUtility is forced to see the connect device as a camera");
-            this.check_IPCon_ForceCam.UseVisualStyleBackColor = true;
-            this.check_IPCon_ForceCam.CheckedChanged += new System.EventHandler(this.check_IPCon_ForceCam_CheckedChanged);
+            this.l_IPCon_PTSpeed.AutoSize = true;
+            this.l_IPCon_PTSpeed.Location = new System.Drawing.Point(6, 119);
+            this.l_IPCon_PTSpeed.Name = "l_IPCon_PTSpeed";
+            this.l_IPCon_PTSpeed.Size = new System.Drawing.Size(91, 13);
+            this.l_IPCon_PTSpeed.TabIndex = 90;
+            this.l_IPCon_PTSpeed.Text = "PT Control Speed";
+            this.toolTips.SetToolTip(this.l_IPCon_PTSpeed, "Multiplier of PTZ commands sent to the camera");
             // 
             // tB_IPCon_Adr
             // 
@@ -373,21 +424,21 @@ namespace SSUtility2
             this.l_IPCon_Adr.Text = "IP Address";
             this.toolTips.SetToolTip(this.l_IPCon_Adr, "IP Address of the camera");
             // 
-            // slider_IPCon_ControlMultiplier
+            // slider_IPCon_PTSpeed
             // 
-            this.slider_IPCon_ControlMultiplier.BackColor = System.Drawing.SystemColors.Window;
-            this.slider_IPCon_ControlMultiplier.Location = new System.Drawing.Point(115, 119);
-            this.slider_IPCon_ControlMultiplier.Maximum = 200;
-            this.slider_IPCon_ControlMultiplier.Minimum = 1;
-            this.slider_IPCon_ControlMultiplier.Name = "slider_IPCon_ControlMultiplier";
-            this.slider_IPCon_ControlMultiplier.Size = new System.Drawing.Size(134, 45);
-            this.slider_IPCon_ControlMultiplier.TabIndex = 7;
-            this.slider_IPCon_ControlMultiplier.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.toolTips.SetToolTip(this.slider_IPCon_ControlMultiplier, "Multiplier of PTZ commands sent to the camera");
-            this.slider_IPCon_ControlMultiplier.Value = 100;
-            this.slider_IPCon_ControlMultiplier.Scroll += new System.EventHandler(this.slider_IPCon_ControlMultiplier_Scroll);
-            this.slider_IPCon_ControlMultiplier.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_ControlMultiplier_MouseDown);
-            this.slider_IPCon_ControlMultiplier.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_ControlMultiplier_MouseUp);
+            this.slider_IPCon_PTSpeed.BackColor = System.Drawing.SystemColors.Window;
+            this.slider_IPCon_PTSpeed.Location = new System.Drawing.Point(115, 114);
+            this.slider_IPCon_PTSpeed.Maximum = 200;
+            this.slider_IPCon_PTSpeed.Minimum = 1;
+            this.slider_IPCon_PTSpeed.Name = "slider_IPCon_PTSpeed";
+            this.slider_IPCon_PTSpeed.Size = new System.Drawing.Size(134, 45);
+            this.slider_IPCon_PTSpeed.TabIndex = 7;
+            this.slider_IPCon_PTSpeed.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.toolTips.SetToolTip(this.slider_IPCon_PTSpeed, "Multiplier of PTZ commands sent to the camera");
+            this.slider_IPCon_PTSpeed.Value = 100;
+            this.slider_IPCon_PTSpeed.Scroll += new System.EventHandler(this.slider_IPCon_PTSpeed_Scroll);
+            this.slider_IPCon_PTSpeed.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_PTSpeed_MouseDown);
+            this.slider_IPCon_PTSpeed.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_IPCon_PTSpeed_MouseUp);
             // 
             // tP_Recording
             // 
@@ -786,6 +837,10 @@ namespace SSUtility2
             // 
             // tP_Other
             // 
+            this.tP_Other.Controls.Add(this.l_Other_ForceCamMode);
+            this.tP_Other.Controls.Add(this.cB_Other_ForceMode);
+            this.tP_Other.Controls.Add(this.check_Other_ForceCam);
+            this.tP_Other.Controls.Add(this.b_Other_Recheck);
             this.tP_Other.Controls.Add(this.check_Other_Maximised);
             this.tP_Other.Controls.Add(this.check_Other_FullToParts);
             this.tP_Other.Controls.Add(this.l_Other_CurrentResolution);
@@ -805,6 +860,66 @@ namespace SSUtility2
             this.tP_Other.TabIndex = 2;
             this.tP_Other.Text = "Other";
             this.tP_Other.UseVisualStyleBackColor = true;
+            // 
+            // l_Other_ForceCamMode
+            // 
+            this.l_Other_ForceCamMode.AutoSize = true;
+            this.l_Other_ForceCamMode.Location = new System.Drawing.Point(197, 33);
+            this.l_Other_ForceCamMode.Name = "l_Other_ForceCamMode";
+            this.l_Other_ForceCamMode.Size = new System.Drawing.Size(73, 13);
+            this.l_Other_ForceCamMode.TabIndex = 62;
+            this.l_Other_ForceCamMode.Text = "Camera Mode";
+            // 
+            // cB_Other_ForceMode
+            // 
+            this.cB_Other_ForceMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Other_ForceMode.FormattingEnabled = true;
+            this.cB_Other_ForceMode.Items.AddRange(new object[] {
+            "SSTraditional",
+            "Strict",
+            "RevTilt",
+            "Legacy",
+            "Null"});
+            this.cB_Other_ForceMode.Location = new System.Drawing.Point(276, 29);
+            this.cB_Other_ForceMode.Name = "cB_Other_ForceMode";
+            this.cB_Other_ForceMode.Size = new System.Drawing.Size(88, 21);
+            this.cB_Other_ForceMode.TabIndex = 61;
+            this.cB_Other_ForceMode.SelectedIndexChanged += new System.EventHandler(this.cB_Other_ForceMode_SelectedIndexChanged);
+            // 
+            // check_Other_ForceCam
+            // 
+            this.check_Other_ForceCam.AutoSize = true;
+            this.check_Other_ForceCam.Location = new System.Drawing.Point(242, 6);
+            this.check_Other_ForceCam.Name = "check_Other_ForceCam";
+            this.check_Other_ForceCam.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_ForceCam.Size = new System.Drawing.Size(122, 17);
+            this.check_Other_ForceCam.TabIndex = 60;
+            this.check_Other_ForceCam.Text = "Force Camera Mode";
+            this.check_Other_ForceCam.UseVisualStyleBackColor = true;
+            this.check_Other_ForceCam.CheckedChanged += new System.EventHandler(this.check_Other_ForceCam_CheckedChanged);
+            // 
+            // b_Other_Recheck
+            // 
+            this.b_Other_Recheck.Location = new System.Drawing.Point(251, 56);
+            this.b_Other_Recheck.Name = "b_Other_Recheck";
+            this.b_Other_Recheck.Size = new System.Drawing.Size(113, 21);
+            this.b_Other_Recheck.TabIndex = 59;
+            this.b_Other_Recheck.Text = "Requery Cam Mode";
+            this.b_Other_Recheck.UseVisualStyleBackColor = true;
+            this.b_Other_Recheck.Click += new System.EventHandler(this.b_Other_Recheck_Click);
+            // 
+            // check_Other_Maximised
+            // 
+            this.check_Other_Maximised.Location = new System.Drawing.Point(4, 66);
+            this.check_Other_Maximised.Name = "check_Other_Maximised";
+            this.check_Other_Maximised.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Other_Maximised.Size = new System.Drawing.Size(175, 24);
+            this.check_Other_Maximised.TabIndex = 57;
+            this.check_Other_Maximised.Text = "Launch Maximised";
+            this.check_Other_Maximised.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTips.SetToolTip(this.check_Other_Maximised, "Resize the Main Player to maintain the shown aspect ratio");
+            this.check_Other_Maximised.UseVisualStyleBackColor = true;
+            this.check_Other_Maximised.CheckedChanged += new System.EventHandler(this.check_Other_Maximised_CheckedChanged);
             // 
             // check_Other_FullToParts
             // 
@@ -959,19 +1074,6 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
-            // check_Other_Maximised
-            // 
-            this.check_Other_Maximised.Location = new System.Drawing.Point(4, 66);
-            this.check_Other_Maximised.Name = "check_Other_Maximised";
-            this.check_Other_Maximised.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.check_Other_Maximised.Size = new System.Drawing.Size(175, 24);
-            this.check_Other_Maximised.TabIndex = 57;
-            this.check_Other_Maximised.Text = "Launch Maximised";
-            this.check_Other_Maximised.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTips.SetToolTip(this.check_Other_Maximised, "Resize the Main Player to maintain the shown aspect ratio");
-            this.check_Other_Maximised.UseVisualStyleBackColor = true;
-            this.check_Other_Maximised.CheckedChanged += new System.EventHandler(this.check_Other_Maximised_CheckedChanged);
-            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -991,7 +1093,9 @@ namespace SSUtility2
             this.tC_Settings.ResumeLayout(false);
             this.tP_Control.ResumeLayout(false);
             this.tP_Control.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ControlMultiplier)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_FocusSpeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ZoomSpeed)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_PTSpeed)).EndInit();
             this.tP_Recording.ResumeLayout(false);
             this.tP_Recording.PerformLayout();
             this.tP_Customs.ResumeLayout(false);
@@ -1025,16 +1129,12 @@ namespace SSUtility2
         public System.Windows.Forms.DataGridView dgv_Custom_Buttons;
         private System.Windows.Forms.DataGridViewTextBoxColumn ButtonName;
         private System.Windows.Forms.DataGridViewComboBoxColumn ButtonsCommand;
-        public System.Windows.Forms.Label l_IPCon_ForceMode;
-        private System.Windows.Forms.ComboBox cB_IPCon_ForceMode;
-        public System.Windows.Forms.CheckBox check_IPCon_ForceCam;
-        public System.Windows.Forms.TextBox tB_IPCon_CamSpeed;
-        public System.Windows.Forms.Label l_IPCon_TrackBar;
-        private System.Windows.Forms.TrackBar slider_IPCon_ControlMultiplier;
-        private System.Windows.Forms.Label l_IPCon_Percent;
+        public System.Windows.Forms.TextBox tB_IPCon_PTSpeed;
+        public System.Windows.Forms.Label l_IPCon_PTSpeed;
+        private System.Windows.Forms.TrackBar slider_IPCon_PTSpeed;
+        private System.Windows.Forms.Label l_IPCon_PTPercent;
         public System.Windows.Forms.CheckBox check_Other_Aspect;
         private System.Windows.Forms.Label l_Other_Ratio;
-        private System.Windows.Forms.Button b_IPCon_Recheck;
         public System.Windows.Forms.Label l_IPCon_Subnet;
         public System.Windows.Forms.ComboBox cB_IPCon_MainPlayerPreset;
         public System.Windows.Forms.Label l_IPCon_MainPlayerPreset;
@@ -1078,5 +1178,17 @@ namespace SSUtility2
         private System.Windows.Forms.Label l_Startup_Panels;
         public System.Windows.Forms.CheckBox check_Other_FullToParts;
         public System.Windows.Forms.CheckBox check_Other_Maximised;
+        private System.Windows.Forms.Button b_Other_Recheck;
+        private System.Windows.Forms.Label l_Other_ForceCamMode;
+        private System.Windows.Forms.ComboBox cB_Other_ForceMode;
+        private System.Windows.Forms.CheckBox check_Other_ForceCam;
+        private System.Windows.Forms.Label l_IPCon_FocusPercent;
+        public System.Windows.Forms.TextBox tB_IPCon_FocusSpeed;
+        public System.Windows.Forms.Label l_IPCon_FocusSpeed;
+        private System.Windows.Forms.TrackBar slider_IPCon_FocusSpeed;
+        private System.Windows.Forms.Label l_IPCon_ZoomPercent;
+        public System.Windows.Forms.TextBox tB_IPCon_ZoomSpeed;
+        public System.Windows.Forms.Label l_IPCon_ZoomSpeed;
+        private System.Windows.Forms.TrackBar slider_IPCon_ZoomSpeed;
     }
 }

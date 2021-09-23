@@ -21,30 +21,39 @@ namespace SSUtility2.Hidden {
         static uint incrementalCounter = 0;
         static int messagePos = 0;
 
-        static void SendUP(string text) {
-            messagePos = 0;
-            byte[] SYNC = new byte[] { 0x5A, 0xA5 };
-            byte[] FID = BitConverter.GetBytes(incrementalCounter++);
-            byte[] TIME = GetMillisecondTime();
-            byte[] CMD = GetCMD();
-            byte[] DATA = GetData();
-            byte[] DATALEN = GetDataLen(DATA);
+        void SendUP(string text) {
+            try {
+                messagePos = 0;
+                byte[] SYNC = new byte[] { 0x5A, 0xA5 }; //Big endian
+                byte[] FID = BitConverter.GetBytes(incrementalCounter++);
+                byte[] TIME = GetMillisecondTime();
+                //XT
+                byte[] CMD = GetCMD();
+                byte[] DATA = GetData();
+                byte[] DATALEN = GetDataLen(DATA);
 
-            //SYNC:16, TIME:32, FID:16, CMD:16, LEN:16, DATA:0-65521, CRC:16 
-            byte[] message = new byte[65535];
+                //SYNC:2, TIME:4, FID:2, XT:4, CMD:2, LEN:2, DATA:0-65517, CRC:2    //bytes (8 bits)
+                //byte[] message = new byte[65535];
+                byte[] message = new byte[128];
 
-            AddToMessage(message, SYNC);
-            AddToMessage(message, FID);
-            AddToMessage(message, TIME);
-            AddToMessage(message, CMD);
-            AddToMessage(message, DATALEN);
-            AddToMessage(message, DATA);
+                AddToMessage(message, SYNC);
+                AddToMessage(message, FID);
+                AddToMessage(message, TIME);
+                //XT
+                AddToMessage(message, CMD);
+                AddToMessage(message, DATALEN);
+                AddToMessage(message, DATA);
 
-            byte[] CRC = GetCRC(message);
+                byte[] CRC = GetCRC(message);
 
-            AddToMessage(message, CRC);
+                AddToMessage(message, CRC);
 
-            AsyncCamCom.SendNonAsync(message);
+                //AsyncCamCom.SendNonAsync(message);
+
+                l_Send.Text = "Sending: " + BitConverter.ToString(message);
+            } catch (Exception e) {
+                MessageBox.Show("UP\n" + e.ToString());
+            }
         }
 
         static byte[] AddToMessage(byte[] message, byte[] vals) {

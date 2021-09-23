@@ -34,10 +34,14 @@ namespace SSUtility2 {
 
         public async Task LoadSettings() {
             try {
-                slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
+                slider_IPCon_PTSpeed.Value = ConfigControl.cameraPTSpeedMultiplier.intVal;
+                slider_IPCon_ZoomSpeed.Value = ConfigControl.cameraZoomSpeedMultiplier.intVal;
+                slider_IPCon_FocusSpeed.Value = ConfigControl.cameraFocusSpeedMultiplier.intVal;
 
                 tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
-                tB_IPCon_CamSpeed.Text = ConfigControl.cameraSpeedMultiplier.intVal.ToString();
+                tB_IPCon_PTSpeed.Text = ConfigControl.cameraPTSpeedMultiplier.intVal.ToString();
+                tB_IPCon_ZoomSpeed.Text = ConfigControl.cameraZoomSpeedMultiplier.intVal.ToString();
+                tB_IPCon_FocusSpeed.Text = ConfigControl.cameraFocusSpeedMultiplier.intVal.ToString();
                 tB_Recording_sCFolder.Text = ConfigControl.scFolder.stringVal;
                 tB_Recording_vFolder.Text = ConfigControl.vFolder.stringVal;
                 tB_Recording_vFileN.Text = ConfigControl.vFileName.stringVal;
@@ -45,15 +49,14 @@ namespace SSUtility2 {
                 tB_Other_ResolutionWidth.Text = ConfigControl.startupWidth.stringVal;
                 tB_Other_ResolutionHeight.Text = ConfigControl.startupHeight.stringVal;
 
-
                 cB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
-                cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
-                cB_IPCon_ForceMode.Text = ConfigControl.forceType.stringVal;
+                cB_Other_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
+                cB_Other_ForceMode.Text = ConfigControl.forceType.stringVal;
                 cB_Recording_Quality.Text = ConfigControl.recQual.stringVal;
                 cB_Recording_FPS.Text = ConfigControl.recFPS.stringVal;
                 cB_Startup_PlayerCount.Text = ConfigControl.playerCount.stringVal;
 
-                check_IPCon_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
+                check_Other_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
                 check_Recording_Manual.Checked = ConfigControl.automaticPaths.boolVal;
                 check_Startup_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
                 check_Startup_QuickFunctions.Checked = ConfigControl.launchQuickFunctions.boolVal;
@@ -76,12 +79,6 @@ namespace SSUtility2 {
                 UpdateResolutionLabel();
                 UpdateCamType();
                 UpdateRatioLabel();
-
-                int index;
-                if (int.TryParse(RTSPPresets.GetValue(RTSPPresets.PresetColumn.Index, ConfigControl.mainPlayerPreset.stringVal), out index)) {
-                    MainForm.m.mainPlayer.settings.cB_RTSP.SelectedIndex = index;
-                    cB_IPCon_MainPlayerPreset.SelectedIndex = index;
-                }
 
                 MainForm.m.mainPlayer.settings.LoadTabName();
             } catch (Exception e) {
@@ -329,19 +326,19 @@ namespace SSUtility2 {
             UpdateRatioLabel();
         }
 
-        private void check_IPCon_ForceCam_CheckedChanged(object sender, EventArgs e) {
+        private void check_Other_ForceCam_CheckedChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
 
-            ConfigControl.forceCamera.UpdateValue(check_IPCon_ForceCam.Checked.ToString());
-            cB_IPCon_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
+            ConfigControl.forceCamera.UpdateValue(check_Other_ForceCam.Checked.ToString());
+            cB_Other_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
 
 
             InfoPanel.i.isCamera = ConfigControl.forceCamera.boolVal;
         }
 
-        private void cB_IPCon_ForceMode_SelectedIndexChanged(object sender, EventArgs e) {
-            ConfigControl.forceType.UpdateValue(cB_IPCon_ForceMode.Text);
+        private void cB_Other_ForceMode_SelectedIndexChanged(object sender, EventArgs e) {
+            ConfigControl.forceType.UpdateValue(cB_Other_ForceMode.Text);
             UpdateCamType();
         }
 
@@ -366,45 +363,6 @@ namespace SSUtility2 {
 
                 OtherCamCom.currentConfig = config;
             } 
-        }
-
-        private void tB_IPCon_CamSpeed_KeyPress(object sender, KeyPressEventArgs e) {
-            if (float.TryParse(tB_IPCon_CamSpeed.Text, out float val)) {
-                if (val < 1f)
-                    val = 1;
-                else if (val > 200f)
-                    val = 200;
-
-                val = (float)Math.Truncate(val);
-
-                ConfigControl.cameraSpeedMultiplier.UpdateValue(val.ToString());
-            }
-            if (e.KeyChar == (char)Keys.Enter) {
-                tB_IPCon_CamSpeed.Text = ConfigControl.cameraSpeedMultiplier.intVal.ToString();
-                slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
-            }
-        }
-
-        private void tB_IPCon_CamSpeed_Leave(object sender, EventArgs e) {
-            tB_IPCon_CamSpeed.Text = (ConfigControl.cameraSpeedMultiplier.intVal).ToString();
-            slider_IPCon_ControlMultiplier.Value = ConfigControl.cameraSpeedMultiplier.intVal;
-        }
-
-        bool dragging = false;
-
-        private void slider_IPCon_ControlMultiplier_Scroll(object sender, EventArgs e) {
-            if (dragging) {
-                ConfigControl.cameraSpeedMultiplier.UpdateValue(slider_IPCon_ControlMultiplier.Value.ToString());
-                tB_IPCon_CamSpeed.Text = (ConfigControl.cameraSpeedMultiplier.intVal).ToString();
-            }
-        }
-
-        private void slider_IPCon_ControlMultiplier_MouseDown(object sender, MouseEventArgs e) {
-            dragging = true;
-        }
-
-        private void slider_IPCon_ControlMultiplier_MouseUp(object sender, MouseEventArgs e) {
-            dragging = false;
         }
 
         private void check_Other_Aspect_CheckedChanged(object sender, EventArgs e) {
@@ -436,12 +394,12 @@ namespace SSUtility2 {
 
         public void UpdateCamConfig(OtherCamCom.CamConfig type) {
             Invoke((MethodInvoker)delegate {
-                cB_IPCon_ForceMode.Text = type.ToString();
-                ConfigControl.forceType.UpdateValue(cB_IPCon_ForceMode.Text);
+                cB_Other_ForceMode.Text = type.ToString();
+                ConfigControl.forceType.UpdateValue(cB_Other_ForceMode.Text);
             });
         }
 
-        private void b_IPCon_Recheck_Click(object sender, EventArgs e) {
+        private void b_Other_Recheck_Click(object sender, EventArgs e) {
             CheckConfig();
         }
 
@@ -687,5 +645,143 @@ namespace SSUtility2 {
             l_Other_CurrentResolution.Text = "Current MainForm resolution: " + MainForm.m.Width.ToString() + "x" + MainForm.m.Height.ToString();
         }
 
+        bool draggingPT = false;
+        bool draggingZ = false;
+        bool draggingF = false;
+
+        int IsValidVal(object sender, int min, int max) {
+            TextBox tb = (TextBox)sender;
+            if (float.TryParse(tb.Text, out float val)) {
+                if (val < min)
+                    val = min;
+                else if (val > max)
+                    val = max;
+
+                val = (float)Math.Truncate(val);
+
+                return (int)val;
+            }
+
+            return -1;
+        }
+
+        private void tB_IPCon_PTSpeed_KeyPress(object sender, KeyPressEventArgs e) {
+            int val = IsValidVal(sender, 1, 200);
+
+            if(val > -1)
+                ConfigControl.cameraPTSpeedMultiplier.UpdateValue(val.ToString());
+
+            if (e.KeyChar == (char)Keys.Enter) {
+                tB_IPCon_PTSpeed.Text = val.ToString();
+                slider_IPCon_PTSpeed.Value = val;
+            }
+        }
+
+        private void slider_IPCon_PTSpeed_Scroll(object sender, EventArgs e) {
+            if (draggingPT)
+                PTScrollFunction(sender);
+        }
+
+        void PTScrollFunction(object sender) {
+            TrackBar track = slider_IPCon_PTSpeed;
+            ConfigControl.cameraPTSpeedMultiplier.UpdateValue(track.Value.ToString());
+            tB_IPCon_PTSpeed.Text = track.Value.ToString();
+        }
+
+        private void slider_IPCon_PTSpeed_MouseDown(object sender, MouseEventArgs e) {
+            draggingPT = true;
+        }
+
+        private void slider_IPCon_PTSpeed_MouseUp(object sender, MouseEventArgs e) {
+            PTScrollFunction(slider_IPCon_PTSpeed);
+            draggingPT = false;
+        }
+        
+        private void tB_IPCon_PTSpeed_Leave(object sender, EventArgs e) {
+            TextBox tb = tB_IPCon_PTSpeed;
+            int val = ConfigControl.cameraPTSpeedMultiplier.intVal;
+            tb.Text = val.ToString();
+            slider_IPCon_PTSpeed.Value =val;
+        }
+
+
+        private void tB_IPCon_ZoomSpeed_KeyPress(object sender, KeyPressEventArgs e) {
+            int val = IsValidVal(sender, 0, 4);
+
+            if (val > -1)
+                ConfigControl.cameraZoomSpeedMultiplier.UpdateValue(val.ToString());
+
+            if (e.KeyChar == (char)Keys.Enter) {
+                tB_IPCon_ZoomSpeed.Text = val.ToString();
+                slider_IPCon_ZoomSpeed.Value = val;
+            }
+        }
+
+        private void slider_IPCon_ZoomSpeed_Scroll(object sender, EventArgs e) {
+            if (draggingZ)
+                ZoomScrollFunction(slider_IPCon_ZoomSpeed);
+        }
+
+        void ZoomScrollFunction(object sender) {
+            TrackBar track = slider_IPCon_ZoomSpeed;
+            ConfigControl.cameraZoomSpeedMultiplier.UpdateValue(track.Value.ToString());
+            tB_IPCon_ZoomSpeed.Text = track.Value.ToString();
+        }
+
+        private void slider_IPCon_ZoomSpeed_MouseDown(object sender, MouseEventArgs e) {
+            draggingZ = true;
+        }
+
+        private void slider_IPCon_ZoomSpeed_MouseUp(object sender, MouseEventArgs e) {
+            ZoomScrollFunction(slider_IPCon_ZoomSpeed);
+            draggingZ = false;
+        }
+
+        private void tB_IPCon_ZoomSpeed_Leave(object sender, EventArgs e) {
+            TextBox tb = tB_IPCon_ZoomSpeed;
+            int val = ConfigControl.cameraZoomSpeedMultiplier.intVal;
+            tb.Text = val.ToString();
+            slider_IPCon_ZoomSpeed.Value = val;
+        }
+
+
+        private void tB_IPCon_FocusSpeed_KeyPress(object sender, KeyPressEventArgs e) {
+            int val = IsValidVal(sender, 0, 4);
+
+            if (val > -1)
+                ConfigControl.cameraFocusSpeedMultiplier.UpdateValue(val.ToString());
+
+            if (e.KeyChar == (char)Keys.Enter) {
+                tB_IPCon_FocusSpeed.Text = val.ToString();
+                slider_IPCon_FocusSpeed.Value = val;
+            }
+        }
+
+        private void slider_IPCon_FocusSpeed_Scroll(object sender, EventArgs e) {
+            if (draggingF)
+                FocusScrollFunction(slider_IPCon_FocusSpeed);
+        }
+
+        void FocusScrollFunction(object sender) {
+            TrackBar track = slider_IPCon_FocusSpeed;
+            ConfigControl.cameraFocusSpeedMultiplier.UpdateValue(track.Value.ToString());
+            tB_IPCon_FocusSpeed.Text = track.Value.ToString();
+        }
+
+        private void slider_IPCon_FocusSpeed_MouseDown(object sender, MouseEventArgs e) {
+            draggingF = true;
+        }
+
+        private void slider_IPCon_FocusSpeed_MouseUp(object sender, MouseEventArgs e) {
+            FocusScrollFunction(slider_IPCon_FocusSpeed);
+            draggingF = false;
+        }
+
+        private void slider_IPCon_FocusSpeed_Leave(object sender, EventArgs e) {
+            TextBox tb = tB_IPCon_FocusSpeed;
+            int val = ConfigControl.cameraFocusSpeedMultiplier.intVal;
+            tb.Text = val.ToString();
+            slider_IPCon_FocusSpeed.Value = val;
+        }
     }
 }

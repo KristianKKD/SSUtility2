@@ -18,6 +18,7 @@ namespace SSUtility2 {
         public int channelID = -1;
         public bool isMainPlayer;
         public bool isAttached = false;
+        public bool refreshBox = true; //trigger cB_RTSP selectindex update
 
         Timer updateControl;
         Timer cursorTimer;
@@ -178,7 +179,7 @@ namespace SSUtility2 {
             return tp;
         }
 
-        public void LoadSecondary(string presetName, bool autoPlay) {
+        public void LoadPlayer(string presetName, bool autoPlay) {
             string indexVal = RTSPPresets.GetValue(PresetColumn.Index, presetName);
             int presetIndex = 0;
             if (indexVal != "")
@@ -194,6 +195,8 @@ namespace SSUtility2 {
 
             if (autoPlay)
                 myDetached.Play(false, false);
+            if (isMainPlayer)
+                MainForm.m.setPage.cB_IPCon_MainPlayerPreset.SelectedIndex = cB_RTSP.SelectedIndex;
         }
 
         static Control FindControl(TabPage tp, object reference) {
@@ -207,9 +210,12 @@ namespace SSUtility2 {
             return null;
         }
 
-        static void UpdateSinglePresetBox(ComboBox box) {
-            int oldVal = box.SelectedIndex;
+        static void UpdateSinglePresetBox(ComboBox box, VideoSettings refreshSettings = null) {
+            if(refreshSettings != null)
+                refreshSettings.refreshBox = false;
 
+            int oldVal = box.SelectedIndex;
+            
             box.Items.Clear();
             foreach (string s in RTSPPresets.GetPresetList())
                 box.Items.Add(s);
@@ -218,20 +224,32 @@ namespace SSUtility2 {
 
             if (oldVal <= box.Items.Count - 2)
                 box.SelectedIndex = oldVal;
+
+            if (refreshSettings != null)
+                refreshSettings.refreshBox = true;
         }
 
-        public static void UpdateAllPresetBoxes() {
-            foreach (VideoSettings vs in allSettings)
-                UpdateSinglePresetBox(vs.cB_RTSP);
+        public static void UpdateAllPresetBoxes(bool force = false, bool refresh = true) {
+            if (!MainForm.m.finishedLoading && !force)
+                return;
+
+            VideoSettings v = null; //if the box needs to be repopulated without triggering a selectindex update
+
+            foreach (VideoSettings vs in allSettings) {
+                if (!refresh) 
+                    v = vs;
+
+                UpdateSinglePresetBox(vs.cB_RTSP, v);
+            }
 
             foreach (TabPage tp in MainForm.m.mainPlayer.settings.tC_PlayerSettings.TabPages) {
                 if (tp == MainForm.m.mainPlayer.settings.tP_Main)
                     continue;
 
-                UpdateSinglePresetBox((ComboBox)FindControl(tp, MainForm.m.mainPlayer.settings.cB_RTSP));
+                UpdateSinglePresetBox((ComboBox)FindControl(tp, MainForm.m.mainPlayer.settings.cB_RTSP), MainForm.m.mainPlayer.settings);
             }
 
-            UpdateSinglePresetBox(MainForm.m.setPage.cB_IPCon_MainPlayerPreset);
+            UpdateSinglePresetBox(MainForm.m.setPage.cB_IPCon_MainPlayerPreset); //need to look into what happens if this doesnt get refresh affected
         }
 
         private void b_Edit_Click(object sender, EventArgs e) {
@@ -256,7 +274,7 @@ namespace SSUtility2 {
 
         int previousIndex = -1;
         private void cB_RTSP_SelectedIndexChanged(object sender, EventArgs e) {
-            if (!MainForm.m.finishedLoading)
+            if (!MainForm.m.finishedLoading || !refreshBox)
                 return;
 
             previousIndex = cB_RTSP.SelectedIndex;
@@ -350,6 +368,8 @@ namespace SSUtility2 {
         private void VideoSettings_VisibleChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
+
+            UpdateAllPresetBoxes(false, false);
         }
 
         private void VideoSettings_FormClosing(object sender, FormClosingEventArgs e) {

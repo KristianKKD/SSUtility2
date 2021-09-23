@@ -537,7 +537,7 @@ namespace SSUtility2 {
                     foreach (string line in lines)
                         File.AppendAllText(configFile, line + "\n");
 
-                    RTSPPresets.Reload();
+                    RTSPPresets.Reload(true);
                     ConfigControl.SetToDefaults();
                     await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
                     MainForm.m.setPage.LoadSettings();
@@ -545,7 +545,7 @@ namespace SSUtility2 {
                     MainForm.m.AttachPlayers();
                 } else {
                     if (name == configFile)
-                        MessageBox.Show("Please don't try to replace the config file with itself!\nIgnored request!");
+                        MessageBox.Show("Please don't try to replace the config file with itself!");
                 }
             } catch (Exception e) {
                 ShowPopup("Failed to import config!\nShow more?", "Error Occurred!", e.ToString());

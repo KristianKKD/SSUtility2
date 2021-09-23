@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.1.17";
+        public const string version = "v2.8.2.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -54,7 +54,7 @@ namespace SSUtility2 {
             try {
                 CreateHandle();
                 m = this;
-                RTSPPresets.Reload();
+                RTSPPresets.Reload(false);
                 detachedList = new List<Detached>();
                 recorderProcessList = new List<Process>();
                 VideoSettings.allSettings = new List<VideoSettings>();
@@ -106,7 +106,7 @@ namespace SSUtility2 {
                 if (startLiteVersion)
                     LiteToggle();
                 else
-                    await AttachPlayers();
+                    AttachPlayers().ConfigureAwait(false);
 
                 finishedLoading = true;
 
@@ -139,9 +139,6 @@ namespace SSUtility2 {
             try {
                 bool autoPlay = ConfigControl.autoPlay.boolVal;
 
-                if (autoPlay)
-                    mainPlayer.Play(false, false);
-
                 int playercount = ConfigControl.playerCount.intVal;
 
                 if (playercount >= 2 && mainPlayer.attachedPlayers.Count < 1) {
@@ -170,10 +167,13 @@ namespace SSUtility2 {
                     thirdPlayer = null;
                 }
 
+                VideoSettings.UpdateAllPresetBoxes(true, false);
+                mainPlayer.settings.LoadPlayer(ConfigControl.mainPlayerPreset.stringVal, autoPlay);
+
                 if (secondPlayer != null)
-                    secondPlayer.settings.LoadSecondary(ConfigControl.player2Preset.stringVal, autoPlay);
+                    secondPlayer.settings.LoadPlayer(ConfigControl.player2Preset.stringVal, autoPlay);
                 if (thirdPlayer != null)
-                    thirdPlayer.settings.LoadSecondary(ConfigControl.player3Preset.stringVal, autoPlay);
+                    thirdPlayer.settings.LoadPlayer(ConfigControl.player3Preset.stringVal, autoPlay);
 
             } catch (Exception e) {
                 MessageBox.Show("ATTACH\n" + e.ToString());
@@ -508,7 +508,7 @@ namespace SSUtility2 {
                 }
 
                 if (keyboardControl) {
-                    uint ptSpeed = Convert.ToUInt32((ConfigControl.cameraSpeedMultiplier.intVal / 200f) * 63);
+                    uint ptSpeed = Convert.ToUInt32((ConfigControl.cameraPTSpeedMultiplier.intVal / 200f) * 63);
                     byte[] code = null;
                     uint address = Tools.MakeAdr();
 
@@ -588,20 +588,44 @@ namespace SSUtility2 {
             }
         }
 
+        async Task Zoom(bool isPositive) {
+            //int val = 32767 + (int)Math.Round(((ConfigControl.cameraZoomSpeedMultiplier.intVal - 100) / 100f) * 32767);
+            int val = ConfigControl.cameraZoomSpeedMultiplier.intVal;
+            await CustomScriptCommands.QuickCommand("setzoomspeed " + val.ToString(), false).ConfigureAwait(true);
+
+            D.Zoom type = D.Zoom.Wide;
+            if (isPositive)
+                type = D.Zoom.Tele;
+
+            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), type));
+        }
+
+        async Task Focus(bool isPositive) {
+            //int val = 32767 + (int)Math.Round(((ConfigControl.cameraFocusSpeedMultiplier.intVal - 100) / 100f) * 32767);
+            int val = ConfigControl.cameraFocusSpeedMultiplier.intVal;
+            await CustomScriptCommands.QuickCommand("setfocusspeed " + val.ToString(), false).ConfigureAwait(true);
+
+            D.Focus type = D.Focus.Near;
+            if (isPositive)
+                type = D.Focus.Far;
+
+            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(Tools.MakeAdr(), type));
+        }
+
         private void b_PTZ_ZoomPos_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), D.Zoom.Tele));
+            Zoom(true);
         }
 
         private void b_PTZ_ZoomNeg_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraZoom(Tools.MakeAdr(), D.Zoom.Wide));
+            Zoom(false);
         }
 
         private void b_PTZ_FocusPos_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(Tools.MakeAdr(), D.Focus.Far));
+            Focus(true);
         }
 
         private void b_PTZ_FocusNeg_MouseDown(object sender, MouseEventArgs e) {
-            AsyncCamCom.SendNonAsync(D.protocol.CameraFocus(Tools.MakeAdr(), D.Focus.Near));
+            Focus(false);
         }
 
         private void b_PTZ_Up_MouseDown(object sender, MouseEventArgs e) {
@@ -626,7 +650,7 @@ namespace SSUtility2 {
 
         void PTZMove(D.Tilt tilt = D.Tilt.Null, D.Pan pan = D.Pan.Null) {
             byte[] code;
-            uint speed = Convert.ToUInt32((ConfigControl.cameraSpeedMultiplier.intVal / 200f) * 63);
+            uint speed = Convert.ToUInt32((ConfigControl.cameraPTSpeedMultiplier.intVal / 200f) * 63);
 
             if (tilt != D.Tilt.Null) {
                 code = D.protocol.CameraTilt(Tools.MakeAdr(), tilt, speed);
@@ -656,11 +680,10 @@ namespace SSUtility2 {
 
         uint JoystickSpeedFunction(float val) {
             //0.5x^2 * y + 3
-            uint newVal = (Convert.ToUInt32(((0.5f * Math.Pow(Math.Abs(val), 2) * (ConfigControl.cameraSpeedMultiplier.intVal / 100f)) / 3969) * 63) + 3);
+            uint newVal = (Convert.ToUInt32(((0.5f * Math.Pow(Math.Abs(val), 2) * (ConfigControl.cameraPTSpeedMultiplier.intVal / 100f)) / 3969) * 63) + 3);
 
-            if (newVal > 63) {
+            if (newVal > 63)
                 newVal = 63;
-            }
 
             return newVal;
         }
