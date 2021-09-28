@@ -69,6 +69,10 @@ namespace SSUtility2
             this.b_Recording_vBrowse = new System.Windows.Forms.Button();
             this.l_Paths_vFolder = new System.Windows.Forms.Label();
             this.tB_Recording_vFolder = new System.Windows.Forms.TextBox();
+            this.tP_Layout = new System.Windows.Forms.TabPage();
+            this.check_Layout_Sliders = new System.Windows.Forms.CheckBox();
+            this.l_Layout_CP = new System.Windows.Forms.Label();
+            this.cB_Layout_CP = new System.Windows.Forms.ComboBox();
             this.tP_Customs = new System.Windows.Forms.TabPage();
             this.dgv_Custom_Buttons = new System.Windows.Forms.DataGridView();
             this.ButtonName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -108,6 +112,7 @@ namespace SSUtility2
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_ZoomSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_PTSpeed)).BeginInit();
             this.tP_Recording.SuspendLayout();
+            this.tP_Layout.SuspendLayout();
             this.tP_Customs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Custom_Buttons)).BeginInit();
             this.tP_Startup.SuspendLayout();
@@ -130,6 +135,7 @@ namespace SSUtility2
             // 
             this.tC_Settings.Controls.Add(this.tP_Control);
             this.tC_Settings.Controls.Add(this.tP_Recording);
+            this.tC_Settings.Controls.Add(this.tP_Layout);
             this.tC_Settings.Controls.Add(this.tP_Customs);
             this.tC_Settings.Controls.Add(this.tP_Startup);
             this.tC_Settings.Controls.Add(this.tP_Other);
@@ -670,6 +676,53 @@ namespace SSUtility2
             this.tB_Recording_vFolder.TabIndex = 38;
             this.tB_Recording_vFolder.TextChanged += new System.EventHandler(this.tB_Recording_vFolder_TextChanged);
             // 
+            // tP_Layout
+            // 
+            this.tP_Layout.Controls.Add(this.check_Layout_Sliders);
+            this.tP_Layout.Controls.Add(this.l_Layout_CP);
+            this.tP_Layout.Controls.Add(this.cB_Layout_CP);
+            this.tP_Layout.Location = new System.Drawing.Point(4, 22);
+            this.tP_Layout.Name = "tP_Layout";
+            this.tP_Layout.Padding = new System.Windows.Forms.Padding(3);
+            this.tP_Layout.Size = new System.Drawing.Size(370, 219);
+            this.tP_Layout.TabIndex = 6;
+            this.tP_Layout.Text = "Layout";
+            this.tP_Layout.UseVisualStyleBackColor = true;
+            // 
+            // check_Layout_Sliders
+            // 
+            this.check_Layout_Sliders.AutoSize = true;
+            this.check_Layout_Sliders.Location = new System.Drawing.Point(3, 33);
+            this.check_Layout_Sliders.Name = "check_Layout_Sliders";
+            this.check_Layout_Sliders.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.check_Layout_Sliders.Size = new System.Drawing.Size(123, 17);
+            this.check_Layout_Sliders.TabIndex = 2;
+            this.check_Layout_Sliders.Text = "Control Panel Sliders";
+            this.check_Layout_Sliders.UseVisualStyleBackColor = true;
+            this.check_Layout_Sliders.CheckedChanged += new System.EventHandler(this.check_Layout_Sliders_CheckedChanged);
+            // 
+            // l_Layout_CP
+            // 
+            this.l_Layout_CP.AutoSize = true;
+            this.l_Layout_CP.Location = new System.Drawing.Point(3, 9);
+            this.l_Layout_CP.Name = "l_Layout_CP";
+            this.l_Layout_CP.Size = new System.Drawing.Size(105, 13);
+            this.l_Layout_CP.TabIndex = 1;
+            this.l_Layout_CP.Text = "Control Panel Layout";
+            // 
+            // cB_Layout_CP
+            // 
+            this.cB_Layout_CP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Layout_CP.FormattingEnabled = true;
+            this.cB_Layout_CP.Items.AddRange(new object[] {
+            "Standard",
+            "Legacy"});
+            this.cB_Layout_CP.Location = new System.Drawing.Point(112, 6);
+            this.cB_Layout_CP.Name = "cB_Layout_CP";
+            this.cB_Layout_CP.Size = new System.Drawing.Size(121, 21);
+            this.cB_Layout_CP.TabIndex = 0;
+            this.cB_Layout_CP.SelectedIndexChanged += new System.EventHandler(this.cB_Layout_CP_SelectedIndexChanged);
+            // 
             // tP_Customs
             // 
             this.tP_Customs.Controls.Add(this.dgv_Custom_Buttons);
@@ -1098,6 +1151,8 @@ namespace SSUtility2
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_PTSpeed)).EndInit();
             this.tP_Recording.ResumeLayout(false);
             this.tP_Recording.PerformLayout();
+            this.tP_Layout.ResumeLayout(false);
+            this.tP_Layout.PerformLayout();
             this.tP_Customs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Custom_Buttons)).EndInit();
             this.tP_Startup.ResumeLayout(false);
@@ -1190,5 +1245,9 @@ namespace SSUtility2
         public System.Windows.Forms.TextBox tB_IPCon_ZoomSpeed;
         public System.Windows.Forms.Label l_IPCon_ZoomSpeed;
         private System.Windows.Forms.TrackBar slider_IPCon_ZoomSpeed;
+        private System.Windows.Forms.TabPage tP_Layout;
+        private System.Windows.Forms.Label l_Layout_CP;
+        private System.Windows.Forms.ComboBox cB_Layout_CP;
+        private System.Windows.Forms.CheckBox check_Layout_Sliders;
     }
 }

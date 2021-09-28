@@ -59,6 +59,8 @@ namespace SSUtility2 {
         public static ConfigSetting launchCustomPanel = new ConfigSetting("false", "EnableCustomPanelOnLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting enableFullToParts = new ConfigSetting("true", "EnableFullToParts", ConfigSetting.VarType.boolean);
         public static ConfigSetting startInMaximised = new ConfigSetting("false", "StartInMaximised", ConfigSetting.VarType.boolean);
+        public static ConfigSetting cpLayout = new ConfigSetting("Standard", "ControlPanelLayout", ConfigSetting.VarType.strings);
+        public static ConfigSetting cpSliders = new ConfigSetting("false", "ControlPanelAbsoluteSliders", ConfigSetting.VarType.boolean);
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -79,6 +81,7 @@ namespace SSUtility2 {
             cameraPTSpeedMultiplier,
             cameraZoomSpeedMultiplier,
             cameraFocusSpeedMultiplier,
+            cameraFocusSpeedMultiplier,
             forceType,
             startupWidth,
             startupHeight,
@@ -97,6 +100,8 @@ namespace SSUtility2 {
             launchCustomPanel,
             enableFullToParts,
             startInMaximised,
+            cpLayout,
+            cpSliders,
         };
 
         public static async Task SetToDefaults() {

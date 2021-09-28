@@ -248,7 +248,7 @@ namespace SSUtility2 {
                     } else {
                         byte[] code = Tools.ConvertMsgToByte(command);
                         if (code == null) {
-                            MessageBox.Show("Command invalid!\nMake sure to enter command in perfect format!\n(FF 0x xx xx xx xx yy)");
+                            MessageBox.Show("Command invalid!\nMake sure to enter command in the correct format!\n(FF 0x xx xx xx xx yy OR [command] [value])");
                             return;
                         }
                         send = new ScriptCommand(new string[] { "custom" }, code, "", 0);

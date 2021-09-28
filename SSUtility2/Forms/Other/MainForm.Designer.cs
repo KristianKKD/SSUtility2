@@ -86,6 +86,15 @@ namespace SSUtility2 {
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_RecordIndicator = new System.Windows.Forms.ToolStripMenuItem();
             this.p_PlayerPanel = new System.Windows.Forms.Panel();
+            this.p_PTZ_Sliders = new System.Windows.Forms.Panel();
+            this.l_PTZ_SlidersFPercent = new System.Windows.Forms.Label();
+            this.tB_PTZ_SlidersFText = new System.Windows.Forms.TextBox();
+            this.l_PTZ_SlidersFocus = new System.Windows.Forms.Label();
+            this.slider_PTZ_AbsFocus = new System.Windows.Forms.TrackBar();
+            this.l_PTZ_SliderZPercent = new System.Windows.Forms.Label();
+            this.tB_PTZ_SlidersZText = new System.Windows.Forms.TextBox();
+            this.l_PTZ_SliderZoom = new System.Windows.Forms.Label();
+            this.slider_PTZ_AbsZoom = new System.Windows.Forms.TrackBar();
             this.pB_Panoramic = new System.Windows.Forms.PictureBox();
             this.JoyBack = new Kaiser.JoyBack();
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
@@ -101,6 +110,9 @@ namespace SSUtility2 {
             this.b_PTZ_Up = new System.Windows.Forms.Button();
             this.MenuBar.SuspendLayout();
             this.p_PlayerPanel.SuspendLayout();
+            this.p_PTZ_Sliders.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsFocus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
             this.SuspendLayout();
@@ -430,6 +442,7 @@ namespace SSUtility2 {
             this.p_PlayerPanel.AllowDrop = true;
             this.p_PlayerPanel.BackColor = System.Drawing.Color.Black;
             this.p_PlayerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_PlayerPanel.Controls.Add(this.p_PTZ_Sliders);
             this.p_PlayerPanel.Controls.Add(this.pB_Panoramic);
             this.p_PlayerPanel.Controls.Add(this.JoyBack);
             this.p_PlayerPanel.Controls.Add(this.b_PTZ_Daylight);
@@ -451,6 +464,108 @@ namespace SSUtility2 {
             this.p_PlayerPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragDrop);
             this.p_PlayerPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragOver);
             this.p_PlayerPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.p_PlayerPanel_MouseMove);
+            // 
+            // p_PTZ_Sliders
+            // 
+            this.p_PTZ_Sliders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SlidersFPercent);
+            this.p_PTZ_Sliders.Controls.Add(this.tB_PTZ_SlidersFText);
+            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SlidersFocus);
+            this.p_PTZ_Sliders.Controls.Add(this.slider_PTZ_AbsFocus);
+            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SliderZPercent);
+            this.p_PTZ_Sliders.Controls.Add(this.tB_PTZ_SlidersZText);
+            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SliderZoom);
+            this.p_PTZ_Sliders.Controls.Add(this.slider_PTZ_AbsZoom);
+            this.p_PTZ_Sliders.Location = new System.Drawing.Point(43, 320);
+            this.p_PTZ_Sliders.Name = "p_PTZ_Sliders";
+            this.p_PTZ_Sliders.Size = new System.Drawing.Size(200, 68);
+            this.p_PTZ_Sliders.TabIndex = 101;
+            // 
+            // l_PTZ_SlidersFPercent
+            // 
+            this.l_PTZ_SlidersFPercent.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.l_PTZ_SlidersFPercent.AutoSize = true;
+            this.l_PTZ_SlidersFPercent.Location = new System.Drawing.Point(166, 50);
+            this.l_PTZ_SlidersFPercent.Name = "l_PTZ_SlidersFPercent";
+            this.l_PTZ_SlidersFPercent.Size = new System.Drawing.Size(15, 13);
+            this.l_PTZ_SlidersFPercent.TabIndex = 7;
+            this.l_PTZ_SlidersFPercent.Text = "%";
+            // 
+            // tB_PTZ_SlidersFText
+            // 
+            this.tB_PTZ_SlidersFText.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tB_PTZ_SlidersFText.Location = new System.Drawing.Point(127, 47);
+            this.tB_PTZ_SlidersFText.Name = "tB_PTZ_SlidersFText";
+            this.tB_PTZ_SlidersFText.Size = new System.Drawing.Size(39, 20);
+            this.tB_PTZ_SlidersFText.TabIndex = 6;
+            this.tB_PTZ_SlidersFText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PTZ_SlidersFText_KeyPress);
+            this.tB_PTZ_SlidersFText.Leave += new System.EventHandler(this.tB_PTZ_SlidersFText_Leave);
+            // 
+            // l_PTZ_SlidersFocus
+            // 
+            this.l_PTZ_SlidersFocus.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.l_PTZ_SlidersFocus.AutoSize = true;
+            this.l_PTZ_SlidersFocus.Location = new System.Drawing.Point(129, 31);
+            this.l_PTZ_SlidersFocus.Name = "l_PTZ_SlidersFocus";
+            this.l_PTZ_SlidersFocus.Size = new System.Drawing.Size(36, 13);
+            this.l_PTZ_SlidersFocus.TabIndex = 4;
+            this.l_PTZ_SlidersFocus.Text = "Focus";
+            // 
+            // slider_PTZ_AbsFocus
+            // 
+            this.slider_PTZ_AbsFocus.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.slider_PTZ_AbsFocus.Location = new System.Drawing.Point(103, 4);
+            this.slider_PTZ_AbsFocus.Maximum = 100;
+            this.slider_PTZ_AbsFocus.Name = "slider_PTZ_AbsFocus";
+            this.slider_PTZ_AbsFocus.Size = new System.Drawing.Size(94, 45);
+            this.slider_PTZ_AbsFocus.TabIndex = 5;
+            this.slider_PTZ_AbsFocus.TickFrequency = 0;
+            this.slider_PTZ_AbsFocus.Scroll += new System.EventHandler(this.slider_PTZ_AbsFocus_Scroll);
+            this.slider_PTZ_AbsFocus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsFocus_MouseDown);
+            this.slider_PTZ_AbsFocus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsFocus_MouseUp);
+            // 
+            // l_PTZ_SliderZPercent
+            // 
+            this.l_PTZ_SliderZPercent.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.l_PTZ_SliderZPercent.AutoSize = true;
+            this.l_PTZ_SliderZPercent.Location = new System.Drawing.Point(63, 49);
+            this.l_PTZ_SliderZPercent.Name = "l_PTZ_SliderZPercent";
+            this.l_PTZ_SliderZPercent.Size = new System.Drawing.Size(15, 13);
+            this.l_PTZ_SliderZPercent.TabIndex = 3;
+            this.l_PTZ_SliderZPercent.Text = "%";
+            // 
+            // tB_PTZ_SlidersZText
+            // 
+            this.tB_PTZ_SlidersZText.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tB_PTZ_SlidersZText.Location = new System.Drawing.Point(24, 46);
+            this.tB_PTZ_SlidersZText.Name = "tB_PTZ_SlidersZText";
+            this.tB_PTZ_SlidersZText.Size = new System.Drawing.Size(39, 20);
+            this.tB_PTZ_SlidersZText.TabIndex = 2;
+            this.tB_PTZ_SlidersZText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PTZ_SlidersZText_KeyPress);
+            this.tB_PTZ_SlidersZText.Leave += new System.EventHandler(this.tB_PTZ_SlidersZText_Leave);
+            // 
+            // l_PTZ_SliderZoom
+            // 
+            this.l_PTZ_SliderZoom.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.l_PTZ_SliderZoom.AutoSize = true;
+            this.l_PTZ_SliderZoom.Location = new System.Drawing.Point(26, 30);
+            this.l_PTZ_SliderZoom.Name = "l_PTZ_SliderZoom";
+            this.l_PTZ_SliderZoom.Size = new System.Drawing.Size(34, 13);
+            this.l_PTZ_SliderZoom.TabIndex = 0;
+            this.l_PTZ_SliderZoom.Text = "Zoom";
+            // 
+            // slider_PTZ_AbsZoom
+            // 
+            this.slider_PTZ_AbsZoom.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.slider_PTZ_AbsZoom.Location = new System.Drawing.Point(0, 3);
+            this.slider_PTZ_AbsZoom.Maximum = 100;
+            this.slider_PTZ_AbsZoom.Name = "slider_PTZ_AbsZoom";
+            this.slider_PTZ_AbsZoom.Size = new System.Drawing.Size(94, 45);
+            this.slider_PTZ_AbsZoom.TabIndex = 1;
+            this.slider_PTZ_AbsZoom.TickFrequency = 0;
+            this.slider_PTZ_AbsZoom.Scroll += new System.EventHandler(this.slider_PTZ_AbsZoom_Scroll);
+            this.slider_PTZ_AbsZoom.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsZoom_MouseDown);
+            this.slider_PTZ_AbsZoom.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsZoom_MouseUp);
             // 
             // pB_Panoramic
             // 
@@ -642,6 +757,10 @@ namespace SSUtility2 {
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_PlayerPanel.ResumeLayout(false);
+            this.p_PTZ_Sliders.ResumeLayout(false);
+            this.p_PTZ_Sliders.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsFocus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
             this.ResumeLayout(false);
@@ -702,5 +821,14 @@ namespace SSUtility2 {
         public PictureBox pB_Panoramic;
         public ToolStripMenuItem Menu_Recording_Video_Global;
         public ToolStripMenuItem Menu_RecordIndicator;
+        private Panel p_PTZ_Sliders;
+        private TrackBar slider_PTZ_AbsZoom;
+        private Label l_PTZ_SliderZoom;
+        private Label l_PTZ_SliderZPercent;
+        private TextBox tB_PTZ_SlidersZText;
+        private Label l_PTZ_SlidersFPercent;
+        private TextBox tB_PTZ_SlidersFText;
+        private Label l_PTZ_SlidersFocus;
+        private TrackBar slider_PTZ_AbsFocus;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

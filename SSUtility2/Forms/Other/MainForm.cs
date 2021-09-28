@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.2.0";
+        public const string version = "v2.8.3.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -88,6 +88,7 @@ namespace SSUtility2 {
                     b_PTZ_FocusPos,
                     b_PTZ_FocusNeg,
                     JoyBack,
+                    p_PTZ_Sliders,
                 };
 
                 HideControlPanel();
@@ -223,6 +224,25 @@ namespace SSUtility2 {
                 c.Show();
                 c.BringToFront();
             }
+
+            p_PTZ_Sliders.Visible = ConfigControl.cpSliders.boolVal;
+            QuerySliders();
+
+            switch (ConfigControl.cpLayout.stringVal) {
+                case "Standard":
+                    b_PTZ_FocusPos.Location = new Point(12, 56);
+                    b_PTZ_ZoomNeg.Location = new Point(224, 248);
+                    break;
+                case "Legacy":
+                    b_PTZ_FocusPos.Location = new Point(224, 248);
+                    b_PTZ_ZoomNeg.Location = new Point(12, 56);
+                    break;
+                default:
+                    b_PTZ_FocusPos.Location = new Point(12, 56);
+                    b_PTZ_ZoomNeg.Location = new Point(224, 248);
+                    break;
+            }
+
             Menu_Settings_Panels_CP.Text = "Hide Control Panel";
             b_Open.Text = "<<";
         }
@@ -306,11 +326,10 @@ namespace SSUtility2 {
         }
 
         void OpenCloseCP() {
-            if (!JoyBack.Visible) {
+            if (!JoyBack.Visible)
                 ShowControlPanel();
-            } else {
+            else
                 HideControlPanel();
-            }
         }
 
         void OpenSettings() {
@@ -361,10 +380,10 @@ namespace SSUtility2 {
             closing = true;
             ConfigControl.CreateConfig(ConfigControl.appFolder + ConfigControl.config);
 
-            if(!startLiteVersion)
-                EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Release();
-
             FFMPEGRecord.StopAll();
+
+            if (!startLiteVersion)
+                EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Release();
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
@@ -1249,6 +1268,96 @@ namespace SSUtility2 {
             } catch(Exception e) {
                 Console.WriteLine(e.ToString());
             }
+        }
+
+        bool draggingZ;
+        bool draggingF;
+
+        void ZScrollFunction(bool send = true) {
+            tB_PTZ_SlidersZText.Text = slider_PTZ_AbsZoom.Value.ToString();
+            if (send)
+                CustomScriptCommands.QuickCommand("abszoom " + Math.Round(655.35 * slider_PTZ_AbsZoom.Value));
+        }
+
+        void FScrollFunction(bool send = true) {
+            tB_PTZ_SlidersFText.Text = slider_PTZ_AbsFocus.Value.ToString();
+            if (send)
+                CustomScriptCommands.QuickCommand("absfocus " + Math.Round(655.35 * slider_PTZ_AbsFocus.Value));
+        }
+
+        private void tB_PTZ_SlidersZText_KeyPress(object sender, KeyPressEventArgs e) {
+            int val = Tools.IsValidVal(sender, 1, 65535);
+
+            if (e.KeyChar == (char)Keys.Enter) {
+                tB_PTZ_SlidersZText.Text = val.ToString();
+                slider_PTZ_AbsZoom.Value = val;
+                ZScrollFunction();
+            }
+        }
+
+        private void tB_PTZ_SlidersZText_Leave(object sender, EventArgs e) {
+            tB_PTZ_SlidersZText.Text = slider_PTZ_AbsZoom.Value.ToString();
+        }
+
+        private void slider_PTZ_AbsZoom_Scroll(object sender, EventArgs e) {
+            if (draggingZ)
+                ZScrollFunction(false);
+        }
+
+        private void slider_PTZ_AbsZoom_MouseDown(object sender, MouseEventArgs e) {
+            draggingZ = true;
+        }
+
+        private void slider_PTZ_AbsZoom_MouseUp(object sender, MouseEventArgs e) {
+            ZScrollFunction();
+            draggingZ = false;
+        }
+    
+        private void tB_PTZ_SlidersFText_KeyPress(object sender, KeyPressEventArgs e) {
+            int val = Tools.IsValidVal(sender, 1, 65535);
+
+            if (e.KeyChar == (char)Keys.Enter) {
+                tB_PTZ_SlidersFText.Text = val.ToString();
+                slider_PTZ_AbsFocus.Value = val;
+                FScrollFunction();
+            }
+        }
+
+        private void tB_PTZ_SlidersFText_Leave(object sender, EventArgs e) {
+            tB_PTZ_SlidersFText.Text = slider_PTZ_AbsFocus.Value.ToString();
+        }
+
+        private void slider_PTZ_AbsFocus_Scroll(object sender, EventArgs e) {
+            if (draggingF)
+                FScrollFunction(false);
+        }
+        private void slider_PTZ_AbsFocus_MouseDown(object sender, MouseEventArgs e) {
+            draggingF = true;
+        }
+
+        private void slider_PTZ_AbsFocus_MouseUp(object sender, MouseEventArgs e) {
+            FScrollFunction();
+            draggingF = false;
+        }
+
+        async Task QuerySliders() {
+            string zoomTb = "0";
+            string focusTb = "0";
+
+            if (InfoPanel.i.isCamera && p_PTZ_Sliders.Visible) {
+                string zoomResponse = await CustomScriptCommands.QuickQuery("queryzoom");
+                if (float.TryParse(OtherCamCom.ConvertQueryResult("queryzoom", zoomResponse), out float zoom))
+                    zoomTb = ((float)Math.Round(zoom / 65535f) * 100).ToString();
+
+                string focusResponse = await CustomScriptCommands.QuickQuery("queryfocus");
+                if (float.TryParse(OtherCamCom.ConvertQueryResult("queryfocus", focusResponse), out float focus))
+                    focusTb = ((float)Math.Round(focus / 65535f) * 100).ToString();
+            }
+
+            tB_PTZ_SlidersZText.Text = zoomTb;
+            tB_PTZ_SlidersFText.Text = focusTb;
+            ZScrollFunction(false);
+            FScrollFunction(false);
         }
 
     } // end of class MainForm

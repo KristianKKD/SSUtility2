@@ -803,6 +803,21 @@ namespace SSUtility2 {
 
             return result;
         }
+        public static int IsValidVal(object sender, int min, int max) {
+            TextBox tb = (TextBox)sender;
+            if (float.TryParse(tb.Text, out float val)) {
+                if (val < min)
+                    val = min;
+                else if (val > max)
+                    val = max;
+
+                val = (float)Math.Truncate(val);
+
+                return (int)val;
+            }
+
+            return -1;
+        }
 
     }
 }

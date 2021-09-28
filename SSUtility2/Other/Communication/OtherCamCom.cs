@@ -184,6 +184,7 @@ namespace SSUtility2 {
                 case "querytilt":
                     returnResult = CalculateTilt(result).ToString();
                     break;
+                case "queryzoom":
                 case "queryfov":
                     returnResult = ReturnedHexValToFloat(result).ToString();
                     break;

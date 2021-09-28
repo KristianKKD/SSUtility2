@@ -4,8 +4,10 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSUtility2 {
-    public partial class SettingsPage : Form {
+namespace SSUtility2
+{
+    public partial class SettingsPage : Form
+    {
 
         Timer resolutionTimer;
         Timer updateControl;
@@ -50,14 +52,16 @@ namespace SSUtility2 {
                 tB_Other_ResolutionHeight.Text = ConfigControl.startupHeight.stringVal;
 
                 cB_IPCon_Port.Text = ConfigControl.savedPort.stringVal;
-                cB_Other_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
-                cB_Other_ForceMode.Text = ConfigControl.forceType.stringVal;
                 cB_Recording_Quality.Text = ConfigControl.recQual.stringVal;
                 cB_Recording_FPS.Text = ConfigControl.recFPS.stringVal;
+                cB_Layout_CP.Text = ConfigControl.cpLayout.stringVal;
                 cB_Startup_PlayerCount.Text = ConfigControl.playerCount.stringVal;
+                cB_Other_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
+                cB_Other_ForceMode.Text = ConfigControl.forceType.stringVal;
 
                 check_Other_ForceCam.Checked = ConfigControl.forceCamera.boolVal;
                 check_Recording_Manual.Checked = ConfigControl.automaticPaths.boolVal;
+                check_Layout_Sliders.Checked = ConfigControl.cpSliders.boolVal;
                 check_Startup_AutoPlay.Checked = ConfigControl.autoPlay.boolVal;
                 check_Startup_QuickFunctions.Checked = ConfigControl.launchQuickFunctions.boolVal;
                 check_Startup_InfoPanel.Checked = ConfigControl.launchInfoPanel.boolVal;
@@ -203,7 +207,7 @@ namespace SSUtility2 {
 
         private void b_Other_ChangeDir_Click(object sender, EventArgs e) {
             bool confirm = Tools.ShowPopup("Moving the directory will reset app configuration AND WILL ALSO DELETE ALL FILES WITHIN THE OLD APP FOLDER!\nYou will have the option to save these files.\nAre you sure you want to continue?", "Warning", null, false);
-            
+
             if (confirm) {
                 bool moveFiles = Tools.ShowPopup("Would you like to move all current directory files to the new directory too?", "Move files?", null, false);
                 string oldAppFolder = ConfigControl.appFolder;
@@ -240,7 +244,7 @@ namespace SSUtility2 {
             ConfigControl.savedIP.UpdateValue(tB_IPCon_Adr.Text);
 
             int parsed;
-            if(int.TryParse(cB_IPCon_Port.Text, out parsed))
+            if (int.TryParse(cB_IPCon_Port.Text, out parsed))
                 ConfigControl.savedPort.UpdateValue(parsed.ToString());
 
             AsyncCamCom.TryConnect(false).ConfigureAwait(false);
@@ -362,7 +366,7 @@ namespace SSUtility2 {
                 }
 
                 OtherCamCom.currentConfig = config;
-            } 
+            }
         }
 
         private void check_Other_Aspect_CheckedChanged(object sender, EventArgs e) {
@@ -649,26 +653,10 @@ namespace SSUtility2 {
         bool draggingZ = false;
         bool draggingF = false;
 
-        int IsValidVal(object sender, int min, int max) {
-            TextBox tb = (TextBox)sender;
-            if (float.TryParse(tb.Text, out float val)) {
-                if (val < min)
-                    val = min;
-                else if (val > max)
-                    val = max;
-
-                val = (float)Math.Truncate(val);
-
-                return (int)val;
-            }
-
-            return -1;
-        }
-
         private void tB_IPCon_PTSpeed_KeyPress(object sender, KeyPressEventArgs e) {
-            int val = IsValidVal(sender, 1, 200);
+            int val = Tools.IsValidVal(sender, 1, 200);
 
-            if(val > -1)
+            if (val > -1)
                 ConfigControl.cameraPTSpeedMultiplier.UpdateValue(val.ToString());
 
             if (e.KeyChar == (char)Keys.Enter) {
@@ -679,10 +667,10 @@ namespace SSUtility2 {
 
         private void slider_IPCon_PTSpeed_Scroll(object sender, EventArgs e) {
             if (draggingPT)
-                PTScrollFunction(sender);
+                PTScrollFunction();
         }
 
-        void PTScrollFunction(object sender) {
+        void PTScrollFunction() {
             TrackBar track = slider_IPCon_PTSpeed;
             ConfigControl.cameraPTSpeedMultiplier.UpdateValue(track.Value.ToString());
             tB_IPCon_PTSpeed.Text = track.Value.ToString();
@@ -693,20 +681,20 @@ namespace SSUtility2 {
         }
 
         private void slider_IPCon_PTSpeed_MouseUp(object sender, MouseEventArgs e) {
-            PTScrollFunction(slider_IPCon_PTSpeed);
+            PTScrollFunction();
             draggingPT = false;
         }
-        
+
         private void tB_IPCon_PTSpeed_Leave(object sender, EventArgs e) {
             TextBox tb = tB_IPCon_PTSpeed;
             int val = ConfigControl.cameraPTSpeedMultiplier.intVal;
             tb.Text = val.ToString();
-            slider_IPCon_PTSpeed.Value =val;
+            slider_IPCon_PTSpeed.Value = val;
         }
 
 
         private void tB_IPCon_ZoomSpeed_KeyPress(object sender, KeyPressEventArgs e) {
-            int val = IsValidVal(sender, 0, 4);
+            int val = Tools.IsValidVal(sender, 0, 4);
 
             if (val > -1)
                 ConfigControl.cameraZoomSpeedMultiplier.UpdateValue(val.ToString());
@@ -719,10 +707,10 @@ namespace SSUtility2 {
 
         private void slider_IPCon_ZoomSpeed_Scroll(object sender, EventArgs e) {
             if (draggingZ)
-                ZoomScrollFunction(slider_IPCon_ZoomSpeed);
+                ZoomScrollFunction();
         }
 
-        void ZoomScrollFunction(object sender) {
+        void ZoomScrollFunction() {
             TrackBar track = slider_IPCon_ZoomSpeed;
             ConfigControl.cameraZoomSpeedMultiplier.UpdateValue(track.Value.ToString());
             tB_IPCon_ZoomSpeed.Text = track.Value.ToString();
@@ -733,7 +721,7 @@ namespace SSUtility2 {
         }
 
         private void slider_IPCon_ZoomSpeed_MouseUp(object sender, MouseEventArgs e) {
-            ZoomScrollFunction(slider_IPCon_ZoomSpeed);
+            ZoomScrollFunction();
             draggingZ = false;
         }
 
@@ -744,9 +732,8 @@ namespace SSUtility2 {
             slider_IPCon_ZoomSpeed.Value = val;
         }
 
-
         private void tB_IPCon_FocusSpeed_KeyPress(object sender, KeyPressEventArgs e) {
-            int val = IsValidVal(sender, 0, 4);
+            int val = Tools.IsValidVal(sender, 0, 4);
 
             if (val > -1)
                 ConfigControl.cameraFocusSpeedMultiplier.UpdateValue(val.ToString());
@@ -759,10 +746,10 @@ namespace SSUtility2 {
 
         private void slider_IPCon_FocusSpeed_Scroll(object sender, EventArgs e) {
             if (draggingF)
-                FocusScrollFunction(slider_IPCon_FocusSpeed);
+                FocusScrollFunction();
         }
 
-        void FocusScrollFunction(object sender) {
+        void FocusScrollFunction() {
             TrackBar track = slider_IPCon_FocusSpeed;
             ConfigControl.cameraFocusSpeedMultiplier.UpdateValue(track.Value.ToString());
             tB_IPCon_FocusSpeed.Text = track.Value.ToString();
@@ -773,7 +760,7 @@ namespace SSUtility2 {
         }
 
         private void slider_IPCon_FocusSpeed_MouseUp(object sender, MouseEventArgs e) {
-            FocusScrollFunction(slider_IPCon_FocusSpeed);
+            FocusScrollFunction();
             draggingF = false;
         }
 
@@ -782,6 +769,27 @@ namespace SSUtility2 {
             int val = ConfigControl.cameraFocusSpeedMultiplier.intVal;
             tb.Text = val.ToString();
             slider_IPCon_FocusSpeed.Value = val;
+        }
+
+        private void cB_Layout_CP_SelectedIndexChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            ConfigControl.cpLayout.UpdateValue(cB_Layout_CP.Text);
+            RefreshCP();
+        }
+
+        private void check_Layout_Sliders_CheckedChanged(object sender, EventArgs e) {
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            ConfigControl.cpSliders.UpdateValue(check_Layout_Sliders.Checked.ToString());
+            RefreshCP();
+        }
+
+        void RefreshCP() {
+            if (MainForm.m.JoyBack.Visible)
+                MainForm.m.ShowControlPanel();
         }
     }
 }
