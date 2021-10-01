@@ -38,16 +38,16 @@ namespace SSUtility2.Hidden
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_Text.Location = new System.Drawing.Point(15, 12);
             this.tB_Text.Name = "tB_Text";
-            this.tB_Text.Size = new System.Drawing.Size(678, 20);
+            this.tB_Text.Size = new System.Drawing.Size(1309, 20);
             this.tB_Text.TabIndex = 0;
             // 
             // b_Send
             // 
             this.b_Send.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Send.Location = new System.Drawing.Point(618, 38);
+            this.b_Send.Location = new System.Drawing.Point(1249, 38);
             this.b_Send.Name = "b_Send";
-            this.b_Send.Size = new System.Drawing.Size(75, 171);
+            this.b_Send.Size = new System.Drawing.Size(75, 409);
             this.b_Send.TabIndex = 1;
             this.b_Send.Text = "Send";
             this.b_Send.UseVisualStyleBackColor = true;
@@ -55,16 +55,16 @@ namespace SSUtility2.Hidden
             // 
             // l_Send
             // 
-            this.l_Send.Location = new System.Drawing.Point(12, 38);
+            this.l_Send.Location = new System.Drawing.Point(0, 38);
             this.l_Send.Name = "l_Send";
-            this.l_Send.Size = new System.Drawing.Size(600, 174);
+            this.l_Send.Size = new System.Drawing.Size(1243, 409);
             this.l_Send.TabIndex = 2;
             // 
             // UPControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(702, 218);
+            this.ClientSize = new System.Drawing.Size(1333, 456);
             this.Controls.Add(this.l_Send);
             this.Controls.Add(this.b_Send);
             this.Controls.Add(this.tB_Text);
