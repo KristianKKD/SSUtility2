@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.3.1";
+        public const string version = "v2.8.3.2";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -266,7 +266,7 @@ namespace SSUtility2 {
                     lite = true;
                     ShowControlPanel();
                     m.MinimumSize = new Size(0, 0);
-                    m.Size = new Size(305, 340);
+                    m.Size = new Size(305, 410);
                     m.MinimumSize = Size;
                     m.MaximumSize = Size;
 
@@ -382,8 +382,10 @@ namespace SSUtility2 {
 
             FFMPEGRecord.StopAll();
 
-            if (!startLiteVersion)
-                EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Release();
+            try {
+                if (!startLiteVersion)
+                    EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Release();
+            } catch (Exception err) { }
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
@@ -854,7 +856,7 @@ namespace SSUtility2 {
         }
 
         private void p_PlayerPanel_MouseMove(object sender, MouseEventArgs e) {
-            if ((!AsyncCamCom.sock.Connected || lite) && !JoyBack.Visible) {
+            if ((!AsyncCamCom.sock.Connected || lite) && !JoyBack.Visible && !InfoPanel.i.isCamera) {
                 b_Open.Visible = false;
                 return;
             }

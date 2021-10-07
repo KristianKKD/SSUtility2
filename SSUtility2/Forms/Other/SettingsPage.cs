@@ -544,9 +544,7 @@ namespace SSUtility2
             if (!MainForm.m.finishedLoading)
                 return;
 
-            if (updateControl.Enabled)
-                updateControl.Stop();
-
+            updateControl.Stop();
             updateControl.Start();
         }
 
@@ -790,6 +788,13 @@ namespace SSUtility2
         void RefreshCP() {
             if (MainForm.m.JoyBack.Visible)
                 MainForm.m.ShowControlPanel();
+        }
+
+        private void tB_IPCon_Adr_KeyDown(object sender, KeyEventArgs e) {
+            if (e.KeyCode == Keys.Enter) {
+                updateControl.Stop();
+                updateControl.Start();
+            }
         }
     }
 }

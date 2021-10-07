@@ -13,6 +13,30 @@ namespace SSUtility2 {
 
         public static Command currentCom;
 
+        static Timer reconnectTimer;
+
+        static void InitReconnectTimer() {
+            if (reconnectTimer == null) {
+                reconnectTimer = new Timer();
+                reconnectTimer.Interval = 5000;
+                reconnectTimer.Tick += new EventHandler(reconnectTimer_CallBack);
+            }
+
+            reconnectTimer.Stop();
+            reconnectTimer.Start();
+        }
+
+        private static void reconnectTimer_CallBack(object sender, EventArgs e) {
+            DoPingAndReconnect().ConfigureAwait(false);
+        }
+
+        static async Task DoPingAndReconnect() {
+            if (!await OtherCamCom.PingAdr(ConfigControl.savedIP.stringVal) || !sock.Connected) {
+                OtherCamCom.LabelDisplay(false);
+                TryConnect();
+            }
+        }
+
         public static async Task<bool> TryConnect(bool showErrors = false, IPEndPoint customep = null) { //Return true or false if Connect worked
             bool result = true; //needs to be on true
 
@@ -155,6 +179,7 @@ namespace SSUtility2 {
                 connecting = sock.BeginConnect(end, ConnectCallback, null);
 
                 MainForm.m.WriteToResponses("Successfully connected to: " + end.Address.ToString() + ":" + end.Port.ToString(), true);
+                InitReconnectTimer();
                 return true;
             } catch (SocketException ex) {
                 MainForm.m.WriteToResponses(ex.Message, false);

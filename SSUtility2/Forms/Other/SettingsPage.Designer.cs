@@ -401,6 +401,7 @@ namespace SSUtility2
             this.tB_IPCon_Adr.TabIndex = 1;
             this.toolTips.SetToolTip(this.tB_IPCon_Adr, "IP Address of the camera");
             this.tB_IPCon_Adr.TextChanged += new System.EventHandler(this.tB_IPCon_ControlFields_TextChanged);
+            this.tB_IPCon_Adr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tB_IPCon_Adr_KeyDown);
             // 
             // l_IPCon_Connected
             // 
