@@ -58,6 +58,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <Prefer32Bit>false</Prefer32Bit>
     <NoWarn>1998, 4014, 0162</NoWarn>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Other\SSLogo.ico</ApplicationIcon>
@@ -108,7 +109,7 @@
       <HintPath>..\packages\Costura.Fody.5.3.0\lib\netstandard1.0\Costura.dll</HintPath>
     </Reference>
     <Reference Include="EasyPlayer-RTSP.NetSDK">
-      <HintPath>..\..\EasyPlayerNetSDK\obj\Debug\EasyPlayer-RTSP.NetSDK.dll</HintPath>
+      <HintPath>..\..\EasyPlayerNetSDK\obj\Release\EasyPlayer-RTSP.NetSDK.dll</HintPath>
     </Reference>
     <Reference Include="KaiserControls">
       <HintPath>..\..\KaiserControls\KaiserControls\bin\Release\KaiserControls.dll</HintPath>
@@ -493,6 +494,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Other\app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

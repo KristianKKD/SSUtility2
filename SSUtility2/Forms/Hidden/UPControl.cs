@@ -15,13 +15,13 @@ namespace SSUtility2.Hidden {
         }
 
         private void b_Send_Click(object sender, EventArgs e) {
-            SendUP(tB_Text.Text);
+            SendUP("1234");
         }
 
         static uint incrementalCounter = 0;
         static int messagePos = 0;
 
-        void SendUP(string text) {
+        public static void SendUP(string text) {
             try {
                 messagePos = 0;
                 byte[] SYNC = new byte[] { 0xA5, 0x00 }; //Low endian
@@ -33,7 +33,7 @@ namespace SSUtility2.Hidden {
                 byte[] DATALEN = GetDataLen(DATA);
 
                 //SYNC:2, TIME:4, FID:2, XT:4, CMD:2, LEN:2, DATA:0-65517, CRC:2    //bytes (8 bits)
-                byte[] message = new byte[18];
+                byte[] message = new byte[65535]; //18 for debug, 65535 for full
 
                 AddToMessage(message, SYNC);
                 AddToMessage(message, FID);
@@ -41,15 +41,15 @@ namespace SSUtility2.Hidden {
                 AddToMessage(message, XT);
                 AddToMessage(message, CMD);
                 AddToMessage(message, DATALEN);
-                //AddToMessage(message, DATA);
+                AddToMessage(message, DATA);
 
-                byte[] CRC = GetCRC(message);
+                var result = Crc16.ComputeChecksum(message);
+                byte[] CRC = BitConverter.GetBytes(result);
 
                 AddToMessage(message, CRC);
 
                 //AsyncCamCom.SendNonAsync(message);
                 incrementalCounter++;
-
 
                 string s = "";
                 for (int i = 0; i < message.Length; i++) {
@@ -57,12 +57,13 @@ namespace SSUtility2.Hidden {
                         s += "... ";
                         i = message.Length - 2;
                     }
-                        s += message[i].ToString("X") + " ";
+                    s += message[i].ToString("X") + " ";
                 }
 
-                l_Send.Text = s;
+                //l_Send.Text = s;
+                Console.WriteLine(s);
             } catch (Exception e) {
-                MessageBox.Show("UP\n" + e.ToString());
+                Console.WriteLine("FAIL\n" + e.ToString());
             }
         }
 
@@ -83,7 +84,10 @@ namespace SSUtility2.Hidden {
 
         static byte[] GetMillisecondTime() {
             byte[] time = new byte[4];
-            time = BitConverter.GetBytes(DateTime.Now.Millisecond);
+            var temp = BitConverter.GetBytes(DateTimeOffset.Now.ToUnixTimeSeconds());
+            for (int i = 0; i < 4; i++)
+                time[i] = temp[i];
+
             return time;
         }
 
@@ -91,7 +95,7 @@ namespace SSUtility2.Hidden {
             //byte[] XT = new byte[4] { 0x00, 0x00, 0x00, 0x00 };
             return new byte[4];
         }
-        
+
         static byte[] GetCMD(string text) {
             byte[] cmd = LowEndianConvert(Convert.ToUInt16(text, 16));
             return cmd;
@@ -110,47 +114,48 @@ namespace SSUtility2.Hidden {
             return new byte[65517];
         }
 
-        static byte[] GetCRC(byte[] message) {
-            string stringcrc = "";
-            for (int i = 0; i < message.Length; i++)
-                stringcrc += Convert.ToString(message[i], 2).PadLeft(8, '0');
-
-            return CalculateCRC(stringcrc);
+        public static byte[] HexToBytes(string input) {
+            byte[] result = new byte[input.Length / 2];
+            for (int i = 0; i < result.Length; i++)
+                result[i] = Convert.ToByte(input.Substring(2 * i, 2), 16);
+            return result;
         }
 
-        static byte[] CalculateCRC(string input) {
-            int resultLength = 16;
-            string divisor = "1000000100001";
+        public static class Crc16
+        {
+            const ushort polynomial = 0x1021;
+            static readonly ushort[] table = new ushort[256];
 
-            for (int i = 0; i < resultLength; i++)
-                input += "0";
-
-            char[] dividend = input.ToCharArray();
-
-            for (int i = 0; i < dividend.Length - resultLength; i++) {
-                if (dividend[i] == '1') {
-                    for (int o = 0; o < divisor.Length; o++) {
-                        if (dividend.Length < i + o + 1) //if there are no more bits in input
-                            break;
-
-                        if (dividend[i + o] == divisor[o])
-                            dividend[i + o] = '0';
-                        else
-                            dividend[i + o] = '1';
-                    }
+            public static ushort ComputeChecksum(byte[] bytes) {
+                ushort crc = 0;
+                for (int i = 0; i < bytes.Length; ++i) {
+                    byte index = unchecked((byte)(crc ^ bytes[i]));
+                    crc = (ushort)((crc >> 8) ^ table[index]);
                 }
+                return crc;
             }
 
-            string result = "";
+            public static string ToBinary(byte data) {
+                return string.Join(" ", Convert.ToString(data, 2).PadLeft(8, '0'));
+            }
 
-            for (int i = dividend.Length - resultLength; i < dividend.Length; i++)
-                result += dividend[i];
-
-            byte[] CRC = new byte[2];
-            for (int i = 0; i < 2; ++i)
-                CRC[i] = Convert.ToByte(result.Substring(8 * i, 8), 2);
-
-            return CRC;
+            static Crc16() {
+                ushort value;
+                ushort temp;
+                for (ushort i = 0; i < table.Length; ++i) {
+                    value = 0;
+                    temp = i;
+                    for (byte j = 0; j < 8; ++j) {
+                        if (((value ^ temp) & 0x0001) != 0) {
+                            value = (ushort)((value >> 1) ^ polynomial);
+                        } else {
+                            value >>= 1;
+                        }
+                        temp >>= 1;
+                    }
+                    table[i] = value;
+                }
+            }
         }
 
     }
