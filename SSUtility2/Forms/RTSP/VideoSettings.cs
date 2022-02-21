@@ -265,7 +265,7 @@ namespace SSUtility2 {
         }
 
         private void b_Play_Click(object sender, EventArgs e) {
-            myDetached.Play(true, false);
+            myDetached.Play(true, true);
         }
 
         private void b_Stop_Click(object sender, EventArgs e) {

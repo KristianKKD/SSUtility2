@@ -130,7 +130,7 @@ namespace SSUtility2 {
                 string fullPath = dgv_Media.Rows[e.RowIndex].Cells[3].Value.ToString();
                 Process.Start("explorer.exe", @"/select," + fullPath);
             }catch(Exception err) {
-                MessageBox.Show("Failed to find path!\n" + e.ToString());
+                MessageBox.Show("Failed to find path!\n" + err.ToString());
             }
         }
 

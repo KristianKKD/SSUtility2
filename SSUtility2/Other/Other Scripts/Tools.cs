@@ -494,9 +494,8 @@ namespace SSUtility2 {
         }
 
         public static void CopyFiles(string destination, string[] sourceDir) {
-            foreach (string file in sourceDir) {
+            foreach (string file in sourceDir)
                 CopySingleFile(destination, file, true);
-            }
         }
 
         public static void SaveTextFile(string[] lines, string name = null) {
@@ -555,9 +554,9 @@ namespace SSUtility2 {
         }
 
         public static void ResetFile(string path) {
-            if (File.Exists(path)) {
+            if (File.Exists(path))
                 File.Delete(path);
-            }
+
             var newFile = File.Create(path);
             newFile.Close();
         }
@@ -571,9 +570,8 @@ namespace SSUtility2 {
                 File.Delete(file);
             }
 
-            foreach (string dir in dirs) {
+            foreach (string dir in dirs)
                 DeleteDirectory(dir);
-            }
 
             Directory.Delete(oldFolderPath, false);
         }

@@ -1,10 +1,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29418.71
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSUtility2", "SSUtility2\SSUtility2.csproj", "{F84B85DB-F1C8-441B-B61B-F21C814D7215}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaiserControls", "..\KaiserControls\KaiserControls\KaiserControls.csproj", "{104A7E26-594E-4621-9AE7-0163BDCDE920}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyPlayer-RTSP.NetSDK", "..\EasyPlayerNetSDK\EasyPlayer-RTSP.NetSDK.csproj", "{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,18 @@ Global
 		{104A7E26-594E-4621-9AE7-0163BDCDE920}.Release|x64.Build.0 = Release|Any CPU
 		{104A7E26-594E-4621-9AE7-0163BDCDE920}.Release|x86.ActiveCfg = Release|Any CPU
 		{104A7E26-594E-4621-9AE7-0163BDCDE920}.Release|x86.Build.0 = Release|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|x64.Build.0 = Debug|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Debug|x86.Build.0 = Debug|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|x64.ActiveCfg = Release|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|x64.Build.0 = Release|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|x86.ActiveCfg = Release|Any CPU
+		{4CCDF0E5-EEE4-45A6-A394-0B043B20E569}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

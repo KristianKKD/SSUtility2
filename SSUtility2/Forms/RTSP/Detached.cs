@@ -64,7 +64,7 @@ namespace SSUtility2 {
             p_Player.Refresh();
         }
 
-        public async Task Play(bool showErrors, bool doPing = true) {
+        public async Task Play(bool showErrors, bool doPing = true, string customAdr = "") {
             try {
                 if (MainForm.m.lite && settings.isMainPlayer) {
                     settings.channelID = 1;
@@ -78,7 +78,9 @@ namespace SSUtility2 {
                     return;
                 }
 
-                string fullAdr = settings.GetCombined();
+                string fullAdr = customAdr;
+                if(fullAdr == "")
+                    fullAdr = settings.GetCombined();
 
                 Uri combinedUrl = ConfirmAdr(showErrors, fullAdr, doPing);
                 if (combinedUrl == null)

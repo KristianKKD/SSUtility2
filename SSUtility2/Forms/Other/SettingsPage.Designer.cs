@@ -106,6 +106,8 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
+            this.l_Layout_MainForm = new System.Windows.Forms.Label();
+            this.cB_Layout_MainForm = new System.Windows.Forms.ComboBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_FocusSpeed)).BeginInit();
@@ -679,6 +681,8 @@ namespace SSUtility2
             // 
             // tP_Layout
             // 
+            this.tP_Layout.Controls.Add(this.l_Layout_MainForm);
+            this.tP_Layout.Controls.Add(this.cB_Layout_MainForm);
             this.tP_Layout.Controls.Add(this.check_Layout_Sliders);
             this.tP_Layout.Controls.Add(this.l_Layout_CP);
             this.tP_Layout.Controls.Add(this.cB_Layout_CP);
@@ -1128,6 +1132,28 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
+            // l_Layout_MainForm
+            // 
+            this.l_Layout_MainForm.AutoSize = true;
+            this.l_Layout_MainForm.Location = new System.Drawing.Point(3, 74);
+            this.l_Layout_MainForm.Name = "l_Layout_MainForm";
+            this.l_Layout_MainForm.Size = new System.Drawing.Size(91, 13);
+            this.l_Layout_MainForm.TabIndex = 4;
+            this.l_Layout_MainForm.Text = "Main Form Layout";
+            // 
+            // cB_Layout_MainForm
+            // 
+            this.cB_Layout_MainForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Layout_MainForm.FormattingEnabled = true;
+            this.cB_Layout_MainForm.Items.AddRange(new object[] {
+            "Standard",
+            "Legacy"});
+            this.cB_Layout_MainForm.Location = new System.Drawing.Point(112, 71);
+            this.cB_Layout_MainForm.Name = "cB_Layout_MainForm";
+            this.cB_Layout_MainForm.Size = new System.Drawing.Size(121, 21);
+            this.cB_Layout_MainForm.TabIndex = 3;
+            this.cB_Layout_MainForm.SelectedIndexChanged += new System.EventHandler(this.cB_Layout_MainForm_SelectedIndexChanged);
+            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1250,5 +1276,7 @@ namespace SSUtility2
         private System.Windows.Forms.Label l_Layout_CP;
         private System.Windows.Forms.ComboBox cB_Layout_CP;
         private System.Windows.Forms.CheckBox check_Layout_Sliders;
+        private System.Windows.Forms.Label l_Layout_MainForm;
+        private System.Windows.Forms.ComboBox cB_Layout_MainForm;
     }
 }

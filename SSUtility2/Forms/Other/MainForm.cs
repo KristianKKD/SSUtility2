@@ -12,7 +12,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.3.3";
+        public const string version = "v2.8.4.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -106,6 +106,8 @@ namespace SSUtility2 {
 
                 if (startLiteVersion)
                     LiteToggle();
+                else if (ConfigControl.legacyLayout.boolVal)
+                    LoadLegacy();
                 else
                     AttachPlayers().ConfigureAwait(false);
 
@@ -179,6 +181,14 @@ namespace SSUtility2 {
             } catch (Exception e) {
                 MessageBox.Show("ATTACH\n" + e.ToString());
             }
+        }
+
+         void LoadLegacy() {
+            Detached d = new Detached(false);
+            mainPlayer.p_Player = p_Player1;
+            d.p_Player = mainPlayer.p_Player;
+
+            p_PlayerPanel.Hide();
         }
 
         void AttachInfoPanel() {
@@ -1362,5 +1372,49 @@ namespace SSUtility2 {
             FScrollFunction(false);
         }
 
+        private void b_Player1_Stop_Click(object sender, EventArgs e) {
+            mainPlayer.StopPlaying();
+            b_Player1_Stop.Visible = false;
+        }
+
+        private void b_Player1_Play_Click(object sender, EventArgs e) {
+            string full = "";
+            try {
+                if (checkB_Player1_Manual.Checked)
+                    full = tB_Player1_SimpleAdr.Text;
+                else {
+                    string ipaddress = tB_Legacy_IP.Text;
+                    string port = tB_Legacy_Port.Text;
+                    string url = tB_Legacy_RTSP.Text;
+                    string username = tB_Legacy_Username.Text;
+                    string password = tB_Legacy_Password.Text;
+
+                    string userPass = username + ":" + password + "@";
+                    if (username.Length <= 0 && password.Length <= 0)
+                        userPass = "";
+
+                    string colonPort = ":" + port;
+                    if (port.Length <= 0)
+                        colonPort = "";
+
+                    full = "rtsp://" + userPass + ipaddress + colonPort + "/" + url;
+                }
+            } catch (Exception err) {
+                Console.WriteLine(err.ToString());
+            };
+
+            mainPlayer.Play(true, true, full);
+            b_Player1_Stop.Visible = true;
+        }
+
+        private void checkB_Player1_Manual_CheckedChanged(object sender, EventArgs e) {
+            if (checkB_Player1_Manual.Checked) {
+                p_Player1_Simple.Hide();
+                p_Player1_Extended.Show();
+            } else {
+                p_Player1_Extended.Hide();
+                p_Player1_Simple.Show();
+            }
+        }
     } // end of class MainForm
 } // end of namespace SSUtility2

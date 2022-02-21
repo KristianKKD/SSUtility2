@@ -4,10 +4,8 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SSUtility2
-{
-    public partial class SettingsPage : Form
-    {
+namespace SSUtility2 {
+    public partial class SettingsPage : Form {
 
         Timer resolutionTimer;
         Timer updateControl;
@@ -55,6 +53,7 @@ namespace SSUtility2
                 cB_Recording_Quality.Text = ConfigControl.recQual.stringVal;
                 cB_Recording_FPS.Text = ConfigControl.recFPS.stringVal;
                 cB_Layout_CP.Text = ConfigControl.cpLayout.stringVal;
+                cB_Layout_MainForm.Text = ConfigControl.legacyLayout.stringVal;
                 cB_Startup_PlayerCount.Text = ConfigControl.playerCount.stringVal;
                 cB_Other_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
                 cB_Other_ForceMode.Text = ConfigControl.forceType.stringVal;
@@ -795,6 +794,13 @@ namespace SSUtility2
                 updateControl.Stop();
                 updateControl.Start();
             }
+        }
+
+        private void cB_Layout_MainForm_SelectedIndexChanged(object sender, EventArgs e){
+            if (!MainForm.m.finishedLoading)
+                return;
+
+            ConfigControl.legacyLayout.UpdateValue((cB_Layout_MainForm.Text.ToUpper() == "LEGACY").ToString());
         }
     }
 }

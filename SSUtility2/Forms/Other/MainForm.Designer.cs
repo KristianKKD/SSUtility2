@@ -108,6 +108,57 @@ namespace SSUtility2 {
             this.b_PTZ_Down = new System.Windows.Forms.Button();
             this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
             this.b_PTZ_Up = new System.Windows.Forms.Button();
+            this.p_Legacy = new System.Windows.Forms.Panel();
+            this.p_Legacy_Player2 = new System.Windows.Forms.Panel();
+            this.p_Legacy_Player1 = new System.Windows.Forms.Panel();
+            this.p_Player1 = new System.Windows.Forms.Panel();
+            this.l_Name = new System.Windows.Forms.Label();
+            this.tB_Player1_Name = new System.Windows.Forms.TextBox();
+            this.p_Player1_Simple = new System.Windows.Forms.Panel();
+            this.tB_Player1_SimpleAdr = new System.Windows.Forms.TextBox();
+            this.l_Player1_SimpleAdr = new System.Windows.Forms.Label();
+            this.p_Player1_Extended = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.l_Player1_Type = new System.Windows.Forms.Label();
+            this.cB_Player1_Type = new System.Windows.Forms.ComboBox();
+            this.l_Player1_RTSP = new System.Windows.Forms.Label();
+            this.tB_Player1_Password = new System.Windows.Forms.TextBox();
+            this.tB_Player1_Adr = new System.Windows.Forms.TextBox();
+            this.l_Player1_Buffering = new System.Windows.Forms.Label();
+            this.l_Player1_Password = new System.Windows.Forms.Label();
+            this.l_Player1_Username = new System.Windows.Forms.Label();
+            this.tB_Player1_Port = new System.Windows.Forms.TextBox();
+            this.tB_Player1_Buffering = new System.Windows.Forms.TextBox();
+            this.l_Player1_Port = new System.Windows.Forms.Label();
+            this.tB_Player1_Username = new System.Windows.Forms.TextBox();
+            this.tB_Player1_RTSP = new System.Windows.Forms.TextBox();
+            this.l_Player1_Adr = new System.Windows.Forms.Label();
+            this.b_Player1_Stop = new System.Windows.Forms.Button();
+            this.checkB_Player1_Manual = new System.Windows.Forms.CheckBox();
+            this.b_Player1_Play = new System.Windows.Forms.Button();
+            this.l_Legacy_CP = new System.Windows.Forms.Panel();
+            this.l_Legacy_Password = new System.Windows.Forms.Label();
+            this.tB_Legacy_Password = new System.Windows.Forms.TextBox();
+            this.l_Legacy_Username = new System.Windows.Forms.Label();
+            this.tB_Legacy_Username = new System.Windows.Forms.TextBox();
+            this.b_Legacy_Connect = new System.Windows.Forms.Button();
+            this.l_Legacy_RTSP = new System.Windows.Forms.Label();
+            this.tB_Legacy_RTSP = new System.Windows.Forms.TextBox();
+            this.l_legacy_Port = new System.Windows.Forms.Label();
+            this.tB_Legacy_Port = new System.Windows.Forms.TextBox();
+            this.l_Legacy_IP = new System.Windows.Forms.Label();
+            this.l_Legacy_IPCon = new System.Windows.Forms.Label();
+            this.tB_Legacy_IP = new System.Windows.Forms.TextBox();
+            this.l_Legacy_PTZ = new System.Windows.Forms.Label();
+            this.b_Legacy_Up = new System.Windows.Forms.Button();
+            this.Legacy_JoyBack = new Kaiser.JoyBack();
+            this.b_Legacy_FocusNeg = new System.Windows.Forms.Button();
+            this.b_Legacy_ZoomPos = new System.Windows.Forms.Button();
+            this.b_Legacy_Down = new System.Windows.Forms.Button();
+            this.b_Legacy_Left = new System.Windows.Forms.Button();
+            this.b_Legacy_ZoomNeg = new System.Windows.Forms.Button();
+            this.b_Legacy_FocusPos = new System.Windows.Forms.Button();
+            this.b_Legacy_Right = new System.Windows.Forms.Button();
             this.MenuBar.SuspendLayout();
             this.p_PlayerPanel.SuspendLayout();
             this.p_PTZ_Sliders.SuspendLayout();
@@ -115,6 +166,12 @@ namespace SSUtility2 {
             ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
+            this.p_Legacy.SuspendLayout();
+            this.p_Legacy_Player1.SuspendLayout();
+            this.p_Player1_Simple.SuspendLayout();
+            this.p_Player1_Extended.SuspendLayout();
+            this.l_Legacy_CP.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Legacy_JoyBack)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -737,6 +794,564 @@ namespace SSUtility2 {
             this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
             this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
             // 
+            // p_Legacy
+            // 
+            this.p_Legacy.Controls.Add(this.p_Legacy_Player2);
+            this.p_Legacy.Controls.Add(this.p_Legacy_Player1);
+            this.p_Legacy.Controls.Add(this.l_Legacy_CP);
+            this.p_Legacy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.p_Legacy.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.p_Legacy.Location = new System.Drawing.Point(0, 0);
+            this.p_Legacy.Name = "p_Legacy";
+            this.p_Legacy.Size = new System.Drawing.Size(1264, 681);
+            this.p_Legacy.TabIndex = 32;
+            this.p_Legacy.Visible = false;
+            // 
+            // p_Legacy_Player2
+            // 
+            this.p_Legacy_Player2.BackColor = System.Drawing.SystemColors.Menu;
+            this.p_Legacy_Player2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_Legacy_Player2.Location = new System.Drawing.Point(727, 30);
+            this.p_Legacy_Player2.Name = "p_Legacy_Player2";
+            this.p_Legacy_Player2.Size = new System.Drawing.Size(530, 643);
+            this.p_Legacy_Player2.TabIndex = 123;
+            // 
+            // p_Legacy_Player1
+            // 
+            this.p_Legacy_Player1.BackColor = System.Drawing.SystemColors.Menu;
+            this.p_Legacy_Player1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_Legacy_Player1.Controls.Add(this.p_Player1);
+            this.p_Legacy_Player1.Controls.Add(this.l_Name);
+            this.p_Legacy_Player1.Controls.Add(this.tB_Player1_Name);
+            this.p_Legacy_Player1.Controls.Add(this.p_Player1_Simple);
+            this.p_Legacy_Player1.Controls.Add(this.p_Player1_Extended);
+            this.p_Legacy_Player1.Controls.Add(this.b_Player1_Stop);
+            this.p_Legacy_Player1.Controls.Add(this.checkB_Player1_Manual);
+            this.p_Legacy_Player1.Controls.Add(this.b_Player1_Play);
+            this.p_Legacy_Player1.Location = new System.Drawing.Point(185, 30);
+            this.p_Legacy_Player1.Name = "p_Legacy_Player1";
+            this.p_Legacy_Player1.Size = new System.Drawing.Size(530, 643);
+            this.p_Legacy_Player1.TabIndex = 122;
+            // 
+            // p_Player1
+            // 
+            this.p_Player1.BackColor = System.Drawing.SystemColors.WindowText;
+            this.p_Player1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_Player1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.p_Player1.Location = new System.Drawing.Point(0, 0);
+            this.p_Player1.Name = "p_Player1";
+            this.p_Player1.Size = new System.Drawing.Size(528, 407);
+            this.p_Player1.TabIndex = 63;
+            // 
+            // l_Name
+            // 
+            this.l_Name.AutoSize = true;
+            this.l_Name.Location = new System.Drawing.Point(297, 417);
+            this.l_Name.Name = "l_Name";
+            this.l_Name.Size = new System.Drawing.Size(70, 13);
+            this.l_Name.TabIndex = 62;
+            this.l_Name.Text = "Player Name:";
+            // 
+            // tB_Player1_Name
+            // 
+            this.tB_Player1_Name.Location = new System.Drawing.Point(373, 414);
+            this.tB_Player1_Name.Name = "tB_Player1_Name";
+            this.tB_Player1_Name.Size = new System.Drawing.Size(149, 20);
+            this.tB_Player1_Name.TabIndex = 55;
+            // 
+            // p_Player1_Simple
+            // 
+            this.p_Player1_Simple.Controls.Add(this.tB_Player1_SimpleAdr);
+            this.p_Player1_Simple.Controls.Add(this.l_Player1_SimpleAdr);
+            this.p_Player1_Simple.Location = new System.Drawing.Point(3, 413);
+            this.p_Player1_Simple.Name = "p_Player1_Simple";
+            this.p_Player1_Simple.Size = new System.Drawing.Size(288, 225);
+            this.p_Player1_Simple.TabIndex = 61;
+            // 
+            // tB_Player1_SimpleAdr
+            // 
+            this.tB_Player1_SimpleAdr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player1_SimpleAdr.Location = new System.Drawing.Point(86, 13);
+            this.tB_Player1_SimpleAdr.Name = "tB_Player1_SimpleAdr";
+            this.tB_Player1_SimpleAdr.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player1_SimpleAdr.TabIndex = 28;
+            // 
+            // l_Player1_SimpleAdr
+            // 
+            this.l_Player1_SimpleAdr.AutoSize = true;
+            this.l_Player1_SimpleAdr.Location = new System.Drawing.Point(3, 16);
+            this.l_Player1_SimpleAdr.Name = "l_Player1_SimpleAdr";
+            this.l_Player1_SimpleAdr.Size = new System.Drawing.Size(80, 13);
+            this.l_Player1_SimpleAdr.TabIndex = 27;
+            this.l_Player1_SimpleAdr.Text = "RTSP Address:";
+            // 
+            // p_Player1_Extended
+            // 
+            this.p_Player1_Extended.Controls.Add(this.label1);
+            this.p_Player1_Extended.Controls.Add(this.l_Player1_Type);
+            this.p_Player1_Extended.Controls.Add(this.cB_Player1_Type);
+            this.p_Player1_Extended.Controls.Add(this.l_Player1_RTSP);
+            this.p_Player1_Extended.Controls.Add(this.tB_Player1_Password);
+            this.p_Player1_Extended.Controls.Add(this.tB_Player1_Adr);
+            this.p_Player1_Extended.Controls.Add(this.l_Player1_Buffering);
+            this.p_Player1_Extended.Controls.Add(this.l_Player1_Password);
+            this.p_Player1_Extended.Controls.Add(this.l_Player1_Username);
+            this.p_Player1_Extended.Controls.Add(this.tB_Player1_Port);
+            this.p_Player1_Extended.Controls.Add(this.tB_Player1_Buffering);
+            this.p_Player1_Extended.Controls.Add(this.l_Player1_Port);
+            this.p_Player1_Extended.Controls.Add(this.tB_Player1_Username);
+            this.p_Player1_Extended.Controls.Add(this.tB_Player1_RTSP);
+            this.p_Player1_Extended.Controls.Add(this.l_Player1_Adr);
+            this.p_Player1_Extended.Location = new System.Drawing.Point(3, 413);
+            this.p_Player1_Extended.Name = "p_Player1_Extended";
+            this.p_Player1_Extended.Size = new System.Drawing.Size(288, 225);
+            this.p_Player1_Extended.TabIndex = 60;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(7, 193);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(275, 13);
+            this.label1.TabIndex = 49;
+            this.label1.Text = "*Changed fields will not apply until the stream is replayed*";
+            // 
+            // l_Player1_Type
+            // 
+            this.l_Player1_Type.AutoSize = true;
+            this.l_Player1_Type.Location = new System.Drawing.Point(3, 17);
+            this.l_Player1_Type.Name = "l_Player1_Type";
+            this.l_Player1_Type.Size = new System.Drawing.Size(77, 13);
+            this.l_Player1_Type.TabIndex = 2;
+            this.l_Player1_Type.Text = "Encoder Type:";
+            // 
+            // cB_Player1_Type
+            // 
+            this.cB_Player1_Type.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cB_Player1_Type.FormattingEnabled = true;
+            this.cB_Player1_Type.Items.AddRange(new object[] {
+            "IONodes - Daylight",
+            "IONodes - Thermal",
+            "VIVOTEK",
+            "BOSCH"});
+            this.cB_Player1_Type.Location = new System.Drawing.Point(86, 14);
+            this.cB_Player1_Type.Name = "cB_Player1_Type";
+            this.cB_Player1_Type.Size = new System.Drawing.Size(191, 21);
+            this.cB_Player1_Type.TabIndex = 5;
+            this.cB_Player1_Type.Text = "Daylight";
+            // 
+            // l_Player1_RTSP
+            // 
+            this.l_Player1_RTSP.AutoSize = true;
+            this.l_Player1_RTSP.Location = new System.Drawing.Point(3, 91);
+            this.l_Player1_RTSP.Name = "l_Player1_RTSP";
+            this.l_Player1_RTSP.Size = new System.Drawing.Size(69, 13);
+            this.l_Player1_RTSP.TabIndex = 2;
+            this.l_Player1_RTSP.Text = "RTSP String:";
+            // 
+            // tB_Player1_Password
+            // 
+            this.tB_Player1_Password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player1_Password.Location = new System.Drawing.Point(86, 170);
+            this.tB_Player1_Password.Name = "tB_Player1_Password";
+            this.tB_Player1_Password.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player1_Password.TabIndex = 4;
+            this.tB_Player1_Password.Text = "admin";
+            // 
+            // tB_Player1_Adr
+            // 
+            this.tB_Player1_Adr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player1_Adr.Location = new System.Drawing.Point(86, 41);
+            this.tB_Player1_Adr.Name = "tB_Player1_Adr";
+            this.tB_Player1_Adr.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player1_Adr.TabIndex = 4;
+            this.tB_Player1_Adr.Text = "192.168.1.71";
+            // 
+            // l_Player1_Buffering
+            // 
+            this.l_Player1_Buffering.AutoSize = true;
+            this.l_Player1_Buffering.Location = new System.Drawing.Point(3, 117);
+            this.l_Player1_Buffering.Name = "l_Player1_Buffering";
+            this.l_Player1_Buffering.Size = new System.Drawing.Size(77, 13);
+            this.l_Player1_Buffering.TabIndex = 2;
+            this.l_Player1_Buffering.Text = "Buffering (ms): ";
+            // 
+            // l_Player1_Password
+            // 
+            this.l_Player1_Password.AutoSize = true;
+            this.l_Player1_Password.Location = new System.Drawing.Point(3, 168);
+            this.l_Player1_Password.Name = "l_Player1_Password";
+            this.l_Player1_Password.Size = new System.Drawing.Size(56, 13);
+            this.l_Player1_Password.TabIndex = 2;
+            this.l_Player1_Password.Text = "Password:";
+            // 
+            // l_Player1_Username
+            // 
+            this.l_Player1_Username.AutoSize = true;
+            this.l_Player1_Username.Location = new System.Drawing.Point(3, 143);
+            this.l_Player1_Username.Name = "l_Player1_Username";
+            this.l_Player1_Username.Size = new System.Drawing.Size(58, 13);
+            this.l_Player1_Username.TabIndex = 2;
+            this.l_Player1_Username.Text = "Username:";
+            // 
+            // tB_Player1_Port
+            // 
+            this.tB_Player1_Port.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player1_Port.Location = new System.Drawing.Point(86, 67);
+            this.tB_Player1_Port.Name = "tB_Player1_Port";
+            this.tB_Player1_Port.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player1_Port.TabIndex = 4;
+            this.tB_Player1_Port.Text = "554";
+            // 
+            // tB_Player1_Buffering
+            // 
+            this.tB_Player1_Buffering.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player1_Buffering.Location = new System.Drawing.Point(86, 118);
+            this.tB_Player1_Buffering.Name = "tB_Player1_Buffering";
+            this.tB_Player1_Buffering.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player1_Buffering.TabIndex = 4;
+            this.tB_Player1_Buffering.Text = "200";
+            // 
+            // l_Player1_Port
+            // 
+            this.l_Player1_Port.AutoSize = true;
+            this.l_Player1_Port.Location = new System.Drawing.Point(3, 68);
+            this.l_Player1_Port.Name = "l_Player1_Port";
+            this.l_Player1_Port.Size = new System.Drawing.Size(29, 13);
+            this.l_Player1_Port.TabIndex = 2;
+            this.l_Player1_Port.Text = "Port:";
+            // 
+            // tB_Player1_Username
+            // 
+            this.tB_Player1_Username.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player1_Username.Location = new System.Drawing.Point(86, 144);
+            this.tB_Player1_Username.Name = "tB_Player1_Username";
+            this.tB_Player1_Username.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player1_Username.TabIndex = 4;
+            this.tB_Player1_Username.Text = "admin";
+            // 
+            // tB_Player1_RTSP
+            // 
+            this.tB_Player1_RTSP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player1_RTSP.Location = new System.Drawing.Point(86, 92);
+            this.tB_Player1_RTSP.Name = "tB_Player1_RTSP";
+            this.tB_Player1_RTSP.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player1_RTSP.TabIndex = 4;
+            this.tB_Player1_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
+            // 
+            // l_Player1_Adr
+            // 
+            this.l_Player1_Adr.AutoSize = true;
+            this.l_Player1_Adr.Location = new System.Drawing.Point(3, 43);
+            this.l_Player1_Adr.Name = "l_Player1_Adr";
+            this.l_Player1_Adr.Size = new System.Drawing.Size(61, 13);
+            this.l_Player1_Adr.TabIndex = 2;
+            this.l_Player1_Adr.Text = "IP Address:";
+            // 
+            // b_Player1_Stop
+            // 
+            this.b_Player1_Stop.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Player1_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Player1_Stop.Location = new System.Drawing.Point(429, 557);
+            this.b_Player1_Stop.Name = "b_Player1_Stop";
+            this.b_Player1_Stop.Size = new System.Drawing.Size(93, 25);
+            this.b_Player1_Stop.TabIndex = 59;
+            this.b_Player1_Stop.Text = "Stop Video Playback";
+            this.b_Player1_Stop.UseVisualStyleBackColor = false;
+            this.b_Player1_Stop.Visible = false;
+            this.b_Player1_Stop.Click += new System.EventHandler(this.b_Player1_Stop_Click);
+            // 
+            // checkB_Player1_Manual
+            // 
+            this.checkB_Player1_Manual.AutoSize = true;
+            this.checkB_Player1_Manual.Location = new System.Drawing.Point(300, 440);
+            this.checkB_Player1_Manual.Name = "checkB_Player1_Manual";
+            this.checkB_Player1_Manual.Size = new System.Drawing.Size(144, 17);
+            this.checkB_Player1_Manual.TabIndex = 57;
+            this.checkB_Player1_Manual.Text = "Extended RTSP Controls";
+            this.checkB_Player1_Manual.UseVisualStyleBackColor = true;
+            this.checkB_Player1_Manual.CheckedChanged += new System.EventHandler(this.checkB_Player1_Manual_CheckedChanged);
+            // 
+            // b_Player1_Play
+            // 
+            this.b_Player1_Play.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Player1_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Player1_Play.Location = new System.Drawing.Point(297, 587);
+            this.b_Player1_Play.Name = "b_Player1_Play";
+            this.b_Player1_Play.Size = new System.Drawing.Size(225, 50);
+            this.b_Player1_Play.TabIndex = 56;
+            this.b_Player1_Play.Text = "Play";
+            this.b_Player1_Play.UseVisualStyleBackColor = false;
+            this.b_Player1_Play.Click += new System.EventHandler(this.b_Player1_Play_Click);
+            // 
+            // l_Legacy_CP
+            // 
+            this.l_Legacy_CP.BackColor = System.Drawing.SystemColors.Menu;
+            this.l_Legacy_CP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.l_Legacy_CP.Controls.Add(this.l_Legacy_Password);
+            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_Password);
+            this.l_Legacy_CP.Controls.Add(this.l_Legacy_Username);
+            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_Username);
+            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Connect);
+            this.l_Legacy_CP.Controls.Add(this.l_Legacy_RTSP);
+            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_RTSP);
+            this.l_Legacy_CP.Controls.Add(this.l_legacy_Port);
+            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_Port);
+            this.l_Legacy_CP.Controls.Add(this.l_Legacy_IP);
+            this.l_Legacy_CP.Controls.Add(this.l_Legacy_IPCon);
+            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_IP);
+            this.l_Legacy_CP.Controls.Add(this.l_Legacy_PTZ);
+            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Up);
+            this.l_Legacy_CP.Controls.Add(this.Legacy_JoyBack);
+            this.l_Legacy_CP.Controls.Add(this.b_Legacy_FocusNeg);
+            this.l_Legacy_CP.Controls.Add(this.b_Legacy_ZoomPos);
+            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Down);
+            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Left);
+            this.l_Legacy_CP.Controls.Add(this.b_Legacy_ZoomNeg);
+            this.l_Legacy_CP.Controls.Add(this.b_Legacy_FocusPos);
+            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Right);
+            this.l_Legacy_CP.Dock = System.Windows.Forms.DockStyle.Left;
+            this.l_Legacy_CP.Location = new System.Drawing.Point(0, 0);
+            this.l_Legacy_CP.Name = "l_Legacy_CP";
+            this.l_Legacy_CP.Size = new System.Drawing.Size(179, 681);
+            this.l_Legacy_CP.TabIndex = 114;
+            // 
+            // l_Legacy_Password
+            // 
+            this.l_Legacy_Password.AutoSize = true;
+            this.l_Legacy_Password.Location = new System.Drawing.Point(11, 164);
+            this.l_Legacy_Password.Name = "l_Legacy_Password";
+            this.l_Legacy_Password.Size = new System.Drawing.Size(53, 13);
+            this.l_Legacy_Password.TabIndex = 125;
+            this.l_Legacy_Password.Text = "Password";
+            // 
+            // tB_Legacy_Password
+            // 
+            this.tB_Legacy_Password.Location = new System.Drawing.Point(68, 161);
+            this.tB_Legacy_Password.Name = "tB_Legacy_Password";
+            this.tB_Legacy_Password.Size = new System.Drawing.Size(94, 20);
+            this.tB_Legacy_Password.TabIndex = 124;
+            // 
+            // l_Legacy_Username
+            // 
+            this.l_Legacy_Username.AutoSize = true;
+            this.l_Legacy_Username.Location = new System.Drawing.Point(11, 138);
+            this.l_Legacy_Username.Name = "l_Legacy_Username";
+            this.l_Legacy_Username.Size = new System.Drawing.Size(55, 13);
+            this.l_Legacy_Username.TabIndex = 123;
+            this.l_Legacy_Username.Text = "Username";
+            // 
+            // tB_Legacy_Username
+            // 
+            this.tB_Legacy_Username.Location = new System.Drawing.Point(68, 135);
+            this.tB_Legacy_Username.Name = "tB_Legacy_Username";
+            this.tB_Legacy_Username.Size = new System.Drawing.Size(94, 20);
+            this.tB_Legacy_Username.TabIndex = 122;
+            // 
+            // b_Legacy_Connect
+            // 
+            this.b_Legacy_Connect.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Legacy_Connect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Legacy_Connect.Location = new System.Drawing.Point(105, 187);
+            this.b_Legacy_Connect.Name = "b_Legacy_Connect";
+            this.b_Legacy_Connect.Size = new System.Drawing.Size(57, 29);
+            this.b_Legacy_Connect.TabIndex = 121;
+            this.b_Legacy_Connect.Text = "Connect";
+            this.b_Legacy_Connect.UseVisualStyleBackColor = false;
+            // 
+            // l_Legacy_RTSP
+            // 
+            this.l_Legacy_RTSP.AutoSize = true;
+            this.l_Legacy_RTSP.Location = new System.Drawing.Point(11, 112);
+            this.l_Legacy_RTSP.Name = "l_Legacy_RTSP";
+            this.l_Legacy_RTSP.Size = new System.Drawing.Size(36, 13);
+            this.l_Legacy_RTSP.TabIndex = 120;
+            this.l_Legacy_RTSP.Text = "RTSP";
+            // 
+            // tB_Legacy_RTSP
+            // 
+            this.tB_Legacy_RTSP.Location = new System.Drawing.Point(68, 109);
+            this.tB_Legacy_RTSP.Name = "tB_Legacy_RTSP";
+            this.tB_Legacy_RTSP.Size = new System.Drawing.Size(94, 20);
+            this.tB_Legacy_RTSP.TabIndex = 119;
+            // 
+            // l_legacy_Port
+            // 
+            this.l_legacy_Port.AutoSize = true;
+            this.l_legacy_Port.Location = new System.Drawing.Point(11, 86);
+            this.l_legacy_Port.Name = "l_legacy_Port";
+            this.l_legacy_Port.Size = new System.Drawing.Size(26, 13);
+            this.l_legacy_Port.TabIndex = 118;
+            this.l_legacy_Port.Text = "Port";
+            // 
+            // tB_Legacy_Port
+            // 
+            this.tB_Legacy_Port.Location = new System.Drawing.Point(68, 83);
+            this.tB_Legacy_Port.Name = "tB_Legacy_Port";
+            this.tB_Legacy_Port.Size = new System.Drawing.Size(94, 20);
+            this.tB_Legacy_Port.TabIndex = 117;
+            // 
+            // l_Legacy_IP
+            // 
+            this.l_Legacy_IP.AutoSize = true;
+            this.l_Legacy_IP.Location = new System.Drawing.Point(11, 60);
+            this.l_Legacy_IP.Name = "l_Legacy_IP";
+            this.l_Legacy_IP.Size = new System.Drawing.Size(17, 13);
+            this.l_Legacy_IP.TabIndex = 116;
+            this.l_Legacy_IP.Text = "IP";
+            // 
+            // l_Legacy_IPCon
+            // 
+            this.l_Legacy_IPCon.AutoSize = true;
+            this.l_Legacy_IPCon.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.l_Legacy_IPCon.Location = new System.Drawing.Point(8, 29);
+            this.l_Legacy_IPCon.Name = "l_Legacy_IPCon";
+            this.l_Legacy_IPCon.Size = new System.Drawing.Size(101, 24);
+            this.l_Legacy_IPCon.TabIndex = 115;
+            this.l_Legacy_IPCon.Text = "IP Control";
+            // 
+            // tB_Legacy_IP
+            // 
+            this.tB_Legacy_IP.Location = new System.Drawing.Point(68, 57);
+            this.tB_Legacy_IP.Name = "tB_Legacy_IP";
+            this.tB_Legacy_IP.Size = new System.Drawing.Size(94, 20);
+            this.tB_Legacy_IP.TabIndex = 114;
+            // 
+            // l_Legacy_PTZ
+            // 
+            this.l_Legacy_PTZ.AutoSize = true;
+            this.l_Legacy_PTZ.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
+            this.l_Legacy_PTZ.Location = new System.Drawing.Point(8, 228);
+            this.l_Legacy_PTZ.Name = "l_Legacy_PTZ";
+            this.l_Legacy_PTZ.Size = new System.Drawing.Size(49, 24);
+            this.l_Legacy_PTZ.TabIndex = 113;
+            this.l_Legacy_PTZ.Text = "PTZ";
+            this.l_Legacy_PTZ.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // b_Legacy_Up
+            // 
+            this.b_Legacy_Up.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_Legacy_Up.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Legacy_Up.Location = new System.Drawing.Point(60, 411);
+            this.b_Legacy_Up.Name = "b_Legacy_Up";
+            this.b_Legacy_Up.Size = new System.Drawing.Size(50, 30);
+            this.b_Legacy_Up.TabIndex = 106;
+            this.b_Legacy_Up.Text = "Up";
+            this.b_Legacy_Up.UseVisualStyleBackColor = false;
+            this.b_Legacy_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
+            this.b_Legacy_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // Legacy_JoyBack
+            // 
+            this.Legacy_JoyBack.BackColor = System.Drawing.Color.Transparent;
+            this.Legacy_JoyBack.Location = new System.Drawing.Point(10, 255);
+            this.Legacy_JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
+            this.Legacy_JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
+            this.Legacy_JoyBack.Name = "Legacy_JoyBack";
+            this.Legacy_JoyBack.Size = new System.Drawing.Size(150, 150);
+            this.Legacy_JoyBack.TabIndex = 112;
+            this.Legacy_JoyBack.TabStop = false;
+            this.Legacy_JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
+            // 
+            // b_Legacy_FocusNeg
+            // 
+            this.b_Legacy_FocusNeg.BackColor = System.Drawing.Color.YellowGreen;
+            this.b_Legacy_FocusNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Legacy_FocusNeg.Location = new System.Drawing.Point(7, 475);
+            this.b_Legacy_FocusNeg.Name = "b_Legacy_FocusNeg";
+            this.b_Legacy_FocusNeg.Size = new System.Drawing.Size(50, 30);
+            this.b_Legacy_FocusNeg.TabIndex = 105;
+            this.b_Legacy_FocusNeg.Text = "F-";
+            this.b_Legacy_FocusNeg.UseVisualStyleBackColor = false;
+            this.b_Legacy_FocusNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomNeg_MouseDown);
+            this.b_Legacy_FocusNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_Legacy_ZoomPos
+            // 
+            this.b_Legacy_ZoomPos.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_Legacy_ZoomPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Legacy_ZoomPos.Location = new System.Drawing.Point(113, 411);
+            this.b_Legacy_ZoomPos.Name = "b_Legacy_ZoomPos";
+            this.b_Legacy_ZoomPos.Size = new System.Drawing.Size(50, 30);
+            this.b_Legacy_ZoomPos.TabIndex = 102;
+            this.b_Legacy_ZoomPos.Text = "Z+";
+            this.b_Legacy_ZoomPos.UseVisualStyleBackColor = false;
+            this.b_Legacy_ZoomPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_FocusPos_MouseDown);
+            this.b_Legacy_ZoomPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_Legacy_Down
+            // 
+            this.b_Legacy_Down.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_Legacy_Down.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Legacy_Down.Location = new System.Drawing.Point(60, 475);
+            this.b_Legacy_Down.Name = "b_Legacy_Down";
+            this.b_Legacy_Down.Size = new System.Drawing.Size(50, 30);
+            this.b_Legacy_Down.TabIndex = 107;
+            this.b_Legacy_Down.Text = "Down";
+            this.b_Legacy_Down.UseVisualStyleBackColor = false;
+            this.b_Legacy_Down.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Down_MouseDown);
+            this.b_Legacy_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_Legacy_Left
+            // 
+            this.b_Legacy_Left.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_Legacy_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Legacy_Left.Location = new System.Drawing.Point(7, 443);
+            this.b_Legacy_Left.Name = "b_Legacy_Left";
+            this.b_Legacy_Left.Size = new System.Drawing.Size(50, 30);
+            this.b_Legacy_Left.TabIndex = 109;
+            this.b_Legacy_Left.Text = "Left";
+            this.b_Legacy_Left.UseVisualStyleBackColor = false;
+            this.b_Legacy_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
+            this.b_Legacy_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_Legacy_ZoomNeg
+            // 
+            this.b_Legacy_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_Legacy_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Legacy_ZoomNeg.Location = new System.Drawing.Point(113, 475);
+            this.b_Legacy_ZoomNeg.Name = "b_Legacy_ZoomNeg";
+            this.b_Legacy_ZoomNeg.Size = new System.Drawing.Size(50, 30);
+            this.b_Legacy_ZoomNeg.TabIndex = 104;
+            this.b_Legacy_ZoomNeg.Text = "Z-";
+            this.b_Legacy_ZoomNeg.UseVisualStyleBackColor = false;
+            this.b_Legacy_ZoomNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomNeg_MouseDown);
+            this.b_Legacy_ZoomNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_Legacy_FocusPos
+            // 
+            this.b_Legacy_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
+            this.b_Legacy_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Legacy_FocusPos.Location = new System.Drawing.Point(7, 411);
+            this.b_Legacy_FocusPos.Name = "b_Legacy_FocusPos";
+            this.b_Legacy_FocusPos.Size = new System.Drawing.Size(50, 30);
+            this.b_Legacy_FocusPos.TabIndex = 103;
+            this.b_Legacy_FocusPos.Text = "F+";
+            this.b_Legacy_FocusPos.UseVisualStyleBackColor = false;
+            this.b_Legacy_FocusPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomPos_MouseDown);
+            this.b_Legacy_FocusPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_Legacy_Right
+            // 
+            this.b_Legacy_Right.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_Legacy_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Legacy_Right.Location = new System.Drawing.Point(113, 443);
+            this.b_Legacy_Right.Name = "b_Legacy_Right";
+            this.b_Legacy_Right.Size = new System.Drawing.Size(50, 30);
+            this.b_Legacy_Right.TabIndex = 108;
+            this.b_Legacy_Right.Text = "Right";
+            this.b_Legacy_Right.UseVisualStyleBackColor = false;
+            this.b_Legacy_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Right_MouseDown);
+            this.b_Legacy_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -745,6 +1360,7 @@ namespace SSUtility2 {
             this.ClientSize = new System.Drawing.Size(1264, 681);
             this.Controls.Add(this.p_PlayerPanel);
             this.Controls.Add(this.MenuBar);
+            this.Controls.Add(this.p_Legacy);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MenuBar;
             this.MinimumSize = new System.Drawing.Size(800, 600);
@@ -763,6 +1379,16 @@ namespace SSUtility2 {
             ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
+            this.p_Legacy.ResumeLayout(false);
+            this.p_Legacy_Player1.ResumeLayout(false);
+            this.p_Legacy_Player1.PerformLayout();
+            this.p_Player1_Simple.ResumeLayout(false);
+            this.p_Player1_Simple.PerformLayout();
+            this.p_Player1_Extended.ResumeLayout(false);
+            this.p_Player1_Extended.PerformLayout();
+            this.l_Legacy_CP.ResumeLayout(false);
+            this.l_Legacy_CP.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Legacy_JoyBack)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -830,5 +1456,56 @@ namespace SSUtility2 {
         private TextBox tB_PTZ_SlidersFText;
         private Label l_PTZ_SlidersFocus;
         private TrackBar slider_PTZ_AbsFocus;
+        private Panel p_Legacy;
+        private Label l_Legacy_PTZ;
+        public JoyBack Legacy_JoyBack;
+        public Button b_Legacy_ZoomPos;
+        public Button b_Legacy_Left;
+        public Button b_Legacy_FocusPos;
+        public Button b_Legacy_Right;
+        public Button b_Legacy_ZoomNeg;
+        public Button b_Legacy_Down;
+        public Button b_Legacy_FocusNeg;
+        public Button b_Legacy_Up;
+        private Panel l_Legacy_CP;
+        private Label l_Legacy_RTSP;
+        private TextBox tB_Legacy_RTSP;
+        private Label l_legacy_Port;
+        private TextBox tB_Legacy_Port;
+        private Label l_Legacy_IP;
+        private Label l_Legacy_IPCon;
+        private TextBox tB_Legacy_IP;
+        public Button b_Legacy_Connect;
+        private Panel p_Legacy_Player1;
+        private Panel p_Legacy_Player2;
+        private Panel p_Player1;
+        private Label l_Name;
+        public TextBox tB_Player1_Name;
+        private Panel p_Player1_Simple;
+        public TextBox tB_Player1_SimpleAdr;
+        public Label l_Player1_SimpleAdr;
+        private Panel p_Player1_Extended;
+        public Label label1;
+        public Label l_Player1_Type;
+        public ComboBox cB_Player1_Type;
+        public Label l_Player1_RTSP;
+        public TextBox tB_Player1_Password;
+        public TextBox tB_Player1_Adr;
+        public Label l_Player1_Buffering;
+        public Label l_Player1_Password;
+        public Label l_Player1_Username;
+        public TextBox tB_Player1_Port;
+        public TextBox tB_Player1_Buffering;
+        public Label l_Player1_Port;
+        public TextBox tB_Player1_Username;
+        public TextBox tB_Player1_RTSP;
+        public Label l_Player1_Adr;
+        public Button b_Player1_Stop;
+        public CheckBox checkB_Player1_Manual;
+        public Button b_Player1_Play;
+        private Label l_Legacy_Password;
+        private TextBox tB_Legacy_Password;
+        private Label l_Legacy_Username;
+        private TextBox tB_Legacy_Username;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
