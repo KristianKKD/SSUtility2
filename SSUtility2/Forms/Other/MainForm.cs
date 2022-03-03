@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Kaiser;
@@ -12,7 +13,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.4.0";
+        public const string version = "v2.8.4.1";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -1383,11 +1384,11 @@ namespace SSUtility2 {
                 if (checkB_Player1_Manual.Checked)
                     full = tB_Player1_SimpleAdr.Text;
                 else {
-                    string ipaddress = tB_Legacy_IP.Text;
-                    string port = tB_Legacy_Port.Text;
-                    string url = tB_Legacy_RTSP.Text;
-                    string username = tB_Legacy_Username.Text;
-                    string password = tB_Legacy_Password.Text;
+                    string ipaddress = tB_Player1_Adr.Text;
+                    string port = tB_Player1_Port.Text;
+                    string url = tB_Player1_RTSP.Text;
+                    string username = tB_Player1_Username.Text;
+                    string password = tB_Player1_Password.Text;
 
                     string userPass = username + ":" + password + "@";
                     if (username.Length <= 0 && password.Length <= 0)
@@ -1398,13 +1399,21 @@ namespace SSUtility2 {
                         colonPort = "";
 
                     full = "rtsp://" + userPass + ipaddress + colonPort + "/" + url;
+
+                    mainPlayer.Play(true, true, full);
+                    b_Player1_Stop.Visible = true;
+
+                    //full = tB_Player1_Name.Text + ";" + full + ";" + ipaddress + ";" + port + ";" + url + ";" + username
+                    //   + ";" + password + ";" + tB_Legacy_PelcoID.Text + ";;;";
+
+                    //RTSPPresets.LoadPreset(full);
                 }
+
+
             } catch (Exception err) {
                 Console.WriteLine(err.ToString());
             };
 
-            mainPlayer.Play(true, true, full);
-            b_Player1_Stop.Visible = true;
         }
 
         private void checkB_Player1_Manual_CheckedChanged(object sender, EventArgs e) {
@@ -1415,6 +1424,35 @@ namespace SSUtility2 {
                 p_Player1_Extended.Hide();
                 p_Player1_Simple.Show();
             }
+        }
+
+        private void b_Legacy_Connect_Click(object sender, EventArgs e) {
+            IPAddress ip;
+            if(!IPAddress.TryParse(tB_Legacy_IP.Text, out ip)) {
+                MessageBox.Show("Please enter a valid IP Address!");
+                return;
+            }
+
+            int port;
+            if (!int.TryParse(tB_Legacy_Port.Text, out port)) {
+                MessageBox.Show("Please enter a valid port, must be a number!");
+                return;
+            }
+
+
+            IPEndPoint ep = new IPEndPoint(ip, port);
+            if(AsyncCamCom.TryConnect(true, ep).Result) {
+                ConfigControl.savedIP.UpdateValue(tB_Legacy_IP.Text);
+                ConfigControl.savedPort.UpdateValue(tB_Legacy_Port.Text);
+            }
+        }
+
+        private void tB_Legacy_PelcoID_TextChanged(object sender, EventArgs e) {
+            int parsedVal;
+            if (int.TryParse(tB_Legacy_PelcoID.Text, out parsedVal))
+                ConfigControl.pelcoOverrideID.intVal = parsedVal;
+            else
+                ConfigControl.pelcoOverrideID.intVal = 0;
         }
     } // end of class MainForm
 } // end of namespace SSUtility2

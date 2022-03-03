@@ -85,29 +85,6 @@ namespace SSUtility2 {
             this.Menu_Final = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Final_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_RecordIndicator = new System.Windows.Forms.ToolStripMenuItem();
-            this.p_PlayerPanel = new System.Windows.Forms.Panel();
-            this.p_PTZ_Sliders = new System.Windows.Forms.Panel();
-            this.l_PTZ_SlidersFPercent = new System.Windows.Forms.Label();
-            this.tB_PTZ_SlidersFText = new System.Windows.Forms.TextBox();
-            this.l_PTZ_SlidersFocus = new System.Windows.Forms.Label();
-            this.slider_PTZ_AbsFocus = new System.Windows.Forms.TrackBar();
-            this.l_PTZ_SliderZPercent = new System.Windows.Forms.Label();
-            this.tB_PTZ_SlidersZText = new System.Windows.Forms.TextBox();
-            this.l_PTZ_SliderZoom = new System.Windows.Forms.Label();
-            this.slider_PTZ_AbsZoom = new System.Windows.Forms.TrackBar();
-            this.pB_Panoramic = new System.Windows.Forms.PictureBox();
-            this.JoyBack = new Kaiser.JoyBack();
-            this.b_PTZ_Daylight = new System.Windows.Forms.Button();
-            this.b_Open = new System.Windows.Forms.Button();
-            this.b_PTZ_Thermal = new System.Windows.Forms.Button();
-            this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
-            this.b_PTZ_Left = new System.Windows.Forms.Button();
-            this.b_PTZ_FocusPos = new System.Windows.Forms.Button();
-            this.b_PTZ_Right = new System.Windows.Forms.Button();
-            this.b_PTZ_ZoomNeg = new System.Windows.Forms.Button();
-            this.b_PTZ_Down = new System.Windows.Forms.Button();
-            this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
-            this.b_PTZ_Up = new System.Windows.Forms.Button();
             this.p_Legacy = new System.Windows.Forms.Panel();
             this.p_Legacy_Player2 = new System.Windows.Forms.Panel();
             this.p_Legacy_Player1 = new System.Windows.Forms.Panel();
@@ -137,13 +114,9 @@ namespace SSUtility2 {
             this.checkB_Player1_Manual = new System.Windows.Forms.CheckBox();
             this.b_Player1_Play = new System.Windows.Forms.Button();
             this.l_Legacy_CP = new System.Windows.Forms.Panel();
-            this.l_Legacy_Password = new System.Windows.Forms.Label();
-            this.tB_Legacy_Password = new System.Windows.Forms.TextBox();
-            this.l_Legacy_Username = new System.Windows.Forms.Label();
-            this.tB_Legacy_Username = new System.Windows.Forms.TextBox();
             this.b_Legacy_Connect = new System.Windows.Forms.Button();
-            this.l_Legacy_RTSP = new System.Windows.Forms.Label();
-            this.tB_Legacy_RTSP = new System.Windows.Forms.TextBox();
+            this.l_Legacy_PelcoID = new System.Windows.Forms.Label();
+            this.tB_Legacy_PelcoID = new System.Windows.Forms.TextBox();
             this.l_legacy_Port = new System.Windows.Forms.Label();
             this.tB_Legacy_Port = new System.Windows.Forms.TextBox();
             this.l_Legacy_IP = new System.Windows.Forms.Label();
@@ -159,19 +132,42 @@ namespace SSUtility2 {
             this.b_Legacy_ZoomNeg = new System.Windows.Forms.Button();
             this.b_Legacy_FocusPos = new System.Windows.Forms.Button();
             this.b_Legacy_Right = new System.Windows.Forms.Button();
+            this.b_PTZ_Up = new System.Windows.Forms.Button();
+            this.b_PTZ_FocusNeg = new System.Windows.Forms.Button();
+            this.b_PTZ_Down = new System.Windows.Forms.Button();
+            this.b_PTZ_ZoomNeg = new System.Windows.Forms.Button();
+            this.b_PTZ_Right = new System.Windows.Forms.Button();
+            this.b_PTZ_FocusPos = new System.Windows.Forms.Button();
+            this.b_PTZ_Left = new System.Windows.Forms.Button();
+            this.b_PTZ_ZoomPos = new System.Windows.Forms.Button();
+            this.b_PTZ_Thermal = new System.Windows.Forms.Button();
+            this.b_Open = new System.Windows.Forms.Button();
+            this.b_PTZ_Daylight = new System.Windows.Forms.Button();
+            this.JoyBack = new Kaiser.JoyBack();
+            this.pB_Panoramic = new System.Windows.Forms.PictureBox();
+            this.p_PTZ_Sliders = new System.Windows.Forms.Panel();
+            this.l_PTZ_SlidersFPercent = new System.Windows.Forms.Label();
+            this.tB_PTZ_SlidersFText = new System.Windows.Forms.TextBox();
+            this.l_PTZ_SlidersFocus = new System.Windows.Forms.Label();
+            this.slider_PTZ_AbsFocus = new System.Windows.Forms.TrackBar();
+            this.l_PTZ_SliderZPercent = new System.Windows.Forms.Label();
+            this.tB_PTZ_SlidersZText = new System.Windows.Forms.TextBox();
+            this.l_PTZ_SliderZoom = new System.Windows.Forms.Label();
+            this.slider_PTZ_AbsZoom = new System.Windows.Forms.TrackBar();
+            this.p_PlayerPanel = new System.Windows.Forms.Panel();
             this.MenuBar.SuspendLayout();
-            this.p_PlayerPanel.SuspendLayout();
-            this.p_PTZ_Sliders.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsFocus)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
             this.p_Legacy.SuspendLayout();
             this.p_Legacy_Player1.SuspendLayout();
             this.p_Player1_Simple.SuspendLayout();
             this.p_Player1_Extended.SuspendLayout();
             this.l_Legacy_CP.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Legacy_JoyBack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
+            this.p_PTZ_Sliders.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsFocus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).BeginInit();
+            this.p_PlayerPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -494,306 +490,6 @@ namespace SSUtility2 {
             this.Menu_RecordIndicator.Visible = false;
             this.Menu_RecordIndicator.Click += new System.EventHandler(this.Menu_RecordIndicator_Click);
             // 
-            // p_PlayerPanel
-            // 
-            this.p_PlayerPanel.AllowDrop = true;
-            this.p_PlayerPanel.BackColor = System.Drawing.Color.Black;
-            this.p_PlayerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.p_PlayerPanel.Controls.Add(this.p_PTZ_Sliders);
-            this.p_PlayerPanel.Controls.Add(this.pB_Panoramic);
-            this.p_PlayerPanel.Controls.Add(this.JoyBack);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Daylight);
-            this.p_PlayerPanel.Controls.Add(this.b_Open);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Thermal);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_ZoomPos);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Left);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_FocusPos);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Right);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_ZoomNeg);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Down);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_FocusNeg);
-            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Up);
-            this.p_PlayerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.p_PlayerPanel.Location = new System.Drawing.Point(0, 24);
-            this.p_PlayerPanel.Name = "p_PlayerPanel";
-            this.p_PlayerPanel.Size = new System.Drawing.Size(1264, 657);
-            this.p_PlayerPanel.TabIndex = 31;
-            this.p_PlayerPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragDrop);
-            this.p_PlayerPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragOver);
-            this.p_PlayerPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.p_PlayerPanel_MouseMove);
-            // 
-            // p_PTZ_Sliders
-            // 
-            this.p_PTZ_Sliders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SlidersFPercent);
-            this.p_PTZ_Sliders.Controls.Add(this.tB_PTZ_SlidersFText);
-            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SlidersFocus);
-            this.p_PTZ_Sliders.Controls.Add(this.slider_PTZ_AbsFocus);
-            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SliderZPercent);
-            this.p_PTZ_Sliders.Controls.Add(this.tB_PTZ_SlidersZText);
-            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SliderZoom);
-            this.p_PTZ_Sliders.Controls.Add(this.slider_PTZ_AbsZoom);
-            this.p_PTZ_Sliders.Location = new System.Drawing.Point(43, 320);
-            this.p_PTZ_Sliders.Name = "p_PTZ_Sliders";
-            this.p_PTZ_Sliders.Size = new System.Drawing.Size(200, 68);
-            this.p_PTZ_Sliders.TabIndex = 101;
-            // 
-            // l_PTZ_SlidersFPercent
-            // 
-            this.l_PTZ_SlidersFPercent.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.l_PTZ_SlidersFPercent.AutoSize = true;
-            this.l_PTZ_SlidersFPercent.Location = new System.Drawing.Point(166, 50);
-            this.l_PTZ_SlidersFPercent.Name = "l_PTZ_SlidersFPercent";
-            this.l_PTZ_SlidersFPercent.Size = new System.Drawing.Size(15, 13);
-            this.l_PTZ_SlidersFPercent.TabIndex = 7;
-            this.l_PTZ_SlidersFPercent.Text = "%";
-            // 
-            // tB_PTZ_SlidersFText
-            // 
-            this.tB_PTZ_SlidersFText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tB_PTZ_SlidersFText.Location = new System.Drawing.Point(127, 47);
-            this.tB_PTZ_SlidersFText.Name = "tB_PTZ_SlidersFText";
-            this.tB_PTZ_SlidersFText.Size = new System.Drawing.Size(39, 20);
-            this.tB_PTZ_SlidersFText.TabIndex = 6;
-            this.tB_PTZ_SlidersFText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PTZ_SlidersFText_KeyPress);
-            this.tB_PTZ_SlidersFText.Leave += new System.EventHandler(this.tB_PTZ_SlidersFText_Leave);
-            // 
-            // l_PTZ_SlidersFocus
-            // 
-            this.l_PTZ_SlidersFocus.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.l_PTZ_SlidersFocus.AutoSize = true;
-            this.l_PTZ_SlidersFocus.Location = new System.Drawing.Point(129, 31);
-            this.l_PTZ_SlidersFocus.Name = "l_PTZ_SlidersFocus";
-            this.l_PTZ_SlidersFocus.Size = new System.Drawing.Size(36, 13);
-            this.l_PTZ_SlidersFocus.TabIndex = 4;
-            this.l_PTZ_SlidersFocus.Text = "Focus";
-            // 
-            // slider_PTZ_AbsFocus
-            // 
-            this.slider_PTZ_AbsFocus.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.slider_PTZ_AbsFocus.Location = new System.Drawing.Point(103, 4);
-            this.slider_PTZ_AbsFocus.Maximum = 100;
-            this.slider_PTZ_AbsFocus.Name = "slider_PTZ_AbsFocus";
-            this.slider_PTZ_AbsFocus.Size = new System.Drawing.Size(94, 45);
-            this.slider_PTZ_AbsFocus.TabIndex = 5;
-            this.slider_PTZ_AbsFocus.TickFrequency = 0;
-            this.slider_PTZ_AbsFocus.Scroll += new System.EventHandler(this.slider_PTZ_AbsFocus_Scroll);
-            this.slider_PTZ_AbsFocus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsFocus_MouseDown);
-            this.slider_PTZ_AbsFocus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsFocus_MouseUp);
-            // 
-            // l_PTZ_SliderZPercent
-            // 
-            this.l_PTZ_SliderZPercent.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.l_PTZ_SliderZPercent.AutoSize = true;
-            this.l_PTZ_SliderZPercent.Location = new System.Drawing.Point(63, 49);
-            this.l_PTZ_SliderZPercent.Name = "l_PTZ_SliderZPercent";
-            this.l_PTZ_SliderZPercent.Size = new System.Drawing.Size(15, 13);
-            this.l_PTZ_SliderZPercent.TabIndex = 3;
-            this.l_PTZ_SliderZPercent.Text = "%";
-            // 
-            // tB_PTZ_SlidersZText
-            // 
-            this.tB_PTZ_SlidersZText.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tB_PTZ_SlidersZText.Location = new System.Drawing.Point(24, 46);
-            this.tB_PTZ_SlidersZText.Name = "tB_PTZ_SlidersZText";
-            this.tB_PTZ_SlidersZText.Size = new System.Drawing.Size(39, 20);
-            this.tB_PTZ_SlidersZText.TabIndex = 2;
-            this.tB_PTZ_SlidersZText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PTZ_SlidersZText_KeyPress);
-            this.tB_PTZ_SlidersZText.Leave += new System.EventHandler(this.tB_PTZ_SlidersZText_Leave);
-            // 
-            // l_PTZ_SliderZoom
-            // 
-            this.l_PTZ_SliderZoom.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.l_PTZ_SliderZoom.AutoSize = true;
-            this.l_PTZ_SliderZoom.Location = new System.Drawing.Point(26, 30);
-            this.l_PTZ_SliderZoom.Name = "l_PTZ_SliderZoom";
-            this.l_PTZ_SliderZoom.Size = new System.Drawing.Size(34, 13);
-            this.l_PTZ_SliderZoom.TabIndex = 0;
-            this.l_PTZ_SliderZoom.Text = "Zoom";
-            // 
-            // slider_PTZ_AbsZoom
-            // 
-            this.slider_PTZ_AbsZoom.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.slider_PTZ_AbsZoom.Location = new System.Drawing.Point(0, 3);
-            this.slider_PTZ_AbsZoom.Maximum = 100;
-            this.slider_PTZ_AbsZoom.Name = "slider_PTZ_AbsZoom";
-            this.slider_PTZ_AbsZoom.Size = new System.Drawing.Size(94, 45);
-            this.slider_PTZ_AbsZoom.TabIndex = 1;
-            this.slider_PTZ_AbsZoom.TickFrequency = 0;
-            this.slider_PTZ_AbsZoom.Scroll += new System.EventHandler(this.slider_PTZ_AbsZoom_Scroll);
-            this.slider_PTZ_AbsZoom.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsZoom_MouseDown);
-            this.slider_PTZ_AbsZoom.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsZoom_MouseUp);
-            // 
-            // pB_Panoramic
-            // 
-            this.pB_Panoramic.BackColor = System.Drawing.Color.Transparent;
-            this.pB_Panoramic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pB_Panoramic.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pB_Panoramic.Location = new System.Drawing.Point(0, 645);
-            this.pB_Panoramic.Name = "pB_Panoramic";
-            this.pB_Panoramic.Size = new System.Drawing.Size(1262, 10);
-            this.pB_Panoramic.TabIndex = 100;
-            this.pB_Panoramic.TabStop = false;
-            this.pB_Panoramic.Visible = false;
-            this.pB_Panoramic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pB_Panoramic_MouseClick);
-            // 
-            // JoyBack
-            // 
-            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
-            this.JoyBack.Location = new System.Drawing.Point(68, 92);
-            this.JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
-            this.JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
-            this.JoyBack.Name = "JoyBack";
-            this.JoyBack.Size = new System.Drawing.Size(150, 150);
-            this.JoyBack.TabIndex = 99;
-            this.JoyBack.TabStop = false;
-            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
-            // 
-            // b_PTZ_Daylight
-            // 
-            this.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
-            this.b_PTZ_Daylight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Daylight.Location = new System.Drawing.Point(160, 284);
-            this.b_PTZ_Daylight.Name = "b_PTZ_Daylight";
-            this.b_PTZ_Daylight.Size = new System.Drawing.Size(58, 30);
-            this.b_PTZ_Daylight.TabIndex = 98;
-            this.b_PTZ_Daylight.Text = "Daylight";
-            this.b_PTZ_Daylight.UseVisualStyleBackColor = false;
-            this.b_PTZ_Daylight.Visible = false;
-            this.b_PTZ_Daylight.Click += new System.EventHandler(this.b_PTZ_Daylight_Click);
-            // 
-            // b_Open
-            // 
-            this.b_Open.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.b_Open.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Open.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.b_Open.ForeColor = System.Drawing.SystemColors.Control;
-            this.b_Open.Location = new System.Drawing.Point(0, 0);
-            this.b_Open.Name = "b_Open";
-            this.b_Open.Size = new System.Drawing.Size(50, 50);
-            this.b_Open.TabIndex = 1;
-            this.b_Open.Text = ">>";
-            this.b_Open.UseVisualStyleBackColor = false;
-            this.b_Open.Visible = false;
-            this.b_Open.Click += new System.EventHandler(this.b_Open_Click);
-            // 
-            // b_PTZ_Thermal
-            // 
-            this.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
-            this.b_PTZ_Thermal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Thermal.Location = new System.Drawing.Point(68, 284);
-            this.b_PTZ_Thermal.Name = "b_PTZ_Thermal";
-            this.b_PTZ_Thermal.Size = new System.Drawing.Size(58, 30);
-            this.b_PTZ_Thermal.TabIndex = 97;
-            this.b_PTZ_Thermal.Text = "Thermal";
-            this.b_PTZ_Thermal.UseVisualStyleBackColor = false;
-            this.b_PTZ_Thermal.Visible = false;
-            this.b_PTZ_Thermal.Click += new System.EventHandler(this.b_PTZ_Thermal_Click);
-            // 
-            // b_PTZ_ZoomPos
-            // 
-            this.b_PTZ_ZoomPos.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b_PTZ_ZoomPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(224, 56);
-            this.b_PTZ_ZoomPos.Name = "b_PTZ_ZoomPos";
-            this.b_PTZ_ZoomPos.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_ZoomPos.TabIndex = 86;
-            this.b_PTZ_ZoomPos.Text = "Z+";
-            this.b_PTZ_ZoomPos.UseVisualStyleBackColor = false;
-            this.b_PTZ_ZoomPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomPos_MouseDown);
-            this.b_PTZ_ZoomPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_Left
-            // 
-            this.b_PTZ_Left.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.b_PTZ_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Left.Location = new System.Drawing.Point(12, 151);
-            this.b_PTZ_Left.Name = "b_PTZ_Left";
-            this.b_PTZ_Left.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_Left.TabIndex = 95;
-            this.b_PTZ_Left.Text = "Left";
-            this.b_PTZ_Left.UseVisualStyleBackColor = false;
-            this.b_PTZ_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
-            this.b_PTZ_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_FocusPos
-            // 
-            this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
-            this.b_PTZ_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(12, 56);
-            this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
-            this.b_PTZ_FocusPos.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_FocusPos.TabIndex = 87;
-            this.b_PTZ_FocusPos.Text = "F+";
-            this.b_PTZ_FocusPos.UseVisualStyleBackColor = false;
-            this.b_PTZ_FocusPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_FocusPos_MouseDown);
-            this.b_PTZ_FocusPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_Right
-            // 
-            this.b_PTZ_Right.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.b_PTZ_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Right.Location = new System.Drawing.Point(224, 151);
-            this.b_PTZ_Right.Name = "b_PTZ_Right";
-            this.b_PTZ_Right.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_Right.TabIndex = 94;
-            this.b_PTZ_Right.Text = "Right";
-            this.b_PTZ_Right.UseVisualStyleBackColor = false;
-            this.b_PTZ_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Right_MouseDown);
-            this.b_PTZ_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_ZoomNeg
-            // 
-            this.b_PTZ_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.b_PTZ_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(224, 248);
-            this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
-            this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_ZoomNeg.TabIndex = 88;
-            this.b_PTZ_ZoomNeg.Text = "Z-";
-            this.b_PTZ_ZoomNeg.UseVisualStyleBackColor = false;
-            this.b_PTZ_ZoomNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomNeg_MouseDown);
-            this.b_PTZ_ZoomNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_Down
-            // 
-            this.b_PTZ_Down.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.b_PTZ_Down.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Down.Location = new System.Drawing.Point(118, 248);
-            this.b_PTZ_Down.Name = "b_PTZ_Down";
-            this.b_PTZ_Down.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_Down.TabIndex = 93;
-            this.b_PTZ_Down.Text = "Down";
-            this.b_PTZ_Down.UseVisualStyleBackColor = false;
-            this.b_PTZ_Down.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Down_MouseDown);
-            this.b_PTZ_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_FocusNeg
-            // 
-            this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.YellowGreen;
-            this.b_PTZ_FocusNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(12, 248);
-            this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
-            this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_FocusNeg.TabIndex = 89;
-            this.b_PTZ_FocusNeg.Text = "F-";
-            this.b_PTZ_FocusNeg.UseVisualStyleBackColor = false;
-            this.b_PTZ_FocusNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_FocusNeg_MouseDown);
-            this.b_PTZ_FocusNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
-            // b_PTZ_Up
-            // 
-            this.b_PTZ_Up.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.b_PTZ_Up.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_PTZ_Up.Location = new System.Drawing.Point(118, 56);
-            this.b_PTZ_Up.Name = "b_PTZ_Up";
-            this.b_PTZ_Up.Size = new System.Drawing.Size(50, 30);
-            this.b_PTZ_Up.TabIndex = 92;
-            this.b_PTZ_Up.Text = "Up";
-            this.b_PTZ_Up.UseVisualStyleBackColor = false;
-            this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
-            this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
-            // 
             // p_Legacy
             // 
             this.p_Legacy.Controls.Add(this.p_Legacy_Player2);
@@ -805,7 +501,6 @@ namespace SSUtility2 {
             this.p_Legacy.Name = "p_Legacy";
             this.p_Legacy.Size = new System.Drawing.Size(1264, 681);
             this.p_Legacy.TabIndex = 32;
-            this.p_Legacy.Visible = false;
             // 
             // p_Legacy_Player2
             // 
@@ -858,6 +553,7 @@ namespace SSUtility2 {
             this.tB_Player1_Name.Name = "tB_Player1_Name";
             this.tB_Player1_Name.Size = new System.Drawing.Size(149, 20);
             this.tB_Player1_Name.TabIndex = 55;
+            this.tB_Player1_Name.Text = "LegacyPlayer 1";
             // 
             // p_Player1_Simple
             // 
@@ -1096,13 +792,9 @@ namespace SSUtility2 {
             // 
             this.l_Legacy_CP.BackColor = System.Drawing.SystemColors.Menu;
             this.l_Legacy_CP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.l_Legacy_CP.Controls.Add(this.l_Legacy_Password);
-            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_Password);
-            this.l_Legacy_CP.Controls.Add(this.l_Legacy_Username);
-            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_Username);
             this.l_Legacy_CP.Controls.Add(this.b_Legacy_Connect);
-            this.l_Legacy_CP.Controls.Add(this.l_Legacy_RTSP);
-            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_RTSP);
+            this.l_Legacy_CP.Controls.Add(this.l_Legacy_PelcoID);
+            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_PelcoID);
             this.l_Legacy_CP.Controls.Add(this.l_legacy_Port);
             this.l_Legacy_CP.Controls.Add(this.tB_Legacy_Port);
             this.l_Legacy_CP.Controls.Add(this.l_Legacy_IP);
@@ -1124,64 +816,34 @@ namespace SSUtility2 {
             this.l_Legacy_CP.Size = new System.Drawing.Size(179, 681);
             this.l_Legacy_CP.TabIndex = 114;
             // 
-            // l_Legacy_Password
-            // 
-            this.l_Legacy_Password.AutoSize = true;
-            this.l_Legacy_Password.Location = new System.Drawing.Point(11, 164);
-            this.l_Legacy_Password.Name = "l_Legacy_Password";
-            this.l_Legacy_Password.Size = new System.Drawing.Size(53, 13);
-            this.l_Legacy_Password.TabIndex = 125;
-            this.l_Legacy_Password.Text = "Password";
-            // 
-            // tB_Legacy_Password
-            // 
-            this.tB_Legacy_Password.Location = new System.Drawing.Point(68, 161);
-            this.tB_Legacy_Password.Name = "tB_Legacy_Password";
-            this.tB_Legacy_Password.Size = new System.Drawing.Size(94, 20);
-            this.tB_Legacy_Password.TabIndex = 124;
-            // 
-            // l_Legacy_Username
-            // 
-            this.l_Legacy_Username.AutoSize = true;
-            this.l_Legacy_Username.Location = new System.Drawing.Point(11, 138);
-            this.l_Legacy_Username.Name = "l_Legacy_Username";
-            this.l_Legacy_Username.Size = new System.Drawing.Size(55, 13);
-            this.l_Legacy_Username.TabIndex = 123;
-            this.l_Legacy_Username.Text = "Username";
-            // 
-            // tB_Legacy_Username
-            // 
-            this.tB_Legacy_Username.Location = new System.Drawing.Point(68, 135);
-            this.tB_Legacy_Username.Name = "tB_Legacy_Username";
-            this.tB_Legacy_Username.Size = new System.Drawing.Size(94, 20);
-            this.tB_Legacy_Username.TabIndex = 122;
-            // 
             // b_Legacy_Connect
             // 
             this.b_Legacy_Connect.BackColor = System.Drawing.SystemColors.Control;
             this.b_Legacy_Connect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Legacy_Connect.Location = new System.Drawing.Point(105, 187);
+            this.b_Legacy_Connect.Location = new System.Drawing.Point(105, 135);
             this.b_Legacy_Connect.Name = "b_Legacy_Connect";
             this.b_Legacy_Connect.Size = new System.Drawing.Size(57, 29);
             this.b_Legacy_Connect.TabIndex = 121;
             this.b_Legacy_Connect.Text = "Connect";
             this.b_Legacy_Connect.UseVisualStyleBackColor = false;
+            this.b_Legacy_Connect.Click += new System.EventHandler(this.b_Legacy_Connect_Click);
             // 
-            // l_Legacy_RTSP
+            // l_Legacy_PelcoID
             // 
-            this.l_Legacy_RTSP.AutoSize = true;
-            this.l_Legacy_RTSP.Location = new System.Drawing.Point(11, 112);
-            this.l_Legacy_RTSP.Name = "l_Legacy_RTSP";
-            this.l_Legacy_RTSP.Size = new System.Drawing.Size(36, 13);
-            this.l_Legacy_RTSP.TabIndex = 120;
-            this.l_Legacy_RTSP.Text = "RTSP";
+            this.l_Legacy_PelcoID.AutoSize = true;
+            this.l_Legacy_PelcoID.Location = new System.Drawing.Point(11, 112);
+            this.l_Legacy_PelcoID.Name = "l_Legacy_PelcoID";
+            this.l_Legacy_PelcoID.Size = new System.Drawing.Size(45, 13);
+            this.l_Legacy_PelcoID.TabIndex = 120;
+            this.l_Legacy_PelcoID.Text = "PelcoID";
             // 
-            // tB_Legacy_RTSP
+            // tB_Legacy_PelcoID
             // 
-            this.tB_Legacy_RTSP.Location = new System.Drawing.Point(68, 109);
-            this.tB_Legacy_RTSP.Name = "tB_Legacy_RTSP";
-            this.tB_Legacy_RTSP.Size = new System.Drawing.Size(94, 20);
-            this.tB_Legacy_RTSP.TabIndex = 119;
+            this.tB_Legacy_PelcoID.Location = new System.Drawing.Point(68, 109);
+            this.tB_Legacy_PelcoID.Name = "tB_Legacy_PelcoID";
+            this.tB_Legacy_PelcoID.Size = new System.Drawing.Size(94, 20);
+            this.tB_Legacy_PelcoID.TabIndex = 119;
+            this.tB_Legacy_PelcoID.TextChanged += new System.EventHandler(this.tB_Legacy_PelcoID_TextChanged);
             // 
             // l_legacy_Port
             // 
@@ -1229,7 +891,7 @@ namespace SSUtility2 {
             // 
             this.l_Legacy_PTZ.AutoSize = true;
             this.l_Legacy_PTZ.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.l_Legacy_PTZ.Location = new System.Drawing.Point(8, 228);
+            this.l_Legacy_PTZ.Location = new System.Drawing.Point(11, 175);
             this.l_Legacy_PTZ.Name = "l_Legacy_PTZ";
             this.l_Legacy_PTZ.Size = new System.Drawing.Size(49, 24);
             this.l_Legacy_PTZ.TabIndex = 113;
@@ -1240,7 +902,7 @@ namespace SSUtility2 {
             // 
             this.b_Legacy_Up.BackColor = System.Drawing.Color.LightSkyBlue;
             this.b_Legacy_Up.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Legacy_Up.Location = new System.Drawing.Point(60, 411);
+            this.b_Legacy_Up.Location = new System.Drawing.Point(63, 358);
             this.b_Legacy_Up.Name = "b_Legacy_Up";
             this.b_Legacy_Up.Size = new System.Drawing.Size(50, 30);
             this.b_Legacy_Up.TabIndex = 106;
@@ -1252,7 +914,7 @@ namespace SSUtility2 {
             // Legacy_JoyBack
             // 
             this.Legacy_JoyBack.BackColor = System.Drawing.Color.Transparent;
-            this.Legacy_JoyBack.Location = new System.Drawing.Point(10, 255);
+            this.Legacy_JoyBack.Location = new System.Drawing.Point(13, 202);
             this.Legacy_JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
             this.Legacy_JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
             this.Legacy_JoyBack.Name = "Legacy_JoyBack";
@@ -1265,7 +927,7 @@ namespace SSUtility2 {
             // 
             this.b_Legacy_FocusNeg.BackColor = System.Drawing.Color.YellowGreen;
             this.b_Legacy_FocusNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Legacy_FocusNeg.Location = new System.Drawing.Point(7, 475);
+            this.b_Legacy_FocusNeg.Location = new System.Drawing.Point(10, 422);
             this.b_Legacy_FocusNeg.Name = "b_Legacy_FocusNeg";
             this.b_Legacy_FocusNeg.Size = new System.Drawing.Size(50, 30);
             this.b_Legacy_FocusNeg.TabIndex = 105;
@@ -1278,7 +940,7 @@ namespace SSUtility2 {
             // 
             this.b_Legacy_ZoomPos.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.b_Legacy_ZoomPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Legacy_ZoomPos.Location = new System.Drawing.Point(113, 411);
+            this.b_Legacy_ZoomPos.Location = new System.Drawing.Point(116, 358);
             this.b_Legacy_ZoomPos.Name = "b_Legacy_ZoomPos";
             this.b_Legacy_ZoomPos.Size = new System.Drawing.Size(50, 30);
             this.b_Legacy_ZoomPos.TabIndex = 102;
@@ -1291,7 +953,7 @@ namespace SSUtility2 {
             // 
             this.b_Legacy_Down.BackColor = System.Drawing.Color.LightSkyBlue;
             this.b_Legacy_Down.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Legacy_Down.Location = new System.Drawing.Point(60, 475);
+            this.b_Legacy_Down.Location = new System.Drawing.Point(63, 422);
             this.b_Legacy_Down.Name = "b_Legacy_Down";
             this.b_Legacy_Down.Size = new System.Drawing.Size(50, 30);
             this.b_Legacy_Down.TabIndex = 107;
@@ -1304,7 +966,7 @@ namespace SSUtility2 {
             // 
             this.b_Legacy_Left.BackColor = System.Drawing.Color.LightSkyBlue;
             this.b_Legacy_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Legacy_Left.Location = new System.Drawing.Point(7, 443);
+            this.b_Legacy_Left.Location = new System.Drawing.Point(10, 390);
             this.b_Legacy_Left.Name = "b_Legacy_Left";
             this.b_Legacy_Left.Size = new System.Drawing.Size(50, 30);
             this.b_Legacy_Left.TabIndex = 109;
@@ -1317,7 +979,7 @@ namespace SSUtility2 {
             // 
             this.b_Legacy_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.b_Legacy_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Legacy_ZoomNeg.Location = new System.Drawing.Point(113, 475);
+            this.b_Legacy_ZoomNeg.Location = new System.Drawing.Point(116, 422);
             this.b_Legacy_ZoomNeg.Name = "b_Legacy_ZoomNeg";
             this.b_Legacy_ZoomNeg.Size = new System.Drawing.Size(50, 30);
             this.b_Legacy_ZoomNeg.TabIndex = 104;
@@ -1330,7 +992,7 @@ namespace SSUtility2 {
             // 
             this.b_Legacy_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
             this.b_Legacy_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Legacy_FocusPos.Location = new System.Drawing.Point(7, 411);
+            this.b_Legacy_FocusPos.Location = new System.Drawing.Point(10, 358);
             this.b_Legacy_FocusPos.Name = "b_Legacy_FocusPos";
             this.b_Legacy_FocusPos.Size = new System.Drawing.Size(50, 30);
             this.b_Legacy_FocusPos.TabIndex = 103;
@@ -1343,7 +1005,7 @@ namespace SSUtility2 {
             // 
             this.b_Legacy_Right.BackColor = System.Drawing.Color.LightSkyBlue;
             this.b_Legacy_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.b_Legacy_Right.Location = new System.Drawing.Point(113, 443);
+            this.b_Legacy_Right.Location = new System.Drawing.Point(116, 390);
             this.b_Legacy_Right.Name = "b_Legacy_Right";
             this.b_Legacy_Right.Size = new System.Drawing.Size(50, 30);
             this.b_Legacy_Right.TabIndex = 108;
@@ -1351,6 +1013,306 @@ namespace SSUtility2 {
             this.b_Legacy_Right.UseVisualStyleBackColor = false;
             this.b_Legacy_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Right_MouseDown);
             this.b_Legacy_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_Up
+            // 
+            this.b_PTZ_Up.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_PTZ_Up.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Up.Location = new System.Drawing.Point(118, 56);
+            this.b_PTZ_Up.Name = "b_PTZ_Up";
+            this.b_PTZ_Up.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_Up.TabIndex = 92;
+            this.b_PTZ_Up.Text = "Up";
+            this.b_PTZ_Up.UseVisualStyleBackColor = false;
+            this.b_PTZ_Up.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Up_MouseDown);
+            this.b_PTZ_Up.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_FocusNeg
+            // 
+            this.b_PTZ_FocusNeg.BackColor = System.Drawing.Color.YellowGreen;
+            this.b_PTZ_FocusNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_FocusNeg.Location = new System.Drawing.Point(12, 248);
+            this.b_PTZ_FocusNeg.Name = "b_PTZ_FocusNeg";
+            this.b_PTZ_FocusNeg.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_FocusNeg.TabIndex = 89;
+            this.b_PTZ_FocusNeg.Text = "F-";
+            this.b_PTZ_FocusNeg.UseVisualStyleBackColor = false;
+            this.b_PTZ_FocusNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_FocusNeg_MouseDown);
+            this.b_PTZ_FocusNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_Down
+            // 
+            this.b_PTZ_Down.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_PTZ_Down.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Down.Location = new System.Drawing.Point(118, 248);
+            this.b_PTZ_Down.Name = "b_PTZ_Down";
+            this.b_PTZ_Down.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_Down.TabIndex = 93;
+            this.b_PTZ_Down.Text = "Down";
+            this.b_PTZ_Down.UseVisualStyleBackColor = false;
+            this.b_PTZ_Down.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Down_MouseDown);
+            this.b_PTZ_Down.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_ZoomNeg
+            // 
+            this.b_PTZ_ZoomNeg.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_PTZ_ZoomNeg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_ZoomNeg.Location = new System.Drawing.Point(224, 248);
+            this.b_PTZ_ZoomNeg.Name = "b_PTZ_ZoomNeg";
+            this.b_PTZ_ZoomNeg.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_ZoomNeg.TabIndex = 88;
+            this.b_PTZ_ZoomNeg.Text = "Z-";
+            this.b_PTZ_ZoomNeg.UseVisualStyleBackColor = false;
+            this.b_PTZ_ZoomNeg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomNeg_MouseDown);
+            this.b_PTZ_ZoomNeg.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_Right
+            // 
+            this.b_PTZ_Right.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_PTZ_Right.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Right.Location = new System.Drawing.Point(224, 151);
+            this.b_PTZ_Right.Name = "b_PTZ_Right";
+            this.b_PTZ_Right.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_Right.TabIndex = 94;
+            this.b_PTZ_Right.Text = "Right";
+            this.b_PTZ_Right.UseVisualStyleBackColor = false;
+            this.b_PTZ_Right.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Right_MouseDown);
+            this.b_PTZ_Right.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_FocusPos
+            // 
+            this.b_PTZ_FocusPos.BackColor = System.Drawing.Color.YellowGreen;
+            this.b_PTZ_FocusPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_FocusPos.Location = new System.Drawing.Point(12, 56);
+            this.b_PTZ_FocusPos.Name = "b_PTZ_FocusPos";
+            this.b_PTZ_FocusPos.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_FocusPos.TabIndex = 87;
+            this.b_PTZ_FocusPos.Text = "F+";
+            this.b_PTZ_FocusPos.UseVisualStyleBackColor = false;
+            this.b_PTZ_FocusPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_FocusPos_MouseDown);
+            this.b_PTZ_FocusPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_Left
+            // 
+            this.b_PTZ_Left.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.b_PTZ_Left.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Left.Location = new System.Drawing.Point(12, 151);
+            this.b_PTZ_Left.Name = "b_PTZ_Left";
+            this.b_PTZ_Left.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_Left.TabIndex = 95;
+            this.b_PTZ_Left.Text = "Left";
+            this.b_PTZ_Left.UseVisualStyleBackColor = false;
+            this.b_PTZ_Left.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Left_MouseDown);
+            this.b_PTZ_Left.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_ZoomPos
+            // 
+            this.b_PTZ_ZoomPos.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.b_PTZ_ZoomPos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_ZoomPos.Location = new System.Drawing.Point(224, 56);
+            this.b_PTZ_ZoomPos.Name = "b_PTZ_ZoomPos";
+            this.b_PTZ_ZoomPos.Size = new System.Drawing.Size(50, 30);
+            this.b_PTZ_ZoomPos.TabIndex = 86;
+            this.b_PTZ_ZoomPos.Text = "Z+";
+            this.b_PTZ_ZoomPos.UseVisualStyleBackColor = false;
+            this.b_PTZ_ZoomPos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_ZoomPos_MouseDown);
+            this.b_PTZ_ZoomPos.MouseUp += new System.Windows.Forms.MouseEventHandler(this.b_PTZ_Any_MouseUp);
+            // 
+            // b_PTZ_Thermal
+            // 
+            this.b_PTZ_Thermal.BackColor = System.Drawing.Color.Silver;
+            this.b_PTZ_Thermal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Thermal.Location = new System.Drawing.Point(68, 284);
+            this.b_PTZ_Thermal.Name = "b_PTZ_Thermal";
+            this.b_PTZ_Thermal.Size = new System.Drawing.Size(58, 30);
+            this.b_PTZ_Thermal.TabIndex = 97;
+            this.b_PTZ_Thermal.Text = "Thermal";
+            this.b_PTZ_Thermal.UseVisualStyleBackColor = false;
+            this.b_PTZ_Thermal.Visible = false;
+            this.b_PTZ_Thermal.Click += new System.EventHandler(this.b_PTZ_Thermal_Click);
+            // 
+            // b_Open
+            // 
+            this.b_Open.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.b_Open.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Open.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.b_Open.ForeColor = System.Drawing.SystemColors.Control;
+            this.b_Open.Location = new System.Drawing.Point(0, 0);
+            this.b_Open.Name = "b_Open";
+            this.b_Open.Size = new System.Drawing.Size(50, 50);
+            this.b_Open.TabIndex = 1;
+            this.b_Open.Text = ">>";
+            this.b_Open.UseVisualStyleBackColor = false;
+            this.b_Open.Visible = false;
+            this.b_Open.Click += new System.EventHandler(this.b_Open_Click);
+            // 
+            // b_PTZ_Daylight
+            // 
+            this.b_PTZ_Daylight.BackColor = System.Drawing.Color.Silver;
+            this.b_PTZ_Daylight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_PTZ_Daylight.Location = new System.Drawing.Point(160, 284);
+            this.b_PTZ_Daylight.Name = "b_PTZ_Daylight";
+            this.b_PTZ_Daylight.Size = new System.Drawing.Size(58, 30);
+            this.b_PTZ_Daylight.TabIndex = 98;
+            this.b_PTZ_Daylight.Text = "Daylight";
+            this.b_PTZ_Daylight.UseVisualStyleBackColor = false;
+            this.b_PTZ_Daylight.Visible = false;
+            this.b_PTZ_Daylight.Click += new System.EventHandler(this.b_PTZ_Daylight_Click);
+            // 
+            // JoyBack
+            // 
+            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
+            this.JoyBack.Location = new System.Drawing.Point(68, 92);
+            this.JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
+            this.JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
+            this.JoyBack.Name = "JoyBack";
+            this.JoyBack.Size = new System.Drawing.Size(150, 150);
+            this.JoyBack.TabIndex = 99;
+            this.JoyBack.TabStop = false;
+            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
+            // 
+            // pB_Panoramic
+            // 
+            this.pB_Panoramic.BackColor = System.Drawing.Color.Transparent;
+            this.pB_Panoramic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pB_Panoramic.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pB_Panoramic.Location = new System.Drawing.Point(0, 645);
+            this.pB_Panoramic.Name = "pB_Panoramic";
+            this.pB_Panoramic.Size = new System.Drawing.Size(1262, 10);
+            this.pB_Panoramic.TabIndex = 100;
+            this.pB_Panoramic.TabStop = false;
+            this.pB_Panoramic.Visible = false;
+            this.pB_Panoramic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pB_Panoramic_MouseClick);
+            // 
+            // p_PTZ_Sliders
+            // 
+            this.p_PTZ_Sliders.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SlidersFPercent);
+            this.p_PTZ_Sliders.Controls.Add(this.tB_PTZ_SlidersFText);
+            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SlidersFocus);
+            this.p_PTZ_Sliders.Controls.Add(this.slider_PTZ_AbsFocus);
+            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SliderZPercent);
+            this.p_PTZ_Sliders.Controls.Add(this.tB_PTZ_SlidersZText);
+            this.p_PTZ_Sliders.Controls.Add(this.l_PTZ_SliderZoom);
+            this.p_PTZ_Sliders.Controls.Add(this.slider_PTZ_AbsZoom);
+            this.p_PTZ_Sliders.Location = new System.Drawing.Point(43, 320);
+            this.p_PTZ_Sliders.Name = "p_PTZ_Sliders";
+            this.p_PTZ_Sliders.Size = new System.Drawing.Size(200, 68);
+            this.p_PTZ_Sliders.TabIndex = 101;
+            // 
+            // l_PTZ_SlidersFPercent
+            // 
+            this.l_PTZ_SlidersFPercent.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.l_PTZ_SlidersFPercent.AutoSize = true;
+            this.l_PTZ_SlidersFPercent.Location = new System.Drawing.Point(166, 50);
+            this.l_PTZ_SlidersFPercent.Name = "l_PTZ_SlidersFPercent";
+            this.l_PTZ_SlidersFPercent.Size = new System.Drawing.Size(15, 13);
+            this.l_PTZ_SlidersFPercent.TabIndex = 7;
+            this.l_PTZ_SlidersFPercent.Text = "%";
+            // 
+            // tB_PTZ_SlidersFText
+            // 
+            this.tB_PTZ_SlidersFText.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tB_PTZ_SlidersFText.Location = new System.Drawing.Point(127, 47);
+            this.tB_PTZ_SlidersFText.Name = "tB_PTZ_SlidersFText";
+            this.tB_PTZ_SlidersFText.Size = new System.Drawing.Size(39, 20);
+            this.tB_PTZ_SlidersFText.TabIndex = 6;
+            this.tB_PTZ_SlidersFText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PTZ_SlidersFText_KeyPress);
+            this.tB_PTZ_SlidersFText.Leave += new System.EventHandler(this.tB_PTZ_SlidersFText_Leave);
+            // 
+            // l_PTZ_SlidersFocus
+            // 
+            this.l_PTZ_SlidersFocus.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.l_PTZ_SlidersFocus.AutoSize = true;
+            this.l_PTZ_SlidersFocus.Location = new System.Drawing.Point(129, 31);
+            this.l_PTZ_SlidersFocus.Name = "l_PTZ_SlidersFocus";
+            this.l_PTZ_SlidersFocus.Size = new System.Drawing.Size(36, 13);
+            this.l_PTZ_SlidersFocus.TabIndex = 4;
+            this.l_PTZ_SlidersFocus.Text = "Focus";
+            // 
+            // slider_PTZ_AbsFocus
+            // 
+            this.slider_PTZ_AbsFocus.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.slider_PTZ_AbsFocus.Location = new System.Drawing.Point(103, 4);
+            this.slider_PTZ_AbsFocus.Maximum = 100;
+            this.slider_PTZ_AbsFocus.Name = "slider_PTZ_AbsFocus";
+            this.slider_PTZ_AbsFocus.Size = new System.Drawing.Size(94, 45);
+            this.slider_PTZ_AbsFocus.TabIndex = 5;
+            this.slider_PTZ_AbsFocus.TickFrequency = 0;
+            this.slider_PTZ_AbsFocus.Scroll += new System.EventHandler(this.slider_PTZ_AbsFocus_Scroll);
+            this.slider_PTZ_AbsFocus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsFocus_MouseDown);
+            this.slider_PTZ_AbsFocus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsFocus_MouseUp);
+            // 
+            // l_PTZ_SliderZPercent
+            // 
+            this.l_PTZ_SliderZPercent.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.l_PTZ_SliderZPercent.AutoSize = true;
+            this.l_PTZ_SliderZPercent.Location = new System.Drawing.Point(63, 49);
+            this.l_PTZ_SliderZPercent.Name = "l_PTZ_SliderZPercent";
+            this.l_PTZ_SliderZPercent.Size = new System.Drawing.Size(15, 13);
+            this.l_PTZ_SliderZPercent.TabIndex = 3;
+            this.l_PTZ_SliderZPercent.Text = "%";
+            // 
+            // tB_PTZ_SlidersZText
+            // 
+            this.tB_PTZ_SlidersZText.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tB_PTZ_SlidersZText.Location = new System.Drawing.Point(24, 46);
+            this.tB_PTZ_SlidersZText.Name = "tB_PTZ_SlidersZText";
+            this.tB_PTZ_SlidersZText.Size = new System.Drawing.Size(39, 20);
+            this.tB_PTZ_SlidersZText.TabIndex = 2;
+            this.tB_PTZ_SlidersZText.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tB_PTZ_SlidersZText_KeyPress);
+            this.tB_PTZ_SlidersZText.Leave += new System.EventHandler(this.tB_PTZ_SlidersZText_Leave);
+            // 
+            // l_PTZ_SliderZoom
+            // 
+            this.l_PTZ_SliderZoom.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.l_PTZ_SliderZoom.AutoSize = true;
+            this.l_PTZ_SliderZoom.Location = new System.Drawing.Point(26, 30);
+            this.l_PTZ_SliderZoom.Name = "l_PTZ_SliderZoom";
+            this.l_PTZ_SliderZoom.Size = new System.Drawing.Size(34, 13);
+            this.l_PTZ_SliderZoom.TabIndex = 0;
+            this.l_PTZ_SliderZoom.Text = "Zoom";
+            // 
+            // slider_PTZ_AbsZoom
+            // 
+            this.slider_PTZ_AbsZoom.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.slider_PTZ_AbsZoom.Location = new System.Drawing.Point(0, 3);
+            this.slider_PTZ_AbsZoom.Maximum = 100;
+            this.slider_PTZ_AbsZoom.Name = "slider_PTZ_AbsZoom";
+            this.slider_PTZ_AbsZoom.Size = new System.Drawing.Size(94, 45);
+            this.slider_PTZ_AbsZoom.TabIndex = 1;
+            this.slider_PTZ_AbsZoom.TickFrequency = 0;
+            this.slider_PTZ_AbsZoom.Scroll += new System.EventHandler(this.slider_PTZ_AbsZoom_Scroll);
+            this.slider_PTZ_AbsZoom.MouseDown += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsZoom_MouseDown);
+            this.slider_PTZ_AbsZoom.MouseUp += new System.Windows.Forms.MouseEventHandler(this.slider_PTZ_AbsZoom_MouseUp);
+            // 
+            // p_PlayerPanel
+            // 
+            this.p_PlayerPanel.AllowDrop = true;
+            this.p_PlayerPanel.BackColor = System.Drawing.Color.Black;
+            this.p_PlayerPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_PlayerPanel.Controls.Add(this.p_PTZ_Sliders);
+            this.p_PlayerPanel.Controls.Add(this.pB_Panoramic);
+            this.p_PlayerPanel.Controls.Add(this.JoyBack);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Daylight);
+            this.p_PlayerPanel.Controls.Add(this.b_Open);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Thermal);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_ZoomPos);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Left);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_FocusPos);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Right);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_ZoomNeg);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Down);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_FocusNeg);
+            this.p_PlayerPanel.Controls.Add(this.b_PTZ_Up);
+            this.p_PlayerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.p_PlayerPanel.Location = new System.Drawing.Point(0, 24);
+            this.p_PlayerPanel.Name = "p_PlayerPanel";
+            this.p_PlayerPanel.Size = new System.Drawing.Size(1264, 657);
+            this.p_PlayerPanel.TabIndex = 31;
+            this.p_PlayerPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragDrop);
+            this.p_PlayerPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragOver);
+            this.p_PlayerPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.p_PlayerPanel_MouseMove);
             // 
             // MainForm
             // 
@@ -1372,13 +1334,6 @@ namespace SSUtility2 {
             this.ResizeEnd += new System.EventHandler(this.MainForm_ResizeEnd);
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
-            this.p_PlayerPanel.ResumeLayout(false);
-            this.p_PTZ_Sliders.ResumeLayout(false);
-            this.p_PTZ_Sliders.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsFocus)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
             this.p_Legacy.ResumeLayout(false);
             this.p_Legacy_Player1.ResumeLayout(false);
             this.p_Legacy_Player1.PerformLayout();
@@ -1389,6 +1344,13 @@ namespace SSUtility2 {
             this.l_Legacy_CP.ResumeLayout(false);
             this.l_Legacy_CP.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Legacy_JoyBack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).EndInit();
+            this.p_PTZ_Sliders.ResumeLayout(false);
+            this.p_PTZ_Sliders.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsFocus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).EndInit();
+            this.p_PlayerPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1403,27 +1365,14 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Window_Response;
         public ToolStripMenuItem Menu_QC;
         public ToolStripMenuItem Menu_QC_PanZero;
-        public Panel p_PlayerPanel;
         public ToolStripMenuItem Menu_QC_Pan;
         public ToolStripMenuItem Menu_QC_Tilt;
         public ToolStripMenuItem Menu_Window_Presets;
-        public Button b_Open;
         public ToolStripMenuItem Menu_Settings;
         public ToolStripMenuItem Menu_Settings_Open;
-        public Button b_PTZ_Left;
-        public Button b_PTZ_Right;
-        public Button b_PTZ_Down;
-        public Button b_PTZ_Up;
-        public Button b_PTZ_FocusNeg;
-        public Button b_PTZ_ZoomNeg;
-        public Button b_PTZ_FocusPos;
-        public Button b_PTZ_ZoomPos;
         public ToolStripMenuItem Menu_Settings_Keyboard;
         public ToolStripMenuItem Menu_Settings_Lite;
         public ToolStripMenuItem Menu_QC_Custom;
-        public Button b_PTZ_Daylight;
-        public Button b_PTZ_Thermal;
-        public Kaiser.JoyBack JoyBack;
         private ToolStripMenuItem Menu_QC_Zoom;
         public ToolStripMenuItem Menu_Settings_Config;
         public ToolStripMenuItem Menu_Settings_Config_Import;
@@ -1444,19 +1393,9 @@ namespace SSUtility2 {
         public ToolStripMenuItem Menu_Recording_StopRecording;
         private ToolStripMenuItem Menu_Settings_ConnectionSettings;
         private ToolStripMenuItem Menu_Recording_Snapshot_All;
-        public PictureBox pB_Panoramic;
         public ToolStripMenuItem Menu_Recording_Video_Global;
         public ToolStripMenuItem Menu_RecordIndicator;
-        private Panel p_PTZ_Sliders;
-        private TrackBar slider_PTZ_AbsZoom;
-        private Label l_PTZ_SliderZoom;
-        private Label l_PTZ_SliderZPercent;
-        private TextBox tB_PTZ_SlidersZText;
-        private Label l_PTZ_SlidersFPercent;
-        private TextBox tB_PTZ_SlidersFText;
-        private Label l_PTZ_SlidersFocus;
-        private TrackBar slider_PTZ_AbsFocus;
-        private Panel p_Legacy;
+        public Panel p_Legacy;
         private Label l_Legacy_PTZ;
         public JoyBack Legacy_JoyBack;
         public Button b_Legacy_ZoomPos;
@@ -1468,44 +1407,63 @@ namespace SSUtility2 {
         public Button b_Legacy_FocusNeg;
         public Button b_Legacy_Up;
         private Panel l_Legacy_CP;
-        private Label l_Legacy_RTSP;
-        private TextBox tB_Legacy_RTSP;
+        private Label l_Legacy_PelcoID;
+        public TextBox tB_Legacy_PelcoID;
         private Label l_legacy_Port;
-        private TextBox tB_Legacy_Port;
+        public TextBox tB_Legacy_Port;
         private Label l_Legacy_IP;
         private Label l_Legacy_IPCon;
-        private TextBox tB_Legacy_IP;
+        public TextBox tB_Legacy_IP;
         public Button b_Legacy_Connect;
-        private Panel p_Legacy_Player1;
-        private Panel p_Legacy_Player2;
-        private Panel p_Player1;
+        public Panel p_Legacy_Player1;
+        public Panel p_Legacy_Player2;
+        public Panel p_Player1;
         private Label l_Name;
         public TextBox tB_Player1_Name;
-        private Panel p_Player1_Simple;
+        public Panel p_Player1_Simple;
         public TextBox tB_Player1_SimpleAdr;
-        public Label l_Player1_SimpleAdr;
-        private Panel p_Player1_Extended;
+        private Label l_Player1_SimpleAdr;
+        public Panel p_Player1_Extended;
         public Label label1;
-        public Label l_Player1_Type;
+        private Label l_Player1_Type;
         public ComboBox cB_Player1_Type;
-        public Label l_Player1_RTSP;
+        private Label l_Player1_RTSP;
         public TextBox tB_Player1_Password;
         public TextBox tB_Player1_Adr;
-        public Label l_Player1_Buffering;
-        public Label l_Player1_Password;
-        public Label l_Player1_Username;
+        private Label l_Player1_Buffering;
+        private Label l_Player1_Password;
+        private Label l_Player1_Username;
         public TextBox tB_Player1_Port;
         public TextBox tB_Player1_Buffering;
-        public Label l_Player1_Port;
+        private Label l_Player1_Port;
         public TextBox tB_Player1_Username;
         public TextBox tB_Player1_RTSP;
-        public Label l_Player1_Adr;
+        private Label l_Player1_Adr;
         public Button b_Player1_Stop;
         public CheckBox checkB_Player1_Manual;
         public Button b_Player1_Play;
-        private Label l_Legacy_Password;
-        private TextBox tB_Legacy_Password;
-        private Label l_Legacy_Username;
-        private TextBox tB_Legacy_Username;
+        public Button b_PTZ_Up;
+        public Button b_PTZ_FocusNeg;
+        public Button b_PTZ_Down;
+        public Button b_PTZ_ZoomNeg;
+        public Button b_PTZ_Right;
+        public Button b_PTZ_FocusPos;
+        public Button b_PTZ_Left;
+        public Button b_PTZ_ZoomPos;
+        public Button b_PTZ_Thermal;
+        public Button b_Open;
+        public Button b_PTZ_Daylight;
+        public JoyBack JoyBack;
+        public PictureBox pB_Panoramic;
+        private Panel p_PTZ_Sliders;
+        private Label l_PTZ_SlidersFPercent;
+        private TextBox tB_PTZ_SlidersFText;
+        private Label l_PTZ_SlidersFocus;
+        private TrackBar slider_PTZ_AbsFocus;
+        private Label l_PTZ_SliderZPercent;
+        private TextBox tB_PTZ_SlidersZText;
+        private Label l_PTZ_SliderZoom;
+        private TrackBar slider_PTZ_AbsZoom;
+        public Panel p_PlayerPanel;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

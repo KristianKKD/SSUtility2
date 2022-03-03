@@ -51,15 +51,12 @@ namespace SSUtility2 {
                     result = false;
                 }
 
-                IPEndPoint ep;
                 if (customep == null)
-                    ep = new IPEndPoint(IPAddress.Parse(ConfigControl.savedIP.stringVal),
+                    customep = new IPEndPoint(IPAddress.Parse(ConfigControl.savedIP.stringVal),
                         int.Parse(ConfigControl.savedPort.stringVal));
-                else
-                    ep = customep;
 
                 if (result)
-                    result = Connect(ep, showErrors);
+                    result = Connect(customep, showErrors);
 
             } catch (Exception e){
                 if (showErrors)

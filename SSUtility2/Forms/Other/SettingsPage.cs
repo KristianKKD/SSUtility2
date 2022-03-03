@@ -10,7 +10,7 @@ namespace SSUtility2 {
         Timer resolutionTimer;
         Timer updateControl;
 
-        public bool overridePreset;
+        public static bool overridePreset;
 
         public SettingsPage() {
             InitializeComponent();
@@ -34,9 +34,15 @@ namespace SSUtility2 {
 
         public async Task LoadSettings() {
             try {
+                ChangeLayout(ConfigControl.legacyLayout.boolVal);
+
                 slider_IPCon_PTSpeed.Value = ConfigControl.cameraPTSpeedMultiplier.intVal;
                 slider_IPCon_ZoomSpeed.Value = ConfigControl.cameraZoomSpeedMultiplier.intVal;
                 slider_IPCon_FocusSpeed.Value = ConfigControl.cameraFocusSpeedMultiplier.intVal;
+
+                MainForm.m.tB_Legacy_IP.Text = ConfigControl.savedIP.stringVal;
+                MainForm.m.tB_Legacy_Port.Text = ConfigControl.savedPort.intVal.ToString();
+                MainForm.m.tB_Legacy_PelcoID.Text = ConfigControl.pelcoOverrideID.intVal.ToString();
 
                 tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
                 tB_IPCon_PTSpeed.Text = ConfigControl.cameraPTSpeedMultiplier.intVal.ToString();
@@ -53,7 +59,7 @@ namespace SSUtility2 {
                 cB_Recording_Quality.Text = ConfigControl.recQual.stringVal;
                 cB_Recording_FPS.Text = ConfigControl.recFPS.stringVal;
                 cB_Layout_CP.Text = ConfigControl.cpLayout.stringVal;
-                cB_Layout_MainForm.Text = ConfigControl.legacyLayout.stringVal;
+                cB_Layout_MainForm.Text = cB_Layout_MainForm.Items[Convert.ToInt32(ConfigControl.legacyLayout.boolVal)].ToString();
                 cB_Startup_PlayerCount.Text = ConfigControl.playerCount.stringVal;
                 cB_Other_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
                 cB_Other_ForceMode.Text = ConfigControl.forceType.stringVal;
@@ -800,7 +806,20 @@ namespace SSUtility2 {
             if (!MainForm.m.finishedLoading)
                 return;
 
-            ConfigControl.legacyLayout.UpdateValue((cB_Layout_MainForm.Text.ToUpper() == "LEGACY").ToString());
+            MainForm.m.mainPlayer.StopPlaying();
+
+            bool legacyMode = cB_Layout_MainForm.Text.ToUpper() == "LEGACY";
+            ChangeLayout(legacyMode);
+
+            ConfigControl.legacyLayout.UpdateValue(legacyMode.ToString());
         }
+
+        void ChangeLayout(bool legacyMode) {
+            MainForm.m.p_Legacy.Visible = legacyMode;
+            MainForm.m.p_PlayerPanel.Visible = !legacyMode;
+
+            overridePreset = legacyMode;
+        }
+
     }
 }

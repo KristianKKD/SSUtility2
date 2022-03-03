@@ -71,7 +71,7 @@ namespace SSUtility2 {
         public static uint MakeAdr() {
             int id = 0;
 
-            if (MainForm.m.setPage.overridePreset || MainForm.m.lite)
+            if (SettingsPage.overridePreset || MainForm.m.lite || ConfigControl.legacyLayout.boolVal)
                 id = ConfigControl.pelcoOverrideID.intVal;
             else
                 id = MainForm.m.mainPlayer.settings.GetPelcoID();
