@@ -80,8 +80,9 @@ namespace SSUtility2 {
                 MainForm.m.Invoke((MethodInvoker)delegate {
                     string text;
                     Color col;
-                    Label l1 = MainForm.m.setPage.l_IPCon_Connected;
-                    Label l2 = MainForm.m.mainPlayer.settings.l_Connected;
+
+                    Label[] labels = { MainForm.m.setPage.l_IPCon_Connected,
+                        MainForm.m.mainPlayer.settings.l_Connected, MainForm.m.l_Legacy_Indicator };
                     if (connected) {
                         text = "✓";
                         col = Color.Green;
@@ -90,11 +91,10 @@ namespace SSUtility2 {
                         col = Color.Red;
                     }
 
-                    l1.Text = text;
-                    l2.Text = text;
-
-                    l1.ForeColor = col;
-                    l2.ForeColor = col;
+                    for(int i = 0; i < labels.Length; i++) {
+                        labels[i].Text = text;
+                        labels[i].ForeColor = col;
+                    }
                 });
             } catch (Exception e) { 
                 Console.WriteLine("LABEL DISPLAY\n" + e.ToString());

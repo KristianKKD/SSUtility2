@@ -491,6 +491,7 @@
             this.Name = "RTSPWizard";
             this.Text = "RTSP Wizard";
             this.Deactivate += new System.EventHandler(this.RTSPWizard_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTSPWizard_FormClosing);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ClickOnForm_Click);
             this.ResumeLayout(false);
             this.PerformLayout();

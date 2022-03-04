@@ -69,7 +69,7 @@ namespace SSUtility2 {
         }
 
         public static uint MakeAdr() {
-            int id = 0;
+            int id = 1;
 
             if (SettingsPage.overridePreset || MainForm.m.lite || ConfigControl.legacyLayout.boolVal)
                 id = ConfigControl.pelcoOverrideID.intVal;
@@ -77,7 +77,7 @@ namespace SSUtility2 {
                 id = MainForm.m.mainPlayer.settings.GetPelcoID();
 
             if (id == -1)
-                id = 0;
+                id = 1;
 
             return Convert.ToUInt32(id);
         }
@@ -270,6 +270,8 @@ namespace SSUtility2 {
                 while (File.Exists(fullPath))
                     fullPath = path + name + "(" + (++numAdd).ToString() + ")" + extension;
 
+                Tools.ReplaceAll(fullPath, "\\\\", "\\");
+
                 return fullPath;
             } catch (Exception e) {
                 MessageBox.Show("PATHNOOVERWRITE\n" + e.ToString());
@@ -277,6 +279,48 @@ namespace SSUtility2 {
             }
         }
  
+        
+        static string ReplaceAll(string input, string find, string replaceWith) {
+	        string returnString = "";
+	        int count = 0;
+	        int lastPos = 0;
+
+	        while (true) {
+		        int index = FindNthIndexOf(input, find, count + 1);
+		        if (index < 0) {
+			        returnString += input.Substring(lastPos);
+			        break;
+		        }
+
+		        count++;
+
+		        returnString += input.Substring(lastPos, index - lastPos - find.Length) + replaceWith;
+		        lastPos = index;
+	        }
+
+	        if (count == 0)
+		        returnString = input;
+
+	        return returnString;
+        }
+
+        
+        static int FindNthIndexOf(string input, string findString, int index) {
+	        int pos = 0;
+	        if (input.Length <= 0 || findString.Length <= 0)
+		        return -1;
+
+	        for (int i = 0; i < index; i++) {
+		        int posOfNext = input.Substring(pos).IndexOf(findString);
+		        pos += posOfNext;
+		        if (posOfNext == -1)
+			        return -1;
+
+		        pos += findString.Length;
+	        }
+
+	        return pos;
+        }
         
         public static async Task<bool> CheckFinishedTypingPath(TextBox tb, Label linkLabel) {
             if (tb.Text.Length < 1) {
@@ -386,6 +430,9 @@ namespace SSUtility2 {
                 full = "";
             }
 
+            full.Replace("//", "/");
+            full.Replace("\\\\", "\\");
+
             return full;
         }
 
@@ -453,6 +500,9 @@ namespace SSUtility2 {
                 string name = sourceFile.Substring(sourceFile.LastIndexOf("\\") + 1);
                 curFile = sourceFile;
                 newLocation = destination + name;
+
+                destination.Replace("//", "/");
+                destination.Replace("\\\\", "\\");
 
                 if (copyingDirectory) {
                     if(!destination.EndsWith(@"\"))
@@ -815,6 +865,35 @@ namespace SSUtility2 {
             }
 
             return -1;
+        }
+
+         public static void DoPresetPlayerSettings(string encText, TextBox rtspBox, TextBox userBox, TextBox passBox) {
+            string username = "";
+            string password = "";
+            string rtsp = "";
+
+            if (encText == "IONodes - Daylight") {
+                username = "admin";
+                password = "admin";
+                rtsp = "videoinput_1:0/h264_1/onvif.stm";
+            } else if (encText == "IONodes - Thermal") {
+                username = "admin";
+                password = "admin";
+                rtsp = "videoinput_2:0/h264_1/onvif.stm";
+            } else if (encText == "VIVOTEK") {
+                username = "root";
+                password = "root1234";
+                rtsp = "live.sdp";
+            } else if (encText == "BOSCH") {
+                username = "service";
+                password = "Service123!";
+                rtsp = "";
+            } else
+                return;
+
+            rtspBox.Text = rtsp;
+            userBox.Text = username;
+            passBox.Text = password;
         }
 
     }

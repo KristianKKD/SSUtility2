@@ -13,7 +13,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.4.1";
+        public const string version = "v2.8.4.2";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -107,10 +107,12 @@ namespace SSUtility2 {
 
                 if (startLiteVersion)
                     LiteToggle();
-                else if (ConfigControl.legacyLayout.boolVal)
-                    LoadLegacy();
-                else
+                else {
+                    if (ConfigControl.legacyLayout.boolVal)
+                        LoadLegacy();
+
                     AttachPlayers().ConfigureAwait(false);
+                }
 
                 finishedLoading = true;
 
@@ -142,6 +144,16 @@ namespace SSUtility2 {
         public async Task AttachPlayers() {
             try {
                 bool autoPlay = ConfigControl.autoPlay.boolVal;
+
+                if (ConfigControl.legacyLayout.boolVal) {
+                    secondPlayer = new Detached(false);
+                    secondPlayer.p_Player = p_Player2;
+                    if (autoPlay) {
+                        b_Player1_Play_Click(null, null);
+                        b_Player2_Play_Click(null, null);
+                    }
+                    return;
+                }
 
                 int playercount = ConfigControl.playerCount.intVal;
 
@@ -304,6 +316,9 @@ namespace SSUtility2 {
                     b_Open.Dispose();
 
                     mainPlayer.DestroyAll();
+
+                    p_Legacy.Dispose();
+                    p_PlayerPanel.Show();
 
                     mainPlayer.StopPlaying();
                     JoyBack.Joystick.UpdateJoystickCentre();
@@ -722,10 +737,14 @@ namespace SSUtility2 {
 
         byte[] lastCode;
         public void Tick() {
+            JoyBack joy = JoyBack;
+            if (ConfigControl.legacyLayout.boolVal)
+                joy = Legacy_JoyBack;
+            
             try {
-                Point coords = JoyBack.Joystick.coords;
+                Point coords = joy.Joystick.coords;
 
-                if (JoyBack.Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
+                if (joy.Joystick.distance != 0 && AsyncCamCom.sock.Connected) {
                     uint adr = Tools.MakeAdr();
                     int x = coords.X;
                     int y = coords.Y;
@@ -743,7 +762,7 @@ namespace SSUtility2 {
 
             } catch (Exception err) {
                 Tools.ShowPopup("Failed to send virtual joystick commands!\nShow more?", "Error Occurred!", err.ToString());
-                JoyBack.Joystick.Centre();
+                joy.Joystick.Centre();
             }
         }
 
@@ -1373,50 +1392,69 @@ namespace SSUtility2 {
             FScrollFunction(false);
         }
 
+
+        ///TO REWORK IN THE FUTURE, IS TOO HARDCODED!!!!
+
         private void b_Player1_Stop_Click(object sender, EventArgs e) {
             mainPlayer.StopPlaying();
             b_Player1_Stop.Visible = false;
         }
 
         private void b_Player1_Play_Click(object sender, EventArgs e) {
+            string simple = tB_Player1_SimpleAdr.Text;
+            string ipaddress = tB_Player1_Adr.Text;
+            string port = tB_Player1_Port.Text;
+            string url = tB_Player1_RTSP.Text;
+            string username = tB_Player1_Username.Text;
+            string password = tB_Player1_Password.Text;
+
+            string full = LegacyPlayerPlay(ConfigControl.player1Extended.boolVal, new string[] { simple, ipaddress, port, url, username, password });
+            if (full == "")
+                return;
+
+            if(mainPlayer.Play(finishedLoading, true, full).Result) { 
+                b_Player1_Stop.Visible = true;
+                tB_Player1_SimpleAdr.Text = full;
+                ConfigControl.player1Simple.UpdateValue(simple);
+                ConfigControl.player1Adr.UpdateValue(ipaddress);
+                ConfigControl.player1Port.UpdateValue(port);
+                ConfigControl.player1RTSP.UpdateValue(url);
+                ConfigControl.player1User.UpdateValue(username);
+                ConfigControl.player1Pass.UpdateValue(password);
+            }
+        }
+
+        string LegacyPlayerPlay(bool manual, string[] values) {
             string full = "";
             try {
-                if (checkB_Player1_Manual.Checked)
-                    full = tB_Player1_SimpleAdr.Text;
+                if (!manual)
+                    full = values[0]; //simple address
                 else {
-                    string ipaddress = tB_Player1_Adr.Text;
-                    string port = tB_Player1_Port.Text;
-                    string url = tB_Player1_RTSP.Text;
-                    string username = tB_Player1_Username.Text;
-                    string password = tB_Player1_Password.Text;
-
-                    string userPass = username + ":" + password + "@";
-                    if (username.Length <= 0 && password.Length <= 0)
+                    string userPass = values[4] + ":" + values[5] + "@";
+                    if (values[4].Length <= 0 && values[5].Length <= 0)
                         userPass = "";
 
-                    string colonPort = ":" + port;
-                    if (port.Length <= 0)
+                    string colonPort = ":" + values[2];
+                    if (values[2].Length <= 0)
                         colonPort = "";
 
-                    full = "rtsp://" + userPass + ipaddress + colonPort + "/" + url;
-
-                    mainPlayer.Play(true, true, full);
-                    b_Player1_Stop.Visible = true;
-
-                    //full = tB_Player1_Name.Text + ";" + full + ";" + ipaddress + ";" + port + ";" + url + ";" + username
-                    //   + ";" + password + ";" + tB_Legacy_PelcoID.Text + ";;;";
-
-                    //RTSPPresets.LoadPreset(full);
+                    full = "rtsp://" + userPass + values[1] + colonPort + "/" + values[3]; //ip address and rtsp are 1 and 3 respectively
                 }
-
-
             } catch (Exception err) {
                 Console.WriteLine(err.ToString());
             };
 
+            return full;
         }
 
-        private void checkB_Player1_Manual_CheckedChanged(object sender, EventArgs e) {
+        private void cB_Player1_Type_SelectedIndexChanged(object sender, EventArgs e) {
+            if (MainForm.m.finishedLoading) {
+                Tools.DoPresetPlayerSettings(cB_Player1_Type.Text, tB_Player1_RTSP, tB_Player1_Username, tB_Player1_Password);
+                ConfigControl.player1TypeIndex.UpdateValue(cB_Player1_Type.SelectedIndex.ToString());
+            }
+        }
+
+        public void checkB_Player1_Manual_CheckedChanged(object sender, EventArgs e) {
             if (checkB_Player1_Manual.Checked) {
                 p_Player1_Simple.Hide();
                 p_Player1_Extended.Show();
@@ -1424,6 +1462,8 @@ namespace SSUtility2 {
                 p_Player1_Extended.Hide();
                 p_Player1_Simple.Show();
             }
+
+            ConfigControl.player1Extended.UpdateValue(checkB_Player1_Manual.Checked.ToString());
         }
 
         private void b_Legacy_Connect_Click(object sender, EventArgs e) {
@@ -1439,7 +1479,6 @@ namespace SSUtility2 {
                 return;
             }
 
-
             IPEndPoint ep = new IPEndPoint(ip, port);
             if(AsyncCamCom.TryConnect(true, ep).Result) {
                 ConfigControl.savedIP.UpdateValue(tB_Legacy_IP.Text);
@@ -1453,6 +1492,70 @@ namespace SSUtility2 {
                 ConfigControl.pelcoOverrideID.intVal = parsedVal;
             else
                 ConfigControl.pelcoOverrideID.intVal = 0;
+        }
+
+        private void tB_Player1_Name_KeyUp(object sender, KeyEventArgs e) {
+            ConfigControl.player1Name.UpdateValue(tB_Player1_Name.Text);
+        }
+
+        public void checkB_Player2_Manual_CheckedChanged(object sender, EventArgs e) {
+            if (checkB_Player2_Manual.Checked) {
+                p_Player2_Simple.Hide();
+                p_Player2_Extended.Show();
+            } else {
+                p_Player2_Extended.Hide();
+                p_Player2_Simple.Show();
+            }
+
+            ConfigControl.player2Extended.UpdateValue(checkB_Player2_Manual.Checked.ToString());
+        }
+
+        private void tB_Player1_CustomValues(object sender, KeyEventArgs e) {
+            cB_Player1_Type.Text = "Custom";
+        }
+
+        private void cB_Player2_Type_SelectedIndexChanged(object sender, EventArgs e) {
+            if (MainForm.m.finishedLoading) {
+                Tools.DoPresetPlayerSettings(cB_Player2_Type.Text, tB_Player2_RTSP, tB_Player2_Username, tB_Player2_Password);
+                ConfigControl.player2TypeIndex.UpdateValue(cB_Player2_Type.SelectedIndex.ToString());
+            }
+        }
+
+        private void b_Player2_Play_Click(object sender, EventArgs e) {
+            string simple = tB_Player2_SimpleAdr.Text;
+            string ipaddress = tB_Player2_Adr.Text;
+            string port = tB_Player2_Port.Text;
+            string url = tB_Player2_RTSP.Text;
+            string username = tB_Player2_Username.Text;
+            string password = tB_Player2_Password.Text;
+
+            string full = LegacyPlayerPlay(ConfigControl.player2Extended.boolVal, new string[] { simple, ipaddress, port, url, username, password });
+            if (full == "")
+                return;
+
+            if(secondPlayer.Play(finishedLoading, true, full).Result) { 
+                b_Player2_Stop.Visible = true;
+                tB_Player2_SimpleAdr.Text = full;
+                ConfigControl.player2Simple.UpdateValue(simple);
+                ConfigControl.player2Adr.UpdateValue(ipaddress);
+                ConfigControl.player2Port.UpdateValue(port);
+                ConfigControl.player2RTSP.UpdateValue(url);
+                ConfigControl.player2User.UpdateValue(username);
+                ConfigControl.player2Pass.UpdateValue(password);
+            }
+        }
+
+        private void b_Player2_Stop_Click(object sender, EventArgs e) {
+            mainPlayer.StopPlaying();
+            b_Player1_Stop.Visible = false;
+        }
+
+        private void tB_Player2_Name_KeyUp(object sender, KeyEventArgs e) {
+            ConfigControl.player2Name.UpdateValue(tB_Player2_Name.Text);
+        }
+
+        private void tB_Player2_Password_KeyUp(object sender, KeyEventArgs e) {
+            cB_Player2_Type.Text = "Custom";
         }
     } // end of class MainForm
 } // end of namespace SSUtility2

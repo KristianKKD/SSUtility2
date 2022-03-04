@@ -27,6 +27,7 @@ namespace SSUtility2 {
         readonly static int columns = 10;
         public static string[,] allPresets;
         public static int currentPresetCount = 0;
+        static RTSPWizard wiz;
 
         public static List<string> GetAll() {
             List<string> all = new List<string>();
@@ -75,10 +76,6 @@ namespace SSUtility2 {
             return loadPos;
         }
 
-        public static bool PresetIsValid(string presetName) {
-            return (GetValue(PresetColumn.RTSPIP, presetName) != "" && GetValue(PresetColumn.RTSPPort, presetName) != "");
-        }
-
         static void ReloadAll() {
             //Reloads all settings every time this is updated, make a way so it reloads after it finishes loading later
 
@@ -94,7 +91,6 @@ namespace SSUtility2 {
             return all;
         }
 
-        static RTSPWizard wiz;
         public static void OpenPreset(string presetName, VideoSettings sets) {
             if (wiz != null)
                 wiz.Dispose();

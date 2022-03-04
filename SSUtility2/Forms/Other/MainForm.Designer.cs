@@ -87,25 +87,46 @@ namespace SSUtility2 {
             this.Menu_RecordIndicator = new System.Windows.Forms.ToolStripMenuItem();
             this.p_Legacy = new System.Windows.Forms.Panel();
             this.p_Legacy_Player2 = new System.Windows.Forms.Panel();
+            this.l_Player2_Name = new System.Windows.Forms.Label();
+            this.tB_Player2_Name = new System.Windows.Forms.TextBox();
+            this.p_Player2_Simple = new System.Windows.Forms.Panel();
+            this.tB_Player2_SimpleAdr = new System.Windows.Forms.TextBox();
+            this.l_Player2_SimpleAdr = new System.Windows.Forms.Label();
+            this.p_Player2_Extended = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.l_Player2_Type = new System.Windows.Forms.Label();
+            this.cB_Player2_Type = new System.Windows.Forms.ComboBox();
+            this.l_Player2_RTSP = new System.Windows.Forms.Label();
+            this.tB_Player2_Password = new System.Windows.Forms.TextBox();
+            this.tB_Player2_Adr = new System.Windows.Forms.TextBox();
+            this.l_Player2_Password = new System.Windows.Forms.Label();
+            this.l_Player2_Username = new System.Windows.Forms.Label();
+            this.tB_Player2_Port = new System.Windows.Forms.TextBox();
+            this.l_Player2_Port = new System.Windows.Forms.Label();
+            this.tB_Player2_Username = new System.Windows.Forms.TextBox();
+            this.tB_Player2_RTSP = new System.Windows.Forms.TextBox();
+            this.l_Player2_Adr = new System.Windows.Forms.Label();
+            this.b_Player2_Stop = new System.Windows.Forms.Button();
+            this.checkB_Player2_Manual = new System.Windows.Forms.CheckBox();
+            this.b_Player2_Play = new System.Windows.Forms.Button();
+            this.p_Player2 = new System.Windows.Forms.Panel();
             this.p_Legacy_Player1 = new System.Windows.Forms.Panel();
             this.p_Player1 = new System.Windows.Forms.Panel();
-            this.l_Name = new System.Windows.Forms.Label();
+            this.l_Player1_Name = new System.Windows.Forms.Label();
             this.tB_Player1_Name = new System.Windows.Forms.TextBox();
             this.p_Player1_Simple = new System.Windows.Forms.Panel();
             this.tB_Player1_SimpleAdr = new System.Windows.Forms.TextBox();
             this.l_Player1_SimpleAdr = new System.Windows.Forms.Label();
             this.p_Player1_Extended = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.l_Player1_Info = new System.Windows.Forms.Label();
             this.l_Player1_Type = new System.Windows.Forms.Label();
             this.cB_Player1_Type = new System.Windows.Forms.ComboBox();
             this.l_Player1_RTSP = new System.Windows.Forms.Label();
             this.tB_Player1_Password = new System.Windows.Forms.TextBox();
             this.tB_Player1_Adr = new System.Windows.Forms.TextBox();
-            this.l_Player1_Buffering = new System.Windows.Forms.Label();
             this.l_Player1_Password = new System.Windows.Forms.Label();
             this.l_Player1_Username = new System.Windows.Forms.Label();
             this.tB_Player1_Port = new System.Windows.Forms.TextBox();
-            this.tB_Player1_Buffering = new System.Windows.Forms.TextBox();
             this.l_Player1_Port = new System.Windows.Forms.Label();
             this.tB_Player1_Username = new System.Windows.Forms.TextBox();
             this.tB_Player1_RTSP = new System.Windows.Forms.TextBox();
@@ -113,7 +134,8 @@ namespace SSUtility2 {
             this.b_Player1_Stop = new System.Windows.Forms.Button();
             this.checkB_Player1_Manual = new System.Windows.Forms.CheckBox();
             this.b_Player1_Play = new System.Windows.Forms.Button();
-            this.l_Legacy_CP = new System.Windows.Forms.Panel();
+            this.p_Legacy_CP = new System.Windows.Forms.Panel();
+            this.l_Legacy_Indicator = new System.Windows.Forms.Label();
             this.b_Legacy_Connect = new System.Windows.Forms.Button();
             this.l_Legacy_PelcoID = new System.Windows.Forms.Label();
             this.tB_Legacy_PelcoID = new System.Windows.Forms.TextBox();
@@ -157,10 +179,13 @@ namespace SSUtility2 {
             this.p_PlayerPanel = new System.Windows.Forms.Panel();
             this.MenuBar.SuspendLayout();
             this.p_Legacy.SuspendLayout();
+            this.p_Legacy_Player2.SuspendLayout();
+            this.p_Player2_Simple.SuspendLayout();
+            this.p_Player2_Extended.SuspendLayout();
             this.p_Legacy_Player1.SuspendLayout();
             this.p_Player1_Simple.SuspendLayout();
             this.p_Player1_Extended.SuspendLayout();
-            this.l_Legacy_CP.SuspendLayout();
+            this.p_Legacy_CP.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Legacy_JoyBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
@@ -202,28 +227,28 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Presets.Text = "Quick Functions";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
@@ -344,7 +369,7 @@ namespace SSUtility2 {
             // Menu_Recording_StopRecording
             // 
             this.Menu_Recording_StopRecording.Name = "Menu_Recording_StopRecording";
-            this.Menu_Recording_StopRecording.Size = new System.Drawing.Size(159, 22);
+            this.Menu_Recording_StopRecording.Size = new System.Drawing.Size(180, 22);
             this.Menu_Recording_StopRecording.Text = "Stop Recording";
             this.Menu_Recording_StopRecording.Visible = false;
             this.Menu_Recording_StopRecording.Click += new System.EventHandler(this.Menu_Recording_StopRecording_Click);
@@ -356,27 +381,27 @@ namespace SSUtility2 {
             this.Menu_Recording_Video_MainPlayer,
             this.Menu_Recording_Video_Global});
             this.Menu_Recording_Video.Name = "Menu_Recording_Video";
-            this.Menu_Recording_Video.Size = new System.Drawing.Size(159, 22);
+            this.Menu_Recording_Video.Size = new System.Drawing.Size(180, 22);
             this.Menu_Recording_Video.Text = "Video";
             // 
             // Menu_Recording_Video_SSUtility
             // 
             this.Menu_Recording_Video_SSUtility.Name = "Menu_Recording_Video_SSUtility";
-            this.Menu_Recording_Video_SSUtility.Size = new System.Drawing.Size(166, 22);
+            this.Menu_Recording_Video_SSUtility.Size = new System.Drawing.Size(180, 22);
             this.Menu_Recording_Video_SSUtility.Text = "SSUtility";
             this.Menu_Recording_Video_SSUtility.Click += new System.EventHandler(this.Menu_Recording_Video_SSUtility_Click);
             // 
             // Menu_Recording_Video_MainPlayer
             // 
             this.Menu_Recording_Video_MainPlayer.Name = "Menu_Recording_Video_MainPlayer";
-            this.Menu_Recording_Video_MainPlayer.Size = new System.Drawing.Size(166, 22);
+            this.Menu_Recording_Video_MainPlayer.Size = new System.Drawing.Size(180, 22);
             this.Menu_Recording_Video_MainPlayer.Text = "Main Player Only";
             this.Menu_Recording_Video_MainPlayer.Click += new System.EventHandler(this.Menu_Recording_Video_MainPlayer_Click);
             // 
             // Menu_Recording_Video_Global
             // 
             this.Menu_Recording_Video_Global.Name = "Menu_Recording_Video_Global";
-            this.Menu_Recording_Video_Global.Size = new System.Drawing.Size(166, 22);
+            this.Menu_Recording_Video_Global.Size = new System.Drawing.Size(180, 22);
             this.Menu_Recording_Video_Global.Text = "Global";
             this.Menu_Recording_Video_Global.Click += new System.EventHandler(this.Menu_Recording_Global_Click);
             // 
@@ -387,7 +412,7 @@ namespace SSUtility2 {
             this.Menu_Recording_Snapshot_Panoramic,
             this.Menu_Recording_Snapshot_All});
             this.Menu_Recording_Snapshot.Name = "Menu_Recording_Snapshot";
-            this.Menu_Recording_Snapshot.Size = new System.Drawing.Size(159, 22);
+            this.Menu_Recording_Snapshot.Size = new System.Drawing.Size(180, 22);
             this.Menu_Recording_Snapshot.Text = "Snapshot";
             // 
             // Menu_Recording_Snapshot_Single
@@ -414,7 +439,7 @@ namespace SSUtility2 {
             // Menu_Recording_Collection
             // 
             this.Menu_Recording_Collection.Name = "Menu_Recording_Collection";
-            this.Menu_Recording_Collection.Size = new System.Drawing.Size(159, 22);
+            this.Menu_Recording_Collection.Size = new System.Drawing.Size(180, 22);
             this.Menu_Recording_Collection.Text = "Collection...";
             this.Menu_Recording_Collection.Click += new System.EventHandler(this.Menu_Recording_Collection_Click);
             // 
@@ -494,7 +519,7 @@ namespace SSUtility2 {
             // 
             this.p_Legacy.Controls.Add(this.p_Legacy_Player2);
             this.p_Legacy.Controls.Add(this.p_Legacy_Player1);
-            this.p_Legacy.Controls.Add(this.l_Legacy_CP);
+            this.p_Legacy.Controls.Add(this.p_Legacy_CP);
             this.p_Legacy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.p_Legacy.ForeColor = System.Drawing.SystemColors.ControlText;
             this.p_Legacy.Location = new System.Drawing.Point(0, 0);
@@ -504,19 +529,288 @@ namespace SSUtility2 {
             // 
             // p_Legacy_Player2
             // 
+            this.p_Legacy_Player2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.p_Legacy_Player2.BackColor = System.Drawing.SystemColors.Menu;
             this.p_Legacy_Player2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_Legacy_Player2.Controls.Add(this.l_Player2_Name);
+            this.p_Legacy_Player2.Controls.Add(this.tB_Player2_Name);
+            this.p_Legacy_Player2.Controls.Add(this.p_Player2_Simple);
+            this.p_Legacy_Player2.Controls.Add(this.p_Player2_Extended);
+            this.p_Legacy_Player2.Controls.Add(this.b_Player2_Stop);
+            this.p_Legacy_Player2.Controls.Add(this.checkB_Player2_Manual);
+            this.p_Legacy_Player2.Controls.Add(this.b_Player2_Play);
+            this.p_Legacy_Player2.Controls.Add(this.p_Player2);
             this.p_Legacy_Player2.Location = new System.Drawing.Point(727, 30);
             this.p_Legacy_Player2.Name = "p_Legacy_Player2";
             this.p_Legacy_Player2.Size = new System.Drawing.Size(530, 643);
             this.p_Legacy_Player2.TabIndex = 123;
             // 
+            // l_Player2_Name
+            // 
+            this.l_Player2_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.l_Player2_Name.AutoSize = true;
+            this.l_Player2_Name.Location = new System.Drawing.Point(297, 417);
+            this.l_Player2_Name.Name = "l_Player2_Name";
+            this.l_Player2_Name.Size = new System.Drawing.Size(70, 13);
+            this.l_Player2_Name.TabIndex = 71;
+            this.l_Player2_Name.Text = "Player Name:";
+            // 
+            // tB_Player2_Name
+            // 
+            this.tB_Player2_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player2_Name.Location = new System.Drawing.Point(373, 414);
+            this.tB_Player2_Name.Name = "tB_Player2_Name";
+            this.tB_Player2_Name.Size = new System.Drawing.Size(149, 20);
+            this.tB_Player2_Name.TabIndex = 65;
+            this.tB_Player2_Name.Text = "LegacyPlayer 2";
+            this.tB_Player2_Name.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Player2_Name_KeyUp);
+            // 
+            // p_Player2_Simple
+            // 
+            this.p_Player2_Simple.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_Player2_Simple.Controls.Add(this.tB_Player2_SimpleAdr);
+            this.p_Player2_Simple.Controls.Add(this.l_Player2_SimpleAdr);
+            this.p_Player2_Simple.Location = new System.Drawing.Point(3, 413);
+            this.p_Player2_Simple.Name = "p_Player2_Simple";
+            this.p_Player2_Simple.Size = new System.Drawing.Size(288, 224);
+            this.p_Player2_Simple.TabIndex = 70;
+            // 
+            // tB_Player2_SimpleAdr
+            // 
+            this.tB_Player2_SimpleAdr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player2_SimpleAdr.Location = new System.Drawing.Point(86, 13);
+            this.tB_Player2_SimpleAdr.Name = "tB_Player2_SimpleAdr";
+            this.tB_Player2_SimpleAdr.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player2_SimpleAdr.TabIndex = 28;
+            // 
+            // l_Player2_SimpleAdr
+            // 
+            this.l_Player2_SimpleAdr.AutoSize = true;
+            this.l_Player2_SimpleAdr.Location = new System.Drawing.Point(3, 16);
+            this.l_Player2_SimpleAdr.Name = "l_Player2_SimpleAdr";
+            this.l_Player2_SimpleAdr.Size = new System.Drawing.Size(80, 13);
+            this.l_Player2_SimpleAdr.TabIndex = 27;
+            this.l_Player2_SimpleAdr.Text = "RTSP Address:";
+            // 
+            // p_Player2_Extended
+            // 
+            this.p_Player2_Extended.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_Player2_Extended.Controls.Add(this.label4);
+            this.p_Player2_Extended.Controls.Add(this.l_Player2_Type);
+            this.p_Player2_Extended.Controls.Add(this.cB_Player2_Type);
+            this.p_Player2_Extended.Controls.Add(this.l_Player2_RTSP);
+            this.p_Player2_Extended.Controls.Add(this.tB_Player2_Password);
+            this.p_Player2_Extended.Controls.Add(this.tB_Player2_Adr);
+            this.p_Player2_Extended.Controls.Add(this.l_Player2_Password);
+            this.p_Player2_Extended.Controls.Add(this.l_Player2_Username);
+            this.p_Player2_Extended.Controls.Add(this.tB_Player2_Port);
+            this.p_Player2_Extended.Controls.Add(this.l_Player2_Port);
+            this.p_Player2_Extended.Controls.Add(this.tB_Player2_Username);
+            this.p_Player2_Extended.Controls.Add(this.tB_Player2_RTSP);
+            this.p_Player2_Extended.Controls.Add(this.l_Player2_Adr);
+            this.p_Player2_Extended.Location = new System.Drawing.Point(3, 413);
+            this.p_Player2_Extended.Name = "p_Player2_Extended";
+            this.p_Player2_Extended.Size = new System.Drawing.Size(288, 225);
+            this.p_Player2_Extended.TabIndex = 69;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 174);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(275, 13);
+            this.label4.TabIndex = 49;
+            this.label4.Text = "*Changed fields will not apply until the stream is replayed*";
+            // 
+            // l_Player2_Type
+            // 
+            this.l_Player2_Type.AutoSize = true;
+            this.l_Player2_Type.Location = new System.Drawing.Point(3, 17);
+            this.l_Player2_Type.Name = "l_Player2_Type";
+            this.l_Player2_Type.Size = new System.Drawing.Size(77, 13);
+            this.l_Player2_Type.TabIndex = 2;
+            this.l_Player2_Type.Text = "Encoder Type:";
+            // 
+            // cB_Player2_Type
+            // 
+            this.cB_Player2_Type.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cB_Player2_Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Player2_Type.FormattingEnabled = true;
+            this.cB_Player2_Type.Items.AddRange(new object[] {
+            "IONodes - Daylight",
+            "IONodes - Thermal",
+            "VIVOTEK",
+            "BOSCH",
+            "Custom"});
+            this.cB_Player2_Type.Location = new System.Drawing.Point(86, 14);
+            this.cB_Player2_Type.Name = "cB_Player2_Type";
+            this.cB_Player2_Type.Size = new System.Drawing.Size(191, 21);
+            this.cB_Player2_Type.TabIndex = 5;
+            this.cB_Player2_Type.SelectedIndexChanged += new System.EventHandler(this.cB_Player2_Type_SelectedIndexChanged);
+            // 
+            // l_Player2_RTSP
+            // 
+            this.l_Player2_RTSP.AutoSize = true;
+            this.l_Player2_RTSP.Location = new System.Drawing.Point(3, 95);
+            this.l_Player2_RTSP.Name = "l_Player2_RTSP";
+            this.l_Player2_RTSP.Size = new System.Drawing.Size(69, 13);
+            this.l_Player2_RTSP.TabIndex = 2;
+            this.l_Player2_RTSP.Text = "RTSP String:";
+            // 
+            // tB_Player2_Password
+            // 
+            this.tB_Player2_Password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player2_Password.Location = new System.Drawing.Point(86, 144);
+            this.tB_Player2_Password.Name = "tB_Player2_Password";
+            this.tB_Player2_Password.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player2_Password.TabIndex = 4;
+            this.tB_Player2_Password.Text = "admin";
+            this.tB_Player2_Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Player2_Password_KeyUp);
+            // 
+            // tB_Player2_Adr
+            // 
+            this.tB_Player2_Adr.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player2_Adr.Location = new System.Drawing.Point(86, 41);
+            this.tB_Player2_Adr.Name = "tB_Player2_Adr";
+            this.tB_Player2_Adr.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player2_Adr.TabIndex = 4;
+            this.tB_Player2_Adr.Text = "192.168.1.71";
+            // 
+            // l_Player2_Password
+            // 
+            this.l_Player2_Password.AutoSize = true;
+            this.l_Player2_Password.Location = new System.Drawing.Point(3, 147);
+            this.l_Player2_Password.Name = "l_Player2_Password";
+            this.l_Player2_Password.Size = new System.Drawing.Size(56, 13);
+            this.l_Player2_Password.TabIndex = 2;
+            this.l_Player2_Password.Text = "Password:";
+            // 
+            // l_Player2_Username
+            // 
+            this.l_Player2_Username.AutoSize = true;
+            this.l_Player2_Username.Location = new System.Drawing.Point(3, 121);
+            this.l_Player2_Username.Name = "l_Player2_Username";
+            this.l_Player2_Username.Size = new System.Drawing.Size(58, 13);
+            this.l_Player2_Username.TabIndex = 2;
+            this.l_Player2_Username.Text = "Username:";
+            // 
+            // tB_Player2_Port
+            // 
+            this.tB_Player2_Port.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player2_Port.Location = new System.Drawing.Point(86, 67);
+            this.tB_Player2_Port.Name = "tB_Player2_Port";
+            this.tB_Player2_Port.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player2_Port.TabIndex = 4;
+            this.tB_Player2_Port.Text = "554";
+            // 
+            // l_Player2_Port
+            // 
+            this.l_Player2_Port.AutoSize = true;
+            this.l_Player2_Port.Location = new System.Drawing.Point(3, 68);
+            this.l_Player2_Port.Name = "l_Player2_Port";
+            this.l_Player2_Port.Size = new System.Drawing.Size(29, 13);
+            this.l_Player2_Port.TabIndex = 2;
+            this.l_Player2_Port.Text = "Port:";
+            // 
+            // tB_Player2_Username
+            // 
+            this.tB_Player2_Username.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player2_Username.Location = new System.Drawing.Point(86, 118);
+            this.tB_Player2_Username.Name = "tB_Player2_Username";
+            this.tB_Player2_Username.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player2_Username.TabIndex = 4;
+            this.tB_Player2_Username.Text = "admin";
+            this.tB_Player2_Username.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Player2_Password_KeyUp);
+            // 
+            // tB_Player2_RTSP
+            // 
+            this.tB_Player2_RTSP.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tB_Player2_RTSP.Location = new System.Drawing.Point(86, 92);
+            this.tB_Player2_RTSP.Name = "tB_Player2_RTSP";
+            this.tB_Player2_RTSP.Size = new System.Drawing.Size(191, 20);
+            this.tB_Player2_RTSP.TabIndex = 4;
+            this.tB_Player2_RTSP.Text = "videoinput_2:0/h264_1/onvif.stm";
+            this.tB_Player2_RTSP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Player2_Password_KeyUp);
+            // 
+            // l_Player2_Adr
+            // 
+            this.l_Player2_Adr.AutoSize = true;
+            this.l_Player2_Adr.Location = new System.Drawing.Point(3, 43);
+            this.l_Player2_Adr.Name = "l_Player2_Adr";
+            this.l_Player2_Adr.Size = new System.Drawing.Size(61, 13);
+            this.l_Player2_Adr.TabIndex = 2;
+            this.l_Player2_Adr.Text = "IP Address:";
+            // 
+            // b_Player2_Stop
+            // 
+            this.b_Player2_Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Player2_Stop.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Player2_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Player2_Stop.Location = new System.Drawing.Point(429, 557);
+            this.b_Player2_Stop.Name = "b_Player2_Stop";
+            this.b_Player2_Stop.Size = new System.Drawing.Size(93, 25);
+            this.b_Player2_Stop.TabIndex = 68;
+            this.b_Player2_Stop.Text = "Stop Video Playback";
+            this.b_Player2_Stop.UseVisualStyleBackColor = false;
+            this.b_Player2_Stop.Visible = false;
+            this.b_Player2_Stop.Click += new System.EventHandler(this.b_Player2_Stop_Click);
+            // 
+            // checkB_Player2_Manual
+            // 
+            this.checkB_Player2_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkB_Player2_Manual.AutoSize = true;
+            this.checkB_Player2_Manual.Location = new System.Drawing.Point(300, 440);
+            this.checkB_Player2_Manual.Name = "checkB_Player2_Manual";
+            this.checkB_Player2_Manual.Size = new System.Drawing.Size(144, 17);
+            this.checkB_Player2_Manual.TabIndex = 67;
+            this.checkB_Player2_Manual.Text = "Extended RTSP Controls";
+            this.checkB_Player2_Manual.UseVisualStyleBackColor = true;
+            this.checkB_Player2_Manual.CheckedChanged += new System.EventHandler(this.checkB_Player2_Manual_CheckedChanged);
+            // 
+            // b_Player2_Play
+            // 
+            this.b_Player2_Play.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_Player2_Play.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Player2_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Player2_Play.Location = new System.Drawing.Point(297, 587);
+            this.b_Player2_Play.Name = "b_Player2_Play";
+            this.b_Player2_Play.Size = new System.Drawing.Size(225, 50);
+            this.b_Player2_Play.TabIndex = 66;
+            this.b_Player2_Play.Text = "Play";
+            this.b_Player2_Play.UseVisualStyleBackColor = false;
+            this.b_Player2_Play.Click += new System.EventHandler(this.b_Player2_Play_Click);
+            // 
+            // p_Player2
+            // 
+            this.p_Player2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_Player2.BackColor = System.Drawing.SystemColors.WindowText;
+            this.p_Player2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_Player2.Location = new System.Drawing.Point(0, 0);
+            this.p_Player2.Name = "p_Player2";
+            this.p_Player2.Size = new System.Drawing.Size(528, 407);
+            this.p_Player2.TabIndex = 64;
+            // 
             // p_Legacy_Player1
             // 
+            this.p_Legacy_Player1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.p_Legacy_Player1.BackColor = System.Drawing.SystemColors.Menu;
             this.p_Legacy_Player1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.p_Legacy_Player1.Controls.Add(this.p_Player1);
-            this.p_Legacy_Player1.Controls.Add(this.l_Name);
+            this.p_Legacy_Player1.Controls.Add(this.l_Player1_Name);
             this.p_Legacy_Player1.Controls.Add(this.tB_Player1_Name);
             this.p_Legacy_Player1.Controls.Add(this.p_Player1_Simple);
             this.p_Legacy_Player1.Controls.Add(this.p_Player1_Extended);
@@ -530,38 +824,45 @@ namespace SSUtility2 {
             // 
             // p_Player1
             // 
+            this.p_Player1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.p_Player1.BackColor = System.Drawing.SystemColors.WindowText;
             this.p_Player1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.p_Player1.Dock = System.Windows.Forms.DockStyle.Top;
             this.p_Player1.Location = new System.Drawing.Point(0, 0);
             this.p_Player1.Name = "p_Player1";
             this.p_Player1.Size = new System.Drawing.Size(528, 407);
             this.p_Player1.TabIndex = 63;
             // 
-            // l_Name
+            // l_Player1_Name
             // 
-            this.l_Name.AutoSize = true;
-            this.l_Name.Location = new System.Drawing.Point(297, 417);
-            this.l_Name.Name = "l_Name";
-            this.l_Name.Size = new System.Drawing.Size(70, 13);
-            this.l_Name.TabIndex = 62;
-            this.l_Name.Text = "Player Name:";
+            this.l_Player1_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.l_Player1_Name.AutoSize = true;
+            this.l_Player1_Name.Location = new System.Drawing.Point(297, 417);
+            this.l_Player1_Name.Name = "l_Player1_Name";
+            this.l_Player1_Name.Size = new System.Drawing.Size(70, 13);
+            this.l_Player1_Name.TabIndex = 62;
+            this.l_Player1_Name.Text = "Player Name:";
             // 
             // tB_Player1_Name
             // 
+            this.tB_Player1_Name.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.tB_Player1_Name.Location = new System.Drawing.Point(373, 414);
             this.tB_Player1_Name.Name = "tB_Player1_Name";
             this.tB_Player1_Name.Size = new System.Drawing.Size(149, 20);
             this.tB_Player1_Name.TabIndex = 55;
             this.tB_Player1_Name.Text = "LegacyPlayer 1";
+            this.tB_Player1_Name.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Player1_Name_KeyUp);
             // 
             // p_Player1_Simple
             // 
+            this.p_Player1_Simple.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.p_Player1_Simple.Controls.Add(this.tB_Player1_SimpleAdr);
             this.p_Player1_Simple.Controls.Add(this.l_Player1_SimpleAdr);
             this.p_Player1_Simple.Location = new System.Drawing.Point(3, 413);
             this.p_Player1_Simple.Name = "p_Player1_Simple";
-            this.p_Player1_Simple.Size = new System.Drawing.Size(288, 225);
+            this.p_Player1_Simple.Size = new System.Drawing.Size(288, 224);
             this.p_Player1_Simple.TabIndex = 61;
             // 
             // tB_Player1_SimpleAdr
@@ -584,17 +885,17 @@ namespace SSUtility2 {
             // 
             // p_Player1_Extended
             // 
-            this.p_Player1_Extended.Controls.Add(this.label1);
+            this.p_Player1_Extended.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.p_Player1_Extended.Controls.Add(this.l_Player1_Info);
             this.p_Player1_Extended.Controls.Add(this.l_Player1_Type);
             this.p_Player1_Extended.Controls.Add(this.cB_Player1_Type);
             this.p_Player1_Extended.Controls.Add(this.l_Player1_RTSP);
             this.p_Player1_Extended.Controls.Add(this.tB_Player1_Password);
             this.p_Player1_Extended.Controls.Add(this.tB_Player1_Adr);
-            this.p_Player1_Extended.Controls.Add(this.l_Player1_Buffering);
             this.p_Player1_Extended.Controls.Add(this.l_Player1_Password);
             this.p_Player1_Extended.Controls.Add(this.l_Player1_Username);
             this.p_Player1_Extended.Controls.Add(this.tB_Player1_Port);
-            this.p_Player1_Extended.Controls.Add(this.tB_Player1_Buffering);
             this.p_Player1_Extended.Controls.Add(this.l_Player1_Port);
             this.p_Player1_Extended.Controls.Add(this.tB_Player1_Username);
             this.p_Player1_Extended.Controls.Add(this.tB_Player1_RTSP);
@@ -604,14 +905,14 @@ namespace SSUtility2 {
             this.p_Player1_Extended.Size = new System.Drawing.Size(288, 225);
             this.p_Player1_Extended.TabIndex = 60;
             // 
-            // label1
+            // l_Player1_Info
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(7, 193);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(275, 13);
-            this.label1.TabIndex = 49;
-            this.label1.Text = "*Changed fields will not apply until the stream is replayed*";
+            this.l_Player1_Info.AutoSize = true;
+            this.l_Player1_Info.Location = new System.Drawing.Point(3, 174);
+            this.l_Player1_Info.Name = "l_Player1_Info";
+            this.l_Player1_Info.Size = new System.Drawing.Size(275, 13);
+            this.l_Player1_Info.TabIndex = 49;
+            this.l_Player1_Info.Text = "*Changed fields will not apply until the stream is replayed*";
             // 
             // l_Player1_Type
             // 
@@ -626,22 +927,24 @@ namespace SSUtility2 {
             // 
             this.cB_Player1_Type.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cB_Player1_Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cB_Player1_Type.FormattingEnabled = true;
             this.cB_Player1_Type.Items.AddRange(new object[] {
             "IONodes - Daylight",
             "IONodes - Thermal",
             "VIVOTEK",
-            "BOSCH"});
+            "BOSCH",
+            "Custom"});
             this.cB_Player1_Type.Location = new System.Drawing.Point(86, 14);
             this.cB_Player1_Type.Name = "cB_Player1_Type";
             this.cB_Player1_Type.Size = new System.Drawing.Size(191, 21);
             this.cB_Player1_Type.TabIndex = 5;
-            this.cB_Player1_Type.Text = "Daylight";
+            this.cB_Player1_Type.SelectedIndexChanged += new System.EventHandler(this.cB_Player1_Type_SelectedIndexChanged);
             // 
             // l_Player1_RTSP
             // 
             this.l_Player1_RTSP.AutoSize = true;
-            this.l_Player1_RTSP.Location = new System.Drawing.Point(3, 91);
+            this.l_Player1_RTSP.Location = new System.Drawing.Point(3, 95);
             this.l_Player1_RTSP.Name = "l_Player1_RTSP";
             this.l_Player1_RTSP.Size = new System.Drawing.Size(69, 13);
             this.l_Player1_RTSP.TabIndex = 2;
@@ -651,11 +954,12 @@ namespace SSUtility2 {
             // 
             this.tB_Player1_Password.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Player1_Password.Location = new System.Drawing.Point(86, 170);
+            this.tB_Player1_Password.Location = new System.Drawing.Point(86, 144);
             this.tB_Player1_Password.Name = "tB_Player1_Password";
             this.tB_Player1_Password.Size = new System.Drawing.Size(191, 20);
             this.tB_Player1_Password.TabIndex = 4;
             this.tB_Player1_Password.Text = "admin";
+            this.tB_Player1_Password.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Player1_CustomValues);
             // 
             // tB_Player1_Adr
             // 
@@ -667,19 +971,10 @@ namespace SSUtility2 {
             this.tB_Player1_Adr.TabIndex = 4;
             this.tB_Player1_Adr.Text = "192.168.1.71";
             // 
-            // l_Player1_Buffering
-            // 
-            this.l_Player1_Buffering.AutoSize = true;
-            this.l_Player1_Buffering.Location = new System.Drawing.Point(3, 117);
-            this.l_Player1_Buffering.Name = "l_Player1_Buffering";
-            this.l_Player1_Buffering.Size = new System.Drawing.Size(77, 13);
-            this.l_Player1_Buffering.TabIndex = 2;
-            this.l_Player1_Buffering.Text = "Buffering (ms): ";
-            // 
             // l_Player1_Password
             // 
             this.l_Player1_Password.AutoSize = true;
-            this.l_Player1_Password.Location = new System.Drawing.Point(3, 168);
+            this.l_Player1_Password.Location = new System.Drawing.Point(3, 147);
             this.l_Player1_Password.Name = "l_Player1_Password";
             this.l_Player1_Password.Size = new System.Drawing.Size(56, 13);
             this.l_Player1_Password.TabIndex = 2;
@@ -688,7 +983,7 @@ namespace SSUtility2 {
             // l_Player1_Username
             // 
             this.l_Player1_Username.AutoSize = true;
-            this.l_Player1_Username.Location = new System.Drawing.Point(3, 143);
+            this.l_Player1_Username.Location = new System.Drawing.Point(3, 121);
             this.l_Player1_Username.Name = "l_Player1_Username";
             this.l_Player1_Username.Size = new System.Drawing.Size(58, 13);
             this.l_Player1_Username.TabIndex = 2;
@@ -704,16 +999,6 @@ namespace SSUtility2 {
             this.tB_Player1_Port.TabIndex = 4;
             this.tB_Player1_Port.Text = "554";
             // 
-            // tB_Player1_Buffering
-            // 
-            this.tB_Player1_Buffering.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Player1_Buffering.Location = new System.Drawing.Point(86, 118);
-            this.tB_Player1_Buffering.Name = "tB_Player1_Buffering";
-            this.tB_Player1_Buffering.Size = new System.Drawing.Size(191, 20);
-            this.tB_Player1_Buffering.TabIndex = 4;
-            this.tB_Player1_Buffering.Text = "200";
-            // 
             // l_Player1_Port
             // 
             this.l_Player1_Port.AutoSize = true;
@@ -727,11 +1012,12 @@ namespace SSUtility2 {
             // 
             this.tB_Player1_Username.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_Player1_Username.Location = new System.Drawing.Point(86, 144);
+            this.tB_Player1_Username.Location = new System.Drawing.Point(86, 118);
             this.tB_Player1_Username.Name = "tB_Player1_Username";
             this.tB_Player1_Username.Size = new System.Drawing.Size(191, 20);
             this.tB_Player1_Username.TabIndex = 4;
             this.tB_Player1_Username.Text = "admin";
+            this.tB_Player1_Username.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Player1_CustomValues);
             // 
             // tB_Player1_RTSP
             // 
@@ -742,6 +1028,7 @@ namespace SSUtility2 {
             this.tB_Player1_RTSP.Size = new System.Drawing.Size(191, 20);
             this.tB_Player1_RTSP.TabIndex = 4;
             this.tB_Player1_RTSP.Text = "videoinput_1:0/h264_1/onvif.stm";
+            this.tB_Player1_RTSP.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tB_Player1_CustomValues);
             // 
             // l_Player1_Adr
             // 
@@ -754,6 +1041,7 @@ namespace SSUtility2 {
             // 
             // b_Player1_Stop
             // 
+            this.b_Player1_Stop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_Player1_Stop.BackColor = System.Drawing.SystemColors.Control;
             this.b_Player1_Stop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Player1_Stop.Location = new System.Drawing.Point(429, 557);
@@ -767,6 +1055,7 @@ namespace SSUtility2 {
             // 
             // checkB_Player1_Manual
             // 
+            this.checkB_Player1_Manual.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.checkB_Player1_Manual.AutoSize = true;
             this.checkB_Player1_Manual.Location = new System.Drawing.Point(300, 440);
             this.checkB_Player1_Manual.Name = "checkB_Player1_Manual";
@@ -778,6 +1067,7 @@ namespace SSUtility2 {
             // 
             // b_Player1_Play
             // 
+            this.b_Player1_Play.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_Player1_Play.BackColor = System.Drawing.SystemColors.Control;
             this.b_Player1_Play.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Player1_Play.Location = new System.Drawing.Point(297, 587);
@@ -788,33 +1078,42 @@ namespace SSUtility2 {
             this.b_Player1_Play.UseVisualStyleBackColor = false;
             this.b_Player1_Play.Click += new System.EventHandler(this.b_Player1_Play_Click);
             // 
-            // l_Legacy_CP
+            // p_Legacy_CP
             // 
-            this.l_Legacy_CP.BackColor = System.Drawing.SystemColors.Menu;
-            this.l_Legacy_CP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Connect);
-            this.l_Legacy_CP.Controls.Add(this.l_Legacy_PelcoID);
-            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_PelcoID);
-            this.l_Legacy_CP.Controls.Add(this.l_legacy_Port);
-            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_Port);
-            this.l_Legacy_CP.Controls.Add(this.l_Legacy_IP);
-            this.l_Legacy_CP.Controls.Add(this.l_Legacy_IPCon);
-            this.l_Legacy_CP.Controls.Add(this.tB_Legacy_IP);
-            this.l_Legacy_CP.Controls.Add(this.l_Legacy_PTZ);
-            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Up);
-            this.l_Legacy_CP.Controls.Add(this.Legacy_JoyBack);
-            this.l_Legacy_CP.Controls.Add(this.b_Legacy_FocusNeg);
-            this.l_Legacy_CP.Controls.Add(this.b_Legacy_ZoomPos);
-            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Down);
-            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Left);
-            this.l_Legacy_CP.Controls.Add(this.b_Legacy_ZoomNeg);
-            this.l_Legacy_CP.Controls.Add(this.b_Legacy_FocusPos);
-            this.l_Legacy_CP.Controls.Add(this.b_Legacy_Right);
-            this.l_Legacy_CP.Dock = System.Windows.Forms.DockStyle.Left;
-            this.l_Legacy_CP.Location = new System.Drawing.Point(0, 0);
-            this.l_Legacy_CP.Name = "l_Legacy_CP";
-            this.l_Legacy_CP.Size = new System.Drawing.Size(179, 681);
-            this.l_Legacy_CP.TabIndex = 114;
+            this.p_Legacy_CP.BackColor = System.Drawing.SystemColors.Menu;
+            this.p_Legacy_CP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.p_Legacy_CP.Controls.Add(this.l_Legacy_Indicator);
+            this.p_Legacy_CP.Controls.Add(this.b_Legacy_Connect);
+            this.p_Legacy_CP.Controls.Add(this.l_Legacy_PelcoID);
+            this.p_Legacy_CP.Controls.Add(this.tB_Legacy_PelcoID);
+            this.p_Legacy_CP.Controls.Add(this.l_legacy_Port);
+            this.p_Legacy_CP.Controls.Add(this.tB_Legacy_Port);
+            this.p_Legacy_CP.Controls.Add(this.l_Legacy_IP);
+            this.p_Legacy_CP.Controls.Add(this.l_Legacy_IPCon);
+            this.p_Legacy_CP.Controls.Add(this.tB_Legacy_IP);
+            this.p_Legacy_CP.Controls.Add(this.l_Legacy_PTZ);
+            this.p_Legacy_CP.Controls.Add(this.b_Legacy_Up);
+            this.p_Legacy_CP.Controls.Add(this.Legacy_JoyBack);
+            this.p_Legacy_CP.Controls.Add(this.b_Legacy_FocusNeg);
+            this.p_Legacy_CP.Controls.Add(this.b_Legacy_ZoomPos);
+            this.p_Legacy_CP.Controls.Add(this.b_Legacy_Down);
+            this.p_Legacy_CP.Controls.Add(this.b_Legacy_Left);
+            this.p_Legacy_CP.Controls.Add(this.b_Legacy_ZoomNeg);
+            this.p_Legacy_CP.Controls.Add(this.b_Legacy_FocusPos);
+            this.p_Legacy_CP.Controls.Add(this.b_Legacy_Right);
+            this.p_Legacy_CP.Dock = System.Windows.Forms.DockStyle.Left;
+            this.p_Legacy_CP.Location = new System.Drawing.Point(0, 0);
+            this.p_Legacy_CP.Name = "p_Legacy_CP";
+            this.p_Legacy_CP.Size = new System.Drawing.Size(179, 681);
+            this.p_Legacy_CP.TabIndex = 114;
+            // 
+            // l_Legacy_Indicator
+            // 
+            this.l_Legacy_Indicator.AutoSize = true;
+            this.l_Legacy_Indicator.Location = new System.Drawing.Point(85, 143);
+            this.l_Legacy_Indicator.Name = "l_Legacy_Indicator";
+            this.l_Legacy_Indicator.Size = new System.Drawing.Size(0, 13);
+            this.l_Legacy_Indicator.TabIndex = 122;
             // 
             // b_Legacy_Connect
             // 
@@ -1335,14 +1634,20 @@ namespace SSUtility2 {
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.p_Legacy.ResumeLayout(false);
+            this.p_Legacy_Player2.ResumeLayout(false);
+            this.p_Legacy_Player2.PerformLayout();
+            this.p_Player2_Simple.ResumeLayout(false);
+            this.p_Player2_Simple.PerformLayout();
+            this.p_Player2_Extended.ResumeLayout(false);
+            this.p_Player2_Extended.PerformLayout();
             this.p_Legacy_Player1.ResumeLayout(false);
             this.p_Legacy_Player1.PerformLayout();
             this.p_Player1_Simple.ResumeLayout(false);
             this.p_Player1_Simple.PerformLayout();
             this.p_Player1_Extended.ResumeLayout(false);
             this.p_Player1_Extended.PerformLayout();
-            this.l_Legacy_CP.ResumeLayout(false);
-            this.l_Legacy_CP.PerformLayout();
+            this.p_Legacy_CP.ResumeLayout(false);
+            this.p_Legacy_CP.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Legacy_JoyBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).EndInit();
@@ -1391,7 +1696,7 @@ namespace SSUtility2 {
         private ToolStripMenuItem Menu_Recording_Snapshot_Panoramic;
         private ToolStripMenuItem Menu_Recording_Collection;
         public ToolStripMenuItem Menu_Recording_StopRecording;
-        private ToolStripMenuItem Menu_Settings_ConnectionSettings;
+        public ToolStripMenuItem Menu_Settings_ConnectionSettings;
         private ToolStripMenuItem Menu_Recording_Snapshot_All;
         public ToolStripMenuItem Menu_Recording_Video_Global;
         public ToolStripMenuItem Menu_RecordIndicator;
@@ -1406,7 +1711,7 @@ namespace SSUtility2 {
         public Button b_Legacy_Down;
         public Button b_Legacy_FocusNeg;
         public Button b_Legacy_Up;
-        private Panel l_Legacy_CP;
+        private Panel p_Legacy_CP;
         private Label l_Legacy_PelcoID;
         public TextBox tB_Legacy_PelcoID;
         private Label l_legacy_Port;
@@ -1416,25 +1721,22 @@ namespace SSUtility2 {
         public TextBox tB_Legacy_IP;
         public Button b_Legacy_Connect;
         public Panel p_Legacy_Player1;
-        public Panel p_Legacy_Player2;
         public Panel p_Player1;
-        private Label l_Name;
+        private Label l_Player1_Name;
         public TextBox tB_Player1_Name;
         public Panel p_Player1_Simple;
         public TextBox tB_Player1_SimpleAdr;
         private Label l_Player1_SimpleAdr;
         public Panel p_Player1_Extended;
-        public Label label1;
+        public Label l_Player1_Info;
         private Label l_Player1_Type;
         public ComboBox cB_Player1_Type;
         private Label l_Player1_RTSP;
         public TextBox tB_Player1_Password;
         public TextBox tB_Player1_Adr;
-        private Label l_Player1_Buffering;
         private Label l_Player1_Password;
         private Label l_Player1_Username;
         public TextBox tB_Player1_Port;
-        public TextBox tB_Player1_Buffering;
         private Label l_Player1_Port;
         public TextBox tB_Player1_Username;
         public TextBox tB_Player1_RTSP;
@@ -1465,5 +1767,30 @@ namespace SSUtility2 {
         private Label l_PTZ_SliderZoom;
         private TrackBar slider_PTZ_AbsZoom;
         public Panel p_PlayerPanel;
+        public Label l_Legacy_Indicator;
+        public Panel p_Legacy_Player2;
+        private Label l_Player2_Name;
+        public TextBox tB_Player2_Name;
+        public Panel p_Player2_Simple;
+        public TextBox tB_Player2_SimpleAdr;
+        private Label l_Player2_SimpleAdr;
+        public Panel p_Player2_Extended;
+        private Label l_Player2_Type;
+        public ComboBox cB_Player2_Type;
+        private Label l_Player2_RTSP;
+        public TextBox tB_Player2_Password;
+        public TextBox tB_Player2_Adr;
+        private Label l_Player2_Password;
+        private Label l_Player2_Username;
+        public TextBox tB_Player2_Port;
+        private Label l_Player2_Port;
+        public TextBox tB_Player2_Username;
+        public TextBox tB_Player2_RTSP;
+        private Label l_Player2_Adr;
+        public Button b_Player2_Stop;
+        public CheckBox checkB_Player2_Manual;
+        public Button b_Player2_Play;
+        public Panel p_Player2;
+        public Label label4;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2

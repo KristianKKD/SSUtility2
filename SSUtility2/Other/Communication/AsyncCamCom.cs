@@ -67,6 +67,11 @@ namespace SSUtility2 {
                 result = false;
             }
 
+            if (result && ConfigControl.legacyLayout.stringVal.ToUpper() == "LEGACY") {
+                ConfigControl.savedIP.UpdateValue(MainForm.m.tB_Legacy_IP.Text);
+                ConfigControl.savedPort.UpdateValue(MainForm.m.tB_Legacy_Port.Text);
+            }
+
             connectingAlready = false;
             OtherCamCom.LabelDisplay(result);
             VideoSettings.UpdateControlFields();

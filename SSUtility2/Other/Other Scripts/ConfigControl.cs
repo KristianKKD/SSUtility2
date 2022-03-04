@@ -27,41 +27,69 @@ namespace SSUtility2 {
         public static ConfigSetting vFolder = new ConfigSetting(savedFolder, "VideoFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting vFileName = new ConfigSetting("Video", "VideoFileName", ConfigSetting.VarType.strings);
         public static ConfigSetting scFileName = new ConfigSetting("Snapshot", "SnapshotFileName", ConfigSetting.VarType.strings);
-        public static ConfigSetting recQual = new ConfigSetting("70", "RecordingQuality", ConfigSetting.VarType.integer);
-        public static ConfigSetting recFPS = new ConfigSetting("50", "RecordingFramerate", ConfigSetting.VarType.integer);
-        public static ConfigSetting autoPlay = new ConfigSetting("true", "AutoPlayLaunch", ConfigSetting.VarType.boolean);
-        public static ConfigSetting ignoreAddress = new ConfigSetting("false", "AddressInvalidHidden", ConfigSetting.VarType.boolean);
-        public static ConfigSetting forceCamera = new ConfigSetting("false", "ForceCameraModeEnabled", ConfigSetting.VarType.boolean);
-        public static ConfigSetting automaticPaths = new ConfigSetting("true", "AutomaticPaths", ConfigSetting.VarType.boolean);
-        public static ConfigSetting portableMode = new ConfigSetting("true", "PortableMode", ConfigSetting.VarType.boolean);
         public static ConfigSetting finalSource = new ConfigSetting(@"\\192.168.1.118\netdrive\ProductionTesting\DEFAULT FILES", "FinalModeSourceFolder", ConfigSetting.VarType.strings);
         public static ConfigSetting finalDestination = new ConfigSetting(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "FinalModeDestinationFolder", ConfigSetting.VarType.strings);
+        public static ConfigSetting automaticPaths = new ConfigSetting("true", "AutomaticPaths", ConfigSetting.VarType.boolean);
+
         public static ConfigSetting savedIP = new ConfigSetting("192.168.1.71", "SavedIP", ConfigSetting.VarType.strings);
         public static ConfigSetting savedPort = new ConfigSetting("6791", "SavedPort", ConfigSetting.VarType.strings);
+        
+        public static ConfigSetting recQual = new ConfigSetting("70", "RecordingQuality", ConfigSetting.VarType.integer);
+        public static ConfigSetting recFPS = new ConfigSetting("50", "RecordingFramerate", ConfigSetting.VarType.integer);
         public static ConfigSetting cameraPTSpeedMultiplier = new ConfigSetting("100", "CameraPanTiltSpeedMultiplier", ConfigSetting.VarType.integer);
         public static ConfigSetting cameraZoomSpeedMultiplier = new ConfigSetting("2", "CameraZoomSpeedMultiplier", ConfigSetting.VarType.integer);
         public static ConfigSetting cameraFocusSpeedMultiplier = new ConfigSetting("2", "CameraFocusSpeedMultiplier", ConfigSetting.VarType.integer);
+        
         public static ConfigSetting forceType = new ConfigSetting("Strict", "ForcedCameraType", ConfigSetting.VarType.strings);
         public static ConfigSetting startupWidth = new ConfigSetting("1280", "StartupWidth", ConfigSetting.VarType.integer);
         public static ConfigSetting startupHeight = new ConfigSetting("720", "StartupHeight", ConfigSetting.VarType.integer);
         public static ConfigSetting maintainAspectRatio = new ConfigSetting("false", "MaintainAspectRatio", ConfigSetting.VarType.boolean);
         public static ConfigSetting playerCount = new ConfigSetting("1", "PlayerCount", ConfigSetting.VarType.integer);
+        public static ConfigSetting autoPlay = new ConfigSetting("true", "AutoPlayLaunch", ConfigSetting.VarType.boolean);
+        public static ConfigSetting ignoreAddress = new ConfigSetting("false", "AddressInvalidHidden", ConfigSetting.VarType.boolean);
+        public static ConfigSetting forceCamera = new ConfigSetting("false", "ForceCameraModeEnabled", ConfigSetting.VarType.boolean);
+        public static ConfigSetting portableMode = new ConfigSetting("true", "PortableMode", ConfigSetting.VarType.boolean);
         public static ConfigSetting pelcoOverrideID = new ConfigSetting("1", "PelcoOverrideID", ConfigSetting.VarType.integer);
+        
         public static ConfigSetting mainPlayerPreset = new ConfigSetting("", "MainPlayerPresetName", ConfigSetting.VarType.strings);
         public static ConfigSetting player2Preset = new ConfigSetting("", "SecondaryPresetName", ConfigSetting.VarType.strings);
         public static ConfigSetting player3Preset = new ConfigSetting("", "TertiaryPresetName", ConfigSetting.VarType.strings);
         public static ConfigSetting mainPlayerTabName = new ConfigSetting("Main Player", "MainPlayerTabName", ConfigSetting.VarType.strings);
         public static ConfigSetting player2TabName = new ConfigSetting("Player 2", "SecondaryTabName", ConfigSetting.VarType.strings);
         public static ConfigSetting player3TabName = new ConfigSetting("Player 3", "TertiaryTabName", ConfigSetting.VarType.strings);
+        
         public static ConfigSetting launchQuickFunctions = new ConfigSetting("false", "EnableQuickFunctionsOnLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting launchInfoPanel = new ConfigSetting("false", "EnableInfoPanelOnLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting launchControlPanel = new ConfigSetting("false", "EnableControlPanelOnLaunch", ConfigSetting.VarType.boolean);
         public static ConfigSetting launchCustomPanel = new ConfigSetting("false", "EnableCustomPanelOnLaunch", ConfigSetting.VarType.boolean);
+        
         public static ConfigSetting enableFullToParts = new ConfigSetting("true", "EnableFullToParts", ConfigSetting.VarType.boolean);
         public static ConfigSetting startInMaximised = new ConfigSetting("false", "StartInMaximised", ConfigSetting.VarType.boolean);
+        
         public static ConfigSetting cpLayout = new ConfigSetting("Standard", "ControlPanelLayout", ConfigSetting.VarType.strings);
         public static ConfigSetting cpSliders = new ConfigSetting("false", "ControlPanelAbsoluteSliders", ConfigSetting.VarType.boolean);
         public static ConfigSetting legacyLayout = new ConfigSetting("false", "MainFormLayout", ConfigSetting.VarType.boolean);
+        
+        public static ConfigSetting player1Extended = new ConfigSetting("false", "LegacyPlayer1Extended", ConfigSetting.VarType.boolean);
+        public static ConfigSetting player1Simple = new ConfigSetting("", "LegacyPlayer1Full", ConfigSetting.VarType.strings);
+        public static ConfigSetting player1Name = new ConfigSetting("Player 1", "LegacyPlayer1Name", ConfigSetting.VarType.strings);
+        public static ConfigSetting player1TypeIndex = new ConfigSetting("0", "LegacyPlayer1TypeIndex", ConfigSetting.VarType.integer);
+        public static ConfigSetting player1Adr = new ConfigSetting("192.168.1.71", "LegacyPlayer1Adr", ConfigSetting.VarType.strings);
+        public static ConfigSetting player1Port = new ConfigSetting("554", "LegacyPlayer1Port", ConfigSetting.VarType.strings);
+        public static ConfigSetting player1RTSP = new ConfigSetting("videoinput_1:0/h264_1/onvif.stm", "LegacyPlayer1RTSP", ConfigSetting.VarType.strings);
+        public static ConfigSetting player1User = new ConfigSetting("admin", "LegacyPlayer1Username", ConfigSetting.VarType.strings);
+        public static ConfigSetting player1Pass = new ConfigSetting("admin", "LegacyPlayer1Password", ConfigSetting.VarType.strings);
+
+        public static ConfigSetting player2Extended = new ConfigSetting("false", "LegacyPlayer2Extended", ConfigSetting.VarType.boolean);
+        public static ConfigSetting player2Simple = new ConfigSetting("", "LegacyPlayer2Full", ConfigSetting.VarType.strings);
+        public static ConfigSetting player2Name = new ConfigSetting("Player 2", "LegacyPlayer2Name", ConfigSetting.VarType.strings);
+        public static ConfigSetting player2TypeIndex = new ConfigSetting("1", "LegacyPlayer2TypeIndex", ConfigSetting.VarType.integer);
+        public static ConfigSetting player2Adr = new ConfigSetting("192.168.1.71", "LegacyPlayer2Adr", ConfigSetting.VarType.strings);
+        public static ConfigSetting player2Port = new ConfigSetting("554", "LegacyPlayer2Port", ConfigSetting.VarType.strings);
+        public static ConfigSetting player2RTSP = new ConfigSetting("videoinput_2:0/h264_1/onvif.stm", "LegacyPlayer2RTSP", ConfigSetting.VarType.strings);
+        public static ConfigSetting player2User = new ConfigSetting("admin", "LegacyPlayer2Username", ConfigSetting.VarType.strings);
+        public static ConfigSetting player2Pass = new ConfigSetting("admin", "LegacyPlayer2Password", ConfigSetting.VarType.strings);
+
 
         public static ConfigSetting[] configArray = new ConfigSetting[] { //make sure to add any new vars to here if they should be saved (and on settings page load)
             scFolder,
@@ -104,6 +132,24 @@ namespace SSUtility2 {
             cpLayout,
             cpSliders,
             legacyLayout,
+            player1Extended,
+            player1Simple,
+            player1Name,
+            player1TypeIndex,
+            player1Adr,
+            player1Port,
+            player1RTSP,
+            player1User,
+            player1Pass,
+            player2Extended,
+            player2Simple,
+            player2Name,
+            player2TypeIndex,
+            player2Adr,
+            player2Port,
+            player2RTSP,
+            player2User,
+            player2Pass,
         };
 
         public static async Task SetToDefaults() {

@@ -64,18 +64,18 @@ namespace SSUtility2 {
             p_Player.Refresh();
         }
 
-        public async Task Play(bool showErrors, bool doPing = true, string customAdr = "") {
+        public async Task<bool> Play(bool showErrors, bool doPing = true, string customAdr = "") {
             try {
                 if (MainForm.m.lite && settings.isMainPlayer) {
                     settings.channelID = 1;
-                    return;
+                    return false;
                 }
 
                 if (InvokeRequired) {
                     Invoke((MethodInvoker)delegate {
                         Play(showErrors, doPing);
                     });
-                    return;
+                    return false;
                 }
 
                 string fullAdr = customAdr;
@@ -84,7 +84,7 @@ namespace SSUtility2 {
 
                 Uri combinedUrl = ConfirmAdr(showErrors, fullAdr, doPing);
                 if (combinedUrl == null)
-                    return;
+                    return false;
 
                 Console.WriteLine("playing " + combinedUrl.ToString());
 
@@ -109,8 +109,10 @@ namespace SSUtility2 {
                     Tools.ShowPopup("Failed to init player stream!\nShow more?", "Error Occurred!", e.ToString());
                 Console.WriteLine("PLAY " + e.ToString());
                 StopPlaying();
-                return;
+                return false;
             }
+
+            return IsPlaying();
         }
 
         public Uri ConfirmAdr(bool showErrors, string fullAdr, bool doPing) {

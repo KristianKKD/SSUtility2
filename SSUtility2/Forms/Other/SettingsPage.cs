@@ -41,8 +41,30 @@ namespace SSUtility2 {
                 slider_IPCon_FocusSpeed.Value = ConfigControl.cameraFocusSpeedMultiplier.intVal;
 
                 MainForm.m.tB_Legacy_IP.Text = ConfigControl.savedIP.stringVal;
-                MainForm.m.tB_Legacy_Port.Text = ConfigControl.savedPort.intVal.ToString();
-                MainForm.m.tB_Legacy_PelcoID.Text = ConfigControl.pelcoOverrideID.intVal.ToString();
+                MainForm.m.tB_Legacy_Port.Text = ConfigControl.savedPort.stringVal;
+                MainForm.m.tB_Legacy_PelcoID.Text = ConfigControl.pelcoOverrideID.stringVal;
+
+                MainForm.m.cB_Player1_Type.SelectedIndex = ConfigControl.player1TypeIndex.intVal;
+                MainForm.m.checkB_Player1_Manual.Checked = ConfigControl.player1Extended.boolVal;
+                MainForm.m.checkB_Player1_Manual_CheckedChanged(null, null); //apply the settings
+                MainForm.m.tB_Player1_Name.Text = ConfigControl.player1Name.stringVal;
+                MainForm.m.tB_Player1_SimpleAdr.Text = ConfigControl.player1Simple.stringVal;
+                MainForm.m.tB_Player1_Adr.Text = ConfigControl.player1Adr.stringVal;
+                MainForm.m.tB_Player1_Port.Text = ConfigControl.player1Port.stringVal;
+                MainForm.m.tB_Player1_RTSP.Text = ConfigControl.player1RTSP.stringVal;
+                MainForm.m.tB_Player1_Username.Text = ConfigControl.player1User.stringVal;
+                MainForm.m.tB_Player1_Password.Text = ConfigControl.player1Pass.stringVal;
+
+                MainForm.m.cB_Player2_Type.SelectedIndex = ConfigControl.player2TypeIndex.intVal;
+                MainForm.m.checkB_Player2_Manual.Checked = ConfigControl.player2Extended.boolVal;
+                MainForm.m.checkB_Player2_Manual_CheckedChanged(null, null); //apply the settings
+                MainForm.m.tB_Player2_Name.Text = ConfigControl.player2Name.stringVal;
+                MainForm.m.tB_Player2_SimpleAdr.Text = ConfigControl.player2Simple.stringVal;
+                MainForm.m.tB_Player2_Adr.Text = ConfigControl.player2Adr.stringVal;
+                MainForm.m.tB_Player2_Port.Text = ConfigControl.player2Port.stringVal;
+                MainForm.m.tB_Player2_RTSP.Text = ConfigControl.player2RTSP.stringVal;
+                MainForm.m.tB_Player2_Username.Text = ConfigControl.player2User.stringVal;
+                MainForm.m.tB_Player2_Password.Text = ConfigControl.player2Pass.stringVal;
 
                 tB_IPCon_Adr.Text = ConfigControl.savedIP.stringVal;
                 tB_IPCon_PTSpeed.Text = ConfigControl.cameraPTSpeedMultiplier.intVal.ToString();
@@ -817,6 +839,8 @@ namespace SSUtility2 {
         void ChangeLayout(bool legacyMode) {
             MainForm.m.p_Legacy.Visible = legacyMode;
             MainForm.m.p_PlayerPanel.Visible = !legacyMode;
+
+            MainForm.m.Menu_Settings_ConnectionSettings.Visible = !legacyMode;
 
             overridePreset = legacyMode;
         }

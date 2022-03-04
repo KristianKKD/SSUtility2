@@ -31,9 +31,10 @@ namespace SSUtility2 {
                 if (retVal != "")
                     editIndex = int.Parse(retVal);
 
-                b_Forget.Visible = true;
-                if (editIndex != -1)
+                if (editIndex != -1) {
                     LoadPreset(preset);
+                    b_Forget.Visible = true;
+                }
 
                 check_Manual.Checked = (preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.ControlIP)] != ""
                     || preset[RTSPPresets.TableValue(RTSPPresets.PresetColumn.ControlPort)] != ""
@@ -333,6 +334,10 @@ namespace SSUtility2 {
                 UpdateAll();
 
             refresh = false;
+        }
+
+        private void RTSPWizard_FormClosing(object sender, FormClosingEventArgs e) {
+            b_Forget.Visible = false;
         }
     }
 }
