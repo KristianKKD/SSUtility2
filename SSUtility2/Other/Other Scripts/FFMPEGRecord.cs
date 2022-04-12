@@ -239,7 +239,8 @@ namespace SSUtility2 {
                 string arguments = gdigrab + " -i " + input
                     + " -framerate " + ConfigControl.recFPS.stringVal + " -b:v " + (ConfigControl.recQual.intVal * 30) + "k "
                     + "\"" + outPath + "\"";
-                    
+
+                MessageBox.Show(arguments);
                 Console.WriteLine("args-------------------" + arguments);
                 p = new Process();
                 p.StartInfo.UseShellExecute = false;

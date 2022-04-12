@@ -13,7 +13,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.4.2";
+        public const string version = "v2.8.4.2a";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -70,11 +70,6 @@ namespace SSUtility2 {
                 D.protocol = new D();
                 playerConfigList = new List<List<ConfigVar>>();
 
-                if (!startLiteVersion) {
-                    if(FileStuff.CheckForLibs())
-                        Console.WriteLine("ACTIVATION: " + EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init().ToString());
-                }
-
                 mainPlayer = new Detached(true);
                 AttachInfoPanel();
                 AttachPresetPanel();
@@ -98,6 +93,9 @@ namespace SSUtility2 {
                 bool hasLiteInName = FileStuff.FileWork().Result;
                 if (!startLiteVersion)
                     startLiteVersion = hasLiteInName;
+                if (!startLiteVersion && !hasLiteInName)
+                    if(FileStuff.CheckForLibs())
+                        Console.WriteLine("ACTIVATION: " + EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Init().ToString());
 
                 setPage.LoadSettings();
 
@@ -709,9 +707,9 @@ namespace SSUtility2 {
         }
 
         async Task DelayStop() {
-            if (!AsyncCamCom.sock.Connected) {
+            if (!AsyncCamCom.sock.Connected)
                 return;
-            }
+
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
             await Task.Delay(100).ConfigureAwait(false);
             AsyncCamCom.SendNonAsync(D.protocol.CameraStop(Tools.MakeAdr()));
