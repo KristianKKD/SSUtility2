@@ -17,10 +17,15 @@ namespace SSUtility2 {
             InitializeComponent();
         }
 
+
+
         private void b_Debug_Click(object sender, EventArgs e) {
             sc = CustomScriptCommands.CheckForCommands(tB_Debug.Text, 0, false).Result;
             Tools.ShowScriptCommandInfo(sc,true);
         }
 
+        private void b_PelcoSend_Click(object sender, EventArgs e) {
+            AsyncCamCom.SendNewCommand(Tools.ConvertMsgToByte(tB_Debug.Text));
+        }
     }
 }

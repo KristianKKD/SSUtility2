@@ -77,6 +77,7 @@ namespace SSUtility2
             this.b_Presets_Peak_ZoomIn = new System.Windows.Forms.Button();
             this.b_Presets_Peak_LampOff = new System.Windows.Forms.Button();
             this.b_Presets_Peak_StrobeLamp = new System.Windows.Forms.Button();
+            this.b_Presets_Clear = new System.Windows.Forms.Button();
             this.tC_Presets_Default.SuspendLayout();
             this.adminPage.SuspendLayout();
             this.presetsPage.SuspendLayout();
@@ -88,8 +89,8 @@ namespace SSUtility2
             // 
             // tC_Presets_Default
             // 
-            this.tC_Presets_Default.Controls.Add(this.adminPage);
             this.tC_Presets_Default.Controls.Add(this.presetsPage);
+            this.tC_Presets_Default.Controls.Add(this.adminPage);
             this.tC_Presets_Default.Controls.Add(this.daylightPage);
             this.tC_Presets_Default.Controls.Add(this.thermalPage);
             this.tC_Presets_Default.Controls.Add(this.slgPage);
@@ -166,6 +167,7 @@ namespace SSUtility2
             // 
             // presetsPage
             // 
+            this.presetsPage.Controls.Add(this.b_Presets_Clear);
             this.presetsPage.Controls.Add(this.tB_Presets_Number);
             this.presetsPage.Controls.Add(this.l_Presets_Number);
             this.presetsPage.Controls.Add(this.b_Presets_GoTo);
@@ -200,7 +202,7 @@ namespace SSUtility2
             this.b_Presets_GoTo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_GoTo.Location = new System.Drawing.Point(11, 35);
             this.b_Presets_GoTo.Name = "b_Presets_GoTo";
-            this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 22);
+            this.b_Presets_GoTo.Size = new System.Drawing.Size(94, 24);
             this.b_Presets_GoTo.TabIndex = 78;
             this.b_Presets_GoTo.Text = "Go To";
             this.b_Presets_GoTo.UseVisualStyleBackColor = false;
@@ -212,7 +214,7 @@ namespace SSUtility2
             this.b_Presets_Learn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.b_Presets_Learn.Location = new System.Drawing.Point(119, 35);
             this.b_Presets_Learn.Name = "b_Presets_Learn";
-            this.b_Presets_Learn.Size = new System.Drawing.Size(94, 22);
+            this.b_Presets_Learn.Size = new System.Drawing.Size(94, 24);
             this.b_Presets_Learn.TabIndex = 79;
             this.b_Presets_Learn.Text = "Learn";
             this.b_Presets_Learn.UseVisualStyleBackColor = false;
@@ -685,7 +687,19 @@ namespace SSUtility2
             this.b_Presets_Peak_StrobeLamp.UseVisualStyleBackColor = false;
             this.b_Presets_Peak_StrobeLamp.Click += new System.EventHandler(this.b_Presets_Peak_StrobeLamp_Click);
             // 
-            // PresetPanel
+            // b_Presets_Clear
+            // 
+            this.b_Presets_Clear.BackColor = System.Drawing.SystemColors.Control;
+            this.b_Presets_Clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.b_Presets_Clear.Location = new System.Drawing.Point(119, 65);
+            this.b_Presets_Clear.Name = "b_Presets_Clear";
+            this.b_Presets_Clear.Size = new System.Drawing.Size(94, 24);
+            this.b_Presets_Clear.TabIndex = 83;
+            this.b_Presets_Clear.Text = "Forget";
+            this.b_Presets_Clear.UseVisualStyleBackColor = false;
+            this.b_Presets_Clear.Click += new System.EventHandler(this.b_Presets_Clear_Click);
+            // 
+            // QuickFunctions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -695,7 +709,7 @@ namespace SSUtility2
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(245, 295);
             this.MinimumSize = new System.Drawing.Size(245, 295);
-            this.Name = "PresetPanel";
+            this.Name = "QuickFunctions";
             this.Text = "Quick Functions";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PresetPanel_FormClosing);
             this.tC_Presets_Default.ResumeLayout(false);
@@ -760,5 +774,6 @@ namespace SSUtility2
         public System.Windows.Forms.Button b_Presets_Learn;
         public System.Windows.Forms.Button b_Presets_GoTo;
         private System.Windows.Forms.TabPage presetsPage;
+        public System.Windows.Forms.Button b_Presets_Clear;
     }
 }

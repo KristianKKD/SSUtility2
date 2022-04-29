@@ -165,26 +165,25 @@ namespace SSUtility2 {
         }
 
         private void b_Presets_GoTo_Click(object sender, EventArgs e) {
-            PresetLearnGoto(false);
+            PresetLearnGoto(D.PresetAction.Goto);
         }
 
         private void b_Presets_Learn_Click(object sender, EventArgs e) {
-            PresetLearnGoto(true);
+            PresetLearnGoto(D.PresetAction.Set);
         }
 
-        void PresetLearnGoto(bool learn) {
+        private void b_Presets_Clear_Click(object sender, EventArgs e) {
+            PresetLearnGoto(D.PresetAction.Clear);
+        }
+
+        void PresetLearnGoto(D.PresetAction action) {
             if (!Tools.CheckIfNameValid(tB_Presets_Number.Text, true) || tB_Presets_Number.Text.ToString() == "") {
                 MessageBox.Show("Invalid Preset!");
                 return;
             }
 
             byte presetNumber = Convert.ToByte(tB_Presets_Number.Text);
-
-            if (learn) {
-                AsyncCamCom.SendNewCommand(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Set));
-            } else {
-                AsyncCamCom.SendNewCommand(D.protocol.Preset(Tools.MakeAdr(), presetNumber, D.PresetAction.Goto));
-            }
+            AsyncCamCom.SendNewCommand(D.protocol.Preset(Tools.MakeAdr(), presetNumber, action));
         }
 
         private void PresetPanel_FormClosing(object sender, FormClosingEventArgs e) {
@@ -193,5 +192,6 @@ namespace SSUtility2 {
                 Hide();
             }
         }
+
     }
 }

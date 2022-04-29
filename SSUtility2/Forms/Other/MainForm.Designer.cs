@@ -227,28 +227,28 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(168, 22);
             this.Menu_Window_Presets.Text = "Quick Functions";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
@@ -269,7 +269,7 @@ namespace SSUtility2 {
             // 
             this.Menu_Settings_ConnectionSettings.Name = "Menu_Settings_ConnectionSettings";
             this.Menu_Settings_ConnectionSettings.Size = new System.Drawing.Size(193, 22);
-            this.Menu_Settings_ConnectionSettings.Text = "Connection Settings";
+            this.Menu_Settings_ConnectionSettings.Text = "Stream Settings";
             this.Menu_Settings_ConnectionSettings.Click += new System.EventHandler(this.Menu_Settings_ConnectionSettings_Click);
             // 
             // Menu_Settings_Open
@@ -369,7 +369,7 @@ namespace SSUtility2 {
             // Menu_Recording_StopRecording
             // 
             this.Menu_Recording_StopRecording.Name = "Menu_Recording_StopRecording";
-            this.Menu_Recording_StopRecording.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_StopRecording.Size = new System.Drawing.Size(159, 22);
             this.Menu_Recording_StopRecording.Text = "Stop Recording";
             this.Menu_Recording_StopRecording.Visible = false;
             this.Menu_Recording_StopRecording.Click += new System.EventHandler(this.Menu_Recording_StopRecording_Click);
@@ -381,27 +381,27 @@ namespace SSUtility2 {
             this.Menu_Recording_Video_MainPlayer,
             this.Menu_Recording_Video_Global});
             this.Menu_Recording_Video.Name = "Menu_Recording_Video";
-            this.Menu_Recording_Video.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video.Size = new System.Drawing.Size(159, 22);
             this.Menu_Recording_Video.Text = "Video";
             // 
             // Menu_Recording_Video_SSUtility
             // 
             this.Menu_Recording_Video_SSUtility.Name = "Menu_Recording_Video_SSUtility";
-            this.Menu_Recording_Video_SSUtility.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video_SSUtility.Size = new System.Drawing.Size(166, 22);
             this.Menu_Recording_Video_SSUtility.Text = "SSUtility";
             this.Menu_Recording_Video_SSUtility.Click += new System.EventHandler(this.Menu_Recording_Video_SSUtility_Click);
             // 
             // Menu_Recording_Video_MainPlayer
             // 
             this.Menu_Recording_Video_MainPlayer.Name = "Menu_Recording_Video_MainPlayer";
-            this.Menu_Recording_Video_MainPlayer.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video_MainPlayer.Size = new System.Drawing.Size(166, 22);
             this.Menu_Recording_Video_MainPlayer.Text = "Main Player Only";
             this.Menu_Recording_Video_MainPlayer.Click += new System.EventHandler(this.Menu_Recording_Video_MainPlayer_Click);
             // 
             // Menu_Recording_Video_Global
             // 
             this.Menu_Recording_Video_Global.Name = "Menu_Recording_Video_Global";
-            this.Menu_Recording_Video_Global.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Video_Global.Size = new System.Drawing.Size(166, 22);
             this.Menu_Recording_Video_Global.Text = "Global";
             this.Menu_Recording_Video_Global.Click += new System.EventHandler(this.Menu_Recording_Global_Click);
             // 
@@ -412,7 +412,7 @@ namespace SSUtility2 {
             this.Menu_Recording_Snapshot_Panoramic,
             this.Menu_Recording_Snapshot_All});
             this.Menu_Recording_Snapshot.Name = "Menu_Recording_Snapshot";
-            this.Menu_Recording_Snapshot.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Snapshot.Size = new System.Drawing.Size(159, 22);
             this.Menu_Recording_Snapshot.Text = "Snapshot";
             // 
             // Menu_Recording_Snapshot_Single
@@ -439,7 +439,7 @@ namespace SSUtility2 {
             // Menu_Recording_Collection
             // 
             this.Menu_Recording_Collection.Name = "Menu_Recording_Collection";
-            this.Menu_Recording_Collection.Size = new System.Drawing.Size(180, 22);
+            this.Menu_Recording_Collection.Size = new System.Drawing.Size(159, 22);
             this.Menu_Recording_Collection.Text = "Collection...";
             this.Menu_Recording_Collection.Click += new System.EventHandler(this.Menu_Recording_Collection_Click);
             // 

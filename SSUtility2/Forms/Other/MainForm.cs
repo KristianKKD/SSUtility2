@@ -13,7 +13,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.4.2a";
+        public const string version = "v2.8.4.2b";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -118,6 +118,7 @@ namespace SSUtility2 {
                     StartRatioTimer();
 
                 AsyncCamCom.TryConnect(false);
+                mainPlayer.Play(false, false); //sometimes it requires two times?
 
                 ActivatePanels();
                 col.AddDefaultSavedLocations();

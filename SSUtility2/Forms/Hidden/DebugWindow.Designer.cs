@@ -27,6 +27,7 @@ namespace SSUtility2
         private void InitializeComponent() {
             this.tB_Debug = new System.Windows.Forms.TextBox();
             this.b_DebugReadCom = new System.Windows.Forms.Button();
+            this.b_PelcoSend = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tB_Debug
@@ -52,11 +53,25 @@ namespace SSUtility2
             this.b_DebugReadCom.UseVisualStyleBackColor = true;
             this.b_DebugReadCom.Click += new System.EventHandler(this.b_Debug_Click);
             // 
+            // b_PelcoSend
+            // 
+            this.b_PelcoSend.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.b_PelcoSend.Location = new System.Drawing.Point(118, 39);
+            this.b_PelcoSend.Name = "b_PelcoSend";
+            this.b_PelcoSend.Size = new System.Drawing.Size(157, 25);
+            this.b_PelcoSend.TabIndex = 2;
+            this.b_PelcoSend.Text = "Send PelcoD";
+            this.b_PelcoSend.UseVisualStyleBackColor = true;
+            this.b_PelcoSend.Click += new System.EventHandler(this.b_PelcoSend_Click);
+            // 
             // DebugWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(479, 76);
+            this.Controls.Add(this.b_PelcoSend);
             this.Controls.Add(this.b_DebugReadCom);
             this.Controls.Add(this.tB_Debug);
             this.Name = "DebugWindow";
@@ -70,5 +85,6 @@ namespace SSUtility2
 
         private System.Windows.Forms.TextBox tB_Debug;
         private System.Windows.Forms.Button b_DebugReadCom;
+        private System.Windows.Forms.Button b_PelcoSend;
     }
 }
