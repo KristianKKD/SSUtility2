@@ -160,16 +160,27 @@ namespace SSUtility2 {
                 sP_Secondary.Location = pos;
                 sP_Secondary.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
 
-                sP_Secondary.MouseDown += (s, e) => {
-                    if (e.Button == MouseButtons.Right) {
+                sP_Secondary.MouseDown += (s, e) => { //open settings
+                    if (sP_Secondary.dragging && e.Button == MouseButtons.Right)
+                        secondPlayer.DoubleSize(true);
+                    else if (e.Button == MouseButtons.Right) {
                         secondPlayer.settings.Show();
                         secondPlayer.settings.BringToFront();
-                    }
+                    } else if (e.Button == MouseButtons.Middle)
+                        sP_Secondary.Size = new Size(300, 200); //reset the size
                 };
 
-                sP_Secondary.DoubleClick += (s, e) => {
+                sP_Secondary.DoubleClick += (s, e) => { //swap to be main player
                     MainForm.m.SwapSettings(secondPlayer);
                 };
+
+                //sP_Secondary.EdgeDocked += (s, e) => {
+                //    p_Player.Dock = DockStyle.Left;
+                //    p_Player.Width = (int)Math.Floor((float)Width / 2f);
+                //};
+                //sP_Secondary.EdgeUndocked += (s, e) => {
+                //    p_Player.Dock = DockStyle.Fill;
+                //};
 
                 //string name = "Player " + (MainForm.m.mainPlayer.attachedPlayers.Count + 1).ToString();
                 //secondPlayer.settings.tP_Main.Text = name;
@@ -186,6 +197,30 @@ namespace SSUtility2 {
             }
         }
 
+        public void DoubleSize(bool half) {  //double the size
+            if (MainForm.m.mainPlayer == this)
+                return;
+
+            float multiplier = (half) ? 2f : 0.5f;
+
+            int newWidth = (int)Math.Floor(p_Player.Width * multiplier);
+            if (newWidth > MainForm.m.Width)
+                newWidth = MainForm.m.Width;
+
+            int newHeight = (int)Math.Floor(p_Player.Height * multiplier);
+            if (newHeight > MainForm.m.Height)
+                newHeight = MainForm.m.Height;
+
+            p_Player.Width = newWidth;
+            p_Player.Height = newHeight;
+
+            if (p_Player.Left + p_Player.Width > MainForm.m.Width) //never move out of the screen
+                p_Player.Left -= p_Player.Left + p_Player.Width - MainForm.m.Width; //move the player depending on how far out of the screen it is
+            if (p_Player.Top < 0 || p_Player.Bottom > MainForm.m.Height) //never move out of the screen
+                p_Player.Top = 0;
+
+        }
+
         public void DestroyAll() {
             List<Detached> dList = new List<Detached>();
             foreach (Detached d in attachedPlayers)
@@ -197,6 +232,8 @@ namespace SSUtility2 {
                 d.DestroyPlayer();
             }
         }
+
+
 
         public void Detach(Detached detachable, bool destroy) {
             TabPage tp = detachable.settings.myLinkedPage;

@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static SSUtility2.RTSPPresets;
 
 namespace SSUtility2 {
     public partial class SettingsPage : Form {
@@ -82,7 +83,7 @@ namespace SSUtility2 {
                 cB_Recording_FPS.Text = ConfigControl.recFPS.stringVal;
                 cB_Layout_CP.Text = ConfigControl.cpLayout.stringVal;
                 cB_Layout_MainForm.Text = cB_Layout_MainForm.Items[Convert.ToInt32(ConfigControl.legacyLayout.boolVal)].ToString();
-                cB_Startup_PlayerCount.Text = ConfigControl.playerCount.stringVal;
+                cB_Layout_PlayerCount.Text = ConfigControl.playerCount.stringVal;
                 cB_Other_ForceMode.Enabled = ConfigControl.forceCamera.boolVal;
                 cB_Other_ForceMode.Text = ConfigControl.forceType.stringVal;
 
@@ -438,11 +439,11 @@ namespace SSUtility2 {
             UpdateCamConfig(await OtherCamCom.CheckConfiguration());
         }
 
-        private void cB_Startup_PlayerCount_SelectedIndexChanged(object sender, EventArgs e) {
+        private void cB_Layout_PlayerCount_SelectedIndexChanged(object sender, EventArgs e) {
             if (!MainForm.m.finishedLoading)
                 return;
 
-            ConfigControl.playerCount.UpdateValue(cB_Startup_PlayerCount.Text);
+            ConfigControl.playerCount.UpdateValue(cB_Layout_PlayerCount.Text);
             MainForm.m.AttachPlayers();
         }
 
@@ -834,6 +835,35 @@ namespace SSUtility2 {
             ChangeLayout(legacyMode);
 
             ConfigControl.legacyLayout.UpdateValue(legacyMode.ToString());
+
+            if (!legacyMode)
+                return;
+
+            MainForm main = MainForm.m;
+            if (main.mainPlayer.IsPlaying()) {
+                main.cB_Player1_Type.SelectedIndex = main.cB_Player1_Type.Items.Count - 1; //custom
+                main.checkB_Player1_Manual.Checked = ConfigControl.player1Extended.boolVal;
+                main.checkB_Player1_Manual_CheckedChanged(null, null); //apply the settings
+                main.tB_Player1_Name.Text = GetValue(PresetColumn.Name, main.mainPlayer.settings.cB_RTSP.Text);
+                main.tB_Player1_SimpleAdr.Text = GetValue(PresetColumn.FullAdr, main.mainPlayer.settings.cB_RTSP.Text);
+                main.tB_Player1_Adr.Text = GetValue(PresetColumn.RTSPIP, main.mainPlayer.settings.cB_RTSP.Text);
+                main.tB_Player1_Port.Text = GetValue(PresetColumn.RTSPPort, main.mainPlayer.settings.cB_RTSP.Text);
+                main.tB_Player1_RTSP.Text = GetValue(PresetColumn.RTSP, main.mainPlayer.settings.cB_RTSP.Text);
+                main.tB_Player1_Username.Text = GetValue(PresetColumn.Username, main.mainPlayer.settings.cB_RTSP.Text);
+                main.tB_Player1_Password.Text = GetValue(PresetColumn.Password, main.mainPlayer.settings.cB_RTSP.Text);
+            }
+            if (main.mainPlayer.attachedPlayers.Count > 0 && main.mainPlayer.attachedPlayers[0].IsPlaying()) { //copy secondPlayer settings to player2
+                main.cB_Player2_Type.SelectedIndex = main.cB_Player2_Type.Items.Count - 1; //custom
+                main.checkB_Player2_Manual.Checked = ConfigControl.player2Extended.boolVal;
+                main.checkB_Player2_Manual_CheckedChanged(null, null); //apply the settings
+                main.tB_Player2_Name.Text = GetValue(PresetColumn.Name, main.mainPlayer.attachedPlayers[0].settings.cB_RTSP.Text);
+                main.tB_Player2_SimpleAdr.Text = GetValue(PresetColumn.FullAdr, main.mainPlayer.attachedPlayers[0].settings.cB_RTSP.Text);
+                main.tB_Player2_Adr.Text = GetValue(PresetColumn.RTSPIP, main.mainPlayer.attachedPlayers[0].settings.cB_RTSP.Text);
+                main.tB_Player2_Port.Text = GetValue(PresetColumn.RTSPPort, main.mainPlayer.attachedPlayers[0].settings.cB_RTSP.Text);
+                main.tB_Player2_RTSP.Text = GetValue(PresetColumn.RTSP, main.mainPlayer.attachedPlayers[0].settings.cB_RTSP.Text);
+                main.tB_Player2_Username.Text = GetValue(PresetColumn.Username, main.mainPlayer.attachedPlayers[0].settings.cB_RTSP.Text);
+                main.tB_Player2_Password.Text = GetValue(PresetColumn.Password, main.mainPlayer.attachedPlayers[0].settings.cB_RTSP.Text);
+            }
         }
 
         void ChangeLayout(bool legacyMode) {
@@ -843,6 +873,29 @@ namespace SSUtility2 {
             MainForm.m.Menu_Settings_ConnectionSettings.Visible = !legacyMode;
 
             overridePreset = legacyMode;
+
+            if (MainForm.m.secondLegacy == null) {
+                MainForm.m.secondLegacy = new Detached(false);
+                MainForm.m.secondLegacy.p_Player = MainForm.m.p_Player2;
+            }
+
+            MainForm.m.mainPlayer.StopPlaying();
+            if (!legacyMode) //stop legacy players
+                MainForm.m.b_Player2_Stop_Click(null, null);
+            else //stop attached players
+                for (int i = 0; i < MainForm.m.mainPlayer.attachedPlayers.Count; i++)
+                    MainForm.m.mainPlayer.attachedPlayers[i].StopPlaying();
+
+            MainForm.m.mainPlayer.p_Player = (legacyMode) ? MainForm.m.p_Player1 : MainForm.m.p_PlayerPanel; //swap between main panels
+
+            if (legacyMode) { //play the legacy players
+                MainForm.m.b_Player1_Play_Click(null, null);
+                MainForm.m.b_Player2_Play_Click(null, null);
+            } else if (MainForm.m.finishedLoading) { //play all the players if they aren't already being played
+                MainForm.m.mainPlayer.Play(false);
+                for (int i = 0; i < MainForm.m.mainPlayer.attachedPlayers.Count; i++)
+                    MainForm.m.mainPlayer.attachedPlayers[i].Play(false);
+            }
         }
 
     }

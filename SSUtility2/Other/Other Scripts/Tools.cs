@@ -845,6 +845,8 @@ namespace SSUtility2 {
                 result = "6791";
             else if (val == "MOXA nPort")
                 result = "4001";
+            else if (val == "Aladdin/Jasmine")
+                result = "54000";
 
             if (result == "")
                 result = val;

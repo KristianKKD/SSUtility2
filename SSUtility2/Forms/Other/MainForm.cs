@@ -13,7 +13,7 @@ using static Kaiser.SizeablePanel;
 namespace SSUtility2 {
     public partial class MainForm : Form {
 
-        public const string version = "v2.8.4.2b";
+        public const string version = "v2.8.5.0";
         private bool startLiteVersion = false; //only for launch
 
         private bool closing = false;
@@ -138,7 +138,7 @@ namespace SSUtility2 {
                 ToggleCustomPanel();
         }
 
-        Detached secondPlayer;
+        public Detached secondPlayer;
         Detached thirdPlayer;
         public async Task AttachPlayers() {
             try {
@@ -410,7 +410,7 @@ namespace SSUtility2 {
             try {
                 if (!startLiteVersion)
                     EasyPlayerNetSDK.PlayerSdk.EasyPlayer_Release();
-            } catch (Exception err) { }
+            } catch (Exception err) { Console.WriteLine(err.ToString()); }
         }
 
         private void Menu_Window_Detached_Click(object sender, EventArgs e) {
@@ -473,7 +473,6 @@ namespace SSUtility2 {
             FFMPEGRecord.GlobalRecord();
         }
 
-
         private void Menu_RecordIndicator_Click(object sender, EventArgs e) {
             currentType = FFMPEGRecord.RecordType.Global;
             FFMPEGRecord.GlobalRecord();
@@ -529,6 +528,13 @@ namespace SSUtility2 {
                 if (!Tools.IsMainActive())
                     return;
 
+                if (k == Keys.OemOpenBrackets)
+                    secondPlayer.DoubleSize(false);
+                else if (k == Keys.OemCloseBrackets)
+                    secondPlayer.DoubleSize(true);
+                else if (k == Keys.Oemplus)
+                    secondPlayer.p_Player.Size = new Size(300, 200);
+
                 if ((oldK == Keys.LControlKey && k == Keys.L) ||
                     (k == Keys.LControlKey && oldK == Keys.L)) {
                     DebugWindow dg = new DebugWindow();
@@ -547,10 +553,9 @@ namespace SSUtility2 {
 
                 if (custom.isVisible && k.ToString().Length == 2) {
                     int but;
-                    if (int.TryParse(k.ToString().Substring(1, 1), out but)) {
+                    if (int.TryParse(k.ToString().Substring(1, 1), out but))
                         if (but > 0 && but < 10)
                             custom.DoCommand(but - 1);
-                    }
                 }
 
                 if (keyboardControl) {
@@ -1394,12 +1399,12 @@ namespace SSUtility2 {
 
         ///TO REWORK IN THE FUTURE, IS TOO HARDCODED!!!!
 
-        private void b_Player1_Stop_Click(object sender, EventArgs e) {
+        public void b_Player1_Stop_Click(object sender, EventArgs e) {
             mainPlayer.StopPlaying();
             b_Player1_Stop.Visible = false;
         }
 
-        private void b_Player1_Play_Click(object sender, EventArgs e) {
+        public void b_Player1_Play_Click(object sender, EventArgs e) {
             string simple = tB_Player1_SimpleAdr.Text;
             string ipaddress = tB_Player1_Adr.Text;
             string port = tB_Player1_Port.Text;
@@ -1520,7 +1525,8 @@ namespace SSUtility2 {
             }
         }
 
-        private void b_Player2_Play_Click(object sender, EventArgs e) {
+        public Detached secondLegacy;
+        public void b_Player2_Play_Click(object sender, EventArgs e) {
             string simple = tB_Player2_SimpleAdr.Text;
             string ipaddress = tB_Player2_Adr.Text;
             string port = tB_Player2_Port.Text;
@@ -1532,7 +1538,7 @@ namespace SSUtility2 {
             if (full == "")
                 return;
 
-            if(secondPlayer.Play(finishedLoading, true, full).Result) { 
+            if(secondLegacy.Play(finishedLoading, true, full).Result) { 
                 b_Player2_Stop.Visible = true;
                 tB_Player2_SimpleAdr.Text = full;
                 ConfigControl.player2Simple.UpdateValue(simple);
@@ -1544,8 +1550,8 @@ namespace SSUtility2 {
             }
         }
 
-        private void b_Player2_Stop_Click(object sender, EventArgs e) {
-            mainPlayer.StopPlaying();
+        public void b_Player2_Stop_Click(object sender, EventArgs e) {
+            secondLegacy.StopPlaying();
             b_Player1_Stop.Visible = false;
         }
 
@@ -1555,6 +1561,10 @@ namespace SSUtility2 {
 
         private void tB_Player2_Password_KeyUp(object sender, KeyEventArgs e) {
             cB_Player2_Type.Text = "Custom";
+        }
+
+        private void Menu_Settings_SetupWizard_Click(object sender, EventArgs e) {
+            FileStuff.FirstTimeSetup();
         }
     } // end of class MainForm
 } // end of namespace SSUtility2

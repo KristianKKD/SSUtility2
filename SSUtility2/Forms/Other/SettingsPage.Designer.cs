@@ -70,6 +70,10 @@ namespace SSUtility2
             this.l_Paths_vFolder = new System.Windows.Forms.Label();
             this.tB_Recording_vFolder = new System.Windows.Forms.TextBox();
             this.tP_Layout = new System.Windows.Forms.TabPage();
+            this.l_Layout_PlayerCount = new System.Windows.Forms.Label();
+            this.cB_Layout_PlayerCount = new System.Windows.Forms.ComboBox();
+            this.l_Layout_MainForm = new System.Windows.Forms.Label();
+            this.cB_Layout_MainForm = new System.Windows.Forms.ComboBox();
             this.check_Layout_Sliders = new System.Windows.Forms.CheckBox();
             this.l_Layout_CP = new System.Windows.Forms.Label();
             this.cB_Layout_CP = new System.Windows.Forms.ComboBox();
@@ -83,8 +87,6 @@ namespace SSUtility2
             this.check_Startup_QuickFunctions = new System.Windows.Forms.CheckBox();
             this.check_Startup_CustomPanel = new System.Windows.Forms.CheckBox();
             this.check_Startup_InfoPanel = new System.Windows.Forms.CheckBox();
-            this.l_Startup_PlayerCount = new System.Windows.Forms.Label();
-            this.cB_Startup_PlayerCount = new System.Windows.Forms.ComboBox();
             this.check_Startup_AutoPlay = new System.Windows.Forms.CheckBox();
             this.tP_Other = new System.Windows.Forms.TabPage();
             this.l_Other_ForceCamMode = new System.Windows.Forms.Label();
@@ -106,8 +108,6 @@ namespace SSUtility2
             this.b_Custom_CommandList = new System.Windows.Forms.Button();
             this.toolTips = new System.Windows.Forms.ToolTip(this.components);
             this.l_Version = new System.Windows.Forms.Label();
-            this.l_Layout_MainForm = new System.Windows.Forms.Label();
-            this.cB_Layout_MainForm = new System.Windows.Forms.ComboBox();
             this.tC_Settings.SuspendLayout();
             this.tP_Control.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_IPCon_FocusSpeed)).BeginInit();
@@ -285,7 +285,8 @@ namespace SSUtility2
             this.cB_IPCon_Port.FormattingEnabled = true;
             this.cB_IPCon_Port.Items.AddRange(new object[] {
             "Encoder",
-            "MOXA nPort"});
+            "MOXA nPort",
+            "Aladdin/Jasmine"});
             this.cB_IPCon_Port.Location = new System.Drawing.Point(115, 31);
             this.cB_IPCon_Port.Name = "cB_IPCon_Port";
             this.cB_IPCon_Port.Size = new System.Drawing.Size(183, 21);
@@ -681,6 +682,8 @@ namespace SSUtility2
             // 
             // tP_Layout
             // 
+            this.tP_Layout.Controls.Add(this.l_Layout_PlayerCount);
+            this.tP_Layout.Controls.Add(this.cB_Layout_PlayerCount);
             this.tP_Layout.Controls.Add(this.l_Layout_MainForm);
             this.tP_Layout.Controls.Add(this.cB_Layout_MainForm);
             this.tP_Layout.Controls.Add(this.check_Layout_Sliders);
@@ -693,6 +696,53 @@ namespace SSUtility2
             this.tP_Layout.TabIndex = 6;
             this.tP_Layout.Text = "Layout";
             this.tP_Layout.UseVisualStyleBackColor = true;
+            // 
+            // l_Layout_PlayerCount
+            // 
+            this.l_Layout_PlayerCount.AutoSize = true;
+            this.l_Layout_PlayerCount.Location = new System.Drawing.Point(3, 101);
+            this.l_Layout_PlayerCount.Name = "l_Layout_PlayerCount";
+            this.l_Layout_PlayerCount.Size = new System.Drawing.Size(103, 13);
+            this.l_Layout_PlayerCount.TabIndex = 51;
+            this.l_Layout_PlayerCount.Text = "Stream Player Count";
+            this.toolTips.SetToolTip(this.l_Layout_PlayerCount, "Number of players (1-3) spawned onto the main window on launch");
+            // 
+            // cB_Layout_PlayerCount
+            // 
+            this.cB_Layout_PlayerCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Layout_PlayerCount.FormattingEnabled = true;
+            this.cB_Layout_PlayerCount.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3"});
+            this.cB_Layout_PlayerCount.Location = new System.Drawing.Point(112, 98);
+            this.cB_Layout_PlayerCount.Name = "cB_Layout_PlayerCount";
+            this.cB_Layout_PlayerCount.Size = new System.Drawing.Size(121, 21);
+            this.cB_Layout_PlayerCount.TabIndex = 50;
+            this.toolTips.SetToolTip(this.cB_Layout_PlayerCount, "Number of players (including the Main Player) spawned on launch");
+            this.cB_Layout_PlayerCount.SelectedIndexChanged += new System.EventHandler(this.cB_Layout_PlayerCount_SelectedIndexChanged);
+            // 
+            // l_Layout_MainForm
+            // 
+            this.l_Layout_MainForm.AutoSize = true;
+            this.l_Layout_MainForm.Location = new System.Drawing.Point(3, 74);
+            this.l_Layout_MainForm.Name = "l_Layout_MainForm";
+            this.l_Layout_MainForm.Size = new System.Drawing.Size(91, 13);
+            this.l_Layout_MainForm.TabIndex = 4;
+            this.l_Layout_MainForm.Text = "Main Form Layout";
+            // 
+            // cB_Layout_MainForm
+            // 
+            this.cB_Layout_MainForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cB_Layout_MainForm.FormattingEnabled = true;
+            this.cB_Layout_MainForm.Items.AddRange(new object[] {
+            "Standard",
+            "Legacy"});
+            this.cB_Layout_MainForm.Location = new System.Drawing.Point(112, 71);
+            this.cB_Layout_MainForm.Name = "cB_Layout_MainForm";
+            this.cB_Layout_MainForm.Size = new System.Drawing.Size(121, 21);
+            this.cB_Layout_MainForm.TabIndex = 3;
+            this.cB_Layout_MainForm.SelectedIndexChanged += new System.EventHandler(this.cB_Layout_MainForm_SelectedIndexChanged);
             // 
             // check_Layout_Sliders
             // 
@@ -783,8 +833,6 @@ namespace SSUtility2
             this.tP_Startup.Controls.Add(this.check_Startup_QuickFunctions);
             this.tP_Startup.Controls.Add(this.check_Startup_CustomPanel);
             this.tP_Startup.Controls.Add(this.check_Startup_InfoPanel);
-            this.tP_Startup.Controls.Add(this.l_Startup_PlayerCount);
-            this.tP_Startup.Controls.Add(this.cB_Startup_PlayerCount);
             this.tP_Startup.Controls.Add(this.check_Startup_AutoPlay);
             this.tP_Startup.Location = new System.Drawing.Point(4, 22);
             this.tP_Startup.Name = "tP_Startup";
@@ -854,31 +902,6 @@ namespace SSUtility2
             this.toolTips.SetToolTip(this.check_Startup_InfoPanel, "Play videos upon launch of the program if any have been entered previously.");
             this.check_Startup_InfoPanel.UseVisualStyleBackColor = true;
             this.check_Startup_InfoPanel.CheckedChanged += new System.EventHandler(this.check_Startup_InfoPanel_CheckedChanged);
-            // 
-            // l_Startup_PlayerCount
-            // 
-            this.l_Startup_PlayerCount.AutoSize = true;
-            this.l_Startup_PlayerCount.Location = new System.Drawing.Point(4, 36);
-            this.l_Startup_PlayerCount.Name = "l_Startup_PlayerCount";
-            this.l_Startup_PlayerCount.Size = new System.Drawing.Size(147, 13);
-            this.l_Startup_PlayerCount.TabIndex = 49;
-            this.l_Startup_PlayerCount.Text = "Number of Players on Launch";
-            this.toolTips.SetToolTip(this.l_Startup_PlayerCount, "Number of players (including the MainPlayer) spawned");
-            // 
-            // cB_Startup_PlayerCount
-            // 
-            this.cB_Startup_PlayerCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cB_Startup_PlayerCount.FormattingEnabled = true;
-            this.cB_Startup_PlayerCount.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3"});
-            this.cB_Startup_PlayerCount.Location = new System.Drawing.Point(163, 33);
-            this.cB_Startup_PlayerCount.Name = "cB_Startup_PlayerCount";
-            this.cB_Startup_PlayerCount.Size = new System.Drawing.Size(114, 21);
-            this.cB_Startup_PlayerCount.TabIndex = 45;
-            this.toolTips.SetToolTip(this.cB_Startup_PlayerCount, "Number of players (including the Main Player) spawned on launch");
-            this.cB_Startup_PlayerCount.SelectedIndexChanged += new System.EventHandler(this.cB_Startup_PlayerCount_SelectedIndexChanged);
             // 
             // check_Startup_AutoPlay
             // 
@@ -1132,28 +1155,6 @@ namespace SSUtility2
             this.l_Version.TabIndex = 32;
             this.l_Version.Text = "SSUtility2.0 Version:";
             // 
-            // l_Layout_MainForm
-            // 
-            this.l_Layout_MainForm.AutoSize = true;
-            this.l_Layout_MainForm.Location = new System.Drawing.Point(3, 74);
-            this.l_Layout_MainForm.Name = "l_Layout_MainForm";
-            this.l_Layout_MainForm.Size = new System.Drawing.Size(91, 13);
-            this.l_Layout_MainForm.TabIndex = 4;
-            this.l_Layout_MainForm.Text = "Main Form Layout";
-            // 
-            // cB_Layout_MainForm
-            // 
-            this.cB_Layout_MainForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cB_Layout_MainForm.FormattingEnabled = true;
-            this.cB_Layout_MainForm.Items.AddRange(new object[] {
-            "Standard",
-            "Legacy"});
-            this.cB_Layout_MainForm.Location = new System.Drawing.Point(112, 71);
-            this.cB_Layout_MainForm.Name = "cB_Layout_MainForm";
-            this.cB_Layout_MainForm.Size = new System.Drawing.Size(121, 21);
-            this.cB_Layout_MainForm.TabIndex = 3;
-            this.cB_Layout_MainForm.SelectedIndexChanged += new System.EventHandler(this.cB_Layout_MainForm_SelectedIndexChanged);
-            // 
             // SettingsPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1226,8 +1227,6 @@ namespace SSUtility2
         public System.Windows.Forms.ComboBox cB_IPCon_Port;
         private System.Windows.Forms.CheckBox check_IPCon_Override;
         private System.Windows.Forms.TabPage tP_Startup;
-        private System.Windows.Forms.Label l_Startup_PlayerCount;
-        private System.Windows.Forms.ComboBox cB_Startup_PlayerCount;
         public System.Windows.Forms.CheckBox check_Startup_AutoPlay;
         public System.Windows.Forms.Label l_Other_Dir;
         public System.Windows.Forms.Button b_ChangeDir;
@@ -1278,5 +1277,7 @@ namespace SSUtility2
         private System.Windows.Forms.CheckBox check_Layout_Sliders;
         private System.Windows.Forms.Label l_Layout_MainForm;
         private System.Windows.Forms.ComboBox cB_Layout_MainForm;
+        private System.Windows.Forms.Label l_Layout_PlayerCount;
+        private System.Windows.Forms.ComboBox cB_Layout_PlayerCount;
     }
 }

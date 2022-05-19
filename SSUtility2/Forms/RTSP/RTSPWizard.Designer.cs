@@ -428,7 +428,8 @@
             this.cB_ControlPort.FormattingEnabled = true;
             this.cB_ControlPort.Items.AddRange(new object[] {
             "Encoder",
-            "MOXA nPort"});
+            "MOXA nPort",
+            "Aladdin/Jasmine"});
             this.cB_ControlPort.Location = new System.Drawing.Point(85, 248);
             this.cB_ControlPort.Name = "cB_ControlPort";
             this.cB_ControlPort.Size = new System.Drawing.Size(300, 21);

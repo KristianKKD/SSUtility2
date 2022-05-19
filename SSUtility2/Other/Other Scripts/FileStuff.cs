@@ -12,25 +12,25 @@ namespace SSUtility2 {
 
         public static async Task<bool> FileWork() {
             try {
-                bool firstTime = CheckForNewDir();
-                if (!firstTime)
-                    CheckForMultipleConfigs();
+                if (!CheckForNewDir()) //check if first time
+                    CheckForMultipleConfigs(); //check if ssutility is mistaken and it's just in another dir
 
-                ConfigControl.SetToDefaults();
+                ConfigControl.SetToDefaults(); //set defaults for all settings
 
-                CreateConfigFiles();
+                bool noConfig = !File.Exists(ConfigControl.appFolder + ConfigControl.config); //check if config file exists
+                CreateConfigFiles(); //make the files if they don't exist
 
-                await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config);
+                await ConfigControl.SearchForVarsAsync(ConfigControl.appFolder + ConfigControl.config); //load settings
                 MainForm.m.custom.HideButtons();
 
                 if (ConfigControl.portableMode.boolVal)
                     MainForm.m.Menu_Final.Dispose();
 
-                if (AppDomain.CurrentDomain.FriendlyName.ToLower().Contains("lite"))
+                if (AppDomain.CurrentDomain.FriendlyName.ToLower().Contains("lite")) //auto lite mode if the name contains 'lite'
                     return true;
 
-                if (firstTime)
-                    FirstTimeSetup();
+                if (noConfig) //if no config file was found, redo the first time setup for faster use
+                    FirstTimeSetup(); 
 
                 return false;
             } catch (Exception e) {
@@ -39,7 +39,7 @@ namespace SSUtility2 {
             }
         }
 
-        static void FirstTimeSetup() {
+        public static void FirstTimeSetup() {
             Hidden.FirstTime ft = new Hidden.FirstTime();
             ft.ShowDialog();
         }

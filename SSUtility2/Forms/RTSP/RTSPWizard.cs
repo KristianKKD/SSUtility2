@@ -108,7 +108,7 @@ namespace SSUtility2 {
             CloseWindow();
         }
 
-        void FullToParts(string full) {
+        void FullToParts(string full) { //take all components of a full rtsp address and automatically fill the fields
             if (!ConfigControl.enableFullToParts.boolVal)
                 return;
 
@@ -121,19 +121,19 @@ namespace SSUtility2 {
 
                 int rtspLength = 7; //should be pos of username or ip in expected format
 
-                if (full.Length < rtspLength + 1)
+                if (full.Length < rtspLength + 1) //too short
                     return;
 
                 if (full.Substring(0, rtspLength) != "rtsp://") //if fullAdr isn't completed in any expected way
                     return;
 
-                full = full.Substring(rtspLength);
+                full = full.Substring(rtspLength); //remove the 'rtsp://' part
 
-                int atPos = full.IndexOf("@");
+                int atPos = full.IndexOf("@"); //detect if there is username/password
                 
-                int portColonPos = full.IndexOf(":");
+                int portColonPos = full.IndexOf(":"); //pos of port
 
-                int passwordPos = full.IndexOf(":", 0);
+                int passwordPos = full.IndexOf(":", 0); //i think portColonPos and this are separate as i change them below
                 if (passwordPos > 0 && passwordPos < atPos) //password exists
                     portColonPos = full.IndexOf(":", passwordPos + 1);
                 else if (passwordPos > atPos)
@@ -146,7 +146,7 @@ namespace SSUtility2 {
                     if (atPos < usernameEnd)
                         usernameEnd = atPos; //no password
 
-                    if (usernameEnd > 0)
+                    if (usernameEnd > 0) //try to enter the username
                         usernameLength = TryFillField(full, 0, usernameEnd, tB_Username) - 1;
                 }
 
@@ -158,23 +158,30 @@ namespace SSUtility2 {
                 //if (portFinisher < firstFoundColon) // maybe no port? implement later 
                 //    ipEnd = portFinisher + 1;
 
-                TryFillField(full, ipStart, ipLength, tB_RTSPIP);
+                TryFillField(full, ipStart, ipLength, tB_RTSPIP); //fill ip box
 
                 int portPos = ipStart + ipLength + 1;
-                if (full.Length > portPos && full[portPos - 1] == ':')
+                if (full.Length > portPos && full[portPos - 1] == ':') //there exists a port
                     TryFillField(full, portPos, portFinisher - portPos, tB_RTSPPort);
 
-                TryFillField(full, full.IndexOf('/') + 1, -1, tB_RTSPString);
+                TryFillField(full, full.IndexOf('/') + 1, -1, tB_RTSPString); //fill the rtsp string box
 
-                if (usernameLength > 0 && passwordPos > 0 && atPos - usernameLength > 2)
-                    TryFillField(full, passwordPos + 1, atPos - usernameLength - 2, tB_Password);
+                if (usernameLength > 0 && passwordPos > 0 && atPos - usernameLength > 2) //there exists a username and password
+                    TryFillField(full, passwordPos + 1, atPos - usernameLength - 2, tB_Password); //fill in the password field
+                else if (tB_RTSPString.Text.Length > 0){
+                    if (usernameLength == 0)
+                        tB_Username.Text = "admin";
+                    tB_Password.Text = "admin";
+
+                    tB_FullAdr.Text = GetCombined();
+                }
 
             } catch (Exception e) {
                 Console.WriteLine("Failed to extract values from full address\n" + e.ToString());
             }
         }
 
-        int TryFillField(string full, int startPos, int length, TextBox tb) {
+        int TryFillField(string full, int startPos, int length, TextBox tb) { //fill the field, return the length of the string
             try {
                 string val = "";
                 if (length > 0)
@@ -185,7 +192,7 @@ namespace SSUtility2 {
                 tb.Text = val;
 
                 return val.Length;
-            } catch (Exception e){ }
+            } catch (Exception e){ Console.WriteLine(e.ToString()); }
 
             return 0;
         }

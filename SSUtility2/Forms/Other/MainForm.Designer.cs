@@ -165,7 +165,6 @@ namespace SSUtility2 {
             this.b_PTZ_Thermal = new System.Windows.Forms.Button();
             this.b_Open = new System.Windows.Forms.Button();
             this.b_PTZ_Daylight = new System.Windows.Forms.Button();
-            this.JoyBack = new Kaiser.JoyBack();
             this.pB_Panoramic = new System.Windows.Forms.PictureBox();
             this.p_PTZ_Sliders = new System.Windows.Forms.Panel();
             this.l_PTZ_SlidersFPercent = new System.Windows.Forms.Label();
@@ -177,6 +176,8 @@ namespace SSUtility2 {
             this.l_PTZ_SliderZoom = new System.Windows.Forms.Label();
             this.slider_PTZ_AbsZoom = new System.Windows.Forms.TrackBar();
             this.p_PlayerPanel = new System.Windows.Forms.Panel();
+            this.JoyBack = new Kaiser.JoyBack();
+            this.Menu_Settings_SetupWizard = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuBar.SuspendLayout();
             this.p_Legacy.SuspendLayout();
             this.p_Legacy_Player2.SuspendLayout();
@@ -187,12 +188,12 @@ namespace SSUtility2 {
             this.p_Player1_Extended.SuspendLayout();
             this.p_Legacy_CP.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Legacy_JoyBack)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).BeginInit();
             this.p_PTZ_Sliders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsFocus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).BeginInit();
             this.p_PlayerPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).BeginInit();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -227,28 +228,28 @@ namespace SSUtility2 {
             // Menu_Window_Detached
             // 
             this.Menu_Window_Detached.Name = "Menu_Window_Detached";
-            this.Menu_Window_Detached.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Detached.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Detached.Text = "Detached Player";
             this.Menu_Window_Detached.Click += new System.EventHandler(this.Menu_Window_Detached_Click);
             // 
             // Menu_Window_PelcoD
             // 
             this.Menu_Window_PelcoD.Name = "Menu_Window_PelcoD";
-            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_PelcoD.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_PelcoD.Text = "Pelco D Scripting";
             this.Menu_Window_PelcoD.Click += new System.EventHandler(this.Menu_Window_PelcoD_Click);
             // 
             // Menu_Window_Response
             // 
             this.Menu_Window_Response.Name = "Menu_Window_Response";
-            this.Menu_Window_Response.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Response.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Response.Text = "Response Log";
             this.Menu_Window_Response.Click += new System.EventHandler(this.Menu_Window_Response_Click);
             // 
             // Menu_Window_Presets
             // 
             this.Menu_Window_Presets.Name = "Menu_Window_Presets";
-            this.Menu_Window_Presets.Size = new System.Drawing.Size(168, 22);
+            this.Menu_Window_Presets.Size = new System.Drawing.Size(180, 22);
             this.Menu_Window_Presets.Text = "Quick Functions";
             this.Menu_Window_Presets.Click += new System.EventHandler(this.Menu_Window_Presets_Click);
             // 
@@ -260,7 +261,8 @@ namespace SSUtility2 {
             this.Menu_Settings_Lite,
             this.Menu_Settings_Keyboard,
             this.Menu_Settings_Panels,
-            this.Menu_Settings_Config});
+            this.Menu_Settings_Config,
+            this.Menu_Settings_SetupWizard});
             this.Menu_Settings.Name = "Menu_Settings";
             this.Menu_Settings.Size = new System.Drawing.Size(63, 20);
             this.Menu_Settings.Text = "Settings";
@@ -1458,18 +1460,6 @@ namespace SSUtility2 {
             this.b_PTZ_Daylight.Visible = false;
             this.b_PTZ_Daylight.Click += new System.EventHandler(this.b_PTZ_Daylight_Click);
             // 
-            // JoyBack
-            // 
-            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
-            this.JoyBack.Location = new System.Drawing.Point(68, 92);
-            this.JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
-            this.JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
-            this.JoyBack.Name = "JoyBack";
-            this.JoyBack.Size = new System.Drawing.Size(150, 150);
-            this.JoyBack.TabIndex = 99;
-            this.JoyBack.TabStop = false;
-            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
-            // 
             // pB_Panoramic
             // 
             this.pB_Panoramic.BackColor = System.Drawing.Color.Transparent;
@@ -1613,6 +1603,25 @@ namespace SSUtility2 {
             this.p_PlayerPanel.DragOver += new System.Windows.Forms.DragEventHandler(this.p_PlayerPanel_DragOver);
             this.p_PlayerPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.p_PlayerPanel_MouseMove);
             // 
+            // JoyBack
+            // 
+            this.JoyBack.BackColor = System.Drawing.Color.Transparent;
+            this.JoyBack.Location = new System.Drawing.Point(68, 92);
+            this.JoyBack.MaximumSize = new System.Drawing.Size(150, 150);
+            this.JoyBack.MinimumSize = new System.Drawing.Size(150, 150);
+            this.JoyBack.Name = "JoyBack";
+            this.JoyBack.Size = new System.Drawing.Size(150, 150);
+            this.JoyBack.TabIndex = 99;
+            this.JoyBack.TabStop = false;
+            this.JoyBack.JoyReleased += new System.EventHandler(this.JoyBack_JoyReleased);
+            // 
+            // Menu_Settings_SetupWizard
+            // 
+            this.Menu_Settings_SetupWizard.Name = "Menu_Settings_SetupWizard";
+            this.Menu_Settings_SetupWizard.Size = new System.Drawing.Size(193, 22);
+            this.Menu_Settings_SetupWizard.Text = "Setup Wizard";
+            this.Menu_Settings_SetupWizard.Click += new System.EventHandler(this.Menu_Settings_SetupWizard_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1649,13 +1658,13 @@ namespace SSUtility2 {
             this.p_Legacy_CP.ResumeLayout(false);
             this.p_Legacy_CP.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Legacy_JoyBack)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pB_Panoramic)).EndInit();
             this.p_PTZ_Sliders.ResumeLayout(false);
             this.p_PTZ_Sliders.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsFocus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.slider_PTZ_AbsZoom)).EndInit();
             this.p_PlayerPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.JoyBack)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1792,5 +1801,6 @@ namespace SSUtility2 {
         public Button b_Player2_Play;
         public Panel p_Player2;
         public Label label4;
+        private ToolStripMenuItem Menu_Settings_SetupWizard;
     } // end of partial class MainForm
 } // end of namespace SSLUtility2
